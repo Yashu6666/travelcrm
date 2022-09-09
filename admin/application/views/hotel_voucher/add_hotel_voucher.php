@@ -134,7 +134,7 @@
 																<label for="" class=" col-form-label">Check-in</label>
 																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?>>
 																<input type="hidden" name="check_in[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?>>
-															
+															<!-- <change> -->
 															</div>
 															<?php
 															$date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);

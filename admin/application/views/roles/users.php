@@ -55,7 +55,7 @@
 
                                 <div class="card-body ">
 
-
+                                         <!-- <add settings> -->
                                 <div class="table-scrollable">
 										<table class="table table-hover table-checkable order-column full-width"
 											id="example4">

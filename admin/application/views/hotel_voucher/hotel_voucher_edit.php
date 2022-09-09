@@ -87,7 +87,7 @@
 											</div>
                                             
 											<?php foreach (explode(',',$hotel[0]->nights) as $key => $value) : ?>
-
+                                         <!-- <change> -->
 												<div class="mt-3 row d-flex align-items-baseline ">
 													<div class="bg-dark col-xl-12">
 														<div id="HD_header" class="form-row p-3 rounded-lg">

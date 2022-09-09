@@ -18,6 +18,7 @@ class Transfer extends CI_Controller {
 
 	public function add_vehicle()
 	{
+		//add vehicle
 		$this->load->view('transfer/add');
 	}
 

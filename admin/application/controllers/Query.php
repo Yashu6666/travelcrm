@@ -1,0 +1,2318 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
+class Query extends CI_Controller
+{
+
+	public function __construct()
+	{
+
+		parent::__construct();
+		ini_set('memory_limit', '2048M');
+		$this->load->library('Image_Slug');
+		// $this->load->library('Pdf');
+	}
+	public function sendMailProposalPackage()
+	{
+		try {
+			$data_arr = $_POST['data_arr'];
+			
+			$data_en = json_decode($_POST['data_arr']);
+			$this->load->library('email');
+			$config = array(
+				'protocol' => 'smtp',
+				'smtp_host' => 'ssl://smtp.googlemail.com',
+				'smtp_port' => 465,
+				'smtp_user' => 'devsum2@gmail.com',
+				'smtp_pass' => 'jggdlvqnvdenvssm',
+				'crlf' => "\r\n",
+				'mailtype' => "html",
+				'newline' => "\r\n",
+			);
+			
+			$data['details'] = $data_en;
+			// echo"<pre>";print_r($data['details']);exit;
+
+			// $body = $this->load->view('query/email_templates/proposal', $data, TRUE);	
+			// print_r($body);	
+			// return;	
+			// print_r($data['details']);	
+			// print_r($data['details2']);	
+			// $this->load->view('query/email_templates/proposal', $data);
+			// return;	
+			if ($data['details']->type == 'package'){
+				$body = $this->load->view('query/email_templates/proposal_package', $data, TRUE);
+				echo "Email Sent package";
+			}
+			elseif ($data['details']->type == 'transfer'){
+				// $this->load->view('query/email_templates/proposal_transfer', $data);return;
+				$body = $this->load->view('query/email_templates/proposal_transfer', $data, TRUE);
+			}
+			else {
+				$body = $this->load->view('query/email_templates/proposal', $data, TRUE);
+				echo "Email Sent other";
+
+			}
+
+			$this->email->initialize($config);
+			$this->email->from('devsum2@gmail.com');
+			$this->email->to($data_en->cus_email);
+			$this->email->cc($data_en->cc_email);
+			$this->email->subject($data_en->subject);
+			$this->email->message($body);
+			$this->email->send();
+
+			 
+			echo "Email Sent";
+			$update_data = array('is_proposal_sent' => 1);
+			$this->db->where('queryId', $data_en->query_ID)->update('querypackage', $update_data);
+
+		} catch (\Exception $e) {
+			$this->session->set_flashdata('error', 'Something Went Wrong');
+		}
+	}
+
+	public function view_query($type = '')
+	{
+		// $this->db->select("*");
+
+		// $this->db->from("b2bcustomerquery cb");
+
+		// $this->db->join('querypackage qp','cb.query_id=qp.queryId','LEFT');
+		// $this->db->join('querytransfer qt','cb.query_id=qt.queryId','LEFT');
+		// $this->db->join('queryvisa qv','cb.query_id=qv.queryId','LEFT');
+		// $this->db->join('queryhotel qh','cb.query_id=qh.queryId','LEFT');
+		// $this->db->join('queryexcusion qe','cb.query_id=qe.queryId','LEFT');
+
+		// $sql="SELECT * FROM b2bcustomerquery";
+		error_reporting(0);
+		// $inprogress = $this->db->where('lead_stage', "Inprogress")->get('b2bcustomerquery')->result();
+		$inprogress = $this->db->where('cb.lead_stage', "Inprogress")->join('querypackage qp','cb.query_id=qp.queryId')->group_by('qp.queryId')->get('b2bcustomerquery cb')->result();
+
+		if (isset($inprogress)) {
+			$data['inprogress'] = count($inprogress);
+		} else {
+			$data['inprogress'] = 0;
+		}
+		// $today_date = date("Y-m-d");
+		// $recent = $this->db->query("select * FROM b2bcustomerquery where created_at BETWEEN '" . $today_date . " 00:00:00' AND    '" . $today_date . " 11:59:59'")->result();
+
+		$date = new DateTime("now");
+		$curr_date = $date->format('Y-m-d ');
+		// $recent = $this->db->query("select DISTINCT(qp.queryId) FROM b2bcustomerquery as cb join querypackage as qp ON cb.query_id=qp.queryId where DATE(cb.created_at) = '" . $curr_date . "' group by qp.queryId ")->result();
+		$recent = $this->db->query("select * FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW() group by qp.queryId ")->result();
+
+
+
+		if (isset($recent)) {
+			$data['recent'] = count($recent);
+		} else {
+			$data['recent'] = 0;
+		}
+
+		$confirmed = $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result();
+		if (isset($confirmed)) {
+			$data['confirmed'] = count($confirmed);
+		} else {
+			$data['confirmed'] = 0;
+		}
+
+		$rejected = $this->db->where('lead_stage', "Rejected")->get('b2bcustomerquery')->result();
+		if (isset($rejected)) {
+			$data['rejected'] = count($rejected);
+		} else {
+			$data['rejected'] = 0;
+		}
+
+
+		$callback = $this->db->where('lead_stage', "Callback")->get('b2bcustomerquery')->result();
+		if (isset($callback)) {
+			$data['callback'] = count($callback);
+		} else {
+			$data['callback'] = 0;
+		}
+
+		$overall = $this->db->query("SELECT DISTINCT(queryId) FROM querypackage")->result();
+		if (isset($overall)) {
+			$data['overall'] = count($overall);
+		} else {
+			$data['overall'] = 0;
+		}
+
+		
+		if ($type == 'Inprogress') {
+			$query = $this->db->where('lead_stage', "Inprogress")->get('b2bcustomerquery')->result();
+		} else if ($type == 'Callback') {
+			$query = $this->db->where('lead_stage', "Callback")->get('b2bcustomerquery')->result();
+		} else if ($type == 'Rejected') {
+			$query = $this->db->where('lead_stage', "Rejected")->get('b2bcustomerquery')->result();
+		} else if ($type == 'Confirmed') {
+			$query = $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result();
+		} else if ($type == 'recent') {
+			// $query = $this->db->query("select * FROM b2bcustomerquery where created_at BETWEEN '" . $today_date . " 00:00:00' AND    '" . $today_date . " 11:59:59'")->result();
+			$query = $this->db->query("select * FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW() group by qp.queryId ")->result();
+
+		} else if ($type == 'Overall') {
+			$query = $this->db->query("SELECT * FROM b2bcustomerquery")->result();
+		} else {
+			$query = $this->db->where('lead_stage', "Inprogress")->get('b2bcustomerquery')->result();
+		}
+		// $query=$this->db->get('b2bcustomerquery')->result();
+		// echo"<pre>";print_r($query);die();
+
+		$result = array();
+		foreach ($query as $value) {
+			$query_id = $value->query_id;
+			$name = $value->b2bfirstName . ' ' . $value->b2blastName;
+			$mobile = $value->b2bmobileNumber;
+			$lead_stage = $value->lead_stage;
+
+			$created_at = $value->created_at;
+			$id = $value->id;
+
+			$package = $this->db->where('queryId', $query_id)->get('querypackage')->row();
+
+			if (isset($package)) {
+				$res = array("id" => $id, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
+				$result[] = $res;
+			}
+		}
+
+		$data_assign_to = $this->db->get('users')->result();
+		$names = [];
+		foreach ($data_assign_to as $key => $val) {
+		  $names[] = $val->UserName;
+		}
+		$data['assign_to'] = $names;
+
+		$data['result'] = array_reverse($result);
+
+		$data['users'] = $this->db->query("SELECT * FROM users where userType!='Super Admin'")->result();
+
+		$this->load->view('query/view_query', $data);
+	}
+
+	// public function view_query($type = '')
+	// {
+
+	// 	error_reporting(0);
+
+	// 	// $query = $this->db->select("count(*) as overall")
+	// 	// ->from("b2bcustomerquery cb")
+	// 	// ->join('querypackage qp','cb.query_id=qp.queryId')->get()->result();
+	// 	// echo"<pre>";print_r($query);exit;
+	// 	// exit;
+	// 	$inprogress = $this->db->where('cb.lead_stage', "Inprogress")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
+
+
+	// 	if (isset($inprogress)) {
+	// 		$data['inprogress'] = count($inprogress);
+	// 	} else {
+	// 		$data['inprogress'] = 0;
+	// 	}
+		
+	// 	// $today_date = date("Y-m-d");
+	// 	$date = new DateTime("now");
+
+	// 	$curr_date = $date->format('Y-m-d ');
+	// 	//print_r("select * FROM b2bcustomerquery where created_at BETWEEN '".$today_date." 00:00:00' AND    '".$today_date." 11:59:59'");die();
+	// 	// $recent = $this->db->query("select * FROM b2bcustomerquery where created_at BETWEEN '" . $today_date . " 00:00:00' AND    '" . $today_date . " 11:59:59'")->result();
+	// 	$recent = $this->db->query("select cb.* FROM b2bcustomerquery as cb join querypackage as qp ON cb.query_id=qp.queryId where DATE(cb.created_at) = '" . $curr_date . "' ")->result();
+
+	// 	if (isset($recent)) {
+	// 		$data['recent'] = count($recent);
+	// 	} else {
+	// 		$data['recent'] = 0;
+	// 	}
+		
+	// 	$confirmed = $this->db->where('cb.lead_stage', "Confirmed")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
+	// 	if (isset($confirmed)) {
+	// 		$data['confirmed'] = count($confirmed);
+	// 	} else {
+	// 		$data['confirmed'] = 0;
+	// 	}
+
+	// 	$rejected = $this->db->where('cb.lead_stage', "Rejected")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
+	// 	if (isset($rejected)) {
+	// 		$data['rejected'] = count($rejected);
+	// 	} else {
+	// 		$data['rejected'] = 0;
+	// 	}
+	// 	// echo"<pre>";print_r($rejected);exit;
+
+	// 	$callback = $this->db->where('cb.lead_stage', "Callback")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
+	// 	if (isset($callback)) {
+	// 		$data['callback'] = count($callback);
+	// 	} else {
+	// 		$data['callback'] = 0;
+	// 	}
+
+	// 	$overall = $this->db->query("SELECT * FROM b2bcustomerquery as cb  join querypackage as qp ON cb.query_id=qp.queryId")->result();
+	// 	if (isset($overall)) {
+	// 		$data['overall'] = count($overall);
+	// 	} else {
+	// 		$data['overall'] = 0;
+	// 	}
+
+	// 	// echo '<pre>';print_r($type);exit;
+	// 	if ($type == 'Inprogress') {
+	// 		$query = $this->db->where('cb.lead_stage', "Inprogress")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
+	// 	} else if ($type == 'Callback') {
+	// 		$query = $this->db->where('cb.lead_stage', "Callback")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
+	// 	} else if ($type == 'Rejected') {
+	// 		$query = $this->db->where('cb.lead_stage', "Rejected")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
+	// 	} else if ($type == 'Confirmed') {
+	// 		$query = $this->db->where('cb.lead_stage', "Confirmed")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
+	// 	} else if ($type == 'recent') {
+	// 		$query = $this->db->query("select cb.* FROM b2bcustomerquery as cb join querypackage as qp ON cb.query_id=qp.queryId where DATE(cb.created_at) = '" . $curr_date . "' ")->result();
+	// 	} else if ($type == 'Overall') {
+	// 		$query = $this->db->query("SELECT cb.* FROM b2bcustomerquery as cb join querypackage as qp ON cb.query_id=qp.queryId")->result();
+	// 	} else {
+	// 		$query = $this->db->where('cb.lead_stage', "Inprogress")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
+	// 	}
+
+		
+	// 	// $query=$this->db->get('b2bcustomerquery')->result();
+	// 	// echo"<pre>";print_r($query);exit();
+		
+	// 	$result = array();
+	// 	foreach ($query as $value) {
+	// 		$query_id = $value->query_id;
+	// 		$name = $value->b2bfirstName . ' ' . $value->b2blastName;
+	// 		$mobile = $value->b2bmobileNumber;
+	// 		$lead_stage = $value->lead_stage;
+
+	// 		$Package = $value->Package;
+	// 		$Transfer = $value->Transfer;
+	// 		$Hotel = $value->Hotel;
+	// 		$Excursion = $value->Excursion;
+	// 		$Visa = $value->Visa;
+	// 		$Meals = $value->Meals;
+
+	// 		$created_at = $value->created_at;
+	// 		$id = $value->id;
+
+	// 		$package = $this->db->where('queryId', $query_id)->get('querypackage')->row();
+	// 		// $package = $this->db->query("SELECT * FROM querypackage as qp  join b2bcustomerquery as cb ON qp.queryId=cb.query_id")->result();
+			
+
+	// 		if (isset($package)) {
+	// 			$res = array("id" => $id, 
+	// 						"created_at" => $created_at,
+	// 						"query_id" => $query_id,
+	// 			 			"name" => $name,
+	// 			 			"mobile" => $mobile, 
+	// 						"Description" => $package->type,
+	// 			  			"traveldate" => $package->specificDate,
+	// 						"nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child,
+	// 						"goingTo" => $package->goingTo,
+	// 						// "lead_stage" => $lead_stage
+	// 					);
+	// 			$res['lead_stage'] = "";
+	// 			if($package->type == "Package") $res['lead_stage'] = $Package;
+	// 			if($package->type == "Transfer") $res['lead_stage'] = $Transfer;
+	// 			if($package->type == "Hotel") $res['lead_stage'] = $Hotel;
+	// 			if($package->type == "Excursion") $res['lead_stage'] = $Excursion;
+	// 			if($package->type == "Visa") $res['lead_stage'] = $Visa;
+	// 			if($package->type == "Meals") $res['lead_stage'] = $Meals;
+	// 			$result[] = $res;
+	// 		}
+			
+	// 	}
+	// 	echo '<pre>';print_r($result);
+	// 	exit;
+		
+	// 	$data['result'] = $result;
+	// 	$data['users'] = $this->db->query("SELECT * FROM users where userType!='Super Admin'")->result();
+	// 	$this->load->view('query/view_query', $data);
+	// }
+
+	public function package($query_id = '')
+	{
+		//echo '<pre>';print_r($_POST);exit;
+		// if(isset($query_id)){
+
+		// }else{
+		// 	$query_id=$this->input->post('query_id');
+		// }
+		$query_id1 = $this->input->post('query_id');
+		if (isset($query_id1)) {
+			$data = array(
+				'b2bcompanyName' => $this->input->post('b2bcompanyName'),
+				'b2bEmail' => $this->input->post('b2bEmail'),
+				'b2bfirstName' => $this->input->post('b2bfirstName'),
+				'b2blastName' => $this->input->post('b2blastName'),
+				'b2bmobileNumber' => $this->input->post('b2bmobileNumber'),
+				'reportsTo' => $this->input->post('reportsTo'),
+				'b2bagent_remarks' => $this->input->post('b2bagent_remarks'),
+				'query_id' => $this->input->post('query_id')
+			);
+			$this->db->insert('b2bcustomerquery', $data);
+		}
+		$data['b2bDetails'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
+		$data['buildpackage'] = $this->db->where('queryId', $query_id)->get('querypackage')->row();
+		// echo"<pre>";print_r($data);exit;
+		$this->load->view('query/package', $data);
+	}
+	public function delete_query($id)
+	{
+		if ($this->db->where('id', $id)->delete('b2bcustomerquery')) {
+			$this->session->set_flashdata('success', 'Data deleted Sucessfully');
+			redirect('query/view_query', 'refresh');
+		} else {
+			$this->session->set_flashdata('error', 'Something Went Wrong');
+			redirect('query/view_query', 'refresh');
+		}
+	}
+
+	public function addQueryPackage()
+	{
+		//echo '<pre>';print_r($_POST);exit;
+
+		$country = implode(',', $_POST['country']);
+		$goingFrom = implode(',', $_POST['goingFrom']);
+		$hotelPrefrence = implode(',', $_POST['hotelPrefrence']);
+		$data = array(
+			'goingTo' => $country,
+			'goingFrom' => $goingFrom,
+			'specificDate' => $this->input->post('specificDate'),
+			'noDaysFrom' => $this->input->post('noDaysFrom'),
+			'hotelPrefrence' => $hotelPrefrence,
+			'Packagetravelers' => $this->input->post('adult'),
+			'queryId' => $this->input->post('queryId'),
+			'night' => $this->input->post('night'),
+			'child' => $this->input->post('child'),
+			'child_age' => $this->input->post('child_age'),
+			'room' => $this->input->post('rooms'),
+			'adult' => $this->input->post('adult'),
+			'infant' => $this->input->post('infant'),
+			'type' => $this->input->post('colorRadio'),
+			'currency' => $this->input->post('invoice_currency'),
+			'queryId' => $this->input->post('queryId'),
+			'created_date' => $this->input->post('created_date')
+		);
+		$query_id = $this->input->post('queryId');
+		$type = $this->input->post('colorRadio');
+
+		if ($this->db->insert('querypackage', $data)) {
+			$this->session->set_flashdata('successPackage', $type . ' Query Created Sucessfully');
+			redirect('query/package/' . $query_id, 'refresh');
+		} else {
+			$this->session->set_flashdata('error', 'Something Went Wrong');
+			redirect('query/package/' . $query_id, 'refresh');
+		}
+	}
+
+	public function updatestatus()
+	{
+		$id = $_POST['id'];
+		$status = $_POST['status'];
+		// $type = $_POST['type'];
+		$data = array( 'lead_stage' => $status);
+		$this->db->where('id', $id)->update('b2bcustomerquery', $data);
+		echo json_encode("updated");
+	}
+
+	public function fetchdropoff(){
+		$pickup=$_POST['pickup'];
+	
+		$dropoff=$this->db->query("SELECT * FROM transfer_route where start_city='$pickup' AND transport_type='oneway' GROUP BY start_city,dest_city ")->result();
+		echo json_encode(array("data"=>$dropoff));
+	}
+
+	public function fetchPickup(){
+		$pax= $_POST['pax'];
+		$pickup=$this->db->group_by(array("start_city", "dest_city"))->get_where('transfer_route', array('seat_capacity >=' => $pax,'transport_type =' => 'oneway'))->result();
+		echo json_encode(array("data"=>$pickup));
+	}
+
+	public function fetchPickup1(){
+		$pax= $_POST['pax'];
+		$pickup1=$this->db->group_by(array("start_city", "dest_city"))->get_where('transfer_route', array('seat_capacity >=' => $pax,'transport_type =' => 'round'))->result();
+		echo json_encode(array("data"=>$pickup1));
+	}
+	
+	public function fetchprice(){
+		$pickup=$_POST['pickup'];
+		$dropoff=$_POST['dropoff'];
+		$person=$_POST['person'];
+		$dropoff=$this->db->query("SELECT * FROM `transfer_route` WHERE start_city='$pickup' AND  dest_city='$dropoff' AND seat_capacity >= '$person' AND transport_type='oneway'  LIMIT 1")->row();
+		
+		if(empty($dropoff)){
+			$dropoff = "";
+			$dropoff = $this->db->query("SELECT * FROM `transfer_route` WHERE start_city='$pickup' AND  dest_city='$dropoff' AND seat_capacity <= '$person' AND transport_type='oneway'  LIMIT 1")->row();
+		} 
+
+	   $price=$dropoff->cost;
+		
+	   	$priceperperson = $price/$person;
+		$route_name = !empty($dropoff->route_name) ? $dropoff->route_name : "";
+		$dropoff =  !empty($dropoff) ? $dropoff : array() ;
+	  echo json_encode(array("data"=>$priceperperson,"route_name"=>$route_name,'row_data' =>$dropoff ));
+	}
+	public function fetchdropoff1(){
+		$pickup=$_POST['pickup'];
+		$dropoff=$this->db->query("SELECT * FROM transfer_route where start_city='$pickup' AND transport_type='round' GROUP  BY start_city,dest_city ")->result();
+	
+		echo json_encode(array("data"=>$dropoff));
+	}
+	
+	public function fetchprice1(){
+		$pickup=$_POST['pickup'];
+		$dropoff=$_POST['dropoff'];
+		$person=$_POST['person'];
+	
+		
+		$dropoff=$this->db->query("SELECT * FROM `transfer_route` WHERE start_city='$pickup' AND  dest_city='$dropoff' AND seat_capacity >= '$person' AND transport_type='round'  LIMIT 1")->row();
+	
+		$price=$dropoff->cost;
+		
+	  	$priceperperson=$price/$person;
+		$route_name = !empty($dropoff->route_name) ? $dropoff->route_name : "";
+		$dropoff =  !empty($dropoff) ? $dropoff : array() ;
+	 	echo json_encode(array("data"=>$priceperperson,"route_name"=>$route_name,'row_data' =>$dropoff ));
+	
+	}
+
+	public function fetchexcursion()
+	{
+
+		$excursion_type = $_POST['excursion_type'];
+		$excursion_name = $_POST['excursion_name'];
+		$excursion_adult = $_POST['excursion_adult'];
+		$excursion_child = $_POST['excursion_child'];
+		$excursion_infant = $_POST['excursion_infant'];
+
+		$excursion = $this->db->query("SELECT * FROM excursion WHERE tourname='$excursion_name' AND type='$excursion_type'")->row();
+
+		if ($excursion_type == 'SIC') {
+			$adult = $excursion->adultprice;
+			$child = $excursion->childprice;
+			$infant = $excursion->infantprice;
+
+			// $t=$adult*$excursion_adult+$child*$excursion_child+$infant*$excursion_infant;
+			echo json_encode(array("adult" => $adult * $excursion_adult, "child" => $child * $excursion_child, "infant" => $infant * $excursion_infant));
+		} else {
+			$excursion = $this->db->query("SELECT * FROM excursion WHERE tourname='$excursion_name' AND type='$excursion_type'")->result();
+
+			$total = $excursion_adult + $excursion_child + $excursion_infant;
+			print_r($total);
+			die();
+			$data = array();
+			foreach ($excursion as $value) {
+				if ($total <= $value->pax) {
+
+					array_push($data, $value->pax);
+					// $data.push($value['seat_capacity']);
+				}
+			}
+			$count = min($data);
+			$amount = $this->db->query("SELECT * FROM excursion WHERE tourname='$excursion_name' AND type='$excursion_type' AND pax='$count'")->row();
+			$price = $amount->vehicle_price;
+
+			$priceperperson = $price / $total;
+			echo json_encode(array("priceperperson" => $priceperperson));
+		}
+	}
+
+
+
+	public function buildPackage($q_id = '')
+	{
+		//echo '<pre>';print_r($q_id);exit;
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
+		qp.child,cb.reportsTo,cb.b2bEmail,qp.room");
+
+		$this->db->from("b2bcustomerquery cb");
+
+		$this->db->where('qp.queryId', $q_id);
+		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+		$data['view'] = $this->db->get()->row();
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+		$this->load->library('email');
+		$config = array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.googlemail.com',
+			'smtp_port' => 465,
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'crlf' => "\r\n",
+			'mailtype' => "html",
+			'newline' => "\r\n",
+		);
+
+		$subject = $data['view']->query_id . '
+			 - Diamond Tours LLC Dubai / Pax:' . $data['view']->Packagetravelers . ' 
+			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
+			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
+
+		$this->email->initialize($config);
+		$this->email->from('devsum2@gmail.com');
+		$this->email->to($data['view']->b2bEmail);
+		$this->email->subject($subject);
+		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
+		$this->email->message($body);
+		$this->email->send();
+
+		$data['listSuppliers'] = $this->db->get('supplier')->result();
+		$data['transfer_route'] = $this->db->query("SELECT * FROM transfer_route where transport_type='oneway' AND cost_type='Normal' group by start_city,dest_city")->result();
+		$data['transfer_route1'] = $this->db->query("SELECT * FROM transfer_route where transport_type='round' AND cost_type='Normal' group by start_city,dest_city")->result();
+		// $data['hours_based'] = $this->db->query("SELECT * FROM transfer_route where  cost_type='HourBased'")->result();
+		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+
+		// $data['excursion']= $this->db->get('excursion')->result();
+		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
+		$data['excursion_pvt'] = $this->db->query("SELECT * FROM excursion WHERE type='PVT' ")->result();
+
+		$data['listcities'] = $this->db->get('city_master')->result();
+
+		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
+		
+		// echo '<pre>';print_r($data);exit;	
+		$this->load->view('query/build_package', $data);
+	}
+	public function get_hotels()
+	{
+
+		$city = $this->input->post('city');
+		$category = $this->input->post('category');
+		//echo json_encode($city);
+		$this->db->select("hotelname,id");
+		$this->db->from("hotel");
+		$this->db->where('hotelmapaddress', $city);
+		$this->db->where('hotelstars', $category);
+		$hotels = $this->db->get()->result();
+		echo json_encode($hotels);
+	}
+
+	// public function getHotelCalculation(){
+	// 	$pax_adult = $this->input->post('pax_adult');
+	// 	$pax_child = $this->input->post('pax_child');
+	// 	$build_room_type = $this->input->post('build_room_type');
+	// 	$no_of_nights = $this->input->post('no_of_nights');
+	// 	$build_hotel_name = $this->input->post('build_hotel_name');
+	// 	$build_bed_type = $this->input->post('build_bed_type');
+
+	// 	$extra_with_adult = $this->input->post('extra_with_adult');
+	//     $extra_with_child =$this->input->post('extra_with_child');
+	//     $extra_without_bed =$this->input->post('extra_without_bed');
+
+	// 	// echo"<pre>";print_r($_POST);
+
+	// 	$this->db->select("*");
+	// 	$this->db->from("rooms");
+	// 	$this->db->where('roomtype',$build_room_type);
+	// 	$this->db->where('hotelname',$build_hotel_name);
+	// 	$hotels_calculation = $this->db->get()->result_array();
+
+	// 	$hotels_calculation_data =array();
+	// 	if($extra_with_adult){
+	// 		$netrate_extra_array = explode (",", $hotels_calculation[0]['netrate_extra']);
+	// 		$vat_extra_array = explode (",", $hotels_calculation[0]['vat_extra']);
+
+	// 		$net_rate_extra= $netrate_extra_array[0];	
+	// 		$vat_extra = $vat_extra_array[0];
+	// 	}else{
+	// 		$net_rate_extra= 0;$vat_extra = 0;
+	// 	}
+	// 	if($extra_with_child){
+	// 		$netrate_extra_child_array = explode (",", $hotels_calculation[0]['netrate_extra_child']);
+	// 		$vat_extra_child_array = explode (",", $hotels_calculation[0]['vat_extra_child']);
+
+	// 		$netrate_extra_child= $netrate_extra_child_array[0];	
+	// 		$vat_extra_child = $vat_extra_child_array[0];
+
+	// 	}else{
+	// 		$netrate_extra_child=0; $vat_extra_child = 0;
+	// 	}
+	// 	if($extra_without_bed){
+	// 		$netrate_extra_wo_array = explode (",", $hotels_calculation[0]['netrate_extra_wo']);
+	// 		$vat_extra_wo_array = explode (",", $hotels_calculation[0]['vat_extra_wo']);
+
+	// 		$netrate_extra_wo= $netrate_extra_wo_array[0];	
+	// 		$vat_extra_wo = $vat_extra_wo_array[0];
+
+	// 	}else{
+	// 		$netrate_extra_wo= 0;$vat_extra_wo = 0;
+	// 	}
+
+
+
+
+	// 	if($build_bed_type == "Single" ){
+	// 		// $net_rate_array = explode (",", $hotels_calculation[0]['netrate']);
+	// 		// $vat_array = explode (",", $hotels_calculation[0]['vat']); 
+	// 		// $net_rate= $net_rate_array[0];	
+	// 		// $vat = 	$vat_array[0];
+	// 		// $per_pax_adult = $net_rate + $vat;
+	// 		// $total_pax_adult_rate = ($pax_adult * ($net_rate + $vat)) * $no_of_nights;
+
+	// 		$net_rate_array = explode (",", $hotels_calculation[0]['netrate']);
+	// 		$vat_array = explode (",", $hotels_calculation[0]['vat']);
+	// 		// $net_rate_extra = explode (",", $hotels_calculation[0]['netrate']);
+	// 		// $vat_extra = explode (",", $hotels_calculation[0]['netrate']);
+
+	// 		$net_rate= $net_rate_array[0];	
+	// 		$vat = 	$vat_array[0];
+
+
+
+	// 	}else if($build_bed_type == "Double"){
+	// 		$net_rate_array = explode (",", $hotels_calculation[0]['netrate_double']);
+	// 		$vat_array = explode (",", $hotels_calculation[0]['vat_double']); 
+	// 		$net_rate= $net_rate_array[0];	
+	// 		$vat = 	$vat_array[0];
+	// 		// $per_pax_adult = $net_rate + $vat;
+	// 		// $total_pax_adult_rate = ($pax_adult * ($net_rate + $vat)) * $no_of_nights;
+	// 		// $hotels_calculation_data['netrate_double'] = $hotels_calculation[0]['netrate_double'];
+	// 	}else{
+	// 		$net_rate= 0;$vat =0;	
+	// 	}
+
+	// 	$total_per_pax_adult = $net_rate + $vat + $net_rate_extra + $vat_extra ;
+
+	// 	$total_per_pax_child = $netrate_extra_child + $vat_extra_child + $netrate_extra_wo + $vat_extra_wo;
+
+	// 	$hotel_calculation_data['total_pax_adult_rate'] = ($pax_adult * ($total_per_pax_adult)) * $no_of_nights;
+
+	// 	$hotel_calculation_data['total_pax_child_rate'] = ($pax_child * ($total_per_pax_child)) * $no_of_nights;
+
+	// 	// $hotel_calculation_data['total_pax_adult_rate'] = ($pax_adult * ($per_pax_adult)) * $no_of_nights;
+
+
+
+	// 	echo json_encode($hotel_calculation_data);
+
+
+	// }
+
+	public function getHotelCalculation()
+	{
+		$pax_adult = $this->input->post('pax_adult');
+		$pax_child = $this->input->post('pax_child');
+		$pax_infants = $this->input->post('pax_infants');
+
+		// $build_room_type = $this->input->post('build_room_type');
+		// $no_of_nights = $this->input->post('no_of_nights');
+		// $build_hotel_name = $this->input->post('build_hotel_name');
+		// $build_bed_type = $this->input->post('build_bed_type');
+
+		// $extra_with_adult = $this->input->post('extra_with_adult');
+		// $extra_with_child =$this->input->post('extra_with_child');
+		// $extra_without_bed =$this->input->post('extra_without_bed');
+
+
+		$rows_count = $this->input->post('total_rows') + 1;
+		$QueryId = $this->input->post('query_id');
+
+		$tableData = $this->input->post('data');
+		
+		// print_r($tableData);
+
+		$datas =  array();
+		for ($x = 0; $x < $rows_count; $x++) {
+			$datas[$x]['nights'] = $tableData[0]['nights'][$x];
+			$datas[$x]['hotel_id'] = $tableData[0]['hotelName'][$x];
+			$datas[$x]['room_type'] = $tableData[0]['roomType'][$x];
+			$datas[$x]['bed_types'] = $tableData[0]['bedType'][$x];
+			$datas[$x]['extra_with_adult'] = $tableData[0]['extra_with_adult'][$x];
+			$datas[$x]['extra_with_child'] = $tableData[0]['extra_with_child'][$x];
+			$datas[$x]['extra_without_bed'] = $tableData[0]['extra_without_bed'][$x];
+
+			$datas[$x]['buildHotelCity'] = $tableData[0]['buildHotelCity'][$x];
+			$datas[$x]['buildCheckIns'] = $tableData[0]['buildCheckIns'][$x];
+			$datas[$x]['Category'] = $tableData[0]['Category'][$x];
+			$datas[$x]['get_room_types'] = $tableData[0]['get_room_types'][$x];
+		}
+
+		$hotel_names = [];
+		foreach ($tableData[0]['hotelName'] as $key => $value) {
+			$this->db->select('hotelname');
+			$this->db->where('id', $value);
+			$this->db->limit(1);
+  			$name = $this->db->get('hotel');
+			$hotel_names[] = $name->row()->hotelname;
+		}
+
+		$hotel_query_data = [
+			'nights' => implode(',',$tableData[0]['nights']),
+			'hotel_id' => implode(',',$tableData[0]['hotelName']),
+			'room_type' => implode(',',$tableData[0]['roomType']),
+
+			'hotel_name' => implode(',',$hotel_names),
+			'category' => implode(',',$tableData[0]['Category']),
+			'checkin' => implode(',',$tableData[0]['buildCheckIns']),
+			'hotel_city' => implode(',',$tableData[0]['buildHotelCity']),
+
+		];
+
+		$this->db->where('query_id', $QueryId);
+		$this->db->update('query_hotel',$hotel_query_data);
+
+		// echo"<pre>";print_r($datas[0]['room_type']);exit;
+		$hotels_calculation = array();
+		$hotel_calculation_data['total_pax_adult_rate'] = 0;
+		$hotel_calculation_data['total_pax_child_rate'] = 0;
+		$hotel_calculation_data['total_pax_wo_rate'] = 0;
+		foreach ($datas as $k => $val) {
+			$this->db->select("*");
+			$this->db->from("rooms");
+			$this->db->where('roomtype', $val['room_type']);
+			$this->db->where('hotelname', $val['hotel_id']);
+			$hotels_calculation[] = $this->db->get()->result_array();
+			// print_r($hotels_calculation);
+
+			$hotels_calculation_data = array();
+
+			if($val['get_room_types'] == "Room Only"){
+				$room_val_index = 0;
+			}
+			elseif($val['get_room_types'] == "BB"){
+				$room_val_index = 1;
+			}
+			elseif($val['get_room_types'] == "HB"){
+				$room_val_index = 2;
+			}
+			elseif($val['get_room_types'] == "FB"){
+				$room_val_index = 3;
+			}
+
+			if ($val['extra_with_adult']) {
+				$netrate_extra_array = explode(",", $hotels_calculation[$k][0]['netrate_extra']);
+				$vat_extra_array = explode(",", $hotels_calculation[$k][0]['vat_extra']);
+				
+				$net_rate_extra = $netrate_extra_array[$room_val_index];
+				// $vat_extra = $vat_extra_array[0];
+			} else {
+				$net_rate_extra = 0;
+				$vat_extra = 0;
+			}
+			if ($val['extra_with_child']) {
+
+				if (!empty($val['extra_with_child'])) {
+					$netrate_extra_child_array = explode(",", $hotels_calculation[$k][0]['netrate_extra_child']);
+					// $vat_extra_child_array = explode(",", $hotels_calculation[$k][0]['vat_extra_child']);
+					$netrate_extra_child = $netrate_extra_child_array[$room_val_index];
+					// $vat_extra_child = $vat_extra_child_array[0];
+				}  else {
+					$netrate_extra_child = 0;
+				}
+
+			} else {
+				$netrate_extra_child = 0;
+			}
+			if ($val['extra_without_bed']) {
+
+				if (!empty($val['extra_without_bed'])) {
+					$netrate_extra_wo_array = explode(",", $hotels_calculation[$k][0]['netrate_extra_wo']);
+					// $vat_extra_wo_array = explode(",", $hotels_calculation[$k][0]['vat_extra_wo']);
+					$netrate_extra_wo = $netrate_extra_wo_array[$room_val_index];
+					// $vat_extra_wo = $vat_extra_wo_array[0];
+				}  else {
+					$netrate_extra_wo = 0;
+				}
+			} else {
+				$netrate_extra_wo = 0;
+				$vat_extra_wo = 0;
+			}
+
+
+			
+
+			if ($val['bed_types'] == "Single") {
+				// $net_rate_array = explode (",", $hotels_calculation[0]['netrate']);
+				// $vat_array = explode (",", $hotels_calculation[0]['vat']); 
+				// $net_rate= $net_rate_array[0];	
+				// $vat = 	$vat_array[0];
+				// $per_pax_adult = $net_rate + $vat;
+				// $total_pax_adult_rate = ($pax_adult * ($net_rate + $vat)) * $no_of_nights;
+
+				$net_rate_array = explode(",", $hotels_calculation[$k][0]['netrate']);
+				$vat_array = explode(",", $hotels_calculation[$k][0]['vat']);
+				$net_rate = $net_rate_array[$room_val_index];
+				$vat = 	$vat_array[$room_val_index];
+
+				if (!empty($val['extra_with_adult'])) {
+					$net_rate_extra_array = explode(",", $hotels_calculation[$k][0]['netrate_extra']);
+					$net_rate_extra = $net_rate_extra_array[$room_val_index];
+				} else {
+					$net_rate_extra = 0;
+				}
+				
+			} else if ($val['bed_types'] == "Double") {
+				$net_rate_array = explode(",", $hotels_calculation[$k][0]['netrate_double']);
+				$vat_array = explode(",", $hotels_calculation[$k][0]['vat_double']);
+
+				$net_rate = $net_rate_array[$room_val_index];
+				$vat = 	$vat_array[$room_val_index];
+
+				if (!empty($val['extra_with_adult'])) {
+					$net_rate_extra_array = explode(",", $hotels_calculation[$k][0]['netrate_extra']);
+					$net_rate_extra = $net_rate_extra_array[$room_val_index];
+				} else {
+					$net_rate_extra = 0;
+				}
+				// $per_pax_adult = $net_rate + $vat;
+				// $total_pax_adult_rate = ($pax_adult * ($net_rate + $vat)) * $no_of_nights;
+				// $hotels_calculation_data['netrate_double'] = $hotels_calculation[0]['netrate_double'];
+			} else {
+				$net_rate = 0;
+				$vat = 0;
+				$net_rate_extra = 0;
+			}
+
+			// $total_per_pax_adult = $net_rate + $vat + $net_rate_extra + $vat_extra;
+			// echo "<pre>";print_r('-----1----');print_r($net_rate);print_r('-----2----');print_r($vat);print_r('-----3----');print_r($net_rate_extra);print_r('-----4----');return;
+			$total_per_pax_adult = (int)$net_rate + (int)$vat + (int)$net_rate_extra;
+			// $total_per_pax_child = $netrate_extra_child + $vat_extra_child + $netrate_extra_wo + $vat_extra_wo;
+
+			$total_per_pax_child = (int)$netrate_extra_child;
+
+			$total_per_pax_wo = (int)$netrate_extra_wo;
+
+			$hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult ) * $val['nights'];
+
+			$hotel_calculation_data['total_pax_child_rate'] += ($pax_child * ($total_per_pax_child)) * $val['nights'];
+
+			$hotel_calculation_data['total_pax_wo_rate'] += ($pax_infants * ($total_per_pax_wo)) * $val['nights'];
+
+
+			// $hotel_calculation_data['total_pax_adult_rate'] = ($pax_adult * ($per_pax_adult)) * $no_of_nights;
+
+		}
+
+		// echo"<pre>";print_r($hotel_calculation_data);exit;
+
+		echo json_encode($hotel_calculation_data);
+	}
+
+	
+	public function get_resturant_name()
+	{
+		$type_transfer = $this->input->post('transfer');
+		$type_resturant = $this->input->post('rest_type');
+			$this->db->select("id,resturant_name");
+			$this->db->from("meals");
+			$this->db->where('resturant_type', $type_resturant);
+			$this->db->where('transfer', $type_transfer);
+			$resturant_name = $this->db->get()->result();
+			// echo"<pre>";print_r($resturant_name);exit;
+		echo json_encode($resturant_name);
+	}
+
+	public function getMealcalculation()
+	{
+		$rows_count = $this->input->post('total_rows');
+
+		$tableData = $this->input->post('data');
+		$datas =  array();
+		for ($x = 0; $x < $rows_count; $x++) {
+
+			$datas[$x]['resturants'] = $tableData[0]['resturants'][$x];
+			$datas[$x]['meals'] = $tableData[0]['meals'][$x];
+			$datas[$x]['meal_types'] = $tableData[0]['meal_types'][$x];
+			$datas[$x]['meal_adults'] = isset($tableData[0]['meal_adults'][$x]) ? $tableData[0]['meal_adults'][$x] : 0;
+			$datas[$x]['meal_childs'] = isset($tableData[0]['meal_childs'][$x]) ? $tableData[0]['meal_childs'][$x] : 0;
+			$datas[$x]['resturants_name'] = isset($tableData[0]['resturants_name'][$x]) ? $tableData[0]['resturants_name'][$x] : "";
+			$datas[$x]['resturants_transfer'] = isset($tableData[0]['resturants_transfer'][$x]) ? $tableData[0]['resturants_transfer'][$x] : "";
+		}
+
+		$meal_calculation = array();
+		$meal_calculation_data = array();
+		$meal_calculation_data['adult_prices'] = 0;
+		$meal_calculation_data['child_prices'] = 0;
+		foreach ($datas as $k => $val) {
+			$this->db->select("*");
+			$this->db->from("meals");
+			$this->db->where('resturant_type', $val['resturants']);
+			$this->db->where('meal_name', $val['meals']);
+			$this->db->where('meal_type', $val['meal_types']);
+			$this->db->where('transfer', $val['resturants_transfer']);
+			$this->db->where('resturant_name', $val['resturants_name']);
+			$meal_calculation[] = $this->db->get()->result_array();
+		// print_r($meal_calculation);
+		// $meal_calculation[] = $this->db->get_where('meals', ['resturant_type' => $val['resturants'], 'meal_name' => $val['meals'], 'meal_type' => $val['meal_types'],
+		// 'transfer' => $val['resturants_transfer'], 'resturant_name' => $val['resturants_name'] ])->row();
+		// print_r($datas);
+
+			if (array_key_exists('0', $meal_calculation[$k])) {
+				$meal_calculation_data['adult_prices'] += ((int)($meal_calculation[$k][0]['adult_price']) * ($val['meal_adults']));
+				$meal_calculation_data['child_prices'] += ((int)($meal_calculation[$k][0]['child_rate']) * ($val['meal_childs']));
+			}
+		}
+		echo json_encode($meal_calculation_data);
+	}
+	// public function getMealcalculation(){
+
+	// 	 $res_name =  $this->input->post('res_name');
+	// 	 $meal_cal =  $this->input->post('meal_cal');
+	// 	 $adult_meal_cal =  !empty($this->input->post('adult_meal_cal')) ? $this->input->post('adult_meal_cal') : 0 ;
+	// 	 $child_meal_cal =  !empty($this->input->post('child_meal_cal')) ? $this->input->post('child_meal_cal') : 0;
+	// 	 $meal_type_cal = $this->input->post('meal_type_cal');
+	// 	//  print_r($meal_type_cal);exit;
+	// 	$meal_calculation=array();
+	// 	$meal_calculation_data =array();
+	// 	$this->db->select("*");
+	// 	$this->db->from("meals");
+	// 	$this->db->where('resturant_name',$res_name);
+	// 	$this->db->where('meal_name',$meal_cal);
+	// 	$this->db->where('meal_type',$meal_type_cal);
+
+	// 	$meal_calculation = $this->db->get()->result_array();
+	// 	$meal_calculation_data['adult_price'] = $meal_calculation[0]['adult_price'] * $adult_meal_cal;
+	// 	$meal_calculation_data['child_price'] = $meal_calculation[0]['child_rate'] * $child_meal_cal;
+
+	// 	echo json_encode($meal_calculation_data);
+
+	// }
+	public function getExcursionSICCalculations(){
+
+		
+		$excursion_types_SIC =  $this->input->post('excursion_types_SIC');
+        $excursion_name_SIC =    $this->input->post('excursion_name_SIC');
+        $excursion_adults_SIC =  $this->input->post('excursion_adults_SIC');
+        $excursion_childs_SIC =  $this->input->post('excursion_childs_SIC');
+        $excursion_infants_SIC = $this->input->post('excursion_infants_SIC');
+		$total_pax = $excursion_adults_SIC+$excursion_childs_SIC+$excursion_infants_SIC;
+	
+		$excursion=array();
+		$excursion_sic_data =array();
+		$total_adultprice =0; $total_childprice= 0;$total_infantprice= 0;
+
+		if(!empty($excursion_name_SIC)){
+				foreach($excursion_name_SIC as $k => $val){
+					$excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_SIC[$k]."' AND type='".$excursion_types_SIC."' AND pax >=$total_pax  LIMIT 1")->row();
+					if(empty($excursion)){
+						$excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_SIC[$k]."' AND type='".$excursion_types_SIC."' AND pax <=$total_pax  LIMIT 1")->row();
+					}
+					if($excursion_adults_SIC) {
+						$total_adultprice += (int)$excursion->adultprice * (int)$excursion_adults_SIC;
+					}
+					if($excursion_childs_SIC) {
+						$total_childprice += (int)$excursion->childprice * (int)$excursion_childs_SIC;
+					}
+					if($excursion_infants_SIC) {
+						$total_infantprice += (int)$excursion->infantprice * (int)$excursion_infants_SIC;
+					}
+
+
+				}
+			}
+				$excursion_sic_data['total_adultprice'] = $total_adultprice;
+
+				$excursion_sic_data['total_childprice'] = $total_childprice;
+
+				$excursion_sic_data['total_infantprice'] = $total_infantprice;
+				echo json_encode($excursion_sic_data);
+
+		
+	}
+
+
+	public function getExcursionSICCalculation()
+	{
+
+		$excursion_types_SIC =  $this->input->post('excursion_types_SIC');
+		$excursion_name_SIC =    $this->input->post('excursion_name_SIC');
+		$excursion_adults_SIC =  $this->input->post('excursion_adults_SIC');
+		$excursion_childs_SIC =  $this->input->post('excursion_childs_SIC');
+		$excursion_infants_SIC = $this->input->post('excursion_infants_SIC');
+		// echo"<pre>";print_r($excursion_name_SIC);exit;
+		if ($excursion_name_SIC) {
+
+			$this->db->select("*");
+			$this->db->from("excursion");
+			$this->db->where('type', $excursion_types_SIC);
+			// foreach($excursion_name_SIC as $k => $val){
+			// 	if(sizeof($excursion_name_SIC) > 1 ) $this->db->or_where('tourname',$val);
+			// 	else $this->db->where('tourname',$val);
+
+			// }
+
+			$names = array();
+			foreach ($excursion_name_SIC as  $val) {
+				$names[] = $val;
+			}
+			$this->db->where_in('tourname', $names);
+
+
+			$excursion_sic_calculation = $this->db->get()->result_array();
+			$excursion_sic_data = array();
+			$total_adultprice = 0;
+			$total_childprice = 0;
+			$total_infantprice = 0;
+			foreach ($excursion_sic_calculation as $val) {
+
+				if ($excursion_adults_SIC) {
+					$total_adultprice += $val['adultprice'] * $excursion_adults_SIC;
+				}
+				if ($excursion_childs_SIC) {
+					$total_childprice += $val['childprice'] * $excursion_childs_SIC;
+				}
+				if ($excursion_infants_SIC) {
+					$total_infantprice += $val['infantprice'] * $excursion_infants_SIC;
+				}
+			}
+			$excursion_sic_data['total_adultprice'] = $total_adultprice;
+
+			$excursion_sic_data['total_childprice'] = $total_childprice;
+
+			$excursion_sic_data['total_infantprice'] = $total_infantprice;
+
+			echo json_encode($excursion_sic_data);
+		} else {
+			echo json_encode(array());
+		}
+	}
+
+
+	public function getExcursionPVTCalculations(){
+		
+       
+        $excursion_type_PVT = $this->input->post('excursion_type_PVT');
+        $excursion_name_PVT = $this->input->post('excursion_name_PVT');
+        $excursion_adult_PVT = $this->input->post('excursion_adult_PVT');
+        $excursion_child_PVT = $this->input->post('excursion_child_PVT');
+        $excursion_infant_PVT = $this->input->post('excursion_infant_PVT');
+		$total_pax = $excursion_adult_PVT+$excursion_child_PVT+$excursion_infant_PVT;
+
+		$excursion=array();
+		$excursion_pvt_data =array();
+
+		$total_adultprice =0; $total_childprice= 0;$total_infantprice= 0;
+		if(!empty($excursion_name_PVT)){
+
+			foreach($excursion_name_PVT as $k => $val){
+				$excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_PVT[$k]."' AND type='".$excursion_type_PVT."'  AND pax >=$total_pax  LIMIT 1")->row();
+				if(empty($excursion)){
+					$excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_PVT[$k]."' AND type='".$excursion_type_PVT."'  AND pax <=$total_pax  LIMIT 1")->row();
+				}
+				if($excursion_adult_PVT) {
+					// $total_adultprice += (((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->adultprice) * (int)$excursion_adult_PVT ; //$excursion->adultprice * $excursion_adult_PVT;
+					$total_adultprice += ( (int)$excursion->adultprice) * (int)$excursion_adult_PVT ; //$excursion->adultprice * $excursion_adult_PVT;
+				}
+				if($excursion_child_PVT) {
+					// $total_childprice += ((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->childprice * (int)$excursion_child_PVT  ; // $excursion->childprice * $excursion_child_PVT;
+					$total_childprice += ( (int)$excursion->childprice) * (int)$excursion_child_PVT  ; // $excursion->childprice * $excursion_child_PVT;
+				}
+				if($excursion_infant_PVT) {
+					// $total_infantprice += ((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->infantprice * (int)$excursion_infant_PVT ;//$excursion->infantprice * $excursion_infant_PVT;
+					$total_infantprice += ( (int)$excursion->infantprice) * (int)$excursion_infant_PVT ;//$excursion->infantprice * $excursion_infant_PVT;
+				}
+
+
+			}
+		}
+		$excursion_pvt_data['total_adultprice'] = $total_adultprice;
+
+		$excursion_pvt_data['total_childprice'] = $total_childprice;
+
+		$excursion_pvt_data['total_infantprice'] = $total_infantprice;
+
+	
+		echo json_encode($excursion_pvt_data);
+
+
+	}
+	public function getExcursionPVTCalculation()
+	{
+
+		$total_pax = $this->input->post('total_pax');
+		$excursion_type_PVT = $this->input->post('excursion_type_PVT');
+		$excursion_name_PVT = $this->input->post('excursion_name_PVT');
+		$excursion_adult_PVT = $this->input->post('excursion_adult_PVT');
+		$excursion_child_PVT = $this->input->post('excursion_child_PVT');
+		$excursion_infant_PVT = $this->input->post('excursion_infant_PVT');
+
+		if ($excursion_name_PVT) {
+
+			$this->db->select("*");
+			$this->db->from("excursion");
+			// $this->db->where('type',$excursion_type_PVT);	
+
+			// foreach($excursion_name_PVT as  $val){
+
+			// 	if(sizeof($excursion_name_PVT) > 0 ) $this->db->where('tourname',$val);
+			// 	else $this->db->where('tourname',$val);
+			// 	// $this->db->where('pax',$total_pax);
+			// 	// $this->db->where('tourname',$val);
+
+			// }
+			$names = array();
+			foreach ($excursion_name_PVT as  $val) {
+				$names[] = $val;
+			}
+
+			$this->db->where_in('tourname', $names);
+
+			$excursion_pvt_calculation = $this->db->get()->result_array();
+
+
+
+			// echo"<pre>";print_r($total_pax);exit;
+
+			$excursion_pvt_data = array();
+			$total_adultprice = 0;
+			$total_childprice = 0;
+			$total_infantprice = 0;
+			foreach ($excursion_pvt_calculation as $val) {
+
+				if ($excursion_adult_PVT) {
+					$total_adultprice += (($val['vehicle_price'] / $excursion_adult_PVT) + $val['adultprice']) * $excursion_adult_PVT; //$val['adultprice'] * $excursion_adult_PVT;
+				}
+				if ($excursion_child_PVT) {
+					$total_childprice += ($val['vehicle_price'] / $excursion_child_PVT) + $val['childprice'] * $excursion_child_PVT; // $val['childprice'] * $excursion_child_PVT;
+				}
+				if ($excursion_infant_PVT) {
+					$total_infantprice += ($val['vehicle_price'] / $excursion_infant_PVT) + $val['infantprice'] * $excursion_infant_PVT; //$val['infantprice'] * $excursion_infant_PVT;
+				}
+			}
+			$excursion_pvt_data['total_adultprice'] = $total_adultprice;
+
+			$excursion_pvt_data['total_childprice'] = $total_childprice;
+
+			$excursion_pvt_data['total_infantprice'] = $total_infantprice;
+
+			echo json_encode($excursion_pvt_data);
+		} else {
+			echo json_encode(array());
+		}
+	}
+	public function getVisaPrice()
+	{
+
+
+		$pax_adult = $this->input->post('pax_adult');
+		$pax_child = $this->input->post('pax_child');
+		$pax_infant = $this->input->post('pax_infant');
+		$visa_category_drop_down = $this->input->post('visa_category_drop_down');
+		// $visa_validity = $this->input->post('visa_validity');
+		$entry_type = $this->input->post('entry_type');
+		$this->db->select("*");
+		$this->db->from("visa");
+		$this->db->where('visa_category', $visa_category_drop_down);
+		// $this->db->where('visa_validity',$visa_validity);
+		$this->db->where('entry_type', $entry_type);
+
+		$visa_calculation = $this->db->get()->result_array();
+
+		$total_pax_visa_price = array();
+		$per_pax_adult = 0;
+		$per_pax_child = 0;
+		$per_pax_infant = 0;
+		if ($pax_adult) {
+			$per_pax_adult = $visa_calculation[0]['adult'];
+		}
+		if ($pax_child) {
+			$per_pax_child = $visa_calculation[0]['child'];
+		}
+		if ($pax_infant) {
+			$per_pax_infant = $visa_calculation[0]['infant'];
+		}
+		$total_pax_visa_price['per_pax_adult_amt'] = $per_pax_adult * $pax_adult;
+		$total_pax_visa_price['per_pax_child_amt'] = $per_pax_child * $pax_child;
+		$total_pax_visa_price['per_pax_infant_amt'] =  $per_pax_infant * $pax_infant;
+
+		echo json_encode($total_pax_visa_price);
+	}
+
+	public function get_room_type()
+	{
+
+		$hotel_id = $this->input->post('hotel_id');
+		$this->db->select("rooms.roomtype");
+		$this->db->from("rooms");
+		$this->db->join('hotel', 'hotel.id = rooms.hotelname');
+		$this->db->where('rooms.hotelname', $hotel_id);
+		$hotels = $this->db->get()->result();
+		echo json_encode($hotels);
+	}
+
+
+	public function buildHotel($q_id = '')
+	{
+		//echo '<pre>';print_r($q_id);exit;
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
+		qp.child,cb.reportsTo,cb.b2bEmail");
+
+		$this->db->from("b2bcustomerquery cb");
+
+		$this->db->where('qp.queryId', $q_id);
+		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+		$data['view'] = $this->db->get()->row();
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+		$this->load->library('email');
+		$config = array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.googlemail.com',
+			'smtp_port' => 465,
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'crlf' => "\r\n",
+			'mailtype' => "html",
+			'newline' => "\r\n",
+		);
+
+		$subject = $data['view']->query_id . '
+			 - Diamond Tours LLC Dubai / Pax:' . $data['view']->Packagetravelers . ' 
+			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
+			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
+
+		$this->email->initialize($config);
+		$this->email->from('devsum2@gmail.com');
+		$this->email->to($data['view']->b2bEmail);
+		$this->email->subject($subject);
+		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
+		$this->email->message($body);
+		$this->email->send();
+
+		$data['listSuppliers'] = $this->db->get('supplier')->result();
+		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
+		// echo '<pre>';print_r($data);exit;
+
+		$this->load->view('query/build_hotel', $data);
+	}
+
+	public function buildExcursion($q_id = '')
+	{
+		//echo '<pre>';print_r($q_id);exit;
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
+		qp.child,cb.reportsTo,cb.b2bEmail");
+
+		$this->db->from("b2bcustomerquery cb");
+
+		$this->db->where('qp.queryId', $q_id);
+		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+		$data['view'] = $this->db->get()->row();
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+		$this->load->library('email');
+		$config = array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.googlemail.com',
+			'smtp_port' => 465,
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'crlf' => "\r\n",
+			'mailtype' => "html",
+			'newline' => "\r\n",
+		);
+
+		$subject = $data['view']->query_id . '
+			 - Diamond Tours LLC Dubai / Pax:' . $data['view']->Packagetravelers . ' 
+			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
+			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
+
+		$this->email->initialize($config);
+		$this->email->from('devsum2@gmail.com');
+		$this->email->to($data['view']->b2bEmail);
+		$this->email->subject($subject);
+		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
+		$this->email->message($body);
+		$this->email->send();
+
+		$data['listSuppliers'] = $this->db->get('supplier')->result();
+		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+
+		$data['transfer_route'] = $this->db->query("SELECT * FROM transfer_route where transport_type='oneway' AND cost_type='Normal'")->result();
+		$data['transfer_route1'] = $this->db->query("SELECT * FROM transfer_route where transport_type='round' AND cost_type='Normal'")->result();
+		// $data['hours_based'] = $this->db->query("SELECT * FROM transfer_route where  cost_type='HourBased'")->result();
+
+		// $data['excursion']= $this->db->get('excursion')->result();
+		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
+		$data['excursion_pvt'] = $this->db->query("SELECT * FROM excursion WHERE type='PVT' ")->result();
+
+		$data['listcities'] = $this->db->get('city_master')->result();
+		
+		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
+		//echo '<pre>';print_r($data);exit;
+
+		$this->load->view('query/build_excursion', $data);
+	}
+
+	public function buildTransfer($q_id = '')
+	{
+		error_reporting(0);
+		//echo '<pre>';print_r($q_id);exit;
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
+		qp.child,cb.reportsTo,cb.b2bEmail");
+
+		$this->db->from("b2bcustomerquery cb");
+
+		$this->db->where('qp.queryId', $q_id);
+		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+		$data['view'] = $this->db->get()->row();
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+		$this->load->library('email');
+		$config = array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.googlemail.com',
+			'smtp_port' => 465,
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'crlf' => "\r\n",
+			'mailtype' => "html",
+			'newline' => "\r\n",
+		);
+
+		$subject = $data['view']->query_id . '
+			 - Diamond Tours LLC Dubai / Pax:' . $data['view']->Packagetravelers . ' 
+			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
+			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
+
+		$this->email->initialize($config);
+		$this->email->from('devsum2@gmail.com');
+		$this->email->to($data['view']->b2bEmail);
+		$this->email->subject($subject);
+		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
+		$this->email->message($body);
+		$this->email->send();
+
+		$data['excursion'] = $this->db->get('excursion')->result();
+		$data['listSuppliers'] = $this->db->get('supplier')->result();
+
+		$data['transfer_route'] = $this->db->query("SELECT * FROM transfer_route where transport_type='oneway' AND cost_type='Normal' group by start_city,dest_city")->result();
+		$data['transfer_route1'] = $this->db->query("SELECT * FROM transfer_route where transport_type='round' AND cost_type='Normal' group by start_city,dest_city")->result();
+		// $data['hours_based'] = $this->db->query("SELECT * FROM transfer_route where  cost_type='HourBased'")->result();
+
+		// $data['excursion']= $this->db->get('excursion')->result();
+		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
+		$data['excursion_pvt'] = $this->db->query("SELECT * FROM excursion WHERE type='PVT' ")->result();
+
+		$data['listcities'] = $this->db->get('city_master')->result();
+
+		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
+
+
+
+		// echo '<pre>';print_r($data);exit;
+
+		$this->load->view('query/build_transfer', $data);
+	}
+
+	public function buildVisa($q_id = '')
+	{
+		//echo '<pre>';print_r($q_id);exit;
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
+		qp.child,cb.reportsTo,cb.b2bEmail");
+
+		$this->db->from("b2bcustomerquery cb");
+
+		$this->db->where('qp.queryId', $q_id);
+		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+		$data['view'] = $this->db->get()->row();
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+		$this->load->library('email');
+		$config = array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.googlemail.com',
+			'smtp_port' => 465,
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'crlf' => "\r\n",
+			'mailtype' => "html",
+			'newline' => "\r\n",
+		);
+
+		$subject = $data['view']->query_id . '
+			 - Diamond Tours LLC Dubai / Pax:' . $data['view']->Packagetravelers . ' 
+			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
+			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
+
+		$this->email->initialize($config);
+		$this->email->from('devsum2@gmail.com');
+		$this->email->to($data['view']->b2bEmail);
+		$this->email->subject($subject);
+		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
+		$this->email->message($body);
+		$this->email->send();
+
+		$data['excursion'] = $this->db->get('excursion')->result();
+		$data['listSuppliers'] = $this->db->get('supplier')->result();
+		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+
+		$data['transfer_route'] = $this->db->query("SELECT * FROM transfer_route where transport_type='oneway' AND cost_type='Normal'")->result();
+		$data['transfer_route1'] = $this->db->query("SELECT * FROM transfer_route where transport_type='round' AND cost_type='Normal'")->result();
+		// $data['hours_based'] = $this->db->query("SELECT * FROM transfer_route where  cost_type='HourBased'")->result();
+
+		// $data['excursion']= $this->db->get('excursion')->result();
+		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
+		$data['excursion_pvt'] = $this->db->query("SELECT * FROM excursion WHERE type='PVT' ")->result();
+
+		$data['listcities'] = $this->db->get('city_master')->result();
+		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
+
+
+		$this->load->view('query/build_visa', $data);
+	}
+
+
+	public function buildMeals($q_id = '')
+	{
+		//echo '<pre>';print_r($q_id);exit;
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
+		qp.child,cb.reportsTo,cb.b2bEmail");
+
+		$this->db->from("b2bcustomerquery cb");
+
+		$this->db->where('qp.queryId', $q_id);
+		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+		$data['view'] = $this->db->get()->row();
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+		$this->load->library('email');
+		$config = array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.googlemail.com',
+			'smtp_port' => 465,
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'crlf' => "\r\n",
+			'mailtype' => "html",
+			'newline' => "\r\n",
+		);
+
+		$subject = $data['view']->query_id . '
+			 - Diamond Tours LLC Dubai / Pax:' . $data['view']->Packagetravelers . ' 
+			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
+			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
+
+		$this->email->initialize($config);
+		$this->email->from('devsum2@gmail.com');
+		$this->email->to($data['view']->b2bEmail);
+		$this->email->subject($subject);
+		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
+		$this->email->message($body);
+		$this->email->send();
+
+		$data['excursion'] = $this->db->get('excursion')->result();
+		$data['listSuppliers'] = $this->db->get('supplier')->result();
+		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+
+		$data['transfer_route'] = $this->db->query("SELECT * FROM transfer_route where transport_type='oneway' AND cost_type='Normal'")->result();
+		$data['transfer_route1'] = $this->db->query("SELECT * FROM transfer_route where transport_type='round' AND cost_type='Normal'")->result();
+		// $data['hours_based'] = $this->db->query("SELECT * FROM transfer_route where  cost_type='HourBased'")->result();
+
+		// $data['excursion']= $this->db->get('excursion')->result();
+		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
+		$data['excursion_pvt'] = $this->db->query("SELECT * FROM excursion WHERE type='PVT' ")->result();
+
+		$data['listcities'] = $this->db->get('city_master')->result();
+
+		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
+
+		$this->load->view('query/build_meals', $data);
+	}
+
+	public function CreateProposalTransfer()
+	{
+		
+		$data['proposalDetails'] = array(
+
+			'query_id' => $_POST['QueryId'],
+			'perpax_adult' =>  $_POST['perpax_adult_input'],
+			'perpax_childs' =>  $_POST['perpax_childs_input'],
+			'perpax_infants' => $_POST['perpax_infants_input'],
+
+
+			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
+			'buildPackageExclusions' => $_POST['buildPackageExclusions'],
+			'buildPackageConditions' => $_POST['buildPackageConditions'],
+			'buildPackageCancellations' => $_POST['buildPackageCancellations'],
+			'buildTravelFromdateCab' => $_POST['buildTravelFromdateCab'],
+
+			'pickupinternal' => $_POST['buildTravelToDateCab'],
+			// 'dropoffinternal' => $_POST['buildTravelFromdateSIC'],
+
+			'pickuppoint' => $_POST['buildTravelToDateSIC'],
+			'currencyOption' => $_POST['currencyOption'],
+
+			'in_transfer_date' => $_POST['buildTravelFromdateCab'],
+			'in_transfer_pickup' => $_POST['buildTravelToDateCab'],
+			'in_transfer_dropoff' => $_POST['buildTravelToCityCabDrop'],
+
+			'pp_transfer_date' => $_POST['buildTravelFromdatePVT'],
+			'pp_transfer_pickup' => $_POST['buildTravelToDateSIC'],
+			'pp_transfer_dropoff' => $_POST['buildTravelToCitySIC']
+		);
+
+		$data['pricing_info'] = array(
+			'query_id' => $_POST['QueryId'],
+			'user_id' => $this->session->userdata('admin_id'),
+			'user_name' => $this->session->userdata('admin_username'),
+			'transfer_price' => $_POST['totalprice_transfer']
+			
+		);
+
+		$query = $this->db->where('query_id', $_POST['QueryId'])->get('pricing_info');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $_POST['QueryId']);
+			$this->db->update('pricing_info',$data['pricing_info']);
+		} else {
+			$this->db->insert('pricing_info', $data['pricing_info']);
+		}
+
+		$updatedata = array('status' => "Sent");
+		$this->db->where('query_id', $_POST['QueryId'])->update('b2bcustomerquery', $updatedata);
+
+		$data['buildpackage'] = $this->db->where('queryId', $_POST['QueryId'])->get('querypackage')->row();
+		$data['b2bcustomerquery'] = $this->db->where('query_id', $_POST['QueryId'])->get('b2bcustomerquery')->row();
+		// $data['hotels']= $this->db->where('id',$_POST['buildHotelName'])->get('hotel')->row();
+
+		$this->load->view('query/finaltransfer', $data);
+	}
+
+	public function CreateProposalVisa()
+	{
+		// echo '<pre>';print_r($_POST);exit;
+
+		//   $data['buildpackage']= $this->db->where('queryId',$_POST['QueryId'])->get('querypackage')->row();
+		//   $first_date = new DateTime($data['buildpackage']->noDaysFrom);
+		//     $second_date = new DateTime( $data['buildpackage']->specificDate);
+		// 	$difference = $first_date->diff($second_date);
+		// 	$data['proposalDetails'] = array('QueryId' => $_POST['QueryId'],
+		//     'iternary' => $_POST['iternary'],
+		//     'excusions' => $_POST['excusions'],
+		//     'currency' => $_POST['currency'],
+		//     'total' => $_POST['total'],
+		//     'markup' =>$_POST['markup'], 
+		//     'vat' => $_POST['vat'],
+		//     'total_price' => $_POST['total_price'],
+		//     'advance_amount' => $_POST['advance_amount'],
+		//     'inclusions' => $_POST['inclusions'],
+		//     'exclusions' => $_POST['exclusions'],
+		//     'booking_terms' => $_POST['booking_terms'],
+		// 	'difference'=>$difference->days,
+		// 	'booked_by'=>$this->session->userdata('admin_username')
+
+		//   );
+
+		$data['proposalDetails'] = array(
+			'query_id' => $_POST['QueryId'],
+			'perpax_adult' =>  $_POST['perpax_adult_input'],
+			'perpax_childs' =>  $_POST['perpax_childs_input'],
+			'perpax_infants' => $_POST['perpax_infants_input'],
+
+			// 'hotelName' => $_POST['buildHotelName'],
+
+
+			// 'noOfNights' => $_POST['buildNoNights'],
+			// 'roomType' => $_POST['buildRoomType'],
+
+			// 'excursion_name_SIC' => $_POST['excursion'][0],
+			// 'excursion_name_PVT' => $_POST['excursion'][1],
+			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
+			'buildPackageExclusions' => $_POST['buildPackageExclusions'],
+			'buildPackageConditions' => $_POST['buildPackageConditions'],
+			'buildPackageCancellations' => $_POST['buildPackageCancellations'],
+			'buildPackageRefund' => $_POST['buildPackageRefund'],
+			// 'buildTravelFromdateCab' => $_POST['buildTravelFromdateCab'],
+
+			// 'pickupinternal' => $_POST['buildTravelToDateCab'],
+			// 'dropoffinternal' => $_POST['buildTravelFromdateSIC'],	
+
+			// 'pickuppoint' => $_POST['buildTravelToDateSIC'],
+			// // 'dropoffpoint' => $_POST['buildTravelToCityCab'],
+			'currencyOption' => $_POST['currencyOption'],
+			// 'dropoffpointIn' => $_POST['buildTravelToCityCabIn'],
+
+			// 'in_transfer' => $_POST['buildTravelFromCityCab'],
+			// 'in_transfer_date'=> $_POST['buildTravelFromdateCab'],
+			// 'in_transfer_pickup'=> $_POST['buildTravelToDateCab'],
+			// 'in_transfer_dropoff'=> $_POST['buildTravelToCityCabDrop'],
+
+			// 'pp_transfer'=> $_POST['buildTravelFromCitySIC'],
+			// 'pp_transfer_date'=> $_POST['buildTravelFromdatePVT'],
+			// 'pp_transfer_pickup'=> $_POST['buildTravelToDateSIC'],
+			// 'pp_transfer_dropoff'=> $_POST['buildTravelToCitySIC']
+
+			'visa_category_drop_down' => $_POST['visa_category_drop_down'],
+			'entry_type' => $_POST['entry_type'],
+			'visa_validity' => $_POST['visa_validity'],
+
+
+
+
+		);
+		$data['pricing_info'] = array(
+			'query_id' => $_POST['QueryId'],
+			'user_id' => $this->session->userdata('admin_id'),
+			'user_name' => $this->session->userdata('admin_username'),
+			'visa_price' => $_POST['totalprice_visa']
+			
+		);
+
+		$query = $this->db->where('query_id', $_POST['QueryId'])->get('pricing_info');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $_POST['QueryId']);
+			$this->db->update('pricing_info',$data['pricing_info']);
+		} else {
+			$this->db->insert('pricing_info', $data['pricing_info']);
+		}
+
+		$data['buildpackage'] = $this->db->where('queryId', $_POST['QueryId'])->get('querypackage')->row();
+
+
+		$updatedata = array('status' => "Sent");
+		$this->db->where('query_id', $_POST['QueryId'])->update('b2bcustomerquery', $updatedata);
+
+		//   $this->db->insert('visa_report',$data['proposalDetails']);
+		$data['b2bcustomerquery'] = $this->db->where('query_id', $_POST['QueryId'])->get('b2bcustomerquery')->row();
+
+		$this->load->view('query/finalvisa', $data);
+	}
+
+	public function CreateProposalMealsSave()
+	{
+		$rows_count = $this->input->post('total_rows');
+		$QueryId = $this->input->post('QueryId');
+		$buildPackageInclusions = $this->input->post('buildPackageInclusions');
+		$buildPackageExclusions = $this->input->post('buildPackageExclusions');
+		$buildPackageConditions = $this->input->post('buildPackageConditions');
+		$buildPackageCancellations = $this->input->post('buildPackageCancellations');
+		$buildPackageRefund = $this->input->post('buildPackageRefund');
+		$totalprice_adult = $this->input->post('totalprice_adult');
+		$totalprice_childs = $this->input->post('totalprice_childs');
+		$totalprice_infants = $this->input->post('totalprice_infants');
+
+		$total_pricing = (int)$totalprice_adult + (int)$totalprice_childs + (int)$totalprice_infants;
+
+		$tableData = $this->input->post('data');
+		// echo"<pre>";print_r($tableData);exit;
+		$datas =  array();
+		for ($x = 0; $x < $rows_count; $x++) {
+			$datas[$x]['query_id'] = $QueryId;
+			$datas[$x]['resturent_name'] = $tableData[0]['resturants'][$x];
+			$datas[$x]['meal'] = $tableData[0]['meals'][$x];
+			$datas[$x]['date'] = $tableData[0]['dates'][$x];
+			$datas[$x]['meal_type'] = $tableData[0]['meal_types'][$x];
+			$datas[$x]['adult'] = isset($tableData[0]['meal_adults'][$x]) ? $tableData[0]['meal_adults'][$x] : 0;
+			$datas[$x]['child'] = isset($tableData[0]['meal_childs'][$x]) ? $tableData[0]['meal_childs'][$x] : 0;
+			$datas[$x]['resturant_name'] = isset($tableData[0]['resturants_name'][$x]) ? $tableData[0]['resturants_name'][$x] : "";
+			$datas[$x]['transfer'] = isset($tableData[0]['resturants_transfer'][$x]) ? $tableData[0]['resturants_transfer'][$x] : "";
+			$datas[$x]['buildPackageInclusions'] = $buildPackageInclusions;
+			$datas[$x]['buildPackageExclusions'] = $buildPackageExclusions;
+			$datas[$x]['buildPackageConditions'] = $buildPackageConditions;
+			$datas[$x]['buildPackageCancellations'] = $buildPackageCancellations;
+			// $datas[$x]['buildPackageRefund'] = $buildPackageRefund;
+			$datas[$x]['total_price'] = $total_pricing;
+		}
+
+		$query = $this->db->where('query_id', $QueryId)->get('query_meals');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $QueryId)->delete('query_meals');
+			$this->db->insert_batch('query_meals', $datas);
+		} else {
+			$this->db->insert_batch('query_meals', $datas);
+		}
+
+
+		// echo"<pre>";print_r($datas);exit;
+		echo json_encode($datas);
+	}
+
+	public function CreateProposalMeals()
+	{
+		// echo"<pre>";print_r($_POST);exit;
+		$data = array();
+		$data['proposalDetails'] = array(
+
+			'query_id' => $_POST['QueryId'],
+			'perpax_adult' =>  $_POST['perpax_adult_input'],
+			'perpax_childs' =>  $_POST['perpax_childs_input'],
+			'perpax_infants' => $_POST['perpax_infants_input'],
+
+			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
+			'buildPackageExclusions' => $_POST['buildPackageExclusions'],
+			'buildPackageConditions' => $_POST['buildPackageConditions'],
+			'buildPackageCancellations' => $_POST['buildPackageCancellations'],
+			// 'buildPackageRefund' => $_POST['buildPackageRefund'],
+
+			'currencyOption' => $_POST['currencyOption'],
+
+			'res_name' => $_POST['res_name'],
+			'Meal' => $_POST['Meal'],
+			'Meal_Type' => $_POST['Meal_Type'],
+
+
+		);
+
+		$data['pricing_info'] = array(
+			'query_id' => $_POST['QueryId'],
+			'user_id' => $this->session->userdata('admin_id'),
+			'user_name' => $this->session->userdata('admin_username'),
+			'meal_price' => $_POST['totalprice_meals']
+			
+		);
+
+		$query = $this->db->where('query_id', $_POST['QueryId'])->get('pricing_info');
+		if ($query->num_rows() > 0) {
+
+			$this->db->where('query_id', $_POST['QueryId']);
+			$this->db->update('pricing_info',$data['pricing_info']);
+
+		} else {
+			$this->db->insert('pricing_info', $data['pricing_info']);
+		}
+
+		$data['proposalDetailsEncode'] =  json_encode($data['proposalDetails']);
+		$data['res_name'] = $_POST['res_name'];
+		$data['Meal'] = $_POST['Meal'];
+		$data['Meal_Type'] = $_POST['Meal_Type'];
+		//   print_r($data['proposalDetails']);
+		//   return;
+		$data['buildpackage'] = $this->db->where('queryId', $_POST['QueryId'])->get('querypackage')->row();
+		// echo"<pre>";print_r($data['buildpackage']);exit;
+		$data['b2bcustomerquery'] = $this->db->where('query_id', $_POST['QueryId'])->get('b2bcustomerquery')->row();
+		// $this->db->where('query_id',$_POST['QueryId'])->update('b2bcustomerquery',$updatedata);
+		// echo"<pre>";print_r($data);exit;
+
+		// $this->db->insert('package',$data['proposalDetails']);
+
+
+		$this->load->view('query/finalmeals', $data);
+	}
+
+
+	public function CreateProposal()
+	{
+		// echo"<pre>";print_r($_POST);exit;
+		// return;
+		$data = array();
+
+		$hotels = [];
+		foreach ($_POST['buildHotelName'] as $key => $value) {
+			$hotels[] = $this->db->get_where('hotel', array('id' => $value))->row();
+		}
+		$data['proposalDetails'] = array(
+
+			'query_id' => $_POST['QueryId'],
+			'hotels' => $hotels,
+			'no_of_room' => $_POST['no_of_room'],
+			'buildCheckIns' => $_POST['buildCheckIns'],
+
+			// 'excursion_name_SIC' => $_POST['excursion'][0],
+			// 'excursion_name_PVT' => $_POST['excursion'][1],
+			'excursion_name_SIC' => $_POST['excursion_name_SIC'],
+			'excursion_name_PVT' => $_POST['excursion_name_PVT'],
+
+			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
+			'buildPackageExclusions' => $_POST['buildPackageExclusions'],
+			'buildPackageConditions' => $_POST['buildPackageConditions'],
+			'buildPackageCancellations' => $_POST['buildPackageCancellations'],
+			// 'buildPackageRefund' => $_POST['buildPackageRefund'],
+
+			'perpax_adult' =>  $_POST['perpax_adult_input'],
+			'perpax_childs' =>  $_POST['perpax_childs_input'],
+			'perpax_infants' => $_POST['perpax_infants_input'],
+
+			'hotelName' => $_POST['buildHotelName'],
+
+			'noOfNights' => $_POST['buildNoNightss'],
+			'roomType' => $_POST['buildRoomType'],
+
+			'buildTravelFromdateCab' => $_POST['buildTravelFromdateCab'],
+
+			'pickupinternal' => $_POST['buildTravelToDateCab'],
+			// 'dropoffinternal' => $_POST['buildTravelFromdateSIC'],
+
+			'pickuppoint' => $_POST['buildTravelToDateSIC'],
+			// 'dropoffpoint' => $_POST['buildTravelToCityCab'],
+			'currencyOption' => $_POST['currencyOption'],
+			// 'dropoffpointIn' => $_POST['buildTravelToCityCabIn'],
+
+			// 'in_transfer' => $_POST['buildTravelFromCityCab'],
+			'in_transfer_date' => $_POST['buildTravelFromdateCab'],
+			'in_transfer_pickup' => $_POST['buildTravelToDateCab'],
+			'in_transfer_dropoff' => $_POST['buildTravelToCityCabDrop'],
+
+			// 'pp_transfer'=> $_POST['buildTravelFromCitySIC'],
+			'pp_transfer_date' => $_POST['buildTravelFromdatePVT'],
+			'pp_transfer_pickup' => $_POST['buildTravelToDateSIC'],
+			'pp_transfer_dropoff' => $_POST['buildTravelToCitySIC'],
+			'res_type' => $_POST['res_type'],
+			'res_name' => $_POST['res_name'],
+			'Meal' => $_POST['Meal'],
+			'Meal_Type' => $_POST['Meal_Type'],
+
+			'visa_category_drop_down' => $_POST['visa_category_drop_down'],
+			'entry_type' => $_POST['entry_type'],
+			'visa_validity' => $_POST['visa_validity'],
+			'internal_route' => $_POST['buildTravelTypeCab'],
+			'return_route' => $_POST['buildTravelTypeSIC'],
+			'buildRoomType' => $_POST['buildRoomType'],
+			
+
+		);
+
+		$data['pricing_info'] = array(
+			'query_id' => $_POST['QueryId'],
+			'user_id' => $this->session->userdata('admin_id'),
+			'user_name' => $this->session->userdata('admin_username'),
+			'package_price' => $_POST['totalprice_package']
+		);
+
+		$query = $this->db->where('query_id', $_POST['QueryId'])->get('pricing_info');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $_POST['QueryId']);
+			$this->db->update('pricing_info',$data['pricing_info']);
+		} else {
+			$this->db->insert('pricing_info', $data['pricing_info']);
+		}
+
+		// 										print_r($data['proposalDetails']);
+		// return
+		$data['buildpackage'] = $this->db->where('queryId', $_POST['QueryId'])->get('querypackage')->row();
+		// echo"<pre>";print_r($data['buildpackage']);exit;
+		$data['b2bcustomerquery'] = $this->db->where('query_id', $_POST['QueryId'])->get('b2bcustomerquery')->row();
+		// $this->db->where('query_id',$_POST['QueryId'])->update('b2bcustomerquery',$updatedata);
+		// echo"<pre>";print_r($data);exit;
+
+		// $this->db->insert('package',$data['proposalDetails']);
+
+
+		$this->load->view('query/newproposal_new', $data);
+	}
+	/*public function CreateProposal()
+	{
+		// echo '<pre>';print_r($_POST);exit;
+		$data['proposalDetails'] = array('package_title'=>$_POST['packageType'],
+										'inclusion_supplier'=>$_POST['packageInclusion'],
+										'supplier'=>$_POST['supplier'],	
+										'distance_covered'=>$_POST['destinationCovered'],
+										'hotel_city'=>$_POST['buildHotelCity'],
+										'checkin'=>$_POST['buildCheckIn'],
+										'nights'=>$_POST['buildNoNights'],
+										'hotel_name'=>$_POST['buildHotelName'],
+										'room_type'=>$_POST['buildRoomType'],
+										'meal_plan'=>$_POST['buildMealType'],
+									
+										'transport_type'=>$_POST['TransType'],
+										'fromdate_transport'=>$_POST['buildTravelFromdateCab'],
+										'fromcity_transport'=>$_POST['buildTravelFromCityCab'],
+										'todate_transport'=>$_POST['buildTravelToDateCab'],
+										'tocity_transport'=>$_POST['buildTravelToCityCab'],
+										'transport_desc'=>$_POST['buildTravelTypeCab'],
+
+										'visa_details'=>$_POST['visaDetails'],
+										'price_per_adult'=>$_POST['visaPerAdultCost'],
+										'total_cost_visa'=>$_POST['visaTotalCost'],
+										'markup_visa'=>$_POST['visaTotalMarkup'],
+										'final_cost_visa'=>$_POST['visaFinalPrice'],
+										'transfer_details'=>$_POST['transferDetails'],
+
+										'pricing_info_type'=>$_POST['pricingInfo'],
+										'pricing_info_curreny'=>$_POST['currencyOption'],
+
+										'visa_total_cost_per'=>$_POST['pricingTotalCost'],
+										'visa_total_cost'=>$_POST['pricingTotalMarkup'],
+										'visa_total_markup'=>$_POST['pricingTotalCost']+$_POST['pricingTotalMarkup'],
+
+										'package_total_cost_per'=>$_POST['totalCostPackage'],
+										'package_markup'=>$_POST['PackageMarkup'],
+                                         'package_total_cost'=>(!empty($_POST['totalCostPackage']) ? $_POST['totalCostPackage'] : 0 )+$_POST['PackageMarkup'],
+
+                                         
+										
+										'total_package_cost'=>$_POST['TotalSales'],
+										'whyuseus'=>$_POST['buildPackageWhyUse'],
+										'booking_terms'=>$_POST['buildPackageBookingTerms'],
+										'refund'=>$_POST['buildPackageRefund'],
+										'general_info'=>$_POST['buildPackageInformations'],
+										'cancelation_policy'=>$_POST['buildPackageCancellations'],
+										'inclusions'=>$_POST['buildPackageInclusions'],
+										'exclusions'=>$_POST['buildPackageExclusions'],
+										'query_id'=>$_POST['QueryId'],
+
+										'buildPackageConditions'=>$_POST['buildPackageConditions'],
+										
+									
+									);
+									$this->db->insert('package',$data['proposalDetails']);
+									$data['buildpackage']= $this->db->where('queryId',$_POST['QueryId'])->get('querypackage')->row();
+									$data['b2bcustomerquery']= $this->db->where('query_id',$_POST['QueryId'])->get('b2bcustomerquery')->row();
+		// $this->load->view('query/newproposal',$data,TRUE);
+	$updatedata = array('status' => "Sent");
+	$this->db->where('query_id',$_POST['QueryId'])->update('b2bcustomerquery',$updatedata);
+
+		 $this->load->view('query/newproposal',$data);
+	// 	echo $response;
+	// 	//echo $response;exit;
+	// 	$this->pdf->load_html($response); 
+
+    //      $this->pdf->set_base_path('/');// Load HTML content
+	// 	$this->pdf->setPaper('A4', 'landscape'); // (Optional) Setup the paper size and orientation
+			
+	// 	$this->pdf->render();// Render the HTML as PDF
+	// 		$output = $this->pdf->output();
+    //    // $this->pdf->stream("welcome.pdf", array("Attachment"=>1));// Output the generated PDF (1 = download and 0 = preview)
+	// 		file_put_contents("./public/uploads/file1.pdf", $output);
+       
+
+		
+
+	}*/
+
+	public function CreateProposalExcursion()
+	{
+		error_reporting(0);
+		// echo"<pre>";print_r($_POST);exit;
+		$data['proposalDetails'] = array(
+
+			'query_id' => $_POST['QueryId'],
+			'perpax_adult' =>  $_POST['perpax_adult_input'],
+			'perpax_childs' =>  $_POST['perpax_childs_input'],
+			'perpax_infants' => $_POST['perpax_infants_input'],
+
+
+			// 'excursion_name_SIC' => $_POST['excursion'][0],
+			// 'excursion_name_PVT' => $_POST['excursion'][1],
+			'excursion_name_SIC' => $_POST['excursion_name_SIC'],
+			'excursion_name_PVT' => $_POST['excursion_name_PVT'],
+
+			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
+			'buildPackageExclusions' => $_POST['buildPackageExclusions'],
+			'buildPackageConditions' => $_POST['buildPackageConditions'],
+			'buildPackageCancellations' => $_POST['buildPackageCancellations'],
+			
+			'currencyOption' => $_POST['currencyOption'],
+	
+		);
+
+
+		$data['pricing_info'] = array(
+			'query_id' => $_POST['QueryId'],
+			'user_id' => $this->session->userdata('admin_id'),
+			'user_name' => $this->session->userdata('admin_username'),
+			'excursion_price' => $_POST['totalprice_excursion']
+			
+		);
+
+		$query = $this->db->where('query_id', $_POST['QueryId'])->get('pricing_info');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $_POST['QueryId']);
+			$this->db->update('pricing_info',$data['pricing_info']);
+		} else {
+			$this->db->insert('pricing_info', $data['pricing_info']);
+		}
+
+		$data['buildpackage'] = $this->db->where('queryId', $_POST['QueryId'])->get('querypackage')->row();
+		$data['b2bcustomerquery'] = $this->db->where('query_id', $_POST['QueryId'])->get('b2bcustomerquery')->row();
+		// $this->load->view('query/newproposal',$data,TRUE);
+
+		$updatedata = array('status' => "Sent");
+		$this->db->where('query_id', $_POST['QueryId'])->update('b2bcustomerquery', $updatedata);
+
+		$this->load->view('query/finalexcursion', $data);
+		// 	echo $response;
+		// 	//echo $response;exit;
+		// 	$this->pdf->load_html($response); 
+
+		//      $this->pdf->set_base_path('/');// Load HTML content
+		// 	$this->pdf->setPaper('A4', 'landscape'); // (Optional) Setup the paper size and orientation
+
+		// 	$this->pdf->render();// Render the HTML as PDF
+		// 		$output = $this->pdf->output();
+		//    // $this->pdf->stream("welcome.pdf", array("Attachment"=>1));// Output the generated PDF (1 = download and 0 = preview)
+		// 		file_put_contents("./public/uploads/file1.pdf", $output);
+
+
+	}
+
+	public function CreateProposalHotelSave()
+	{
+
+		$rows_count = $this->input->post('total_rows') + 1;
+		$QueryId = $this->input->post('QueryId');
+		$buildPackageInclusions = $this->input->post('buildPackageInclusions');
+		$buildPackageExclusions = $this->input->post('buildPackageExclusions');
+		$buildPackageConditions = $this->input->post('buildPackageConditions');
+		$buildPackageCancellations = $this->input->post('buildPackageCancellations');
+		$buildPackageRefund = $this->input->post('buildPackageRefund');
+		$totalprice_adult = $this->input->post('totalprice_adult');
+		$totalprice_childs = $this->input->post('totalprice_childs');
+		$totalprice_infants = $this->input->post('totalprice_infants');
+		$total_pricing = (int)$totalprice_adult + (int)$totalprice_childs + (int)$totalprice_infants;
+		$created_by = $this->session->userdata('admin_id');
+		$tableData = $this->input->post('data');
+		$datas =  array();
+		for ($x = 0; $x < $rows_count; $x++) {
+			$datas[$x]['query_id'] = $QueryId;
+			$datas[$x]['hotel_city'] = $tableData[0]['cities'][$x];
+			$datas[$x]['checkin'] = $tableData[0]['checkIn'][$x];
+			$datas[$x]['nights'] = $tableData[0]['nights'][$x];
+			$datas[$x]['hotel_id'] = $tableData[0]['hotelName'][$x];
+			$datas[$x]['category'] = $tableData[0]['category'][$x];
+			$datas[$x]['room_type'] = $tableData[0]['roomType'][$x];
+			// $datas[$x]['bed_types'] = $tableData[0]['bedType'][$x];
+			$datas[$x]['created_at'] = date('Y-m-d');
+			$datas[$x]['booked_by'] = "";
+			$datas[$x]['buildPackageInclusions'] = $buildPackageInclusions;
+			$datas[$x]['buildPackageExclusions'] = $buildPackageExclusions;
+			$datas[$x]['buildPackageConditions'] = $buildPackageConditions;
+			$datas[$x]['buildPackageCancellations'] = $buildPackageCancellations;
+			$datas[$x]['buildPackageRefund'] = $buildPackageRefund;
+			$datas[$x]['total_price'] = $total_pricing;
+			$datas[$x]['created_by'] = $created_by;
+		}
+
+		$query = $this->db->where('query_id', $QueryId)->get('query_hotel');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $QueryId)->delete('query_hotel');
+			$this->db->insert_batch('query_hotel', $datas);
+		} else {
+			$this->db->insert_batch('query_hotel', $datas);
+		}
+
+		echo json_encode($datas);
+	}
+	public function CreateProposalHotel()
+	{
+// echo"<pre>";print_r($_POST);exit;
+		$data['proposalDetails'] = array(
+			'perpax_adult' =>  $_POST['perpax_adult_input'],
+			'perpax_childs' =>  $_POST['perpax_childs_input'],
+			'perpax_infants' => $_POST['perpax_infants_input'],
+			'hotel_city' => $_POST['buildHotelCity'],
+			'nights' => $_POST['buildNoNight'],
+			'hotel_name' => $_POST['buildHotelName'],
+			'room_type' => $_POST['buildRoomType'],
+			'pricing_info_curreny' => $_POST['currencyOption'],
+			'cancelation_policy' => $_POST['buildPackageCancellations'],
+			'inclusions' => $_POST['buildPackageInclusions'],
+			'exclusions' => $_POST['buildPackageExclusions'],
+			'query_id' => $_POST['QueryId'],
+			'buildPackageConditions' => $_POST['buildPackageConditions'],
+
+		);
+		
+		
+		$data['pricing_info'] = array(
+			'query_id' => $_POST['QueryId'],
+			'user_id' => $this->session->userdata('admin_id'),
+			'user_name' => $this->session->userdata('admin_username'),
+			'hotel_price' => $_POST['totalprice_hotel']
+			
+		);
+
+		$query = $this->db->where('query_id', $_POST['QueryId'])->get('pricing_info');
+		if ($query->num_rows() > 0) {
+
+			$this->db->where('query_id', $_POST['QueryId']);
+			$this->db->update('pricing_info',$data['pricing_info']);
+
+		} else {
+			$this->db->insert('pricing_info', $data['pricing_info']);
+		}
+
+
+
+
+		$data['buildpackage'] = $this->db->where('queryId', $_POST['QueryId'])->get('querypackage')->row();
+		$data['b2bcustomerquery'] = $this->db->where('query_id', $_POST['QueryId'])->get('b2bcustomerquery')->row();
+		// $this->load->view('query/newproposal',$data,TRUE);
+
+		$updatedata = array('status' => "Sent");
+		$this->db->where('query_id', $_POST['QueryId'])->update('b2bcustomerquery', $updatedata);
+		$data['hotels'] = array(); // $this->db->where('id',$_POST['buildHotelName'])->get('hotel')->row();
+		// echo"<pre>";print_r($data['hotels']);exit;
+		$this->load->view('query/finalhotel', $data);
+		// 	echo $response;
+		// 	//echo $response;exit;
+		// 	$this->pdf->load_html($response); 
+
+		//      $this->pdf->set_base_path('/');// Load HTML content
+		// 	$this->pdf->setPaper('A4', 'landscape'); // (Optional) Setup the paper size and orientation
+
+		// 	$this->pdf->render();// Render the HTML as PDF
+		// 		$output = $this->pdf->output();
+		//    // $this->pdf->stream("welcome.pdf", array("Attachment"=>1));// Output the generated PDF (1 = download and 0 = preview)
+		// 		file_put_contents("./public/uploads/file1.pdf", $output);
+
+
+	}
+
+
+	public function addQueryTransfer()
+	{
+		//echo '<pre>';print_r($_POST);exit;
+
+		$data = array(
+			'qtype' => $this->input->post('qtype'),
+			'TgoingTo' => $this->input->post('TgoingTo'),
+			'TgoingFrom' => $this->input->post('TgoingFrom'),
+			'TspecificDate' => $this->input->post('TspecificDate'),
+			'TnoOfDays' => $this->input->post('TnoOfDays'),
+			'Ttravelers' => $this->input->post('Ttravelers'),
+			'pickUp' => $this->input->post('pickUp'),
+			'Tpreference' => $this->input->post('Tpreference'),
+			'TleadSource' => $this->input->post('TleadSource'),
+			'Tremarks' => $this->input->post('Tremarks'),
+			'Tassignto' => $this->input->post('Tassignto'),
+			'queryId' => $this->input->post('queryId'),
+			'created_date' => $this->input->post('created_date')
+		);
+
+		$query_id = $this->input->post('queryId');
+
+		if ($this->db->insert('querytransfer', $data)) {
+			$this->session->set_flashdata('successPackage', 'Transfer Query Created Sucessfully');
+			redirect('query/package/' . $query_id, 'refresh');
+		} else {
+			$this->session->set_flashdata('error', 'Something Went Wrong');
+			redirect('query/package/' . $query_id, 'refresh');
+		}
+	}
+
+
+	public function addQueryVisa()
+	{
+		// echo '<pre>';print_r($_POST);exit;
+
+		$data = array(
+			'visaCountry' => $this->input->post('visaCountry'),
+			'vCategory' => $this->input->post('vCategory'),
+			'visaEntryType' => $this->input->post('visaEntryType'),
+			'visaDateofTravel' => $this->input->post('visaDateofTravel'),
+			'visaApplicants' => $this->input->post('visaApplicants'),
+			'visaDuration' => $this->input->post('visaDuration'),
+			'visaNationality' => $this->input->post('visaNationality'),
+			'visaAssignTo' => $this->input->post('visaAssignTo'),
+			'visaTraveler' => $this->input->post('visaTraveler'),
+			'visaFirstname' => $this->input->post('visaFirstname'),
+			'visaLastname' => $this->input->post('visaLastname'),
+			'visaPax' => $this->input->post('visaPax'),
+			'visaComment' => $this->input->post('visaComment'),
+			'queryId' => $this->input->post('queryId'),
+			'created_date' => $this->input->post('created_date')
+		);
+
+		$query_id = $this->input->post('queryId');
+
+		if ($this->db->insert('queryvisa', $data)) {
+			$this->session->set_flashdata('successPackage', 'Visa Query Created Sucessfully');
+			redirect('query/package/' . $query_id, 'refresh');
+		} else {
+			$this->session->set_flashdata('error', 'Something Went Wrong');
+			redirect('query/package/' . $query_id, 'refresh');
+		}
+	}
+
+
+
+	public function addQueryHotel()
+	{
+		// echo '<pre>';print_r($_POST);exit;
+		$data = array(
+			'hotelDestination' => $this->input->post('hotelDestination'),
+			'hotelCheckIn' => $this->input->post('hotelCheckIn'),
+			'hotelCheckOut' => $this->input->post('hotelCheckOut'),
+			'hotelNights' => $this->input->post('hotelNights'),
+			'hotelNationality' => $this->input->post('hotelNationality'),
+			'hotelRatings' => $this->input->post('hotelRatings'),
+			'hotelAssignto' => $this->input->post('hotelAssignto'),
+			'hotelRemarks' => $this->input->post('hotelRemarks'),
+			'queryId' => $this->input->post('queryId'), 
+			'created_date' => $this->input->post('created_date')
+		);
+		$query_id = $this->input->post('queryId');
+
+		if ($this->db->insert('queryhotel', $data)) {
+			$this->session->set_flashdata('successPackage', 'Hotel Query Created Sucessfully');
+			redirect('query/package/' . $query_id, 'refresh');
+		} else {
+			$this->session->set_flashdata('error', 'Something Went Wrong');
+			redirect('query/package/' . $query_id, 'refresh');
+		}
+	}
+
+	public function addQueryExcursion()
+	{
+		// echo '<pre>';print_r($_POST);exit;
+		$data = array(
+			'Edestination' => $this->input->post('Edestination'),
+			'EtourDate' => $this->input->post('EtourDate'),
+			'ENatioality' => $this->input->post('ENatioality'),
+			'EnoOfPax' => $this->input->post('EnoOfPax'),
+			'Eadults' => $this->input->post('Eadults'),
+			'Echild' => $this->input->post('Echild'),
+			'Eremarks' => $this->input->post('Eremarks'),
+			'EassignTo' => $this->input->post('EassignTo'),
+			'queryId' => $this->input->post('queryId'),
+			'created_date' => $this->input->post('created_date')
+		);
+		$query_id = $this->input->post('queryId');
+
+		if ($this->db->insert('queryexcusion', $data)) {
+			$this->session->set_flashdata('successPackage', 'Excursion Query Created Sucessfully');
+			redirect('query/package/' . $query_id, 'refresh');
+		} else {
+			$this->session->set_flashdata('error', 'Something Went Wrong');
+			redirect('query/package/' . $query_id, 'refresh');
+		}
+	}
+	public function addFollowUp()
+	{
+		//echo '<pre>';print_r($_POST);exit;
+		$redirect_url = site_url() . '/query/view_query';
+
+		$today = $this->input->post('followUpday');
+		$Date = date('Y-m-d');
+		$dt = '';
+		if($today == 'today')
+		{
+			$dt = date('Y-m-d', strtotime($Date));
+			
+		}
+		if($today == 'tomorrow')
+		{
+			$dt = date('Y-m-d', strtotime($Date. ' + 1 days'));
+			
+		}
+		if($today == '2days')
+		{
+			$dt = date('Y-m-d', strtotime($Date. ' + 2 days'));
+		}
+		if($today == '3days')
+		{
+			$dt = date('Y-m-d', strtotime($Date. ' + 3 days'));
+		}
+
+		$data = array(
+			'followUptype' => $this->input->post('followUptype'),
+			'followUpday' => $dt,
+			'followUpTime' => $this->input->post('followUpTime'),
+			'followUpCustomer' => $this->input->post('followUpCustomer'),
+			'followUpAssignTo' => $this->input->post('followUpAssignTo'),
+			'followUpdetails' => $this->input->post('followUpdetails'),
+			'followUpQueryStatus' => $this->input->post('followUpQueryStatus'),
+			'query_id' => $this->input->post('followUpQueryId'),
+			'followUpRemarks' => $this->input->post('followUpRemarks')
+		);
+		if ($this->db->insert('followups', $data)) {
+			// echo "<script>alert('Follow Added Sucessfully');window.location='" . $redirect_url . "';</script>";
+			$this->session->set_flashdata('success','Follow Added Sucessfully');
+			redirect('query/view_query','refresh');
+		} else {
+			echo "<script>alert('Something went wrong try again later');window.location='" . $redirect_url . "';</script>";
+		}
+	}
+}

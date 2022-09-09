@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+   
+}
+body{
+    min-height: 100vh;
+}
+
+.second {
+    position: relative;
+    width: 70%;
+    border: 2px solid gray;
+}
+
+.second img {
+    padding: 0;
+    margin: 10px;
+    width: 30%;
+    height: 10%;
+    border-radius: 15px;
+}
+
+.second h5, p{
+    display: inline-block;
+}
+
+
+.head{
+    background-color: gray;
+}
+
+.sidebar{
+    position: absolute;
+    top: 80%;
+    right: 3%;
+    width: 28%;
+    height: 80%;
+    border: 1px solid rgba(0, 0, 0, 0.253);
+    padding: 20px;
+    border-radius: 5px;
+}
+textarea{
+    resize: none;
+}
+.section{
+    height: 500vh;
+}

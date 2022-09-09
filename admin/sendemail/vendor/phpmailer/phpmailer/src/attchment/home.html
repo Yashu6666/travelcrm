@@ -1,0 +1,760 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Avaya</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" />
+    <meta content="Coderthemes" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+
+
+    <!-- App favicon -->
+   <link rel="shortcut icon" href="assets/images/favicon.ico">
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
+ <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+   <!--  <link href="assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/libs/clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" type="text/css" /> -->
+  <link href="assets/css/color.css" rel="stylesheet" />
+
+ 
+</head>
+<body>
+   
+
+        <!-- Begin page -->
+        
+
+
+        <div id="wrapper">
+
+            <!-- Topbar Start -->
+            <div class="navbar-custom">
+                <ul class="list-unstyled topnav-menu float-right mb-0" style="background-image: url(assets/images/patterns.png);
+    background-repeat: no-repeat;
+    background-size: contain;">                   
+                  
+
+
+                    <li class="dropdown notification-list">
+                        <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <img src="assets/images/users/user-1.jpg" alt="user-image" class="rounded-circle">
+                            <span class="pro-user-name ml-1" id="UserName">
+                                Logged User <i class="mdi mdi-chevron-down"></i>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                            <!-- item-->
+                            <div class="dropdown-item noti-title">
+                                <h5 class="m-0 text-white">
+                                    Welcome !
+                                </h5>
+                            </div>
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item" onclick="fnChangePassword();">
+                                <i class="fe-user"></i>
+                                <span>Change Password</span>
+                            </a>
+
+                            <!-- item-->
+                           
+
+                            <div class="dropdown-divider"></div>
+
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item" onclick="fnLogOut();">
+                                <i class="fe-log-out"></i>
+                                <span>Logout</span>
+                            </a>
+
+                        </div>
+                    </li>
+
+                    
+                  
+
+
+                </ul>
+
+                <!-- LOGO -->
+             <!--    <div class="logo-box">
+                    <a href="index.html" class="logo text-center">
+                        <span class="logo-lg">
+                            
+                            <img src="assets/images/Inaipi_New_Logo1.png" alt="" height="74">
+                        </span>
+                        <span class="logo-sm">
+                            
+                            <img src="assets/images/Inaipi_New_Logo1.png" alt="" height="28">
+                        </span>
+                    </a>
+                </div> -->
+
+                <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                    <li>
+                        <a class="navbar-brand" href="javascript:void(0);"> <img src="assets/images/avaya-lg-w.png" class="m-2" style="width:170px"></a>
+                    </li>
+
+
+                    
+                </ul>
+            </div>
+            <!-- end Topbar -->
+
+            <nav class="navbar navbar-light bg-light mt-4">
+  <span class="navbar-brand mb-0 h1"></span>
+  <div class="form-inline mt-lg-4 mt-xs-4 mt-md-4">
+     <i class="btn btn-outline-success fa fa-undo mx-2 my-sm-0" type="submit"></i>
+     <i class="btn btn-outline-success fa fa-eye mx-2 my-sm-0" type="submit"></i>
+      <i class="btn btn-outline-success fa fa-print mx-2 my-sm-0" type="submit"></i>
+      <button class="btn btn-primary my-2 my-sm-0" type="submit">Save</button>
+    </div>
+</nav>
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="left-side-menu">
+
+                <div class="">
+
+                    <!--- Sidemenu -->
+                    <div>
+
+                        <ul class="metismenu nav">
+
+                          <li class="libox">
+<span class="navClass"><a href="index.html"><i class="fa fa-home"></i><br>Home</a></span>
+
+</li>
+
+                         <li class="libox">
+<span class="navClass"><i class="fa fa-th-large"></i><br>Templates</span>
+<section id="" class="subnavs active animated slideInLeft">
+    <div class="form-group has-search mt-2 my-1 mx-1">
+    <span class="fa fa-search form-control-feedback"></span>
+    <input type="text" class="form-control" placeholder="Search">
+  </div>
+<div class="row cnt-scroll m-0">
+ 
+ <div class="col-sm-6 p-1" >
+    <div class="card cards card-all">
+      <div class="card-body">
+    <img class="r-button" src="assets/images/redph.png">
+      </div>
+    </div>
+  </div>
+ <div class="col-sm-6 p-1" >
+    <div class="card cards card-all">
+      <div class="card-body">
+        <img class="g-button" src="assets/images/ph/11.png" style="width:70px">
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 p-1" >
+    <div class="card cards card-all">
+      <div class="card-body">
+        <img class="b-button" src="assets/images/ph/22.png" style="width:70px">
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 p-1" >
+    <div class="card cards card-all">
+      <div class="card-body">
+        <img class="p-button" src="assets/images/ph/33.png" style="width:70px">
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 p-1" >
+    <div class="card cards card-all">
+      <div class="card-body">
+         <img class="r-button" src="assets/images/redph.png" style="width:70px">
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 p-1" >
+    <div class="card cards card-all">
+      <div class="card-body">
+        <img class="b-button" src="assets/images/ph/22.png" style="width:70px">
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 p-1" >
+    <div class="card cards card-all">
+      <div class="card-body">
+         <img class="p-button" src="assets/images/ph/33.png" style="width:70px">
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 p-1" >
+    <div class="card cards card-all">
+      <div class="card-body">
+        <img class="g-button" src="assets/images/ph/11.png" style="width:70px">
+      </div>
+    </div>
+  </div>
+</div>
+
+</section>
+</li>
+
+   <li class="libox">
+<span class="navClass"><i class="fa fa-cogs"></i><br>Advanced</span>
+
+
+
+<section id="" class="subnavs active animated slideInLeft">
+<div class="row m-1">
+  <div class="col-sm-12" >
+    <div class=" ">
+    <div class="m-0">
+<!--   <input type="text" id="basic-colorpicker" class="form-control" placeholder="Basic colorpicker">
+ -->
+
+      </div>
+<div class="demoPanel">
+ 
+  <div id="cpInline"></div>
+  <br/>
+ <!--  <div class="demo-links">
+    <a href="#" id="getVal2">Get Value</a>
+    <a href="#" id="setVal2">Set Value</a><br/>
+    <a href="#" id="enable2">Enable</a>
+    <a href="#" id="disable2">Disable</a>
+    <a href="#" id="destroy2">Destroy</a>
+  </div>  -->
+</div>
+    </div>
+   
+  </div>
+ <!--  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+     
+      </div>
+    </div>
+  </div> -->
+</div>
+
+</section>
+</li>
+<li class="libox">
+<span class="navClass"><i class="fa fa-align-justify"></i><br>Patterns</span>
+<section id="" class="subnavs active animated slideInLeft">
+  <div class="form-group has-search mt-2 my-1 mx-2">
+    <span class="fa fa-search form-control-feedback"></span>
+    <input type="text" class="form-control" placeholder="Search Patterns">
+  </div>
+<div class="row cnt-scroll m-1">
+ 
+  <div class="col-sm-6 p-1" >
+    <div class="card cards card-all">
+      <div class="card-body">
+       <a href="#"><img class="p10-button" src="assets/images/pattern/p10.png" style="width:155px;height: 100%"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 p-1" >
+     <div class="card cards card-all">
+      <div class="card-body">
+        <a href="#"><img class="p3-button" src="assets/images/pattern/p3.png" style="width:155px;height: 100%"></a>
+      </div>
+    </div>
+  </div>
+  
+
+
+  <div class="col-sm-6 p-1" >
+     <div class="card cards card-all">
+      <div class="card-body">
+        <a href="#"><img class="p11-button" src="assets/images/pattern/p11.png" style="width:155px;"></a>
+      </div>
+    </div> 
+  </div>
+  <div class="col-sm-6 p-1" >
+     <div class="card cards card-all">
+      <div class="card-body">
+         <a href="#"><img class="p12-button" src="assets/images/pattern/p12.png" style="width:155px;"></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 p-1" >
+     <div class="card cards card-all">
+      <div class="card-body">
+         <a href="#"><img class="p13-button" src="assets/images/pattern/p13.png" style="width:155px;"></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 p-1" >
+     <div class="card cards card-all">
+      <div class="card-body">
+         <a href="#"><img class="p9-button" src="assets/images/pattern/p9.png" style="width:155px;"></a>
+      </div>
+    </div>
+  </div>
+ <div class="col-sm-6 p-1" >
+     <div class="card cards card-all">
+      <div class="card-body">
+         <a href="#"><img class="p2-button" src="assets/images/pattern/p2.png" style="width:155px;"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 p-1" >
+     <div class="card cards card-all">
+      <div class="card-body">
+         <a href="#"><img class="p4-button" src="assets/images/pattern/p4.png" style="width:155px;"></a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-sm-6 p-1" >
+     <div class="card cards card-all">
+      <div class="card-body">
+        <a href="#"><img class="p6-button" src="assets/images/pattern/p6.png" style="width:155px;"></a>
+      </div>
+    </div>
+  </div>
+   <div class="col-sm-6 p-1" >
+    <div class="card cards card-all">
+      <div class="card-body">
+       <a href="#"><img class="p7-button" src="assets/images/pattern/p7.png" style="width:155px;"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 p-1" >
+     <div class="card cards card-all">
+      <div class="card-body">
+        <a href="#"><img class="p8-button" src="assets/images/pattern/p8.png" style="width:155px;"></a>
+      </div>
+    </div>
+  </div>
+   
+ <div class="col-sm-6 p-1" >
+     <div class="card cards card-all">
+      <div class="card-body">
+         <a href="#"><img class="p1-button" src="assets/images/pattern/p1.png" style="width:155px;"></a>
+      </div>
+    </div>
+  </div>
+
+  
+</div>
+
+</section>
+</li>
+
+   <li class="libox">
+<span class="navClass"><i class="fa fa-text-width"></i><br>Text</span>
+<section id="" class="subnavs active animated slideInLeft">
+   <div class="form-group has-search mt-2 mx-2">
+    <span class="fa fa-search form-control-feedback"></span>
+    <input type="text" class="form-control" placeholder="Search Text">
+  </div>
+<div class="row m-0">
+  <div class="col-sm-12" >
+    <div class="">
+    <div class="p-0 m-0">
+      <button type="button" class="btn btn-primary btn-gry btn-lg btn-block">Add a Heading</button>
+        <button type="button" class="btn btn-primary btn-gry btn-block">Add a sub heading</button>
+         <button type="button" class="btn btn-primary btn-gry btn-sm btn-block">Add a body text</button>
+    </div>
+</div>
+</div>
+</div>
+</section>
+</li>
+
+<li class="libox">
+<span class="navClass"><i class="fas fa-upload"></i><br>Uploads</span>
+<section id="" class="subnavs active animated slideInLeft">
+<div class="row m-0">
+  <div class="col-sm-12" >
+   
+
+   <div class="avatar-upload my-2">
+<div class="avatar-edit">
+<input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+<label for="imageUpload"></label>
+</div>
+<div class="avatar-preview">
+<div id="imagePreview" style="background-image: url(assets/images/placeholder-image.png);">
+</div>
+</div>
+</div>
+ <div class="form-group mt-2">
+      <button type="button" name="upload" value="upload" id="upload" class="btn btn-block btn-dark"><i class="fa fa-fw fa-upload"></i> Upload</button>
+    </div>
+</div>
+</div>
+</section>
+</li>
+
+<li class="libox">
+<span class="navClass"><i class="far fa-image"></i><br>Logo</span>
+<section id="" class="subnavs active animated slideInLeft">
+   <div class="form-group has-search mt-2 my-1 mx-2">
+    <span class="fa fa-search form-control-feedback"></span>
+    <input type="text" class="form-control" placeholder="Search Logo">
+  </div>
+<div class="row m-0">
+  <div class="col-sm-6 my-1" >
+    <div class="card cards card-w">
+      <div class="card-body">
+       <a href="#"><img class="r-logo" src="assets/images/avaya-lg-r.png" style="width:120px"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 my-1" >
+     <div class="card cards card-b">
+      <div class="card-body">
+        <a href="#"><img  class="w-logo" src="assets/images/avaya-lg-w.png" style="width:120px"></a>
+      </div> 
+    </div>
+  </div>
+
+ <div class="col-sm-6 my-1" >
+     <div class="card cards card-r">
+      <div class="card-body">
+        <a href="#"><img class="w-logo" src="assets/images/avaya-lg-w.png" style="width:120px"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 my-1" >
+     <div class="card cards card-w">
+      <div class="card-body">
+        <a href="#"><img class="b-logo" src="assets/images/avaya-lg-b.png" style="width:120px"></a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-sm-6 my-1" >
+     <div class="card cards card-b">
+      <div class="card-body">
+        <a href="#"><img class="r-logo" src="assets/images/avaya-lg-r.png" style="width:120px"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 my-1" >
+     <div class="card cards card-w">
+      <div class="card-body">
+        <a href="#"><img class="inb-logo" src="assets/images/inaipi-lg.png" style="width:120px"></a>
+      </div>
+    </div>
+  </div>
+    <div class="col-sm-6 my-1" >
+     <div class="card cards card-w">
+      <div class="card-body">
+        <a href="#"><img class="inr-logo" src="assets/images/inaipi-r.jpg" style="width:120px"></a>
+      </div>
+    </div>
+  </div>
+    <div class="col-sm-6 my-1" >
+     <div class="card cards card-w">
+      <div class="card-body">
+        <a href="#"><img class="inp-logo" src="assets/images/inaipi-p.jpg" style="width:120px"></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 my-1" >
+     <div class="card cards card-w">
+      <div class="card-body">
+        <a href="#"><img class="ino-logo" src="assets/images/inaipi-o.jpg" style="width:120px"></a>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+</li>
+
+
+
+                        </ul>
+
+                    </div>
+                    <!-- End Sidebar -->
+
+                    <div class="clearfix"></div>
+
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>
+            <!-- Left Sidebar End -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page"  style="background-color: #fff">
+                <div class="content">
+
+                <!-- content -->
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-12">
+                               <div class="row d-flex justify-content-center" style="">
+                                <!--   <img  alt="Black Image" style="text-align: center;height:100%;width:350px;background-image: url();background-repeat: no-repeat;background-size: cover; object-fit: cover;" class="my-5" /> -->
+
+  <img id="change-image" src="assets/images/pattern/demo11.png" class="bottom-img my-3" >
+  <img   id="change-image2" src="assets/images/01-01.png"  class="top-img my-3">
+</div>
+                            </div>
+
+                        </div>
+                <!-- Footer Start -->
+              
+                <footer class="footer footer-alt">
+                    2020 &copy;  <a target="_blank" href="#" />Avaya
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+       
+       
+
+        <!-- Vendor js -->
+        <script src="assets/js/vendor.js"></script>
+
+        <!-- Plugins js-->
+       <!--  <script src="assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js"></script>
+        <script src="assets/libs/clockpicker/bootstrap-clockpicker.min.js"></script>
+   -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+  <script src="assets/js/color-picker.js" type="text/javascript"></script>
+
+        <!-- Init js-->
+<!--         <script src="assets/js/pages/form-pickers.init.js"></script>
+ -->
+        <!-- App js -->
+        <script src="assets/js/app.js"></script>
+        <script id="rendered-js">
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+      $('#imagePreview').hide();
+      $('#imagePreview').fadeIn(650);
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+$("#imageUpload").change(function () {
+  readURL(this);
+});
+//# sourceURL=pen.js
+    </script>
+<script>
+
+$(document).ready(function(){
+
+  // Change theme
+    $('.css').on('click', function(evt){
+        var theme=this.innerHTML.toLowerCase().replace(' ', '-'),
+            url='http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/'+theme+'/jquery-ui.css';
+        $('#jquiCSS').attr('href', url);
+        $('.css').removeClass('sel');
+        $(this).addClass('sel');
+    });
+  
+ 
+  // Methods demo 2 (inline colorpicker)
+  $('#getVal2').on('click', function(){
+    alert('Selected color = "' + $('#cpInline').colorpicker("val") + '"');
+  });
+  $('#setVal2').on('click', function(){
+    $('#cpInline').colorpicker("val", '#31859b');
+  });
+  $('#enable2').on('click', function(){
+    $('#cpInline').colorpicker("enable");
+  });
+  $('#disable2').on('click', function(){
+    $('#cpInline').colorpicker("disable");
+  });
+  $('#destroy2').on('click', function(){
+    $('#cpInline').colorpicker("destroy");
+  });
+  
+ 
+    $('#cpInline').colorpicker({color:'#92cddc'});
+    $('#cpInline2').colorpicker({color:'#92cddc', defaultPalette:'web'});
+
+
+});
+
+</script>
+       <script type="text/javascript">
+        jQuery(document).ready(function($){
+// logo
+
+$('.w-logo').on({
+     'click': function(){
+         $('#change-image2').attr('src','assets/images/01-02.png');
+     }
+ });
+$('.b-logo').on({
+     'click': function(){
+         $('#change-image2').attr('src','assets/images/01-03.png');
+     }
+ });
+$('.r-logo').on({
+     'click': function(){
+         $('#change-image2').attr('src','assets/images/01-01.png');
+     }
+ });
+
+$('.ino-logo').on({
+     'click': function(){
+         $('#change-image2').attr('src','assets/images/in-01-04.png');
+     }
+ });
+$('.inp-logo').on({
+     'click': function(){
+         $('#change-image2').attr('src','assets/images/in-01-01.png');
+     }
+ });
+
+$('.inr-logo').on({
+     'click': function(){
+         $('#change-image2').attr('src','assets/images/in-01-02.png');
+     }
+ });
+
+$('.inb-logo').on({
+     'click': function(){
+         $('#change-image2').attr('src','assets/images/in-01-03.png');
+     }
+ });
+
+$('.p1-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/pattern/p1.png');
+     }
+ });
+$('.p2-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/pattern/phsize/demo55.png');
+     }
+ });
+$('.p3-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/pattern/phsize/demo66.png');
+     }
+ });
+
+$('.p4-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/pattern/phsize/demo88.png');
+     }
+ });
+
+$('.p5-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/pattern/p5.png');
+     }
+ });
+
+$('.p6-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/pattern/phsize/demo99.png');
+     }
+ });
+
+$('.p7-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/pattern/phsize/demo100.png');
+     }
+ });
+
+$('.p8-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/pattern/phsize/demo101.png');
+     }
+ });
+
+$('.p9-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/pattern/phsize/demo77.png');
+     }
+ });
+
+$('.p10-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/pattern/phsize/demo11.png');
+     }
+ });
+
+$('.p11-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/pattern/phsize/demo22.png');
+     }
+ });
+$('.p12-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/pattern/phsize/demo33.png');
+     }
+ });
+$('.p13-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/pattern/phsize/demo44.png');
+     }
+ });
+
+$('.r-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/ph/red.png');
+     }
+ });
+ 
+$('.g-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/ph/555.png');
+     }
+ });
+ 
+$('.b-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/ph/666.png');
+     }
+ });
+ 
+$('.p-button').on({
+     'click': function(){
+         $('#change-image').attr('src','assets/images/ph/444.png');
+     }
+ });
+});
+
+
+$('.navClass').on('click', function() {
+
+  $parent_box = $(this).closest('.libox');
+  $parent_box.siblings().find('.subnavs').hide();
+  $parent_box.find('.subnavs').toggle();
+
+});
+
+</script>
+     
+</body>
+</html>

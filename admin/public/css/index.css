@@ -1,0 +1,142 @@
+@import url("https://rsms.me/inter/inter.css");
+:root {
+  --color-light: white;
+  --color-signal: #2CA8FF;
+  --color-background: var(--color-light);
+  --color-text: var(--color-dark);
+  --color-accent: var(--color-signal);
+  --size-bezel: .3rem;
+  --size-radius: 4px;
+  color: var(--color-text);
+  background: var(--color-background);
+  font-weight: 300;
+ 
+}
+
+.input {
+  position: relative;
+   /* padding: calc(var(--size-bezel) * 3); */
+}
+
+.input__label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: calc(var(--size-bezel) * 0.65) calc(var(--size-bezel) * .2);
+  margin: calc(var(--size-bezel) * 0.65 + 3px) calc(var(--size-bezel) * .3);
+  background: pink;
+  white-space: nowrap;
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+  background: var(--color-background);
+  -webkit-transition: -webkit-transform 120ms ease-in;
+  transition: -webkit-transform 120ms ease-in;
+  transition: transform 120ms ease-in;
+  transition: transform 120ms ease-in, -webkit-transform 120ms ease-in;
+  font-weight: 500;
+  line-height: .5;
+}
+
+.input__field {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border: 1px solid black;
+  padding: calc(var(--size-bezel) * 1) var(--size-bezel);
+  color: black;
+  background: transparent;
+  border-radius: var(--size-radius);
+}
+
+.input__field:focus + .input__label, .input__field:not(:placeholder-shown) + .input__label {
+  -webkit-transform: translate(0.25rem, -65%) scale(0.8);
+          transform: translate(0.25rem, -65%) scale(0.8);
+  color: var(--color-accent);
+}
+
+.fname {
+  width: 170%;
+}
+
+.colorRed {
+  color: red;
+}
+
+.spanCompany {
+  color: red;
+  font-size: .7rem;
+  font-weight: bold;
+}
+
+.all-width {
+  width: 120%;
+}
+
+.visa-input-width {
+  width: 80%;
+}
+
+.hotel-input-width {
+  width: 125%;
+}
+
+.hotel-input-width-time {
+  width: 185%;
+}
+
+.shightseeing-wid {
+  width: 120%;
+}
+
+.shightseeing-wid-date {
+  width: 165%;
+}
+/*# sourceMappingURL=index.css.map */
+
+.width-input{
+  width: 190%;
+}
+
+.width-dest{
+  width: 376%;
+}
+
+.width-check{
+  width: 350%;
+}
+
+
+.input-time{
+  width: 422%;
+}
+
+.Subject-width{
+  width: 350%;
+  margin-bottom: 15px;
+}
+
+.invoice-email{
+  width: 110%;
+}
+.setting-width{
+  width: 210%;
+}
+.setting-select{
+  width: 87%;
+  height: 5vh;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin-left: 4px;
+
+}
+.setting-select-module{
+  width: 100%;
+  height: 5vh;
+  border: 1px solid black;
+  border-radius: 4px;
+  /* margin-left: 10px; */
+  margin-bottom: 100px;
+}

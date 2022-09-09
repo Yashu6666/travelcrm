@@ -1,0 +1,67 @@
+
+        <style>
+        table
+        {
+            border: 1px solid black;    
+        }
+        th
+        {
+            border: 1px solid black;
+            padding: 5px;
+            background-color:skyblue;
+            color: white;  
+        }
+        td
+        {
+            border: 1px solid black;
+            padding: 5px;
+            color: black;
+        }
+        </style>
+         <table bordered="1">  
+         <tr>  
+          <th>Order ID</th>
+          <th>Call Date & Time</th>
+          <th>Agent Name</th>
+          <th>Patient Name</th>
+          <th>Gender</th>
+          <th>Mobile</th>
+          <th>Email</th>
+          <th>Department</th>
+          <th>Call Reason</th>
+          <th>Comments</th>
+          <th>Status</th>
+          <th>Agent Name</th>
+          <th>Comment 1</th>
+          <th>Commented Date</th>
+          <th>Agent Name</th>
+          <th>Comment 2</th>
+          <th>Commented Date</th>
+          <th>Agent Name</th>
+          <th>Comment 3</th>
+          <th>Commented Date</th>     
+         </tr>
+        
+          <tr>  
+          <td>AH8</td>
+          <td>2020-07-03 13:07:32</td>
+          <td>admin</td>
+          <td>A ALABDALI,AHMED ABDULELAH</td>
+          <td>Male</td>
+          <td>0588790945</td> 
+          <td>ahmadalabdali@hotmail.com</td>          
+          <td>Ent</td>
+          <td>Ticket Created</td>
+          <td>test</td>
+          <td>Open</td>
+          <td>admin</td>
+          <td>commented</td>
+          <td>2020-07-03 15:27:23</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+         </table>

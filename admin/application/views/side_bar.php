@@ -57,30 +57,33 @@
 						<ul class="sub-menu">
 							<li class="nav-item">
 								<a href="<?php echo site_url(); ?>hotel/view_hotels" class="nav-link <?php echo $this->uri->segment(1) == "hotel" ? "text-white" : "" ?>">
-									<span class="title">Hotels</span>
+								<i class="fa-solid fa-hotel"></i>	
+								<span class="title">Hotels</span>
 								</a>
 							</li>
 
 							<li class="nav-item">
 								<a href="<?php echo site_url(); ?>room/view_rooms" class="nav-link <?php echo $this->uri->segment(1) == "room" ? "text-white" : "" ?>">
-									<span class="title">Rooms</span>
+								<i class="fa-solid fa-bed"></i>
+								<span class="title">Rooms</span>
 								</a>
 							</li>
 							<li class="nav-item ">
 								<a href="<?php echo site_url(); ?>transfer/view_transfers" class="nav-link nav-toggle <?php echo $this->uri->segment(1) == "transfer" ? "text-white" : "" ?>">
-
+								<i class="fa-solid fa-car"></i>
 									<span class="title">Transfer</span>
 								</a>
 
 							</li>
 							<li class="nav-item">
 								<a href="<?php echo site_url(); ?>excursion/view_excursion" class="nav-link <?php echo $this->uri->segment(1) == "excursion" ? "text-white" : "" ?>">
-									<span class="title">Excursion</span>
+								<i class="fa-solid fa-place-of-worship"></i>	
+								<span class="title">Excursion</span>
 								</a>
 							</li>
 							<li class="nav-item">
 								<a href="<?php echo site_url(); ?>visa/view_visa" class="nav-link nav-toggle <?php echo $this->uri->segment(1) == "visa" ? "text-white" : "" ?>">
-
+								<i class="fa-brands fa-cc-visa"></i>
 									<span class="title">Visa</span>
 
 								</a>
@@ -88,13 +91,15 @@
 
 							<li class="nav-item">
 								<a href="<?php echo site_url(); ?>meals/view_meals" class="nav-link <?php echo $this->uri->segment(1) == "meals" ? "text-white" : "" ?>">
-									<span class="title">Meals</span>
+								<i class="fa-solid fa-bowl-rice"></i>	
+								<span class="title">Meals</span>
 								</a>
 							</li>
 
 							<li class="nav-item">
 								<a href="<?php echo site_url(); ?>supplier/view_supplier" class="nav-link <?php echo $this->uri->segment(1) == "supplier" ? "text-white" : "" ?>">
-									<span class="title">Suppliers</span>
+								<i class="fa-solid fa-boxes-packing"></i>	
+								<span class="title">Suppliers</span>
 								</a>
 							</li>
 
@@ -226,18 +231,20 @@
 								<ul class="sub-menu">
 									<li class="nav-item">
 										<a href="<?php echo site_url(); ?>hotel/view_hotels" class="nav-link <?php echo $this->uri->segment(1) == "hotel" ? "text-white" : "" ?>">
-											<span class="title">Hotels</span>
+										<i class="fa-solid fa-hotel"></i>	
+										<span class="title">Hotels</span>
 										</a>
 									</li>
 
 									<li class="nav-item">
 										<a href="<?php echo site_url(); ?>room/view_rooms" class="nav-link <?php echo $this->uri->segment(1) == "room" ? "text-white" : "" ?>">
-											<span class="title">Rooms</span>
+										<i class="fa-solid fa-bed"></i>
+										<span class="title">Rooms</span>
 										</a>
 									</li>
 									<li class="nav-item ">
 										<a href="<?php echo site_url(); ?>transfer/view_transfers" class="nav-link nav-toggle <?php echo $this->uri->segment(1) == "transfer" ? "text-white" : "" ?>">
-
+										<i class="fa-solid fa-car"></i>
 											<span class="title">Transfer</span>
 										</a>
 
@@ -249,7 +256,7 @@
 									</li>
 									<li class="nav-item">
 										<a href="<?php echo site_url(); ?>visa/view_visa" class="nav-link nav-toggle <?php echo $this->uri->segment(1) == "visa" ? "text-white" : "" ?>">
-
+										<i class="fa-brands fa-cc-visa"></i>
 											<span class="title">Visa</span>
 
 										</a>
@@ -257,13 +264,15 @@
 
 									<li class="nav-item">
 										<a href="<?php echo site_url(); ?>meals/view_meals" class="nav-link <?php echo $this->uri->segment(1) == "meals" ? "text-white" : "" ?>">
-											<span class="title">Meals</span>
+										<i class="fa-solid fa-bowl-rice"></i>
+										<span class="title">Meals</span>
 										</a>
 									</li>
 
 									<li class="nav-item">
 										<a href="<?php echo site_url(); ?>supplier/view_supplier" class="nav-link <?php echo $this->uri->segment(1) == "supplier" ? "text-white" : "" ?>">
-											<span class="title">Suppliers</span>
+										<i class="fa-solid fa-boxes-packing"></i>	
+										<span class="title">Suppliers</span>
 										</a>
 									</li>
 

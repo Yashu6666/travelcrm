@@ -82,7 +82,91 @@ class Itinerary extends CI_Controller {
 
 	public function searchDetails(){
 		$query_id=$_POST['query_id'];
+		// print_r($query_id);
+		$hotel = $this->db->where('query_id',$query_id)->get('query_hotel')->result();
+		// print_r($hotel);
 		
+		$data['hotel_city'] = explode(',',$hotel[0]->hotel_city);
+		$data['hotel_name'] = explode(',',$hotel[0]->hotel_name);
+		$data['room_type'] = explode(',',$hotel[0]->room_type);
+		$data['category'] = explode(',',$hotel[0]->category);
+
+		// $transfer = $this->db->get_where('query_transfer', array('query_id' => $query_id))->row();
+		$transfer_pickup = [];
+		$transfer_dropoff = [];
+		$transfer_routes = [];
+		$transfer = $this->db->query("SELECT * FROM query_transfer WHERE query_id=".$query_id)->result();
+		foreach ($transfer as $key => $value) {
+			$transfer_pickup_values = explode(',',$transfer[$key]->pickup);
+			foreach ($transfer_pickup_values as $key => $value) {
+				array_push($transfer_pickup, $value);
+			}
+
+			$transfer_dropoff_values = explode(',',$transfer[$key]->dropoff);
+			foreach ($transfer_dropoff_values as $key => $value) {
+				array_push($transfer_dropoff, $value);
+			}
+
+			$transfer_route_values = explode(',',$transfer[$key]->transfer_route);
+			foreach ($transfer_route_values as $key => $value) {
+				array_push($transfer_routes, $value);
+			}
+
+		}
+
+		$data['transfer_pickup'] = $transfer_pickup;
+		$data['transfer_dropoff'] = $transfer_dropoff;
+		$data['transfer_routes'] = $transfer_routes;
+
+		// $meals = $this->db->where('query_id',$query_id)->get('query_meal')->result();
+		$meals = $this->db->query("SELECT * FROM query_meal WHERE query_id=".$query_id)->result();
+
+		$data['resturant_type'] = explode(',',$meals[0]->resturant_type);
+		$data['resturant_name'] = explode(',',$meals[0]->resturant_name);
+		$data['meal'] = explode(',',$meals[0]->meal);
+		$data['meal_type'] = explode(',',$meals[0]->meal_type);
+
+		// $excursion_sic = $this->db->query("SELECT * FROM `query_excursion` WHERE query_id='".$query_id."' AND excursion_type='SIC' ")->row();
+		// $excursion_pvt = $this->db->query("SELECT * FROM `query_excursion` WHERE query_id='".$query_id."'")->row();
+
+		// $excursion_pvt = $this->db->where('query_id',$query_id)->where('excursion_type','PVT')->get('query_excursion')->result();
+		// $excursion_pvt = $this->db->get('query_excursion')->result();
+		// $this->db->like('start_city', $pickup)->where('dest_city', $dropoff)->where('seat_capacity >=', $person)->where('transport_type', 'oneway')->get('transfer_route')->result();
+
+		// $where_pvt = array('query_id' => $query_id, 'excursion_type' => 'PVT');
+		// $this->db->where($where_pvt); 
+		// $excursion_pvt = $this->db->get('query_excursion')->result();
+
+		$excursion = $this->db->query("SELECT * FROM query_excursion WHERE query_id=".$query_id)->result();
+
+		$excursion_sic_data = array_filter($excursion, function($value) {
+			if($value->excursion_type == "SIC"){
+				return $value;
+			}
+		});
+
+		$excursion_pvt_data = array_filter($excursion, function($value) {
+			if($value->excursion_type == "PVT"){
+				return $value;
+			}
+		});
+
+		$excursion_pvt = [];
+		foreach ($excursion_pvt_data as $key => $value) {
+			foreach (explode(',',$value->excursion_name) as $k => $val) {
+				array_push($excursion_pvt, $val);
+			}
+		}
+
+		$excursion_sic = [];
+		foreach ($excursion_sic_data as $key => $value) {
+			foreach (explode(',',$value->excursion_name) as $k => $val) {
+				array_push($excursion_sic, $val);
+			}
+		}
+
+		$data['excursion_data'] = array_merge($excursion_pvt,$excursion_sic);
+
 		$query=$this->db->query("SELECT * FROM b2bcustomerquery WHERE query_id=".$query_id)->row();
 		// $query=$this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
 		if(isset($query)){

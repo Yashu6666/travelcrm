@@ -16,9 +16,8 @@
                             <select class="form-control Hotel_name_city_select" id="Hotel_name_city_select" required="" name="Hotel_name_city_select">
                                 <!-- <option value="">Select</option> -->
                                 <?php 
-                                foreach($cities as $city) { 
-                                    echo '<option value="'.$city->city_name.'">'.$city->city_name.'</option>';
-
+                                foreach($hotel_city as $city) { 
+                                    echo '<option value="'.$city.'">'.$city.'</option>';
                                 } 
                                 ?>
                              </select>
@@ -28,34 +27,50 @@
                             <label>Category </label>
                             <select class="form-control selectStarRating" id="selectStarRating" name="selectStarRating" class="selmenu">
                                 <!-- <option value="0">Select</option> -->
-                                <option value="1">1</option>
+                                <!-- <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
-                                <option value="5">5</option>
+                                <option value="5">5</option> -->
+                                <?php 
+                                foreach($category as $name) { 
+                                    echo '<option value="'.$name.'">'.$name.'</option>';
+                                } 
+                                
+                                ?>
                             </select>               
                         </section>
                         <section id="" class="col-md-12 mt-4" >
                             <label>Hotel Name</label>
                             <select class="form-control buildHotelName" id="buildHotelName"  required="" name="buildHotelName" required style="display: flex;">
-                                <!-- <option>Select</option>                                              -->
+                            <?php 
+                                foreach($hotel_name as $name) { 
+                                    echo '<option value="'.$name.'">'.$name.'</option>';
+                                } 
+                                ?>
                             </select>
                         </section>
                         <section id="" class="col-md-12 mt-4">
                         <label>Room Type</label>
                             <select class="form-control buildRoomType" id="buildRoomType" required="" name="buildRoomType" style="display: flex;">
-                                <!-- <option>Select</option>                                              -->
+                            <?php 
+                                foreach($room_type as $name) { 
+                                    echo '<option value="'.$name.'">'.$name.'</option>';
+                                } 
+                                ?>                                          -->
                             </select>
                         </section>
                         <section id="aside" class="mt-4" style="display: flex;">
                             <section id="recipientcase" class="col-md-6">
                                 <label>Check In </label>
-                                <input type="date" name="check_in_date" id="check_in_date" class="form-control check_in_date" value="<?php echo isset($details['checkindate']) ? $details['checkindate'] : "" ;?>" readonly >
+                                <input type="date" name="check_in_date" id="check_in_date" class="form-control check_in_date" >
+                                <!-- <input type="date" name="check_in_date" id="check_in_date" class="form-control check_in_date" value="<?php echo isset($details['checkindate']) ? $details['checkindate'] : "" ;?>" readonly > -->
                             </section>
 
                             <section id="recipientcase" class="col-md-6">
                                 <label>Check Out</label>
-                                <input type="date" name="check_out_date" id="check_out_date" class="form-control txtinput check_out_date" min="<?php echo $details['checkindate'];?>" max="<?php echo $details['checkoutdate'];?>" value="">
+                                <input type="date" name="check_out_date" id="check_out_date" class="form-control txtinput check_out_date" >
+                                <!-- <input type="date" name="check_out_date" id="check_out_date" class="form-control txtinput check_out_date" min="<?php echo $details['checkindate'];?>" max="<?php echo $details['checkoutdate'];?>" value=""> -->
                             </section>
                         </section>
                         <!-- <br>
@@ -482,24 +497,36 @@
                                 <select id="pickupinternal"  required  name="buildTravelToDateCab"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                     <option value="Pickup">Pickup</option>
                                     <?php 
-                                    foreach($transfer_route as $value){ ?>
-                                       <option value="<?php echo $value->start_city ?>"><?php echo $value->start_city ?></option>
-                                    <?php }
-                                     ?>
+                                    foreach($transfer_pickup as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>  
                                 </select>
                             </section>
 
                             <section id="" class="col-md-6">
                             <label>Drop off</label>
                                 <select   id="dropoffinternal" name="buildTravelToCityCabDrop"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                 <option value="Drop Off">Drop Off</option>
+                                    <?php 
+                                    foreach($transfer_dropoff as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>  
                                 </select>
                             </section>
                         </section>
 
                         <section id="" class="col-md-6 mt-4">
                         <label>Route Name</label>
-                            <input id="route_nameinternal" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeCab"></td>
+                            <!-- <input id="route_nameinternal" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeCab"> -->
+                            <select   id="route_nameinternal" class="form-control"  name="buildTravelTypeCab" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                    <?php 
+                                    foreach($transfer_routes as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>  
+                                </select>
+                        </td>
                         </section>
                     
                     <section id="aside">
@@ -562,24 +589,33 @@
                             <section id="" class="col-md-12 mt-4">
                                 <label>Resturant Type</label>
                                 <select id="resturant_type"  required  name="resturant_type" onchange="get_resturant_name()" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                        <option value="Standard">Standard</option>
-                                        <option value="Premium">Premium</option>
-                                        
+                                <?php 
+                                    foreach($resturant_type as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>  
                                     </select>
                             </section>
 
                             <section id="" class="col-md-12 mt-4">
                                 <label>Resturant Name</label>
                                 <select id="resturant_name"  required  name="resturant_name"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                    <option>select</option>             
+                                <?php 
+                                    foreach($resturant_name as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>             
                                 </select> 
                             </section>
                         
                        <section id="aligned" class="col-md-12 mt-4">
                             <label>Meal </label>
                             <select id="meal"  required  name="meal"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                    <option value="Lunch">Lunch</option>
-                                    <option value="Dinner">Dinner</option>
+                            <?php 
+                                    foreach($meal as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>  
                                        
                                 </select>
                         </section>
@@ -587,14 +623,14 @@
                         <section id="aligned" class="col-md-12 mt-4">
                             <label>Meal Type </label>
                             <select id="meal_type"  required  name="meal_type"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                    <option value="Veg">Veg</option>
-                                    <option value="Non-Veg">Non-Veg</option>
-                                    <option value="Jain">Jain</option>
+                            <?php 
+                                    foreach($meal_type as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>  
                                        
                                 </select>
                         </section>
-
-                        
 
                         <section id="" class="col-md-12 mt-4">
                         <label>Adult</label>
@@ -677,8 +713,8 @@
                                 <label>Excursion Name</label>
                                 <!-- <select required multiple="" id="excursion_name"  name="excursion[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" > -->
                                 <select id="excursion_name"  required  name="excursion"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                        <?php foreach($excursion as $value){ ?>
-                                            <option value="<?php echo $value->tourname ?>"><?php echo $value->tourname ?></option>
+                                        <?php foreach($excursion_data as $value){ ?>
+                                            <option value="<?php echo $value ?>"><?php echo $value ?></option>
                                         <?php } ?>
                                 </select>
                             </section>

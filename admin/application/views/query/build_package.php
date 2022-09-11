@@ -263,11 +263,11 @@
                
                 <td><input class="form-control" type="number" id="pax_internal" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCityCab[]" disabled></td>
                
-                <td><input class="form-control" type="date" value="<?php echo $view->specificDate;?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
+                <td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate;?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
                <td>
 
-                <select id="pickupinternal"  required  name="buildTravelToDateCab[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-             <option value="Pickup">Pickup</option>
+                <select id="pickupinternal"  required  name="buildTravelToDateCab[]"  class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                    <option value="Pickup">Pickup</option>
                 <!-- <?php foreach($transfer_route as $value){ ?>
                 <option value="<?php echo $value->start_city ?>"><?php echo $value->start_city ?></option>
               <?php } ?> -->
@@ -275,7 +275,7 @@
                     
               </td>
                 <td>
-                <select   id="dropoffinternal" name="buildTravelToCityCabDrop[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select   id="dropoffinternal" name="buildTravelToCityCabDrop[]"  class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                 <option value="Drop Off">Drop Off</option>
 
               </select>
@@ -284,7 +284,7 @@
                     <input id="price_internal" type="hidden" name="price_internal[]" />
                     <input id="pax_count_internal" type="hidden" name="pax_count_internal[]" />
                     <input id="total_price_internal" type="hidden" value="0" name="total_price_internal[]" />
-                    <input id="route_nameinternal" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeCab[]"></td>
+                    <input id="route_nameinternal" class="form-control internal_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeCab[]"></td>
                 <td><a class="new_btn px-3" onclick="transRow()">add</a></td>
                </tr>
 
@@ -292,82 +292,28 @@
                 <tr id="Sic" style="display: none;">
                 <th>Return Transfer</th>
               <td><input class="form-control" id="pax_point" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC[]" disabled></td>
-              <td><input class="form-control" id="buildTravelFromdatePVT" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdatePVT[]"></td>
+              <td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdatePVT[]"></td>
                
               <td>
-                <select id="pickuppoint"  required  name="buildTravelToDateSIC[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select id="pickuppoint"  required  name="buildTravelToDateSIC[]"  class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
              <option value="Pickup">Pickup</option>
                 <!-- ?php foreach($transfer_route1 as $value){ ?>
                 <option value="?php echo $value->start_city ?>">?php echo $value->start_city ?></option>
               ?php } ?> -->
               </select></td>
                 <td>
-                <select   id="dropoffpoint" name="buildTravelToCitySIC[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select   id="dropoffpoint" name="buildTravelToCitySIC[]"  class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                 <option value="Drop Off">Drop Off</option>
 
               </select>
                   </td>
-                <td><input id="route_namepoint" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>
-                <td>
+                <td><input id="route_namepoint" class="form-control return_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>
                 <input id="price_point" type="hidden" name="price_point[]" />
                 <input id="pax_count_point" type="hidden" name="pax_count_point[]" />
                 <input id="total_price_point" type="hidden" value="0" name="total_price_point[]" />
                 <td><a class="new_btn px-3" onclick="transReturnRow()">add</a></td>
-                </td>
 
                </tr>
-
-
-               <!-- <tr id="Sic1" style="display: none;">
-                <th></th>
-                <td></td>
-              <td><input class="form-control" id="buildTravelFromdatePVT" type="date" value="?php echo $view->specificDate;?>" name="buildTravelFromdatePVT1" disabled></td>
-               
-              <td>
-              
-              <input id="pickuppoint1" class="form-control" type="text" placeholder="Pickup"  value="" name="buildTravelToDateSIC1" disabled>
-            </td>
-                <td>
-                
-                <input id="dropoffpoint1" class="form-control" type="text" placeholder="Drop off"  value="" name="buildTravelToCitySIC1" disabled>
-              </select>
-                  </td>
-                <td><input id="route_namepoint1" class="form-control" type="text" placeholder="Route Name"  value="" name="buildTravelTypeSIC1" disabled></td>
-
-               </tr> -->
-               
-
-               <!-- <input id="price_point" type="hidden" name="price_point" />
-                <input id="pax_count_point" type="hidden" name="pax_count_point" />
-                <input id="total_price_point" type="hidden" value="0" name="total_price_point" /> -->
-
-                 <!-- <tr id="Bus" style="display: none;">
-                <th>Hourly</th>
-            
-                <td><input class="form-control" id="pax_point" type="text" placeholder="Pax" value="?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC" disabled></td>
-              <td><input class="form-control" type="date" value="?php echo $view->specificDate;?>" name="buildTravelFromdateSIC"></td>
-               
-              <td>
-                <select id="pickuphourly"  required  name="buildTravelToDateHourly"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-             <option value="Pickup">Pickup</option>
-                ?php foreach($transfer_route1 as $value){ ?>
-                <option value="?php echo $value->start_city ?>">?php echo $value->start_city ?></option>
-
-            ?php } ?>
-              </select></td>
-                <td>
-                <select   id="dropoffhourly" name="buildTravelToCityPVTDrop"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                <option value="Drop Off">Drop Off</option>
-
-              </select>
-                  </td>
-                <td><input id="route_namepoint" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeSIC"></td>
-
-                    <input id="price_point" type="hidden" name="price_point" />
-                    <input id="pax_count_point" type="hidden" name="pax_count_point" />
-                    <input id="total_price_point" type="hidden" value="0" name="total_price_point" />
-
-               </tr> -->
 
                  <tr id="Train" style="display: none;">
                 <th>Train</th>
@@ -382,13 +328,14 @@
                </tr>
               </tbody>
              </table>
-
-             <hr>
-
-             <div>
-          
-
-              <div class="card-head card-head-new">
+             <div class="d-flex justify-content-end">
+              <button type="button" id="transferSave" class="new_btn px-5">Save</button>
+              </div>
+            </div>
+            
+            </div>
+              <div class="mt-5">
+              <div class="card-head card-head-new m">
              <p style="margin-top:20px"><i class="fa-brands fa-cc-visa"></i> Visa
                
              <input type="radio" id="visa_status" name="visa_status" value="Yes"><label for="html">Yes</label>
@@ -1001,7 +948,6 @@
                         var pax_adult_count = <?php  echo $buildpackage->adult; ?>;
                         var pax_child_count = <?php  echo $buildpackage->child; ?>;
                         var pax_infant_count = <?php echo $buildpackage->infant;?>;
-                        console.log("🚩 ~ file: build_package.php ~ line 995 ~ $ ~ pax_infant_count", pax_infant_count)
 
                         var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val(); 
                         var total_pax_meal_adult = $("#total_pax_meal_adult").val(); 
@@ -1037,7 +983,6 @@
                           parseInt(total_pax_visa_price_child);
                           
                         var hotel_rate_infant = $("#hotel_rate_infant").val();
-                        console.log("🚩 ~ file: build_package.php ~ line 1030 ~ $ ~ hotel_rate_infant", hotel_rate_infant)
                         var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val(); 
                         var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
                         var total_pax_sic_infant = $("#total_pax_sic_infant").val();
@@ -1046,7 +991,6 @@
                         parseInt(hotel_rate_infant) +
                         parseInt(total_pax_pvt_infant)+ 
                         parseInt(total_pax_sic_infant);
-                        console.log("🚩 ~ file: build_package.php ~ line 1036 ~ $ ~ sub_total_infant", sub_total_infant)
 
                           
                           let c_type = document.getElementById('currencyOption').value;
@@ -1096,9 +1040,11 @@
                           $("#perpax_childs_input").val( c_type == 'USD' ?   Math.floor( per_pax_child / usd_aed)  : Math.floor(per_pax_child)  );
                           $("#perpax_infants_input").val( c_type == 'USD' ?   Math.floor( per_pax_infant / usd_aed)  : Math.floor(per_pax_infant)  );
                           var totalprice_package = total_adult + total_child + total_infant;
-                          $("#totalprice_package").val( c_type == 'USD' ?  Math.floor( totalprice_package / usd_aed)  : Math.floor(totalprice_package) );
+                          console.log("🚩 ~ file: build_package.php ~ line 1043 ~ $ ~ totalprice_package", totalprice_package)
+                          // var totalprice_package = c_type == 'USD' ?  Math.floor( totalprice_package / usd_aed)  : Math.floor(totalprice_package);
+
+                          $("#totalprice_package").val( totalprice_package );
                        
-                        
                          })
 
 
@@ -1172,9 +1118,9 @@
                           $('#rows_count').val(parseInt(cnt) + parseInt(1));
                           var adds=' <tr  id="PvtCab'+trans_rows + '"> <th>Internal Transfer</th>';
                           adds += '<td><input class="form-control" type="number" id="pax_internal'+trans_rows + '" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCityCab[]" disabled></td>';
-                          adds += '<td><input class="form-control" type="date" value="<?php echo $view->specificDate;?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>';
+                          adds += '<td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate;?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>';
                           adds += `<td>
-                                    <select id="pickupinternal${trans_rows}"  onchange="pickupInternal(${trans_rows})" required  name="buildTravelToDateCab[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                    <select id="pickupinternal${trans_rows}"  onchange="pickupInternal(${trans_rows})" required  name="buildTravelToDateCab[]"  class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                       <option value="Pickup">Pickup</option>
                                       <?php foreach($transfer_route as $value){ ?>
                                       <option value="<?php echo $value->start_city ?>"><?php echo $value->start_city ?></option>
@@ -1184,7 +1130,7 @@
 
                           adds += `
                                 <td>
-                                  <select id="dropoffinternal${trans_rows}" name="buildTravelToCityCabDrop[]"  onchange="dropInternal(${trans_rows})" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                  <select id="dropoffinternal${trans_rows}" name="buildTravelToCityCabDrop[]"  onchange="dropInternal(${trans_rows})" class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                   <option value="Drop Off">Drop Off</option>
                                   </select>
                                 </td>
@@ -1195,7 +1141,7 @@
                                   <input id="price_internal${trans_rows}" type="hidden" name="price_internal[]" />
                                   <input id="pax_count_internal${trans_rows}" type="hidden" name="pax_count_internal[]" />
                                   <input id="total_price_internal${trans_rows}" type="hidden" value="0" name="total_price_internal[]" />
-                                  <input id="route_nameinternal${trans_rows}" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeCab[]">
+                                  <input id="route_nameinternal${trans_rows}" class="form-control internal_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeCab[]">
                                 </td>
                                 `;
 
@@ -1214,30 +1160,30 @@
                           var adds=' <tr  id="Sic'+trans_retrun_rows + '"> <th>Return Transfer</th>';
 
                           adds += '<td><input class="form-control" id="pax_point'+trans_retrun_rows + '" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC[]" disabled></td>';
-                          adds += '<td><input class="form-control" id="buildTravelFromdatePVT'+trans_retrun_rows + '" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdatePVT[]"></td>';
+                          adds += '<td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT'+trans_retrun_rows + '" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdatePVT[]"></td>';
 
-                          adds += `<td>
-                                    <select id="pickuppoint${trans_retrun_rows}" onchange="pickupReturn(${trans_retrun_rows})" required  name="buildTravelToDateSIC[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                          adds += `<td> 
+                                    <select id="pickuppoint${trans_retrun_rows}" onchange="pickupReturn(${trans_retrun_rows})" required  name="buildTravelToDateSIC[]"  class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                       <option value="Pickup">Pickup</option>
                                     </select>
                                   </td>`;
                                   
                           adds += `
                                 <td>
-                                  <select id="dropoffpoint${trans_retrun_rows}" name="buildTravelToCitySIC[]"  onchange="dropReturn(${trans_retrun_rows})" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                  <select id="dropoffpoint${trans_retrun_rows}" name="buildTravelToCitySIC[]"  onchange="dropReturn(${trans_retrun_rows})" class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                   <option value="Drop Off">Drop Off</option>
                                   </select>
                                 </td>
                                 `;
 
-                          adds += '<td><input id="route_namepoint'+trans_retrun_rows+'" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>';
+                          adds += '<td><input id="route_namepoint'+trans_retrun_rows+'" class="form-control return_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>';
 
                           adds += `
-                                <td>
+                                
                                   <input id="price_point${trans_retrun_rows}" type="hidden" name="price_point[]" />
                                   <input id="pax_count_point${trans_retrun_rows}" type="hidden" name="pax_count_point[]" />
                                   <input id="total_price_point${trans_retrun_rows}" type="hidden" value="0" name="total_price_point[]" />
-                                </td>
+                               
                                 `;
 
                           adds += '</td> <td><button class="btn btn-danger btn-xs" onClick="$(\'#Sic' + trans_retrun_rows + '\').remove();"><i class="fa fa-trash"></i></button> </td>';
@@ -1733,14 +1679,15 @@ function get_resturant_name(id,row){
       var pax_child = <?php  echo $buildpackage->child; ?>;
       var pax_infant = <?php echo $buildpackage->infant;?>;
       var visa_validity =  $("#visa_validity").val();
+      var QueryId = $('#QueryId').val();
+
       console.log(pax_adult + "|" + entry_type + "|" + visa_validity);
       $.ajax({
           type:"POST",
           dataType: "json",
           url:'<?php echo site_url();?>/Query/getVisaPrice',
-          data:{'pax_adult':pax_adult,'pax_child':pax_child,'pax_infant':pax_infant,'visa_category_drop_down':visa_category_drop_down,'visa_validity':visa_validity,'entry_type':entry_type},
+          data:{'pax_adult':pax_adult,' ': 'package','pax_child':pax_child,'pax_infant':pax_infant,'visa_category_drop_down':visa_category_drop_down,'visa_validity':visa_validity,'entry_type':entry_type,'query_id':QueryId},
           success:function(response){
-              console.log("🚩 ~ file: build_package.php ~ line 1597 ~ getvisaprice ~ response", response)
               
               $("#total_pax_visa_price_adult").val(response.per_pax_adult_amt);
               $("#total_pax_visa_price_child").val(response.per_pax_child_amt);
@@ -1764,6 +1711,7 @@ function get_resturant_name(id,row){
       <script>
          function mealcalculation(){
                         var total_rows = $('#faqs tbody#addrowss tr').length;
+                        var QueryId = $('#QueryId').val();
 
                         var resturants_name = [];
                           $(".res_name").each(function() {
@@ -1825,6 +1773,20 @@ function get_resturant_name(id,row){
 
                           });
 
+                          var transfer_with_or_without  = [];
+                          $(".transfer_with_or_without").each(function() {
+                            var transfer_wo = $(this).val();
+                            if(!transfer_wo) transfer_wo = 0;
+                            transfer_with_or_without.push($.trim(transfer_wo));
+                          });
+
+                          var checkIn_date  = [];
+                          $(".checkIn_date").each(function() {
+                            var checkIn = $(this).val();
+                            if(!checkIn) checkIn = 0;
+                            checkIn_date.push($.trim(checkIn));
+                          });
+
                           var data= [{
                               'resturants' : resturants,
                               'meals' : meals,
@@ -1833,8 +1795,8 @@ function get_resturant_name(id,row){
                               'meal_childs' : meal_childs,
                               'resturants_name' : resturants_name,
                               'resturants_transfer' : resturants_transfer,
-                              'no_of_meals' : no_of_meals
-                              
+                              'no_of_meals' : no_of_meals,
+                              'checkIn_date' : checkIn_date,
                             }];
                            
 
@@ -1842,7 +1804,7 @@ function get_resturant_name(id,row){
                             type:"POST",
                             dataType: "json",
                             url:'<?php echo site_url();?>/Query/getMealcalculation',
-                            data:{data : data, total_rows : total_rows},
+                            data:{data : data, total_rows : total_rows,'query_id':QueryId,'query_type':"package"},
                             success:function(response){
                             console.log(response);
                               $("#total_pax_meal_adult").val(response.adult_prices);
@@ -1932,11 +1894,15 @@ function get_resturant_name(id,row){
         var excursion_adults_SIC =  $("#excursion_adult_SIC").val();
         var excursion_childs_SIC =  $("#excursion_child_SIC").val();
         var excursion_infants_SIC =  $("#excursion_infant_SIC").val();
+        var QueryId = $('#QueryId').val();
+
            $.ajax({
           type:"POST",
           dataType: "json",
           url:'<?php echo site_url();?>/Query/getExcursionSICCalculations',
-          data:{'excursion_types_SIC':excursion_types_SIC,'excursion_adults_SIC':excursion_adults_SIC,'excursion_childs_SIC':excursion_childs_SIC,'excursion_infants_SIC':excursion_infants_SIC,
+          data:{'query_id':QueryId,
+            'query_type':'package',
+            'excursion_types_SIC':excursion_types_SIC,'excursion_adults_SIC':excursion_adults_SIC,'excursion_childs_SIC':excursion_childs_SIC,'excursion_infants_SIC':excursion_infants_SIC,
             'excursion_name_SIC':excursion_name_SIC},
           success:function(response){
           console.log(response);
@@ -1962,16 +1928,18 @@ function get_resturant_name(id,row){
        var excursion_adult_PVT =  $("#excursion_adult_PVT").val();
        var excursion_child_PVT =  $("#excursion_child_PVT").val();
        var excursion_infant_PVT =  $("#excursion_infant_PVT").val();
+       var QueryId = $('#QueryId').val();
 
         $.ajax({
          type:"POST",
          dataType: "json",
          url:'<?php echo site_url();?>/Query/getExcursionPVTCalculations',
          data:{
+            'query_id':QueryId,
+            'query_type':'package',
            'excursion_type_PVT':excursion_type_PVT,'excursion_adult_PVT':excursion_adult_PVT,
            'excursion_child_PVT':excursion_child_PVT,'excursion_infant_PVT':excursion_infant_PVT,'excursion_name_PVT':excursion_name_PVT,'total_pax':hidden_total_pax},
          success:function(response){
-            console.log("🚩 ~ file: build_package.php ~ line 1926 ~ excursionPVTcalculations ~ response",(response.status))
               
             if(response.status == 0){
                 toastr.error("Selected PVT allowed "+response.pax+" pax only");
@@ -2127,6 +2095,12 @@ setTimeout(function(){ $('.noOfDaysAlertcls2').attr("style","display:none;") }, 
                       get_room_types.push($.trim(cat));
                     });
 
+                    var sharing_types = [];
+                    $(".room_sharing_types").each(function() {
+                      var cat = $(this).val();
+                      sharing_types.push($.trim(cat));
+                    });
+
                     let total_no_of_days = <?php echo $buildpackage->night?>;
                       
                     if(noOfNights < total_no_of_days){
@@ -2145,6 +2119,8 @@ setTimeout(function(){ $('.noOfDaysAlertcls2').attr("style","display:none;") }, 
                         'buildCheckIns' : buildCheckIns,
                         'Category' : Category,
                         'get_room_types' : get_room_types,
+                        'sharing_types' : sharing_types,
+                        'query_type' : 'package',
 
                       }];
                      
@@ -2169,6 +2145,109 @@ setTimeout(function(){ $('.noOfDaysAlertcls2').attr("style","display:none;") }, 
 
 
 }
+
+  $('#transferSave').on('click', function() {
+
+  var pax_adult = <?php  echo $view->Packagetravelers; ?>;
+  var pax_child = <?php  echo $buildpackage->child; ?>;
+  var pax_infants = <?php  echo $buildpackage->infant; ?>;
+  var total_pax = pax_adult + pax_child + pax_infants;
+  var QueryId = $('#QueryId').val();
+
+                  var internal_transfer_pickup = [];
+                    $(".internal_transfer_pickup").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" && cat != 'Pickup'){
+                        internal_transfer_pickup.push($.trim(cat));
+                      }
+                    });
+
+                    var internal_transfer_dropoff = [];
+                    $(".internal_transfer_dropoff").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" && cat != 'Drop Off'){
+                        internal_transfer_dropoff.push($.trim(cat));
+                       }
+                    });
+
+                    var internal_transfer_route = [];
+                    $(".internal_transfer_route").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" ){
+                        internal_transfer_route.push($.trim(cat));
+                      }
+                    });
+
+                    var internal_transfer_date = [];
+                    $(".internal_transfer_date").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" ){
+                        internal_transfer_date.push($.trim(cat));
+                      }
+                    });
+
+                    // return transfer ---------------------------------
+
+                    var return_transfer_pickup = [];
+                    $(".return_transfer_pickup").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" && cat != 'Pickup'){
+                        return_transfer_pickup.push($.trim(cat));
+                       }
+                    });
+
+                    var return_transfer_dropoff = [];
+                    $(".return_transfer_dropoff").each(function() {
+                      var cat = $(this).val();
+                       if(cat != "" && cat != 'Drop Off'){
+                        return_transfer_dropoff.push($.trim(cat));
+                       }
+                    });
+
+                    var return_transfer_route = [];
+                    $(".return_transfer_route").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" ){
+                        return_transfer_route.push($.trim(cat));
+                      }
+                    });
+                    
+                    var return_transfer_date = [];
+                    $(".return_transfer_date").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" ){
+                        return_transfer_date.push($.trim(cat));
+                      }
+                    });
+
+                    var data= [{
+                        'internal_transfer_pickup' : internal_transfer_pickup,
+                        'internal_transfer_dropoff' : internal_transfer_dropoff,
+                        'internal_transfer_route' : internal_transfer_route,
+                        'internal_transfer_date' : internal_transfer_date,
+
+                        'return_transfer_pickup' : return_transfer_pickup,
+                        'return_transfer_dropoff' : return_transfer_dropoff,
+                        'return_transfer_route' : return_transfer_route,
+                        'return_transfer_date' : return_transfer_date,
+
+                      }];
+                     
+                    
+                      $.ajax({ 
+                          type: "POST",
+                          url: "<?php echo base_url()?>Query/saveTransferData",
+                          data : {data : data,'pax_adult':pax_adult,'pax_child':pax_child,'pax_infants':pax_infants,'query_id' : QueryId,'query_type' : 'package' },
+                          cache: false,
+                          dataType: "json",
+                          success: function(response)
+                          {
+                            toastr.success("Transfer Details Saved Successfully");
+                          }
+                      });
+  });
+
+
 </script>
 <input type="hidden" id="hotel_rate_adult" name="hotel_rate_adult" value="0" />
 <input type="hidden" id="hotel_rate_child" name="hotel_rate_child" value="0" />
@@ -2515,7 +2594,7 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
        $('#dropoffinternal').on('change', function() {
         var value=$("#pickupinternal").val();
         var pax_internal=$("#pax_internal").val();
-        
+
         $.ajax({
           type:"POST",
           dataType: "json",
@@ -2526,7 +2605,6 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
            // $("#pax_count_internal").val(response.data[0].seat_capacity);
              $("#price_internal").val(response.data);
                var total_price=response.data*pax_internal;
-               console.log("🚩 ~ file: build_package.php ~ line 2473 ~ $ ~ total_price", total_price)
              $("#total_price_internal").val(total_price);
            }
 
@@ -2608,7 +2686,6 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
         let dropValue = document.getElementById('dropoffpoint'+id).value;
         var value=$("#pickuppoint"+id).val();
         var pax_internal=$("#pax_point"+id).val();
-        console.log("🚩 ~ file: build_package.php ~ line 2448 ~ dropReturn ~ pax_internal", pax_internal)
         
         $.ajax({
           type:"POST",
@@ -2616,7 +2693,6 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
           url:'<?php echo site_url();?>/query/fetchprice1',
           data:{'dropoff':dropValue ,'pickup':value,'person':pax_internal},
           success:function(response){
-            console.log("🚩 ~ file: build_package.php ~ line 2455 ~ dropReturn ~ response", response)
              $("#route_namepoint"+id).val(response.route_name);
              $("#price_point"+id).val(response.data);
                var total_price=response.data*pax_internal;
@@ -2630,7 +2706,7 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
        $('#dropoffpoint').on('change', function() {
         var value=$("#pickuppoint").val();
         var pax_internal=$("#pax_point").val();
-        
+
           $.ajax({
           type:"POST",
           dataType: "json",

@@ -977,6 +977,7 @@
         "perpax_infants" : "<?php echo $proposalDetails['perpax_infants']  ?>",
         "buildRoomType" : <?php echo json_encode($proposalDetails['roomType']) ?>,
         "hotelPrefrence" : "<?php echo $buildpackage->hotelPrefrence ?>",
+        "room_sharing_types" : <?php echo json_encode($proposalDetails['room_sharing_types']) ?> ,
         "query_ID" : <?php echo $buildpackage->queryId ?>
         };
 

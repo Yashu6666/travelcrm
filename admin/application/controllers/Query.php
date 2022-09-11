@@ -727,7 +727,9 @@ class Query extends CI_Controller
 			$datas[$x]['Category'] = $tableData[0]['Category'][$x];
 			$datas[$x]['get_room_types'] = $tableData[0]['get_room_types'][$x];
 		}
-
+		$no_of_nights = ($tableData[0]['nights']);
+		// print_r();exit;
+		
 		$hotel_names = [];
 		foreach ($tableData[0]['hotelName'] as $key => $value) {
 			$this->db->select('hotelname');
@@ -737,20 +739,20 @@ class Query extends CI_Controller
 			$hotel_names[] = $name->row()->hotelname;
 		}
 
-		$hotel_query_data = [
-			'nights' => implode(',',$tableData[0]['nights']),
-			'hotel_id' => implode(',',$tableData[0]['hotelName']),
-			'room_type' => implode(',',$tableData[0]['roomType']),
+		// $hotel_query_data = [
+		// 	'nights' => implode(',',$tableData[0]['nights']),
+		// 	'hotel_id' => implode(',',$tableData[0]['hotelName']),
+		// 	'room_type' => implode(',',$tableData[0]['roomType']),
 
-			'hotel_name' => implode(',',$hotel_names),
-			'category' => implode(',',$tableData[0]['Category']),
-			'checkin' => implode(',',$tableData[0]['buildCheckIns']),
-			'hotel_city' => implode(',',$tableData[0]['buildHotelCity']),
+		// 	'hotel_name' => implode(',',$hotel_names),
+		// 	'category' => implode(',',$tableData[0]['Category']),
+		// 	'checkin' => implode(',',$tableData[0]['buildCheckIns']),
+		// 	'hotel_city' => implode(',',$tableData[0]['buildHotelCity']),
 
-		];
+		// ];
 
-		$this->db->where('query_id', $QueryId);
-		$this->db->update('query_hotel',$hotel_query_data);
+		// $this->db->where('query_id', $QueryId);
+		// $this->db->update('query_hotel',$hotel_query_data);
 
 		// echo"<pre>";print_r($datas[0]['room_type']);exit;
 		$hotels_calculation = array();
@@ -833,6 +835,7 @@ class Query extends CI_Controller
 				$net_rate_array = explode(",", $hotels_calculation[$k][0]['netrate']);
 				$vat_array = explode(",", $hotels_calculation[$k][0]['vat']);
 				$net_rate = $net_rate_array[$room_val_index];
+
 				$vat = 	$vat_array[$room_val_index];
 
 				if (!empty($val['extra_with_adult'])) {
@@ -847,6 +850,7 @@ class Query extends CI_Controller
 				$vat_array = explode(",", $hotels_calculation[$k][0]['vat_double']);
 
 				$net_rate = $net_rate_array[$room_val_index];
+
 				$vat = 	$vat_array[$room_val_index];
 
 				if (!empty($val['extra_with_adult'])) {
@@ -864,27 +868,108 @@ class Query extends CI_Controller
 				$net_rate_extra = 0;
 			}
 
-			// $total_per_pax_adult = $net_rate + $vat + $net_rate_extra + $vat_extra;
-			// echo "<pre>";print_r('-----1----');print_r($net_rate);print_r('-----2----');print_r($vat);print_r('-----3----');print_r($net_rate_extra);print_r('-----4----');return;
 			$total_per_pax_adult = (int)$net_rate + (int)$vat + (int)$net_rate_extra;
-			// $total_per_pax_child = $netrate_extra_child + $vat_extra_child + $netrate_extra_wo + $vat_extra_wo;
 
 			$total_per_pax_child = (int)$netrate_extra_child;
 
 			$total_per_pax_wo = (int)$netrate_extra_wo;
 
-			$hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult ) * $val['nights'];
 
-			$hotel_calculation_data['total_pax_child_rate'] += ($pax_child * ($total_per_pax_child)) * $val['nights'];
+			// if ($pax_adult == 1) {
+			// 	$hotel_calculation_data['total_pax_adult_rate'] += ((int)$pax_adult != 0  ? (int)$total_per_pax_adult / (int)$pax_adult : (int)$pax_adult) * (int)$val['nights'];
+			// } else {
+			
+			// 	if ($val['nights'] == 1) {
+			// 		$hotel_calculation_data['total_pax_adult_rate'] += ((int)$pax_adult != 0  ? (int)$total_per_pax_adult / (int)$pax_adult : (int)$pax_adult) * array_sum($no_of_nights);
+			// 	} else {
+			// 	print_r(($total_per_pax_adult));
+			// 	print_r("---------");
+			// 	print_r((int)$val['nights']);
+			// 	print_r("---------");
 
-			$hotel_calculation_data['total_pax_wo_rate'] += ($pax_infants * ($total_per_pax_wo)) * $val['nights'];
+			// 		$ad_pax = (int)$total_per_pax_adult / (int)$pax_adult;
+			// 		$ad_pax1 = $ad_pax * (int)$val['nights'];
+			// 		print_r("---------");
+			// 		print_r($ad_pax1);
+			// 		print_r("---------");
+			// 		$hotel_calculation_data['total_pax_adult_rate'] += ((int)$pax_adult != 0  ? (int)$total_per_pax_adult / (int)$pax_adult : (int)$pax_adult) * (int)$val['nights'];
+			// 	}
 
+			// 	// $pax_adult_price = (int)$pax_adult != 0  ? (int)$total_per_pax_adult / (int)$pax_adult : (int)$pax_adult ;
+			// 	// $hotel_calculation_data['total_pax_adult_rate'] += $pax_adult_price * (int)$no_of_nights;
+			// 	// print_r($pax_adult_price);
+			// 	// print_r("---------");
+			// 	// print_r($total_per_pax_adult);
+			// 	// print_r("---------");
+			// 	// print_r(array_sum($no_of_nights));
+			// 	// print_r("---------");
+				
+			// 	// // print_r(((int)$total_per_pax_adult / (int)$pax_adult) * (int)$no_of_nights);
+			// 	// print_r(gettype((int)$pax_adult));
+
+			// }
+
+					// if ($val['nights'] == 1) {
+					// 	$hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult);
+					// } else {
+						// $hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult) * $val['nights'];
+					// }
+
+			// if ($pax_adult == 1) {
+
+			// 	$hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult) * $val['nights'];
+			// echo '<pre>';print_r($hotel_calculation_data['total_pax_adult_rate']); 
+
+			// } else {
+
+			// 	if ($val['nights'] == 1) {
+			// 		$hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult);
+			// 	} else {
+			// 		$hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult) * $val['nights'];
+			// 	}
+			// }
+			
+			
+			// $hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult ) * $val['nights'];
+			$hotel_calculation_data['total_pax_adult_rate'] += (($total_per_pax_adult)) *  $val['nights'];
+
+			$hotel_calculation_data['total_pax_child_rate'] += (($pax_child * ($total_per_pax_child)) * $val['nights']);
+
+			$hotel_calculation_data['total_pax_wo_rate'] += (($pax_infants * ($total_per_pax_wo)) * $val['nights']);
 
 			// $hotel_calculation_data['total_pax_adult_rate'] = ($pax_adult * ($per_pax_adult)) * $no_of_nights;
 
 		}
+		// 100 * 3 = 300 * 2 =  / 3
+		$hotel_query_data = [
+			'nights' => implode(',',$tableData[0]['nights']),
+			'hotel_id' => implode(',',$tableData[0]['hotelName']),
+			'room_type' => implode(',',$tableData[0]['roomType']),
 
+			'hotel_name' => implode(',',$hotel_names),
+			'category' => implode(',',$tableData[0]['Category']),
+			'checkin' => implode(',',$tableData[0]['buildCheckIns']),
+			'hotel_city' => implode(',',$tableData[0]['buildHotelCity']),
+			
+			'adult_pax' => $pax_adult,
+			'child_pax' => $pax_child,
+			'infant_pax' => $pax_infants,
+			
+			'adult_price' => $hotel_calculation_data['total_pax_adult_rate'],
+			'child_price' => $hotel_calculation_data['total_pax_child_rate'],
+			'infant_price' => $hotel_calculation_data['total_pax_wo_rate'],
+
+			'type' => implode(',',$tableData[0]['get_room_types']),
+			'bed_type' => implode(',',$tableData[0]['bedType']),
+			"adult_extra_bed" => implode(',',$tableData[0]['extra_with_adult']),
+			"child_extra_bed" => implode(',',$tableData[0]['extra_with_child']),
+			"infant_extra_bed" => implode(',',$tableData[0]['extra_without_bed']),
+
+		];
 		// echo"<pre>";print_r($hotel_calculation_data);exit;
+
+		$this->db->where('query_id', $QueryId);
+		$this->db->update('query_hotel',$hotel_query_data);
 
 		echo json_encode($hotel_calculation_data);
 	}
@@ -1077,6 +1162,7 @@ class Query extends CI_Controller
         $excursion_adult_PVT = $this->input->post('excursion_adult_PVT');
         $excursion_child_PVT = $this->input->post('excursion_child_PVT');
         $excursion_infant_PVT = $this->input->post('excursion_infant_PVT');
+
 		$total_pax = $excursion_adult_PVT+$excursion_child_PVT+$excursion_infant_PVT;
 
 		$excursion=array();
@@ -1090,22 +1176,30 @@ class Query extends CI_Controller
 				if(empty($excursion)){
 					$excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_PVT[$k]."' AND type='".$excursion_type_PVT."'  AND pax <=$total_pax  LIMIT 1")->row();
 				}
+
+				if($excursion->pax <= $total_pax){
+					echo json_encode(["status"=>0,"pax"=>$excursion->pax]);
+					return;
+				}
+
+
 				if($excursion_adult_PVT) {
-					// $total_adultprice += (((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->adultprice) * (int)$excursion_adult_PVT ; //$excursion->adultprice * $excursion_adult_PVT;
-					$total_adultprice += ( (int)$excursion->adultprice) * (int)$excursion_adult_PVT ; //$excursion->adultprice * $excursion_adult_PVT;
+					$total_adultprice += ((((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->adultprice)) * (int)$excursion_adult_PVT ; //$excursion->adultprice * $excursion_adult_PVT;
+					// $total_adultprice += ( (int)$excursion->adultprice) * (int)$excursion_adult_PVT ; //$excursion->adultprice * $excursion_adult_PVT;
 				}
 				if($excursion_child_PVT) {
-					// $total_childprice += ((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->childprice * (int)$excursion_child_PVT  ; // $excursion->childprice * $excursion_child_PVT;
-					$total_childprice += ( (int)$excursion->childprice) * (int)$excursion_child_PVT  ; // $excursion->childprice * $excursion_child_PVT;
+					$total_childprice += (((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->childprice) * (int)$excursion_child_PVT  ; // $excursion->childprice * $excursion_child_PVT;
+					// $total_childprice += ( (int)$excursion->childprice) * (int)$excursion_child_PVT  ; // $excursion->childprice * $excursion_child_PVT;
 				}
 				if($excursion_infant_PVT) {
-					// $total_infantprice += ((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->infantprice * (int)$excursion_infant_PVT ;//$excursion->infantprice * $excursion_infant_PVT;
-					$total_infantprice += ( (int)$excursion->infantprice) * (int)$excursion_infant_PVT ;//$excursion->infantprice * $excursion_infant_PVT;
+					$total_infantprice += (((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->infantprice) * (int)$excursion_infant_PVT ;//$excursion->infantprice * $excursion_infant_PVT;
+					// $total_infantprice += ( (int)$excursion->infantprice) * (int)$excursion_infant_PVT ;//$excursion->infantprice * $excursion_infant_PVT;
 				}
 
 
 			}
 		}
+
 		$excursion_pvt_data['total_adultprice'] = $total_adultprice;
 
 		$excursion_pvt_data['total_childprice'] = $total_childprice;
@@ -1859,7 +1953,7 @@ class Query extends CI_Controller
 			'internal_route' => $_POST['buildTravelTypeCab'],
 			'return_route' => $_POST['buildTravelTypeSIC'],
 			'buildRoomType' => $_POST['buildRoomType'],
-			
+			'room_sharing_types' => $_POST['room_sharing_types'],
 
 		);
 

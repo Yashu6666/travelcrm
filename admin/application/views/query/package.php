@@ -321,7 +321,6 @@
 <span id="spanSpecificDate" class="spanCompany"></span>
 
 </div>
-<div class="col"></div>
 </div>
 
                <div class="row mt-4 mr-3 ml-3">

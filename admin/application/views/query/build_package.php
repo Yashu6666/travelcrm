@@ -86,7 +86,8 @@
         <div class="mt-5">
           <div>
            <div class="card-head card-head-new">
-            <p>Hotel</p>
+            
+           <p><i class="fa-solid fa-hotel"></i> Hotel</p>
            </div>
            <div class="row mt-5 mr-3 ml-3 mb-3">
             <div>
@@ -110,6 +111,7 @@
                 <th>Room Type </th>
                 <th>Bed Type </th>
                 <th>Type </th>
+                <th>Sharing Type </th>
                 <th>Extra </th>
                 <!-- <th>Action</th> -->
 
@@ -187,6 +189,13 @@
                   </select>
               </td> 
               <td>
+              <select class="form-control room_sharing_types" id="room_sharing_types" name="room_sharing_types[]">
+                      <option value ="">Select option</option> 
+                      <option value ="triple_sharing">Triple Sharing</option> 
+                      <option value="double_sharing" >Double Sharing</option>                                             
+                  </select>
+                  </td>
+              <td>
                 <!-- <input class="form-control" type="text"  placeholder="Room Type" name="buildRoomType" id="buildRoomType" required="">-->
                 <!-- <select required multiple=""  name="buildExtraBedType[]" id="buildExtraBedType" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" multiple="multiple"> -->
                 <!-- <select class="form-control" id="buildExtraBedType"  required="" name="buildExtraBedType" required> -->
@@ -194,7 +203,7 @@
                       <option value="extra_with_child" >Extra Bed(CHild)</option>
                       <option value="extra_without_bed" >Extra W/O Bed</option>                                             
                   </select> -->
-                  <input type="checkbox" id="extra_with_adult" name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"><label for="html" style="margin-left: 5%;">  Extra Bed(Adult)</label><br/> 
+                  <input type="checkbox" id="extra_with_adult" <?php  echo $buildpackage->adult > 2 ? 'checked' : ''; ?> name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"><label for="html" style="margin-left: 5%;">  Extra Bed(Adult)</label><br/> 
                   <input type="checkbox" <?php  echo $buildpackage->child > 0 ? 'checked' : ''; ?> id="extra_with_child" name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child"><label for="html" style="margin-left: 5%;">  Extra Bed(Child)</label><br/>  
                   <input type="checkbox" <?php  echo $buildpackage->infant > 0 ? 'checked' : ''; ?> id="extra_without_bed" name="extra_check[]" value="extra_without_bed" class="check-extra extra_without_bed"><label for="html" style="margin-left: 5%;">  Extra W/O Bed</label>
 
@@ -215,7 +224,7 @@
           <div class="mt-5">
            <div>
             <div class="card-head card-head-new">
-             <p>Transfer</p>
+             <p><i class="fa-solid fa-car"></i> Transfer</p>
             </div>
             <div class="row mt-4 mr-3 ml-3 mb-3">
              <div class="col">
@@ -380,7 +389,7 @@
           
 
               <div class="card-head card-head-new">
-             <p style="margin-top:20px">Visa
+             <p style="margin-top:20px"><i class="fa-brands fa-cc-visa"></i> Visa
                
              <input type="radio" id="visa_status" name="visa_status" value="Yes"><label for="html">Yes</label>
              <input type="radio" id="visa_status1" name="visa_status" value="No"><label for="html">No</label></p>
@@ -494,7 +503,7 @@
 
              </div>
              <div class="card-head card-head-new">
-             <p style="margin-top:20px">Excursion
+             <p style="margin-top:20px"><i class="fa-solid fa-place-of-worship"></i> Excursion
                
         </div>
             <div class="row mt-4 mr-3 ml-3 mb-3 ">
@@ -615,7 +624,7 @@
        
                </div>
                <div class="card-head card-head-new">
-             <p style="margin-top:20px">Meal
+             <p style="margin-top:20px"><i class="fa-solid fa-bowl-rice"></i>	Meal
                
         </div>
             <div class="row mt-4 mr-3 ml-3 mb-3 ">
@@ -992,6 +1001,7 @@
                         var pax_adult_count = <?php  echo $buildpackage->adult; ?>;
                         var pax_child_count = <?php  echo $buildpackage->child; ?>;
                         var pax_infant_count = <?php echo $buildpackage->infant;?>;
+                        console.log("🚩 ~ file: build_package.php ~ line 995 ~ $ ~ pax_infant_count", pax_infant_count)
 
                         var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val(); 
                         var total_pax_meal_adult = $("#total_pax_meal_adult").val(); 
@@ -1025,16 +1035,18 @@
                           parseInt(total_pax_pvt_hild) + 
                           parseInt(total_pax_meal_child) + 
                           parseInt(total_pax_visa_price_child);
-
+                          
                         var hotel_rate_infant = $("#hotel_rate_infant").val();
+                        console.log("🚩 ~ file: build_package.php ~ line 1030 ~ $ ~ hotel_rate_infant", hotel_rate_infant)
                         var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val(); 
                         var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
                         var total_pax_sic_infant = $("#total_pax_sic_infant").val();
 
                         var sub_total_infant = parseInt(total_pax_visa_price_infant) +
-                          parseInt(hotel_rate_infant) +
-                          parseInt(total_pax_pvt_infant)+ 
-                          parseInt(total_pax_sic_infant);
+                        parseInt(hotel_rate_infant) +
+                        parseInt(total_pax_pvt_infant)+ 
+                        parseInt(total_pax_sic_infant);
+                        console.log("🚩 ~ file: build_package.php ~ line 1036 ~ $ ~ sub_total_infant", sub_total_infant)
 
                           
                           let c_type = document.getElementById('currencyOption').value;
@@ -1070,19 +1082,21 @@
                           $("#totalprice_childs").html(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
                           $("#totalprice_infants").html(  c_type == 'USD' ? ( total_infant / usd_aed).toFixed(2)  : total_infant  );
 
-                          var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / 2 : parseInt(total_adult));
-                          var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
-                          var per_pax_infant = (pax_infant_count > 1 ? parseInt(total_infant) / 2 : parseInt(total_infant));
-                          
-                          $("#perpax_adult").html( c_type == 'USD' ?  ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
-                          $("#perpax_childs").html(  c_type == 'USD' ?  ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child   );
-                          $("#perpax_infants").html(  c_type == 'USD' ?    ( per_pax_infant / usd_aed).toFixed(2)  : per_pax_infant  );
+                          var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
 
-                          $("#perpax_adult_input").val( c_type == 'USD' ? ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
-                          $("#perpax_childs_input").val( c_type == 'USD' ?   ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child  );
-                          $("#perpax_infants_input").val( c_type == 'USD' ?   ( per_pax_infant / usd_aed).toFixed(2)  : per_pax_infant  );
+                          var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_child_count: parseInt(total_child));
+                          
+                          var per_pax_infant = (pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
+                          
+                          $("#perpax_adult").html( c_type == 'USD' ?  Math.floor( per_pax_adult / usd_aed)  : Math.floor(per_pax_adult)  );
+                          $("#perpax_childs").html(  c_type == 'USD' ?  Math.floor( per_pax_child / usd_aed)  : Math.floor(per_pax_child)   );
+                          $("#perpax_infants").html(  c_type == 'USD' ?    Math.floor( per_pax_infant / usd_aed)  : Math.floor(per_pax_infant)  );
+
+                          $("#perpax_adult_input").val( c_type == 'USD' ? Math.floor( per_pax_adult / usd_aed)  : Math.floor(per_pax_adult)  );
+                          $("#perpax_childs_input").val( c_type == 'USD' ?   Math.floor( per_pax_child / usd_aed)  : Math.floor(per_pax_child)  );
+                          $("#perpax_infants_input").val( c_type == 'USD' ?   Math.floor( per_pax_infant / usd_aed)  : Math.floor(per_pax_infant)  );
                           var totalprice_package = total_adult + total_child + total_infant;
-                          $("#totalprice_package").val( c_type == 'USD' ?  ( totalprice_package / usd_aed).toFixed(2)  : totalprice_package );
+                          $("#totalprice_package").val( c_type == 'USD' ?  Math.floor( totalprice_package / usd_aed)  : Math.floor(totalprice_package) );
                        
                         
                          })
@@ -1941,7 +1955,6 @@ function get_resturant_name(id,row){
       }
 
       function excursionPVTcalculations(){
-       
 
        var hidden_total_pax = $('#hidden_total_pax').val();
        var excursion_type_PVT =  $("#excursion_type_PVT").val();
@@ -1949,7 +1962,6 @@ function get_resturant_name(id,row){
        var excursion_adult_PVT =  $("#excursion_adult_PVT").val();
        var excursion_child_PVT =  $("#excursion_child_PVT").val();
        var excursion_infant_PVT =  $("#excursion_infant_PVT").val();
-
 
         $.ajax({
          type:"POST",
@@ -1959,15 +1971,17 @@ function get_resturant_name(id,row){
            'excursion_type_PVT':excursion_type_PVT,'excursion_adult_PVT':excursion_adult_PVT,
            'excursion_child_PVT':excursion_child_PVT,'excursion_infant_PVT':excursion_infant_PVT,'excursion_name_PVT':excursion_name_PVT,'total_pax':hidden_total_pax},
          success:function(response){
-            console.log("🚩 ~ file: build_package.php ~ line 1926 ~ excursionPVTcalculations ~ response", response)
-         
+            console.log("🚩 ~ file: build_package.php ~ line 1926 ~ excursionPVTcalculations ~ response",(response.status))
+              
+            if(response.status == 0){
+                toastr.error("Selected PVT allowed "+response.pax+" pax only");
+              } else {
                $("#total_pax_pvt_adult").val( response.total_adultprice);
                $("#total_pax_pvt_hild").val( response.total_childprice);
                $("#total_pax_pvt_infant").val( response.total_infantprice);
-
               toastr.success("Excursion PVT Saved Successfully");
+            }
 
-           
          }
        })
 
@@ -3149,8 +3163,8 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
 
                           
                           template +='<td><select class="form-control get_room_types" id="room_types'+faqs_row+'" name="build_room_types[]" required><option value ="BB">BB</option><option value ="Room Only">Room Only</option><option value="HB" >HB</option><option value="FB" >FB</option></select></td>'; 
-
-                          template +='<td><input type="checkbox"  id="extra_with_adult'+faqs_row+'" name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"><label for="html" style="margin-left: 5%;"> Extra Bed(Adult)</label><br><input type="checkbox" id="extra_with_child'+faqs_row+'" <?php  echo $buildpackage->child > 0 ? 'checked' : ''; ?> name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child" ><label for="html" style="margin-left: 5%;"> Extra Bed(Child)</label><br><input type="checkbox" id="extra_without_bed'+faqs_row+'" name="extra_check[]" <?php  echo $buildpackage->child > 0 ? 'checked' : ''; ?> value="extra_without_bed" class="check-extra extra_without_bed"><label for="html" style="margin-left: 5%;"> Extra W/O Bed</label></td>';
+                          template +='<td><select class="form-control room_sharing_types" id="room_sharing_types'+faqs_row+'" name="room_sharing_types[]" ><option value ="">Select option</option><option value ="triple_sharing">Triple Sharing</option> <option value="double_sharing" >Double Sharing</option></select></td>';
+                          template +='<td><input type="checkbox"  id="extra_with_adult'+faqs_row+'" <?php  echo $buildpackage->adult > 2 ? 'checked' : ''; ?> name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"><label for="html" style="margin-left: 5%;"> Extra Bed(Adult)</label><br><input type="checkbox" id="extra_with_child'+faqs_row+'" <?php  echo $buildpackage->child > 0 ? 'checked' : ''; ?> name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child" ><label for="html" style="margin-left: 5%;"> Extra Bed(Child)</label><br><input type="checkbox" id="extra_without_bed'+faqs_row+'" name="extra_check[]" <?php  echo $buildpackage->infant > 0 ? 'checked' : ''; ?> value="extra_without_bed" class="check-extra extra_without_bed"><label for="html" style="margin-left: 5%;"> Extra W/O Bed</label></td>';
 
                           template += '<td><button type="button" class="btn btn-danger btn-xs cls-btn"  id="del_btn'+faqs_row+'"  onClick="return  removeHotel(this);"><i class="fa fa-trash"></i></button> </td>';
                           template += '</tr>';

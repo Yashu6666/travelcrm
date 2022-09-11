@@ -243,8 +243,8 @@
 
                     <div class="left">
                         <p>Total Pkg Rate :</p>
-                        <br>
-                        <br>
+                        <p><br/></p>
+                        <p><br/></p>
                         <p>Check-in : </p>
                         <p>Check-out : </p>
                         <p>No. of night : </p>
@@ -254,10 +254,10 @@
                     </div>
 
                     <div class="right">
-                        <p>AED <?php echo $details->perpax_adult ?> Adult</p>
+                        <p>AED <?php echo $details->perpax_adult ?> Adult <?php echo $details->room_sharing_types[0] != "" ? $details->room_sharing_types[0] == "triple_sharing" ? "Per Person on Triple Sharing Basis" : "Per Person on Double Sharing Basis" : "" ?> </p>
                         <p>AED <?php echo $details->perpax_childs ?> Child</p>
                         <p>AED <?php echo $details->perpax_infants ?> Infant</p>
-                        <p><?php echo $details->checkin ?></p>
+                        <p style="margin-top: -1px;"><?php echo $details->checkin ?></p>
                         <p><?php echo $details->checkout ?></p>
                         <p><?php echo $details->nights ?></p>
                         <p><?php echo 'Adult ' . $details->pax_adult . ' Child ' . $details->pax_child . ' Infant ' . $details->pax_infant ?></p>

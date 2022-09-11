@@ -252,7 +252,7 @@
                             </div>
                           </div> 
 
-                          <div class="row form-group mb-3" hidden>
+                          <div class="row form-group mb-3" >
                             <label class="col-md-4 control-label text-left"><b>Vehicle Price</b></label>
                             <div class="col-md-8">
                               <input  type="text" class="form-control" name="vehicle_price" value="0">

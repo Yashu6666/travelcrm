@@ -92,27 +92,39 @@ class Itinerary extends CI_Controller {
 		$data['category'] = explode(',',$hotel[0]->category);
 
 		// $transfer = $this->db->get_where('query_transfer', array('query_id' => $query_id))->row();
+		$transfer_types = [];
 		$transfer_pickup = [];
 		$transfer_dropoff = [];
 		$transfer_routes = [];
 		$transfer = $this->db->query("SELECT * FROM query_transfer WHERE query_id=".$query_id)->result();
+
 		foreach ($transfer as $key => $value) {
 			$transfer_pickup_values = explode(',',$transfer[$key]->pickup);
-			foreach ($transfer_pickup_values as $key => $value) {
-				array_push($transfer_pickup, $value);
+			foreach ($transfer_pickup_values as $key1 => $value1) {
+				array_push($transfer_pickup, $value1);
 			}
 
 			$transfer_dropoff_values = explode(',',$transfer[$key]->dropoff);
-			foreach ($transfer_dropoff_values as $key => $value) {
-				array_push($transfer_dropoff, $value);
+			foreach ($transfer_dropoff_values as $key2 => $value2) {
+				array_push($transfer_dropoff, $value2);
 			}
 
 			$transfer_route_values = explode(',',$transfer[$key]->transfer_route);
-			foreach ($transfer_route_values as $key => $value) {
-				array_push($transfer_routes, $value);
+			foreach ($transfer_route_values as $key3 => $value3) {
+				array_push($transfer_routes, $value3);
 			}
-
+			array_push($transfer_types,$value->transfer_type);
 		}
+
+
+		foreach ($transfer_types as $k => $val) {
+			if($val == "internal"){
+				$transfer_types[$k] = 'oneway';
+			} else {
+				$transfer_types[$k] = 'round';
+			}
+		}
+		$data['transfer_types'] = array_unique($transfer_types);
 
 		$data['transfer_pickup'] = $transfer_pickup;
 		$data['transfer_dropoff'] = $transfer_dropoff;
@@ -121,6 +133,7 @@ class Itinerary extends CI_Controller {
 		// $meals = $this->db->where('query_id',$query_id)->get('query_meal')->result();
 		$meals = $this->db->query("SELECT * FROM query_meal WHERE query_id=".$query_id)->result();
 
+		$data['resturant_transfer_type'] = explode(',',$meals[0]->transfer_type);
 		$data['resturant_type'] = explode(',',$meals[0]->resturant_type);
 		$data['resturant_name'] = explode(',',$meals[0]->resturant_name);
 		$data['meal'] = explode(',',$meals[0]->meal);
@@ -165,6 +178,13 @@ class Itinerary extends CI_Controller {
 			}
 		}
 
+		$excursion_types = [];
+
+		foreach ($excursion as $k1 => $val1) {
+			array_push($excursion_types, $val1->excursion_type);
+		}
+
+		$data['excursion_types'] = $excursion_types;
 		$data['excursion_data'] = array_merge($excursion_pvt,$excursion_sic);
 
 		$query=$this->db->query("SELECT * FROM b2bcustomerquery WHERE query_id=".$query_id)->row();

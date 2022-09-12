@@ -572,7 +572,7 @@ $this
                                       <div class="" style="padding: 5px; background-color: #d9a927;">
 
                                         <div class="">
-                                          <p class="d-flex justify-content-between">Hotel<a style="text-decoration:underline; float: right;" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?php echo $i ?>" id="hotelmodal">Add +</a></p>
+                                          <p class="d-flex justify-content-between"><span><i class="fa-solid fa-hotel"></i> Hotel</span><a style="text-decoration:underline; float: right;" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?php echo $i ?>" id="hotelmodal">Add +</a></p>
 
                                           <span style="margin-left:65px;display:none;">
                                             <input type="radio" name="packagecategory_256346" id="packagecategory_256346_3" value="3" checked="checked" onclick="return DisplayGrid('3','256346','2261')">
@@ -605,7 +605,7 @@ $this
                                         <div class="" style="padding: 5px; background-color: #d9a927;">
 
                                           <div class="">
-                                            <p class="d-flex justify-content-between">Transfer<a style="text-decoration:underline; float: right;" data-bs-toggle="modal" data-bs-target="#transferModal" data-id="<?php echo $i ?>" id="transfermodal" onclick="ViewAllTransfersHotels()">Add +</a></p>
+                                            <p class="d-flex justify-content-between"><span><i class="fa-solid fa-car"></i> Transfer</span><a style="text-decoration:underline; float: right;" data-bs-toggle="modal" data-bs-target="#transferModal" data-id="<?php echo $i ?>" id="transfermodal" onclick="ViewAllTransfersHotels()">Add +</a></p>
 
 
                                             <span style="margin-left:65px;display:none;">
@@ -646,7 +646,8 @@ $this
                                           <div class="" style="padding: 5px; background-color: #d9a927;">
 
                                             <div class="">
-                                              <p class="d-flex justify-content-between">Meal<a style="text-decoration:underline; float: right;" data-bs-toggle="modal" data-bs-target="#mealsModal" id="mealsmodal" data-id="<?php echo $i ?>" onclick="meals_click();">Add +
+                                              <p class="d-flex justify-content-between">
+                                                <span><i class="fa-solid fa-bowl-rice"></i> Meal</span> <a style="text-decoration:underline; float: right;" data-bs-toggle="modal" data-bs-target="#mealsModal" id="mealsmodal" data-id="<?php echo $i ?>" onclick="meals_click();">Add +
                                                   </a></p>
 
                                               <!-- <span style="margin-left:65px;display:none;">
@@ -751,7 +752,7 @@ $this
                                           <div class="text-white" style="padding: 5px; background-color: #d9a927;">
 
                                             <div class="">
-                                              <p class="d-flex justify-content-between">Excursion<a style="text-decoration:underline; float: right;" data-bs-toggle="modal" data-bs-target="#excursionModal" id="excursionmodal" data-id="<?php echo $i ?>" onclick="excursion_click();">Add +
+                                              <p class="d-flex justify-content-between"><span><i class="fa-solid fa-place-of-worship"></i> Excursion </span><a style="text-decoration:underline; float: right;" data-bs-toggle="modal" data-bs-target="#excursionModal" id="excursionmodal" data-id="<?php echo $i ?>" onclick="excursion_click();">Add +
                                                   </a></p>
 
                                               <!-- <span style="margin-left:65px;display:none;">

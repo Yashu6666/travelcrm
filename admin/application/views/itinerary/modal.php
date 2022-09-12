@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width: 800px!important;">
             <div class="modal-header" style="background-color: #d9a927;">
-                <h5 class="modal-title" id="exampleModalLabel">Hotels</h5>
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-hotel"></i> Hotels</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -454,7 +454,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width: 800px!important;">
             <div class="modal-header" style="background-color: #d9a927;">
-                <h5 class="modal-title" id="exampleModalLabel">Transfer</h5>
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-car"></i> Transfer</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -475,9 +475,17 @@
                         <section id="aligned" class="col-md-12 mt-4">
                             <label>Transfer Type</label>
                             <select id="transfertype"  required  name="transfertype"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                    <option value="oneway">Internal Transfer</option>
+                                    <option value="">Select Transfer</option>
+                                    <!-- <option value="oneway">Internal Transfer</option>
                                     <option value="round">Point to Point Transfer</option>
-                                       
+                                    ?php 
+                                    foreach($transfer_types as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?> -->
+                                    <?php foreach($transfer_types as $value) : ?>
+                                        <option value=<?php echo $value ?>><?php echo $value == "oneway" ? "Internal Transfer" : "Point to Point Transfer" ?></option>
+                                    <?php endforeach ?>
                                 </select>
                         </section>
 
@@ -507,25 +515,27 @@
                             <section id="" class="col-md-6">
                             <label>Drop off</label>
                                 <select   id="dropoffinternal" name="buildTravelToCityCabDrop"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                    <?php 
+                                    <!-- <?php 
                                     foreach($transfer_dropoff as $name) { 
                                         echo '<option value="'.$name.'">'.$name.'</option>';
                                     } 
-                                    ?>  
-                                </select>
+                                    ?>   -->
+
+                                        <option value="Drop Off">Drop Off</option>
+                                        </select>
                             </section>
                         </section>
 
                         <section id="" class="col-md-6 mt-4">
                         <label>Route Name</label>
-                            <!-- <input id="route_nameinternal" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeCab"> -->
-                            <select   id="route_nameinternal" class="form-control"  name="buildTravelTypeCab" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                            <input id="route_nameinternal" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeCab">
+                            <!-- <select   id="route_nameinternal" class="form-control"  name="buildTravelTypeCab" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                     <?php 
                                     foreach($transfer_routes as $name) { 
                                         echo '<option value="'.$name.'">'.$name.'</option>';
                                     } 
                                     ?>  
-                                </select>
+                                </select> -->
                         </td>
                         </section>
                     
@@ -568,7 +578,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width: 800px!important;">
             <div class="modal-header" style="background-color: #d9a927;">
-                <h5 class="modal-title" id="exampleModalLabel">Meals</h5>
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-bowl-rice"></i> Meals</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -582,10 +592,23 @@
                                     <label>Date</label>                            
                                     <input class="form-control" type="date" value="<?php echo isset($details['checkindate']) ? $details['checkindate'] : "" ;?>" name="meals_date" id="meals_date">
                             </section> -->
-                  <section id="" class="col-md-12 d-flex">
-                    <input type="radio" class="transfer_with_or_without" id="with_transfer" name="transfer_with_or_without" value="with_transfer" onclick="get_resturant_name('with_transfer','');" autocompleted=""> With Transfer<br>
-                    <input type="radio" class="transfer_with_or_without" id="without_transfer" name="transfer_with_or_without" value="without_transfer" onclick="get_resturant_name('without_transfer','');"> Without Transfer 
-                  </section>
+                  <!-- <section id="" class="col-md-12 d-flex">
+                 <input type="radio" class="transfer_with_or_without" id="with_transfer" name="transfer_with_or_without" value="with_transfer" onclick="get_resturant_name('with_transfer','');" autocompleted=""> With Transfer<br>
+                    <input type="radio" class="transfer_with_or_without" id="without_transfer" name="transfer_with_or_without" value="without_transfer" onclick="get_resturant_name('without_transfer','');"> Without Transfer  
+                    </section> -->
+
+                    <section id="" class="col-md-12 mt-4">
+                                <label>Transfer Type</label>
+                                <select id="meal_resturant_type"  required  name="transfer_with_or_without" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                <option value="">Select Transfer</option>
+                                    <?php foreach($resturant_transfer_type as $value) : ?>
+                                        <option value=<?php echo $value ?>><?php echo $value == "with_transfer" ? "With Transfer" : "Without Transfer" ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </section>
+
+
+                    
                             <section id="" class="col-md-12 mt-4">
                                 <label>Resturant Type</label>
                                 <select id="resturant_type"  required  name="resturant_type" onchange="get_resturant_name()" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
@@ -691,7 +714,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width: 800px!important;">
             <div class="modal-header" style="background-color: #d9a927;">
-                <h5 class="modal-title" id="exampleModalLabel">Excursion</h5>
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-place-of-worship"></i> Excursion</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -704,9 +727,12 @@
                             <section id="" class="col-md-12">
                                     <label>Excursion Type</label> 
                                     <select id="excursion_type"  required  name="excursion_type"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                        <option value="SIC">SIC</option>
-                                        <option value="PVT">PVT</option>
-                                        
+                                        <option value="">Select Type</option>
+                                        <!-- <option value="SIC">SIC</option>
+                                        <option value="PVT">PVT</option> -->
+                                        <?php foreach($excursion_types as $value) : ?>
+                                            <option value=<?php echo $value ?>><?php echo $value ?></option>
+                                        <?php endforeach ?>
                                     </select>                           
                             </section>
                             <section id="" class="col-md-12 mt-4">

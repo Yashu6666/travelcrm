@@ -438,7 +438,6 @@
                 </table>
             </div>
         </div>
-
         <br /><br />
         <div class=" second">
             <div class="accordion accordion-flush mt-5">
@@ -450,22 +449,22 @@
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-
-                            <div id="editor1"><!-- ?php echo  $proposalDetails['buildPackageInclusions']  ?> -->
+                            <div id="editor1">
                     <?php foreach($proposalDetails['hotelName'] as $key => $val) : ?>
                         <?php echo $proposalDetails['noOfNights'][0] ?> Nights at Hotel  <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?><br>
+                        <?php if($proposalDetails['build_room_types'][0] == 'BB') : ?>
+                            <?php echo $proposalDetails['noOfNights'][0] ?> Breakfast in Hotel  <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?><br>
+                        <?php endif ?>
                     <?php endforeach ?>
 
                     <?php foreach($proposalDetails['in_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
-                        <!-- Internal Transfer at <?php echo $proposalDetails['in_transfer_date'][$key] ?> from <?php echo $proposalDetails['in_transfer_pickup'][$key] ?> to <?php echo $proposalDetails['in_transfer_dropoff'][$key] ?><br> -->
                         <?php echo $proposalDetails['internal_route'][$key] ?><br>
                     <?php endif ?>
                     <?php endforeach ?>
 
                     <?php foreach($proposalDetails['pp_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
-                        <!-- Point to Point Transfer at <?php echo $proposalDetails['pp_transfer_date'][$key] ?> from <?php echo $proposalDetails['pp_transfer_pickup'][$key] ?> to <?php echo $proposalDetails['pp_transfer_dropoff'][$key] ?><br> -->
                         <?php echo $proposalDetails['return_route'][$key] ?><br>
                     
                         <?php endif ?>
@@ -476,11 +475,10 @@
                     "Dubai Single entry tourist  visa with Covid 19 Inbound insurance"<br>
                     <?php endif ?>
                     
-                    <!-- ?php print_r($proposalDetails)?> -->
-
                     <?php echo $proposalDetails['excursion_name_SIC'][0] ?> <br> <?php echo $proposalDetails['excursion_name_PVT'][0] ?><br>
                         <?php foreach($proposalDetails['res_name'] as $key => $val) : ?>
-                            Meals at Resturant <?php echo $proposalDetails['res_name'][$key].' (' .$proposalDetails['Meal'][$key].','.$proposalDetails['Meal_Type'][$key] .')'?><br>
+                            <?php echo $proposalDetails['no_of_meals'][$key]." ".$proposalDetails['Meal'][$key]." ".$proposalDetails['res_type'][$key]." ".$proposalDetails['Meal_Type'][$key]; ?> 
+                            Meal Coupons in <?php echo $proposalDetails['res_name'][$key]?><br>
                         <?php endforeach ?>
 
 

@@ -463,15 +463,34 @@
                     <form method="post" >
                       <div id="wrapping">
                       <input type="hidden" name="modal_transfer" id="modal_transfer" value=""/>
-                      <section id="aligned" class="col-md-12">
-                       
-                     
+
+                      <!-- <section id="aligned" class="col-md-12">
                         <div class="first">
                             <label><input type="radio" name="colorRadio" value="TransArrival" checked="">Arrival Transfer</label>
                             <label><input type="radio" name="colorRadio" value="TransDeparture"> Departure Transfer</label>
                          </div>
-                    
+                    </section> -->
+
+                    <section id="aligned" class="col-md-12 mt-4">
+                            <label>Flight Arrival</label>
+                            <div class="d-flex">
+                                <input id="arrival_airline" class="form-control arrival_airline " type="text" placeholder="Airline Code" name="arrival_airline[]">
+                                <input id="arrival_flight" class="form-control arrival_flight ml-2 " type="text" placeholder="Flight No" name="arrival_flight[]">
+                                <input id="arrival_hours" class="form-control arrival_hours ml-2 " type="text" placeholder="Hours" name="arrival_hours[]">
+                                <input id="arrival_mins" class="form-control arrival_mins ml-2 " type="text" placeholder="Minutes" name="arrival_mins[]">
+                            </div>
                     </section>
+
+                    <section id="aligned" class="col-md-12 mt-4">
+                            <label>Return Flight</label>
+                            <div class="d-flex">
+                                <input id="return_airline" class="form-control return_airline " type="text" placeholder="Airline Code" name="return_airline[]">
+                                <input id="return_flight" class="form-control return_flight ml-2 " type="text" placeholder="Flight No" name="return_flight[]">
+                                <input id="return_hours" class="form-control return_hours ml-2 " type="text" placeholder="Hours" name="return_hours[]">
+                                <input id="return_mins" class="form-control return_mins ml-2 " type="text" placeholder="Minutes" name="return_mins[]">
+                            </div>
+                    </section>
+
                         <section id="aligned" class="col-md-12 mt-4">
                             <label>Transfer Type</label>
                             <select id="transfertype"  required  name="transfertype"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
@@ -599,7 +618,7 @@
 
                     <section id="" class="col-md-12 mt-4">
                                 <label>Transfer Type</label>
-                                <select id="meal_resturant_type"  required  name="transfer_with_or_without" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                <select id="transfer_with_or_without"  required  name="transfer_with_or_without" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                 <option value="">Select Transfer</option>
                                     <?php foreach($resturant_transfer_type as $value) : ?>
                                         <option value=<?php echo $value ?>><?php echo $value == "with_transfer" ? "With Transfer" : "Without Transfer" ?></option>
@@ -611,7 +630,8 @@
                     
                             <section id="" class="col-md-12 mt-4">
                                 <label>Resturant Type</label>
-                                <select id="resturant_type"  required  name="resturant_type" onchange="get_resturant_name()" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                <select id="resturant_type"  required  name="resturant_type"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                <!-- <select id="resturant_type"  required  name="resturant_type" onchange="get_resturant_name()" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg"> -->
                                 <?php 
                                     foreach($resturant_type as $name) { 
                                         echo '<option value="'.$name.'">'.$name.'</option>';

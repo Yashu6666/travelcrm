@@ -885,10 +885,25 @@ $this
     var query_id = '<?php echo $details['query_id'] ?>';
 
 
-
+    
 
     for (var i = 0; i < days; i++) {
       var day = parseInt(i) + parseInt(1);
+
+      var arrival_airline = $.trim($(".arrival_airline" + i).text());
+      console.log("🚩 ~ file: add.php ~ line 894 ~ saveItinerary ~ arrival_airline", arrival_airline)
+      var arrival_flight = $.trim($(".arrival_flight" + i).text());
+      console.log("🚩 ~ file: add.php ~ line 895 ~ saveItinerary ~ arrival_flight", arrival_flight)
+      var arrival_hours = $.trim($(".arrival_hours" + i).text());
+      console.log("🚩 ~ file: add.php ~ line 896 ~ saveItinerary ~ arrival_hours", arrival_hours)
+      var arrival_mins = $.trim($(".arrival_mins" + i).text());
+      console.log("🚩 ~ file: add.php ~ line 897 ~ saveItinerary ~ arrival_mins", arrival_mins)
+
+      var return_airline = $.trim($(".return_airline" + i).text());
+      var return_flight = $.trim($(".return_flight" + i).text());
+      var return_hours = $.trim($(".return_hours" + i).text());
+      var return_mins = $.trim($(".return_mins" + i).text());
+
       var hotel_data_hotelname = $.trim($(".hotel_data_hotelname" + i).text());
       var hotel_data_hotelstar = $.trim($(".hotel_data_hotelstar" + i).text());
       var hotel_data_roomtype = $.trim($(".hotel_data_roomtype" + i).text());
@@ -951,7 +966,18 @@ $this
           'excursion_data_excursion_child': excursion_data_excursion_child,
           'excursion_data_excursion_infant': excursion_data_excursion_infant,
           'query_id': query_id,
-          'day': day
+          'day': day,
+
+          'arrival_airline':arrival_airline,
+          'arrival_flight':arrival_flight,
+          'arrival_hours':arrival_hours,
+          'arrival_mins':arrival_mins,
+
+          'return_airline':return_airline,
+          'return_flight':return_flight,
+          'return_hours':return_hours,
+          'return_mins':return_mins,
+
         },
         dataType: 'JSON',
         success: function(data) {
@@ -1117,6 +1143,7 @@ $this
     // var modalid= $("#modalid").val();
 
 
+
     var tabl = "";
     tabl = '<tr class="odd gradeX">';
     tabl += '<td class="hotel_data_hotelname' + modalid + '" >' + buildHotelName + '</td>';
@@ -1125,6 +1152,7 @@ $this
     tabl += '<td class="hotel_data_pax' + modalid + '">' + <?php echo ((int)$package->adult + (int)$package->child) ?> + '</td>';
     tabl += '<td class="hotel_data_checkin' + modalid + '">' + check_in_date + '</td>';
     tabl += '<td class="hotel_data_checkout' + modalid + '">' + check_out_date + '</td>';
+
     tabl += '</tr>';
     // $('#hotelbody').append(tabl);
     // $("#searchhotel").hide();
@@ -1164,6 +1192,18 @@ $this
     var dropoffinternal = $("#dropoffinternal").val();
     var route_nameinternal = $("#route_nameinternal").val();
     var modalid = $("#modal_transfer").val();
+
+    var arrival_airline = $("#arrival_airline").val();
+    var arrival_flight = $("#arrival_flight").val();
+    var arrival_hours = $("#arrival_hours").val();
+    var arrival_mins = $("#arrival_mins").val();
+
+    var return_airline = $("#return_airline").val();
+    var return_flight = $("#return_flight").val();
+    var return_hours = $("#return_hours").val();
+    var return_mins = $("#return_mins").val();
+
+
     var transfer_body = "";
     transfer_body = '<tr class="odd gradeX">';
     transfer_body += '<td class="transfer_data_type' + modalid + '">' + type + '</td>';
@@ -1173,6 +1213,16 @@ $this
     transfer_body += '<td class="transfer_data_dropoff' + modalid + '">' + dropoffinternal + '</td>';
     transfer_body += '<td class="transfer_data_routename' + modalid + '">' + route_nameinternal + '</td>';
     transfer_body += '<td class="transfer_data_type' + modalid + '" style="visibility: hidden;">' + transfer + '</td>';
+
+    transfer_body += '<td style="display:none" class="arrival_airline' + modalid + '">' + arrival_airline + '</td>';
+    transfer_body += '<td style="display:none" class="arrival_flight' + modalid + '">' + arrival_flight + '</td>';
+    transfer_body += '<td style="display:none" class="arrival_hours' + modalid + '">' + arrival_hours + '</td>';
+    transfer_body += '<td style="display:none" class="arrival_mins' + modalid + '">' + arrival_mins + '</td>';
+
+    transfer_body += '<td style="display:none" class="return_airline' + modalid + '">' + return_airline + '</td>';
+    transfer_body += '<td style="display:none" class="return_flight' + modalid + '">' + return_flight + '</td>';
+    transfer_body += '<td style="display:none" class="return_hours' + modalid + '">' + return_hours + '</td>';
+    transfer_body += '<td style="display:none" class="return_mins' + modalid + '">' + return_mins + '</td>';
     transfer_body += '</tr>';
 
     // $('#transfer_body').append(transfer_body);
@@ -1196,7 +1246,10 @@ $this
     var resturant_name = $("#resturant_name").val();
 
     var resturant_type = $("#resturant_type").val();
-    var meals_transfer_type = document.querySelector('input[name="transfer_with_or_without"]:checked').value;
+
+    var meals_transfer_type = $("#transfer_with_or_without").val();
+
+    // var meals_transfer_type = document.querySelector('input[name="transfer_with_or_without"]:checked').value;
     
     var meal = $("#meal").val();
 

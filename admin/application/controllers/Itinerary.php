@@ -37,8 +37,8 @@ class Itinerary extends CI_Controller {
 				'protocol' => 'smtp',	
 				'smtp_host' => 'ssl://smtp.googlemail.com',	
 				'smtp_port' => 465,	
-				'smtp_user' => 'devsum2@gmail.com',	
-				'smtp_pass' => 'jggdlvqnvdenvssm',	
+				'smtp_user' => 'test.yrpitsolutions.com@gmail.com',	
+				'smtp_pass' => 'xcvbtihuojnhvmrn',	
 				'crlf' => "\r\n",	
 				'mailtype' => "html",	
 				'newline' => "\r\n",	
@@ -50,7 +50,7 @@ class Itinerary extends CI_Controller {
 			// print_r($data['details2']);	
 			// return;	
 			$this->email->initialize($config);	
-			$this->email->from('devsum2@gmail.com');	
+			$this->email->from('test.yrpitsolutions.com@gmail.com');	
 			$this->email->to('sumanth@yrpitsolutions.com');	
 			$this->email->cc('');	
 			$this->email->subject('itinery');	
@@ -266,7 +266,20 @@ class Itinerary extends CI_Controller {
 	
 	public function saveItinerary(){
 
-		$data = array(
+	$arrival_airline = $this->input->post('arrival_airline');
+	$arrival_flight = $this->input->post('arrival_flight');
+	$arrival_hours = $this->input->post('arrival_hours');
+	$arrival_mins = $this->input->post('arrival_mins');
+
+	$return_airline = $this->input->post('return_airline');
+	$return_flight = $this->input->post('return_flight');
+	$return_hours = $this->input->post('return_hours');
+	$return_mins = $this->input->post('return_mins');
+
+	$arrival_data = $arrival_airline.','.$arrival_flight.','.$arrival_hours.':'.$arrival_mins;
+	$return_data = $return_airline.','.$return_flight.','.$return_hours.':'.$return_mins;
+
+	$data = array(
 			'hotel_name' => $this->input->post('hotel_data_hotelname'),
 			'hotel_category' => $this->input->post('hotel_data_hotelstar'),
 			'hotel_room_type' => $this->input->post('hotel_data_roomtype'),
@@ -293,7 +306,11 @@ class Itinerary extends CI_Controller {
 			'excursion_child' => $this->input->post('excursion_data_excursion_child'),
 			'excursion_infant' => $this->input->post('excursion_data_excursion_infant'),
 			'query_id' => $this->input->post('query_id'),
-			'day' => $this->input->post('day')
+			'day' => $this->input->post('day'),
+			'arrival_transfer' => $arrival_data,
+			'return_transfer' => $return_data,
+			'created_by' =>   $this->session->userdata('admin_id'),
+
 		);
 		$get_query_id = $this->db->query("SELECT * FROM itinery_data WHERE query_id='".$data['query_id']."' ")->result_array();
 		$this->db->where('query_id',$data['query_id']);

@@ -254,9 +254,18 @@
                     </div>
 
                     <div class="right">
-                        <p>AED <?php echo $details->perpax_adult ?> Adult <?php echo $details->room_sharing_types[0] != "" ? $details->room_sharing_types[0] == "triple_sharing" ? "Per Person on Triple Sharing Basis" : "Per Person on Double Sharing Basis" : "" ?> </p>
-                        <p>AED <?php echo $details->perpax_childs ?> Child</p>
-                        <p>AED <?php echo $details->perpax_infants ?> Infant</p>
+                        <?php if($details->perpax_adult > 0) : ?>
+                            <p style="color:red">AED <?php echo $details->perpax_adult ?> Adult <?php echo $details->room_sharing_types[0] != "" ? $details->room_sharing_types[0] == "triple_sharing" ? "Per Person on Triple Sharing Basis" : "Per Person on Double Sharing Basis" : "" ?> </p>
+                        <?php endif ?>
+                        
+                        <?php if($details->perpax_childs > 0) : ?>
+                            <p style="color:red">AED <?php echo $details->perpax_childs ?> Child</p>
+                        <?php endif ?>
+
+                        <?php if($details->perpax_infants > 0) : ?>
+                            <p style="color:red">AED <?php echo $details->perpax_infants ?> Infant</p>
+                        <?php endif ?>
+
                         <p style="margin-top: -1px;"><?php echo $details->checkin ?></p>
                         <p><?php echo $details->checkout ?></p>
                         <p><?php echo $details->nights ?></p>
@@ -273,12 +282,13 @@
                 <div class="head5 mt_inc">
                     <b>Package Price Inclusions:</b>
                     <?php echo $details->inclusions ?>
-                    <p> 5% Vat</p>
-                    <p> All of the above services with the hotel to hotel transfer and ticket</p>
-                    <p> All Tours & Transfers on sharing Basis except airport transfer</p>
+                    <p>Tourism Dhiram Fees</p>
+                    <p>Vat 5% Inclusive</p>
+                    <p>All Applicable Taxes</p>
+                    <p>All Tours and transfers on Private Basis</p>
+                    <p>All of the above services with the hotel to hotel transfer and ticket</p>
+                    <p>All Tours & Transfers on sharing Basis except airport transfer</p>
                 </div>
-
-
 
                 <!-- <div class="head5" style="margin-top: 20px;">
                     <b>Package Price Exclusions:</b>

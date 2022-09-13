@@ -313,46 +313,31 @@
                                                     <label class="input">
                                                         <input class="input__field fname all-width" type="date" placeholder=" " id="specificDate1" name="specificDate" autocomplete="off" required />
                                                         <span class="input__label">Check IN<span class="colorRed">*</span></span>
-
-
                                                     </label><br>
-                                                    <span id="spanSpecificDate" class="spanCompany"></span>
                                                 </div>
                                                 <div class="col">
                                                     <label class="input">
                                                         <input class="input__field fname all-width" type="number" min="1" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
                                                         <span class="input__label">Nights</span>
-
-
                                                     </label>
                                                 </div>
                                                 <div class="col">
-
                                                     <label class="input">
                                                         <input class="input__field  all-width" type="date" placeholder=" " id="endDate1" name="noDaysFrom" autocomplete="off" />
                                                         <span class="input__label">Check Out<span class="colorRed">*</span></span>
 
-
                                                     </label>
-                                                    <span id="spanSpecificDate" class="spanCompany"></span>
-
                                                 </div>
-                                            <!-- </div>
-
-                                            <div class="row mt-4 mr-3 ml-3"> -->
                                                 <div class="col">
                                                     <label class="input">
                                                         <input class="input__field fname all-width" type="text" placeholder=" " name="country[]" value="United Arab Emirates" required autocomplete="off" />
                                                         <span class="input__label">Country</span>
-
-
                                                     </label>
-                                                    <span id="spanGoingFrom" class="spanCompany"></span>
                                                 </div>
-                                                <div class="col">
-                                                    <select class="form-control" required name="goingFrom[]">
+                                                <div class="col" style="margin-right: -55px;">
+                                                <label class="input">
+                                                    <select class="input__field form-control" required name="goingFrom[]">
                                                         <option value="">Select City</option>
-
                                                         <option value="Dubai">Dubai</option>
                                                         <option value="AbuDhabi">Abu Dhabi</option>
                                                         <option value="Sharjah">Sharjah</option>
@@ -363,19 +348,21 @@
                                                         <option value="Ras Al Khaimah">Ras Al Khaimah</option>
                                                         <option value="Al Ain">Al Ain</option>
                                                     </select>
-
+                                                 </label>
                                                 </div>
 
                                                 <div class="col">
-                                                    <label for="">Hotel Ratings
-                                                        :</label>
-                                                    <div class="cb_options">
+                                                <div class="col-form-label" style="margin-top: -25px;">
+                                                <!-- <div class="d-flex"> -->
+                                                <label for="">Rating</label>
+                                                <label class="input">
                                                         <input type="checkbox" value="1" name="hotelPrefrence[]" class="hotelRating mr-2 ml-3">1
                                                         <input type="checkbox" value="2" name="hotelPrefrence[]" class="hotelRating mr-2 ml-3">2
                                                         <input type="checkbox" value="3" name="hotelPrefrence[]" class="hotelRating mr-2 ml-3">3
                                                         <input type="checkbox" value="4" name="hotelPrefrence[]" class="hotelRating mr-2 ml-3">4
                                                         <input type="checkbox" value="5" name="hotelPrefrence[]" class="hotelRating mr-2 ml-3">5
-                                                    </div>
+                                                 </label>
+                                                </div>
                                                 </div>
                                             </div>
 

@@ -599,7 +599,7 @@
 
               <td>
                   <input type="radio"  class="transfer_with_or_without"  id="with_transfer" name="transfer_with_or_without[]" value="with_transfer" onclick="get_resturant_name('with_transfer','');"/> With Transfer<br/>
-                  <input type="radio" class="transfer_with_or_without" id="without_transfer" name="transfer_with_or_without[]" value="without_transfer" onclick="get_resturant_name('without_transfer','');"/> Without Transfer 
+                  <input type="radio" checked="checked" class="transfer_with_or_without" id="without_transfer" name="transfer_with_or_without[]" value="without_transfer" onclick="get_resturant_name('without_transfer','');"/> Without Transfer 
               </td>
 
               <td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate;?>" min="<?php echo $view->specificDate;?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate. ' + '.(($buildpackage->night)- (1)).' days')); ?>" name="buildCheckIn[]" id="buildCheckIn"></td>
@@ -1095,7 +1095,7 @@
                           var cnt = $('#rows_count').val();
                           $('#rows_count').val(parseInt(cnt) + parseInt(1));
                           var adds=' <tr  id="faqs-row'+faqs_row2 + '">';   
-                          adds +='<td><input type="radio"   id="with_transfer'+faqs_row2 + '" class="transfer_with_or_without" name="transfer_with_or_without'+faqs_row2 +'[]" value="with_transfer" onclick="get_resturant_name(this.id,'+faqs_row2+');"/> With Transfer<br/><input type="radio" class="transfer_with_or_without"  id="without_transfer'+faqs_row2 + '" name="transfer_with_or_without'+faqs_row2 +'[]" value="without_transfer" onclick="get_resturant_name(this.id,'+faqs_row2+');"/> Without Transfer </td>';                                             
+                          adds +='<td><input type="radio"   id="with_transfer'+faqs_row2 + '" class="transfer_with_or_without" name="transfer_with_or_without'+faqs_row2 +'[]" value="with_transfer" onclick="get_resturant_name(this.id,'+faqs_row2+');"/> With Transfer<br/><input type="radio" class="transfer_with_or_without" checked="checked" id="without_transfer'+faqs_row2 + '" name="transfer_with_or_without'+faqs_row2 +'[]" value="without_transfer" onclick="get_resturant_name(this.id,'+faqs_row2+');"/> Without Transfer </td>';                                             
                           adds += '<td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate;?>" min="<?php echo $view->specificDate;?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate. ' + '.(($buildpackage->night)- (1)).' days')); ?>" name="buildCheckIn[]" id="buildCheckIn'+faqs_row2 + '"></td>';
                           adds += '<td> <div> <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type'+faqs_row2 + '" name="res_type[]" onchange="get_resturant_name(this.id,'+faqs_row2+');"> <option value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';                          
                           // adds += '<td><input class="form-control " type="text" value="" name="res_name[]" id="res_name'+faqs_row2 + '"></td>';
@@ -2428,6 +2428,8 @@ console.log(response);
         $("#visa_status").on("change",function(){
             // alert(this.value);
             $("#visadisplay").show();
+            $("#visa_category_drop_down").val('30_days_tourist');
+
         })
         $("#visa_status1").on("change",function(){
             $("#visadisplay").hide();

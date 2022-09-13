@@ -471,8 +471,7 @@
                     <?php endforeach ?>
                     
                     <?php if(!empty($proposalDetails['visa_category_drop_down'])) : ?>
-                     <?php echo str_replace("_"," ",$proposalDetails['visa_category_drop_down']) ?><br>
-                    "Dubai Single entry tourist  visa with Covid 19 Inbound insurance"<br>
+                    Dubai Single entry tourist  visa with Covid 19 Inbound insurance<br>
                     <?php endif ?>
                     
                     <?php echo $proposalDetails['excursion_name_SIC'][0] ?> <br> <?php echo $proposalDetails['excursion_name_PVT'][0] ?><br>

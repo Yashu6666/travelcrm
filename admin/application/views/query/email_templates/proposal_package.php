@@ -243,8 +243,12 @@
 
                     <div class="left">
                         <p>Total Pkg Rate :</p>
+                        <?php if($details->perpax_childs > 0) : ?>
                         <p><br/></p>
+                        <?php endif ?>
+                        <?php if($details->perpax_infants > 0) : ?>
                         <p><br/></p>
+                        <?php endif ?>
                         <p>Check-in : </p>
                         <p>Check-out : </p>
                         <p>No. of night : </p>

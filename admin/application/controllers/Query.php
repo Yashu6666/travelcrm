@@ -1210,6 +1210,8 @@ class Query extends CI_Controller
 		$total_adultprice =0; $total_childprice= 0;$total_infantprice= 0;
 
 		if(!empty($excursion_name_SIC)){
+
+		if(!empty($excursion_name_SIC)){
 				foreach($excursion_name_SIC as $k => $val){
 					$excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_SIC[$k]."' AND type='".$excursion_types_SIC."' AND pax >=$total_pax  LIMIT 1")->row();
 					if(empty($excursion)){
@@ -1259,9 +1261,21 @@ class Query extends CI_Controller
 				$excursion_sic_data['total_childprice'] = $total_childprice;
 
 				$excursion_sic_data['total_infantprice'] = $total_infantprice;
+
 				echo json_encode($excursion_sic_data);
 
-		
+		} else {
+			$query = $this->db->where('query_id', $query_id)->where('excursion_type', $excursion_types_SIC)->get('query_excursion');
+			if ($query->num_rows() > 0) {
+				$this->db->where('query_id', $query_id)->where('excursion_type', $excursion_types_SIC)->delete('query_excursion');
+			} 
+
+				$excursion_sic_data['total_adultprice'] = 0;
+				$excursion_sic_data['total_childprice'] = 0;
+				$excursion_sic_data['total_infantprice'] = 0;
+				
+				echo json_encode($excursion_sic_data);
+		}
 	}
 
 
@@ -1331,9 +1345,13 @@ class Query extends CI_Controller
         $excursion_child_PVT = $this->input->post('excursion_child_PVT');
         $excursion_infant_PVT = $this->input->post('excursion_infant_PVT');
 
-		$total_pax = $excursion_adult_PVT+$excursion_child_PVT+$excursion_infant_PVT;
 		$query_id = $this->input->post('query_id');
 		$query_type = $this->input->post('query_type');
+
+		if(!empty($excursion_name_PVT)) {
+		
+		$total_pax = $excursion_adult_PVT+$excursion_child_PVT+$excursion_infant_PVT;
+		
 
 		$excursion=array();
 		$excursion_pvt_data =array();
@@ -1403,7 +1421,17 @@ class Query extends CI_Controller
 
 	
 		echo json_encode($excursion_pvt_data);
+	} else {
+		$query = $this->db->where('query_id', $query_id)->where('excursion_type', $excursion_type_PVT)->get('query_excursion');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $query_id)->where('excursion_type', $excursion_type_PVT)->delete('query_excursion');
+		} 
+		$excursion_pvt_data['total_adultprice'] = 0;
+		$excursion_pvt_data['total_childprice'] = 0;
+		$excursion_pvt_data['total_infantprice'] = 0;
 
+		echo json_encode($excursion_pvt_data);
+	}
 
 	}
 	public function getExcursionPVTCalculation()

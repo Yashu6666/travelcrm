@@ -62,7 +62,7 @@
 												</a>
 											</div>
 											<div class="btn-group">
-												<a href="<?php echo site_url();?>query/view_query/Inprogress" id="addRow" class="new_btn ">
+												<a href="<?php echo site_url();?>query/view_query/Inprogress" id="addRow" class="new_btn " style="background: #3197ffd6;">
 													In Progress (<?php echo $inprogress ?>)
 												</a>
 											</div>
@@ -72,17 +72,17 @@
 												</a>
 											</div> -->
 											<div class="btn-group">
-												<a href="<?php echo site_url();?>query/view_query/Confirmed"  id="addRow" class="new_btn">
+												<a href="<?php echo site_url();?>query/view_query/Confirmed"  id="addRow" class="new_btn" style="background: #08cd04;">
 													Confirmed (<?php echo $confirmed ?>)
 												</a>
 											</div>
 											<div class="btn-group">
-												<a href="<?php echo site_url();?>query/view_query/Rejected"  id="addRow" class="new_btn">
+												<a href="<?php echo site_url();?>query/view_query/Rejected"  id="addRow" class="new_btn" style="background: #ff023d;">
 													Rejected (<?php echo $rejected ?>)
 												</a>
 											</div>
 											<div class="btn-group">
-												<a href="<?php echo site_url();?>query/view_query/Callback"  id="addRow" class="new_btn">
+												<a href="<?php echo site_url();?>query/view_query/Callback"  id="addRow" class="new_btn" style="background: #ff6d9c;">
 													Call Back (<?php echo $callback ?>)
 												</a>
 											</div>
@@ -349,7 +349,7 @@
                             <div class="form-group reportsToDropdown active">
 
 							<div class="txtfieldMain textfieldMain_mobile form-group active" style="border: 0px solid #000;">
-                                    <label for="b2bagent_mobilenum" class="mobilenumber_labelshow"><b>RM</b> <span class="colorRed">*</span> </label>
+                                    <label for="b2bagent_mobilenum" class="mobilenumber_labelshow"><b>Staff</b> <span class="colorRed">*</span> </label>
                                    <input type="text" class="form-control whbg" name="reportsTo" value="<?php echo $this->session->userdata('admin_username');?>" readonly >
 	 <span id="spanPhone" class="spanCompany"></span>
                                

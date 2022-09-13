@@ -35,6 +35,10 @@ class HotelVoucher extends CI_Controller
 		$data['hotel'] = $this->db->where('query_id', $query_id)->get('query_hotel')->result();
 		$data['guest'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
 		$data['query_id'] = $query_id;
+
+		$board_data = $this->db->where('query_id', $query_id)->get('query_hotel')->row();
+		$data['board'] = explode(',',$board_data->type);
+
 		$this->load->view('hotel_voucher/add_hotel_voucher', $data);
 		} else {
 			$this->session->set_flashdata('error', 'Details not found for this Query Id');

@@ -167,7 +167,7 @@
 																	<td><?php echo $details->adult; ?></td>
 																	<td><?php echo $details->child; ?></td>
 																	<td>--</td>
-																	<td><input type="text" class="form-control" name="board[<?php echo $key; ?>]"></td>
+																	<td><input type="text" class="form-control" value=<?php echo $board[$key] ?> name="board[<?php echo $key; ?>]"></td>
 																</tr>
 															</tbody>
 														</table>

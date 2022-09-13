@@ -43,7 +43,8 @@ class Invoice extends CI_Controller
 		$data['desc'] = $query_type->type;
 		$data['currency'] = $query_type->currency;
 		$data['pax'] = $query_type->adult + $query_type->child + $query_type->infant;
-
+		$query_price = $this->db->where('query_id', $query_id)->get('pricing_info')->row();
+		$data['price'] = $query_price->package_price / $data['pax'];
 		// if($query_type->type == "Package") {
 		
 		// 	$query_type = $this->db->where('queryId', $query_id)->get('querypackage')->row();
@@ -107,8 +108,8 @@ class Invoice extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'devsum2@gmail.com',
-			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
+			'smtp_pass' => 'xcvbtihuojnhvmrn',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -117,7 +118,7 @@ class Invoice extends CI_Controller
 		$subject = 'Invoice Details';
 
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from('test.yrpitsolutions.com@gmail.com');
 		$this->email->to($email);
 		$this->email->subject($subject);
 		$body = $this->load->view('invoice/template/invoice_mail', $data, TRUE);
@@ -134,8 +135,8 @@ class Invoice extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'devsum2@gmail.com',
-			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
+			'smtp_pass' => 'xcvbtihuojnhvmrn',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -145,7 +146,7 @@ class Invoice extends CI_Controller
 		$subject = $this->input->post('subject');
 
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from('test.yrpitsolutions.com@gmail.com');
 		$this->email->to($email);
 		$this->email->subject($subject);
 		$this->email->message($this->input->post('body'));

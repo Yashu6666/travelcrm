@@ -21480,7 +21480,7 @@
         <img src="<?php echo base_url('/public/image/logo_new.png'); ?>" alt="logo" style="margin-bottom: 15px;" width="100" class="my-3 ms-4">
     </div>
     <div class="mainDiv">
-        <h4>Booking - Voucher - Hotel</h4>
+        <h4>Voucher</h4>
     </div>
     <div class="mainDiv">
         <h4 class="text-lg-start mx-3" style="text-align: start;margin-left: 20px;"><span class="icon"><svg width="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">

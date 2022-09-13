@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width: 800px!important;">
             <div class="modal-header" style="background-color: #d9a927;">
-                <h5 class="modal-title" id="exampleModalLabel">Hotels</h5>
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-hotel"></i> Hotels</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -16,9 +16,8 @@
                             <select class="form-control Hotel_name_city_select" id="Hotel_name_city_select" required="" name="Hotel_name_city_select">
                                 <!-- <option value="">Select</option> -->
                                 <?php 
-                                foreach($cities as $city) { 
-                                    echo '<option value="'.$city->city_name.'">'.$city->city_name.'</option>';
-
+                                foreach($hotel_city as $city) { 
+                                    echo '<option value="'.$city.'">'.$city.'</option>';
                                 } 
                                 ?>
                              </select>
@@ -28,34 +27,50 @@
                             <label>Category </label>
                             <select class="form-control selectStarRating" id="selectStarRating" name="selectStarRating" class="selmenu">
                                 <!-- <option value="0">Select</option> -->
-                                <option value="1">1</option>
+                                <!-- <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
-                                <option value="5">5</option>
+                                <option value="5">5</option> -->
+                                <?php 
+                                foreach($category as $name) { 
+                                    echo '<option value="'.$name.'">'.$name.'</option>';
+                                } 
+                                
+                                ?>
                             </select>               
                         </section>
                         <section id="" class="col-md-12 mt-4" >
                             <label>Hotel Name</label>
                             <select class="form-control buildHotelName" id="buildHotelName"  required="" name="buildHotelName" required style="display: flex;">
-                                <!-- <option>Select</option>                                              -->
+                            <?php 
+                                foreach($hotel_name as $name) { 
+                                    echo '<option value="'.$name.'">'.$name.'</option>';
+                                } 
+                                ?>
                             </select>
                         </section>
                         <section id="" class="col-md-12 mt-4">
                         <label>Room Type</label>
                             <select class="form-control buildRoomType" id="buildRoomType" required="" name="buildRoomType" style="display: flex;">
-                                <!-- <option>Select</option>                                              -->
+                            <?php 
+                                foreach($room_type as $name) { 
+                                    echo '<option value="'.$name.'">'.$name.'</option>';
+                                } 
+                                ?>                                          -->
                             </select>
                         </section>
                         <section id="aside" class="mt-4" style="display: flex;">
                             <section id="recipientcase" class="col-md-6">
                                 <label>Check In </label>
-                                <input type="date" name="check_in_date" id="check_in_date" class="form-control check_in_date" value="<?php echo isset($details['checkindate']) ? $details['checkindate'] : "" ;?>" readonly >
+                                <input type="date" name="check_in_date" id="check_in_date" class="form-control check_in_date" >
+                                <!-- <input type="date" name="check_in_date" id="check_in_date" class="form-control check_in_date" value="<?php echo isset($details['checkindate']) ? $details['checkindate'] : "" ;?>" readonly > -->
                             </section>
 
                             <section id="recipientcase" class="col-md-6">
                                 <label>Check Out</label>
-                                <input type="date" name="check_out_date" id="check_out_date" class="form-control txtinput check_out_date" min="<?php echo $details['checkindate'];?>" max="<?php echo $details['checkoutdate'];?>" value="">
+                                <input type="date" name="check_out_date" id="check_out_date" class="form-control txtinput check_out_date" >
+                                <!-- <input type="date" name="check_out_date" id="check_out_date" class="form-control txtinput check_out_date" min="<?php echo $details['checkindate'];?>" max="<?php echo $details['checkoutdate'];?>" value=""> -->
                             </section>
                         </section>
                         <!-- <br>
@@ -439,7 +454,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width: 800px!important;">
             <div class="modal-header" style="background-color: #d9a927;">
-                <h5 class="modal-title" id="exampleModalLabel">Transfer</h5>
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-car"></i> Transfer</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -448,21 +463,48 @@
                     <form method="post" >
                       <div id="wrapping">
                       <input type="hidden" name="modal_transfer" id="modal_transfer" value=""/>
-                      <section id="aligned" class="col-md-12">
-                       
-                     
+
+                      <!-- <section id="aligned" class="col-md-12">
                         <div class="first">
                             <label><input type="radio" name="colorRadio" value="TransArrival" checked="">Arrival Transfer</label>
                             <label><input type="radio" name="colorRadio" value="TransDeparture"> Departure Transfer</label>
                          </div>
-                    
+                    </section> -->
+
+                    <section id="aligned" class="col-md-12 mt-4">
+                            <label>Flight Arrival</label>
+                            <div class="d-flex">
+                                <input id="arrival_airline" class="form-control arrival_airline " type="text" placeholder="Airline Code" name="arrival_airline[]">
+                                <input id="arrival_flight" class="form-control arrival_flight ml-2 " type="text" placeholder="Flight No" name="arrival_flight[]">
+                                <input id="arrival_hours" class="form-control arrival_hours ml-2 " type="text" placeholder="Hours" name="arrival_hours[]">
+                                <input id="arrival_mins" class="form-control arrival_mins ml-2 " type="text" placeholder="Minutes" name="arrival_mins[]">
+                            </div>
                     </section>
+
+                    <section id="aligned" class="col-md-12 mt-4">
+                            <label>Return Flight</label>
+                            <div class="d-flex">
+                                <input id="return_airline" class="form-control return_airline " type="text" placeholder="Airline Code" name="return_airline[]">
+                                <input id="return_flight" class="form-control return_flight ml-2 " type="text" placeholder="Flight No" name="return_flight[]">
+                                <input id="return_hours" class="form-control return_hours ml-2 " type="text" placeholder="Hours" name="return_hours[]">
+                                <input id="return_mins" class="form-control return_mins ml-2 " type="text" placeholder="Minutes" name="return_mins[]">
+                            </div>
+                    </section>
+
                         <section id="aligned" class="col-md-12 mt-4">
                             <label>Transfer Type</label>
                             <select id="transfertype"  required  name="transfertype"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                    <option value="oneway">Internal Transfer</option>
+                                    <option value="">Select Transfer</option>
+                                    <!-- <option value="oneway">Internal Transfer</option>
                                     <option value="round">Point to Point Transfer</option>
-                                       
+                                    ?php 
+                                    foreach($transfer_types as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?> -->
+                                    <?php foreach($transfer_types as $value) : ?>
+                                        <option value=<?php echo $value ?>><?php echo $value == "oneway" ? "Internal Transfer" : "Point to Point Transfer" ?></option>
+                                    <?php endforeach ?>
                                 </select>
                         </section>
 
@@ -482,24 +524,38 @@
                                 <select id="pickupinternal"  required  name="buildTravelToDateCab"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                     <option value="Pickup">Pickup</option>
                                     <?php 
-                                    foreach($transfer_route as $value){ ?>
-                                       <option value="<?php echo $value->start_city ?>"><?php echo $value->start_city ?></option>
-                                    <?php }
-                                     ?>
+                                    foreach($transfer_pickup as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>  
                                 </select>
                             </section>
 
                             <section id="" class="col-md-6">
                             <label>Drop off</label>
                                 <select   id="dropoffinternal" name="buildTravelToCityCabDrop"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                 <option value="Drop Off">Drop Off</option>
-                                </select>
+                                    <!-- <?php 
+                                    foreach($transfer_dropoff as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>   -->
+
+                                        <option value="Drop Off">Drop Off</option>
+                                        </select>
                             </section>
                         </section>
 
                         <section id="" class="col-md-6 mt-4">
                         <label>Route Name</label>
-                            <input id="route_nameinternal" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeCab"></td>
+                            <input id="route_nameinternal" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeCab">
+                            <!-- <select   id="route_nameinternal" class="form-control"  name="buildTravelTypeCab" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                    <?php 
+                                    foreach($transfer_routes as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>  
+                                </select> -->
+                        </td>
                         </section>
                     
                     <section id="aside">
@@ -541,7 +597,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width: 800px!important;">
             <div class="modal-header" style="background-color: #d9a927;">
-                <h5 class="modal-title" id="exampleModalLabel">Meals</h5>
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-bowl-rice"></i> Meals</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -555,31 +611,54 @@
                                     <label>Date</label>                            
                                     <input class="form-control" type="date" value="<?php echo isset($details['checkindate']) ? $details['checkindate'] : "" ;?>" name="meals_date" id="meals_date">
                             </section> -->
-                  <section id="" class="col-md-12 d-flex">
-                    <input type="radio" class="transfer_with_or_without" id="with_transfer" name="transfer_with_or_without" value="with_transfer" onclick="get_resturant_name('with_transfer','');" autocompleted=""> With Transfer<br>
-                    <input type="radio" class="transfer_with_or_without" id="without_transfer" name="transfer_with_or_without" value="without_transfer" onclick="get_resturant_name('without_transfer','');"> Without Transfer 
-                  </section>
+                  <!-- <section id="" class="col-md-12 d-flex">
+                 <input type="radio" class="transfer_with_or_without" id="with_transfer" name="transfer_with_or_without" value="with_transfer" onclick="get_resturant_name('with_transfer','');" autocompleted=""> With Transfer<br>
+                    <input type="radio" class="transfer_with_or_without" id="without_transfer" name="transfer_with_or_without" value="without_transfer" onclick="get_resturant_name('without_transfer','');"> Without Transfer  
+                    </section> -->
+
+                    <section id="" class="col-md-12 mt-4">
+                                <label>Transfer Type</label>
+                                <select id="transfer_with_or_without"  required  name="transfer_with_or_without" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                <option value="">Select Transfer</option>
+                                    <?php foreach($resturant_transfer_type as $value) : ?>
+                                        <option value=<?php echo $value ?>><?php echo $value == "with_transfer" ? "With Transfer" : "Without Transfer" ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </section>
+
+
+                    
                             <section id="" class="col-md-12 mt-4">
                                 <label>Resturant Type</label>
-                                <select id="resturant_type"  required  name="resturant_type" onchange="get_resturant_name()" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                        <option value="Standard">Standard</option>
-                                        <option value="Premium">Premium</option>
-                                        
+                                <select id="resturant_type"  required  name="resturant_type"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                <!-- <select id="resturant_type"  required  name="resturant_type" onchange="get_resturant_name()" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg"> -->
+                                <?php 
+                                    foreach($resturant_type as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>  
                                     </select>
                             </section>
 
                             <section id="" class="col-md-12 mt-4">
                                 <label>Resturant Name</label>
                                 <select id="resturant_name"  required  name="resturant_name"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                    <option>select</option>             
+                                <?php 
+                                    foreach($resturant_name as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>             
                                 </select> 
                             </section>
                         
                        <section id="aligned" class="col-md-12 mt-4">
                             <label>Meal </label>
                             <select id="meal"  required  name="meal"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                    <option value="Lunch">Lunch</option>
-                                    <option value="Dinner">Dinner</option>
+                            <?php 
+                                    foreach($meal as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>  
                                        
                                 </select>
                         </section>
@@ -587,14 +666,14 @@
                         <section id="aligned" class="col-md-12 mt-4">
                             <label>Meal Type </label>
                             <select id="meal_type"  required  name="meal_type"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                    <option value="Veg">Veg</option>
-                                    <option value="Non-Veg">Non-Veg</option>
-                                    <option value="Jain">Jain</option>
+                            <?php 
+                                    foreach($meal_type as $name) { 
+                                        echo '<option value="'.$name.'">'.$name.'</option>';
+                                    } 
+                                    ?>  
                                        
                                 </select>
                         </section>
-
-                        
 
                         <section id="" class="col-md-12 mt-4">
                         <label>Adult</label>
@@ -655,7 +734,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width: 800px!important;">
             <div class="modal-header" style="background-color: #d9a927;">
-                <h5 class="modal-title" id="exampleModalLabel">Excursion</h5>
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-place-of-worship"></i> Excursion</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -668,17 +747,20 @@
                             <section id="" class="col-md-12">
                                     <label>Excursion Type</label> 
                                     <select id="excursion_type"  required  name="excursion_type"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                        <option value="SIC">SIC</option>
-                                        <option value="PVT">PVT</option>
-                                        
+                                        <option value="">Select Type</option>
+                                        <!-- <option value="SIC">SIC</option>
+                                        <option value="PVT">PVT</option> -->
+                                        <?php foreach($excursion_types as $value) : ?>
+                                            <option value=<?php echo $value ?>><?php echo $value ?></option>
+                                        <?php endforeach ?>
                                     </select>                           
                             </section>
                             <section id="" class="col-md-12 mt-4">
                                 <label>Excursion Name</label>
                                 <!-- <select required multiple="" id="excursion_name"  name="excursion[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" > -->
                                 <select id="excursion_name"  required  name="excursion"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                        <?php foreach($excursion as $value){ ?>
-                                            <option value="<?php echo $value->tourname ?>"><?php echo $value->tourname ?></option>
+                                        <?php foreach($excursion_data as $value){ ?>
+                                            <option value="<?php echo $value ?>"><?php echo $value ?></option>
                                         <?php } ?>
                                 </select>
                             </section>

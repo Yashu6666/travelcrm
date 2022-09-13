@@ -35,6 +35,10 @@ class HotelVoucher extends CI_Controller
 		$data['hotel'] = $this->db->where('query_id', $query_id)->get('query_hotel')->result();
 		$data['guest'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
 		$data['query_id'] = $query_id;
+
+		$board_data = $this->db->where('query_id', $query_id)->get('query_hotel')->row();
+		$data['board'] = explode(',',$board_data->type);
+
 		$this->load->view('hotel_voucher/add_hotel_voucher', $data);
 		} else {
 			$this->session->set_flashdata('error', 'Details not found for this Query Id');
@@ -101,14 +105,14 @@ class HotelVoucher extends CI_Controller
 				'protocol' => 'smtp',
 				'smtp_host' => 'ssl://smtp.googlemail.com',
 				'smtp_port' => 465,
-				'smtp_user' => 'devsum2@gmail.com',
-				'smtp_pass' => 'jggdlvqnvdenvssm',
+				'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
+				'smtp_pass' => 'xcvbtihuojnhvmrn',
 				'crlf' => "\r\n",
 				'mailtype' => "html",
 				'newline' => "\r\n",
 			);
 			$this->email->initialize($config);
-			$this->email->from('devsum2@gmail.com');
+			$this->email->from('test.yrpitsolutions.com@gmail.com');
 			$this->email->to($c_email);
 			$this->email->subject('hotel voucher');
 
@@ -144,7 +148,7 @@ class HotelVoucher extends CI_Controller
 	public function submitVoucherDetails()
 	{
 		try {
-
+			// print_r($_POST);
 			$query_id = $_POST['query_id'];
 			$conf_number = $_POST['conf_number'];
 			$hotel_id = $_POST['hotel_id'];
@@ -153,12 +157,15 @@ class HotelVoucher extends CI_Controller
 			$booking_date = $_POST['booking_date'];
 			$check_in = $_POST['check_in'];
 			$check_out = $_POST['check_out'];
+			$guest_name = $_POST['guest_name'];
+
 
 			foreach ($conf_number as $key => $val) {
 				$data_arr = [
 					'confirmation_id' => $conf_number[$key],
 					'query_hotel_id' => $hotel_id[$key],
 					'query_id' => $query_id,
+					'guest_name' => $guest_name[0],
 					'board' => $board[$key],
 					'query_hotel_name' => $hotel_name[$key],
 					'query_hotel_booking_date' => $booking_date[$key],

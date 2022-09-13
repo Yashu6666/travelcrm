@@ -69,7 +69,7 @@
 	class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark">
 	<div class="page-wrapper">
 		<!-- start header -->
-		<div class="page-header navbar navbar-fixed-top" style="background-color:#d9a927 !important;">
+		<div class="page-header navbar navbar-fixed-top" style="background-color:#ffffff !important;">
 			<div class="page-header-inner ">
 				<!-- logo start -->
 				<div class="page-logo">

@@ -68,24 +68,23 @@
 									<!-- <form action="<php echo site_url(); ?>HotelVoucher/submitVoucherDetails" method="post"> -->
 									<div class="card-body">
 										<div class="container mb-5 mt-3">
-											<div class="row d-flex align-items-baseline new_bg_header">
+											<!-- <div class="row d-flex align-items-baseline new_bg_header">
 												<hr>
 												<div class="col-xl-12">
 													<h4 class="text-white text-center ">Voucher / Accommodation</h4>
 												</div>
-											</div>
+											</div> -->
 											<div class="mt-3 row d-flex align-items-baseline new_bg_header">
 												<div class="col-xl-12">
-													<h4 class="text-white text-center">Booking - Voucher - Hotel</h4>
+													<h4 class="text-white text-center">Voucher</h4>
 												</div>
 											</div>
 
-											<div class="mt-3 row d-flex align-items-baseline new_bg_header">
+											<!-- <div class="mt-3 row d-flex align-items-baseline new_bg_header">
 												<div class="col-xl-12">
 													<h4 class="text-white">Hotel Details</h4>
 												</div>
-											</div>
-                                            
+											</div> -->
 											<?php foreach (explode(',',$hotel[0]->nights) as $key => $value) : ?>
 
 												<div class="mt-3 row d-flex align-items-baseline ">
@@ -167,7 +166,7 @@
 													</thead>
 													<tbody>
 														<tr>
-															<td><?php echo $guest->b2bfirstName . ' ' . $guest->b2blastName ?></td>
+															<td><input type="text" id="guest_name" class="form-control" name="guest_name[<?php echo $key; ?>]"></td>
 															<td>indian</td>
 															<td><?php echo $guest->b2bEmail ?></td>
 															<td><?php echo $guest->b2bmobileNumber ?></td>
@@ -253,8 +252,10 @@ input {
         hotel_id: id,
       },
       success: function (result) {
+        console.log("🚩 ~ file: hotel_voucher_edit.php ~ line 256 ~ JSON.parse ~ result", result)
         document.getElementById('conf_number_'+index).value = JSON.parse(result).confirmation_id;
         document.getElementById('board_'+index).value = JSON.parse(result).board;
+        document.getElementById('guest_name').value = JSON.parse(result).guest_name;
       },
       error: function () {
         console.log("Error");

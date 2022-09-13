@@ -92,8 +92,10 @@
 
                                                     <td>
                                                         <select class="invoice-INR" style="width:70% !important;height:38px !important;" name="invoiceCurrency">
-                                                          <option <?php echo $currency == "AED" ? "selected" : ""?> value="AED">AED</option>
-                                                          <option <?php echo $currency  == "USD" ? "selected" : "" ?> value="USD">USD</option>
+                                                          <!-- <option <?php echo $currency == "AED" ? "selected" : ""?> value="AED">AED</option>
+                                                          <option <?php echo $currency  == "USD" ? "selected" : "" ?> value="USD">USD</option> -->
+                                                          <option  value="AED">AED</option>
+                                                          <option  value="USD">USD</option>
                                                         </select>
                                                     </td>
                                                     <td><label class="input">
@@ -223,7 +225,7 @@
                                                         <div class="mb-3">
                                                             <input type="number" class="form-control invoiceRate" id="invoiceRate"
                                                                 name="invoiceRate[]" aria-describedby="emailHelp"
-                                                                value="0" autocomplete="off">
+                                                                value=<?php echo isset($price) ? $price : "0" ?> autocomplete="off">
                                                             <b><span id="spanRate" class="colorRed"></span></b>
                                                         </div>
                                                     </td>

@@ -23,8 +23,8 @@ class Query extends CI_Controller
 				'protocol' => 'smtp',
 				'smtp_host' => 'ssl://smtp.googlemail.com',
 				'smtp_port' => 465,
-				'smtp_user' => 'devsum2@gmail.com',
-				'smtp_pass' => 'jggdlvqnvdenvssm',
+				'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
+				'smtp_pass' => 'xcvbtihuojnhvmrn',
 				'crlf' => "\r\n",
 				'mailtype' => "html",
 				'newline' => "\r\n",
@@ -50,12 +50,10 @@ class Query extends CI_Controller
 			}
 			else {
 				$body = $this->load->view('query/email_templates/proposal', $data, TRUE);
-				echo "Email Sent other";
-
 			}
 
 			$this->email->initialize($config);
-			$this->email->from('devsum2@gmail.com');
+			$this->email->from('test.yrpitsolutions.com@gmail.com');
 			$this->email->to($data_en->cus_email);
 			$this->email->cc($data_en->cc_email);
 			$this->email->subject($data_en->subject);
@@ -537,8 +535,8 @@ class Query extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'devsum2@gmail.com',
-			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
+			'smtp_pass' => 'xcvbtihuojnhvmrn',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -550,7 +548,7 @@ class Query extends CI_Controller
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from('test.yrpitsolutions.com@gmail.com');
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -726,6 +724,8 @@ class Query extends CI_Controller
 			$datas[$x]['buildCheckIns'] = $tableData[0]['buildCheckIns'][$x];
 			$datas[$x]['Category'] = $tableData[0]['Category'][$x];
 			$datas[$x]['get_room_types'] = $tableData[0]['get_room_types'][$x];
+			$datas[$x]['sharing_types'] = $tableData[0]['sharing_types'][$x];
+			
 		}
 		$no_of_nights = ($tableData[0]['nights']);
 		// print_r();exit;
@@ -964,7 +964,7 @@ class Query extends CI_Controller
 			"adult_extra_bed" => implode(',',$tableData[0]['extra_with_adult']),
 			"child_extra_bed" => implode(',',$tableData[0]['extra_with_child']),
 			"infant_extra_bed" => implode(',',$tableData[0]['extra_without_bed']),
-
+			"sharing_type" => implode(',',$tableData[0]['sharing_types']),
 		];
 		// echo"<pre>";print_r($hotel_calculation_data);exit;
 
@@ -988,6 +988,106 @@ class Query extends CI_Controller
 		echo json_encode($resturant_name);
 	}
 
+	public function saveTransferData()
+	{
+		$query_id = $this->input->post('query_id');
+		$query_type = $this->input->post('query_type');
+		$pax_adult = $this->input->post('pax_adult');
+		$pax_child = $this->input->post('pax_child');
+		$pax_infants = $this->input->post('pax_infants');
+
+		$tableData = $this->input->post('data');
+
+		if(isset($tableData[0]['internal_transfer_pickup'])) {
+
+		$priceperperson_internal = 0;
+		$person= $pax_adult + $pax_child;
+
+		foreach ($tableData[0]['internal_transfer_pickup'] as $key => $value) {
+			$pickup = $tableData[0]['internal_transfer_pickup'][$key];
+			$dropoff = $tableData[0]['internal_transfer_dropoff'][$key];
+
+			$dropoff_query = $this->db->like('start_city', $pickup)->where('dest_city', $dropoff)->where('seat_capacity >=', $person)->where('transport_type', 'oneway')->get('transfer_route')->result();
+
+			$price = $dropoff_query[0]->cost;
+			$priceperperson_internal += $price/$person;
+		}
+
+
+		$internal_transfer_data = [
+			'query_id' =>  $query_id ,
+			'query_type' =>  $query_type ,
+			'transfer_type' =>  'internal',
+			'transfer_date' =>  implode(',',$tableData[0]['internal_transfer_date']),
+			'pickup' =>  implode(',',$tableData[0]['internal_transfer_pickup']),
+			'dropoff' =>  implode(',',$tableData[0]['internal_transfer_dropoff']),
+			'transfer_route' =>  implode(',',$tableData[0]['internal_transfer_route']),
+			'adult_pax' =>  $pax_adult,
+			'child_pax' =>  $pax_child,
+			'adult_price' => $priceperperson_internal,
+			'child_price'  =>  $priceperperson_internal,
+			'created_by' =>   $this->session->userdata('admin_id'),
+		];
+
+		$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'internal')->get('query_transfer');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $query_id);
+			$this->db->where('transfer_type', 'internal');
+			$this->db->update('query_transfer',$internal_transfer_data);
+		} else {
+			$this->db->insert('query_transfer', $internal_transfer_data);
+		}
+
+		echo json_encode("transfer details saved successfully");
+		}
+
+		// ----------------------------------------- return -------------------------------------------------
+
+		if(isset($tableData[0]['return_transfer_pickup'])) {
+
+			$priceperperson_return = 0;
+			$person= $pax_adult + $pax_child;
+	
+			foreach ($tableData[0]['return_transfer_pickup'] as $key => $value) {
+				$pickup = $tableData[0]['return_transfer_pickup'][$key];
+				$dropoff = $tableData[0]['return_transfer_dropoff'][$key];
+	
+				$dropoff_query = $this->db->like('start_city', $pickup)->where('dest_city', $dropoff)->where('seat_capacity >=', $person)->where('transport_type', 'round')->get('transfer_route')->result();
+	
+				$price = $dropoff_query[0]->cost;
+				$priceperperson_return += $price/$person;
+			}
+	
+			$return_transfer_data = [
+				'query_id' =>  $query_id ,
+				'query_type' =>  $query_type ,
+				'transfer_type' =>  'return',
+				'transfer_date' =>  implode(',',$tableData[0]['return_transfer_date']),
+				'pickup' =>  implode(',',$tableData[0]['return_transfer_pickup']),
+				'dropoff' =>  implode(',',$tableData[0]['return_transfer_dropoff']),
+				'transfer_route' =>  implode(',',$tableData[0]['return_transfer_route']),
+				'adult_pax' =>  $pax_adult,
+				'child_pax' =>  $pax_child,
+				'adult_price' => $priceperperson_return,
+				'child_price'  =>  $priceperperson_return,
+				'created_by' =>   $this->session->userdata('admin_id'),
+			];
+	
+			$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'return')->get('query_transfer');
+			if ($query->num_rows() > 0) {
+				$this->db->where('query_id', $query_id);
+				$this->db->where('transfer_type', 'return');
+				$this->db->update('query_transfer',$return_transfer_data);
+			} else {
+				$this->db->insert('query_transfer', $return_transfer_data);
+			}
+	
+			}
+		
+	}
+
+
+
 	public function getMealcalculation()
 	{
 		$rows_count = $this->input->post('total_rows');
@@ -1001,10 +1101,12 @@ class Query extends CI_Controller
 			$datas[$x]['meal_types'] = $tableData[0]['meal_types'][$x];
 			$datas[$x]['meal_adults'] = isset($tableData[0]['meal_adults'][$x]) ? $tableData[0]['meal_adults'][$x] : 0;
 			$datas[$x]['meal_childs'] = isset($tableData[0]['meal_childs'][$x]) ? $tableData[0]['meal_childs'][$x] : 0;
+			$datas[$x]['no_of_meals'] = isset($tableData[0]['no_of_meals'][$x]) ? $tableData[0]['no_of_meals'][$x] : 0;
 			$datas[$x]['resturants_name'] = isset($tableData[0]['resturants_name'][$x]) ? $tableData[0]['resturants_name'][$x] : "";
 			$datas[$x]['resturants_transfer'] = isset($tableData[0]['resturants_transfer'][$x]) ? $tableData[0]['resturants_transfer'][$x] : "";
 		}
 
+		// print_r($datas);exit;
 		$meal_calculation = array();
 		$meal_calculation_data = array();
 		$meal_calculation_data['adult_prices'] = 0;
@@ -1023,11 +1125,48 @@ class Query extends CI_Controller
 		// 'transfer' => $val['resturants_transfer'], 'resturant_name' => $val['resturants_name'] ])->row();
 		// print_r($datas);
 
+			// if (array_key_exists('0', $meal_calculation[$k])) {
+			// 	$meal_calculation_data['adult_prices'] += ((int)($meal_calculation[$k][0]['adult_price']) * ($val['meal_adults']));
+			// 	$meal_calculation_data['child_prices'] += ((int)($meal_calculation[$k][0]['child_rate']) * ($val['meal_childs']));
+			// }
 			if (array_key_exists('0', $meal_calculation[$k])) {
-				$meal_calculation_data['adult_prices'] += ((int)($meal_calculation[$k][0]['adult_price']) * ($val['meal_adults']));
-				$meal_calculation_data['child_prices'] += ((int)($meal_calculation[$k][0]['child_rate']) * ($val['meal_childs']));
+				$meal_calculation_data['adult_prices'] += ((int)($meal_calculation[$k][0]['adult_price']) * (($val['no_of_meals'] * $val['meal_adults'])));
+				$meal_calculation_data['child_prices'] += ((int)($meal_calculation[$k][0]['child_rate']) * (($val['no_of_meals'] * $val['meal_childs'])));
 			}
 		}
+
+		// print_r($meal_calculation_data);exit;
+
+		$query_id = $this->input->post('query_id');
+		$query_type = $this->input->post('query_type');
+
+		$meals_query_data = [
+			'query_id' =>  $query_id ,
+			'query_type' =>  $query_type ,
+			'transfer_type' =>  implode(',',$tableData[0]['resturants_transfer']),
+			'date' =>  implode(',',$tableData[0]['checkIn_date']),
+			'resturant_type' =>  implode(',',$tableData[0]['resturants']),
+			'resturant_name' =>  implode(',',$tableData[0]['resturants_name']),
+			'meal' =>  implode(',',$tableData[0]['meals']),
+			'meal_type' =>  implode(',',$tableData[0]['meal_types']),
+			'adult_pax' =>  implode(',',$tableData[0]['meal_adults']),
+			'child_pax' =>  implode(',',$tableData[0]['meal_childs']),
+			'no_of_meals' =>  implode(',',$tableData[0]['no_of_meals']),
+			'adult_price' => $meal_calculation_data['adult_prices'] ,
+			'child_price'  =>  $meal_calculation_data['child_prices'] ,
+			'created_by' =>   $this->session->userdata('admin_id'),
+		];
+
+		$query = $this->db->where('query_id', $query_id)->get('query_meal');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $query_id);
+			$this->db->update('query_meal',$meals_query_data);
+		} else {
+			$this->db->insert('query_meal', $meals_query_data);
+		}
+
+		// "query_type" => implode(',',$tableData[0]['query_type'])
+
 		echo json_encode($meal_calculation_data);
 	}
 	// public function getMealcalculation(){
@@ -1063,9 +1202,14 @@ class Query extends CI_Controller
         $excursion_infants_SIC = $this->input->post('excursion_infants_SIC');
 		$total_pax = $excursion_adults_SIC+$excursion_childs_SIC+$excursion_infants_SIC;
 	
+		$query_id = $this->input->post('query_id');
+		$query_type = $this->input->post('query_type');
+
 		$excursion=array();
 		$excursion_sic_data =array();
 		$total_adultprice =0; $total_childprice= 0;$total_infantprice= 0;
+
+		if(!empty($excursion_name_SIC)){
 
 		if(!empty($excursion_name_SIC)){
 				foreach($excursion_name_SIC as $k => $val){
@@ -1086,14 +1230,52 @@ class Query extends CI_Controller
 
 				}
 			}
+
+			$excursion_data = [
+				'query_id' =>  $query_id ,
+				'query_type' =>  $query_type ,
+				'excursion_type' =>  $excursion_types_SIC,
+				'excursion_name' =>  implode(',',$excursion_name_SIC) ,
+				'adult_pax' =>  $excursion_adults_SIC ,
+				'child_pax' =>   $excursion_childs_SIC,
+				'infant_pax' =>  $excursion_infants_SIC ,
+				'adult_price' => $total_adultprice ,
+				'child_price'  =>  $total_childprice ,
+				'infant_price' => $total_infantprice  ,
+				'created_by' =>   $this->session->userdata('admin_id'),
+			];
+	
+			// print_r($excursion_data);return;
+	
+			$query = $this->db->where('query_id', $query_id)->where('excursion_type', $excursion_types_SIC)->get('query_excursion');
+			if ($query->num_rows() > 0) {
+				$this->db->where('query_id', $query_id);
+				$this->db->where('excursion_type', $excursion_types_SIC);
+				$this->db->update('query_excursion',$excursion_data);
+			} else {
+				$this->db->insert('query_excursion', $excursion_data);
+			}
+
 				$excursion_sic_data['total_adultprice'] = $total_adultprice;
 
 				$excursion_sic_data['total_childprice'] = $total_childprice;
 
 				$excursion_sic_data['total_infantprice'] = $total_infantprice;
+
 				echo json_encode($excursion_sic_data);
 
-		
+		} else {
+			$query = $this->db->where('query_id', $query_id)->where('excursion_type', $excursion_types_SIC)->get('query_excursion');
+			if ($query->num_rows() > 0) {
+				$this->db->where('query_id', $query_id)->where('excursion_type', $excursion_types_SIC)->delete('query_excursion');
+			} 
+
+				$excursion_sic_data['total_adultprice'] = 0;
+				$excursion_sic_data['total_childprice'] = 0;
+				$excursion_sic_data['total_infantprice'] = 0;
+				
+				echo json_encode($excursion_sic_data);
+		}
 	}
 
 
@@ -1163,7 +1345,13 @@ class Query extends CI_Controller
         $excursion_child_PVT = $this->input->post('excursion_child_PVT');
         $excursion_infant_PVT = $this->input->post('excursion_infant_PVT');
 
+		$query_id = $this->input->post('query_id');
+		$query_type = $this->input->post('query_type');
+
+		if(!empty($excursion_name_PVT)) {
+		
 		$total_pax = $excursion_adult_PVT+$excursion_child_PVT+$excursion_infant_PVT;
+		
 
 		$excursion=array();
 		$excursion_pvt_data =array();
@@ -1200,6 +1388,31 @@ class Query extends CI_Controller
 			}
 		}
 
+		
+		$excursion_data = [
+			'query_id' =>  $query_id ,
+			'query_type' =>  $query_type ,
+			'excursion_type' =>  $excursion_type_PVT,
+			'excursion_name' =>  implode(',',$excursion_name_PVT) ,
+			'adult_pax' =>  $excursion_adult_PVT ,
+			'child_pax' =>   $excursion_child_PVT,
+			'infant_pax' =>  $excursion_infant_PVT ,
+			'adult_price' => $total_adultprice ,
+			'child_price'  =>  $total_childprice ,
+			'infant_price' => $total_infantprice  ,
+			'created_by' =>   $this->session->userdata('admin_id'),
+		];
+
+
+		$query = $this->db->where('query_id', $query_id)->where('excursion_type', $excursion_type_PVT)->get('query_excursion');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $query_id);
+			$this->db->where('excursion_type', $excursion_type_PVT);
+			$this->db->update('query_excursion',$excursion_data);
+		} else {
+			$this->db->insert('query_excursion', $excursion_data);
+		}
+
 		$excursion_pvt_data['total_adultprice'] = $total_adultprice;
 
 		$excursion_pvt_data['total_childprice'] = $total_childprice;
@@ -1208,7 +1421,17 @@ class Query extends CI_Controller
 
 	
 		echo json_encode($excursion_pvt_data);
+	} else {
+		$query = $this->db->where('query_id', $query_id)->where('excursion_type', $excursion_type_PVT)->get('query_excursion');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $query_id)->where('excursion_type', $excursion_type_PVT)->delete('query_excursion');
+		} 
+		$excursion_pvt_data['total_adultprice'] = 0;
+		$excursion_pvt_data['total_childprice'] = 0;
+		$excursion_pvt_data['total_infantprice'] = 0;
 
+		echo json_encode($excursion_pvt_data);
+	}
 
 	}
 	public function getExcursionPVTCalculation()
@@ -1278,12 +1501,13 @@ class Query extends CI_Controller
 	public function getVisaPrice()
 	{
 
-
 		$pax_adult = $this->input->post('pax_adult');
 		$pax_child = $this->input->post('pax_child');
 		$pax_infant = $this->input->post('pax_infant');
+		$query_id = $this->input->post('query_id');
+		$query_type = $this->input->post('query_type');
 		$visa_category_drop_down = $this->input->post('visa_category_drop_down');
-		// $visa_validity = $this->input->post('visa_validity');
+		$visa_validity = $this->input->post('visa_validity');
 		$entry_type = $this->input->post('entry_type');
 		$this->db->select("*");
 		$this->db->from("visa");
@@ -1306,6 +1530,31 @@ class Query extends CI_Controller
 		if ($pax_infant) {
 			$per_pax_infant = $visa_calculation[0]['infant'];
 		}
+
+		$visa_data = [
+			'query_id' =>  $query_id ,
+			'query_type' =>  $query_type ,
+			'visa_category' =>   $visa_category_drop_down,
+			'entry_type' =>  $entry_type ,
+			'validity' =>  $visa_validity ,
+			'adult_pax' =>  $pax_adult ,
+			'child_pax' =>   $pax_child,
+			'infant_pax' =>  $pax_infant ,
+			'adult_price' =>  $per_pax_adult * $pax_adult ,
+			'child_price'  =>  $per_pax_child * $pax_child ,
+			'infant_price' => $per_pax_infant * $pax_infant  ,
+			'created_by' =>   $this->session->userdata('admin_id'),
+		];
+
+
+		$query = $this->db->where('query_id', $query_id)->get('query_visa');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $query_id);
+			$this->db->update('query_visa',$visa_data);
+		} else {
+			$this->db->insert('query_visa', $visa_data);
+		}
+
 		$total_pax_visa_price['per_pax_adult_amt'] = $per_pax_adult * $pax_adult;
 		$total_pax_visa_price['per_pax_child_amt'] = $per_pax_child * $pax_child;
 		$total_pax_visa_price['per_pax_infant_amt'] =  $per_pax_infant * $pax_infant;
@@ -1346,8 +1595,8 @@ class Query extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'devsum2@gmail.com',
-			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
+			'smtp_pass' => 'xcvbtihuojnhvmrn',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -1359,7 +1608,7 @@ class Query extends CI_Controller
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from('test.yrpitsolutions.com@gmail.com');
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -1394,8 +1643,8 @@ class Query extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'devsum2@gmail.com',
-			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
+			'smtp_pass' => 'xcvbtihuojnhvmrn',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -1407,7 +1656,7 @@ class Query extends CI_Controller
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from('test.yrpitsolutions.com@gmail.com');
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -1454,8 +1703,8 @@ class Query extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'devsum2@gmail.com',
-			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
+			'smtp_pass' => 'xcvbtihuojnhvmrn',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -1467,7 +1716,7 @@ class Query extends CI_Controller
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from('test.yrpitsolutions.com@gmail.com');
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -1517,8 +1766,8 @@ class Query extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'devsum2@gmail.com',
-			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
+			'smtp_pass' => 'xcvbtihuojnhvmrn',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -1530,7 +1779,7 @@ class Query extends CI_Controller
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from('test.yrpitsolutions.com@gmail.com');
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -1577,8 +1826,8 @@ class Query extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'devsum2@gmail.com',
-			'smtp_pass' => 'jggdlvqnvdenvssm',
+			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
+			'smtp_pass' => 'xcvbtihuojnhvmrn',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -1590,7 +1839,7 @@ class Query extends CI_Controller
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from('test.yrpitsolutions.com@gmail.com');
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -1902,6 +2151,7 @@ class Query extends CI_Controller
 			'hotels' => $hotels,
 			'no_of_room' => $_POST['no_of_room'],
 			'buildCheckIns' => $_POST['buildCheckIns'],
+			'build_room_types' => $_POST['build_room_types'],
 
 			// 'excursion_name_SIC' => $_POST['excursion'][0],
 			// 'excursion_name_PVT' => $_POST['excursion'][1],
@@ -1946,6 +2196,7 @@ class Query extends CI_Controller
 			'res_name' => $_POST['res_name'],
 			'Meal' => $_POST['Meal'],
 			'Meal_Type' => $_POST['Meal_Type'],
+			'no_of_meals' => $_POST['no_of_meals'],
 
 			'visa_category_drop_down' => $_POST['visa_category_drop_down'],
 			'entry_type' => $_POST['entry_type'],
@@ -1971,6 +2222,7 @@ class Query extends CI_Controller
 		} else {
 			$this->db->insert('pricing_info', $data['pricing_info']);
 		}
+
 
 		// 										print_r($data['proposalDetails']);
 		// return

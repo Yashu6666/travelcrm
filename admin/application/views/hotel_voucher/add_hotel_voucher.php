@@ -92,23 +92,23 @@
 									<!-- <form action="<php echo site_url(); ?>HotelVoucher/submitVoucherDetails" method="post"> -->
 									<div class="card-body">
 										<div class="container mb-5 mt-3">
-											<div class="row d-flex align-items-baseline new_bg_header">
+											<!-- <div class="row d-flex align-items-baseline new_bg_header">
 												<hr>
 												<div class="col-xl-12">
 													<h4 class="text-white text-center ">Voucher / Accommodation</h4>
 												</div>
-											</div>
+											</div> -->
 											<div class="mt-3 row d-flex align-items-baseline new_bg_header">
 												<div class="col-xl-12">
-													<h4 class="text-white text-center">Booking - Voucher - Hotel</h4>
+													<h4 class="text-white text-center">Voucher</h4>
 												</div>
 											</div>
 
-											<div class="mt-3 row d-flex align-items-baseline new_bg_header">
+											<!-- <div class="mt-3 row d-flex align-items-baseline new_bg_header">
 												<div class="col-xl-12">
 													<h4 class="text-white">Hotel Details</h4>
 												</div>
-											</div>
+											</div> -->
 
 											<?php foreach (explode(',',$hotel[0]->nights) as $key => $value) : ?>
 
@@ -167,7 +167,7 @@
 																	<td><?php echo $details->adult; ?></td>
 																	<td><?php echo $details->child; ?></td>
 																	<td>--</td>
-																	<td><input type="text" class="form-control" name="board[<?php echo $key; ?>]"></td>
+																	<td><input type="text" class="form-control" value=<?php echo $board[$key] ?> name="board[<?php echo $key; ?>]"></td>
 																</tr>
 															</tbody>
 														</table>
@@ -193,7 +193,7 @@
 													</thead>
 													<tbody>
 														<tr>
-															<td><?php echo $guest->b2bfirstName . ' ' . $guest->b2blastName ?></td>
+															<td><input type="text" class="form-control" name="guest_name" ></td>
 															<td>indian</td>
 															<td><?php echo $guest->b2bEmail ?></td>
 															<td><?php echo $guest->b2bmobileNumber ?></td>

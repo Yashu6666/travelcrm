@@ -37,8 +37,8 @@ class Itinerary extends CI_Controller {
 				'protocol' => 'smtp',	
 				'smtp_host' => 'ssl://smtp.googlemail.com',	
 				'smtp_port' => 465,	
-				'smtp_user' => 'devsum2@gmail.com',	
-				'smtp_pass' => 'jggdlvqnvdenvssm',	
+				'smtp_user' => 'test.yrpitsolutions.com@gmail.com',	
+				'smtp_pass' => 'xcvbtihuojnhvmrn',	
 				'crlf' => "\r\n",	
 				'mailtype' => "html",	
 				'newline' => "\r\n",	
@@ -50,7 +50,7 @@ class Itinerary extends CI_Controller {
 			// print_r($data['details2']);	
 			// return;	
 			$this->email->initialize($config);	
-			$this->email->from('devsum2@gmail.com');	
+			$this->email->from('test.yrpitsolutions.com@gmail.com');	
 			$this->email->to('sumanth@yrpitsolutions.com');	
 			$this->email->cc('');	
 			$this->email->subject('itinery');	
@@ -82,7 +82,111 @@ class Itinerary extends CI_Controller {
 
 	public function searchDetails(){
 		$query_id=$_POST['query_id'];
+		// print_r($query_id);
+		$hotel = $this->db->where('query_id',$query_id)->get('query_hotel')->result();
+		// print_r($hotel);
 		
+		$data['hotel_city'] = explode(',',$hotel[0]->hotel_city);
+		$data['hotel_name'] = explode(',',$hotel[0]->hotel_name);
+		$data['room_type'] = explode(',',$hotel[0]->room_type);
+		$data['category'] = explode(',',$hotel[0]->category);
+
+		// $transfer = $this->db->get_where('query_transfer', array('query_id' => $query_id))->row();
+		$transfer_types = [];
+		$transfer_pickup = [];
+		$transfer_dropoff = [];
+		$transfer_routes = [];
+		$transfer = $this->db->query("SELECT * FROM query_transfer WHERE query_id=".$query_id)->result();
+
+		foreach ($transfer as $key => $value) {
+			$transfer_pickup_values = explode(',',$transfer[$key]->pickup);
+			foreach ($transfer_pickup_values as $key1 => $value1) {
+				array_push($transfer_pickup, $value1);
+			}
+
+			$transfer_dropoff_values = explode(',',$transfer[$key]->dropoff);
+			foreach ($transfer_dropoff_values as $key2 => $value2) {
+				array_push($transfer_dropoff, $value2);
+			}
+
+			$transfer_route_values = explode(',',$transfer[$key]->transfer_route);
+			foreach ($transfer_route_values as $key3 => $value3) {
+				array_push($transfer_routes, $value3);
+			}
+			array_push($transfer_types,$value->transfer_type);
+		}
+
+
+		foreach ($transfer_types as $k => $val) {
+			if($val == "internal"){
+				$transfer_types[$k] = 'oneway';
+			} else {
+				$transfer_types[$k] = 'round';
+			}
+		}
+		$data['transfer_types'] = array_unique($transfer_types);
+
+		$data['transfer_pickup'] = $transfer_pickup;
+		$data['transfer_dropoff'] = $transfer_dropoff;
+		$data['transfer_routes'] = $transfer_routes;
+
+		// $meals = $this->db->where('query_id',$query_id)->get('query_meal')->result();
+		$meals = $this->db->query("SELECT * FROM query_meal WHERE query_id=".$query_id)->result();
+
+		$data['resturant_transfer_type'] = explode(',',$meals[0]->transfer_type);
+		$data['resturant_type'] = explode(',',$meals[0]->resturant_type);
+		$data['resturant_name'] = explode(',',$meals[0]->resturant_name);
+		$data['meal'] = explode(',',$meals[0]->meal);
+		$data['meal_type'] = explode(',',$meals[0]->meal_type);
+
+		// $excursion_sic = $this->db->query("SELECT * FROM `query_excursion` WHERE query_id='".$query_id."' AND excursion_type='SIC' ")->row();
+		// $excursion_pvt = $this->db->query("SELECT * FROM `query_excursion` WHERE query_id='".$query_id."'")->row();
+
+		// $excursion_pvt = $this->db->where('query_id',$query_id)->where('excursion_type','PVT')->get('query_excursion')->result();
+		// $excursion_pvt = $this->db->get('query_excursion')->result();
+		// $this->db->like('start_city', $pickup)->where('dest_city', $dropoff)->where('seat_capacity >=', $person)->where('transport_type', 'oneway')->get('transfer_route')->result();
+
+		// $where_pvt = array('query_id' => $query_id, 'excursion_type' => 'PVT');
+		// $this->db->where($where_pvt); 
+		// $excursion_pvt = $this->db->get('query_excursion')->result();
+
+		$excursion = $this->db->query("SELECT * FROM query_excursion WHERE query_id=".$query_id)->result();
+
+		$excursion_sic_data = array_filter($excursion, function($value) {
+			if($value->excursion_type == "SIC"){
+				return $value;
+			}
+		});
+
+		$excursion_pvt_data = array_filter($excursion, function($value) {
+			if($value->excursion_type == "PVT"){
+				return $value;
+			}
+		});
+
+		$excursion_pvt = [];
+		foreach ($excursion_pvt_data as $key => $value) {
+			foreach (explode(',',$value->excursion_name) as $k => $val) {
+				array_push($excursion_pvt, $val);
+			}
+		}
+
+		$excursion_sic = [];
+		foreach ($excursion_sic_data as $key => $value) {
+			foreach (explode(',',$value->excursion_name) as $k => $val) {
+				array_push($excursion_sic, $val);
+			}
+		}
+
+		$excursion_types = [];
+
+		foreach ($excursion as $k1 => $val1) {
+			array_push($excursion_types, $val1->excursion_type);
+		}
+
+		$data['excursion_types'] = $excursion_types;
+		$data['excursion_data'] = array_merge($excursion_pvt,$excursion_sic);
+
 		$query=$this->db->query("SELECT * FROM b2bcustomerquery WHERE query_id=".$query_id)->row();
 		// $query=$this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
 		if(isset($query)){
@@ -162,7 +266,20 @@ class Itinerary extends CI_Controller {
 	
 	public function saveItinerary(){
 
-		$data = array(
+	$arrival_airline = $this->input->post('arrival_airline');
+	$arrival_flight = $this->input->post('arrival_flight');
+	$arrival_hours = $this->input->post('arrival_hours');
+	$arrival_mins = $this->input->post('arrival_mins');
+
+	$return_airline = $this->input->post('return_airline');
+	$return_flight = $this->input->post('return_flight');
+	$return_hours = $this->input->post('return_hours');
+	$return_mins = $this->input->post('return_mins');
+
+	$arrival_data = $arrival_airline.','.$arrival_flight.','.$arrival_hours.':'.$arrival_mins;
+	$return_data = $return_airline.','.$return_flight.','.$return_hours.':'.$return_mins;
+
+	$data = array(
 			'hotel_name' => $this->input->post('hotel_data_hotelname'),
 			'hotel_category' => $this->input->post('hotel_data_hotelstar'),
 			'hotel_room_type' => $this->input->post('hotel_data_roomtype'),
@@ -189,7 +306,11 @@ class Itinerary extends CI_Controller {
 			'excursion_child' => $this->input->post('excursion_data_excursion_child'),
 			'excursion_infant' => $this->input->post('excursion_data_excursion_infant'),
 			'query_id' => $this->input->post('query_id'),
-			'day' => $this->input->post('day')
+			'day' => $this->input->post('day'),
+			'arrival_transfer' => $arrival_data,
+			'return_transfer' => $return_data,
+			'created_by' =>   $this->session->userdata('admin_id'),
+
 		);
 		$get_query_id = $this->db->query("SELECT * FROM itinery_data WHERE query_id='".$data['query_id']."' ")->result_array();
 		$this->db->where('query_id',$data['query_id']);

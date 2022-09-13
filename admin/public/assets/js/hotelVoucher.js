@@ -16,6 +16,7 @@ function subVoucherAjax() {
   let hotel_booking_date_arr = [];
   let check_in_arr = [];
   let check_out_arr = [];
+  let guest_name_arr = [];
 
 
   let conf_number = $('input[name^="conf_number"]').each(function () {
@@ -28,6 +29,10 @@ function subVoucherAjax() {
 
   let board = $('input[name^="board"]').each(function () {
     board_arr.push($(this).val());
+  });
+
+  let guest_name = $('input[name^="guest_name"]').each(function () {
+    guest_name_arr.push($(this).val());
   });
 
   let hotel_name = $('input[name^="hotel_name"]').each(function () {
@@ -46,8 +51,6 @@ function subVoucherAjax() {
     check_out_arr.push($(this).val());
   });
 
-  console.log("🚩 ~ file: hotelVoucher.js ~ line 47 ~ check_out_arr", check_out_arr)
-  
 
   if (confarr.every((val) => val !== "")) {
     let q_id = document.getElementById("query_id").value;
@@ -61,7 +64,7 @@ function subVoucherAjax() {
         hotel_id: hotel_id_arr,
         conf_number: confarr,
         board: board_arr,
-
+        guest_name:guest_name_arr,
         hotel_name: hotel_name_arr,
         booking_date : hotel_booking_date_arr,
         check_in: check_in_arr,

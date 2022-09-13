@@ -1013,12 +1013,14 @@
                              total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
 
                           }
+                          
+                          markup_per = parseInt(PackageMarkup) / parseInt(pax_adult_count + pax_child_count + pax_infant_count);
+
                           if(Mark_up == "values"){
 
-                            total_adult = (parseInt(sub_total_adult) + parseInt(PackageMarkup));
-                            total_child = (parseInt(sub_total_child) + parseInt(PackageMarkup));
-                            total_infant = (parseInt(sub_total_infant) + parseInt(PackageMarkup));
-
+                            total_adult = pax_adult_count > 0 ? (parseInt(sub_total_adult) + parseInt(markup_per * pax_adult_count)) : 0 ;
+                            total_child = pax_child_count > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * pax_child_count)) : 0 ;
+                            total_infant = pax_infant_count > 0 ? (parseInt(sub_total_infant) + parseInt(markup_per * pax_infant_count)) : 0 ;
                             
                           }
                         

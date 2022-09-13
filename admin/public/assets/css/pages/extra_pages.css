@@ -155,7 +155,7 @@ iframe {
   z-index: 1;  
 }
 .page-background{
-	background-image: url('../../img/bg-01.jpg');
+	background-image: url('../../img/login_bg.png');
 }
 
 .container-login100::before {

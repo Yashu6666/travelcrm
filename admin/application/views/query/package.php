@@ -334,9 +334,9 @@
                                                         <span class="input__label">Country</span>
                                                     </label>
                                                 </div>
-                                                <div class="col" style="margin-right: -55px;">
+                                                <div class="col">
                                                 <label class="input">
-                                                    <select class="input__field form-control" required name="goingFrom[]">
+                                                    <select class="input__field form-control all-width" required name="goingFrom[]">
                                                         <option value="">Select City</option>
                                                         <option value="Dubai">Dubai</option>
                                                         <option value="AbuDhabi">Abu Dhabi</option>
@@ -352,8 +352,20 @@
                                                 </div>
 
                                                 <div class="col">
+                                                <label class="input">
+                                                    <select class="input__field form-control all-width" required name="hotelPrefrence[]">
+                                                        <option value="">Select Rating</option>
+                                                        <option value="1">⭐ 1</option>
+                                                        <option value="2">⭐⭐ 2</option>
+                                                        <option value="3">⭐⭐⭐ 3</option>
+                                                        <option value="4">⭐⭐⭐⭐ 4</option>
+                                                        <option value="5">⭐⭐⭐⭐⭐ 5</option>
+                                                    </select>
+                                                 </label>
+                                                </div>
+
+                                                <!-- <div class="col">
                                                 <div class="col-form-label" style="margin-top: -25px;">
-                                                <!-- <div class="d-flex"> -->
                                                 <label for="">Rating</label>
                                                 <label class="input">
                                                         <input type="checkbox" value="1" name="hotelPrefrence[]" class="hotelRating mr-2 ml-3">1
@@ -363,7 +375,7 @@
                                                         <input type="checkbox" value="5" name="hotelPrefrence[]" class="hotelRating mr-2 ml-3">5
                                                  </label>
                                                 </div>
-                                                </div>
+                                                </div> -->
                                             </div>
 
                                     </div>
@@ -500,7 +512,6 @@
                                                 </a>
                                         <?php }
                                         }
-
 
                                         ?>
 

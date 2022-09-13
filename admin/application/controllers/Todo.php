@@ -24,7 +24,7 @@ class Todo extends CI_Controller {
 
 	public function view()
 	{
-		$data['ListTodo'] = $this->db->order_by('id', 'desc')->get('todo')->result();
+		$data['ListTodo'] = $this->db->order_by('id', 'desc')->where('created_by', $this->session->userdata('admin_username'))->or_where('TodoAssigned' ,$this->session->userdata('admin_username'))->get('todo')->result();
 		$data_assign_to = $this->db->get('users')->result();
 		$names = [];
 		foreach ($data_assign_to as $key => $val) {
@@ -100,5 +100,23 @@ class Todo extends CI_Controller {
 		$data['listAll'] = $this->db->where('Tododay >=',$from_date)->where('Tododay <=',$to_date)->where('status',$task_status)->get('todo')->result();
 
 		$this->load->view('todo/viewall',$data);
+	}
+
+	public function statusUpdate()
+	{
+		
+		$id = $this->input->post('id');
+		$task_status = $this->input->post('task_status');
+		
+		$data = array(
+			'status' => $task_status,
+		);
+		$this->db->set($data);
+		$this->db->where('id', $id);
+		$this->db->update('todo');
+
+		
+		// $this->db->update('todo',$data,array('id' => $id));
+		echo json_encode($task_status);
 	}
 }

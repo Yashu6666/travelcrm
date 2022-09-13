@@ -80,7 +80,7 @@
 									 foreach ($view as $key ) { $cnt++?>
 										<tr>
 													<td><?php echo $cnt;?> </td>
-                                                    <td><?php echo $key->visa_category;?></td>
+                                                    <td><?php echo str_replace('_', ' ', $key->visa_category) ;?></td>
                                                     <td><?php echo $key->entry_type;?></td>
                                                     <td><?php echo $key->process_time;?></td>
                                                     <td><?php echo $key->visa_validity;?></td>

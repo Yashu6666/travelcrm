@@ -120,14 +120,14 @@
 								<div class="panel tab-border card-box">
 									<div class="row">
 										<div class="ml-4 mt-4">
-											<label style="font-weight: bold;">Vehicle Cost Type</label>
+											<label style="font-weight: bold;">Vehicle Cost</label>
 
 										</div>
 										<div class="ml-4"></div>
 
 
 										<div class="nav nav-tabs mt-4" role="tablist">
-											<div>
+											<div style="display:none;">
 												<input id="optDaily" checked name="intervaltype" type="radio" data-target="#scheduleDaily" value="Normal">
 												<label for="optDaily">Normal</label>
 											</div>
@@ -203,7 +203,7 @@
 										</div>
 
 										<div class="form-group mb-4">
-											<div class="offset-md-3 col-md-9">
+											<div class="offset-md-5 col-md-9">
 												<button type="submit" class="new_btn px-3">Submit</button>
 												<button type="button" class="new_btn px-3">Cancel</button>
 											</div>

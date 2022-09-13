@@ -17,7 +17,7 @@
               <ol class="breadcrumb page-breadcrumb pull-right">
                 <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="#">Inventory</a>&nbsp;<i
                     class="fa fa-angle-right"></i>
-                  </i>&nbsp;<a class="parent-item" href="hotel.html">Excursion</a>&nbsp;<i
+                  </i>&nbsp;<a class="parent-item" href="<?php echo base_url(); ?>excursion/view_excursion">Excursion</a>&nbsp;<i
                     class="fa fa-angle-right"></i>
 
                 </li>
@@ -111,9 +111,9 @@
                                         <td>Price</td>
                                         <td><input type="text" class="form-control input-sm adult" name="adultprice"
                                             size="" value="<?php echo $edit->adultprice;?>"></td>
-                                        <td><input type="text" class="form-control input-sm child" readonly=""
+                                        <td><input type="text" class="form-control input-sm child" 
                                             name="childprice" size="" value="<?php echo $edit->childprice;?>"></td>
-                                        <td><input type="text" class="form-control input-sm infant" readonly=""
+                                        <td><input type="text" class="form-control input-sm infant" 
                                             name="infantprice" size="" value="<?php echo $edit->infantprice;?>"></td>
                                       </tr>
                                       <tr bgcolor="#ffffff" style="text-align:center;display:none;">

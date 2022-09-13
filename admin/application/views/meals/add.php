@@ -14,7 +14,7 @@
 					</div>
 					<ol class="breadcrumb page-breadcrumb pull-right">
 						<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
-							href="<?php echo site_url();?>transfer/vehicle">Meals</a>&nbsp;<i class="fa fa-angle-right"></i>
+							href="<?php echo site_url();?>meals/view_meals">Meals</a>&nbsp;<i class="fa fa-angle-right"></i>
 						</li>
 						<li class="active">Add Meals</li>
 					</ol>

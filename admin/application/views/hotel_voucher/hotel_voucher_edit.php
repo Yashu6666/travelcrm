@@ -42,7 +42,7 @@
 						<div class="page-title">Edit Hotel Voucher</div>
 					</div>
 					<ol class="breadcrumb page-breadcrumb pull-right">
-						<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="#">Dashboard</a>&nbsp;<i class="fa fa-angle-right"></i>
+						<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="<?php echo base_url(); ?>HotelVoucher/view_hotels_voucher">Hotel Voucher</a>&nbsp;<i class="fa fa-angle-right"></i>
 						</li>
 						<li class="active">Edit Hotel Voucher</li>
 					</ol>
@@ -106,8 +106,8 @@
 													<div class="border border-bottom-0 border-top-0 col-xl-12">
 														<div class=" form-row p-3 rounded-lg">
 															<div class="col d-flex just">
-																<label for="" class=" col-form-label">Check-in</label>
-																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?>>
+																<label for="" class=" col-form-label"><b>Check-in</b></label>
+																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?> readonly>
 																<input type="hidden" name="check_in[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?>>
 															</div>
 															<?php
@@ -117,8 +117,8 @@
 															?>
 															<input type="hidden" name="check_out[<?php echo $key; ?>]" value=<?php echo $checkout; ?>>
 															<div class="col d-flex">
-																<label for="" class=" col-form-label">Check-out</label>
-																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $checkout; ?>>
+																<label for="" class=" col-form-label"><b>Check-out</b></label>
+																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $checkout; ?> readonly>
 															</div>
 														</div>
 
@@ -196,7 +196,7 @@
 												<!-- <button id="submtVoucherbtn" type="button" class="float-right new_btn px-3">Submit</button> -->
 												<button onclick="subVoucherAjax()" id="submtVoucherBTN" type="button" class="float-right new_btn px-3">Update</button>
 												<button onclick="printVoucher()"  id="submtVoucherPrint" type="button" class="mr-3 float-right new_btn px-3">Print</button>
-												<button onclick="sendEmail()"  id="submtVoucherEmail" type="button" class="mr-3 float-right new_btn px-3">Send Mail to Customer</button>
+												<button onclick="sendEmail()"  id="submtVoucherEmail" type="button" class="mr-3 float-right new_btn px-3">Send Mail </button>
 											</div>
 										</div>
 									</div>

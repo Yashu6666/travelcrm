@@ -47,6 +47,14 @@ class Query extends CI_Controller
 			elseif ($data['details']->type == 'transfer'){
 				// $this->load->view('query/email_templates/proposal_transfer', $data);return;
 				$body = $this->load->view('query/email_templates/proposal_transfer', $data, TRUE);
+			}elseif($data['details']->type == 'hotel'){
+				$body = $this->load->view('query/email_templates/temp_hotel', $data, TRUE);
+			}elseif($data['details']->type == 'visa'){
+				$body = $this->load->view('query/email_templates/temp_visa', $data, TRUE);
+			}elseif($data['details']->type == 'excursions'){
+				$body = $this->load->view('query/email_templates/temp_excursion', $data, TRUE);
+			}elseif($data['details']->type == 'meals'){
+				$body = $this->load->view('query/email_templates/temp_meal', $data, TRUE);
 			}
 			else {
 				$body = $this->load->view('query/email_templates/proposal', $data, TRUE);
@@ -1991,6 +1999,7 @@ class Query extends CI_Controller
 			'entry_type' => $_POST['entry_type'],
 			'visa_validity' => $_POST['visa_validity'],
 
+			'loggedInUser' => $this->session->userdata('admin_username')
 
 
 
@@ -2095,6 +2104,7 @@ class Query extends CI_Controller
 			'Meal' => $_POST['Meal'],
 			'Meal_Type' => $_POST['Meal_Type'],
 
+			'loggedInUser' => $this->session->userdata('admin_username')
 
 		);
 
@@ -2127,7 +2137,8 @@ class Query extends CI_Controller
 		$data['b2bcustomerquery'] = $this->db->where('query_id', $_POST['QueryId'])->get('b2bcustomerquery')->row();
 		// $this->db->where('query_id',$_POST['QueryId'])->update('b2bcustomerquery',$updatedata);
 		// echo"<pre>";print_r($data);exit;
-
+		$data['buildhotel'] = $this->db->where('query_id', $_POST['QueryId'])->get('query_hotel')->row();
+		$data['buildmeal'] = $this->db->where('query_id', $_POST['QueryId'])->get('query_meals')->row();
 		// $this->db->insert('package',$data['proposalDetails']);
 
 
@@ -2340,7 +2351,8 @@ class Query extends CI_Controller
 			'buildPackageCancellations' => $_POST['buildPackageCancellations'],
 			
 			'currencyOption' => $_POST['currencyOption'],
-	
+			'loggedInUser' => $this->session->userdata('admin_username')
+
 		);
 
 
@@ -2363,6 +2375,7 @@ class Query extends CI_Controller
 		$data['buildpackage'] = $this->db->where('queryId', $_POST['QueryId'])->get('querypackage')->row();
 		$data['b2bcustomerquery'] = $this->db->where('query_id', $_POST['QueryId'])->get('b2bcustomerquery')->row();
 		// $this->load->view('query/newproposal',$data,TRUE);
+		$data['buildhotel'] = $this->db->where('query_id', $_POST['QueryId'])->get('query_hotel')->row();
 
 		$updatedata = array('status' => "Sent");
 		$this->db->where('query_id', $_POST['QueryId'])->update('b2bcustomerquery', $updatedata);
@@ -2432,7 +2445,7 @@ class Query extends CI_Controller
 	}
 	public function CreateProposalHotel()
 	{
-// echo"<pre>";print_r($_POST);exit;
+
 		$data['proposalDetails'] = array(
 			'perpax_adult' =>  $_POST['perpax_adult_input'],
 			'perpax_childs' =>  $_POST['perpax_childs_input'],
@@ -2447,6 +2460,8 @@ class Query extends CI_Controller
 			'exclusions' => $_POST['buildPackageExclusions'],
 			'query_id' => $_POST['QueryId'],
 			'buildPackageConditions' => $_POST['buildPackageConditions'],
+			'loggedInUser' => $this->session->userdata('admin_username')
+
 
 		);
 		
@@ -2480,6 +2495,8 @@ class Query extends CI_Controller
 		$this->db->where('query_id', $_POST['QueryId'])->update('b2bcustomerquery', $updatedata);
 		$data['hotels'] = array(); // $this->db->where('id',$_POST['buildHotelName'])->get('hotel')->row();
 		// echo"<pre>";print_r($data['hotels']);exit;
+
+		// echo"<pre>";print_r($data);exit;
 		$this->load->view('query/finalhotel', $data);
 		// 	echo $response;
 		// 	//echo $response;exit;

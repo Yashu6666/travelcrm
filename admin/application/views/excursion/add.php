@@ -17,7 +17,7 @@
               <ol class="breadcrumb page-breadcrumb pull-right">
                 <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="#">Inventory</a>&nbsp;<i
                     class="fa fa-angle-right"></i>
-                  </i>&nbsp;<a class="parent-item" href="hotel.html">Excursion</a>&nbsp;<i
+                  </i>&nbsp;<a class="parent-item" href="<?php echo base_url(); ?>excursion/view_excursion">Excursion</a>&nbsp;<i
                     class="fa fa-angle-right"></i>
 
                 </li>

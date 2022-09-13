@@ -1,4 +1,4 @@
-   <?php $this->load->view('header');?>
+<?php $this->load->view('header');?>
    <link rel="shortcut icon" href="<?php echo base_url();?>public/assets/img/favicon.ico" />
     <link rel="stylesheet" href="<?php echo base_url();?>public/css/invoice.css">
     <link rel="stylesheet" href="<?php echo base_url();?>public/css/index.css">
@@ -14,7 +14,7 @@
                             </div>
                             <ol class="breadcrumb page-breadcrumb pull-right">
                                 <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
-                                        href="dashboard.html">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
+                                        href="#">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
                                 </li>
                                 <li class="active">Setting </li>
 
@@ -122,7 +122,7 @@
 
             <div class="modal-content">
                 <div class="modal-header" style="background: #d9a927 !important;">
-                    <h3 class="modal-title" id="exampleModalLabel">Edit </h3>
+                    <h3 class="modal-title" id="exampleModalLabel" style="margin-top: -4px;">Edit </h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                    <div class="modal-body">
@@ -153,7 +153,9 @@
                                     id="firstName" autocomplete="off" />
                                 <span class="input__label">First Name<span class="colorRed">*</span></span>
                                 <span id="" class=""></span>
-                            </label><br>
+                            </label>
+                            <br>
+
                             <span id="spanFirstName" class="spanCompany"></span>
                         </div>
 
@@ -282,7 +284,7 @@
             <form action="<?php echo site_url();?>roles/addUsers" method="post" name="forms" onsubmit="return validatesetting();" enctype='multipart/form-data'>
                 <div class="modal-content">
                     <div class="modal-header" style="background: #d9a927 !important;">
-                        <h3 class="modal-title" id="staticBackdropLabel">Add New User</h3>
+                        <h3 class="modal-title" id="staticBackdropLabel" style="margin-top: -4px;">Add New User</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -298,26 +300,26 @@
                             <!-- <span id="spanUserName" class="spanCompany"></span> -->
                         </div>
 
+                       
+
+                        
                         <div class="col">
                             <label class="input">
-                                <input class="input__field setting-width mb-2" type="password" placeholder="" name="password" 
-                                    id="password" autocomplete="off" />
+                                <input class="input__field setting-width mb-2" type="password" placeholder=" " id="password" name="password" 
+                                    autocomplete="off" />
                                 <span class="input__label">Password<span class="colorRed">*</span></span>
                             </label><br>
-                            <!-- <span id="spanPassword" class="spanCompany"></span> -->
+                            <!-- <span id="spanLastName" class="spanCompany"></span> -->
                         </div>
 
                         <div class="col">
                             <label class="input">
-                                <input class="input__field setting-width mb-2" type="text" placeholder="" name="firstName" 
-                                    id="firstName" autocomplete="off" />
+                                <input class="input__field setting-width mb-2" type="text" placeholder=" " id="firstName" name="firstName" 
+                                    autocomplete="off" />
                                 <span class="input__label">First Name<span class="colorRed">*</span></span>
-                                <span id="" class=""></span>
                             </label><br>
-                            <span id="spanFirstName" class="spanCompany"></span>
+                            <!-- <span id="spanLastName" class="spanCompany"></span> -->
                         </div>
-
-
 
                         <div class="col">
                             <label class="input">

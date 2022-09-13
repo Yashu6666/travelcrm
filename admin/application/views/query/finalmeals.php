@@ -815,17 +815,31 @@ textarea{
     let Meal_Type =<?php echo json_encode($proposalDetails["Meal_Type"] );?>;
 
     let data_arr = {
+        
+
         "checkin" : "<?php echo date("jS F Y", strtotime($buildpackage->specificDate)) ?>",
         "checkout" : "<?php echo date("jS F Y", strtotime($buildpackage->noDaysFrom)) ?>",
         "nights" : "<?php echo $buildpackage->night ?>",
         "pax_adult" : "<?php echo $buildpackage->adult ?>",
         "pax_child" : "<?php echo $buildpackage->child ?>",
         "pax_infant" : "<?php echo $buildpackage->infant ?>",
+        "per_pax_adult" : "<?php echo $proposalDetails['perpax_adult']; ?>",
+        "per_pax_child" : "<?php echo $proposalDetails['perpax_childs']; ?>",
+        "per_pax_infant" : "<?php echo $proposalDetails['perpax_infants']; ?>",
         "room" : "<?php echo $buildpackage->night  ?>",
-        "res_name" : res_name,
-        "Meal" : Meal,
-        "Meal_Type" :Meal_Type,
+        // "res_name" : res_name,
+        // "Meal" : Meal,
+        // "Meal_Type" :Meal_Type,
+        "res_name" : "<?php echo isset($buildmeal->resturent_name) ? $buildmeal->resturent_name : "" ?>", 
+        "Meal" : "<?php echo isset($buildmeal->meal) ? $buildmeal->meal : "" ?>",
+        "Meal_Type" :"<?php echo isset($buildmeal->meal_type) ? $buildmeal->meal_type : "" ?>",
         "type" : 'meals',
+        "user" : "<?php echo $proposalDetails['loggedInUser']  ?>",
+        "date" : "<?php echo isset($buildmeal->date) ? date("jS F Y", strtotime($buildmeal->date)) : "" ?>",
+        "res_type" :  "<?php echo isset($buildmeal->resturent_name) ? $buildmeal->resturent_name : "" ?>",
+        "transfer_type" :  "<?php echo isset($buildmeal->transfer) ? $buildmeal->transfer : "" ?>",
+        "hotel" : "<?php echo isset($buildhotel->hotel_id) ? $buildhotel->hotel_id : "" ?>",
+        "hotel_city" :  "<?php echo isset($buildhotel->hotel_city) ? $buildhotel->hotel_city : "" ?>",
         "subject"  : document.getElementById("pro_sub").value,
         "cc_email"  : document.getElementById("cc_email").value,
         "cus_email"  : document.getElementById("cus_email").value,
@@ -834,6 +848,7 @@ textarea{
         "conditions" :  TnC,
         "cancelation_policy" : canc_ply,
         "query_ID" : <?php echo $buildpackage->queryId ?>
+
         };
     console.log("🚀 ~ file: finalmeals.php ~ line 801 ~ btn.addEventListener ~ data_arr", data_arr)
         

@@ -1,4 +1,5 @@
 <?php $this->load->view('header');?>
+<script src="<?php echo base_url();?>public/assets/js/hotelVoucher.js"></script>
 
 <!-- start page container -->
 		<div class="page-container">
@@ -101,6 +102,8 @@ $this->session->unset_userdata ( 'success' );
 														<a class="btn btn-tbl-edit btn-xs" href="<?php echo site_url();?>HotelVoucher/editVoucherDetails/<?php echo $value->query_id;?>">
 															<i class="fa fa-edit "></i>
 														</a>
+														<a id="resend" data-id="<?php echo $value->query_id?>" href="#" onclick="resendmail(this);" class="btn btn-tbl-delete btn-xs"><i class="fa fa-envelope "></i></a>
+
 													</td>
 												</tr>
 											<?php endforeach; ?>
@@ -109,6 +112,8 @@ $this->session->unset_userdata ( 'success' );
 											<?php
 												//}?>
 											</tbody>
+											<input type="hidden" id="base_url_id" name="base_url" value=<?php echo site_url(); ?>>
+
 										</table>
 									</div>
 								</div>
@@ -491,3 +496,30 @@ $this->session->unset_userdata ( 'success' );
 		
 
 		</script> -->
+		<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script>
+	// CKEDITOR.replace('impInfo');
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+		<script>
+			function resendmail(d){
+
+				var query_id= d.getAttribute("data-id");
+				var base_url = '<?php echo base_url()?>';
+				$.ajax({
+					url: base_url + "HotelVoucher/getVoucherDetails",
+					dataType : 'json',
+					type: "POST",
+					data : { 'query_id':query_id },
+					success: function(result) {
+					// console.log(result);
+					resendEmail(result);
+				}});
+			}
+		</script>

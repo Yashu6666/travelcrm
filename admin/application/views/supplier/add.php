@@ -17,7 +17,7 @@
                     <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
                       href="#">Inventory</a>&nbsp;<i class="fa fa-angle-right"></i>
                   </i>&nbsp;<a class="parent-item"
-                  href="#">Supplier</a>&nbsp;<i class="fa fa-angle-right"></i>
+                  href="<?php echo base_url();?>supplier/view_supplier">Supplier</a>&nbsp;<i class="fa fa-angle-right"></i>
                   
               </li>
               <li class="active">Add Supplier</li>
@@ -50,11 +50,11 @@
                         <select class="form-control" id="category"  required="" name="category">
                         <option>Select Category</option>
                         <option  value="Hotel and Rooms">Hotel and Rooms</option>
-                        <option value="Transfer">Transfer</option>
+                        <!-- <option value="Transfer">Transfer</option>
                         <option value="Visa">Visa</option>
                         <option value="Packages">Packages</option>
                         <option value="Meals">Meals</option>
-                        <option value="Excursion">Excursion</option>
+                        <option value="Excursion">Excursion</option> -->
                     </select>
                         </div>                                        
 

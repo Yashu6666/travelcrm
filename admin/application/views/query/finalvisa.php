@@ -818,26 +818,31 @@ textarea{
     btn.addEventListener("click", () => {
         
         let data_arr = {
-        "checkin" : "<?php echo date("jS F Y", strtotime($buildpackage->specificDate)) ?>",
-        "checkout" : "<?php echo date("jS F Y", strtotime($buildpackage->noDaysFrom)) ?>",
-        "nights" : "<?php echo $buildpackage->night ?>",
-        "pax_adult" : "<?php echo $buildpackage->adult ?>",
-        "pax_child" : "<?php echo $buildpackage->child ?>",
-        "pax_infant" : "<?php echo $buildpackage->infant ?>",
-        "room" : "<?php echo $buildpackage->night  ?>",
-        "visa_category_drop_down" : "<?php echo $proposalDetails['visa_category_drop_down']  ?>",
-        "entry_type" : "<?php echo $proposalDetails['entry_type']  ?>",
-        "visa_validity" : "<?php echo $proposalDetails['visa_validity']  ?>",
-        // "hotel" : "?php echo $proposalDetails['hotelName'] ?>",
-        "type" : 'visa',
-        "subject"  : document.getElementById("pro_sub").value,
-        "cc_email"  : document.getElementById("cc_email").value,
-        "cus_email"  : document.getElementById("cus_email").value,
-        "inclusions" :  inclu,
-        "exclusions" :  exclu,
-        "conditions" :  TnC,
-        "cancelation_policy" : canc_ply,
-        "query_ID" : <?php echo $buildpackage->queryId ?>
+            "checkin" : "<?php echo date("jS F Y", strtotime($buildpackage->specificDate)) ?>",
+            "checkout" : "<?php echo date("jS F Y", strtotime($buildpackage->noDaysFrom)) ?>",
+            "nights" : "<?php echo $buildpackage->night ?>",
+            "pax_adult" : "<?php echo $buildpackage->adult ?>",
+            "pax_child" : "<?php echo $buildpackage->child ?>",
+            "pax_infant" : "<?php echo $buildpackage->infant ?>",
+            "per_pax_adult" : "<?php echo $proposalDetails['perpax_adult']; ?>",
+            "per_pax_child" : "<?php echo $proposalDetails['perpax_childs']; ?>",
+            "per_pax_infant" : "<?php echo $proposalDetails['perpax_infants']; ?>",
+            "room" : "<?php echo $buildpackage->night  ?>",
+            "visa_category_drop_down" : "<?php echo $proposalDetails['visa_category_drop_down']  ?>",
+            "entry_type" : "<?php echo $proposalDetails['entry_type']  ?>",
+            "visa_validity" : "<?php echo $proposalDetails['visa_validity']  ?>",
+            
+            // "hotel" : "?php echo $proposalDetails['hotelName'] ?>",
+            "type" : 'visa',
+            "user" : "<?php echo $proposalDetails['loggedInUser']  ?>",
+            "subject"  : document.getElementById("pro_sub").value,
+            "cc_email"  : document.getElementById("cc_email").value,
+            "cus_email"  : document.getElementById("cus_email").value,
+            "inclusions" :  inclu,
+            "exclusions" :  exclu,
+            "conditions" :  TnC,
+            "cancelation_policy" : canc_ply,
+            "query_ID" : <?php echo $buildpackage->queryId ?>
         };
 
         // console.log(data_arr);

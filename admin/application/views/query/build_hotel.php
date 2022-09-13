@@ -836,7 +836,7 @@ jQuery('#addrows > tbody > tr').each(function(index, value) {
 
 
 
-  function get_hotel_name(id,row){
+function get_hotel_name(id,row){
 // $('#buildHotelCity,#Category').on('change', function() {
     var city = $('#buildHotelCity'+row).val();
     var Category =  $('#Category'+row).val();
@@ -855,7 +855,7 @@ jQuery('#addrows > tbody > tr').each(function(index, value) {
             for (i = 0; i < response.length; ++i) {
               var newOption = $('#buildHotelName'+row)
                     .append($("<option></option>")
-                                .attr("value", response[i].id)
+                    .attr("value", response[i].id + '|' + response[i].hotelname)
                                 .text(response[i].hotelname));
 
                 // $('#buildHotelName')
@@ -872,7 +872,10 @@ jQuery('#addrows > tbody > tr').each(function(index, value) {
 
 
   function get_route_name(id,row){
-    var hotel_id = $('#buildHotelName'+row).val();
+    var hotel = $('#buildHotelName'+row).val().split("|");
+    // var hotel_id = $('#buildHotelName'+row).val();
+   
+    var hotel_id = hotel[0];
     $("#buildRoomType"+row).empty();
     $.ajax({
           type:"POST",

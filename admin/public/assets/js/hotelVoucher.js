@@ -81,7 +81,10 @@ function subVoucherAjax() {
           "submtVoucherEmail"
         ).hidden = false);
         toastr.success("Hotel Voucher Details Updated");
+        location.href = base_url + "/HotelVoucher/view_hotels_voucher";
+
       },
+
       error: function () {
         console.log("Error");
       },
@@ -116,6 +119,8 @@ function sendEmail() {
       success: function (result) {
         console.log("result.email", result);
         toastr.success("Email Sent Successfully");
+        location.href = base_url + "/HotelVoucher/view_hotels_voucher";
+
       },
       error: function () {
         console.log("Error");
@@ -158,3 +163,38 @@ function sendEmail() {
 //   //   },
 //   // });
 // }
+function resendEmail(result) {
+  // console.log(result.hotel_conformation.board);
+  let q_id = result.query_id;
+  let base_url = document.getElementById("base_url_id").value;
+  let email_id = result.guest.b2bEmail;
+  let impInfo = "";//result.hotel_conformation.impInfo;
+  let board_arr = result.hotel_conformation.board;
+  
+// alert(board_arr);
+  // if (impInfo == "" || impInfo == null) {
+  //   toastr.error("Please Add Importent Information");
+  // } else {
+    $.ajax({
+      type: "POST",
+      url: base_url + "/HotelVoucher/send_mail",
+      data: {
+        query_id: q_id,
+        email: email_id,
+        board_arr: board_arr,
+        impInfo: impInfo,
+      },
+      success: function (result) {
+        
+        console.log("result.email", result);
+        toastr.success("Email Sent Successfully");
+        location.href = base_url + "/HotelVoucher/view_hotels_voucher";
+      },
+      error: function () {
+        console.log("Error");
+        toastr.options.positionClass = 'toast-bottom-right';
+        toastr.error("Error while sending email");
+      },
+    });
+  // }
+}

@@ -14,10 +14,10 @@
         <div class="page-title">Edit Room</div>
       </div>
       <ol class="breadcrumb page-breadcrumb pull-right">
-        <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
+      <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
           href="#">Inventory</a>&nbsp;<i class="fa fa-angle-right"></i>
         </i>&nbsp;<a class="parent-item"
-        href="room.html">Rooms</a>&nbsp;<i class="fa fa-angle-right"></i>
+        href="<?php echo base_url();?>room/view_rooms">Rooms</a>&nbsp;<i class="fa fa-angle-right"></i>
 
       </li>
       <li class="active">Edit Room</li>

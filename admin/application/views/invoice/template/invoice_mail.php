@@ -4,6 +4,7 @@
 <head>
     <title>Invoice</title>
 
+
     <style>
 			.invoice-box {
 				max-width: 1000px;
@@ -79,7 +80,7 @@
         align-items: center;
         height: 150px;
         /* border: 1px solid; */
-        padding: 6px;
+        /* padding: 6px; */
       }
 
       .text_right {
@@ -145,7 +146,6 @@
                     </div>
                 </div>
 
-
                     <div class="customer_details no_border_bottom">
                         <div class="p-1">
                             <h5 class="custmo-head">Customer Name</h5>
@@ -156,8 +156,9 @@
                            <?php echo $printInvoice->ClientCity;?>
                              </p>
                         </div>
-                        <div class="col-md-auto mt-2 invoice_tbl" style="overflow-x:auto;">
-                            <table style="height:120px" class="invoice_tbl">
+                        <div class="col-md-auto mt-2 invoice_tbl" style="padding-right:10%;">
+
+                            <table style="height:120px;" class="invoice_tbl">
                                 <tbody>
                                     <tr>
                                         <td class="pad-0" colspan="3">Invoice No</td>
@@ -182,11 +183,14 @@
 
 
 
-                <div class="container ">
-                    <div class="flex_header" style="overflow-x:auto;">
+                <div class="container " >
 
+                        
 
-                      <table class="border-1">
+                    <!-- <div class="flex_header" style="overflow-x:auto;"> -->
+                    <div class="" style="">
+
+                      <table class="border-1" >
                         <tbody>
 
                           <thead>
@@ -270,7 +274,10 @@
                     Bur Dubai, UAE<br/>
                    
                 </div>
-                <div class="text_right">
+                <div class="">
+                    <b>This is computer generated invoice no signature required.</b>
+                </div> 
+                <!-- <div class="text_right">
 
                     <img src="<?php echo base_url();?>public/img/stamp.jpeg" class="logo "  style="width:20% !important;" alt="logo">
 
@@ -278,7 +285,7 @@
 
                 <div class="text_right">
                     Authorized Signatory
-                </div>
+                </div> -->
             </div>
         </div>
 

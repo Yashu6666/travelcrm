@@ -78,7 +78,7 @@
 							<li class="nav-item">
 								<a href="<?php echo site_url(); ?>excursion/view_excursion" class="nav-link <?php echo $this->uri->segment(1) == "excursion" ? "text-white" : "" ?>">
 								<i class="fa-solid fa-place-of-worship"></i>	
-								<span class="title">Excursion</span>
+								<span class="title">Activity</span>
 								</a>
 							</li>
 							<li class="nav-item">
@@ -251,7 +251,7 @@
 									</li>
 									<li class="nav-item">
 										<a href="<?php echo site_url(); ?>excursion/view_excursion" class="nav-link <?php echo $this->uri->segment(1) == "excursion" ? "text-white" : "" ?>">
-											<span class="title">Excursion</span>
+											<span class="title">Activity</span>
 										</a>
 									</li>
 									<li class="nav-item">

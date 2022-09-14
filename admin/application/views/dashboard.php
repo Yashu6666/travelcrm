@@ -49,6 +49,7 @@
 				</div>
 			</div>
 
+
 			<div class="row">
 
 				<div class="col-lg-6 col-md-12 col-sm-12 col-12">
@@ -129,7 +130,54 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+			<div class="col-12">
+					<div class="card card-box">
+						<div class="card-head">
+							<header>Upcoming Arrival</header>
 
+						</div>
+						<div class="card-body ">
+							<div class="row p-b-20">
+								<div class="col-md-6 col-sm-6 col-6">
+									<!-- <div class="btn-group">
+												<a href="<?php echo site_url(); ?>hotel/add_hotel" id="addRow" class="btn btn-info">
+													Add Hotel <i class="fa fa-plus"></i>
+												</a>
+											</div> -->
+								</div>
+								<div class="col-md-6 col-sm-6 col-6">
+
+								</div>
+							</div>
+							<div class="table-scrollable">
+								<table id="dashboard_table2" class="table table-hover table-checkable order-column">
+									<thead>
+										<tr>
+											<th class="center"> SL.NO</th>
+											<th class="center"> Query id </th>
+											<th class="center"> Guest Name </th>
+											<th class="center"> DOA </th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach($upcoming_arrivals as $key => $val) : ?>
+
+											<tr class="odd gradeX">
+												<td class="center"><?php echo $key + 1; ?> </td>
+												<td class="center"><?php echo $val['query_id']; ?></td>
+												<td class="center"><?php echo $val['name']; ?></td>
+												<td class="center"><?php echo $val['traveldate']; ?> </td>
+											</tr>
+										<?php endforeach ?>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-lg-6 col-md-12 col-sm-12 col-12">
 
@@ -139,7 +187,7 @@
 						</div>
 						<div class="card-body no-padding height-9">
 
-							<table class="table ">
+							<table id="dashboard_table1" class="table-responsive table-hover table-checkable order-column">
 								<thead>
 									<tr>
 										<th class="center"> SL.NO</th>
@@ -191,7 +239,7 @@
 								</div>
 							</div>
 							<div class="table-scrollable">
-								<table class="table">
+								<table id="dashboard_table3" class="table table-hover table-checkable order-column">
 									<thead>
 										<tr>
 											<th class="center"> SL.NO</th>

@@ -32,8 +32,8 @@
 							</header>
 						</div>
 						<div class="card-body row">
-						<input type="radio" id="with_transfer" name="transfer[]" value="with_transfer" checked="checked"/> With Transfer
-						<input type="radio" id="without_transfer" name="transfer[]" value="without_transfer"/> Without Transfer	
+						<input type="radio" id="with_transfer" name="transfer[]" value="with_transfer" /> With Transfer
+						<input type="radio" id="without_transfer" name="transfer[]" value="without_transfer" checked="checked"/> Without Transfer	
 						</div>
 						<div class="card-body row">
 						
@@ -63,7 +63,7 @@
 								<select  class="form-control" value=""  tabIndex="-1" name="meal_name">
 									
                                     <option value="Lunch">Lunch</option>
-									<option value="Dinner">Dinner</option>
+									<option selected value="Dinner">Dinner</option>
 								</select>
 							</div>
 						</div>

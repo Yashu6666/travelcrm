@@ -88,7 +88,7 @@ class Login extends CI_Controller
 		$weekdate = date('m-d-Y', strtotime('-7 days'));
 		$month = date('m-d-Y', strtotime('-30 days'));
 		$year = date('m-d-Y', strtotime('-365 days'));
-
+		$current_date = date('Y-m-d');
 
 		$today_total = 0;
 		$today_remaining = 0;
@@ -154,7 +154,9 @@ class Login extends CI_Controller
 
 			$created_at = $value->created_at;
 			$id = $value->id;
-			$package = $this->db->where('queryId', $query_id)->get('querypackage')->row();
+			// $package = $this->db->where('queryId', $query_id)->get('querypackage')->row();
+			$package = $this->db->where('queryId', $query_id)->where('specificDate >=', $current_date)->get('querypackage')->row();
+
 			if (isset($package)) {
 				$res = array("id" => $id, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "traveldate" => $package->specificDate, "checkout" => $package->noDaysFrom, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
 				$result[] = $res;
@@ -237,6 +239,30 @@ class Login extends CI_Controller
 			$data['staffs_data'][$val->user_id]['meal'] = $val->meal_price;
 			
 		}
+
+		$query_data = $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result();
+		// $data['upcoming_arrivals'] = $upcoming_arrivals;
+
+		$result = array();
+		foreach ($query_data as $value) {
+			$query_id = $value->query_id;
+			$name = $value->b2bfirstName . ' ' . $value->b2blastName;
+			$mobile = $value->b2bmobileNumber;
+			$lead_stage = $value->lead_stage;
+
+			$created_at = $value->created_at;
+			$id = $value->id;
+
+			$package = $this->db->where('queryId', $query_id)->where('specificDate >=', $current_date)->get('querypackage')->row();
+
+			if (isset($package)) {
+				$res = array("id" => $id, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
+				$result[] = $res;
+			}
+		}
+
+		$data['upcoming_arrivals'] = $result;
+
 
 		$all_query = $this->db->distinct()->select('query_id')->get('b2bcustomerquery');
 		$confirmed_query = $this->db->distinct()->select('query_id')->where('lead_stage','Confirmed')->get('b2bcustomerquery');

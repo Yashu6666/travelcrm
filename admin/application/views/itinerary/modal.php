@@ -472,7 +472,7 @@
                     </section> -->
 
                     <section id="aligned" class="col-md-12 mt-4">
-                            <label>Flight Arrival</label>
+                            <label><i class="fa-solid fa-plane-arrival"></i> Flight Arrival</label>
                             <div class="d-flex">
                                 <input id="arrival_airline" class="form-control arrival_airline " type="text" placeholder="Airline Code" name="arrival_airline[]">
                                 <input id="arrival_flight" class="form-control arrival_flight ml-2 " type="text" placeholder="Flight No" name="arrival_flight[]">
@@ -482,7 +482,7 @@
                     </section>
 
                     <section id="aligned" class="col-md-12 mt-4">
-                            <label>Return Flight</label>
+                            <label><i class="fa-solid fa-plane-departure"></i> Return Flight</label>
                             <div class="d-flex">
                                 <input id="return_airline" class="form-control return_airline " type="text" placeholder="Airline Code" name="return_airline[]">
                                 <input id="return_flight" class="form-control return_flight ml-2 " type="text" placeholder="Flight No" name="return_flight[]">
@@ -676,13 +676,13 @@
                         </section>
 
                         <section id="" class="col-md-12 mt-4">
-                        <label>Adult</label>
+                        <label><i class="fa fa-male" aria-hidden="true"></i> Adult</label>
                             <input id="meal_adult" value="<?php echo ((int)$package->adult) ?>" class="form-control" type="text"  name="meal_adult"></td>
 
                         </section>
                         
                         <section id="" class="col-md-12 mt-4">
-                        <label>Child</label>
+                        <label><i class="fa-solid fa-child"></i>Child</label>
                             <input id="meal_child" value="<?php echo ((int)$package->child) ?>" class="form-control" type="text"  name="meal_child"></td>
 
                         </section>
@@ -766,20 +766,20 @@
                             </section>
                         
                        <section id="" class="col-md-12 mt-4">
-                        <label>Adult</label>
+                        <label><i class="fa fa-male" aria-hidden="true"></i> Adult</label>
                             <input id="excursion_adult" value="<?php echo ((int)$package->adult) ?>" class="form-control" type="text"  name="excursion_adult"></td>
 
                         </section>
 
                         <section id="" class="col-md-12 mt-4">
-                        <label>Child</label>
+                        <label><i class="fa-solid fa-child"></i> Child</label>
                             <input id="excursion_child"  value="<?php echo ((int)$package->child) ?>" class="form-control" type="text"  name="excursion_child"></td>
 
                         </section>
 
                      
                         <section id="" class="col-md-12 mt-4">
-                        <label>Infant</label>
+                        <label><i class="fa-solid fa-baby"></i>Infant</label>
                             <input id="excursion_infant" value="<?php echo ((int)$package->infant) ?>" class="form-control" type="text"  name="excursion_infant"></td>
 
                         </section>

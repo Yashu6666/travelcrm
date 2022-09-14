@@ -65,8 +65,8 @@
 													<th>S.No</th>
                                                     <th>Visa Category</th>
 													<th>Visa Type</th>
-                                                    <th>Processing Time</th>
-													<th>Validity</th>
+                                                    <!-- <th>Processing Time</th>
+													<th>Validity</th> -->
                                                     <th>Adult Rates </th>
 													<th>Child  Rates</th>
                                                     <th>Infant Rates </th>
@@ -82,8 +82,8 @@
 													<td><?php echo $cnt;?> </td>
                                                     <td><?php echo $key->visa_category;?></td>
                                                     <td><?php echo $key->entry_type;?></td>
-                                                    <td><?php echo $key->process_time;?></td>
-                                                    <td><?php echo $key->visa_validity;?></td>
+                                                    <!-- <td><?php echo $key->process_time;?></td>
+                                                    <td><?php echo $key->visa_validity;?></td> -->
                                                     <td><?php echo $key->adult;?></td>
                                                     <td><?php echo $key->child;?></td>
                                                     <td><?php echo $key->infant;?></td>

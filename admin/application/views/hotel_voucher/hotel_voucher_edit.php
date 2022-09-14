@@ -76,7 +76,7 @@
 											</div> -->
 											<div class="mt-3 row d-flex align-items-baseline new_bg_header">
 												<div class="col-xl-12">
-													<h4 class="text-white text-center">Voucher</h4>
+													<h4 class="text-white text-center">Accommodation oucher</h4>
 												</div>
 											</div>
 
@@ -105,16 +105,30 @@
 													</div>
 													<div class="border border-bottom-0 border-top-0 col-xl-12">
 														<div class=" form-row p-3 rounded-lg">
+														<?php
+															$date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);
+															$check_in = $date->format('d-m-Y');
+															$date->modify('+' . explode(',',$hotel[0]->nights)[$key] . ' day');
+															$checkout =  $date->format('d-m-Y');
+
+															?>
 															<div class="col d-flex just">
 																<label for="" class=" col-form-label">Check-in</label>
-																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?>>
+																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $check_in; ?>>
 																<input type="hidden" name="check_in[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?>>
+															
 															</div>
-															<?php
+															<!-- <?php
 															$date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);
 															$date->modify('+' . explode(',',$hotel[0]->nights)[$key] . ' day');
-															$checkout =  $date->format('Y-m-d');
+															$checkout =  $date->format('d-m-Y');
 															?>
+
+															<div class="col d-flex just">
+																<label for="" class=" col-form-label">Check-in</label>
+																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $date->format('d-m-Y'); ?>>
+																<input type="hidden" name="check_in[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?>>
+															</div> -->
 															<input type="hidden" name="check_out[<?php echo $key; ?>]" value=<?php echo $checkout; ?>>
 															<div class="col d-flex">
 																<label for="" class=" col-form-label">Check-out</label>
@@ -131,7 +145,7 @@
 																	<th scope="col">Adults</th>
 																	<th scope="col">Children</th>
 																	<th scope="col">Children Ages</th>
-																	<th scope="col">Board</th>
+																	<th scope="col">Meals Board</th>
 																</tr>
 															</thead>
 															<tbody>

@@ -21507,14 +21507,17 @@
     <table class="table table-bordered">
         <thead>
             <tr>
+                
                 <th style="border: 2px solid #000;">Check-in</th>
-                <th style="border: 2px solid #000;"><?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?></th>
-                <th style="border: 2px solid #000;">Check-out </th>
                 <?php
                     $date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);
+					$check_in = $date->format('d-m-Y');
+
                     $date->modify('+' . explode(',',$hotel[0]->nights)[$key] . ' day');
-                    $checkout =  $date->format('Y-m-d');
+                    $checkout =  $date->format('d-m-Y');
                 ?>
+                 <th style="border: 2px solid #000;"><?php echo $check_in; ?></th>
+                <th style="border: 2px solid #000;">Check-out </th>
                 <th style="border: 2px solid #000;"><?php echo $checkout; ?></th>
             </tr>
         </thead>
@@ -21529,7 +21532,7 @@
                         <th>Adults</th>
                         <th>Children</th>
                         <th>Children Ages</th>
-                        <th>Board</th>
+                        <th>Meals Board</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21571,7 +21574,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><?php echo $guest->b2bfirstName . ' ' . $guest->b2blastName ?></td>
+                    <td><?php echo $guest_name ?></td>
                     <td>indian</td>
                     <td><?php echo $guest->b2bEmail ?></td>
                     <td><?php echo $guest->b2bmobileNumber ?></td>

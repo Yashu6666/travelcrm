@@ -95,6 +95,7 @@ function sendEmail() {
   let q_id = document.getElementById("query_id").value;
   let base_url = document.getElementById("base_url_id").value;
   let email_id = document.getElementById("email_id").value;
+  let guest_name = document.getElementById("guest_name").value;
   let impInfo = CKEDITOR.instances["impInfo"].getData();
   let board_arr = [];
   let board = $('input[name^="board"]').each(function () {
@@ -112,6 +113,7 @@ function sendEmail() {
         email: email_id,
         board_arr: board_arr,
         impInfo: impInfo,
+        guest_name:guest_name,
       },
       success: function (result) {
         console.log("result.email", result);

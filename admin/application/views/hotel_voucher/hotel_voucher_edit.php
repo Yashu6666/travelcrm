@@ -76,7 +76,7 @@
 											</div> -->
 											<div class="mt-3 row d-flex align-items-baseline new_bg_header">
 												<div class="col-xl-12">
-													<h4 class="text-white text-center">Accommodation oucher</h4>
+													<h4 class="text-white text-center">Accommodation Voucher</h4>
 												</div>
 											</div>
 

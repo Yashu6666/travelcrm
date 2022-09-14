@@ -66,8 +66,8 @@
 <!-- END HEAD -->
 
 <body
-	class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark">
-<!-- <?php echo $this->uri->segment(2) == "package" ?  "class='page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark sidemenu-closed'" : "class='page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark '"; ?> -->
+ <?php echo $this->uri->segment(2) == "package" || $this->uri->segment(2) == "buildPackage" ?  "class='page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark sidemenu-closed'" : "class='page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark '"; ?> >
+<!-- class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark sidemenu-closed"> -->
 
 	<div class="page-wrapper">
 		<!-- start header -->

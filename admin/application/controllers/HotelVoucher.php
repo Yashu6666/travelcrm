@@ -73,6 +73,29 @@ class HotelVoucher extends CI_Controller
 		}
 	}
 
+	public function mailTest(){
+			$query_id = 8865;
+			$c_email = "test";
+			$guest_name = "test";
+			$board_arr = "test";
+			$impInfo = "test";
+
+
+			$data['details'] = $this->db->where('queryId', $query_id)->get('querypackage')->row();
+			$data['hotel'] = $this->db->where('query_id', $query_id)->get('query_hotel')->result();
+			
+			$hotel_confirmation = $this->db->where('query_id', $query_id)->get('hotel_voucher_confirmation')->result();
+			$data['hotel_confirmation'] = $hotel_confirmation;
+
+			$data['guest'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
+			$data['query_id'] = $query_id;
+			$data['impInfo'] = $impInfo;
+			$data['board_arr'] = $board_arr;
+			$data['guest_name'] = $guest_name;
+			// $this->load->view('hotel_voucher/pdf',$data);
+			$this->load->view('hotel_voucher/voucher_pdf/index',$data);
+	}
+
 	public function send_mail()
 	{
 
@@ -84,6 +107,9 @@ class HotelVoucher extends CI_Controller
 			$board_arr = $_POST['board_arr'];
 			$impInfo = $_POST['impInfo'];
 
+			$hotel_confirmation = $this->db->where('query_id', $query_id)->get('hotel_voucher_confirmation')->result();
+			$data['hotel_confirmation'] = $hotel_confirmation;
+			
 			$data['details'] = $this->db->where('queryId', $query_id)->get('querypackage')->row();
 			$data['hotel'] = $this->db->where('query_id', $query_id)->get('query_hotel')->result();
 			$data['guest'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();

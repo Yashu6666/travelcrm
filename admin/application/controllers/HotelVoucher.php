@@ -73,28 +73,6 @@ class HotelVoucher extends CI_Controller
 		}
 	}
 
-	public function mailTest(){
-			$query_id = 8865;
-			$c_email = "test";
-			$guest_name = "test";
-			$board_arr = "test";
-			$impInfo = "test";
-
-
-			$data['details'] = $this->db->where('queryId', $query_id)->get('querypackage')->row();
-			$data['hotel'] = $this->db->where('query_id', $query_id)->get('query_hotel')->result();
-			
-			$hotel_confirmation = $this->db->where('query_id', $query_id)->get('hotel_voucher_confirmation')->result();
-			$data['hotel_confirmation'] = $hotel_confirmation;
-
-			$data['guest'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
-			$data['query_id'] = $query_id;
-			$data['impInfo'] = $impInfo;
-			$data['board_arr'] = $board_arr;
-			$data['guest_name'] = $guest_name;
-			// $this->load->view('hotel_voucher/pdf',$data);
-			$this->load->view('hotel_voucher/voucher_pdf/index',$data);
-	}
 
 	public function send_mail()
 	{
@@ -142,8 +120,16 @@ class HotelVoucher extends CI_Controller
 			$this->email->to($c_email);
 			$this->email->subject('hotel voucher');
 
-			// $file_name = base_url('/public/uploads/hotelVoucher/' . $pdf_name);
-			// $this->email->attach($file_name);
+			$this->load->library('Pdf');
+			$html =  $this->load->view('hotel_voucher/pdf',$data, true);
+			$dompdf = new Dompdf\DOMPDF();
+			$dompdf->load_html($html);
+			$dompdf->render();
+			$output = $dompdf->output();
+			$pdf_name = time() . ".pdf";
+			file_put_contents(FCPATH . '/public/uploads/hotelVoucher/'.$pdf_name, $output);
+			$file_name = base_url('/public/uploads/hotelVoucher/' . $pdf_name);
+			$this->email->attach($file_name);
 
 			$message = '
 			<!DOCTYPE html> 
@@ -160,8 +146,9 @@ class HotelVoucher extends CI_Controller
 			$this->email->message($body); 
 
 			if ($this->email->send()) {
-				// $this->load->helper("file");
-				// delete_files(FCPATH . '/public/uploads/hotelVoucher');
+				$this->load->helper("file");
+				delete_files(FCPATH . '/public/uploads/hotelVoucher');
+
 				echo 'Your Email has successfully been sent.';
 			} else {
 				show_error($this->email->print_debugger());

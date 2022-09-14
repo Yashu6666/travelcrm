@@ -67,6 +67,8 @@
 
 <body
 	class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark">
+<!-- <?php echo $this->uri->segment(2) == "package" ?  "class='page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark sidemenu-closed'" : "class='page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark '"; ?> -->
+
 	<div class="page-wrapper">
 		<!-- start header -->
 		<div class="page-header navbar navbar-fixed-top" style="background-color:#ffffff !important;">

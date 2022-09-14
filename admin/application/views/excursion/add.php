@@ -12,16 +12,16 @@
           <div class="page-bar">
             <div class="page-title-breadcrumb">
               <div class=" pull-left">
-                <div class="page-title">Add Excursion</div>
+                <div class="page-title">Add Activity</div>
               </div>
-              <ol class="breadcrumb page-breadcrumb pull-right">
+             <ol class="breadcrumb page-breadcrumb pull-right">
                 <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="#">Inventory</a>&nbsp;<i
                     class="fa fa-angle-right"></i>
-                  </i>&nbsp;<a class="parent-item" href="<?php echo base_url(); ?>excursion/view_excursion">Excursion</a>&nbsp;<i
+                  </i>&nbsp;<a class="parent-item" href="hotel.html">Activity</a>&nbsp;<i
                     class="fa fa-angle-right"></i>
 
                 </li>
-                <li class="active">Add Excursion</li>
+                <li class="active">Add Activity</li>
               </ol>
             </div>
           </div>
@@ -72,14 +72,14 @@
                             <div class="tab-pane wow fadeIn animated active in" id="GENERAL">
                               <div class="clearfix"></div>
                               <div class="row form-group mb-3">
-                                <label class="col-md-12 control-label text-left"><b>Excursion Name</b></label>
+                                <label class="col-md-12 control-label text-left"><b>Activity Name</b></label>
                                 <div class="col-md-12">
                                   <input required  class="form-control form-control-lg" type="text"
                                     name="tourname" value="">
                                 </div>
                               </div>
                               <div class="row form-group mb-3">
-                                <label class="col-md-12 control-label text-left"><b>Excursion Description</b></label>
+                                <label class="col-md-12 control-label text-left"><b>Activity Description</b></label>
                                 <div class="col-md-12">
                                   <!-- <div id="editor"> -->
                                   	<textarea name="tourdesc" id="editor">

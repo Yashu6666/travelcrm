@@ -2166,8 +2166,8 @@ class Query extends CI_Controller
 
 			// 'excursion_name_SIC' => $_POST['excursion'][0],
 			// 'excursion_name_PVT' => $_POST['excursion'][1],
-			'excursion_name_SIC' => $_POST['excursion_name_SIC'],
-			'excursion_name_PVT' => $_POST['excursion_name_PVT'],
+			'excursion_name_SIC' => isset($_POST['excursion_name_SIC']) ? $_POST['excursion_name_SIC'] : NULL,
+			'excursion_name_PVT' => isset($_POST['excursion_name_PVT']) ? $_POST['excursion_name_PVT'] : NULL,
 
 			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
 			'buildPackageExclusions' => $_POST['buildPackageExclusions'],

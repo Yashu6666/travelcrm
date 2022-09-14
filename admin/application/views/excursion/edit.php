@@ -12,16 +12,16 @@
           <div class="page-bar">
             <div class="page-title-breadcrumb">
               <div class=" pull-left">
-                <div class="page-title">Edit Excursion</div>
+                <div class="page-title">Edit Activity</div>
               </div>
               <ol class="breadcrumb page-breadcrumb pull-right">
                 <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="#">Inventory</a>&nbsp;<i
                     class="fa fa-angle-right"></i>
-                  </i>&nbsp;<a class="parent-item" href="<?php echo base_url(); ?>excursion/view_excursion">Excursion</a>&nbsp;<i
+                  </i>&nbsp;<a class="parent-item" href="hotel.html">Activity</a>&nbsp;<i
                     class="fa fa-angle-right"></i>
 
                 </li>
-                <li class="active">Edit Excursion</li>
+                <li class="active">Edit Activity</li>
               </ol>
             </div>
           </div>
@@ -72,14 +72,14 @@
                             <div class="tab-pane wow fadeIn animated active in" id="GENERAL">
                               <div class="clearfix"></div>
                               <div class="row form-group mb-3">
-                                <label class="col-md-12 control-label text-left">Excursion Name</label>
+                                <label class="col-md-12 control-label text-left">Activity Name</label>
                                 <div class="col-md-12">
                                   <input required  class="form-control form-control-lg" type="text" placeholder="Excursion Name"
                                     name="tourname" value="<?php echo $edit->tourname;?>">
                                 </div>
                               </div>
                               <div class="row form-group mb-3">
-                                <label class="col-md-12 control-label text-left">Excursion Description</label>
+                                <label class="col-md-12 control-label text-left">Activity Description</label>
                                 <div class="col-md-12">
                                   <!-- <div id="editor"> -->
                                     <textarea name="tourdesc" id="editor">

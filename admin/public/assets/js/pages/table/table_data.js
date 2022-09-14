@@ -47,8 +47,27 @@ $(document).ready(function() {
     $('#addRow').click();
     
     $('#example4').DataTable( {
-        "scrollX": true
+        "scrollX": true,
     } );
+    $('#dashboard_table1').DataTable( {
+        "scrollX": true,
+        "pageLength": 5,
+        "hideEmptyCols": true,
+        "autoWidth": false,
+    } );
+
+    $('#dashboard_table2').DataTable( {
+        "scrollX": true,
+        "pageLength": 5,
+        "hideEmptyCols": true,
+        "autoWidth": false,
+    } );
+
+    $('#dashboard_table3').DataTable( {
+        "scrollX": true,
+        "pageLength": 5
+    } );
+    
     
     $('#saveStage').DataTable( {
     	 "scrollX": true,

@@ -100,7 +100,7 @@
 											</div> -->
 											<div class="mt-3 row d-flex align-items-baseline new_bg_header">
 												<div class="col-xl-12">
-													<h4 class="text-white text-center">Voucher</h4>
+													<h4 class="text-white text-center">Accommodation Voucher</h4>
 												</div>
 											</div>
 
@@ -109,7 +109,7 @@
 													<h4 class="text-white">Hotel Details</h4>
 												</div>
 											</div> -->
-
+											
 											<?php foreach (explode(',',$hotel[0]->nights) as $key => $value) : ?>
 
 												<div class="mt-3 row d-flex align-items-baseline ">
@@ -130,24 +130,25 @@
 													</div>
 													<div class="border border-bottom-0 border-top-0 col-xl-12">
 														<div class=" form-row p-3 rounded-lg">
-															<div class="col d-flex just">
-																<label for="" class=" col-form-label"><b>Check-in</b></label>
-																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?> readonly>
+															<?php
+															$date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);
+															$check_in = $date->format('d-m-Y');
+															$date->modify('+' . explode(',',$hotel[0]->nights)[$key] . ' day');
+															$checkout =  $date->format('d-m-Y');
+
+															?>
+														<div class="col d-flex just">
+																<label for="" class=" col-form-label">Check-in</label>
+																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $check_in; ?>>
 																<input type="hidden" name="check_in[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?>>
 															
 															</div>
-															<?php
-															$date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);
-															$date->modify('+' . explode(',',$hotel[0]->nights)[$key] . ' day');
-															$checkout =  $date->format('Y-m-d');
-															?>
 															<input type="hidden" name="check_out[<?php echo $key; ?>]" value=<?php echo $checkout; ?>>
 
 															<div class="col d-flex">
-																<label for="" class=" col-form-label"><b>Check-out</b></label>
-																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $checkout; ?> readonly>
+																<label for="" class=" col-form-label">Check-out</label>
+																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $checkout; ?>>
 															</div>
-														</div>
 
 													</div>
 													<div class="w-100">
@@ -158,7 +159,7 @@
 																	<th scope="col">Adults</th>
 																	<th scope="col">Children</th>
 																	<th scope="col">Children Ages</th>
-																	<th scope="col">Board</th>
+																	<th scope="col">Meals Board</th>
 																</tr>
 															</thead>
 															<tbody>
@@ -167,7 +168,7 @@
 																	<td><?php echo $details->adult; ?></td>
 																	<td><?php echo $details->child; ?></td>
 																	<td>--</td>
-																	<td><input type="text" class="form-control" value=<?php echo $board[$key] ?> name="board[<?php echo $key; ?>]"></td>
+																	<td><input type="text" class="form-control" value="<?php echo isset($board[$key]) ? $board[$key] :  "" ?>" name="board[<?php echo $key; ?>]"></td>
 																</tr>
 															</tbody>
 														</table>
@@ -193,7 +194,7 @@
 													</thead>
 													<tbody>
 														<tr>
-															<td><input type="text" class="form-control" name="guest_name" ></td>
+															<td><input type="text" id="guest_name" class="form-control" name="guest_name" ></td>
 															<td>indian</td>
 															<td><?php echo $guest->b2bEmail ?></td>
 															<td><?php echo $guest->b2bmobileNumber ?></td>

@@ -80,7 +80,7 @@ class HotelVoucher extends CI_Controller
 
 			$query_id = $_POST['query_id'];
 			$c_email = $_POST['email'];
-
+			$guest_name = $_POST['guest_name'];
 			$board_arr = $_POST['board_arr'];
 			$impInfo = $_POST['impInfo'];
 
@@ -90,7 +90,7 @@ class HotelVoucher extends CI_Controller
 			$data['query_id'] = $query_id;
 			$data['impInfo'] = $impInfo;
 			$data['board_arr'] = $board_arr;
-			
+			$data['guest_name'] = $guest_name;
 			$body = $this->load->view('hotel_voucher/voucher_pdf/index',$data,TRUE);
 
 			// $html = $this->load->view('hotel_voucher/pdf', $data, true);

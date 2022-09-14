@@ -11,13 +11,13 @@
 					<div class="page-bar">
 						<div class="page-title-breadcrumb">
 							<div class=" pull-left">
-								<div class="page-title">Excursion</div>
+								<div class="page-title">Activity</div>
 							</div>
 							<ol class="breadcrumb page-breadcrumb pull-right">
 								<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
 										href="#">Inventory</a>&nbsp;<i class="fa fa-angle-right"></i>
 								</li>
-								<li class="active">Excursion</li>
+								<li class="active">Activity</li>
 
 							</ol>
 						</div>
@@ -43,7 +43,7 @@ $this->session->unset_userdata ( 'success' );
 						<div class="col-md-12">
 							<div class="card card-box">
 								<div class="card-head">
-									<header>Excursions</header>
+									<header>Activity</header>
 											</div>
 								<div class="card-body ">
 									<div class="row p-b-20">
@@ -66,7 +66,7 @@ $this->session->unset_userdata ( 'success' );
 													<th class="center"> Name </th>
 													<!-- <th class="center"> Owned By </th> -->
 													<!-- <th class="center"> Supplier </th> -->
-													<th class="center"> Excursion Type </th>
+													<th class="center"> Activity Type </th>
 													<th class="center"> Opertaing From </th>
 													<th class="center"> Opertaing To </th>
 													<th class="center"> City </th>
@@ -86,7 +86,7 @@ $this->session->unset_userdata ( 'success' );
 												
 
 													<td class="center"><?php echo $view[$i]->tourmapaddress;?></td>
-													<td class="center">
+													<td class="d-flex">
 														
 														<a class="btn btn-tbl-edit btn-xs" href="<?php echo site_url();?>excursion/edit_excursion/<?php echo $view[$i]->id;?>">
 															<i class="fa fa-edit "></i>

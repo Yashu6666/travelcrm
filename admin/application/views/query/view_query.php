@@ -32,7 +32,7 @@
 										<!-- <a href="#"><img src="xlsc.png" alt="noimg" srcset="" class="xlscImg"></a> -->
 									</div>
 									<div class="tools">
-										<button class="new_btn show-modal-btn4 " id="show-modal-btn1">Add New +</button>
+										<button class="new_btn show-modal-btn4 sidebar-toggler" id="show-modal-btn1">Add New +</button>
 									</div>
 
 								</div>
@@ -295,7 +295,7 @@
 						<h3 class="pl-4 pt-3">Add B2B Agent</h3>
 					</div>
 
-					<button class="close_btn1" id="close_modal_btn1">X</button>
+					<button class="close_btn1  sidebar-toggler" id="close_modal_btn1">X</button>
 
 			<div class="modal-body" id="material">
                     <div class="row">
@@ -371,7 +371,7 @@
                 </div>
 					<div class="d-flex justify-content-center mr-5 ml-5 " style="margin-bottom:10px !important">
 
-						<a href="" style="width:17%" class="new_btn mr-3">Cancel</a>
+						<a href="" style="width:17%" class="new_btn mr-3  sidebar-toggler">Cancel</a>
 						<!-- <a href="package.html" class=">Save</a>	 -->
 						<button type="submit" style="width:17%" class="new_btn">Save</button>
 					</div>

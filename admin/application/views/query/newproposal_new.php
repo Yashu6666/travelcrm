@@ -340,11 +340,13 @@
         </div> -->
 
         <br /><br />
+        <?php if(isset($proposalDetails['excursion_name_SIC']) || isset($proposalDetails['excursion_name_PVT'])  ) : ?>
         <div class=" second">
             <div class=" bg-primary ">
                 <h3 class="text-light" style="padding: 7px;">Sightseeing</h3>
             </div>
             <div>
+            <?php if(isset($proposalDetails['excursion_name_SIC'])) : ?>
             <div class="head">
                     <h5 class="text-light" style="padding: 7px;"> SIC </h5>
                 </div>
@@ -354,6 +356,9 @@
             <?php endforeach ?>
             </div>
             <div>
+            <?php endif ?>
+
+            <?php if( isset($proposalDetails['excursion_name_PVT'])  ) : ?>
             <div class="head">
                     <h5 class="text-light" style="padding: 7px;"> PVT</h5>
                 </div>
@@ -362,8 +367,9 @@
                 <h5><?php echo $valss ?></h5>
             <?php endforeach ?>
             </div>
+        <?php endif ?>
         </div>
-
+        <?php endif ?>
         <br /><br />
         <div class=" second">
             <div class=" bg-primary ">
@@ -802,7 +808,7 @@
                         <label>Mail</label>
                     </div> -->
                     <div>
-                        <button type="button" class="new_btn" data-bs-dismiss="modal px-3" style="border: none;">Close</button>
+                        <button type="button" class=" new_btn" data-bs-dismiss="modal" data-bs-dismiss="modal" style="border: none;">Close</button>
                         <button type="button" id="modal-submit" class="new_btn px-3" style="border: none;">Submit</button>
                     </div>
                 </div>

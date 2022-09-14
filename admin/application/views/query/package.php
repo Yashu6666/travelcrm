@@ -308,35 +308,34 @@
                  for="">GIT(Group)</label>
                 </div>
                </div> -->
-                                            <div class="row mt-5 ">
+                                         <div class="row mt-4 mr-3 ml-3 mt-3">
                                                 <div class="col">
-                                                    <label class="input">
-                                                        <input class="input__field fname all-width" type="date" placeholder=" " id="specificDate1" name="specificDate" autocomplete="off" required />
-                                                        <span class="input__label">Check IN<span class="colorRed">*</span></span>
-                                                    </label><br>
-                                                </div>
-                                                <div class="col">
-                                                    <label class="input">
-                                                        <input class="input__field fname all-width" type="number" min="1" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
-                                                        <span class="input__label">Nights</span>
-                                                    </label>
-                                                </div>
-                                                <div class="col">
-                                                    <label class="input">
-                                                        <input class="input__field  all-width" type="date" placeholder=" " id="endDate1" name="noDaysFrom" autocomplete="off" />
-                                                        <span class="input__label">Check Out<span class="colorRed">*</span></span>
+                                            <label for="">Check IN</label> <br/>
 
-                                                    </label>
+                                                        <input class="package_inputs" type="date" placeholder=" " id="specificDate1" name="specificDate" autocomplete="off" required />
+                                                        <!-- <span class="input__label">Check IN<span class="colorRed">*</span></span> -->
                                                 </div>
                                                 <div class="col">
-                                                    <label class="input">
-                                                        <input class="input__field fname all-width" type="text" placeholder=" " name="country[]" value="United Arab Emirates" required autocomplete="off" />
-                                                        <span class="input__label">Country</span>
-                                                    </label>
+                                            <label for="">Nights</label> <br/>
+
+                                                        <input class="package_inputs" type="number" min="1" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
+                                                        <!-- <span class="input__label">Nights</span> -->
                                                 </div>
                                                 <div class="col">
-                                                <label class="input">
-                                                    <select class="input__field form-control all-width" required name="goingFrom[]">
+                                            <label for="">Check Out</label> <br/>
+
+                                                        <input class=" package_inputs" type="date" placeholder=" " id="endDate1" name="noDaysFrom" autocomplete="off" />
+                                                        <!-- <span class="input__label">Check Out<span class="colorRed">*</span></span> -->
+                                                </div>
+                                                <div class="col">
+                                            <label for="">Country</label> <br/>
+
+                                                        <input class="package_inputs" type="text" placeholder=" " name="country[]" value="United Arab Emirates" required autocomplete="off" />
+                                                        <!-- <span class="input__label">Country</span> -->
+                                                </div>
+                                                <div class="col">
+                                            <label for="">City</label> <br/>
+                                                    <select style="padding: 0px;" class="package_inputs" required name="goingFrom[]">
                                                         <option value="">Select City</option>
                                                         <option value="Dubai">Dubai</option>
                                                         <option value="AbuDhabi">Abu Dhabi</option>
@@ -348,12 +347,11 @@
                                                         <option value="Ras Al Khaimah">Ras Al Khaimah</option>
                                                         <option value="Al Ain">Al Ain</option>
                                                     </select>
-                                                 </label>
                                                 </div>
 
                                                 <div class="col">
-                                                <label class="input">
-                                                    <select class="input__field form-control all-width" required name="hotelPrefrence[]">
+                                                <label for="">Rating</label> <br/>
+                                                    <select style="padding: 0px;" class="package_inputs" required name="hotelPrefrence[]">
                                                         <option value="">Select Rating</option>
                                                         <option value="1">⭐ 1</option>
                                                         <option value="2">⭐⭐ 2</option>
@@ -361,7 +359,6 @@
                                                         <option value="4">⭐⭐⭐⭐ 4</option>
                                                         <option value="5">⭐⭐⭐⭐⭐ 5</option>
                                                     </select>
-                                                 </label>
                                                 </div>
 
                                                 <!-- <div class="col">
@@ -622,13 +619,34 @@
                             //      $(".box").not(targetBox).hide();
                             //      $(targetBox).show();
                             //     });
-                            //     $('input[name="colorRadio"]:checked').trigger('click');
+                            //     $('input[name="colorRadio"]:checked').chnge(function(){
+                            //      var inputValue = $(this).attr("value");    
+                            //      console.log("🚩 ~ file: package.php ~ line 624 ~ $ ~ inputValue", inputValue)
                             //    });
+                            // $(document).ready(function(){
+                            //    if (!$("input[name='colorRadio']:checked").val()) {
+                            //         return false;
+                            //     }
+                            //     else {
+                            //         $("input[name='colorRadio']:checked").addClass('sidebar-toggler');
+                            //         $('.sidebar-toggler').prop('checked', true);
+                            //     alert('One of the radio buttons is checked!');
+                            //     }
+                            // });
                         </script>
 
                         <style>
                             textarea:focus,
                             input:focus {
                                 border-color: #80bdff !important;
+                            }
+
+                            .package_inputs {
+                                width: 75%;
+                                height: 5vh;
+                                border: 1px solid gray;
+                                color: gray;
+                                border-radius: 4px;
+                                padding: 5px;
                             }
                         </style>

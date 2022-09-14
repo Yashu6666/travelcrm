@@ -1697,7 +1697,7 @@ function get_resturant_name(id,row){
           type:"POST",
           dataType: "json",
           url:'<?php echo site_url();?>/Query/getVisaPrice',
-          data:{'pax_adult':pax_adult,' ': 'package','pax_child':pax_child,'pax_infant':pax_infant,'visa_category_drop_down':visa_category_drop_down,'visa_validity':visa_validity,'entry_type':entry_type,'query_id':QueryId},
+          data:{'pax_adult':pax_adult,'query_type': 'package','pax_child':pax_child,'pax_infant':pax_infant,'visa_category_drop_down':visa_category_drop_down,'visa_validity':visa_validity,'entry_type':entry_type,'query_id':QueryId},
           success:function(response){
               
               $("#total_pax_visa_price_adult").val(response.per_pax_adult_amt);

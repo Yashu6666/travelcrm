@@ -42,7 +42,7 @@
 						<div class="page-title">Edit Hotel Voucher</div>
 					</div>
 					<ol class="breadcrumb page-breadcrumb pull-right">
-						<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="#">Dashboard</a>&nbsp;<i class="fa fa-angle-right"></i>
+						<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="<?php echo base_url(); ?>HotelVoucher/view_hotels_voucher">Hotel Voucher</a>&nbsp;<i class="fa fa-angle-right"></i>
 						</li>
 						<li class="active">Edit Hotel Voucher</li>
 					</ol>
@@ -210,7 +210,7 @@
 												<!-- <button id="submtVoucherbtn" type="button" class="float-right new_btn px-3">Submit</button> -->
 												<button onclick="subVoucherAjax()" id="submtVoucherBTN" type="button" class="float-right new_btn px-3">Update</button>
 												<button onclick="printVoucher()"  id="submtVoucherPrint" type="button" class="mr-3 float-right new_btn px-3">Print</button>
-												<button onclick="sendEmail()"  id="submtVoucherEmail" type="button" class="mr-3 float-right new_btn px-3">Send Mail to Customer</button>
+												<button onclick="sendEmail()"  id="submtVoucherEmail" type="button" class="mr-3 float-right new_btn px-3">Send Mail </button>
 											</div>
 										</div>
 									</div>

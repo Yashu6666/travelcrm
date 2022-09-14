@@ -13,8 +13,12 @@
 						<div class="page-title">Meals</div>
 					</div>
 					<ol class="breadcrumb page-breadcrumb pull-right">
-						<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
-							href="<?php echo site_url();?>meals/update_meals">Meals</a>&nbsp;<i class="fa fa-angle-right"></i>
+						<li><i class="fa fa-home"></i>&nbsp;
+						<a class="parent-item"
+										href="#">Inventory</a>&nbsp;<i class="fa fa-angle-right"></i>
+										</i>&nbsp;
+						<a class="parent-item"
+							href="<?php echo site_url();?>meals/view_meals">Meals</a>&nbsp;<i class="fa fa-angle-right"></i>
 						</li>
 						<li class="active">Edit Meals</li>
 					</ol>

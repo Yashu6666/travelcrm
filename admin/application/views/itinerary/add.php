@@ -324,7 +324,7 @@ $this
           <ol class="breadcrumb page-breadcrumb pull-right">
             <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="#">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
             </li>
-            <li>&nbsp;<a class="parent-item" href="#">Itinerary</a>&nbsp;<i class="fa fa-angle-right"></i>
+            <li>&nbsp;<a class="parent-item" href="<?php echo base_url(); ?>itinerary/view">Itinerary</a>&nbsp;<i class="fa fa-angle-right"></i>
             </li>
 
             <li class="active">Add Itinerary</li>

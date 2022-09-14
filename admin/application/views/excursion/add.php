@@ -14,7 +14,7 @@
               <div class=" pull-left">
                 <div class="page-title">Add Activity</div>
               </div>
-              <ol class="breadcrumb page-breadcrumb pull-right">
+             <ol class="breadcrumb page-breadcrumb pull-right">
                 <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="#">Inventory</a>&nbsp;<i
                     class="fa fa-angle-right"></i>
                   </i>&nbsp;<a class="parent-item" href="hotel.html">Activity</a>&nbsp;<i

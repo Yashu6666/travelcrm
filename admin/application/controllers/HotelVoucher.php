@@ -300,4 +300,24 @@ class HotelVoucher extends CI_Controller
 			redirect('HotelVoucher/view_hotels_voucher', 'refresh');
 		}
 	}
+
+	public function getVoucherDetails()
+	{
+		$query_id = $this->input->post('query_id');
+
+		$data['details'] = $this->db->where('queryId', $query_id)->get('querypackage')->row();
+
+		if($data['details']){
+
+		$data['hotel'] = $this->db->where('query_id', $query_id)->get('query_hotel')->result();
+		$data['guest'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
+		$data['hotel_conformation'] = $this->db->where('query_id', $query_id)->get('hotel_voucher_confirmation')->row();
+		$data['query_id'] = $query_id;
+			// echo"<pre>";print_r($data);exit;
+		echo json_encode($data);
+		} else {
+			$this->session->set_flashdata('error', 'Details not found for this Query Id');
+			redirect('HotelVoucher/view_hotels_voucher','refresh');
+		}
+	}
 }

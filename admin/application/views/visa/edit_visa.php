@@ -14,9 +14,9 @@
         <div class="page-title">Edit Visa</div>
        </div>
        <ol class="breadcrumb page-breadcrumb pull-right">
-        <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
+        <!-- <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
          href="<?php echo site_url();?>">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
-        </li>
+        </li> -->
         <li>&nbsp;<a class="parent-item" href="#">Inventory</a>&nbsp;<i
          class="fa fa-angle-right"></i></li>
          <li>&nbsp;<a class="parent-item" href="<?php echo site_url();?>visa/view_visa">Visa</a>&nbsp;<i

@@ -147,10 +147,18 @@
                                                 <td><?php echo $key->created_date;?></td>
                                                 <td><?php echo $key->TodoCustomer;?> 
                                                 <td><?php echo $key->Tododay;?></td>
-                                                <td><?php echo $this->session->userdata('admin_username');?></td>
+                                                <td><?php echo $key->created_by;?></td>
                                                 <td><?php echo $key->TodoAssigned;?></td>
                                                 </td>
-                                               <td><?php echo $key->status;?></td>
+                                                <td>
+                                                    <select id='task_status_dropdown' name='task_status_dropdown' class='input__field' onchange="changeStatus(this)" >
+                                                        <option value="Active|<?php echo $key->id;?>" <?=($key->status=='Active') ? 'selected':'';?> >Active</option>
+                                                        <option value="Pending|<?php echo $key->id;?>" <?=($key->status=='Pending') ? 'selected':'';?> >Pending</option>
+                                                        <option value="Closed|<?php echo $key->id;?>" <?=($key->status=='Closed') ? 'selected':'';?> >Closed</option>
+
+                                                    </select>
+                                                    <?php // echo $key->status;?>
+                                                </td>
                                             </tr>
                                             <?php } ?>
                                         </tbody>
@@ -211,15 +219,15 @@
                 <h5 class="modal-title" id="exampleModalLabel">Add To Do/Follow Up</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" >
 
-                <div>
+                <div style="margin-left: 20%;">
                 <input type="radio" name="Todotype"  value="call" checked="">Call
                 <input type="radio"  name="Todotype" value="meeting">Meeting
                 <input type="radio" name="Todotype" value="todo">To Do
-                <p class="inline">Remind in <b>15mins</b></p>
+                <p class="inline" style="display:none;">Remind in <b>15mins</b></p>
             </div>
-            <div class="mt-2">
+            <div class="mt-2" style="display:none;">
                 <input type="radio" name="Tododay" checked=""  value="today">Today
                 <input type="radio" name="Tododay" value="tomorrow">Tomorrow
                 <input type="radio" name="Tododay" value="2days">in 2 Days
@@ -292,4 +300,22 @@
             });
         }
     });
+    function changeStatus(current_select){
+        
+        var data= current_select.value;
+        var array = data.split('|');
+        var id= array[1];
+        var task_status = array[0];
+        var base_url = '<?php echo base_url()?>';
+        alert(task_status);
+        $.ajax({
+            url: base_url + "Todo/statusUpdate",
+            dataType : 'json',
+            type: "POST",
+            data : { 'id':id,'task_status':task_status },
+            success: function(result) {
+            console.log(result);
+        }});
+
+    }
 </script>

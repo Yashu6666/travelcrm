@@ -299,12 +299,12 @@ textarea{
             <div class=" bg-primary ">
                 <h3 class="text-light" style="padding: 7px;">Hotel</h3>
                 <div class="head">
-                    <h5 class="text-light" style="padding: 7px;"><?php echo $val ?> - No of Nights <?php echo $proposalDetails['nights'][$key] ?> </h5>
+                <h5 class="text-light" style="padding: 7px;"><?php $name = preg_split ("/\|/", $val);  echo $name[1]; ?> - No of Nights <?php echo $proposalDetails['nights'][$key] ?> </h5>
                 </div>
             </div>
             <div>
                 <img src="<?php echo base_url(); ?>public/image/4.jpg" alt="">
-                <h5><b>Hotel Name : </b> <?php echo $val ?></h5>
+                <h5><b>Hotel Name : </b> <?php $name = preg_split ("/\|/", $val);  echo $name[1]; ?></h5>
                 <b>Room Type : </b> <?php echo $proposalDetails['room_type'][$key] ?>
             </div>
         </div>
@@ -818,9 +818,14 @@ textarea{
         "pax_adult" : "<?php echo $buildpackage->adult ?>",
         "pax_child" : "<?php echo $buildpackage->child ?>",
         "pax_infant" : "<?php echo $buildpackage->infant ?>",
+        "per_pax_adult" : "<?php echo $proposalDetails['perpax_adult']; ?>",
+        "per_pax_child" : "<?php echo $proposalDetails['perpax_childs']; ?>",
+        "per_pax_infant" : "<?php echo $proposalDetails['perpax_infants']; ?>",        
         "room" : "<?php echo $buildpackage->night  ?>",
         "hotel" : "<?php echo $proposalDetails['hotel_name'][0] ?>",
         "type" : 'hotel',
+        "room_type" : "<?php echo $proposalDetails['room_type'][0] ?>",
+        "user" : "<?php echo $proposalDetails['loggedInUser']; ?>",
         "subject"  : document.getElementById("pro_sub").value,
         "cc_email"  : document.getElementById("cc_email").value,
         "cus_email"  : document.getElementById("cus_email").value,
@@ -828,7 +833,7 @@ textarea{
         "exclusions" :  exclu,
         "conditions" :  TnC,
         "cancelation_policy" : canc_ply,
-        "buildRoomType" : <?php echo json_encode($proposalDetails['roomType']) ?>,
+        // "buildRoomType" : <?php// echo $proposalDetails['roomType'][0] ?>,
         "hotelPrefrence" : "<?php echo $buildpackage->hotelPrefrence ?>",
         "query_ID" : <?php echo $buildpackage->queryId ?>
         };

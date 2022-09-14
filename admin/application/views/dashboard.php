@@ -850,3 +850,11 @@
 
 	new Chartist.Pie('#pie_chart', data, options, responsiveOptions);
 </script>
+
+<style>
+	div.dataTables_wrapper div.dataTables_filter input {
+    margin-left: 0.5em;
+    display: inline-block;
+    width: 9rem !important;
+}
+</style>

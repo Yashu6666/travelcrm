@@ -133,12 +133,19 @@ class Itinerary extends CI_Controller {
 		// $meals = $this->db->where('query_id',$query_id)->get('query_meal')->result();
 		$meals = $this->db->query("SELECT * FROM query_meal WHERE query_id=".$query_id)->result();
 
-		$data['resturant_transfer_type'] = explode(',',$meals[0]->transfer_type);
-		$data['resturant_type'] = explode(',',$meals[0]->resturant_type);
-		$data['resturant_name'] = explode(',',$meals[0]->resturant_name);
-		$data['meal'] = explode(',',$meals[0]->meal);
-		$data['meal_type'] = explode(',',$meals[0]->meal_type);
-
+		if(count($meals)> 1){
+			$data['resturant_transfer_type'] = explode(',',$meals[0]->transfer_type);
+			$data['resturant_type'] = explode(',',$meals[0]->resturant_type);
+			$data['resturant_name'] = explode(',',$meals[0]->resturant_name);
+			$data['meal'] = explode(',',$meals[0]->meal);
+			$data['meal_type'] = explode(',',$meals[0]->meal_type);
+		}else {
+			$data['resturant_transfer_type'] = [];
+			$data['resturant_type'] =  [];
+			$data['resturant_name'] =  [];
+			$data['meal'] = [];
+			$data['meal_type'] =  [];
+		}
 		// $excursion_sic = $this->db->query("SELECT * FROM `query_excursion` WHERE query_id='".$query_id."' AND excursion_type='SIC' ")->row();
 		// $excursion_pvt = $this->db->query("SELECT * FROM `query_excursion` WHERE query_id='".$query_id."'")->row();
 

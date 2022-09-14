@@ -3,7 +3,11 @@
 <div class="sidebar-container">
 	<div class="sidemenu-container navbar-collapse collapse fixed-menu" style="background-color:#102158 !important;">
 		<div id="remove-scroll">
-			<ul class="sidemenu page-header-fixed p-t-20" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+	<?php  if($this->uri->segment(2) == "package" || $this->uri->segment(2) == "buildPackage") : ?>
+			<ul class="sidemenu page-header-fixed p-t-20 sidemenu-closed" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+	<?php else : ?>			
+			<ul class="sidemenu page-header-fixed p-t-20 " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+				<?php endif ?>
 				<li class="sidebar-toggler-wrapper hide">
 					<div class="sidebar-toggler">
 						<span></span>
@@ -78,7 +82,7 @@
 							<li class="nav-item">
 								<a href="<?php echo site_url(); ?>excursion/view_excursion" class="nav-link <?php echo $this->uri->segment(1) == "excursion" ? "text-white" : "" ?>">
 								<i class="fa-solid fa-place-of-worship"></i>	
-								<span class="title">Activity</span>
+								<span class="title">Excursion</span>
 								</a>
 							</li>
 							<li class="nav-item">
@@ -251,7 +255,7 @@
 									</li>
 									<li class="nav-item">
 										<a href="<?php echo site_url(); ?>excursion/view_excursion" class="nav-link <?php echo $this->uri->segment(1) == "excursion" ? "text-white" : "" ?>">
-											<span class="title">Activity</span>
+											<span class="title">Excursion</span>
 										</a>
 									</li>
 									<li class="nav-item">

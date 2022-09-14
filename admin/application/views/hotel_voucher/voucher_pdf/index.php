@@ -151,10 +151,10 @@
 
 <body>
     <div class="container-fluid">
-        <img src="<?php echo base_url('/public/image/logo_new.png'); ?>" alt="logo" style="margin-bottom: 15px;" width="100" class="my-3 ms-4">
+        <img src="<?php echo base_url('/public/image/logo.png'); ?>" alt="logo" style="margin-bottom: 15px;" width="100" class="my-3 ms-4">
     </div>
     <div class="mainDiv">
-        <h4>Voucher</h4>
+        <h4>Accommodation Voucher</h4>
     </div>
     <div class="mainDiv">
         <h4 class="text-lg-start mx-3" style="text-align: start;margin-left: 20px;"><span class="icon"><svg width="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -162,27 +162,29 @@
                     <path d="M256 0v128h128L256 0zM224 128L224 0H48C21.49 0 0 21.49 0 48v416C0 490.5 21.49 512 48 512h288c26.51 0 48-21.49 48-48V160h-127.1C238.3 160 224 145.7 224 128zM272 416h-160C103.2 416 96 408.8 96 400C96 391.2 103.2 384 112 384h160c8.836 0 16 7.162 16 16C288 408.8 280.8 416 272 416zM272 352h-160C103.2 352 96 344.8 96 336C96 327.2 103.2 320 112 320h160c8.836 0 16 7.162 16 16C288 344.8 280.8 352 272 352zM288 272C288 280.8 280.8 288 272 288h-160C103.2 288 96 280.8 96 272C96 263.2 103.2 256 112 256h160C280.8 256 288 263.2 288 272z" />
                 </svg></span> Hotel Details</h4>
     </div>
-
     <!-- ?php foreach ($hotel as $key => $value) : ?> -->
     <?php foreach (explode(',',$hotel[0]->nights) as $key => $value) : ?>
     
     <div class="units">
-    <table class="table table-bordered">
+    <table class="" style="width:100%; margin-bottom:20px">
         <thead>
             <tr>
-                <th style="border: 2px solid #000;">Hotel Name</th>
-                <th style="border: 2px solid #000;"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?></th>
+                <th  style="border: 2px solid #000;width: 125px;">Hotel Name</th>
+                <th  style="border: 2px solid #000;width: 125px;"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?></th>
+                <th  style="border: 2px solid #000;width: 125px;">Confirmation Number</th>
+                <th  style="border: 2px solid #000;width: 125px;"><?php print_r($hotel_confirmation[$key]->confirmation_id) ?></th>
+                
             </tr>
         </thead>
     </table>
     </div>
 
     <div class="units">
-    <table class="table table-bordered">
+    <table style="width:100%; margin-bottom:20px">
         <thead>
             <tr>
                 
-                <th style="border: 2px solid #000;">Check-in</th>
+                <th style="border: 2px solid #000;width: 125px;">Check-in</th>
                 <?php
                     $date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);
 					$check_in = $date->format('d-m-Y');
@@ -190,39 +192,37 @@
                     $date->modify('+' . explode(',',$hotel[0]->nights)[$key] . ' day');
                     $checkout =  $date->format('d-m-Y');
                 ?>
-                 <th style="border: 2px solid #000;"><?php echo $check_in; ?></th>
-                <th style="border: 2px solid #000;">Check-out </th>
-                <th style="border: 2px solid #000;"><?php echo $checkout; ?></th>
+                 <th style="border: 2px solid #000;width: 125px;"><?php echo $check_in; ?></th>
+                <th style="border: 2px solid #000;width: 125px;">Check-out </th>
+                <th style="border: 2px solid #000;width: 125px;"><?php echo $checkout; ?></th>
             </tr>
         </thead>
     </table>
     </div>
 
         <div class="units" style="overflow-x: auto;">
-            <table class="table table-bordered">
+            <table style="width:100%; margin-bottom:20px">
                 <thead>
                     <tr>
-                        <th>Room Type</th>
-                        <th>Adults</th>
-                        <th>Children</th>
-                        <th>Children Ages</th>
-                        <th>Meals Board</th>
+                        <th style="border: 2px solid #000;width: 125px;">Room Type</th>
+                        <th style="border: 2px solid #000;width: 125px;">Adults</th>
+                        <th style="border: 2px solid #000;width: 125px;">Children</th>
+                        <th style="border: 2px solid #000;width: 125px;">Children Ages</th>
+                        <th style="border: 2px solid #000;width: 125px;">Meals Board</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php print_r(explode(',',$hotel[0]->room_type)[$key]); ?></td>
-                        <td><?php echo $details->adult; ?></td>
-                        <td><?php echo $details->child; ?></td>
-                        <td>--</td>
+                        <td style="border: 2px solid #000;width: 125px;"><?php print_r(explode(',',$hotel[0]->room_type)[$key]); ?></td>
+                        <td style="border: 2px solid #000;width: 125px;"><?php echo $details->adult; ?></td>
+                        <td style="border: 2px solid #000;width: 125px;"><?php echo $details->child; ?></td>
+                        <td style="border: 2px solid #000;width: 125px;">--</td>
                         <?php if ($board_arr[$key] == '') : ?>
-                            <td>----</td>
+                            <td style="border: 2px solid #000;width: 125px;">----</td>
                         <?php else : ?>
-                             <td><?php 
-                            if(is_array($board_arr)) echo $board_arr[$key];
-                            else echo $board_arr;
-                                
-                                ?></td>
+                            <td style="border: 2px solid #000;width: 125px;">
+                            <?php print_r($hotel_confirmation[$key]->board) ?>
+                            </td>
                         <?php endif ?>
                     </tr>
                 </tbody>
@@ -239,23 +239,23 @@
                 </svg></span>Guest Details</h4>
     </div>
 
-    <div class="units" style="width:100%">
-        <table class="table table-bordered">
+    <div class="units" >
+        <table style="width:100%">
             <thead>
                 <tr>
-                    <th>Guest Name:</th>
-                    <th>Nationality:</th>
-                    <th>Guest Email Id:</th>
-                    <th>Guest Mobile No:</th>
+                    <th style="border: 2px solid #000;width: 125px;">Guest Name:</th>
+                    <th style="border: 2px solid #000;width: 125px;">Nationality:</th>
+                    <th style="border: 2px solid #000;width: 125px;">Guest Email Id:</th>
+                    <th style="border: 2px solid #000;width: 125px;">Guest Mobile No:</th>
 
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><?php echo $guest_name ?></td>
-                    <td>indian</td>
-                    <td><?php echo $guest->b2bEmail ?></td>
-                    <td><?php echo $guest->b2bmobileNumber ?></td>
+                    <td style="border: 2px solid #000;width: 125px;"><?php print_r($hotel_confirmation[0]->guest_name) ?></td>
+                    <td style="border: 2px solid #000;width: 125px;">indian</td>
+                    <td style="border: 2px solid #000;width: 125px;"><?php echo $guest->b2bEmail ?></td>
+                    <td style="border: 2px solid #000;width: 125px;"><?php echo $guest->b2bmobileNumber ?></td>
                 </tr>
             </tbody>
         </table>
@@ -263,7 +263,7 @@
 
 
 
-    <div class="mainDiv">
+    <div class="mainDiv" style="margin-top: 20px;">
         <h4 class="text-lg-start mx-3" style="text-align: start;margin-left: 0px;"><span class="icon" style="text-align: start;margin-left: 20px;"><svg width="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                     
                     <path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 400c-18 0-32-14-32-32s13.1-32 32-32c17.1 0 32 14 32 32S273.1 400 256 400zM325.1 258L280 286V288c0 13-11 24-24 24S232 301 232 288V272c0-8 4-16 12-21l57-34C308 213 312 206 312 198C312 186 301.1 176 289.1 176h-51.1C225.1 176 216 186 216 198c0 13-11 24-24 24s-24-11-24-24C168 159 199 128 237.1 128h51.1C329 128 360 159 360 198C360 222 347 245 325.1 258z" />
@@ -274,8 +274,9 @@
 
 
     <div class="information">
+    <div class="units">
         <?php echo $impInfo ?>
-        
+    </div>
     </div>
 </body>
 

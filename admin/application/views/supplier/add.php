@@ -193,23 +193,35 @@
                     <input type="text" class="form-control" id=""
                     placeholder="" value="" required="" name="bank_name">
                 </div>
-                <div class="col">
+                <!-- <div class="col">
                 <div class="ml-2"><label style="font-size: small;"><b>IFSC Code*</b></label></div>
-
                     <input type="text" class="form-control" id=""
                     placeholder="" value="" required="" name="ifsc_code">
+                </div> -->
+
+                <div class="col">
+                <div class="ml-2"><label style="font-size: small;"><b>Swift Code*</b></label></div>
+                    <input type="text" class="form-control" id=""
+                    placeholder="" value="" required="" name="swift_code">
                 </div>
 
             </div>
 
 
-
+            
             <div class="row mt-3">
                 <div class="col">
-                <div class="ml-2"><label style="font-size: small;"><b>Swift Code*</b></label></div>
+                <div class="ml-2"><label style="font-size: small;"><b>IBAN*</b></label></div>
 
                     <input type="text" class="form-control" id=""
-                    placeholder="" value="" required="" name="swift_code">
+                    placeholder="" value="" required="" name="iban">
+                </div>
+
+                <div class="col">
+                <div class="ml-2"><label style="font-size: small;"><b>Bank Branch Name*</b></label></div>
+
+                    <input type="text" class="form-control" id=""
+                    placeholder="" value="" required="" name="branch">
                 </div>
                 <!-- <div class="col">
                     <label for="">Is Primary</label>
@@ -235,7 +247,7 @@
                 </div>
              
             </div> -->
-
+            </div>
 
             <div class="row mt-3">
 

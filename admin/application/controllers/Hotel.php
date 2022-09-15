@@ -56,6 +56,7 @@ class Hotel extends CI_Controller {
 	//echo '<pre>';print_r($_POST);exit;
 	$hotelamenities = implode(',', $_POST['hotelamenities']);
 	$hotelpayments = implode(',', $_POST['hotelpayments']);
+	$hotelemail = implode(',', $_POST['hotelemail']);
 	// echo '<pre>';print_r($this->input->post('hotelmapaddress'));exit;
 	$data = array('hotelname' => $this->input->post('hotelname'), 
 				'hoteldesc' => $this->input->post('hoteldesc'),
@@ -64,10 +65,11 @@ class Hotel extends CI_Controller {
 			'longitude' => $this->input->post('longitude'),
 			'hotelamenities'=> $hotelamenities,
 			'hotelpayments'=> $hotelpayments,
+			'hotelemail'=> $hotelemail,
 			'checkintime' => $this->input->post('checkintime'),
 			'checkouttime' => $this->input->post('checkouttime'),
 			'hotelpolicy' => $this->input->post('hotelpolicy'),
-			'hotelemail' => $this->input->post('hotelemail'),
+			// 'hotelemail' => $this->input->post('hotelemail'),
 			'hotelwebsite' => $this->input->post('hotelwebsite'),
 			'hotelphone' => $this->input->post('hotelphone'),
 			'hotelstars' => $this->input->post('hotelstars'),
@@ -93,6 +95,8 @@ class Hotel extends CI_Controller {
  	//echo '<pre>';print_r($_POST);exit;
 	$hotelamenities = implode(',', $_POST['hotelamenities']);
 	$hotelpayments = implode(',', $_POST['hotelpayments']);
+	$hotelemail = implode(',', $_POST['hotelemail']);
+
 	//echo '<pre>';print_r($hotelpayments);exit;
 	$data = array('hotelname' => $this->input->post('hotelname'), 
 		'hoteldesc' => $this->input->post('hoteldesc'),
@@ -101,10 +105,11 @@ class Hotel extends CI_Controller {
 			'longitude' => $this->input->post('longitude'),
 			'hotelamenities'=> $hotelamenities,
 			'hotelpayments'=> $hotelpayments,
+			'hotelemail'=> $hotelemail,
 			'checkintime' => $this->input->post('checkintime'),
 			'checkouttime' => $this->input->post('checkouttime'),
 			'hotelpolicy' => $this->input->post('hotelpolicy'),
-			'hotelemail' => $this->input->post('hotelemail'),
+			// 'hotelemail' => $this->input->post('hotelemail'),
 			'hotelwebsite' => $this->input->post('hotelwebsite'),
 			'hotelphone' => $this->input->post('hotelphone'),
 			'hotelstatus' => $this->input->post('hotelstatus'),

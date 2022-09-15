@@ -178,6 +178,8 @@ class Room extends CI_Controller {
 		try {
 			foreach ($roomtype as $key => $val) {
 				$insert_data = array(
+					'promo_code' => $this->input->post('promo_code'),
+					'created_by' => $this->session->userdata('admin_id'),
 					'hotelname' => $this->input->post('hotelname'),
 					'roomtype' => $roomtype[$key],
 					'room_desc' => $this->input->post('room_desc'),
@@ -284,6 +286,9 @@ class Room extends CI_Controller {
 						'vat' => $vat,
 						'vat_double' => $vat_double,
 						// 'vat_extra' => $vat_extra,
+						
+						'promo_code' => $this->input->post('promo_code'),
+						'created_by' => $this->session->userdata('admin_id'),
 
 						'netrate_extra_child'=>$netrate_extra_child,
 						// 'vat_extra_child'=>$vat_extra_child,

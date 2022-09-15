@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/diamowyl/public_html/
-    - /bin/cp -R images $DEPLOYPATH
+    - /bin/cp -r /home/diamowyl/public_html/crmtravel2/admin/* $DEPLOYPATH

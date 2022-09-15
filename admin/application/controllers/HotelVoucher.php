@@ -36,6 +36,14 @@ class HotelVoucher extends CI_Controller
 		$data['guest'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
 		$data['query_id'] = $query_id;
 
+		$hotel_ids = explode(',',$data['hotel'][0]->hotel_id);
+
+		$data['hotel_details'] = [];
+		foreach($hotel_ids as $id){
+			$data_hotel = $this->db->where('id', $id)->get('hotel')->row();
+			array_push($data['hotel_details'],$data_hotel);
+		}
+		
 		$board_data = $this->db->where('query_id', $query_id)->get('query_hotel')->row();
 		$data['board'] = explode(',',$board_data->type);
 
@@ -66,6 +74,15 @@ class HotelVoucher extends CI_Controller
 		$data['hotel'] = $this->db->where('query_id', $query_id)->get('query_hotel')->result();
 		$data['guest'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
 		$data['query_id'] = $query_id;
+
+		$hotel_ids = explode(',',$data['hotel'][0]->hotel_id);
+
+		$data['hotel_details'] = [];
+		foreach($hotel_ids as $id){
+			$data_hotel = $this->db->where('id', $id)->get('hotel')->row();
+			array_push($data['hotel_details'],$data_hotel);
+		}
+
 		$this->load->view('hotel_voucher/hotel_voucher_edit', $data);
 		} else {
 			$this->session->set_flashdata('error', 'Details not found for this Query Id');

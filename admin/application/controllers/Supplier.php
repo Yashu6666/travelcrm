@@ -44,6 +44,11 @@ class Supplier extends CI_Controller {
 					'acc_num'=> $this->input->post('acc_num'),
 					'bank_name'=> $this->input->post('bank_name'),
 					'ifsc_code'=> $this->input->post('ifsc_code'),
+
+					'iban'=> $this->input->post('iban'),
+					'bank_branch_name'=> $this->input->post('branch'),
+					'created_by' => $this->session->userdata('admin_id'),
+
 					'swift_code'=> $this->input->post('swift_code'),
 					'isPrimary'=> $this->input->post('inlineRadioOptions'),
 					'comments'=> "test",
@@ -84,6 +89,11 @@ class Supplier extends CI_Controller {
 					'acc_num'=> $this->input->post('acc_num'),
 					'bank_name'=> $this->input->post('bank_name'),
 					'ifsc_code'=> $this->input->post('ifsc_code'),
+					
+					'iban'=> $this->input->post('iban'),
+					'bank_branch_name'=> $this->input->post('branch'),
+					'created_by' => $this->session->userdata('admin_id'),
+
 					'swift_code'=> $this->input->post('swift_code'),
 					'isPrimary'=> $this->input->post('inlineRadioOptions'),
 					'comments'=>"test",

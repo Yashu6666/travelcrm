@@ -11,7 +11,7 @@
             <div class="page-bar">
               <div class="page-title-breadcrumb">
                  <div class=" pull-left">
-                    <div class="page-title">Add Supplier</div>
+                    <div class="page-title">Edit Supplier</div>
                 </div>
                 <ol class="breadcrumb page-breadcrumb pull-right">
                     <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
@@ -20,7 +20,7 @@
                   href="<?php echo base_url();?>supplier/view_supplier">Supplier</a>&nbsp;<i class="fa fa-angle-right"></i>
                   
               </li>
-              <li class="active">Add Supplier</li>
+              <li class="active">Edit Supplier</li>
           </ol>
       </div>
   </div>
@@ -195,10 +195,10 @@
                     placeholder=""  value="<?php echo $edit->bank_name;?>" required="" name="bank_name">
                 </div>
                 <div class="col">
-                <div class="ml-2"><label style="font-size: small;"><b>IFSC Code*</b></label></div>
+                <div class="ml-2"><label style="font-size: small;"><b>Swift Code*</b></label></div>
 
                     <input type="text" class="form-control" id=""
-                    placeholder="" value="<?php echo $edit->ifsc_code;?>"  required="" name="ifsc_code">
+                    placeholder="" value="<?php echo $edit->swift_code;?>"  required="" name="swift_code">
                 </div>
 
             </div>
@@ -207,10 +207,17 @@
 
             <div class="row mt-3">
                 <div class="col">
-                <div class="ml-2"><label style="font-size: small;"><b>Swift Code*</b></label></div>
+                <div class="ml-2"><label style="font-size: small;"><b>IBAN Code*</b></label></div>
 
                     <input type="text" class="form-control" id=""
-                    placeholder="" value="<?php echo $edit->swift_code;?>" required="" name="swift_code">
+                    placeholder="" value="<?php echo isset($edit->iban) ?  $edit->iban : "" ;?>" required="" name="iban">
+                </div>
+
+                <div class="col">
+                <div class="ml-2"><label style="font-size: small;"><b>Bank Branch Name*</b></label></div>
+                    <input type="text" class="form-control" id=""
+                    placeholder="" value="<?php echo isset($edit->bank_branch_name) ?  $edit->bank_branch_name : "" ;?>" required="" name="branch">
+                </div>
                 </div>
                 <!-- <div class="col">
                     <label for="">Is Primary</label>

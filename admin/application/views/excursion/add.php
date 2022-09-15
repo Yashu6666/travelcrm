@@ -234,12 +234,19 @@
                           <div class="row form-group mb-3">
                             <label class="col-md-4 control-label text-left"><b>Type</b></label>
                             <div class="col-md-8">
-                              <select required class="" name="type"  id="type">
+                              <select required class="form-control" name="type"  id="type">
                                 <option value="">Select</option>
                                 <option value="SIC">SIC</option>
                                 <option value="PVT">PVT</option>
 
                               </select>
+                            </div>
+                          </div>
+
+                          <div class="row form-group mb-3">
+                            <label class="col-md-4 control-label text-left"><b>Tour Time</b></label>
+                            <div class="col-md-8">
+                              <input  type="text" class="form-control" name="tour_time" value="">
                             </div>
                           </div>
 

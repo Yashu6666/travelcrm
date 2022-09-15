@@ -308,12 +308,40 @@
 															</div>
 														</div>
 														<div class="tab-pane wow fadeIn animated in" id="CONTACT">
-															<div class="row form-group mb-3">
+															<!-- <div class="row form-group mb-3">
 																<label class="col-md-2 control-label text-left">Hotel's Email</label>
 																<div class="col-md-10">
 																	<input required name="hotelemail" type="text" placeholder="Email" class="form-control " value="<?php echo $edit->hotelemail;?>">
 																</div>
-															</div>
+															</div> -->
+
+															<?php $emails = explode(",",$edit->hotelemail) ;?>
+
+															<div class="row form-group mb-3">
+															 <label class="col-md-2 control-label text-left">Hotel's Email</label>
+																<div class="col-md-10 d-flex">
+																	<input required name="hotelemail[]" type="text"  placeholder="Email" class="form-control" value="<?php echo 
+																	count($emails) > 0 ? $emails[0] : "" ;?>">
+																	<input type="button" value="Add" onclick="addNewEmails()" id="add_hotel_email" class="new_btn px-3 ml-5" />
+																</div>
+														  </div>
+
+														  
+														  <div id="new_hotel_email_ids">
+															<?php if(count($emails) > 1) : ?>
+																<?php foreach($emails as $key => $val) : ?>
+																	<?php if ( $key == 0 ) { continue; } ?>
+																	<div class="row form-group mb-3">
+															 		<label class="col-md-2 control-label text-left"></label>
+																	<div class="col-md-10 d-flex">
+																	<input required name="hotelemail[]" type="text"  placeholder="Email" class="form-control" value="<?php echo 
+																	$emails[$key] ;?>">
+																</div>
+																</div>
+																<?php endforeach ?>
+															<?php endif ?>
+														  </div>
+
 															<div class="row form-group mb-3">
 																<label class="col-md-2 control-label text-left">Hotel's Website</label>
 																<div class="col-md-10">
@@ -387,7 +415,7 @@
 															 <select required data-placeholder="Select" class="form-select1" name="supplier">
 																	
 															<?php foreach($supplier as $val){ ?>	
-															 <option <?php echo $val->firstName.' '.$val->lastName== $edit->supplier? "Selected":""?> value="<?php echo $val->firstName ?> <?php echo $val->lastName ?>"> <?php echo $val->firstName ?> <?php echo $val->lastName ?></option>
+ 															 <option <?php echo $val->firstName.' '.$val->lastName== $edit->supplier? "Selected":""?> value="<?php print_r($val->company_name) ?>"> <?php print_r($val->company_name) ?></option>
 															<?php } ?>
 															 </select>
 														  </div>
@@ -615,3 +643,15 @@
 		});
 	</script>
 	<!-- dronzone -->
+
+	<script>
+		function addNewEmails(){
+			let row_data = `<div class="row form-group mb-3">
+							<label class="col-md-2 control-label text-left"></label>
+							<div class="col-md-10 d-flex">
+								<input required name="hotelemail[]" type="text"  placeholder="Email" class="form-control" value="">
+							</div>
+						</div>`;
+			$("#new_hotel_email_ids").append(row_data);
+		}
+	</script>

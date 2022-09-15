@@ -445,6 +445,12 @@
 </div> -->
 <hr>
 <div class="row form-group mb-3">
+  <label class="col-md-6 control-label text-left">Promo Code</label>
+  <div class="col-md-6">
+    <input required class="form-control" type="text" placeholder=" Promo Code" name="promo_code" value="">
+  </div>
+</div>
+<div class="row form-group mb-3">
   <label class="col-md-6 control-label text-left">supplementary <br> Cost</label>
   <div class="col-md-6">
     <input required class="form-control" type="text" placeholder=" Cost" name="supplementary" id="supplementary" value="">
@@ -452,13 +458,13 @@
 </div>
 <hr>
 <div class="row form-group mb-3">
-  <label class="col-md-4 control-label text-left">From Date</label>
+  <label class="col-md-4 control-label text-left">Valid From</label>
   <div class="col-md-8">
     <input required class="form-control" type="date" placeholder="Extra beds" name="from_date" id="from_date" value="">
   </div>
 </div>
 <div class="row form-group mb-3">
-  <label class="col-md-4 control-label text-left">To Date</label>
+  <label class="col-md-4 control-label text-left">Valid To</label>
   <div class="col-md-8">
     <input required class="form-control" type="Date" placeholder="Beds charges" name="to_date" id="to_date" value="">
   </div>

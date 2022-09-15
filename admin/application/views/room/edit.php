@@ -667,6 +667,12 @@
 </div> -->
 <hr>
 <div class="row form-group mb-3">
+  <label class="col-md-6 control-label text-left">Promo Code</label>
+  <div class="col-md-6">
+    <input required class="form-control" type="text" placeholder=" Promo Code" name="promo_code" value="">
+  </div>
+</div>
+<div class="row form-group mb-3">
   <label class="col-md-6 control-label text-left">supplementary <br> Cost</label>
   <div class="col-md-6">
     <input required class="form-control" type="text" placeholder=" Cost" name="supplementary" value="<?php echo $edit->supplementary_cost;?>">
@@ -674,13 +680,13 @@
 </div>
 <hr>
 <div class="row form-group mb-3">
-  <label class="col-md-4 control-label text-left">From Date</label>
+  <label class="col-md-4 control-label text-left">Valid From</label>
   <div class="col-md-8">
     <input required class="form-control" type="date" placeholder="Extra beds" id="from_date" name="from_date" value="<?php echo $edit->from_date;?>">
   </div>
 </div>
 <div class="row form-group mb-3">
-  <label class="col-md-4 control-label text-left">To Date</label>
+  <label class="col-md-4 control-label text-left">Valid To</label>
   <div class="col-md-8">
     <input required class="form-control" type="Date" placeholder="Beds charges" id="to_date" name="to_date" value="<?php echo $edit->to_date;?>">
   </div>

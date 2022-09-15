@@ -247,11 +247,11 @@
 														  <div class="row form-group mb-3">
 															 <label class="col-md-2 control-label text-left">Check In</label>
 															 <div class="col-md-4">
-																<input required name="checkintime" type="text" placeholder="Check In" class="form-control timepicker" data-format="hh:mm A" value="">
+																<input required name="checkintime" type="text" placeholder="Check In" class="form-control timepicker" data-format="hh:mm A" value="02 PM">
 															 </div>
 															 <label class="col-md-2 control-label text-left">Check Out</label>
 															 <div class="col-md-4">
-																<input required name="checkouttime" type="text" placeholder="Check Out" class="form-control timepicker" data-format="hh:mm A" value="">
+																<input required name="checkouttime" type="text" placeholder="Check Out" class="form-control timepicker" data-format="hh:mm A" value="11 PM">
 															 </div>
 														  </div>
 														  <div class="row form-group mb-3">
@@ -296,10 +296,15 @@
 													   <div class="tab-pane wow fadeIn animated in" id="CONTACT">
 														  <div class="row form-group mb-3">
 															 <label class="col-md-2 control-label text-left">Hotel's Email</label>
-															 <div class="col-md-10">
-																<input required name="hotelemail" type="text" placeholder="Email" class="form-control " value="">
-															 </div>
+																<div class="col-md-10 d-flex">
+																	<input required name="hotelemail[]" type="text"  placeholder="Email" class="form-control" value="">
+																	<input type="button" value="Add" onclick="addNewEmails()" id="add_hotel_email" class="new_btn px-3 ml-5" />
+																</div>
 														  </div>
+
+														  <div id="new_hotel_email_ids">
+														  </div>
+
 														  <div class="row form-group mb-3">
 															 <label class="col-md-2 control-label text-left">Hotel's Website</label>
 															 <div class="col-md-10">
@@ -371,7 +376,7 @@
 															<?php foreach($supplier as $val){ 
 																//print_r($val->firstName);
 																?>	
-															 <option value="<?php print_r($val->firstName) ?> <?php print_r($val->lastName) ?>"> <?php print_r($val->firstName) ?> <?php print_r($val->lastName) ?></option>
+															 <option value="<?php print_r($val->company_name) ?>"> <?php print_r($val->company_name) ?></option>
 															<?php } ?>
 															 </select>
 														  </div>
@@ -575,3 +580,15 @@
 		});
 	</script>
 	<!-- dronzone -->
+
+	<script>
+		function addNewEmails(){
+			let row_data = `<div class="row form-group mb-3">
+							<label class="col-md-2 control-label text-left"></label>
+							<div class="col-md-10 d-flex">
+								<input required name="hotelemail[]" type="text"  placeholder="Email" class="form-control" value="">
+							</div>
+						</div>`;
+			$("#new_hotel_email_ids").append(row_data);
+		}
+	</script>

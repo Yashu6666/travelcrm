@@ -66,7 +66,10 @@
 <!-- END HEAD -->
 
 <body
- <?php echo $this->uri->segment(2) == "package" || $this->uri->segment(2) == "buildPackage" ?  "class='page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark sidemenu-closed'" : "class='page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark '"; ?> >
+ <?php echo $this->uri->segment(2) == "package" || $this->uri->segment(2) == "buildPackage"
+ || $this->uri->segment(2) == "buildExcursion" || $this->uri->segment(2) == "buildHotel" || $this->uri->segment(2) == "buildTransfer" 
+ || $this->uri->segment(2) == "buildVisa" || $this->uri->segment(2) == "buildMeals"
+ ?  "class='page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark sidemenu-closed'" : "class='page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark '"; ?> >
 <!-- class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark sidemenu-closed"> -->
 
 	<div class="page-wrapper">

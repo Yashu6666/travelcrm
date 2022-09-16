@@ -57,7 +57,7 @@
 														  <div class="row form-group mb-3">
 															 <div class="col-md-12">
 																<!-- <mwc-textfield class="w-100 bg-white" name="hotelname" label="Hotel Name" outlined value=""></mwc-textfield> -->
-																<label class="col-md-12 control-label text-left">Hotel Name</label>
+																<label class="col-md-12 control-label text-left">Property Name</label>
 																<input required class="w-100 bg-white form-control form-control-lg" name="hotelname" value="">
 															 </div>
 														  </div>
@@ -295,8 +295,8 @@
 													   </div>
 													   <div class="tab-pane wow fadeIn animated in" id="CONTACT">
 														  <div class="row form-group mb-3">
-															 <label class="col-md-2 control-label text-left">Hotel's Email</label>
-																<div class="col-md-10 d-flex">
+															 <label class="col-md-12 control-label text-left">Hotel's Email</label>
+																<div class="col-md-12 d-flex">
 																	<input required name="hotelemail[]" type="text"  placeholder="Email" class="form-control" value="">
 																	<input type="button" value="Add" onclick="addNewEmails()" id="add_hotel_email" class="new_btn px-3 ml-5" />
 																</div>
@@ -306,18 +306,35 @@
 														  </div>
 
 														  <div class="row form-group mb-3">
-															 <label class="col-md-2 control-label text-left">Hotel's Website</label>
-															 <div class="col-md-10">
+															 <label class="col-md-12 control-label text-left">Hotel's Website</label>
+															 <div class="col-md-12">
 																<input required name="hotelwebsite" type="text" placeholder="Website" class="form-control " value="">
 															 </div>
 														  </div>
+
 														  <div class="row form-group mb-3">
-															 <label class="col-md-2 control-label text-left">Phone</label>
-															 <div class="col-md-10">
-																<input required name="hotelphone" type="text" placeholder="Phone" class="form-control" value="">
-															 </div>
+															 <label class="col-md-12 control-label text-left">Contact Person</label>
+																<div class="col-md-12 d-flex">
+																	<input required name="contact_person[]" type="text"  placeholder="Contact Person Name" class="form-control" value="">
+																	<input type="button" value="Add" onclick="addNewContactNames()" id="add_hotel_email" class="new_btn px-3 ml-5" />
+																</div>
 														  </div>
-														
+
+														  <div id="new_contact_person_names">
+														  </div>
+
+
+														  <div class="row form-group mb-3">
+															 <label class="col-md-12 control-label text-left">Phone</label>
+																<div class="col-md-12 d-flex">
+																	<input required name="phone[]" type="text"  placeholder="Phone" class="form-control" value="">
+																	<input type="button" value="Add" onclick="addNewPhones()" id="add_hotel_email" class="new_btn px-3 ml-5" />
+																</div>
+														  </div>
+
+														  <div id="new_phone">
+														  </div>
+ 														
 													   </div>
 													
 													</div>
@@ -582,13 +599,47 @@
 	<!-- dronzone -->
 
 	<script>
+		let email_row_id = 1;
 		function addNewEmails(){
-			let row_data = `<div class="row form-group mb-3">
+			let row_data = `<div class="row form-group mb-3" id="email_row${email_row_id}">
 							<label class="col-md-2 control-label text-left"></label>
-							<div class="col-md-10 d-flex">
-								<input required name="hotelemail[]" type="text"  placeholder="Email" class="form-control" value="">
+							<div class="col-md-12 d-flex">
+								<input required name="hotelemail[]" type="text"  placeholder="Email" class="form-control mr-2" value="">
+								<button type="button" class="btn btn-danger ml-5 mt-0 py-2"  onclick="removeNewEmails(${"email_row"+email_row_id})"></i></button>
 							</div>
 						</div>`;
 			$("#new_hotel_email_ids").append(row_data);
+			email_row_id++;
 		}
+
+		function removeNewEmails(id){
+			$(id).remove();
+		}
+
+		let contact_names_id = 1;
+		function addNewContactNames(){
+			let row_data = `<div class="row form-group mb-3" id="contact_names${contact_names_id}">
+							<label class="col-md-2 control-label text-left"></label>
+							<div class="col-md-12 d-flex">
+								<input required name="contact_person[]" type="text"  placeholder="Contact Person Name" class="form-control mr-2" value="">
+								<button type="button" class="btn btn-danger ml-5 mt-0 py-2"  onclick="removeNewEmails(${"contact_names"+contact_names_id})"></i></button>
+							</div>
+						</div>`;
+			$("#new_contact_person_names").append(row_data);
+			contact_names_id++;
+		}
+
+		let new_phone_id = 1;
+		function addNewPhones(){
+			let row_data = `<div class="row form-group mb-3" id="new_phone${new_phone_id}">
+							<label class="col-md-2 control-label text-left"></label>
+							<div class="col-md-12 d-flex">
+								<input required name="phone[]" type="text"  placeholder="Phone" class="form-control mr-2" value="">
+								<button type="button" class="btn btn-danger ml-5 mt-0 py-2"  onclick="removeNewEmails(${"new_phone"+new_phone_id})"></i></button>
+							</div>
+						</div>`;
+			$("#new_phone").append(row_data);
+			new_phone_id++;
+		}
+
 	</script>

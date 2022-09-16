@@ -67,7 +67,7 @@
             </div>
           </div>
           <div class="row form-group mb-3">
-            <label class="col-md-2 control-label text-left"><b>Room Type</b></label>
+            <label class="col-md-2 control-label text-left text-nowrap"><b>Room Type</b></label>
             <div class="col-md-10">
 
              <select  required  name="roomtype"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
@@ -543,15 +543,14 @@
   </div>
 
   <div class="row form-group mb-3">
-    <label class="col-md-4 control-label text-left">Extra Bed Type</label>
+    <label class="col-md-4 control-label text-left text-nowrap">Extra Bed Type</label>
     <div class="col-md-8">
 
       <select required class="form-control children" name="bedtype">
-      <!-- <option value="<?php echo $edit->bedtype;?>"><?php echo $edit->bedtype;?></option> -->
-       <option <?php echo $edit->bedtype =="No Extra Bed"?"Selected":"";?> value="No Extra Bed">No Extra Bed</option>
-       <option  <?php echo $edit->bedtype =="Mattres"?"Selected":"";?> value="Mattres">Mattres</option>
-       <option  <?php echo $edit->bedtype =="Cot"?"Selected":"";?> value="Cot">Cot</option>
-       <option  <?php echo $edit->bedtype =="Sofa cum Bed"?"Selected":"";?> value="Sofa cum Bed">Sofa cum Bed</option>
+       <option <?php echo $edit->bedtype =="Extra Bed" ? "Selected":"";?> value="Extra Bed">Extra Bed</option>
+       <option  <?php echo $edit->bedtype =="Mattres" ?"Selected":"";?> value="Mattres">Mattres</option>
+       <option  <?php echo $edit->bedtype =="Cot" ? "Selected":"";?> value="Cot">Cot</option>
+       <option  <?php echo $edit->bedtype =="Sofa cum Bed" ? "Selected": "";?> value="Sofa cum Bed">Sofa cum Bed</option>
      </select>
 
      <script>
@@ -564,7 +563,7 @@
 
 <hr>
 
-<h4 class="mb-4 center"><strong><b>Room Occupancy</b></strong></h4>
+<h4 class="mb-4 center"><strong><b>Room Occupancy (Max)</b></strong></h4>
 <div class="row form-group mb-3">
   <label class="col-md-4 control-label text-left">Adults</label>
   <div class="col-md-8">
@@ -686,7 +685,7 @@
   </div>
 </div>
 <div class="row form-group mb-3">
-  <label class="col-md-4 control-label text-left">Valid To</label>
+  <label class="col-md-4 control-label text-left">Valid Till</label>
   <div class="col-md-8">
     <input required class="form-control" type="Date" placeholder="Beds charges" id="to_date" name="to_date" value="<?php echo $edit->to_date;?>">
   </div>

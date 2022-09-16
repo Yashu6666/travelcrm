@@ -45,14 +45,10 @@
 											</div>
 										</div>
 
-										<div class="tools">
-											<div class="dropdown">
-												
-												<label for="" class="ml-4"><b>Export</b></label>
-												<select class="pdf">
-													<option value="">PDF</option>
-													<option value="">Word</option>
-												</select>
+										<div class="tools mt-2">
+											<div class="d-flex mx-5">
+											<a href="#"><i class="fa-solid fa-file-pdf fa-2x mx-4"></i></a>
+											<a href="#"><i class="fa-solid fa-file-excel fa-2x"></i></a>
 											</div>
 										</div>
 									</div>

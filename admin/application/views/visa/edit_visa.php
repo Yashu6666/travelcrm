@@ -49,9 +49,9 @@
         
               <th>Visa Category</th>
               <th>Entry Type</th>
-              <th>Processing Time</th>
+              <!-- <th>Processing Time</th>
               <th>Validity</th>
-           
+            -->
               <th>Adult Rate</th>
               <th>Child Rate</th>
               <th>Infant Rate</th>
@@ -114,7 +114,7 @@
 
              </div>
             </td>
-            <td><input type="text" value="<?php echo $edit->process_time?>"  class="form-control" name="process_time"  value="">
+            <!-- <td><input type="text" value="<?php echo $edit->process_time?>"  class="form-control" name="process_time"  value="">
             </td>
             <td>
             <select data-mdl-for="sample2" class="form-control"
@@ -123,7 +123,7 @@
               <option <?php echo $edit->visa_validity=="3 Month"?"selected":"" ?>  value="3 Month">3 Month</option>
               <option <?php echo $edit->visa_validity=="5 Years"?"selected":"" ?>  value="5 Years">5 Years</option>
              </select>
-            </td>
+            </td> -->
        
            <td><input type="text" placeholder="0" class="form-control" name="adult" value="<?php echo $edit->adult?>" >
            </td>

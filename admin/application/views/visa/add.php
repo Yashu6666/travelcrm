@@ -47,8 +47,8 @@
             
               <th>Visa Category</th>
               <th>Entry Type</th>
-              <th>Processing Time</th>
-              <th>Validity</th>
+              <!-- <th>Processing Time</th>
+              <th>Validity</th> -->
               <th>Adult Rate</th>
               <th>Child Rate</th>
               <th>Infant Rate</th>
@@ -96,7 +96,7 @@
 
              </div>
             </td>
-            <td><input type="text" placeholder="" class="form-control" name="process_time">
+            <!-- <td><input type="text" placeholder="" class="form-control" name="process_time">
             </td>
            <td>
              <div>
@@ -107,7 +107,7 @@
               <option value="5 Years">5 Years</option>
              </select>
             </div>
-           </td>
+           </td> -->
 
            <td><input type="text" placeholder="0" class="form-control" name="adult">
            </td>

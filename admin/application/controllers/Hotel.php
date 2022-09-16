@@ -57,6 +57,8 @@ class Hotel extends CI_Controller {
 	$hotelamenities = implode(',', $_POST['hotelamenities']);
 	$hotelpayments = implode(',', $_POST['hotelpayments']);
 	$hotelemail = implode(',', $_POST['hotelemail']);
+	$contact_person = implode(',', $_POST['contact_person']);
+	$phone = implode(',', $_POST['phone']);
 	// echo '<pre>';print_r($this->input->post('hotelmapaddress'));exit;
 	$data = array('hotelname' => $this->input->post('hotelname'), 
 				'hoteldesc' => $this->input->post('hoteldesc'),
@@ -71,12 +73,15 @@ class Hotel extends CI_Controller {
 			'hotelpolicy' => $this->input->post('hotelpolicy'),
 			// 'hotelemail' => $this->input->post('hotelemail'),
 			'hotelwebsite' => $this->input->post('hotelwebsite'),
-			'hotelphone' => $this->input->post('hotelphone'),
+			'hotelphone' => $phone,
+			'contact_name' => $contact_person,
 			'hotelstars' => $this->input->post('hotelstars'),
 			'propertytype' => $this->input->post('propertytype'),
 			'total_markup' => $this->input->post('total_markup'),
 			'total_markup_per' => $this->input->post('total_markup_per'),
-			'supplier' => $this->input->post('supplier')	
+			'supplier' => $this->input->post('supplier'),
+			'created_by' => $this->session->userdata('admin_id')
+
 			);
 	if($this->db->insert('hotel',$data))
 	{
@@ -96,7 +101,8 @@ class Hotel extends CI_Controller {
 	$hotelamenities = implode(',', $_POST['hotelamenities']);
 	$hotelpayments = implode(',', $_POST['hotelpayments']);
 	$hotelemail = implode(',', $_POST['hotelemail']);
-
+	$contact_person = implode(',', $_POST['contact_person']);
+	$phone = implode(',', $_POST['phone']);
 	//echo '<pre>';print_r($hotelpayments);exit;
 	$data = array('hotelname' => $this->input->post('hotelname'), 
 		'hoteldesc' => $this->input->post('hoteldesc'),
@@ -111,13 +117,15 @@ class Hotel extends CI_Controller {
 			'hotelpolicy' => $this->input->post('hotelpolicy'),
 			// 'hotelemail' => $this->input->post('hotelemail'),
 			'hotelwebsite' => $this->input->post('hotelwebsite'),
-			'hotelphone' => $this->input->post('hotelphone'),
+			'hotelphone' => $phone,
+			'contact_name' => $contact_person,
 			'hotelstatus' => $this->input->post('hotelstatus'),
 			'hotelstars' => $this->input->post('hotelstars'),
 			'propertytype' => $this->input->post('propertytype'),
 			'total_markup' => $this->input->post('total_markup'),
 			'total_markup_per' => $this->input->post('total_markup_per'),
-			'supplier' => $this->input->post('supplier')		
+			'supplier' => $this->input->post('supplier'),
+			'created_by' => $this->session->userdata('admin_id')
 			);
 	if($this->db->where('id',$id)->update('hotel',$data))
 	{

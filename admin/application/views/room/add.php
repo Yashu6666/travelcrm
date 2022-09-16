@@ -307,7 +307,7 @@
 
       <select required class="form-control children" name="bedtype" id="bedtype">
        <option value="">Select Bed Type</option>
-       <option value="No Extra Bed">No Extra Bed</option>
+       <option value="Extra Bed">Extra Bed</option>
        <option value="Mattres">Mattres</option>
        <option value="Cot">Cot</option>
        <option value="Sofa cum Bed">Sofa cum Bed</option>
@@ -322,7 +322,7 @@
 
 
 <hr>
-<h4 class="mb-4 center"><strong><b>Room Occupancy</b></strong></h4>
+<h4 class="mb-4 center"><strong><b>Room Occupancy (Max)</b></strong></h4>
 <div class="row form-group mb-3">
   <label class="col-md-4 control-label text-left">Adults</label>
   <div class="col-md-8">
@@ -464,7 +464,7 @@
   </div>
 </div>
 <div class="row form-group mb-3">
-  <label class="col-md-4 control-label text-left">Valid To</label>
+  <label class="col-md-4 control-label text-left">Valid Till</label>
   <div class="col-md-8">
     <input required class="form-control" type="Date" placeholder="Beds charges" name="to_date" id="to_date" value="">
   </div>

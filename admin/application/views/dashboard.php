@@ -134,7 +134,7 @@
 			<div class="col-12">
 					<div class="card card-box">
 						<div class="card-head">
-							<header>Upcoming Arrival</header>
+							<header><i class="fa-solid fa-plane-arrival"></i> Upcoming Arrival</header>
 
 						</div>
 						<div class="card-body ">
@@ -171,7 +171,7 @@
 
 					<div class="card card-box">
 						<div class="card-head">
-							<header>To-Do List</header>
+							<header><i class="fa-regular fa-calendar-check"></i> To-Do List</header>
 						</div>
 						<div class="card-body no-padding height-9">
 
@@ -210,7 +210,7 @@
 				<div class="col-lg-6 col-md-12 col-sm-12 col-12">
 					<div class="card card-box">
 						<div class="card-head">
-							<header>Iternary</header>
+							<header><i class="fa-solid fa-route"></i>  Iternary</header>
 						</div>
 						<div class="card-body no-padding height-9">
 								<table id="dashboard_table3" class="table table-hover table-checkable order-column">

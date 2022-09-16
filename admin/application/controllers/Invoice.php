@@ -41,7 +41,7 @@ class Invoice extends CI_Controller
 
 		$query_type = $this->db->where('queryId', $query_id)->get('querypackage')->row();
 		$data['desc'] = $query_type->type;
-		$data['currency'] = $query_type->currency;
+		// $data['currency'] = $query_type->currency;
 		$data['pax'] = $query_type->adult + $query_type->child + $query_type->infant;
 		$query_price = $this->db->where('query_id', $query_id)->get('pricing_info')->row();
 		$data['price'] = $query_price->package_price / $data['pax'];

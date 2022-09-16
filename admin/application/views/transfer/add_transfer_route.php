@@ -154,19 +154,20 @@
 													</tr>
 
 												</thead>
-												<tbody>
-													<td><select class="form-control" name="currency">
-															<option value="AED">AED</option>
-															<option value="USD">USD</option>
-														</select></td>
+												<tbody id="tbody_id">
+													<tr id="row1">
+														<td><select class="form-control" name="currency[]">
+																<option value="AED">AED</option>
+																<option value="USD">USD</option>
+															</select>
+														</td>
 
-													<td><input type="text" placeholder="PAX" class="form-control" name="seat_capacity" name="seat_capacity" id="seat_capacity"></td>
+														<td><input type="text" placeholder="PAX" class="form-control" name="seat_capacity[]"></td>
 
-													<td><input type="text" placeholder="Cost" class="form-control" name="cost"></td>
-
-													<!-- <button class="btn btn-danger btn-xs">
-																				<i class="fa fa-trash-o "></i>
-																			</button> -->
+														<td class="d-flex">
+															<input type="text" placeholder="Cost" class="form-control" name="cost[]">
+															<input type="button" value="Add" onclick="addNewRow()" id="" class="new_btn px-3 ml-5" />
+														</td>
 
 													</tr>
 												</tbody>
@@ -186,7 +187,6 @@
 												</thead>
 												<tbody>
 
-													</select></td>
 													<td><select class="form-control" name="currency_hour">
 															<option value="AED">AED</option>
 															<option value="USD">USD</option>
@@ -234,3 +234,36 @@
 <div style="padding: 3rem; background-color: #222c3c;">
 	<?php $this->load->view('footer'); ?>
 </div>
+
+<script>
+	let new_row_id = 1;
+
+	function addNewRow() {
+		let row_data = `<tr id="tr_id${new_row_id}">
+							<td><select class="form-control" name="currency[]" id="tr_sel${new_row_id}">
+									<option value="AED">AED</option>
+									<option value="USD">USD</option>
+								</select></td>
+
+							<td><input type="text" placeholder="PAX" class="form-control" name="seat_capacity[]" id="tr_cap${new_row_id}"></td>
+
+							<td class="d-flex">
+								<input type="text" placeholder="Cost" class="form-control" name="cost[]">
+								<button type="button" class="btn btn-danger ml-5 mt-0 py-2"  onclick="removeNewRow(${"tr_id"+new_row_id})"><i class="fa fa-trash"></i></button>
+							</td>
+
+							</tr>`;
+		$("#tbody_id").append(row_data);
+		new_row_id++;
+	}
+
+	function removeNewRow(id) {
+		// document.getElementById()
+		// var values = $("input[name='seat_capacity[]']")
+		//   .map(function(){return $(this).val();}).get();
+
+		//   console.log("🚩 ~ file: add_transfer_route.php ~ line 262 ~ removeNewRow ~ values", values)
+
+		$(id).remove();
+	}
+</script>

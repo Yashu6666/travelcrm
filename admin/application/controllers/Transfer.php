@@ -192,43 +192,49 @@ class Transfer extends CI_Controller {
 		}
 		}
 
-		public function addTransferroute()
-		{
-			//echo '<pre>';print_r($_POST);exit;
-			// $city_name = implode(',', $this->input->post('city_name'));
-			// $no_days = implode(',', $this->input->post('no_days'));
-			// $destination_covered = implode(',', $this->input->post('destination_covered'));	
-			// $sightseeing_covered = implode(',', $this->input->post('sightseeing_covered'));	
+	public function addTransferroute()
+	{
+		//echo '<pre>';print_r($_POST);exit;
+		// $city_name = implode(',', $this->input->post('city_name'));
+		// $no_days = implode(',', $this->input->post('no_days'));
+		// $destination_covered = implode(',', $this->input->post('destination_covered'));	
+		// $sightseeing_covered = implode(',', $this->input->post('sightseeing_covered'));	
 
 
+		$seat_capacity = $this->input->post('seat_capacity');
+		$currency = $this->input->post('currency');
+		$cost = $this->input->post('cost');
+		// print_r($currency); exit;
+		try {
+			foreach ($currency as $key => $val) {
+				$data = array(
+					'transport_type' => $this->input->post('transport_type'),
 
+					'start_city' => $this->input->post('start_city'),
+					'dest_city' => $this->input->post('dest_city'),
+					'route_name' => $this->input->post('route_name'),
+					'cost_type' => $this->input->post('intervaltype'),
 
-		$data = array('transport_type' => $this->input->post('transport_type'),
-			
-			'start_city' => $this->input->post('start_city'),
-			'dest_city' => $this->input->post('dest_city'),
-			'route_name' => $this->input->post('route_name'),
-			'cost_type'=> $this->input->post('intervaltype'),
-			
-			'seat_capacity' => $this->input->post('seat_capacity'),
-			'currency' => $this->input->post('currency'),
-			'cost' => $this->input->post('cost'),
-		
-			'seat_capacity_hour' => $this->input->post('seat_capacity_hour'),
-			'currency_hour' => $this->input->post('currency_hour'),
-			'per_hour_cost' => $this->input->post('per_hour_cost'),
-			
-		);
+					'seat_capacity' => $seat_capacity[$key],
+					'currency' => $currency[$key],
+					'cost' => $cost[$key],
 
-		if($this->db->insert('transfer_route',$data))
-		{
-			$this->session->set_flashdata('success','Transfer Route Added Sucessfully');
-			redirect('transfer/view_transfers','refresh');
-		}
-		else
-		{
-			$this->session->set_flashdata('error','Something Went Wrong');
-			redirect('transfer/view_transfers','refresh');
+					'seat_capacity_hour' => $this->input->post('seat_capacity_hour'),
+					'currency_hour' => $this->input->post('currency_hour'),
+					'per_hour_cost' => $this->input->post('per_hour_cost'),
+					'created_by' => $this->session->userdata('admin_id'),
+
+				);
+
+				$this->db->insert('transfer_route', $data);
+			}
+
+			$this->session->set_flashdata('success', 'Transfer Route Added Sucessfully');
+			// redirect('transfer/view_transfers', 'refresh');
+
+		} catch (\Exception $e) {
+			$this->session->set_flashdata('error', 'Something Went Wrong');
+			redirect('transfer/view_transfers', 'refresh');
 		}
 	}
 

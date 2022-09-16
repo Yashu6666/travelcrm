@@ -112,21 +112,24 @@
 											</thead>
 											<tbody>
 											<?php 
-											if($this->uri->segment(3) == 'Confirmed'){$styleColor = "background: #08cd04";}
-											elseif($this->uri->segment(3) == 'Inprogress'){$styleColor = "background: #3197ffd6";} 
-											elseif($this->uri->segment(3) == 'Rejected'){$styleColor = "background: #ff023d";} 
-											elseif($this->uri->segment(3) == 'Callback'){$styleColor = "background: #ff6d9c";} 
-											?>
+											// if($this->uri->segment(3) == 'Confirmed'){$styleColor = "background: #08cd04";}
+											// elseif($this->uri->segment(3) == 'Inprogress'){$styleColor = "background: #3197ffd6";} 
+											// elseif($this->uri->segment(3) == 'Rejected'){$styleColor = "background: #ff023d";} 
+											// elseif($this->uri->segment(3) == 'Callback'){$styleColor = "background: #ff6d9c";} 
+											// ?>
 												<?php $cnt = 0;
+												$styleColor ="";
 												// echo '<pre>';print_r($result);exit;
-												foreach($result as $val){ $cnt++;?>
-												<?php 
+												foreach($result as $key => $val){ $cnt++; $styleColor = ($key % 2 == 0) ? "background: #E6F5DA;" : "background: #E7E7E7;"   ?>
+
+												<!-- ?php 
 												
 												if($val['lead_stage']=="Confirmed"){$styleColor = "background: #08cd04";}
 												elseif($val['lead_stage']=="Inprogress"){$styleColor = "background: #3197ffd6";} 
 												elseif($val['lead_stage']=="Rejected"){$styleColor = "background: #ff023d";} 
 												elseif($val['lead_stage']=="Callback"){$styleColor = "background: #ff6d9c";}
-												?>
+												?> -->
+												
 												<tr class="odd gradeX" style="<?php echo $styleColor ?>" id="<?php echo $cnt ?>">
 													<td class="center"><?php echo $cnt ?></td>
 													<td class="center"><?php echo date('d M Y H:i:s' , strtotime($val['created_at'])) ?></td>

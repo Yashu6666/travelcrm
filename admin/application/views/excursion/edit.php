@@ -232,7 +232,7 @@
                           </div> -->
 
                           <div class="row form-group mb-3">
-                            <label class="col-md-4 control-label text-left"><b>Type</b></label>
+                            <label class="col-md-4 control-label text-left text-nowrap"><b>Transfer Type</b></label>
                             <div class="col-md-8">
                               <select required class="form-control" name="type"  id="type">
                                 
@@ -244,7 +244,7 @@
                           </div>
 
                           <div class="row form-group mb-3">
-                            <label class="col-md-4 control-label text-left"><b>Tour Time</b></label>
+                            <label class="col-md-4 control-label text-left text-nowrap"><b>Tour Time Hrs</b></label>
                             <div class="col-md-8">
                               <input  type="text" class="form-control" name="tour_time" value="<?php echo $edit->tour_time ?>">
                             </div>

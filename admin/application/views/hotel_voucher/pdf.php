@@ -33,7 +33,7 @@
 </div>
 
 <div class="mainDiv" style="background-color: #d9a927;text-align: center;">
-        <h4 style="padding: 8px;">Accommodation Voucher</h4>
+        <h4 style="padding: 8px;"><i class="fa-solid fa-receipt"></i> Accommodation Voucher</h4>
     </div>
     <div class="mainDiv" style="background-color: #d9a927;">
         <h4 style="text-align: start;margin-left: 20px;padding:2px;align-items: center;display: flex;font-size: 20px;"><img src="<?php echo base_url('/public/image/page_icon.png'); ?>" style="width: 12px;"> Hotel Details</h4>
@@ -61,6 +61,10 @@
                     $checkout =  $date->format('d-m-Y');
                 ?>
                  <th><?php echo $check_in; ?></th>
+
+                <th>No of Nights </th>
+                <th><?php print_r(explode(',',$hotel[0]->nights)[$key]); ?></th>		
+                				
                 <th>Check-out </th>
                 <th><?php echo $checkout; ?></th>
             </tr>

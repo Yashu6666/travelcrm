@@ -154,7 +154,7 @@
         <img src="<?php echo base_url('/public/image/logo.png'); ?>" alt="logo" style="margin-bottom: 15px;" width="100" class="my-3 ms-4">
     </div>
     <div class="mainDiv" style="background-color: #d9a927;text-align: center;">
-        <h4 style="background-color: #d9a927;text-align: center;">Accommodation Voucher</h4>
+        <h4 style="background-color: #d9a927;text-align: center;"><i class="fa-solid fa-receipt"></i> Accommodation Voucher</h4>
     </div>
     <div class="mainDiv" style="background-color: #d9a927;">
         <h4 class="text-lg-start mx-3" style="text-align: start;margin-left: 20px;"><span class="icon"><svg width="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -193,6 +193,10 @@
                     $checkout =  $date->format('d-m-Y');
                 ?>
                  <th style="border: 2px solid #000;width: 125px;"><?php echo $check_in; ?></th>
+
+                <th>No of Nights </th>
+                <th><?php print_r(explode(',',$hotel[0]->nights)[$key]); ?></th>	
+
                 <th style="border: 2px solid #000;width: 125px;">Check-out </th>
                 <th style="border: 2px solid #000;width: 125px;"><?php echo $checkout; ?></th>
             </tr>

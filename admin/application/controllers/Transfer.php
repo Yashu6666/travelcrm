@@ -230,7 +230,7 @@ class Transfer extends CI_Controller {
 			}
 
 			$this->session->set_flashdata('success', 'Transfer Route Added Sucessfully');
-			// redirect('transfer/view_transfers', 'refresh');
+			redirect('transfer/view_transfers', 'refresh');
 
 		} catch (\Exception $e) {
 			$this->session->set_flashdata('error', 'Something Went Wrong');

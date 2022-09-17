@@ -44,7 +44,11 @@
 <table style="width: 100%; margin-top:20px">
   <tr>
     <th>Hotel Name</th>
-    <th><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?></th>
+    <th style="white-space: nowrap;"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?> 
+        <?php if(isset($hotel_details[$key]->hotelstars)) : ?>	
+	    <?php echo str_repeat("⭐",$hotel_details[$key]->hotelstars); ?>
+	    <?php endif ?>
+    </th>
     <th>Confirmation Number</th>
     <th><?php print_r($hotel_confirmation[$key]->confirmation_id) ?></th>
   </tr>
@@ -73,6 +77,7 @@
     <table style="width:100%; margin-top:20px">
                     <tr>
                         <th>Room Type</th>
+                        <th>No of Rooms</th>
                         <th>Adults</th>
                         <th>Children</th>
                         <th>Children Ages</th>
@@ -81,6 +86,7 @@
                 <tbody>
                     <tr>
                         <td><?php print_r(explode(',',$hotel[0]->room_type)[$key]); ?></td>
+                        <td><?php echo $details->room; ?></td>
                         <td><?php echo $details->adult; ?></td>
                         <td><?php echo $details->child; ?></td>
                         <td>--</td>
@@ -105,16 +111,16 @@
             <thead>
                 <tr>
                     <th>Guest Name:</th>
-                    <th>Nationality:</th>
-                    <th>Guest Email Id:</th>
-                    <th>Guest Mobile No:</th>
+                    <th>Agent Name: </th>
+                    <th>Agent Email Id:</th>
+                    <th>Agent Mobile No:</th>
 
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><?php print_r($hotel_confirmation[0]->guest_name) ?></td>
-                    <td>indian</td>
+                    <td><?php echo $guest->b2bfirstName." ".$guest->b2blastName ?></td>
                     <td><?php echo $guest->b2bEmail ?></td>
                     <td><?php echo $guest->b2bmobileNumber ?></td>
                 </tr>

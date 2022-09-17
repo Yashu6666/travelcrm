@@ -170,7 +170,11 @@
         <thead>
             <tr>
                 <th  style="border: 2px solid #000;width: 125px;">Hotel Name</th>
-                <th  style="border: 2px solid #000;width: 125px;"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?></th>
+                <th  style="border: 2px solid #000;width: 125px;white-space: nowrap;"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?>
+                    <?php if(isset($hotel_details[$key]->hotelstars)) : ?>	
+                        <?php echo str_repeat("⭐",$hotel_details[$key]->hotelstars); ?>
+                    <?php endif ?>
+                </th>
                 <th  style="border: 2px solid #000;width: 125px;">Confirmation Number</th>
                 <th  style="border: 2px solid #000;width: 125px;"><?php print_r($hotel_confirmation[$key]->confirmation_id) ?></th>
                 
@@ -209,6 +213,7 @@
                 <thead>
                     <tr>
                         <th style="border: 2px solid #000;width: 125px;">Room Type</th>
+                        <th style="border: 2px solid #000;width: 125px;">No of Rooms</th>
                         <th style="border: 2px solid #000;width: 125px;">Adults</th>
                         <th style="border: 2px solid #000;width: 125px;">Children</th>
                         <th style="border: 2px solid #000;width: 125px;">Children Ages</th>
@@ -218,6 +223,7 @@
                 <tbody>
                     <tr>
                         <td style="border: 2px solid #000;width: 125px;"><?php print_r(explode(',',$hotel[0]->room_type)[$key]); ?></td>
+                        <td style="border: 2px solid #000;width: 125px;"><?php echo $details->room; ?></td>
                         <td style="border: 2px solid #000;width: 125px;"><?php echo $details->adult; ?></td>
                         <td style="border: 2px solid #000;width: 125px;"><?php echo $details->child; ?></td>
                         <td style="border: 2px solid #000;width: 125px;">--</td>
@@ -248,16 +254,15 @@
             <thead>
                 <tr>
                     <th style="border: 2px solid #000;width: 125px;">Guest Name:</th>
-                    <th style="border: 2px solid #000;width: 125px;">Nationality:</th>
-                    <th style="border: 2px solid #000;width: 125px;">Guest Email Id:</th>
-                    <th style="border: 2px solid #000;width: 125px;">Guest Mobile No:</th>
-
+                    <th style="border: 2px solid #000;width: 125px;">Agent Name:</th>
+                    <th style="border: 2px solid #000;width: 125px;">Agent Email Id:</th>
+                    <th style="border: 2px solid #000;width: 125px;">Agent Mobile No:</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td style="border: 2px solid #000;width: 125px;"><?php print_r($hotel_confirmation[0]->guest_name) ?></td>
-                    <td style="border: 2px solid #000;width: 125px;">indian</td>
+                    <td style="border: 2px solid #000;width: 125px;"><?php echo $guest->b2bfirstName." ".$guest->b2blastName ?></td>
                     <td style="border: 2px solid #000;width: 125px;"><?php echo $guest->b2bEmail ?></td>
                     <td style="border: 2px solid #000;width: 125px;"><?php echo $guest->b2bmobileNumber ?></td>
                 </tr>

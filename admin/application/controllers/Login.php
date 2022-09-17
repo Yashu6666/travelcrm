@@ -268,7 +268,7 @@ class Login extends CI_Controller
 		$confirmed_query = $this->db->distinct()->select('query_id')->where('lead_stage','Confirmed')->get('b2bcustomerquery');
 		$inprogress_query = $this->db->distinct()->select('query_id')->where('lead_stage','Inprogress')->get('b2bcustomerquery');
 		$rejected_query = $this->db->distinct()->select('query_id')->where('lead_stage','Rejected')->get('b2bcustomerquery');
-		$data['query_count'] = json_encode([count($all_query->result()),count($confirmed_query->result()),count($inprogress_query->result()),count($rejected_query->result()),]);
+		$data['query_count'] = json_encode([count($confirmed_query->result()),count($inprogress_query->result()),count($rejected_query->result()),]);
 		
 // echo"<pre>";print_r($data['staffs_name'] );	exit;
 		

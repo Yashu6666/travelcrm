@@ -108,7 +108,7 @@
                                             readonly="" size="" value=""></td>
                                       </tr> -->
                                       <tr bgcolor="#ffffff" style="text-align:center">
-                                        <td><b>Price</b></td>
+                                        <td><b>Ticket Price</b></td>
                                         <td><input type="text" class="form-control input-sm adult" name="adultprice"
                                             size="" value=""></td>
                                         <td><input type="text" class="form-control input-sm child" 
@@ -252,20 +252,20 @@
 
                           <div style="display:none" id="pvttab">
                       
-                          <div class="row form-group mb-3">
-                            <label class="col-md-4 control-label text-left"><b>Upto PAX</b></label>
-                            <div class="col-md-8">
-                              <input  type="text" class="form-control" name="pax" value="">
-                            </div>
-                          </div> 
+                            <div class="row form-group mb-3">
+                              <label class="col-md-4 control-label text-left"><b>Upto PAX</b></label>
+                              <div class="col-md-8">
+                                <input  type="text" id="inputTag" class="form-control" name="pax" value="" data-role="tagsinput">
+                              </div>
+                            </div> 
 
-                          <div class="row form-group mb-3" >
-                            <label class="col-md-4 control-label text-left"><b>Vehicle Price</b></label>
-                            <div class="col-md-8">
-                              <input  type="text" class="form-control" name="vehicle_price" value="0">
-                            </div>
-                          </div> 
-</div>
+                            <div class="row form-group mb-3" >
+                              <label class="col-md-4 control-label text-left"><b>Vehicle Price</b></label>
+                              <div class="col-md-8">
+                                <input  type="text" id="inputTag2" class="form-control" value="" name="vehicle_price" data-role="tagsinput">
+                              </div>
+                            </div> 
+                          </div>
 
                           <h6 class="mb-3 center" style="font-weight:Bold;align-self:center" ><strong>Operating Time</strong></h6>
                          <div class="row form-group mb-3">
@@ -362,7 +362,12 @@
           <!-- end widget -->
 
             <?php $this->load->view('footer');?>
-
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" integrity="sha512-xmGTNt20S0t62wHLmQec2DauG9T+owP9e6VU8GigI0anN7OXLip9i7IwEhelasml2osdxX71XcYm6BQunTQeQg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+             <script>
+              $("#inputTag").tagsinput('items');
+              $("#inputTag2").tagsinput('items');
+             </script>
              <script type="text/javascript">
                                     $(function () {
                                       $("#infant").on("click", function () {

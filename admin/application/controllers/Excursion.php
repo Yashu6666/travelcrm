@@ -48,49 +48,79 @@ class Excursion extends CI_Controller {
 	{
 		//echo '<pre>';print_r($_POST);exit;
 
-	// $touramenities = implode(',', $_POST['touramenities']);
-	// $tourexclusions = implode(',', $_POST['tourexclusions']);
-	// $hotelpayments = implode(',', $_POST['hotelpayments']);
-	
-	//echo '<pre>';print_r($hotelpayments);exit;
+		// $touramenities = implode(',', $_POST['touramenities']);
+		// $tourexclusions = implode(',', $_POST['tourexclusions']);
+		// $hotelpayments = implode(',', $_POST['hotelpayments']);
 
-	$type= $this->input->post('type');
+		// echo '<pre>';
+		// print_r(explode(",",$this->input->post('vehicle_price')));
+		// exit;
 
-	if($type=='PVT'){
-		$pax= $this->input->post('pax');
-		$price=$this->input->post('vehicle_price');
-	}else{
-		$pax=0;
-		$price=0;
-	}
-	$data = array('tourname' => $this->input->post('tourname'),
+		$type = $this->input->post('type');
+
+		if ($type == 'PVT') {
+			$pax = $this->input->post('pax');
+			$price = $this->input->post('vehicle_price');
+
+			try {
+			
+			foreach(explode(",",$pax) as $key => $value) {
+
+				$data = array(
+					'tourname' => $this->input->post('tourname'),
 					'tourdesc' => $this->input->post('tourdesc'),
 					'type' => $this->input->post('type'),
 					'tour_time' => $this->input->post('tour_time'),
 					'created_by' => $this->session->userdata('admin_id'),
-		     'adultprice' => $this->input->post('adultprice'),
-			'childprice' => $this->input->post('childprice'),
-			'infantprice' => $this->input->post('infantprice'),
-			'tourmapaddress' => $this->input->post('tourmapaddress'),
-			
-			'operating_from' => $this->input->post('operating_from'),
-			'operating_to' => $this->input->post('operating_to'),
-			'pax'=>$pax,
-			'vehicle_price'=>$price
-				
+					'adultprice' => $this->input->post('adultprice'),
+					'childprice' => $this->input->post('childprice'),
+					'infantprice' => $this->input->post('infantprice'),
+					'tourmapaddress' => $this->input->post('tourmapaddress'),
+					'operating_from' => $this->input->post('operating_from'),
+					'operating_to' => $this->input->post('operating_to'),
+					'pax' => explode(",",$pax)[$key],
+					'vehicle_price' => explode(",",$price)[$key]
+				);
 	
+				$this->db->insert('excursion', $data);
+
+			}
+			
+			$this->session->set_flashdata('success', 'Excursion Added Sucessfully');
+			redirect('excursion/view_excursion', 'refresh');
+			
+		} catch(\Exception $e){
+			$this->session->set_flashdata('error', 'Something Went Wrong');
+			redirect('excursion/view_excursion', 'refresh');
+		}
+
+		} else {
+			$pax = 0;
+			$price = 0;
+
+			$data = array(
+				'tourname' => $this->input->post('tourname'),
+				'tourdesc' => $this->input->post('tourdesc'),
+				'type' => $this->input->post('type'),
+				'tour_time' => $this->input->post('tour_time'),
+				'created_by' => $this->session->userdata('admin_id'),
+				'adultprice' => $this->input->post('adultprice'),
+				'childprice' => $this->input->post('childprice'),
+				'infantprice' => $this->input->post('infantprice'),
+				'tourmapaddress' => $this->input->post('tourmapaddress'),
+				'operating_from' => $this->input->post('operating_from'),
+				'operating_to' => $this->input->post('operating_to'),
+				'pax' => $pax,
+				'vehicle_price' => $price
 			);
 
-
-		if($this->db->insert('excursion',$data))
-		{
-			$this->session->set_flashdata('success','Excursion Added Sucessfully');
-			redirect('excursion/view_excursion','refresh');
-		}
-		else
-		{
-			$this->session->set_flashdata('error','Something Went Wrong');
-			redirect('excursion/view_excursion','refresh');
+			if ($this->db->insert('excursion', $data)) {
+				$this->session->set_flashdata('success', 'Excursion Added Sucessfully');
+				redirect('excursion/view_excursion', 'refresh');
+			} else {
+				$this->session->set_flashdata('error', 'Something Went Wrong');
+				redirect('excursion/view_excursion', 'refresh');
+			}
 		}
 	}
 

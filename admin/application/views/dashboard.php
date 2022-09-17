@@ -52,7 +52,7 @@
 
 			<div class="row">
 
-				<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+				<!-- <div class="col-lg-6 col-md-12 col-sm-12 col-12">
 					<div class="card card-box">
 						<div class="card-head">
 							<header>Total Sales in <?php echo date('Y'); ?> </header>
@@ -65,29 +65,38 @@
 						</div>
 						<div class="card-body no-padding height-9">
 							<b style="float:right;">AED <?php echo $all_total; ?> </b>
-							<!-- <div class="mt-2" dir="ltr">
-                                        <div id="stacked-bar-chart" class="ct-chart ct-golden-section"><div class="chartist-tooltip" style="top: 173.219px; left: 122.5px;"></div><svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="100%" class="ct-chart-bar" style="width: 100%; height: 100%;"><g class="ct-grids"><line x1="50" x2="50" y1="15" y2="265" class="ct-grid ct-horizontal"></line><line x1="159.375" x2="159.375" y1="15" y2="265" class="ct-grid ct-horizontal"></line><line x1="268.75" x2="268.75" y1="15" y2="265" class="ct-grid ct-horizontal"></line><line x1="378.125" x2="378.125" y1="15" y2="265" class="ct-grid ct-horizontal"></line><line y1="265" y2="265" x1="50" x2="487.5" class="ct-grid ct-vertical"></line><line y1="240" y2="240" x1="50" x2="487.5" class="ct-grid ct-vertical"></line><line y1="215" y2="215" x1="50" x2="487.5" class="ct-grid ct-vertical"></line><line y1="190" y2="190" x1="50" x2="487.5" class="ct-grid ct-vertical"></line><line y1="165" y2="165" x1="50" x2="487.5" class="ct-grid ct-vertical"></line><line y1="140" y2="140" x1="50" x2="487.5" class="ct-grid ct-vertical"></line><line y1="115" y2="115" x1="50" x2="487.5" class="ct-grid ct-vertical"></line><line y1="90" y2="90" x1="50" x2="487.5" class="ct-grid ct-vertical"></line><line y1="65" y2="65" x1="50" x2="487.5" class="ct-grid ct-vertical"></line><line y1="40" y2="40" x1="50" x2="487.5" class="ct-grid ct-vertical"></line><line y1="15" y2="15" x1="50" x2="487.5" class="ct-grid ct-vertical"></line></g><g><g class="ct-series ct-series-a"><line x1="104.6875" x2="104.6875" y1="265" y2="185" class="ct-bar" ct:value="800000" style="stroke-width: 30px"></line><line x1="214.0625" x2="214.0625" y1="265" y2="145" class="ct-bar" ct:value="1200000" style="stroke-width: 30px"></line><line x1="323.4375" x2="323.4375" y1="265" y2="125" class="ct-bar" ct:value="1400000" style="stroke-width: 30px"></line><line x1="432.8125" x2="432.8125" y1="265" y2="135" class="ct-bar" ct:value="1300000" style="stroke-width: 30px"></line></g><g class="ct-series ct-series-b"><line x1="104.6875" x2="104.6875" y1="185" y2="165" class="ct-bar" ct:value="200000" style="stroke-width: 30px"></line><line x1="214.0625" x2="214.0625" y1="145" y2="105" class="ct-bar" ct:value="400000" style="stroke-width: 30px"></line><line x1="323.4375" x2="323.4375" y1="125" y2="75" class="ct-bar" ct:value="500000" style="stroke-width: 30px"></line><line x1="432.8125" x2="432.8125" y1="135" y2="105" class="ct-bar" ct:value="300000" style="stroke-width: 30px"></line></g><g class="ct-series ct-series-c"><line x1="104.6875" x2="104.6875" y1="165" y2="149" class="ct-bar" ct:value="160000" style="stroke-width: 30px"></line><line x1="214.0625" x2="214.0625" y1="105" y2="76" class="ct-bar" ct:value="290000" style="stroke-width: 30px"></line><line x1="323.4375" x2="323.4375" y1="75" y2="34" class="ct-bar" ct:value="410000" style="stroke-width: 30px"></line><line x1="432.8125" x2="432.8125" y1="105" y2="45" class="ct-bar" ct:value="600000" style="stroke-width: 30px"></line></g></g><g class="ct-labels"><foreignObject style="overflow: visible;" x="50" y="270" width="109.375" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 109px; height: 20px;">Jan</span></foreignObject><foreignObject style="overflow: visible;" x="159.375" y="270" width="109.375" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 109px; height: 20px;">Feb</span></foreignObject><foreignObject style="overflow: visible;" x="268.75" y="270" width="109.375" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 109px; height: 20px;">Mar</span></foreignObject><foreignObject style="overflow: visible;" x="378.125" y="270" width="109.375" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 109px; height: 20px;">Apr</span></foreignObject><foreignObject style="overflow: visible;" y="240" x="10" height="25" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 25px; width: 30px;">0k</span></foreignObject><foreignObject style="overflow: visible;" y="215" x="10" height="25" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 25px; width: 30px;">250k</span></foreignObject><foreignObject style="overflow: visible;" y="190" x="10" height="25" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 25px; width: 30px;">500k</span></foreignObject><foreignObject style="overflow: visible;" y="165" x="10" height="25" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 25px; width: 30px;">750k</span></foreignObject><foreignObject style="overflow: visible;" y="140" x="10" height="25" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 25px; width: 30px;">1000k</span></foreignObject><foreignObject style="overflow: visible;" y="115" x="10" height="25" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 25px; width: 30px;">1250k</span></foreignObject><foreignObject style="overflow: visible;" y="90" x="10" height="25" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 25px; width: 30px;">1500k</span></foreignObject><foreignObject style="overflow: visible;" y="65" x="10" height="25" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 25px; width: 30px;">1750k</span></foreignObject><foreignObject style="overflow: visible;" y="40" x="10" height="25" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 25px; width: 30px;">2000k</span></foreignObject><foreignObject style="overflow: visible;" y="15" x="10" height="25" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 25px; width: 30px;">2250k</span></foreignObject><foreignObject style="overflow: visible;" y="-15" x="10" height="30" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 30px; width: 30px;">2500k</span></foreignObject></g></svg></div>
-                                    </div> -->
-
 							<div class="mt-2" dir="ltr">
 								<div id="total-sales-bars" class="ct-chart ct-golden-section">
 
 								</div>
 							</div>
 						</div>
-						<!-- <div class="card-body no-padding height-9">
-                                        <div class="row">
-                                            <canvas id="bar-chart1"></canvas>
-                                        </div>
-                                    </div> -->
+					</div>
+				</div> -->
+
+				<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+					<div class="card card-box">
+						<div class="card-head">
+							<header>Total Sales in <?php echo date('Y'); ?></header>
+							<div class="tools">
+								<a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+								<a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+								<a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+							</div>
+						</div>
+
+						<div class="card-body no-padding height-9 ">
+						<b style="float:right;">AED <?php echo $all_total; ?> </b>
+							<div class="mt-2 mx-auto">
+							<canvas id="totalSales"></canvas>
+							</div>
+						</div>
 					</div>
 				</div>
+
+				
 				<div class="col-lg-6 col-md-12 col-sm-12 col-12">
-
 					<div class="card card-box">
-
-
-
 						<div class="card-head">
 							<header>Queries</header>
 							<div class="tools">
@@ -97,17 +106,41 @@
 							</div>
 						</div>
 
-						<div class="card-body no-padding height-9">
-							<div class="mt-2" dir="ltr">
-								<div id="pie_chart" class="ct-golden-section">
+						<div class="card-body no-padding height-9 ml-5">
+						<b style="float:right;"></b>
 
-								</div>
+							<div class="mt-2 mx-auto mb-5">
+							<canvas id="queryPie"></canvas>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
+			<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+					<div class="card card-box">
+						<div class="card-head">
+							<header>Staff Wise Revenue</header>
+							<div class="tools">
+								<a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+								<a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+								<a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+							</div>
+						</div>
+
+						<div class="card-body mx-auto no-padding w-75">
+						<b style="float:right;"></b><br/>
+
+							<div class="mt-2 mx-auto">
+							<canvas id="staffRevenue"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+
+<!-- 
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-12">
 					<div class="card card-box">
@@ -129,7 +162,8 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
+
 			<div class="row">
 			<div class="col-12">
 					<div class="card card-box">
@@ -205,7 +239,6 @@
 						</div>
 					</div>
 				</div>
-
 
 				<div class="col-lg-6 col-md-12 col-sm-12 col-12">
 					<div class="card card-box">
@@ -576,6 +609,138 @@
 </div>
 <!-- end page container -->
 <?php $this->load->view('footer'); ?>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+<script>
+	var labels = <?php echo json_encode(array_values($staffs_name)); ?>;
+	var visa = <?php echo json_encode(array_column(array_values($staffs_data), 'visa')); ?>;
+	var hotel = <?php echo json_encode(array_column(array_values($staffs_data), 'hotel')); ?>;
+	var meal = <?php echo json_encode(array_column(array_values($staffs_data), 'meal')); ?>;
+	var transfer = <?php echo json_encode(array_column(array_values($staffs_data), 'transfer')); ?>;
+	var excursion = <?php echo json_encode(array_column(array_values($staffs_data), 'excursion')); ?>;
+	var package = <?php echo json_encode(array_column(array_values($staffs_data), 'package')); ?>;
+
+	var barChartData = {
+  labels: labels,
+  datasets: [
+    {
+      label: "package",
+      backgroundColor: "pink",
+      borderWidth: 1,
+      data: package
+    },
+    {
+      label: "hotel",
+      backgroundColor: "lightblue",
+      borderWidth: 1,
+      data: hotel
+    },
+    {
+      label: "transfer",
+      backgroundColor: "lightgreen",
+      borderWidth: 1,
+      data: transfer
+    },
+    {
+      label: "excursion",
+      backgroundColor: "yellow",
+      borderWidth: 1,
+      data: excursion
+    },
+	{
+      label: "meal",
+      backgroundColor: "orange",
+      borderWidth: 1,
+      data: meal
+    },
+	{
+      label: "visa",
+      backgroundColor: "red",
+      borderWidth: 1,
+      data: visa
+    }
+  ]
+};
+
+var chartOptions = {
+  responsive: true,
+  legend: {
+    position: "top"
+  },
+  title: {
+    display: false,
+    // text: "Chart.js Bar Chart"
+  },
+  scales: {
+    yAxes: [{
+      ticks: {
+        beginAtZero: true
+      }
+    }]
+  }
+}
+
+window.onload = function() {
+  var ctx = document.getElementById("staffRevenue").getContext("2d");
+  window.myBar = new Chart(ctx, {
+    type: "bar",
+    data: barChartData,
+    options: chartOptions
+  });
+};
+
+</script>
+
+<script>
+var xValues = ['Confirmed', 'Pending', 'Rejected or Failed'];
+var yValues = <?php echo $query_count ;?>;
+var barColors = [
+  "lightgreen",
+  "#2b5797",
+  "red"
+];
+
+new Chart("queryPie", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+    //   text: "World Wide Wine Production 2018"
+    }
+  }
+});
+</script>
+
+<script>
+	new Chart(document.getElementById("totalSales"), {
+    type: 'bar',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [
+        {
+          label: "Total Sale",
+          backgroundColor: "lightgreen",
+          data: [<?php echo isset($total['Jan']) ? $total['Jan'] : "0" . "," . (isset($total['Feb']) ? $total['Feb'] : "0") . "," . (isset($total['Mar']) ? $total['Mar'] : "0") . "," . (isset($total['Apr']) ? $total['Apr'] : "0") . "," . (isset($total['May']) ? $total['May'] : "0") . "," . (isset($total['Jun']) ? $total['Jun'] : "0") . "," . (isset($total['Jul']) ? $total['Jul'] : "0") . "," . (isset($total['Aug']) ? $total['Aug'] : "0") . "," . (isset($total['Sep']) ? $total['Sep'] : "0") . "," . (isset($total['Oct']) ? $total['Oct'] : "0") . "," . (isset($total['Nov']) ? $total['Nov'] : "0") . "," . (isset($total['Dec']) ? $total['Dec'] : "0"); ?>]
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        // text: 'Predicted world population (millions) in 2050'
+      }
+    }
+});
+</script>
 
 <script src="<?php echo base_url(); ?>public/assets/plugins/chartist/chartist.min.js"></script>
 <script src="<?php echo base_url(); ?>public/chartist/chartist-plugin-pointlabels.js"></script>

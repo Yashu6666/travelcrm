@@ -109,7 +109,6 @@
 													<h4 class="text-white">Hotel Details</h4>
 												</div>
 											</div> -->
-											
 											<?php foreach (explode(',',$hotel[0]->nights) as $key => $value) : ?>
 
 												<div class="mt-3 row d-flex align-items-baseline ">
@@ -117,11 +116,15 @@
 														<div id="HD_header" class="form-row p-3 rounded-lg">
 															<div class="col d-flex just">
 																<label for="" class="col-form-label text-white">Hotel Name:</label>
-																<label style="flex: 0 0 50%; max-width: 50%;" class="col-form-label col-xl-6 mx-3 text-white"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?></label>
+																<label style="flex: 0 0 50%; max-width: 50%;white-space: nowrap;" class="col-form-label col-xl-6 mx-3 text-white"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?>
+																<?php if(isset($hotel_details[$key]->hotelstars)) : ?>	
+																	<?php echo str_repeat("⭐",$hotel_details[$key]->hotelstars); ?>
+																<?php endif ?>
+															</label>
 															</div>
 															<div class="col d-flex">
 																<label for="" class=" col-form-label text-white">Confirmation Number:</label>
-																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" id="conf_number_<?php echo $key; ?>" name="conf_number[<?php echo $key; ?>]" placeholder="Enter Confirmatin Number Here">
+																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" id="conf_number_<?php echo $key; ?>" value="#" name="conf_number[<?php echo $key; ?>]" placeholder="Enter Confirmatin Number Here">
 																<input type="hidden" name="hotel_id[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->hotel_id)[$key]); ?>>
 																<input type="hidden" name="hotel_name[<?php echo $key; ?>]" value='<?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?>'>
 																<input type="hidden" name="booking_date[<?php echo $key; ?>]" value=<?php echo $hotel[0]->created_at; ?>>
@@ -162,6 +165,7 @@
 															<thead>
 																<tr>
 																	<th scope="col">Room Type</th>
+																	<th scope="col">No of Rooms</th>
 																	<th scope="col">Adults</th>
 																	<th scope="col">Children</th>
 																	<th scope="col">Children Ages</th>
@@ -171,6 +175,7 @@
 															<tbody>
 																<tr>
 																	<td><?php print_r(explode(',',$hotel[0]->room_type)[$key]); ?></td>
+																	<td><?php echo $details->room; ?></td>
 																	<td><?php echo $details->adult; ?></td>
 																	<td><?php echo $details->child; ?></td>
 																	<td>--</td>
@@ -193,15 +198,15 @@
 													<thead>
 														<tr>
 															<th scope="col">Guest Name:</th>
-															<th scope="col">Nationality: </th>
-															<th scope="col">Guest Email Id:</th>
-															<th scope="col">Guest Mobile No:</th>
+															<th scope="col">Agent Name: </th>
+															<th scope="col">Agent Email Id:</th>
+															<th scope="col">Agent Mobile No:</th>
 														</tr>
 													</thead>
 													<tbody>
 														<tr>
 															<td><input type="text" id="guest_name" class="form-control" name="guest_name" ></td>
-															<td>indian</td>
+															<td><?php echo $guest->b2bfirstName." ".$guest->b2blastName ?></td>
 															<td><?php echo $guest->b2bEmail ?></td>
 															<td><?php echo $guest->b2bmobileNumber ?></td>
 														</tr>

@@ -262,7 +262,7 @@
                           <div class="row form-group mb-3">
                             <label class="col-md-4 control-label text-left"><b>Vehicle Price</b></label>
                             <div class="col-md-8">
-                              <input  type="text" class="form-control"  value="0"  name="vehicle_price">
+                              <input  type="text" class="form-control"  value="<?php echo $edit->vehicle_price;?>"  name="vehicle_price">
                             </div>
                           </div> 
 </div>

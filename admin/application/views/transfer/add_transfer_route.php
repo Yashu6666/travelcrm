@@ -73,7 +73,8 @@
 													<span class="input__label">Display Name<span class="colorRed">*</span></span>
 													<!-- <span id="spanBilledTo" class="colorRed"></span> -->
 												</label>
-
+											</td>
+										</tr>
 
 									</div>
 									<div style="margin-top: 50px;">
@@ -83,187 +84,153 @@
 
 
 								</div>
+							</div>
 
-								<!-- <div style="margin-top: 30px;">
 
+							<div class="table-scrollable">
+								<div class="row">
+									<div class="col-md-12 col-sm-12">
+										<div class="panel tab-border card-box">
+											<div class="row">
+												<div class="ml-4 mt-4">
+													<label style="font-weight: bold;">Vehicle Cost</label>
+
+												</div>
+												<div class="ml-4"></div>
+
+
+												<div class="nav nav-tabs mt-4" role="tablist">
+													<div style="display:none;">
+														<input id="optDaily" checked name="intervaltype" type="radio" data-target="#scheduleDaily" value="Normal">
+														<label for="optDaily">Normal</label>
+													</div>
+												</div>
+											</div>
+
+											<div style="margin-top: 30px;">
+
+											</div>
+											<div class="tab-content">
+												<div id="scheduleDaily" class="tab-pane active">
+													<table class="table">
+														<thead>
+															<tr>
+																<th>Currency</th>
+																<th>Upto PAX</th>
+																<th>Cost</th>
+															</tr>
+
+														</thead>
+														<tbody id="tbody_id">
+															<tr id="row1">
+																<td><select class="form-control" name="currency[]">
+																		<option value="AED">AED</option>
+																		<option value="USD">USD</option>
+																	</select>
+																</td>
+
+																<td><input type="number" placeholder="PAX" class="form-control" name="seat_capacity[]"></td>
+
+																<td class="d-flex">
+																	<input type="number" step="any" placeholder="Cost" class="form-control" name="cost[]">
+																	<input type="button" value="Add" onclick="addNewRow()" id="" class="new_btn px-3 ml-5" />
+																</td>
+
+															</tr>
+														</tbody>
+													</table>
+
+												</div>
+												<div id="scheduleWeekly" class="tab-pane">
 													<table class="table table-hover">
 														<thead>
 															<tr>
-																<th>Description(Shown to the client)</th>
-																<th>Pick up Point Area</th>
-																<th>Drop Point</th>
+																<th>Currency</th>
+																<th>Upto Pax</th>
+
+																<th>Per Hour Cost</th>
 															</tr>
+
 														</thead>
 														<tbody>
-															<tr>
-																	<td><input type="text" placeholder=""
-															class="form-control " name="client_description"></td>
-															<label class="ml-4"></label>
-															<td><input type="text" placeholder=""
-																class="form-control " name="pickup"></td>
-																<td><input type="text" placeholder="" class=" form-control" name="droppoint">
-																</td>
-																	</tr>
-																</tbody>
-																
-															</table>
-														</div>
+
+															<td><select class="form-control" name="currency_hour">
+																	<option value="AED">AED</option>
+																	<option value="USD">USD</option>
+																</select>
+															</td>
+															<td><input type="text" placeholder="PAX" class="form-control" name="seat_capacity_hour" id="seat_capacity_hour"></td>
+
+															<td><input type="text" placeholder="Per Hour Cost" name="per_hour_cost" class="form-control"></td>
+
+
+														</tbody>
+													</table>
+
+												</div>
+
+												<div class="form-group mb-4">
+													<div class="offset-md-5 col-md-9">
+														<button type="submit" class="new_btn px-3">Submit</button>
+														<button type="button" class="new_btn px-3">Cancel</button>
 													</div>
-												</div> -->
-							</div>
-					</div>
-
-
-					<div class="table-scrollable">
-						<div class="row">
-							<div class="col-md-12 col-sm-12">
-								<div class="panel tab-border card-box">
-									<div class="row">
-										<div class="ml-4 mt-4">
-											<label style="font-weight: bold;">Vehicle Cost</label>
-
-										</div>
-										<div class="ml-4"></div>
-
-
-										<div class="nav nav-tabs mt-4" role="tablist">
-											<div style="display:none;">
-												<input id="optDaily" checked name="intervaltype" type="radio" data-target="#scheduleDaily" value="Normal">
-												<label for="optDaily">Normal</label>
+												</div>
 											</div>
-											<!-- <div class="ml-4">
-																					<input id="optWeekly" name="intervaltype" type="radio" data-target="#scheduleWeekly" value="HourBased">
-																					<label for="optWeekly" >Hour Based</label>
-																				</div> -->
+											</from>
 										</div>
+
+
 									</div>
 
-									<div style="margin-top: 30px;">
-
-									</div>
-									<div class="tab-content">
-										<div id="scheduleDaily" class="tab-pane active">
-											<table class="table">
-												<thead>
-													<tr>
-														<th>Currency</th>
-														<th>Upto PAX</th>
-
-														<th>Cost</th>
-
-													</tr>
-
-												</thead>
-												<tbody id="tbody_id">
-													<tr id="row1">
-														<td><select class="form-control" name="currency[]">
-																<option value="AED">AED</option>
-																<option value="USD">USD</option>
-															</select>
-														</td>
-
-														<td><input type="text" placeholder="PAX" class="form-control" name="seat_capacity[]"></td>
-
-														<td class="d-flex">
-															<input type="text" placeholder="Cost" class="form-control" name="cost[]">
-															<input type="button" value="Add" onclick="addNewRow()" id="" class="new_btn px-3 ml-5" />
-														</td>
-
-													</tr>
-												</tbody>
-											</table>
-
-										</div>
-										<div id="scheduleWeekly" class="tab-pane">
-											<table class="table table-hover">
-												<thead>
-													<tr>
-														<th>Currency</th>
-														<th>Upto Pax</th>
-
-														<th>Per Hour Cost</th>
-													</tr>
-
-												</thead>
-												<tbody>
-
-													<td><select class="form-control" name="currency_hour">
-															<option value="AED">AED</option>
-															<option value="USD">USD</option>
-														</select>
-													</td>
-													<td><input type="text" placeholder="PAX" class="form-control" name="seat_capacity_hour" id="seat_capacity_hour"></td>
-
-													<td><input type="text" placeholder="Per Hour Cost" name="per_hour_cost" class="form-control"></td>
-
-
-												</tbody>
-											</table>
-
-										</div>
-
-										<div class="form-group mb-4">
-											<div class="offset-md-5 col-md-9">
-												<button type="submit" class="new_btn px-3">Submit</button>
-												<button type="button" class="new_btn px-3">Cancel</button>
-											</div>
-										</div>
-									</div>
-									</from>
 								</div>
-
-
 							</div>
 
-						</div>
+							<!-- end chat sidebar -->
 					</div>
-
-					<!-- end chat sidebar -->
+					<!-- end page container -->
+					<!-- start footer -->
 				</div>
-				<!-- end page container -->
-				<!-- start footer -->
+
+				<!-- end page content -->
+				<!-- start chat sidebar -->
+
 			</div>
-
-			<!-- end page content -->
-			<!-- start chat sidebar -->
-
+			<!-- end footer -->
 		</div>
-		<!-- end footer -->
 	</div>
-</div>
-<div style="padding: 3rem; background-color: #222c3c;">
-	<?php $this->load->view('footer'); ?>
-</div>
+	<div style="padding: 3rem; background-color: #222c3c;">
+		<?php $this->load->view('footer'); ?>
+	</div>
 
-<script>
-	let new_row_id = 1;
+	<script>
+		let new_row_id = 1;
 
-	function addNewRow() {
-		let row_data = `<tr id="tr_id${new_row_id}">
+		function addNewRow() {
+			let row_data = `<tr id="tr_id${new_row_id}">
 							<td><select class="form-control" name="currency[]" id="tr_sel${new_row_id}">
 									<option value="AED">AED</option>
 									<option value="USD">USD</option>
 								</select></td>
 
-							<td><input type="text" placeholder="PAX" class="form-control" name="seat_capacity[]" id="tr_cap${new_row_id}"></td>
+							<td><input type="number" placeholder="PAX" class="form-control" name="seat_capacity[]" id="tr_cap${new_row_id}"></td>
 
 							<td class="d-flex">
-								<input type="text" placeholder="Cost" class="form-control" name="cost[]">
+								<input type="number" step="any" placeholder="Cost" class="form-control" name="cost[]">
 								<button type="button" class="btn btn-danger ml-5 mt-0 py-2"  onclick="removeNewRow(${"tr_id"+new_row_id})"><i class="fa fa-trash"></i></button>
 							</td>
 
 							</tr>`;
-		$("#tbody_id").append(row_data);
-		new_row_id++;
-	}
+			$("#tbody_id").append(row_data);
+			new_row_id++;
+		}
 
-	function removeNewRow(id) {
-		// document.getElementById()
-		// var values = $("input[name='seat_capacity[]']")
-		//   .map(function(){return $(this).val();}).get();
+		function removeNewRow(id) {
+			// document.getElementById()
+			// var values = $("input[name='seat_capacity[]']")
+			//   .map(function(){return $(this).val();}).get();
 
-		//   console.log("🚩 ~ file: add_transfer_route.php ~ line 262 ~ removeNewRow ~ values", values)
+			//   console.log("🚩 ~ file: add_transfer_route.php ~ line 262 ~ removeNewRow ~ values", values)
 
-		$(id).remove();
-	}
-</script>
+			$(id).remove();
+		}
+	</script>

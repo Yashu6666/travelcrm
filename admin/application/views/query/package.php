@@ -337,11 +337,11 @@
                                             <label for="">City</label> <br/>
                                                     <select style="padding: 0px;" class="package_inputs" required name="goingFrom[]">
                                                         <option value="">Select City</option>
-                                                        <option value="Dubai">Dubai</option>
+                                                        <option selected value="Dubai">Dubai</option>
                                                         <option value="AbuDhabi">Abu Dhabi</option>
                                                         <option value="Sharjah">Sharjah</option>
                                                         <option value="Ajman">Ajman</option>
-                                                        <option value="Sir Baniyas">Sir Baniyas</option>
+                                                        
                                                         <option value="Umm Al-Quwain">Umm Al-Quwain</option>
                                                         <option value="Fujairah">Fujairah</option>
                                                         <option value="Ras Al Khaimah">Ras Al Khaimah</option>
@@ -607,7 +607,7 @@
                             var faqs_row = 0;
 
                             function addrows() {
-                                var add = ' <div id="faqs-row' + faqs_row + '" class="row mt-4 mr-3 ml-3"> <div class="col"> <label class="input"> <input class="input__field fname all-width" type="text" placeholder=" "  name="country[]" value="United Arab Emirates" autocomplete="off" /> <span class="input__label">Country</span> </label> <span id="spanGoingFrom" class="spanCompany"></span> </div> <div class="col"> <select class="form-control" id="goingFrom"  name="goingFrom[]"> <option>Select City</option> <option value="Dubai">Dubai</option> <option value="AbuDhabi">Abu Dhabi</option> <option value="Sharjah">Sharjah</option> <option value="Ajman">Ajman</option> <option value="Sir Baniyas">Sir Baniyas</option> <option value="Umm Al-Quwain">Umm Al-Quwain</option> <option value="Fujairah">Fujairah</option> <option value="Ras Al Khaimah">Ras Al Khaimah</option> <option value="Al Ain">Al Ain</option> </select> </div> <div class="col"> <label for="">Hotel Ratings :</label> <input type="checkbox" value="1" name="hotelPrefrence[]" class="mr-2 ml-3">1 <input type="checkbox" value="2" name="hotelPrefrence[]" class="mr-2 ml-3">2 <input type="checkbox" value="3" name="hotelPrefrence[]" class="mr-2 ml-3">3 <input type="checkbox" value="4" name="hotelPrefrence[]" class="mr-2 ml-3">4 <input type="checkbox"value="5" name="hotelPrefrence[]" class="mr-2 ml-3">5 </div> <button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + faqs_row + '\').remove();"><i class="fa fa-trash"></i></button></div></div>';
+                                var add = ' <div id="faqs-row' + faqs_row + '" class="row mt-4 mr-3 ml-3"> <div class="col"> <label class="input"> <input class="input__field fname all-width" type="text" placeholder=" "  name="country[]" value="United Arab Emirates" autocomplete="off" /> <span class="input__label">Country</span> </label> <span id="spanGoingFrom" class="spanCompany"></span> </div> <div class="col"> <select class="form-control" id="goingFrom"  name="goingFrom[]"> <option>Select City</option> <option selected value="Dubai">Dubai</option> <option value="AbuDhabi">Abu Dhabi</option> <option value="Sharjah">Sharjah</option> <option value="Ajman">Ajman</option>  <option value="Umm Al-Quwain">Umm Al-Quwain</option> <option value="Fujairah">Fujairah</option> <option value="Ras Al Khaimah">Ras Al Khaimah</option> <option value="Al Ain">Al Ain</option> </select> </div> <div class="col"> <label for="">Hotel Ratings :</label> <input type="checkbox" value="1" name="hotelPrefrence[]" class="mr-2 ml-3">1 <input type="checkbox" value="2" name="hotelPrefrence[]" class="mr-2 ml-3">2 <input type="checkbox" value="3" name="hotelPrefrence[]" class="mr-2 ml-3">3 <input type="checkbox" value="4" name="hotelPrefrence[]" class="mr-2 ml-3">4 <input type="checkbox"value="5" name="hotelPrefrence[]" class="mr-2 ml-3">5 </div> <button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + faqs_row + '\').remove();"><i class="fa fa-trash"></i></button></div></div>';
                                 $('#addrows').append(add);
                                 faqs_row++;
                             }

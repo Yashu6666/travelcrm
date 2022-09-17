@@ -92,7 +92,11 @@
 														<div id="HD_header" class="form-row p-3 rounded-lg">
 															<div class="col d-flex just">
 																<label for="" class="col-form-label text-white">Hotel Name:</label>
-																<label style="flex: 0 0 50%; max-width: 50%;" class="col-form-label col-xl-6 mx-3 text-white"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?></label>
+																<label style="flex: 0 0 50%; max-width: 50%;white-space: nowrap;" class="col-form-label col-xl-6 mx-3 text-white"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?>
+																<?php if(isset($hotel_details[$key]->hotelstars)) : ?>	
+																	<?php echo str_repeat("⭐",$hotel_details[$key]->hotelstars); ?>
+																<?php endif ?>
+																</label>
 															</div>
 															<div class="col d-flex">
 																<label for="" class=" col-form-label text-white">Confirmation Number:</label>
@@ -148,6 +152,7 @@
 															<thead>
 																<tr>
 																	<th scope="col">Room Type</th>
+																	<th scope="col">No of Rooms</th>
 																	<th scope="col">Adults</th>
 																	<th scope="col">Children</th>
 																	<th scope="col">Children Ages</th>
@@ -157,6 +162,7 @@
 															<tbody>
 																<tr>
 																	<td><?php print_r(explode(',',$hotel[0]->room_type)[$key]); ?></td>
+																	<td><?php echo $details->room; ?></td>
 																	<td><?php echo $details->adult; ?></td>
 																	<td><?php echo $details->child; ?></td>
 																	<td>--</td>
@@ -179,15 +185,15 @@
 													<thead>
 														<tr>
 															<th scope="col">Guest Name:</th>
-															<th scope="col">Nationality: </th>
-															<th scope="col">Guest Email Id:</th>
-															<th scope="col">Guest Mobile No:</th>
+															<th scope="col">Agent Name: </th>
+															<th scope="col">Agent Email Id:</th>
+															<th scope="col">Agent Mobile No:</th>
 														</tr>
 													</thead>
 													<tbody>
 														<tr>
 															<td><input type="text" id="guest_name" class="form-control" name="guest_name[<?php echo $key; ?>]"></td>
-															<td>indian</td>
+															<td><?php echo $guest->b2bfirstName." ".$guest->b2blastName ?></td>
 															<td><?php echo $guest->b2bEmail ?></td>
 															<td><?php echo $guest->b2bmobileNumber ?></td>
 														</tr>

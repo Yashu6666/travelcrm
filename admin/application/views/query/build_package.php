@@ -87,9 +87,12 @@
           <div>
            <div class="card-head card-head-new">
             
-           <p><i class="fa-solid fa-hotel"></i> Hotel</p>
+           <p><i class="fa-solid fa-hotel"></i> Hotel
+           <input type="radio" id="hotel_status" name="hotel_status" value="Yes"><label for="html">Yes</label>
+            <input type="radio" id="hotel_status1" name="hotel_status" value="No"><label for="html">No</label>
+          </p>
            </div>
-           <div class="row mt-5 mr-3 ml-3 mb-3">
+           <div class="row mt-5 mr-3 ml-3 mb-3" style="display:none" id="hoteldisplay">
             <div>
              <table class="table" id="addrows">
               <div class="alert alert-danger noOfDaysAlertcls" style="display:none;">
@@ -233,9 +236,13 @@
           <div class="mt-5">
            <div>
             <div class="card-head card-head-new">
-             <p><i class="fa-solid fa-car"></i> Transfer</p>
+             <p><i class="fa-solid fa-car"></i> Transfer
+              <input type="radio" id="trans_status" name="trans_status" value="Yes"><label for="html">Yes</label>
+              <input type="radio" id="trans_status1" name="trans_status" value="No"><label for="html">No</label>
+            </p>
             </div>
-            <div class="row mt-4 mr-3 ml-3 mb-3">
+            </div>
+            <div class="row mt-4 mr-3 ml-3 mb-3" style="display:none" id="transdisplay">
              <div class="col">
               <label for="" class="transport-lable"><b>Transport Type</b>
               :</label>
@@ -249,7 +256,6 @@
               class="transport-lable-ckeck">Train</span><span class="checkmark"></span> -->
              </div>
 
-            </div>
             <div>
              <table class="table">
               <thead>
@@ -460,9 +466,11 @@
              </div>
              <div class="card-head card-head-new">
              <p style="margin-top:20px"><i class="fa-solid fa-place-of-worship"></i> Excursion
-               
+                <input type="radio" id="excursion_status" name="excursion_status" value="Yes"><label for="html">Yes</label>
+              <input type="radio" id="excursion_status1" name="excursion_status" value="No"><label for="html">No</label>
+             </p>
         </div>
-            <div class="row mt-4 mr-3 ml-3 mb-3 ">
+            <div class="row mt-4 mr-3 ml-3 mb-3 " style="display:none" id="excursiondisplay">
                <div>
               
                <td><input type="hidden" id="hidden_total_pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" />
@@ -472,7 +480,8 @@
              <tr>
            
              <th>Excursion Type</th>
-              <th>Excursion Name</th>
+              <th>Hotel Pickup</th>
+              <!-- <th>Excursion Name</th> -->
               <th>Adult</th>
               <th>Child</th>
               <th>Infant</th>
@@ -579,11 +588,15 @@
        </table>
        
                </div>
-               <div class="card-head card-head-new">
+               </div>
+               <div class="card-head card-head-new mt-5">
              <p style="margin-top:20px"><i class="fa-solid fa-bowl-rice"></i>	Meal
+             <input type="radio" id="meals_status" name="meals_status" value="Yes"><label for="html">Yes</label>
+              <input type="radio" id="meals_status1" name="meals_status" value="No"><label for="html">No</label>
+            </p>
                
         </div>
-            <div class="row mt-4 mr-3 ml-3 mb-3 ">
+            <div class="row mt-4 mr-3 ml-3 mb-3 " style="display:none" id="mealsdisplay">
                <div>
               
                
@@ -2436,6 +2449,38 @@ console.log(response);
     </script>
 
     <script type="text/javascript">
+        $("#hotel_status").on("change",function(){
+            $("#hoteldisplay").show();
+
+        })
+        $("#hotel_status1").on("change",function(){
+            $("#hoteldisplay").hide();
+        })
+
+        $("#trans_status").on("change",function(){
+            $("#transdisplay").show();
+
+        })
+        $("#trans_status1").on("change",function(){
+            $("#transdisplay").hide();
+        })
+
+        $("#excursion_status").on("change",function(){
+            $("#excursiondisplay").show();
+
+        })
+        $("#excursion_status1").on("change",function(){
+            $("#excursiondisplay").hide();
+        })
+
+        $("#meals_status").on("change",function(){
+            $("#mealsdisplay").show();
+        })
+
+        $("#meals_status1").on("change",function(){
+            $("#mealsdisplay").hide();
+        })
+
         $("#visa_status").on("change",function(){
             // alert(this.value);
             $("#visadisplay").show();

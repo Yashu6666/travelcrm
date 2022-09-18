@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Software</title>
+    <title>Proposal Package</title>
 </head>
 
 <style>
@@ -253,7 +253,9 @@
                         <p>Check-out : </p>
                         <p>No. of night : </p>
                         <p>No. of Pax :</p>
+                        <?php if(!empty($details->hotels)) : ?>
                         <p>Hotel Name(s) :</p>
+                        <?php endif ?>
                         <p>No. of Room(s) :</p>
                     </div>
 
@@ -274,10 +276,12 @@
                         <p><?php echo $details->checkout ?></p>
                         <p><?php echo $details->nights ?></p>
                         <p><?php echo 'Adult ' . $details->pax_adult . ' Child ' . $details->pax_child . ' Infant ' . $details->pax_infant ?></p>
+                        <?php if(!empty($details->hotels)) : ?>
                         <p><?php foreach ($details->hotels as $key => $val) : ?>
                                 <?php print_r($details->hotels[$key]->hotelname) ?> - <?php echo $details->hotelPrefrence ?>* - <?php print_r($details->buildRoomType[$key]) ?><?php echo array_key_last($details->hotels) != $key ?  ',' : '' ?>
                             <?php endforeach ?>
                         </p>
+                        <?php endif ?>
                         <p><?php echo $details->no_of_room ?></p>
                     </div>
 
@@ -289,7 +293,15 @@
                     <p>Tourism Dhiram Fees</p>
                     <p>Vat 5% Inclusive</p>
                     <p>All Applicable Taxes</p>
-                    <p>All Tours and transfers on Private Basis</p>
+
+                    <?php if(isset($details->excursion_name_SIC) && isset($details->excursion_name_PVT)) : ?>
+                        <p>All Tours and transfers on Private and SIC Basis</p>
+                    <?php elseif(isset($details->excursion_name_SIC) && !isset($details->excursion_name_PVT)) : ?>
+                        <p>All Tours and transfers on SIC Basis</p>
+                    <?php elseif(!isset($details->excursion_name_SIC) && isset($details->excursion_name_PVT)) : ?>
+                        <p>All Tours and transfers on Private Basis</p>
+                    <?php endif ?>
+
                     <p>All of the above services with the hotel to hotel transfer and ticket</p>
                     <p>All Tours & Transfers on sharing Basis except airport transfer</p>
                 </div>

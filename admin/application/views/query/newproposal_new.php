@@ -302,6 +302,7 @@
 
 
     <div class="container mt-5 section">
+    <?php if(isset($proposalDetails['hotelName'])) : ?>
     <?php foreach($proposalDetails['hotelName'] as $key => $val) : ?>
         <div class=" second">
             <div class=" bg-primary ">
@@ -317,6 +318,7 @@
             </div>
         </div>
     <?php endforeach ?>
+    <?php endif ?>
         <!-- <div class=" second">
             <div class=" bg-primary ">
                 <h3 class="text-light" style="padding: 7px;">Hotel</h3>
@@ -479,12 +481,25 @@
                     <?php if(!empty($proposalDetails['visa_category_drop_down'])) : ?>
                     Dubai Single entry tourist  visa with Covid 19 Inbound insurance<br>
                     <?php endif ?>
-                    
-                    <?php echo $proposalDetails['excursion_name_SIC'][0] ?> <br> <?php echo $proposalDetails['excursion_name_PVT'][0] ?><br>
+
+                    <?php if(isset($proposalDetails['excursion_name_SIC'])) : ?>
+                    <?php foreach($proposalDetails['excursion_name_SIC'] as $key => $val) : ?>
+                        <?php echo $val ?> <br>
+                    <?php endforeach ?>
+                    <?php endif ?>
+                
+                    <?php if(isset($proposalDetails['excursion_name_PVT'])) : ?>
+                    <?php foreach($proposalDetails['excursion_name_PVT'] as $key => $val) : ?>
+                        <?php echo $val ?><br>
+                    <?php endforeach ?>
+                    <?php endif ?>
+
+                    <?php if($proposalDetails['res_name'][0] != 'select') : ?>
                         <?php foreach($proposalDetails['res_name'] as $key => $val) : ?>
                             <?php echo $proposalDetails['no_of_meals'][$key]." ".$proposalDetails['Meal'][$key]." ".$proposalDetails['res_type'][$key]." ".$proposalDetails['Meal_Type'][$key]; ?> 
                             Meal Coupons in <?php echo $proposalDetails['res_name'][$key]?><br>
                         <?php endforeach ?>
+                    <?php endif ?>
 
 
                             </div>
@@ -711,11 +726,12 @@
 
                         </tbody>
                     </table>
-
+            
                     <div class="row">
                         <div class="col">
                             <label class="input">
-                                <input class="input__field   width-input" id="pro_sub" value="Package Proposal" type="text" placeholder=" " autocomplete="off" />
+                                <input class="input__field   width-input" id="pro_sub" value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo $buildpackage->Packagetravelers ?>/ 
+                                <?php echo $buildpackage->specificDate ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName.' '.$admin_user_data->LastName); ?> " type="text" placeholder=" " autocomplete="off" />
                                 <span class="input__label">Email Subject</span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>
@@ -949,7 +965,7 @@
         "pax_child" : "<?php echo $buildpackage->child ?>",
         "pax_infant" : "<?php echo $buildpackage->infant ?>",
         "room" : "<?php echo $buildpackage->night  ?>",
-        "hotel" : "<?php echo $proposalDetails['hotelName'][0] ?>",
+        // "hotel" : "?php echo isset($proposalDetails['hotelName']) ? $proposalDetails['hotelName'][0] : [] ?>",
         "hotels" : <?php echo json_encode($proposalDetails['hotels']) ?>,
         "no_of_room" : <?php echo $proposalDetails['no_of_room'] ?>,
         "buildCheckIns" : <?php echo json_encode($proposalDetails['buildCheckIns']) ?>,
@@ -973,8 +989,10 @@
         "visa_category_drop_down" : "<?php echo $proposalDetails['visa_category_drop_down']  ?>",
         "entry_type" : "<?php echo $proposalDetails['entry_type']  ?>",
         "visa_validity" : "<?php echo $proposalDetails['visa_validity']  ?>",
-        "excursion_name_SIC" : "<?php echo $proposalDetails['excursion_name_SIC'][0] ?>",
-        "excursion_name_PVT" : "<?php echo $proposalDetails['excursion_name_PVT'][0] ?>",
+        // "excursion_name_SIC" : "?php echo $proposalDetails['excursion_name_SIC'][0] ?>",
+        "excursion_name_SIC" : <?php echo json_encode($proposalDetails['excursion_name_SIC']) ?>, 
+        // "excursion_name_PVT" : "?php echo $proposalDetails['excursion_name_PVT'][0] ?>",
+        "excursion_name_PVT" : <?php echo json_encode($proposalDetails['excursion_name_PVT']) ?>, 
         "perpax_adult" : "<?php echo $proposalDetails['perpax_adult']  ?>",
         "perpax_childs" : "<?php echo $proposalDetails['perpax_childs']  ?>",
         "perpax_infants" : "<?php echo $proposalDetails['perpax_infants']  ?>",

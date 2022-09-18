@@ -380,7 +380,7 @@
 
                                     <div class="btn-group mt-4">
                                         <a class="new_btn ml-0 px-4" onclick="addrows()">
-                                            add
+                                            Add City/Hotel
                                         </a>
                                     </div>
 
@@ -480,32 +480,32 @@
                                         ?>
                                                 <a href="<?php echo site_url(); ?>query/buildPackage/<?php echo $b2bDetails->query_id; ?>">
 
-                                                    <button type="button" id="disabled-btn" class="new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                    <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
                                                 </a>
                                             <?php } else if ($buildpackage->type == 'Transfer') { ?>
                                                 <a href="<?php echo site_url(); ?>query/buildTransfer/<?php echo $b2bDetails->query_id; ?>">
 
-                                                    <button type="button" id="disabled-btn" class="new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                    <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
                                                 </a>
                                             <?php } else if ($buildpackage->type == 'Visa') { ?>
                                                 <a href="<?php echo site_url(); ?>query/buildVisa/<?php echo $b2bDetails->query_id; ?>">
 
-                                                    <button type="button" id="disabled-btn" class="new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                    <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
                                                 </a>
                                             <?php } else if ($buildpackage->type == 'Hotel') { ?>
                                                 <a href="<?php echo site_url(); ?>query/buildHotel/<?php echo $b2bDetails->query_id; ?>">
 
-                                                    <button type="button" id="disabled-btn" class="new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                    <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
                                                 </a>
                                             <?php } else if ($buildpackage->type == 'Excursion') { ?>
                                                 <a href="<?php echo site_url(); ?>query/buildExcursion/<?php echo $b2bDetails->query_id; ?>">
 
-                                                    <button type="button" id="disabled-btn" class="new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                    <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
                                                 </a>
                                             <?php } else if ($buildpackage->type == 'Meals') { ?>
                                                 <a href="<?php echo site_url(); ?>query/buildMeals/<?php echo $b2bDetails->query_id; ?>">
 
-                                                    <button type="button" id="disabled-btn" class="new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                    <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
                                                 </a>
                                         <?php }
                                         }
@@ -607,7 +607,44 @@
                             var faqs_row = 0;
 
                             function addrows() {
-                                var add = ' <div id="faqs-row' + faqs_row + '" class="row mt-4 mr-3 ml-3"> <div class="col"> <label class="input"> <input class="input__field fname all-width" type="text" placeholder=" "  name="country[]" value="United Arab Emirates" autocomplete="off" /> <span class="input__label">Country</span> </label> <span id="spanGoingFrom" class="spanCompany"></span> </div> <div class="col"> <select class="form-control" id="goingFrom"  name="goingFrom[]"> <option>Select City</option> <option selected value="Dubai">Dubai</option> <option value="AbuDhabi">Abu Dhabi</option> <option value="Sharjah">Sharjah</option> <option value="Ajman">Ajman</option>  <option value="Umm Al-Quwain">Umm Al-Quwain</option> <option value="Fujairah">Fujairah</option> <option value="Ras Al Khaimah">Ras Al Khaimah</option> <option value="Al Ain">Al Ain</option> </select> </div> <div class="col"> <label for="">Hotel Ratings :</label> <input type="checkbox" value="1" name="hotelPrefrence[]" class="mr-2 ml-3">1 <input type="checkbox" value="2" name="hotelPrefrence[]" class="mr-2 ml-3">2 <input type="checkbox" value="3" name="hotelPrefrence[]" class="mr-2 ml-3">3 <input type="checkbox" value="4" name="hotelPrefrence[]" class="mr-2 ml-3">4 <input type="checkbox"value="5" name="hotelPrefrence[]" class="mr-2 ml-3">5 </div> <button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + faqs_row + '\').remove();"><i class="fa fa-trash"></i></button></div></div>';
+                                // var add = ' <div id="faqs-row' + faqs_row + '" class="row mt-4 mr-3 ml-3"> <div class="col"> <label class="input"> <input class="input__field fname all-width" type="text" placeholder=" "  name="country[]" value="United Arab Emirates" autocomplete="off" /> <span class="input__label">Country</span> </label> <span id="spanGoingFrom" class="spanCompany"></span> </div> <div class="col"> <select class="form-control" id="goingFrom"  name="goingFrom[]"> <option>Select City</option> <option selected value="Dubai">Dubai</option> <option value="AbuDhabi">Abu Dhabi</option> <option value="Sharjah">Sharjah</option> <option value="Ajman">Ajman</option>  <option value="Umm Al-Quwain">Umm Al-Quwain</option> <option value="Fujairah">Fujairah</option> <option value="Ras Al Khaimah">Ras Al Khaimah</option> <option value="Al Ain">Al Ain</option> </select> </div> <div class="col"> <label for="">Hotel Ratings :</label> <input type="checkbox" value="1" name="hotelPrefrence[]" class="mr-2 ml-3">1 <input type="checkbox" value="2" name="hotelPrefrence[]" class="mr-2 ml-3">2 <input type="checkbox" value="3" name="hotelPrefrence[]" class="mr-2 ml-3">3 <input type="checkbox" value="4" name="hotelPrefrence[]" class="mr-2 ml-3">4 <input type="checkbox"value="5" name="hotelPrefrence[]" class="mr-2 ml-3">5 </div> <button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + faqs_row + '\').remove();"><i class="fa fa-trash"></i></button></div></div>';
+                               
+                                var add =  `<div class="d-flex" id="${'faqs_row'+faqs_row}"> 
+                                            <div class="col">
+                                            <label for="">Country</label> <br/>
+                                                        <input class="package_inputs" type="text" placeholder=" " name="country[]" value="United Arab Emirates" required autocomplete="off" />
+                                                </div>
+                                                <div class="col">
+                                            <label for="">City</label> <br/>
+                                                    <select style="padding: 0px;" class="package_inputs" required name="goingFrom[]">
+                                                        <option value="">Select City</option>
+                                                        <option selected value="Dubai">Dubai</option>
+                                                        <option value="AbuDhabi">Abu Dhabi</option>
+                                                        <option value="Sharjah">Sharjah</option>
+                                                        <option value="Ajman">Ajman</option>
+                                                        
+                                                        <option value="Umm Al-Quwain">Umm Al-Quwain</option>
+                                                        <option value="Fujairah">Fujairah</option>
+                                                        <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                                                        <option value="Al Ain">Al Ain</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col">
+                                                <label for="">Rating</label> <br/>
+                                                    <select style="padding: 0px;" class="package_inputs" required name="hotelPrefrence[]">
+                                                        <option value="">Select Rating</option>
+                                                        <option value="1">⭐ 1</option>
+                                                        <option value="2">⭐⭐ 2</option>
+                                                        <option value="3">⭐⭐⭐ 3</option>
+                                                        <option value="4">⭐⭐⭐⭐ 4</option>
+                                                        <option value="5">⭐⭐⭐⭐⭐ 5</option>
+                                                    </select>
+                                                    <button class="btn btn-danger btn-xs" onclick="removeElement(${'faqs_row'+faqs_row})"><i class="fa fa-trash"></i></button>
+                                                    </div>
+                                               
+                                                </div>`;
+
                                 $('#addrows').append(add);
                                 faqs_row++;
                             }
@@ -633,6 +670,10 @@
                             //     alert('One of the radio buttons is checked!');
                             //     }
                             // });
+
+                            function removeElement(id){
+                                id.remove();
+                            }
                         </script>
 
                         <style>
@@ -649,4 +690,17 @@
                                 border-radius: 4px;
                                 padding: 5px;
                             }
+
+                            .blink_btn {
+ animation-name: blinker;
+ animation-duration: 1s;
+ animation-timing-function: linear;
+ animation-iteration-count: infinite;
+}
+
+@keyframes blinker {  
+ 0% { opacity: 1.0; }
+ 50% { opacity: 0.0; }
+ 100% { opacity: 1.0; }
+}
                         </style>

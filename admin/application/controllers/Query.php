@@ -2153,9 +2153,11 @@ class Query extends CI_Controller
 		$data = array();
 
 		$hotels = [];
+		if(isset($_POST['buildHotelName'])){
 		foreach ($_POST['buildHotelName'] as $key => $value) {
 			$hotels[] = $this->db->get_where('hotel', array('id' => $value))->row();
 		}
+	}
 		$data['proposalDetails'] = array(
 
 			'query_id' => $_POST['QueryId'],
@@ -2179,7 +2181,7 @@ class Query extends CI_Controller
 			'perpax_childs' =>  $_POST['perpax_childs_input'],
 			'perpax_infants' => $_POST['perpax_infants_input'],
 
-			'hotelName' => $_POST['buildHotelName'],
+			'hotelName' =>  isset($_POST['buildHotelName']) ? $_POST['buildHotelName'] : [],
 
 			'noOfNights' => $_POST['buildNoNightss'],
 			'roomType' => $_POST['buildRoomType'],
@@ -2218,6 +2220,9 @@ class Query extends CI_Controller
 			'room_sharing_types' => $_POST['room_sharing_types'],
 
 		);
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user_data'] = $this->db->where('id', $user_id)->get('users')->row();
 
 		$data['pricing_info'] = array(
 			'query_id' => $_POST['QueryId'],

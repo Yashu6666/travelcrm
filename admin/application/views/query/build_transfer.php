@@ -126,10 +126,10 @@
                
                 <td><input class="form-control" type="number" id="pax_internal" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCityCab[]" disabled></td>
                
-                <td><input class="form-control" type="date" value="<?php echo $view->specificDate;?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
+                <td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate;?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
                <td>
 
-                <select id="pickupinternal"  required  name="buildTravelToDateCab[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select id="pickupinternal"  required  name="buildTravelToDateCab[]"  class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
              <option value="Pickup">Pickup</option>
                 <!-- <?php foreach($transfer_route as $value){ ?>
                 <option value="<?php echo $value->start_city ?>"><?php echo $value->start_city ?></option>
@@ -138,7 +138,7 @@
                     
               </td>
                 <td>
-                <select   id="dropoffinternal" name="buildTravelToCityCabDrop[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select   id="dropoffinternal" name="buildTravelToCityCabDrop[]"  class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                 <option value="Drop Off">Drop Off</option>
 
               </select>
@@ -147,7 +147,7 @@
                     <input id="price_internal" type="hidden" name="price_internal[]" />
                     <input id="pax_count_internal" type="hidden" name="pax_count_internal[]" />
                     <input id="total_price_internal" type="hidden" value="0" name="total_price_internal[]" />
-                    <input id="route_nameinternal" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeCab[]"></td>
+                    <input id="route_nameinternal" class="form-control internal_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeCab[]"></td>
                 <td><a class="new_btn px-3" onclick="transRow()">add</a></td>
                </tr>
 
@@ -155,28 +155,28 @@
                 <tr id="Sic" style="display: none;">
                 <th>Return Transfer</th>
               <td><input class="form-control" id="pax_point" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC[]" disabled></td>
-              <td><input class="form-control" id="buildTravelFromdatePVT" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdatePVT[]"></td>
+              <td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdatePVT[]"></td>
                
               <td>
-                <select id="pickuppoint"  required  name="buildTravelToDateSIC[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select id="pickuppoint"  required  name="buildTravelToDateSIC[]"  class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
              <option value="Pickup">Pickup</option>
                 <!-- <?php foreach($transfer_route1 as $value){ ?>
                 <option value="<?php echo $value->start_city ?>"><?php echo $value->start_city ?></option>
               <?php } ?> -->
               </select></td>
                 <td>
-                <select   id="dropoffpoint" name="buildTravelToCitySIC[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select   id="dropoffpoint" name="buildTravelToCitySIC[]"  class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                 <option value="Drop Off">Drop Off</option>
 
               </select>
                   </td>
-                <td><input id="route_namepoint" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>
-                <td>
+                <td><input id="route_namepoint" class="form-control return_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>
+                
                 <input id="price_point" type="hidden" name="price_point[]" />
                 <input id="pax_count_point" type="hidden" name="pax_count_point[]" />
                 <input id="total_price_point" type="hidden" value="0" name="total_price_point[]" />
                 <td><a class="new_btn px-3" onclick="transReturnRow()">add</a></td>
-                </td>
+                
 
                </tr>
 
@@ -245,7 +245,12 @@
                </tr>
               </tbody>
              </table>
-
+             <div class="d-flex justify-content-end">
+              <button type="button" id="transferSave" class="new_btn px-5">Save</button>
+              </div>
+            </div>
+            
+            </div>
              <hr>
 
              <br/> <br/>
@@ -475,16 +480,19 @@
                           $('#rows_count').val(parseInt(cnt) + parseInt(1));
                           var adds=' <tr  id="PvtCab'+trans_rows + '"> <th>Internal Transfer</th>';
                           adds += '<td><input class="form-control" type="number" id="pax_internal'+trans_rows + '" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCityCab[]" disabled></td>';
-                          adds += '<td><input class="form-control" type="date" value="<?php echo $view->specificDate;?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>';
+                          adds += '<td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate;?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>';
                           adds += `<td>
-                                    <select id="pickupinternal${trans_rows}"  onchange="pickupInternal(${trans_rows})" required  name="buildTravelToDateCab[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                    <select id="pickupinternal${trans_rows}"  onchange="pickupInternal(${trans_rows})" required  name="buildTravelToDateCab[]"  class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                       <option value="Pickup">Pickup</option>
+                                      <?php foreach($transfer_route as $value){ ?>
+                                      <option value="<?php echo $value->start_city ?>"><?php echo $value->start_city ?></option>
+                                      <?php } ?>
                                     </select>
                                   </td>`;
 
                           adds += `
                                 <td>
-                                  <select id="dropoffinternal${trans_rows}" name="buildTravelToCityCabDrop[]"  onchange="dropInternal(${trans_rows})" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                  <select id="dropoffinternal${trans_rows}" name="buildTravelToCityCabDrop[]"  onchange="dropInternal(${trans_rows})" class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                   <option value="Drop Off">Drop Off</option>
                                   </select>
                                 </td>
@@ -495,7 +503,7 @@
                                   <input id="price_internal${trans_rows}" type="hidden" name="price_internal[]" />
                                   <input id="pax_count_internal${trans_rows}" type="hidden" name="pax_count_internal[]" />
                                   <input id="total_price_internal${trans_rows}" type="hidden" value="0" name="total_price_internal[]" />
-                                  <input id="route_nameinternal${trans_rows}" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeCab[]">
+                                  <input id="route_nameinternal${trans_rows}" class="form-control internal_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeCab[]">
                                 </td>
                                 `;
 
@@ -514,39 +522,37 @@
                           var adds=' <tr  id="Sic'+trans_retrun_rows + '"> <th>Return Transfer</th>';
 
                           adds += '<td><input class="form-control" id="pax_point'+trans_retrun_rows + '" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC[]" disabled></td>';
-                          adds += '<td><input class="form-control" id="buildTravelFromdatePVT'+trans_retrun_rows + '" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdatePVT[]"></td>';
+                          adds += '<td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT'+trans_retrun_rows + '" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdatePVT[]"></td>';
 
-                          adds += `<td>
-                                    <select id="pickuppoint${trans_retrun_rows}"  onchange="pickupReturn(${trans_retrun_rows})" required  name="buildTravelToDateSIC[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                          adds += `<td> 
+                                    <select id="pickuppoint${trans_retrun_rows}" onchange="pickupReturn(${trans_retrun_rows})" required  name="buildTravelToDateSIC[]"  class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                       <option value="Pickup">Pickup</option>
-                                        <?php foreach($transfer_route1 as $value){ ?>
-                                        <option value="<?php echo $value->start_city ?>"><?php echo $value->start_city ?></option>
-                                        <?php } ?>
                                     </select>
                                   </td>`;
                                   
                           adds += `
                                 <td>
-                                  <select id="dropoffpoint${trans_retrun_rows}" name="buildTravelToCitySIC[]"  onchange="dropReturn(${trans_retrun_rows})" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                  <select id="dropoffpoint${trans_retrun_rows}" name="buildTravelToCitySIC[]"  onchange="dropReturn(${trans_retrun_rows})" class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                   <option value="Drop Off">Drop Off</option>
                                   </select>
                                 </td>
                                 `;
 
-                          adds += '<td><input id="route_namepoint'+trans_retrun_rows+'" class="form-control" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>';
+                          adds += '<td><input id="route_namepoint'+trans_retrun_rows+'" class="form-control return_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>';
 
                           adds += `
-                                <td>
+                                
                                   <input id="price_point${trans_retrun_rows}" type="hidden" name="price_point[]" />
                                   <input id="pax_count_point${trans_retrun_rows}" type="hidden" name="pax_count_point[]" />
                                   <input id="total_price_point${trans_retrun_rows}" type="hidden" value="0" name="total_price_point[]" />
-                                </td>
+                               
                                 `;
 
                           adds += '</td> <td><button class="btn btn-danger btn-xs" onClick="$(\'#Sic' + trans_retrun_rows + '\').remove();"><i class="fa fa-trash"></i></button> </td>';
                           adds += '</tr>';
                             $('#transfer_body').append(adds);
-                            pickupFromReturn(trans_retrun_rows);
+                          pickupFromReturn(trans_retrun_rows);
+
                             trans_retrun_rows++;
                         }
 
@@ -834,7 +840,115 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 ></script>
 <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js"></script>
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+ 
 <script>
+
+  
+$('#transferSave').on('click', function() {
+
+var pax_adult = <?php  echo $view->Packagetravelers; ?>;
+var pax_child = <?php  echo $buildpackage->child; ?>;
+var pax_infants = <?php  echo $buildpackage->infant; ?>;
+var total_pax = pax_adult + pax_child + pax_infants;
+var QueryId = $('#QueryId').val();
+
+                var internal_transfer_pickup = [];
+                  $(".internal_transfer_pickup").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" && cat != 'Pickup'){
+                      internal_transfer_pickup.push($.trim(cat));
+                    }
+                  });
+
+                  var internal_transfer_dropoff = [];
+                  $(".internal_transfer_dropoff").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" && cat != 'Drop Off'){
+                      internal_transfer_dropoff.push($.trim(cat));
+                     }
+                  });
+
+                  var internal_transfer_route = [];
+                  $(".internal_transfer_route").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" ){
+                      internal_transfer_route.push($.trim(cat));
+                    }
+                  });
+
+                  var internal_transfer_date = [];
+                  $(".internal_transfer_date").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" ){
+                      internal_transfer_date.push($.trim(cat));
+                    }
+                  });
+
+                  // return transfer ---------------------------------
+
+                  var return_transfer_pickup = [];
+                  $(".return_transfer_pickup").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" && cat != 'Pickup'){
+                      return_transfer_pickup.push($.trim(cat));
+                     }
+                  });
+
+                  var return_transfer_dropoff = [];
+                  $(".return_transfer_dropoff").each(function() {
+                    var cat = $(this).val();
+                     if(cat != "" && cat != 'Drop Off'){
+                      return_transfer_dropoff.push($.trim(cat));
+                     }
+                  });
+
+                  var return_transfer_route = [];
+                  $(".return_transfer_route").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" ){
+                      return_transfer_route.push($.trim(cat));
+                    }
+                  });
+                  
+                  var return_transfer_date = [];
+                  $(".return_transfer_date").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" ){
+                      return_transfer_date.push($.trim(cat));
+                    }
+                  });
+
+                  var data= [{
+                      'internal_transfer_pickup' : internal_transfer_pickup,
+                      'internal_transfer_dropoff' : internal_transfer_dropoff,
+                      'internal_transfer_route' : internal_transfer_route,
+                      'internal_transfer_date' : internal_transfer_date,
+
+                      'return_transfer_pickup' : return_transfer_pickup,
+                      'return_transfer_dropoff' : return_transfer_dropoff,
+                      'return_transfer_route' : return_transfer_route,
+                      'return_transfer_date' : return_transfer_date,
+
+                    }];
+                   console.log("🚩 ~ file: build_transfer.php ~ line 932 ~ $ ~ data", data)
+                   
+                  
+                    $.ajax({ 
+                        type: "POST",
+                        url: "<?php echo base_url()?>Query/saveTransferData",
+                        data : {data : data,'pax_adult':pax_adult,'pax_child':pax_child,'pax_infants':pax_infants,'query_id' : QueryId,'query_type' : 'transfer' },
+                        cache: false,
+                        dataType: "json",
+                        success: function(response)
+                        {
+                          toastr.success("Transfer Details Saved Successfully");
+                        }
+                    });
+});
+
+
   $('#buildHotelCity').on('change', function() {
     var city = $('#buildHotelCity').val();
     $("#buildHotelName").empty();

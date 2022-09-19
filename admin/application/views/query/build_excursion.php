@@ -101,7 +101,7 @@
              <tr>
            
              <th>Excursion Type</th>
-              <th>Excursion Name</th>
+              <th>Hotel Pickup</th>
               <th>Adult</th>
               <th>Child</th>
               <th>Infant</th>
@@ -875,11 +875,16 @@ $('#buildHotelName').on('change', function() {
         var excursion_adults_SIC =  $("#excursion_adult_SIC").val();
         var excursion_childs_SIC =  $("#excursion_child_SIC").val();
         var excursion_infants_SIC =  $("#excursion_infant_SIC").val();
+        var QueryId = $('#QueryId').val();
+
            $.ajax({
           type:"POST",
           dataType: "json",
           url:'<?php echo site_url();?>/Query/getExcursionSICCalculations',
-          data:{'excursion_types_SIC':excursion_types_SIC,'excursion_adults_SIC':excursion_adults_SIC,'excursion_childs_SIC':excursion_childs_SIC,'excursion_infants_SIC':excursion_infants_SIC,
+          data:{
+            'query_id':QueryId,
+            'query_type':'excursion',
+            'excursion_types_SIC':excursion_types_SIC,'excursion_adults_SIC':excursion_adults_SIC,'excursion_childs_SIC':excursion_childs_SIC,'excursion_infants_SIC':excursion_infants_SIC,
             'excursion_name_SIC':excursion_name_SIC},
           success:function(response){
           console.log(response);
@@ -913,6 +918,7 @@ $('#buildHotelName').on('change', function() {
         var excursion_adult_PVT =  $("#excursion_adult_PVT").val();
         var excursion_child_PVT =  $("#excursion_child_PVT").val();
         var excursion_infant_PVT =  $("#excursion_infant_PVT").val();
+        var QueryId = $('#QueryId').val();
 
         console.log(excursion_name_PVT);
        
@@ -921,6 +927,8 @@ $('#buildHotelName').on('change', function() {
           dataType: "json",
           url:'<?php echo site_url();?>/Query/getExcursionPVTCalculation',
           data:{
+            'query_id':QueryId,
+            'query_type':'excursion',
             'excursion_type_PVT':excursion_type_PVT,'excursion_adult_PVT':excursion_adult_PVT,
             'excursion_child_PVT':excursion_child_PVT,'excursion_infant_PVT':excursion_infant_PVT,'excursion_name_PVT':excursion_name_PVT,'total_pax':hidden_total_pax},
           success:function(response){
@@ -930,7 +938,7 @@ $('#buildHotelName').on('change', function() {
               $("#total_pax_pvt_infant").val(response.total_infantprice);
 
 
-          }
+          } 
         })
 
 
@@ -946,23 +954,28 @@ $('#buildHotelName').on('change', function() {
        var excursion_adult_PVT =  $("#excursion_adult_PVT").val();
        var excursion_child_PVT =  $("#excursion_child_PVT").val();
        var excursion_infant_PVT =  $("#excursion_infant_PVT").val();
-
+       var QueryId = $('#QueryId').val();
 
         $.ajax({
          type:"POST",
          dataType: "json",
-         url:'<?php echo site_url();?>/Query/getExcursionPVTCalculations',
+         url:'<?php echo site_url();?>Query/getExcursionPVTCalculations',
          data:{
+            'query_id':QueryId,
+            'query_type':'excursion',
            'excursion_type_PVT':excursion_type_PVT,'excursion_adult_PVT':excursion_adult_PVT,
            'excursion_child_PVT':excursion_child_PVT,'excursion_infant_PVT':excursion_infant_PVT,'excursion_name_PVT':excursion_name_PVT,'total_pax':hidden_total_pax},
          success:function(response){
             console.log(response);
 
-         
+            if(response.status == 0){
+                toastr.error("Selected PVT allowed "+response.pax+" pax only");
+              } else {
                $("#total_pax_pvt_adult").val( response.total_adultprice);
                $("#total_pax_pvt_hild").val( response.total_childprice);
                $("#total_pax_pvt_infant").val( response.total_infantprice);
-               toastr.success("Excursion PVT Saved Successfully");
+              toastr.success("Excursion PVT Saved Successfully");
+            }
            
          }
        })

@@ -138,11 +138,11 @@
                 </tr>
                 <tr>
                     <th>Meal Type</th>
-                    <td colspan="3"><?php echo $details->Meal;?></td>
+                    <td colspan="3"><?php echo implode(",",$details->Meal);?></td>
                 </tr>
                 <tr>
                     <th>Meal Preference</th>
-                    <td colspan="3"><?php echo $details->Meal_Type;?></td>
+                    <td colspan="3"><?php echo implode(",",$details->Meal_Type);?></td>
                 </tr>
 
                 <!-- <tr>
@@ -160,16 +160,16 @@
 
                 <tr>
                     <th>Restaurant Type</th>
-                    <td colspan="3"><?php echo isset($details->res_type) ? $details->res_type : ""?></td>
+                    <td colspan="3"><?php echo isset($details->res_type) ? implode(",",$details->res_type) : ""?></td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <th>Pick Up Point</th>
                     <td colspan="3"><?php $name = preg_split ("/\|/", $details->hotel);  echo $name[1]; ?> &nbsp;-&nbsp;<?php echo $details->hotel_city;?></td>
                 </tr>
                 <tr>
                     <th>Drop Of Point</th>
                     <td colspan="3"><?php $name = preg_split ("/\|/", $details->hotel);  echo $name[1]; ?>&nbsp;-&nbsp;<?php echo $details->hotel_city;?></td>
-                </tr>
+                </tr> -->
                 
                 <tr>
                 <th rowspan="2">No of Pax</th>

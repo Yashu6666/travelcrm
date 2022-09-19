@@ -31,7 +31,7 @@ class Query extends CI_Controller
 			);
 			
 			$data['details'] = $data_en;
-			// echo"<pre>";print_r($data['details']);exit;
+			// echo"<pre>";print_r($data['details']);exit;return;
 
 			// $body = $this->load->view('query/email_templates/proposal', $data, TRUE);	
 			// print_r($body);	
@@ -974,11 +974,19 @@ class Query extends CI_Controller
 			"infant_extra_bed" => implode(',',$tableData[0]['extra_without_bed']),
 			"sharing_type" => implode(',',$tableData[0]['sharing_types']),
 		];
-		// echo"<pre>";print_r($hotel_calculation_data);exit;
+		// echo"<pre>";print_r($QueryId);print_r($hotel_query_data);exit;
+		// return;
 
-		$this->db->where('query_id', $QueryId);
-		$this->db->update('query_hotel',$hotel_query_data);
+		$query_data = $this->db->where('query_id', $QueryId)->get('query_hotel');
+		if ($query_data->num_rows() > 0) {
+			$this->db->where('query_id', $QueryId);
+			$this->db->update('query_hotel',$hotel_query_data);
+		} else {
+			$hotel_query_data['query_id'] = $QueryId;
+			$this->db->insert('query_hotel',$hotel_query_data);
+		}
 
+		
 		echo json_encode($hotel_calculation_data);
 	}
 
@@ -1912,6 +1920,8 @@ class Query extends CI_Controller
 			'transfer_price' => $_POST['totalprice_transfer']
 			
 		);
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user_data'] = $this->db->where('id', $user_id)->get('users')->row();
 
 		$query = $this->db->where('query_id', $_POST['QueryId'])->get('pricing_info');
 		if ($query->num_rows() > 0) {
@@ -2011,6 +2021,8 @@ class Query extends CI_Controller
 			'visa_price' => $_POST['totalprice_visa']
 			
 		);
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user_data'] = $this->db->where('id', $user_id)->get('users')->row();
 
 		$query = $this->db->where('query_id', $_POST['QueryId'])->get('pricing_info');
 		if ($query->num_rows() > 0) {
@@ -2100,6 +2112,7 @@ class Query extends CI_Controller
 
 			'currencyOption' => $_POST['currencyOption'],
 
+			'res_type' => $_POST['res_type'],
 			'res_name' => $_POST['res_name'],
 			'Meal' => $_POST['Meal'],
 			'Meal_Type' => $_POST['Meal_Type'],
@@ -2107,6 +2120,9 @@ class Query extends CI_Controller
 			'loggedInUser' => $this->session->userdata('admin_username')
 
 		);
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user_data'] = $this->db->where('id', $user_id)->get('users')->row();
 
 		$data['pricing_info'] = array(
 			'query_id' => $_POST['QueryId'],
@@ -2377,6 +2393,9 @@ class Query extends CI_Controller
 			$this->db->insert('pricing_info', $data['pricing_info']);
 		}
 
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user_data'] = $this->db->where('id', $user_id)->get('users')->row();
+
 		$data['buildpackage'] = $this->db->where('queryId', $_POST['QueryId'])->get('querypackage')->row();
 		$data['b2bcustomerquery'] = $this->db->where('query_id', $_POST['QueryId'])->get('b2bcustomerquery')->row();
 		// $this->load->view('query/newproposal',$data,TRUE);
@@ -2451,12 +2470,21 @@ class Query extends CI_Controller
 	public function CreateProposalHotel()
 	{
 
+		$hotels = [];
+		if(isset($_POST['buildHotelName'])){
+		foreach ($_POST['buildHotelName'] as $key => $value) {
+			$hotels[] = $this->db->get_where('hotel', array('id' => $value))->row();
+		}
+	}
+		
 		$data['proposalDetails'] = array(
 			'perpax_adult' =>  $_POST['perpax_adult_input'],
 			'perpax_childs' =>  $_POST['perpax_childs_input'],
 			'perpax_infants' => $_POST['perpax_infants_input'],
 			'hotel_city' => $_POST['buildHotelCity'],
 			'nights' => $_POST['buildNoNight'],
+			'hotels' => $hotels,
+			'roomType' => $_POST['buildRoomType'],
 			'hotel_name' => $_POST['buildHotelName'],
 			'room_type' => $_POST['buildRoomType'],
 			'pricing_info_curreny' => $_POST['currencyOption'],

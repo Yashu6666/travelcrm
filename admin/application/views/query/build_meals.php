@@ -478,7 +478,7 @@
                           adds += '<td> <div> <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type'+faqs_row2 + '" name="res_type[]" onchange="get_resturant_name(this.id,'+faqs_row2+');"> <option value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';                          
                           // adds += '<td><input class="form-control " type="text" value="" name="res_name[]" id="res_name'+faqs_row2 + '"></td>';
 
-                          adds += '<td><select data-mdl-for="sample2" class="form-control res_name" value=""  tabIndex="-1" name="res_name'+faqs_row2 +'[]" id="res_name'+faqs_row2 +'"  ><option>select</option></select></td>'
+                          adds += '<td><select data-mdl-for="sample2" class="form-control res_name" value=""  tabIndex="-1" name="res_name[]" id="res_name'+faqs_row2 +'"  ><option>select</option></select></td>'
                           adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal'+faqs_row2 + '" name="Meal[]"> <option value="Dinner">Dinner</option> <option value="Lunch">Lunch</option>  </select> </div> </td>';
                           adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal'+faqs_row2 + '" name="Meal_Type[]"> <option value="Veg">Veg</option> <option value="Non-Veg">Non-Veg</option> <option value="Jain">Jain</option> </select> </div> </td>';
                           adds +=  '<td><input type="number" id="no_of_meals'+faqs_row2 +'" class="form-control no_of_meals" name="no_of_meals[]" >';
@@ -1000,6 +1000,29 @@ $('#buildHotelName').on('change', function() {
 
                           });
 
+                          var no_of_meals = [];
+                          $(".no_of_meals").each(function() {
+                            var no_of_meal = $(this).val();
+                            if(!no_of_meal) no_of_meal = 0;
+                            no_of_meals.push($.trim(no_of_meal));
+
+                          });
+
+                          var transfer_with_or_without  = [];
+                          $(".transfer_with_or_without").each(function() {
+                            var transfer_wo = $(this).val();
+                            if(!transfer_wo) transfer_wo = 0;
+                            transfer_with_or_without.push($.trim(transfer_wo));
+                          });
+
+                          var checkIn_date  = [];
+                          $(".checkIn_date").each(function() {
+                            var checkIn = $(this).val();
+                            if(!checkIn) checkIn = 0;
+                            checkIn_date.push($.trim(checkIn));
+                          });
+
+
                           var data= [{
                               'resturants' : resturants,
                               'meals' : meals,
@@ -1007,15 +1030,18 @@ $('#buildHotelName').on('change', function() {
                               'meal_adults' : meal_adults,
                               'meal_childs' : meal_childs,
                               'resturants_name' : resturants_name,
-                              'resturants_transfer' : resturants_transfer
+                              'resturants_transfer' : resturants_transfer,
+                              'no_of_meals' : no_of_meals,
+                              'checkIn_date' : checkIn_date,
                             }];
+                        var QueryId = $('#QueryId').val();
                            
                             console.log(data);
                             $.ajax({
                             type:"POST",
                             dataType: "json",
                             url:'<?php echo site_url();?>/Query/getMealcalculation',
-                            data:{data : data, total_rows : total_rows},
+                            data:{'query_id':QueryId,'query_type':"meals", data : data, total_rows : total_rows},
                             success:function(response){
                             console.log(response);
                               $("#total_pax_meal_adult").val(response.adult_prices);

@@ -781,11 +781,13 @@ $('#buildHotelName').on('change', function() {
       var pax_child = <?php  echo $buildpackage->child; ?>;
       var pax_infant = <?php echo $buildpackage->infant;?>;
       var visa_validity =  $("#visa_validity").val();
+      var QueryId = $('#QueryId').val();
+      
       $.ajax({
           type:"POST",
           dataType: "json",
           url:'<?php echo site_url();?>/Query/getVisaPrice',
-          data:{'pax_adult':pax_adult,'pax_child':pax_child,'pax_infant':pax_infant,'visa_category_drop_down':visa_category_drop_down,'visa_validity':visa_validity,'entry_type':entry_type},
+          data:{'query_id':QueryId,'pax_adult':pax_adult,'query_type': 'visa','pax_child':pax_child,'pax_infant':pax_infant,'visa_category_drop_down':visa_category_drop_down,'visa_validity':visa_validity,'entry_type':entry_type},
           success:function(response){
               console.log(response);
               

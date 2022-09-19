@@ -294,7 +294,8 @@ textarea{
 
     <div class="container mt-5 section">
 
-        <?php foreach($proposalDetails['hotel_name'] as $key => $val) : ?>
+    <!-- 
+        ?php foreach($proposalDetails['hotel_name'] as $key => $val) : ?>
         <div class=" second">
             <div class=" bg-primary ">
                 <h3 class="text-light" style="padding: 7px;">Hotel</h3>
@@ -308,7 +309,26 @@ textarea{
                 <b>Room Type : </b> <?php echo $proposalDetails['room_type'][$key] ?>
             </div>
         </div>
+    ?php endforeach ?> -->
+    <?php if(isset($proposalDetails['hotel_name'])) : ?>
+    <?php foreach($proposalDetails['hotel_name'] as $key => $val) : ?>
+        <div class=" second">
+            <div class=" bg-primary ">
+                <h3 class="text-light" style="padding: 7px;">Hotel</h3>
+                <div class="head">
+                    <h5 class="text-light" style="padding: 7px;"><?php print_r($proposalDetails['hotels'][$key]->hotelname) ?> - No of Nights <?php echo $proposalDetails['nights'][$key] ?> </h5>
+                </div>
+            </div>
+            <div>
+                <img src="<?php echo base_url(); ?>public/image/4.jpg" alt="">
+                <h5><b>Hotel Name : </b> <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></h5>
+                <b>Room Type : </b> <?php echo $proposalDetails['roomType'][$key] ?>
+            </div>
+        </div>
     <?php endforeach ?>
+    <?php endif ?>
+
+
         <br/><br/>
     
 
@@ -824,6 +844,8 @@ textarea{
         "room" : "<?php echo $buildpackage->night  ?>",
         "hotel" : "<?php echo $proposalDetails['hotel_name'][0] ?>",
         "type" : 'hotel',
+        "hotels" : <?php echo json_encode($proposalDetails['hotels']) ?>,
+
         "room_type" : "<?php echo $proposalDetails['room_type'][0] ?>",
         "user" : "<?php echo $proposalDetails['loggedInUser']; ?>",
         "subject"  : document.getElementById("pro_sub").value,
@@ -834,6 +856,7 @@ textarea{
         "conditions" :  TnC,
         "cancelation_policy" : canc_ply,
         // "buildRoomType" : <?php// echo $proposalDetails['roomType'][0] ?>,
+        "room_sharing_types" : <?php echo json_encode($proposalDetails['room_sharing_types']) ?> ,
         "hotelPrefrence" : "<?php echo $buildpackage->hotelPrefrence ?>",
         "query_ID" : <?php echo $buildpackage->queryId ?>
         };

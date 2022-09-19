@@ -145,13 +145,16 @@
                     <th>No of Nights</th>
                     <td colspan="3"><?php echo $details->nights;?></td>
                 </tr>
+                <?php print_r(implode(",",$details->excursion_name_SIC)) ?>
                 <tr>
-                    <th>Pick Up Point</th>
-                    <td colspan="3"><?php $name = preg_split ("/\|/", $details->hotel);  echo $name[1]; ?> &nbsp;-&nbsp;<?php echo $details->hotel_city;?></td>
+                    <th>SIC</th>
+                   <td colspan="3">  <?php print_r(implode(",",$details->excursion_name_SIC)) ?>
+                    </td>
                 </tr>
                 <tr>
-                    <th>Drop Of Point</th>
-                    <td colspan="3"><?php $name = preg_split ("/\|/", $details->hotel);  echo $name[1]; ?>&nbsp;-&nbsp;<?php echo $details->hotel_city;?></td>
+                    <th>PVT</th>
+                    <td colspan="3">  <?php print_r(implode(",",$details->excursion_name_PVT)) ?>
+
                 </tr>
                 
                 <tr>

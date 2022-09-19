@@ -641,8 +641,9 @@ textarea{
                     <div class="row">
                         <div class="col">
                             <label class="input">
-                                <input class="input__field  width-input" id="pro_sub" value="Transfer Proposal" type="text" placeholder=" "
-                                    autocomplete="off" />
+                                <input class="input__field  width-input" id="pro_sub" type="text" 
+                                value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo $buildpackage->Packagetravelers ?>/ 
+                                <?php echo $buildpackage->specificDate ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName.' '.$admin_user_data->LastName); ?> " />
                                 <span class="input__label">Email Subject</span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>

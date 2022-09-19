@@ -116,6 +116,7 @@
                 <th>Room Type </th>
                 <th>Bed Type </th>
                 <th>Type </th>
+                <th>Sharing Type </th>
                 <th>Extra </th>
                 <!-- <th>Action</th> -->
 
@@ -142,6 +143,7 @@
                 </td>
                 <td>
                   <input class="form-control get_CheckIn" type="date" value="<?php echo $view->specificDate;?>" name="buildCheckIns[]" id="buildCheckIn" disabled>
+                  <input type="hidden" value="<?php echo $view->room;?>" name="no_of_room" id="no_of_room">
                  
                 </td>
                 <td>
@@ -193,6 +195,13 @@
                       <option value="FB" >FB</option>                                             
                   </select>
               </td> 
+              <td>
+                <select class="form-control room_sharing_types" id="room_sharing_types" name="room_sharing_types[]">
+                        <option value ="">Select option</option> 
+                        <option value ="triple_sharing">Triple Sharing</option> 
+                        <option value="double_sharing" >Double Sharing</option>                                             
+                </select>
+              </td>
               <td>
                 <!-- <input class="form-control" type="text"  placeholder="Room Type" name="buildRoomType" id="buildRoomType" required="">-->
                 <!-- <select required multiple=""  name="buildExtraBedType[]" id="buildExtraBedType" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" multiple="multiple"> -->
@@ -855,7 +864,7 @@ function get_hotel_name(id,row){
             for (i = 0; i < response.length; ++i) {
               var newOption = $('#buildHotelName'+row)
                     .append($("<option></option>")
-                    .attr("value", response[i].id + '|' + response[i].hotelname)
+                    .attr("value", response[i].id)
                                 .text(response[i].hotelname));
 
                 // $('#buildHotelName')
@@ -1316,6 +1325,7 @@ function hotelcalculation(){
                           var hotelName = [];
                           $(".get_buildHotelName").each(function() {
                             var hotel_name = $(this).val();
+                            console.log("🚩 ~ file: build_hotel.php ~ line 1327 ~ $ ~ hotel_name", hotel_name)
                             hotelName.push($.trim(hotel_name));
 
                           });
@@ -1357,10 +1367,16 @@ function hotelcalculation(){
                         });
 
                         var get_room_types = [];
-                        $(".get_room_types").each(function() {
-                          var cat = $(this).val();
-                          get_room_types.push($.trim(cat));
-                        });
+                    $(".get_room_types").each(function() {
+                      var cat = $(this).val();
+                      get_room_types.push($.trim(cat));
+                    });
+
+                    var sharing_types = [];
+                    $(".room_sharing_types").each(function() {
+                      var cat = $(this).val();
+                      sharing_types.push($.trim(cat));
+                    });
 
                         let total_no_of_days = <?php echo $buildpackage->night?>;
                       
@@ -1380,6 +1396,8 @@ function hotelcalculation(){
                               'buildCheckIns' : buildCheckIns,
                               'Category' : Category,
                               'get_room_types' : get_room_types,
+                              'sharing_types' : sharing_types,
+                              'query_type' : 'hotel',
                             }];
                            
                           
@@ -2216,6 +2234,8 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                           template +='<td><select class="form-control get_bed_type" id="buildBedType'+faqs_row+'"  required="" name="buildBedType[]" required><option value="Double" >Double</option><option value = "Single">Single</option></select></td>';
 
                           template +='<td><select class="form-control get_room_types" id="room_types'+faqs_row+'" name="build_room_types[]" required><option value ="BB">BB</option><option value ="Room Only">Room Only</option><option value="HB" >HB</option><option value="FB" >FB</option></select></td>'; 
+                          
+                          template +='<td><select class="form-control room_sharing_types" id="room_sharing_types'+faqs_row+'" name="room_sharing_types[]" ><option value ="">Select option</option><option value ="triple_sharing">Triple Sharing</option> <option value="double_sharing" >Double Sharing</option></select></td>';
 
                           template +='<td><input type="checkbox" id="extra_with_adult'+faqs_row+'" name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"><label for="html" style="margin-left: 5%;"> Extra Bed(Adult)</label><br><input type="checkbox" id="extra_with_child'+faqs_row+'" <?php  echo $buildpackage->child > 0 ? 'checked' : ''; ?>  name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child" ><label for="html" style="margin-left: 5%;"> Extra Bed(Child)</label><br><input type="checkbox" id="extra_without_bed'+faqs_row+'" <?php  echo $buildpackage->infant > 0 ? 'checked' : ''; ?> name="extra_check[]" value="extra_without_bed" class="check-extra extra_without_bed"><label for="html" style="margin-left: 5%;"> Extra W/O Bed</label></td>';
 

@@ -610,8 +610,9 @@ textarea{
                     <div class="row">
                         <div class="col">
                             <label class="input">
-                                <input class="input__field  width-input" id="pro_sub" value="Meals Proposal" type="text" placeholder=" "
-                                    autocomplete="off" />
+                            <input class="input__field  width-input" id="pro_sub" type="text" 
+                                value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo $buildpackage->Packagetravelers ?>/ 
+                                <?php echo $buildpackage->specificDate ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName.' '.$admin_user_data->LastName); ?> " />
                                 <span class="input__label">Email Subject</span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>
@@ -812,7 +813,8 @@ textarea{
     btn.addEventListener("click", () => {
     let res_name =<?php echo json_encode($proposalDetails["res_name"] );?>;
     let Meal =<?php echo json_encode($proposalDetails["Meal"] );?>;
-    let Meal_Type =<?php echo json_encode($proposalDetails["Meal_Type"] );?>;
+    let Meal_Type =<?php echo json_encode($proposalDetails['res_type'] );?>;
+    let res_type =<?php echo json_encode($proposalDetails['res_type'] );?>;
 
     let data_arr = {
         
@@ -827,16 +829,16 @@ textarea{
         "per_pax_child" : "<?php echo $proposalDetails['perpax_childs']; ?>",
         "per_pax_infant" : "<?php echo $proposalDetails['perpax_infants']; ?>",
         "room" : "<?php echo $buildpackage->night  ?>",
-        // "res_name" : res_name,
-        // "Meal" : Meal,
-        // "Meal_Type" :Meal_Type,
-        "res_name" : "<?php echo isset($buildmeal->resturent_name) ? $buildmeal->resturent_name : "" ?>", 
-        "Meal" : "<?php echo isset($buildmeal->meal) ? $buildmeal->meal : "" ?>",
-        "Meal_Type" :"<?php echo isset($buildmeal->meal_type) ? $buildmeal->meal_type : "" ?>",
+        "res_name" : res_name,
+        "Meal" : Meal,
+        "Meal_Type" :Meal_Type,
+        // "res_name" : "?php echo isset($buildmeal->resturent_name) ? $buildmeal->resturent_name : "" ?>", 
+        // "Meal" : "?php echo isset($buildmeal->meal) ? $buildmeal->meal : "" ?>",
+        // "Meal_Type" :"?php echo isset($buildmeal->meal_type) ? $buildmeal->meal_type : "" ?>",
         "type" : 'meals',
         "user" : "<?php echo $proposalDetails['loggedInUser']  ?>",
         "date" : "<?php echo isset($buildmeal->date) ? date("jS F Y", strtotime($buildmeal->date)) : "" ?>",
-        "res_type" :  "<?php echo isset($buildmeal->resturent_name) ? $buildmeal->resturent_name : "" ?>",
+        "res_type" :  res_type,
         "transfer_type" :  "<?php echo isset($buildmeal->transfer) ? $buildmeal->transfer : "" ?>",
         "hotel" : "<?php echo isset($buildhotel->hotel_id) ? $buildhotel->hotel_id : "" ?>",
         "hotel_city" :  "<?php echo isset($buildhotel->hotel_city) ? $buildhotel->hotel_city : "" ?>",

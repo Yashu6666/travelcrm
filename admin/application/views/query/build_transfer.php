@@ -28,6 +28,11 @@
      </ol>
     </div>
    </div>
+
+   <div class="page-bar ">
+   <button type="button" id="del_query" onclick="delQuery()" class="new_btn px-5 float-right">Cancel</button>
+   </div>
+
    <form id="proposal-form" action="<?php echo site_url();?>query/CreateProposalTransfer" method="post"> 
    <input type="hidden" id="hotel_name_in" name="hotel_name_in" value="" />
    <input type="hidden" id="totalprice_transfer" name="totalprice_transfer" value="0" />
@@ -845,7 +850,22 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
  
 <script>
 
-  
+  function delQuery(){
+    var QueryId = $('#QueryId').val();
+    $.ajax({ 
+            type: "POST",
+            url: "<?php echo base_url()?>Query/deleteQueryData",
+            data : {'query_id' : QueryId},
+            cache: false,
+            dataType: "json",
+            success: function(response)
+            {
+              toastr.success("Cancelled Successfully");
+              location.href =  "<?php echo site_url();?>Query/view_query";
+            }
+        });
+  }
+
 $('#transferSave').on('click', function() {
 
 var pax_adult = <?php  echo $view->Packagetravelers; ?>;

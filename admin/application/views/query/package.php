@@ -235,8 +235,6 @@
 
                             </div>
 
-
-
                         </div>
                         <div class="card card-box">
                             <div class="card-head card-head-new">
@@ -245,27 +243,6 @@
                             </div>
                             <div class="card-body row ">
                                 <div class="card-body-head">
-                                    <!-- <div class="first">
-              <label><input type="radio" name="colorRadio" value="Package" checked=""> Package</label>
-              <label><input type="radio" name="colorRadio" value="Transfer"> Transfer</label>
-              <label><input type="radio" name="colorRadio" value="Visa"> Visa</label> 
-
-              <label><input type="radio" name="colorRadio" value="Hotel">Hotel</label> 
-              <label><input type="radio" name="colorRadio" value="Excursion">Excursion</label> 
-            </div> -->
-
-
-                                    <!-- <div class="second mt-4 mb-3 ml-4">
-              <b>Lead Info :</b>
-              <div class="second-box d-flex justify-content-center align-items-center" style="margin-left: 100px;">
-               <div class="second-box-innerDiv">Going To : <br> Going From :</div>
-               <div class="second-box-innerDiv">No Of Day(s) : <br> Travel Date :</div>
-               <div class="second-box-innerDiv">PAX : NA</div>
-              </div>
-             </div> -->
-
-
-                                    <!-- ===================PACKAGE ============================= -->
 
                                     <div class="Package box">
 
@@ -284,11 +261,18 @@
                                                 </div>
                                             </center>
                                         <?php } ?>
-                                        <form onsubmit="return validatePackage();" action="<?php echo site_url(); ?>query/addQueryPackage" method="post">
 
-                                            <input type="hidden" name="queryId" value="<?php echo $b2bDetails->query_id; ?>">
-                                            <input type="hidden" name="created_date" value="<?php echo date('Y-m-d'); ?>">
-                                            <div class="first">
+                                        <div class="first">
+                                            <label><input type="radio" name="colorRadio1" value="Package" checked=""><img src="<?php echo base_url(); ?>public/image/package.png" style="width: 35px;" /> Package</label>
+                                            <label><input type="radio" name="colorRadio1" value="Hotel"><img src="<?php echo base_url(); ?>public/image/hotel.png" style="width: 32px;" /> Hotel</label>
+                                            <label><input type="radio" name="colorRadio1" value="Transfer"><img src="<?php echo base_url(); ?>public/image/transfer.png" style="width: 50px;" /> Transfer</label>
+                                            <label><input type="radio" name="colorRadio1" value="Excursion"><img src="<?php echo base_url(); ?>public/image/excursions.png" style="width: 35px;" />Excursion</label>
+                                            <label><input type="radio" name="colorRadio1" value="Visa"> <img src="<?php echo base_url(); ?>public/image/visa.png" style="width: 50px;" /> Visa</label>
+                                            <label><input type="radio" name="colorRadio1" value="Meals"><img src="<?php echo base_url(); ?>public/image/meals.png" style="width: 35px;" /> Meals</label>
+
+                                        </div>
+
+                                        <!-- <div class="first">
                                                 <label><input type="radio" name="colorRadio" value="Package" checked=""><img src="<?php echo base_url(); ?>public/image/package.png" style="width: 35px;" /> Package</label>
                                                 <label><input type="radio" name="colorRadio" value="Hotel"><img src="<?php echo base_url(); ?>public/image/hotel.png" style="width: 32px;" /> Hotel</label>
                                                 <label><input type="radio" name="colorRadio" value="Transfer"><img src="<?php echo base_url(); ?>public/image/transfer.png" style="width: 50px;" /> Transfer</label>
@@ -296,248 +280,758 @@
                                                 <label><input type="radio" name="colorRadio" value="Visa"> <img src="<?php echo base_url(); ?>public/image/visa.png" style="width: 50px;" /> Visa</label>
                                                 <label><input type="radio" name="colorRadio" value="Meals"><img src="<?php echo base_url(); ?>public/image/meals.png" style="width: 35px;" /> Meals</label>
 
-                                                <!-- <a href=""><button class="first-btn">Miscellaneous</button></a> -->
-                                            </div>
-                                            <!-- <div class="row mt-4 mr-3 ml-3">
-                <div class="col">
-                 <label for="">Query Type
-                 :</label>
-                 <input checked type="radio" name="QueryType" value="FIT(Normal)"><label
-                 for="">FIT(Normal)</label>
-                 <input type="radio" name="QueryType" value="GIT(Group)"><label
-                 for="">GIT(Group)</label>
-                </div>
-               </div> -->
-                                         <div class="row mt-4 mr-3 ml-3 mt-3">
-                                                <div class="col">
-                                            <label for="">Check IN</label> <br/>
+                                            </div> -->
+
+                                        <!-- for package -->
+                                        <div id="forPackage" style="display:block;">
+
+                                            <form  onsubmit="return validatePackage();" action="<?php echo site_url(); ?>query/addQueryPackage" method="post">
+
+                                                <input type="hidden" name="queryId" value="<?php echo $b2bDetails->query_id; ?>">
+                                                <input type="hidden" name="created_date" value="<?php echo date('Y-m-d'); ?>">
+                                                <input type="hidden" name="colorRadio" id="service_type" value="">
+                                                <div class="row mt-4 mr-3 ml-3 mt-3">
+                                                    <div class="col">
+                                                        <label for="">Check IN</label> <br />
 
                                                         <input class="package_inputs" type="date" placeholder=" " id="specificDate1" name="specificDate" autocomplete="off" required />
-                                                        <!-- <span class="input__label">Check IN<span class="colorRed">*</span></span> -->
-                                                </div>
-                                                <div class="col">
-                                            <label for="">Nights</label> <br/>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">Nights</label> <br />
 
                                                         <input class="package_inputs" type="number" min="1" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
-                                                        <!-- <span class="input__label">Nights</span> -->
-                                                </div>
-                                                <div class="col">
-                                            <label for="">Check Out</label> <br/>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">Check Out</label> <br />
 
                                                         <input class=" package_inputs" type="date" placeholder=" " id="endDate1" name="noDaysFrom" autocomplete="off" />
-                                                        <!-- <span class="input__label">Check Out<span class="colorRed">*</span></span> -->
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">Country</label> <br />
+
+                                                        <input class="package_inputs" type="text" placeholder=" " name="country[]" id="country" value="United Arab Emirates" required autocomplete="off" />
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">City</label> <br />
+                                                        <select style="padding: 0px;" class="package_inputs" id="city" required name="goingFrom[]">
+                                                            <option value="">Select City</option>
+                                                            <option selected value="Dubai">Dubai</option>
+                                                            <option value="AbuDhabi">Abu Dhabi</option>
+                                                            <option value="Sharjah">Sharjah</option>
+                                                            <option value="Ajman">Ajman</option>
+
+                                                            <option value="Umm Al-Quwain">Umm Al-Quwain</option>
+                                                            <option value="Fujairah">Fujairah</option>
+                                                            <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                                                            <option value="Al Ain">Al Ain</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">Rating</label> <br />
+                                                        <select style="padding: 0px;" class="package_inputs" id="rating" required name="hotelPrefrence[]">
+                                                            <option value="">Select Rating</option>
+                                                            <option value="1">⭐ 1</option>
+                                                            <option value="2">⭐⭐ 2</option>
+                                                            <option value="3">⭐⭐⭐ 3</option>
+                                                            <option value="4">⭐⭐⭐⭐ 4</option>
+                                                            <option value="5">⭐⭐⭐⭐⭐ 5</option>
+                                                        </select>
+                                                    </div>
+
                                                 </div>
-                                                <div class="col">
-                                            <label for="">Country</label> <br/>
+
+                                                <div id="addrows"></div>
+
+                                                <div class="btn-group mt-4">
+                                                    <a class="new_btn ml-0 px-4" onclick="addrows()">
+                                                        Add City/Hotel
+                                                    </a>
+                                                </div>
+
+                                                <div class="row mt-4 mr-3 ml-3 mt-3">
+                                                    <div class="col">
+                                                        <label for="">Quotation Currency</label>
+
+                                                        <select name="invoice_currency" id="currency" class="Travelers-select-package-values">
+                                                            <option value="AED">AED</option>
+                                                            <option value="USD">USD</option>
+
+                                                        </select>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">No. of Room</label>
+
+                                                        <select name="rooms" id="no_of_rooms" required class="Travelers-select-package-values">
+                                                            <option value="">Select Rooms</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">No. Adult</label><br>
+
+                                                        <select name="adult" id="no_of_adult" required class="Travelers-select-package-values">
+                                                            <option value="">Select Adult</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">No. Child</label><br>
+
+                                                        <select name="child" id="child" required class="Travelers-select-package-values">
+                                                            <option value="0">0</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div id="child_age_div" class="col" style="display:none;">
+                                                        <label for="">Child Age</label><br>
+
+                                                        <input id="child_age" name="child_age" class="Travelers-select-package-values" type="text" value="0" />
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">No. Infant</label><br>
+
+                                                        <select name="infant" id="" required class="Travelers-select-package-values">
+                                                            <option value="0">0</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="d-flex  justify-content-end mt-4 mb-4" style="margin-bottom:50px !important;margin-top:50px !important">
+                                                    <?php if (isset($buildpackage->queryId)) {
+                                                        if ($buildpackage->type == 'Package') {
+                                                    ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildPackage/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Transfer') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildTransfer/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Visa') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildVisa/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Hotel') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildHotel/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Excursion') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildExcursion/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Meals') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildMeals/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                    <?php }
+                                                    }
+
+                                                    ?>
+
+                                                    <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Save</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+
+                                        <!-- for transfer and excursion -->
+
+
+                                        <div id="forTransEx" style="display:none;">
+
+
+                                            <form  onsubmit="return validatePackage();" action="<?php echo site_url(); ?>query/addQueryPackage" method="post">
+
+                                                <input type="hidden" name="queryId" value="<?php echo $b2bDetails->query_id; ?>">
+                                                <input type="hidden" name="created_date" value="<?php echo date('Y-m-d'); ?>">
+                                                <input type="hidden" name="colorRadio" id="service_type2" value="">
+
+                                                <div class="row mt-4 mr-3 ml-3 mt-3">
+                                                    <div class="col">
+                                                        <label for="">Check IN</label> <br />
+                                                        <input class="package_inputs" type="date" placeholder=" " id="specificDate1" name="specificDate" autocomplete="off" required />
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">Nights</label> <br />
+
+                                                        <input class="package_inputs" type="number" min="1" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">Check Out</label> <br />
+
+                                                        <input class=" package_inputs" type="date" placeholder=" " id="endDate1" name="noDaysFrom" autocomplete="off" />
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">Country</label> <br />
 
                                                         <input class="package_inputs" type="text" placeholder=" " name="country[]" value="United Arab Emirates" required autocomplete="off" />
-                                                        <!-- <span class="input__label">Country</span> -->
-                                                </div>
-                                                <div class="col">
-                                            <label for="">City</label> <br/>
-                                                    <select style="padding: 0px;" class="package_inputs" required name="goingFrom[]">
-                                                        <option value="">Select City</option>
-                                                        <option selected value="Dubai">Dubai</option>
-                                                        <option value="AbuDhabi">Abu Dhabi</option>
-                                                        <option value="Sharjah">Sharjah</option>
-                                                        <option value="Ajman">Ajman</option>
-                                                        
-                                                        <option value="Umm Al-Quwain">Umm Al-Quwain</option>
-                                                        <option value="Fujairah">Fujairah</option>
-                                                        <option value="Ras Al Khaimah">Ras Al Khaimah</option>
-                                                        <option value="Al Ain">Al Ain</option>
-                                                    </select>
-                                                </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">City</label> <br />
+                                                        <select style="padding: 0px;" class="package_inputs" required name="goingFrom[]">
+                                                            <option value="">Select City</option>
+                                                            <option selected value="Dubai">Dubai</option>
+                                                            <option value="AbuDhabi">Abu Dhabi</option>
+                                                            <option value="Sharjah">Sharjah</option>
+                                                            <option value="Ajman">Ajman</option>
 
-                                                <div class="col">
-                                                <label for="">Rating</label> <br/>
-                                                    <select style="padding: 0px;" class="package_inputs" required name="hotelPrefrence[]">
-                                                        <option value="">Select Rating</option>
-                                                        <option value="1">⭐ 1</option>
-                                                        <option value="2">⭐⭐ 2</option>
-                                                        <option value="3">⭐⭐⭐ 3</option>
-                                                        <option value="4">⭐⭐⭐⭐ 4</option>
-                                                        <option value="5">⭐⭐⭐⭐⭐ 5</option>
-                                                    </select>
+                                                            <option value="Umm Al-Quwain">Umm Al-Quwain</option>
+                                                            <option value="Fujairah">Fujairah</option>
+                                                            <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                                                            <option value="Al Ain">Al Ain</option>
+                                                        </select>
+                                                    </div>
+
                                                 </div>
 
-                                                <!-- <div class="col">
-                                                <div class="col-form-label" style="margin-top: -25px;">
-                                                <label for="">Rating</label>
-                                                <label class="input">
-                                                        <input type="checkbox" value="1" name="hotelPrefrence[]" class="hotelRating mr-2 ml-3">1
-                                                        <input type="checkbox" value="2" name="hotelPrefrence[]" class="hotelRating mr-2 ml-3">2
-                                                        <input type="checkbox" value="3" name="hotelPrefrence[]" class="hotelRating mr-2 ml-3">3
-                                                        <input type="checkbox" value="4" name="hotelPrefrence[]" class="hotelRating mr-2 ml-3">4
-                                                        <input type="checkbox" value="5" name="hotelPrefrence[]" class="hotelRating mr-2 ml-3">5
-                                                 </label>
+                                                <div id="addrows"></div>
+
+                                                <div class="row mt-4 mr-3 ml-3 mt-3">
+                                                    <div class="col">
+                                                        <label for="">Quotation Currency</label>
+
+                                                        <select name="invoice_currency" id="" class="Travelers-select-package-values">
+                                                            <option value="AED">AED</option>
+                                                            <option value="USD">USD</option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">No. Adult</label><br>
+
+                                                        <select name="adult" id="" required class="Travelers-select-package-values">
+                                                            <option value="">Select Adult</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">No. Child</label><br>
+
+                                                        <select name="child" id="child1" required class="Travelers-select-package-values">
+                                                            <option value="0">0</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div id="child_age_div1" class="col" style="display:none;">
+                                                        <label for="">Child Age</label><br>
+
+                                                        <input id="child_age" name="child_age" class="Travelers-select-package-values" type="text" value="0" />
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">No. Infant</label><br>
+
+                                                        <select name="infant" id="" required class="Travelers-select-package-values">
+                                                            <option value="0">0</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+
+                                                    </div>
+
+
                                                 </div>
-                                                </div> -->
-                                            </div>
+
+                                                <div class="d-flex  justify-content-end mt-4 mb-4" style="margin-bottom:50px !important;margin-top:50px !important">
+                                                    <?php if (isset($buildpackage->queryId)) {
+                                                        if ($buildpackage->type == 'Package') {
+                                                    ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildPackage/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Transfer') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildTransfer/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Visa') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildVisa/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Hotel') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildHotel/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Excursion') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildExcursion/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Meals') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildMeals/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                    <?php }
+                                                    }
+
+                                                    ?>
+
+                                                    <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <!-- for visa -->
+
+                                        <div id="forVisa" style="display:none;">
+
+                                            <form  onsubmit="return validatePackage();" action="<?php echo site_url(); ?>query/addQueryPackage" method="post">
+
+                                                <input type="hidden" name="queryId" value="<?php echo $b2bDetails->query_id; ?>">
+                                                <input type="hidden" name="created_date" value="<?php echo date('Y-m-d'); ?>">
+                                                <input type="hidden" name="colorRadio" id="service_type3" value="">
+
+                                                <div class="row mt-4 mr-3 ml-3 mt-3">
+                                                    <div class="col">
+                                                        <label for="">Date of Arrival</label> <br />
+                                                        <input class="package_inputs" type="date" placeholder=" " id="specificDate1" name="doa" autocomplete="off" required />
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">Date of Departure</label> <br />
+                                                        <input class=" package_inputs" type="date" placeholder=" " id="endDate1" name="dod" autocomplete="off" />
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">Purpose</label> <br />
+                                                        <input class=" package_inputs" type="text" placeholder=" " id="endDate1" name="visa_purpose" autocomplete="off" />
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">Country</label> <br />
+                                                        <input class="package_inputs" type="text" placeholder=" " name="country[]" value="United Arab Emirates" required autocomplete="off" />
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">City</label> <br />
+                                                        <select style="padding: 0px;" class="package_inputs" required name="goingFrom[]">
+                                                            <option value="">Select City</option>
+                                                            <option selected value="Dubai">Dubai</option>
+                                                            <option value="AbuDhabi">Abu Dhabi</option>
+                                                            <option value="Sharjah">Sharjah</option>
+                                                            <option value="Ajman">Ajman</option>
+
+                                                            <option value="Umm Al-Quwain">Umm Al-Quwain</option>
+                                                            <option value="Fujairah">Fujairah</option>
+                                                            <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                                                            <option value="Al Ain">Al Ain</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+
+                                                <div id="addrows"></div>
+
+                                                <div class="row mt-4 mr-3 ml-3 mt-3">
+                                                    <div class="col">
+                                                        <label for="">Quotation Currency</label>
+
+                                                        <select name="invoice_currency" id="" class="Travelers-select-package-values">
+                                                            <!-- <option value="">Select Currency</option> -->
+                                                            <option value="AED">AED</option>
+                                                            <option value="USD">USD</option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">No. Adult</label><br>
+
+                                                        <select name="adult" id="" required class="Travelers-select-package-values">
+                                                            <option value="">Select Adult</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">No. Child</label><br>
+
+                                                        <select name="child" id="child2" required class="Travelers-select-package-values">
+                                                            <option value="0">0</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div id="child_age_div2" class="col" style="display:none;">
+                                                        <label for="">Child Age</label><br>
+
+                                                        <input id="child_age" name="child_age" class="Travelers-select-package-values" type="text" value="0" />
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">No. Infant</label><br>
+                                                        <select name="infant" id="" required class="Travelers-select-package-values">
+                                                            <option value="0">0</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="d-flex  justify-content-end mt-4 mb-4" style="margin-bottom:50px !important;margin-top:50px !important">
+                                                    <?php if (isset($buildpackage->queryId)) {
+                                                        if ($buildpackage->type == 'Package') {
+                                                    ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildPackage/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Transfer') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildTransfer/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Visa') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildVisa/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Hotel') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildHotel/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Excursion') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildExcursion/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Meals') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildMeals/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                    <?php }
+                                                    }
+
+                                                    ?>
+
+                                                    <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Save</button>
+                                                </div>
+                                            </form>
+
+
+                                        </div>
+
+                                        <!-- for meals -->
+                                        <div id="forMeals" style="display:none;">
+
+                                            <form  onsubmit="return validatePackage();" action="<?php echo site_url(); ?>query/addQueryPackage" method="post">
+
+                                                <input type="hidden" name="queryId" value="<?php echo $b2bDetails->query_id; ?>">
+                                                <input type="hidden" name="created_date" value="<?php echo date('Y-m-d'); ?>">
+                                                <input type="hidden" name="colorRadio" id="service_type4" value="">
+
+                                                <div class="row mt-4 mr-3 ml-3 mt-3">
+                                                    <div class="col">
+                                                        <label for="">Check IN</label> <br />
+
+                                                        <input class="package_inputs" type="date" placeholder=" " id="specificDate1" name="specificDate" autocomplete="off" required />
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">Nights</label> <br />
+
+                                                        <input class="package_inputs" type="number" min="1" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">Check Out</label> <br />
+
+                                                        <input class=" package_inputs" type="date" placeholder=" " id="endDate1" name="noDaysFrom" autocomplete="off" />
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">Country</label> <br />
+
+                                                        <input class="package_inputs" type="text" placeholder=" " name="country[]" value="United Arab Emirates" required autocomplete="off" />
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">City</label> <br />
+                                                        <select style="padding: 0px;" class="package_inputs" required name="goingFrom[]">
+                                                            <option value="">Select City</option>
+                                                            <option selected value="Dubai">Dubai</option>
+                                                            <option value="AbuDhabi">Abu Dhabi</option>
+                                                            <option value="Sharjah">Sharjah</option>
+                                                            <option value="Ajman">Ajman</option>
+
+                                                            <option value="Umm Al-Quwain">Umm Al-Quwain</option>
+                                                            <option value="Fujairah">Fujairah</option>
+                                                            <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                                                            <option value="Al Ain">Al Ain</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row mt-4 mr-3 ml-3 mt-3">
+                                                    <div class="col">
+                                                        <label for="">Quotation Currency</label>
+
+                                                        <select name="invoice_currency" id="" class="Travelers-select-package-values">
+                                                            <option value="AED">AED</option>
+                                                            <option value="USD">USD</option>
+
+                                                        </select>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">No. of Room</label>
+
+                                                        <select name="rooms" id="" required class="Travelers-select-package-values">
+                                                            <option value="">Select Rooms</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">No. Adult</label><br>
+
+                                                        <select name="adult" id="" required class="Travelers-select-package-values">
+                                                            <option value="">Select Adult</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">No. Child</label><br>
+
+                                                        <select name="child" id="child3" required class="Travelers-select-package-values">
+                                                            <option value="0">0</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div id="child_age_div3" class="col" style="display:none;">
+                                                        <label for="">Child Age</label><br>
+
+                                                        <input id="child_age" name="child_age" class="Travelers-select-package-values" type="text" value="0" />
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">No. Infant</label><br>
+
+                                                        <select name="infant" id="" required class="Travelers-select-package-values">
+                                                            <option value="0">0</option>
+                                                            <?php $i = 1;
+                                                            while ($i <= 10) {
+                                                            ?>
+                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                            <?php $i++;
+                                                            } ?>
+
+                                                        </select>
+
+                                                    </div>
+
+
+                                                </div>
+
+
+                                                <div class="d-flex  justify-content-end mt-4 mb-4" style="margin-bottom:50px !important;margin-top:50px !important">
+                                                    <?php if (isset($buildpackage->queryId)) {
+                                                        if ($buildpackage->type == 'Package') {
+                                                    ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildPackage/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Transfer') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildTransfer/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Visa') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildVisa/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Hotel') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildHotel/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Excursion') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildExcursion/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                        <?php } else if ($buildpackage->type == 'Meals') { ?>
+                                                            <a href="<?php echo site_url(); ?>query/buildMeals/<?php echo $b2bDetails->query_id; ?>">
+
+                                                                <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                            </a>
+                                                    <?php }
+                                                    }
+
+                                                    ?>
+
+                                                    <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Save</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+
+
 
                                     </div>
-                                    <div id="addrows"></div>
-
-                                    <div class="btn-group mt-4">
-                                        <a class="new_btn ml-0 px-4" onclick="addrows()">
-                                            Add City/Hotel
-                                        </a>
-                                    </div>
-
-                                    <div class="row mt-4 mr-3 ml-3 mt-3">
-                                        <div class="col">
-                                            <label for="">Quotation Currency</label>
-
-                                            <select name="invoice_currency" id="" class="Travelers-select-package-values">
-                                                <!-- <option value="">Select Currency</option> -->
-                                                <option value="AED">AED</option>
-                                                <option value="USD">USD</option>
-
-                                            </select>
-                                        </div>
-                                        <div class="col">
-                                            <label for="">No. of Room</label>
-
-                                            <select name="rooms" id="" required class="Travelers-select-package-values">
-                                                <option value="">Select Rooms</option>
-                                                <?php $i = 1;
-                                                while ($i <= 10) {
-                                                ?>
-                                                    <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                <?php $i++;
-                                                } ?>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="col">
-                                            <label for="">No. Adult</label><br>
-
-                                            <select name="adult" id="" required class="Travelers-select-package-values">
-                                                <option value="">Select Adult</option>
-                                                <?php $i = 1;
-                                                while ($i <= 10) {
-                                                ?>
-                                                    <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                <?php $i++;
-                                                } ?>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="col">
-                                            <label for="">No. Child</label><br>
-
-                                            <select name="child" id="child" required class="Travelers-select-package-values">
-                                                <option value="0">0</option>
-                                                <?php $i = 1;
-                                                while ($i <= 10) {
-                                                ?>
-                                                    <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                <?php $i++;
-                                                } ?>
-
-                                            </select>
-                                        </div>
-
-                                        <div id="child_age_div" class="col" style="display:none;">
-                                            <label for="">Child Age</label>
-
-                                            <input id="child_age" name="child_age" class="Travelers-select-package-values" type="text" value="0" />
-                                        </div>
-
-                                        <div class="col">
-                                            <label for="">No. Infant</label>
-
-                                            <select name="infant" id="" required class="Travelers-select-package-values">
-                                                <option value="0">0</option>
-                                                <?php $i = 1;
-                                                while ($i <= 10) {
-                                                ?>
-                                                    <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                <?php $i++;
-                                                } ?>
-
-                                            </select>
-
-                                        </div>
-
-
-                                    </div>
 
 
 
 
-
-
-
-
-
-
-                                    <div class="d-flex  justify-content-end mt-4 mb-4" style="margin-bottom:50px !important;margin-top:50px !important">
-                                        <?php if (isset($buildpackage->queryId)) {
-                                            if ($buildpackage->type == 'Package') {
-                                        ?>
-                                                <a href="<?php echo site_url(); ?>query/buildPackage/<?php echo $b2bDetails->query_id; ?>">
-
-                                                    <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
-                                                </a>
-                                            <?php } else if ($buildpackage->type == 'Transfer') { ?>
-                                                <a href="<?php echo site_url(); ?>query/buildTransfer/<?php echo $b2bDetails->query_id; ?>">
-
-                                                    <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
-                                                </a>
-                                            <?php } else if ($buildpackage->type == 'Visa') { ?>
-                                                <a href="<?php echo site_url(); ?>query/buildVisa/<?php echo $b2bDetails->query_id; ?>">
-
-                                                    <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
-                                                </a>
-                                            <?php } else if ($buildpackage->type == 'Hotel') { ?>
-                                                <a href="<?php echo site_url(); ?>query/buildHotel/<?php echo $b2bDetails->query_id; ?>">
-
-                                                    <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
-                                                </a>
-                                            <?php } else if ($buildpackage->type == 'Excursion') { ?>
-                                                <a href="<?php echo site_url(); ?>query/buildExcursion/<?php echo $b2bDetails->query_id; ?>">
-
-                                                    <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
-                                                </a>
-                                            <?php } else if ($buildpackage->type == 'Meals') { ?>
-                                                <a href="<?php echo site_url(); ?>query/buildMeals/<?php echo $b2bDetails->query_id; ?>">
-
-                                                    <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
-                                                </a>
-                                        <?php }
-                                        }
-
-                                        ?>
-
-                                        <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Save</button>
-                                    </div>
 
 
 
                                 </div>
 
-                                </form>
                             </div>
 
                         </div>
 
-
-
-                        <!-- ===================Excursion ============================= -->
-
-
-
                         <?php $this->load->view('footer'); ?>
 
                         <script>
+                            $('input[name="colorRadio1"]').change(function(e) {
+                                const valueType = $(this).attr("value");
+                                console.log("🚩 ~ file: package.php ~ line 834 ~ $ ~ valueType", valueType)
+                                if (valueType == "Transfer" || valueType == "Excursion") {
+                                    document.getElementById("forTransEx").style.display = "block";
+                                    document.getElementById("forPackage").style.display = "none";
+                                    document.getElementById("forVisa").style.display = "none";
+                                    document.getElementById("forMeals").style.display = "none";
+                                    document.getElementById("service_type2").value = valueType;
+                                    console.log("🚩 ~ file: package.php ~ line 1031 ~ $ ~ document.getElementById", document.getElementById("service_type2").value)
+
+
+                                } else if (valueType == "Package" || valueType == "Hotel") {
+                                    document.getElementById("forPackage").style.display = "block";
+                                    document.getElementById("forTransEx").style.display = "none";
+                                    document.getElementById("forVisa").style.display = "none";
+                                    document.getElementById("forMeals").style.display = "none";
+                                    document.getElementById("service_type").value = valueType;
+                                    console.log("🚩 ~ file: package.php ~ line 1031 ~ $ ~ document.getElementById", document.getElementById("service_type").value)
+
+
+                                } else if (valueType == "Visa") {
+                                    document.getElementById("forVisa").style.display = "block";
+                                    document.getElementById("forTransEx").style.display = "none";
+                                    document.getElementById("forPackage").style.display = "none";
+                                    document.getElementById("forMeals").style.display = "none";
+                                    document.getElementById("service_type3").value = valueType;
+                                    console.log("🚩 ~ file: package.php ~ line 1031 ~ $ ~ document.getElementById", document.getElementById("service_type3").value)
+
+
+                                } else if (valueType == "Meals") {
+                                    document.getElementById("forMeals").style.display = "block";
+                                    document.getElementById("forVisa").style.display = "none";
+                                    document.getElementById("forTransEx").style.display = "none";
+                                    document.getElementById("forPackage").style.display = "none";
+                                    document.getElementById("service_type4").value = valueType;
+                                    console.log("🚩 ~ file: package.php ~ line 1031 ~ $ ~ document.getElementById", document.getElementById("service_type4").value)
+
+                                }
+                            });
+
                             function checkBoxRequired() {
 
-                                //   let conf_number = $('input[name^="hotelPrefrence"]').each(function () {
-                                //     console.log("🚩 ~ file: package.php ~ line 540 ~ $(this).val()", $(this).attr('required', 'required'))
-                                //   });
+
                                 if ($('.hotelRating').filter(':checked').length < 1) {
 
                                     let conf_number = $('input[name^="hotelPrefrence"]').each(function() {
@@ -548,7 +1042,6 @@
                                     let conf_number = $('input[name^="hotelPrefrence"]').each(function() {
                                         $(this).removeAttr('required');
                                     });
-                                    //  requiredCheckboxes.removeAttr('required');
                                 }
                             }
                         </script>
@@ -567,6 +1060,38 @@
                                     }
 
                                 });
+
+                                $("#child1").change(function() {
+                                    var child = $("#child1").val();
+                                    if (child > 0) {
+                                        $("#child_age_div1").attr('style', 'display:block');
+                                    } else {
+                                        $("#child_age_div1").attr('style', 'display:none');
+                                    }
+
+                                });
+
+                                $("#child2").change(function() {
+                                    var child = $("#child2").val();
+                                    if (child > 0) {
+                                        $("#child_age_div2").attr('style', 'display:block');
+                                    } else {
+                                        $("#child_age_div2").attr('style', 'display:none');
+                                    }
+
+                                });
+
+
+                                $("#child3").change(function() {
+                                    var child = $("#child3").val();
+                                    if (child > 0) {
+                                        $("#child_age_div3").attr('style', 'display:block');
+                                    } else {
+                                        $("#child_age_div3").attr('style', 'display:none');
+                                    }
+
+                                });
+
 
                                 var open = true;
                                 $("#travelers").click(function() {
@@ -608,8 +1133,8 @@
 
                             function addrows() {
                                 // var add = ' <div id="faqs-row' + faqs_row + '" class="row mt-4 mr-3 ml-3"> <div class="col"> <label class="input"> <input class="input__field fname all-width" type="text" placeholder=" "  name="country[]" value="United Arab Emirates" autocomplete="off" /> <span class="input__label">Country</span> </label> <span id="spanGoingFrom" class="spanCompany"></span> </div> <div class="col"> <select class="form-control" id="goingFrom"  name="goingFrom[]"> <option>Select City</option> <option selected value="Dubai">Dubai</option> <option value="AbuDhabi">Abu Dhabi</option> <option value="Sharjah">Sharjah</option> <option value="Ajman">Ajman</option>  <option value="Umm Al-Quwain">Umm Al-Quwain</option> <option value="Fujairah">Fujairah</option> <option value="Ras Al Khaimah">Ras Al Khaimah</option> <option value="Al Ain">Al Ain</option> </select> </div> <div class="col"> <label for="">Hotel Ratings :</label> <input type="checkbox" value="1" name="hotelPrefrence[]" class="mr-2 ml-3">1 <input type="checkbox" value="2" name="hotelPrefrence[]" class="mr-2 ml-3">2 <input type="checkbox" value="3" name="hotelPrefrence[]" class="mr-2 ml-3">3 <input type="checkbox" value="4" name="hotelPrefrence[]" class="mr-2 ml-3">4 <input type="checkbox"value="5" name="hotelPrefrence[]" class="mr-2 ml-3">5 </div> <button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + faqs_row + '\').remove();"><i class="fa fa-trash"></i></button></div></div>';
-                               
-                                var add =  `<div class="d-flex" id="${'faqs_row'+faqs_row}"> 
+
+                                var add = `<div class="d-flex" id="${'faqs_row'+faqs_row}"> 
                                             <div class="col">
                                             <label for="">Country</label> <br/>
                                                         <input class="package_inputs" type="text" placeholder=" " name="country[]" value="United Arab Emirates" required autocomplete="off" />
@@ -671,7 +1196,7 @@
                             //     }
                             // });
 
-                            function removeElement(id){
+                            function removeElement(id) {
                                 id.remove();
                             }
                         </script>
@@ -692,15 +1217,23 @@
                             }
 
                             .blink_btn {
- animation-name: blinker;
- animation-duration: 1s;
- animation-timing-function: linear;
- animation-iteration-count: infinite;
-}
+                                animation-name: blinker;
+                                animation-duration: 1s;
+                                animation-timing-function: linear;
+                                animation-iteration-count: infinite;
+                            }
 
-@keyframes blinker {  
- 0% { opacity: 1.0; }
- 50% { opacity: 0.0; }
- 100% { opacity: 1.0; }
-}
+                            @keyframes blinker {
+                                0% {
+                                    opacity: 1.0;
+                                }
+
+                                50% {
+                                    opacity: 0.0;
+                                }
+
+                                100% {
+                                    opacity: 1.0;
+                                }
+                            }
                         </style>

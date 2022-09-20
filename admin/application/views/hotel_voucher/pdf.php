@@ -51,6 +51,12 @@
     </th>
     <th>Confirmation Number</th>
     <th><?php print_r($hotel_confirmation[$key]->confirmation_id) ?></th>
+    <th>Booking Date</th>
+    <?php
+        $created_date = new DateTime($guest->created_at);
+        $booking_date = $created_date->format('d-m-Y');
+        ?>
+    <th><?php echo $booking_date ?></th>
   </tr>
 </table>
 

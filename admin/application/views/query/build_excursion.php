@@ -28,6 +28,11 @@
      </ol>
     </div>
    </div>
+   
+   <div class="page-bar ">
+   <button type="button" id="del_query" onclick="delQuery()" class="new_btn px-5 float-right">Cancel</button>
+   </div>
+
    <form id="proposal-form" action="<?php echo site_url();?>query/CreateProposalExcursion" method="post"> 
    <input type="hidden" id="totalprice_excursion" name="totalprice_excursion" value="0" />
 
@@ -845,6 +850,22 @@ $('#buildHotelName').on('change', function() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
      <script>
       
+      function delQuery(){
+    var QueryId = $('#QueryId').val();
+    $.ajax({ 
+            type: "POST",
+            url: "<?php echo base_url()?>Query/deleteQueryData",
+            data : {'query_id' : QueryId},
+            cache: false,
+            dataType: "json",
+            success: function(response)
+            {
+              toastr.success("Cancelled Successfully");
+              location.href =  "<?php echo site_url();?>Query/view_query";
+            }
+        });
+  }
+  
       function excursionSICcalculation(){
         
         var excursion_types_SIC =  $('select#excursion_type_SIC').val(); //$("#excursion_type_SIC").val();

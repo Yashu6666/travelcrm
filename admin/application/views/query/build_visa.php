@@ -28,6 +28,11 @@
      </ol>
     </div>
    </div>
+
+   <div class="page-bar ">
+   <button type="button" id="del_query" onclick="delQuery()" class="new_btn px-5 float-right">Cancel</button>
+   </div>
+
    <form id="proposal-form" action="<?php echo site_url();?>query/CreateProposalVisa" method="post"> 
    <input type="hidden" id="totalprice_visa" name="totalprice_visa" value="0" />
    <div class="row mt-5">
@@ -774,6 +779,23 @@ $('#buildHotelName').on('change', function() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 <script>
+
+function delQuery(){
+    var QueryId = $('#QueryId').val();
+    $.ajax({ 
+            type: "POST",
+            url: "<?php echo base_url()?>Query/deleteQueryData",
+            data : {'query_id' : QueryId},
+            cache: false,
+            dataType: "json",
+            success: function(response)
+            {
+              toastr.success("Cancelled Successfully");
+              location.href =  "<?php echo site_url();?>Query/view_query";
+            }
+        });
+  }
+  
      function getvisaprice(){
       var visa_category_drop_down =  $("#visa_category_drop_down").val();
       var entry_type = $("#entry_type").val();

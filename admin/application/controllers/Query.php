@@ -78,6 +78,38 @@ class Query extends CI_Controller
 		}
 	}
 
+	public function deleteQueryData()
+	{
+		$query_id = $this->input->post('query_id');
+
+		$b2b_query = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->result();
+		if(count($b2b_query) > 0){ $this->db->where('query_id', $query_id)->delete('b2bcustomerquery'); }
+
+		$package_query = $this->db->where('queryId', $query_id)->get('querypackage')->result();
+		if(count($package_query) > 0){ $this->db->where('queryId', $query_id)->delete('querypackage'); }
+
+		$transfer_query = $this->db->where('query_id', $query_id)->get('query_transfer')->result();
+		if(count($transfer_query) > 0){ $this->db->where('query_id', $query_id)->delete('query_transfer'); }
+
+		$excursion_query = $this->db->where('query_id', $query_id)->get('query_excursion')->result();
+		if(count($excursion_query) > 0){ $this->db->where('query_id', $query_id)->delete('query_excursion'); }
+
+		$hotel_query = $this->db->where('query_id', $query_id)->get('query_hotel')->result();
+		if(count($hotel_query) > 0){ $this->db->where('query_id', $query_id)->delete('query_hotel'); }
+
+		$meal_query = $this->db->where('query_id', $query_id)->get('query_meal')->result();
+		if(count($meal_query) > 0){ $this->db->where('query_id', $query_id)->delete('query_meal'); }
+
+		$visa_query = $this->db->where('query_id', $query_id)->get('query_visa')->result();
+		if(count($visa_query) > 0){ $this->db->where('query_id', $query_id)->delete('query_visa'); }
+
+		$pricing_info_query = $this->db->where('query_id', $query_id)->get('pricing_info')->result();
+		if(count($pricing_info_query) > 0){ $this->db->where('query_id', $query_id)->delete('pricing_info'); }
+
+		echo json_encode(["msg"=>"deleted successfully"]);
+	}
+
+
 	public function view_query($type = '')
 	{
 		// $this->db->select("*");
@@ -172,6 +204,7 @@ class Query extends CI_Controller
 			$name = $value->b2bfirstName . ' ' . $value->b2blastName;
 			$mobile = $value->b2bmobileNumber;
 			$lead_stage = $value->lead_stage;
+			$company_name = $value->b2bcompanyName;
 
 			$created_at = $value->created_at;
 			$id = $value->id;
@@ -179,7 +212,7 @@ class Query extends CI_Controller
 			$package = $this->db->where('queryId', $query_id)->get('querypackage')->row();
 
 			if (isset($package)) {
-				$res = array("id" => $id, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
+				$res = array("id" => $id, "company_name" => $company_name, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
 				$result[] = $res;
 			}
 		}
@@ -377,12 +410,18 @@ class Query extends CI_Controller
 
 		$country = implode(',', $_POST['country']);
 		$goingFrom = implode(',', $_POST['goingFrom']);
-		$hotelPrefrence = implode(',', $_POST['hotelPrefrence']);
+		$hotelPrefrence = isset($_POST['hotelPrefrence']) ? implode(',', $_POST['hotelPrefrence']) : "";
+		$doa = isset($_POST['doa']) ? $_POST['doa'] : NULL;
+		$dod = isset($_POST['dod']) ? $_POST['dod'] : NULL;
+		$visa_purpose = isset($_POST['visa_purpose']) ? $_POST['visa_purpose'] : NULL;
 		$data = array(
 			'goingTo' => $country,
 			'goingFrom' => $goingFrom,
 			'specificDate' => $this->input->post('specificDate'),
 			'noDaysFrom' => $this->input->post('noDaysFrom'),
+			'doa' => $doa,
+			'dod' => $dod,
+			'visa_purpose' => $visa_purpose,
 			'hotelPrefrence' => $hotelPrefrence,
 			'Packagetravelers' => $this->input->post('adult'),
 			'queryId' => $this->input->post('queryId'),
@@ -399,7 +438,6 @@ class Query extends CI_Controller
 		);
 		$query_id = $this->input->post('queryId');
 		$type = $this->input->post('colorRadio');
-
 		if ($this->db->insert('querypackage', $data)) {
 			$this->session->set_flashdata('successPackage', $type . ' Query Created Sucessfully');
 			redirect('query/package/' . $query_id, 'refresh');
@@ -1602,7 +1640,7 @@ class Query extends CI_Controller
 		$this->db->where('qp.queryId', $q_id);
 		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
 		$data['view'] = $this->db->get()->row();
-
+		print_r($data['view']);return;
 		$user_id = $this->session->userdata()['admin_id'];
 		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
 

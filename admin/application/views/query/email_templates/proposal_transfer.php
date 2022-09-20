@@ -12,9 +12,9 @@
     margin: 0;
 }
 
-body {
+/* body {
     background-color: rgb(190, 190, 190);
-}
+} */
 
 .card {
     background-color: white;
@@ -374,7 +374,16 @@ th, td {
     </tr>
     <tr>
       <th>Transfer Type</th>
-      <td>SIC/PVT Or Both-Which is we select</td>
+      <td>
+      <?php if($details->in_transfer_pickup[0] != 'Pickup' && $details->pp_transfer_pickup[0] == 'Pickup' ) : ?>
+        SIC
+      <?php elseif($details->in_transfer_pickup[0] == 'Pickup' && $details->pp_transfer_pickup[0] != 'Pickup' ) : ?>
+        PVT
+      <?php elseif($details->in_transfer_pickup[0] != 'Pickup' && $details->pp_transfer_pickup[0] != 'Pickup' ) : ?>
+        SIC and PVT
+      <?php endif ?>
+
+    </td>
     </tr>
   </tbody>
 </table>

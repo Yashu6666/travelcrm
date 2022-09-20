@@ -100,7 +100,7 @@
 													<th class="center"> Query Date </th>
 													<th class="center"> Query ID </th>
 
-													<th class="center"> Name/Mobile </th>
+													<th class="center"> TA Name </th>
 													<th class="center"> Description </th>
 													<th class="center"> Travel Date </th>
 													<th class="center"> Pax </th>
@@ -134,7 +134,7 @@
 													<td class="center"><?php echo $cnt ?></td>
 													<td class="center"><?php echo date('d M Y H:i:s' , strtotime($val['created_at'])) ?></td>
 													<td class="center"><?php echo $val['query_id'] ?></td>
-													<td class="center"><?php echo $val['name']?> <br> <?php echo $val['mobile'] ?></td>
+													<td class="center"><?php echo $val['company_name']?></td>
 													<td class="center"><?php echo $val['Description'] ?></td>
 													<td class="center"><?php echo date('d M Y' , strtotime($val['traveldate'])) ?></td>
 													<td class="center"><?php echo $val['nopax'] ?></td>

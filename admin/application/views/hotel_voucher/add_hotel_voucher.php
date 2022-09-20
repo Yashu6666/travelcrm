@@ -109,6 +109,13 @@
 													<h4 class="text-white">Hotel Details</h4>
 												</div>
 											</div> -->
+
+											<?php
+												$created_date = new DateTime($guest->created_at);
+												$booking_date = $created_date->format('d-F-Y');
+												?>
+
+
 											<?php foreach (explode(',',$hotel[0]->nights) as $key => $value) : ?>
 
 												<div class="mt-3 row d-flex align-items-baseline ">
@@ -122,12 +129,20 @@
 																<?php endif ?>
 															</label>
 															</div>
-															<div class="col d-flex">
+
+															<div>
+															<div class="col text-center ">
+															<label for="" class="col-form-label text-white d-flex ml-4">Booking Date: 
+															<input style="flex: 0 0 50%;max-width: 49%;margin-left: 77px !important;" class="col-xl-6 form-control" value="<?php echo $booking_date ?>">
+															</label>
+															<div class="col d-flex justify-content-end">
 																<label for="" class=" col-form-label text-white">Confirmation Number:</label>
 																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" id="conf_number_<?php echo $key; ?>" value="#" name="conf_number[<?php echo $key; ?>]" placeholder="Enter Confirmatin Number Here">
 																<input type="hidden" name="hotel_id[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->hotel_id)[$key]); ?>>
 																<input type="hidden" name="hotel_name[<?php echo $key; ?>]" value='<?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?>'>
 																<input type="hidden" name="booking_date[<?php echo $key; ?>]" value=<?php echo $hotel[0]->created_at; ?>>
+															</div>
+															</div>
 															</div>
 														</div>
 													</div>
@@ -135,9 +150,9 @@
 														<div class=" form-row p-3 rounded-lg">
 															<?php
 															$date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);
-															$check_in = $date->format('d-m-Y');
+															$check_in = $date->format('d-F-Y');
 															$date->modify('+' . explode(',',$hotel[0]->nights)[$key] . ' day');
-															$checkout =  $date->format('d-m-Y');
+															$checkout =  $date->format('d-F-Y');
 
 															?>
 															<div class="col d-flex just">
@@ -148,14 +163,16 @@
 															</div>
 															<input type="hidden" name="check_out[<?php echo $key; ?>]" value=<?php echo $checkout; ?>>
 
+
 															<div class="col d-flex">
 																<label for="" class=" col-form-label">No of Nights</label>
-																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php print_r(explode(',',$hotel[0]->nights)[$key]); ?>>
+																<span class="input-group-text ml-3" style="height: 34px;" id="basic-addon1"><i class="fa-solid fa-moon"></i></span>
+																<input style="flex: 0 0 50%; max-width: 50%;"  aria-describedby="basic-addon1"  class="form-control col-xl-6" placeholder='<?php print_r(explode(',',$hotel[0]->nights)[$key]); ?>'>
 															</div>
 
 															<div class="col d-flex">
 																<label for="" class=" col-form-label">Check-out</label>
-																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $checkout; ?>>
+																<input  style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $checkout; ?>>
 															</div>
 														</div>
 
@@ -227,8 +244,12 @@
 												<input type="hidden" id="base_url_id" name="base_url" value=<?php echo site_url(); ?>>
 												<textarea id="impInfo" name="impInfo">
 												<?php foreach (explode(',',$hotel[0]->room_type) as $key => $value) : ?>
-												<p><?php print_r(explode(',',$hotel[0]->room_type)[$key]); ?>, 
+												<p>
+												<?php print_r($hotel_details[$key]->hotelname); ?>, 
+													
+												<?php print_r(explode(',',$hotel[0]->room_type)[$key]); ?>, 
 												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M408 120c0 54.6-73.1 151.9-105.2 192c-7.7 9.6-22 9.6-29.6 0C241.1 271.9 168 174.6 168 120C168 53.7 221.7 0 288 0s120 53.7 120 120zm8 80.4c3.5-6.9 6.7-13.8 9.6-20.6c.5-1.2 1-2.5 1.5-3.7l116-46.4C558.9 123.4 576 135 576 152V422.8c0 9.8-6 18.6-15.1 22.3L416 503V200.4zM137.6 138.3c2.4 14.1 7.2 28.3 12.8 41.5c2.9 6.8 6.1 13.7 9.6 20.6V451.8L32.9 502.7C17.1 509 0 497.4 0 480.4V209.6c0-9.8 6-18.6 15.1-22.3l122.6-49zM327.8 332c13.9-17.4 35.7-45.7 56.2-77V504.3L192 449.4V255c20.5 31.3 42.3 59.6 56.2 77c20.5 25.6 59.1 25.6 79.6 0zM288 152c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40s17.9 40 40 40z"/></svg>
+												
 												
 												<?php if(isset($hotel_details[$key]->hotelmapaddress)) : ?>	
 													<?php print_r($hotel_details[$key]->hotelmapaddress); ?>, 

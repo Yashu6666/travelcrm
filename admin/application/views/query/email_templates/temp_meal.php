@@ -15,10 +15,10 @@
 
        
 
-        body {
+        /* body {
             background-color: rgb(190, 190, 190);
 
-        }
+        } */
 
         .card {
             background-color: white;

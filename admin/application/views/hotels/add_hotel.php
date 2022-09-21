@@ -93,6 +93,13 @@
 																				</select>
 																			</td>
 																		 </tr>
+
+																		 <tr>
+																			<td>Address</td>
+																			<td>
+																			   <input required type="text" class="form-control Places pac-target-input"  name="hotel_full_address" value="" placeholder="Enter Full Address" >
+																			</td>
+																		 </tr>
 																		 <!-- <tr>
 																			<td></td>
 																		 </tr> -->

@@ -54,7 +54,7 @@
     <th>Booking Date</th>
     <?php
         $created_date = new DateTime($guest->created_at);
-        $booking_date = $created_date->format('d-m-Y');
+        $booking_date = $created_date->format('d-M-Y');
         ?>
     <th><?php echo $booking_date ?></th>
   </tr>
@@ -65,10 +65,10 @@
                 <th>Check-in</th>
                 <?php
                     $date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);
-					$check_in = $date->format('d-m-Y');
+					$check_in = $date->format('d-M-Y');
 
                     $date->modify('+' . explode(',',$hotel[0]->nights)[$key] . ' day');
-                    $checkout =  $date->format('d-m-Y');
+                    $checkout =  $date->format('d-M-Y');
                 ?>
                  <th><?php echo $check_in; ?></th>
 

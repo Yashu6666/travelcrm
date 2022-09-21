@@ -157,12 +157,31 @@
 
 
 												</td>
+												<?php if($val['Description'] == "Meals") : ?>
+													<?php $build_type = "buildMeals" ?>
+
+												<?php elseif($val['Description'] == "Transfer") : ?>
+													<?php $build_type = "buildTransferEdit" ?>
+
+												<?php elseif($val['Description'] == "Excursion") : ?>
+													<?php $build_type = "buildExcursion" ?>
+
+												<?php elseif($val['Description'] == "Package") : ?>
+													<?php $build_type = "buildPackage" ?>
+
+												<?php elseif($val['Description'] == "Hotel") : ?>
+													<?php $build_type = "buildHotel" ?>
+
+												<?php elseif($val['Description'] == "Visa") : ?>
+													<?php $build_type = "buildVisa" ?>
+												<?php endif; ?>
+
 													<td class="center">
 													<a href="#"><button class="btn btn-tbl-edit btn-xs">
 															<i class="fa fa-eye "></i>
 														</button></a>
 														
-														<a href="#"><button class="btn btn-tbl-edit btn-xs">
+														<a href="<?php echo site_url(); ?>query/<?php echo $build_type.'/'.$val['query_id'] ?>"><button class="btn btn-tbl-edit btn-xs">
 															<i class="fa fa-edit "></i>
 														</button></a>
 

@@ -102,6 +102,12 @@
 																				</select>
 																				</td>
 																			</tr>
+																			<tr>
+																			<td>Address</td>
+																			<td>
+																			   <input required type="text" class="form-control Places pac-target-input"  name="hotel_full_address" value="<?php echo $edit->hotel_full_address;?>" placeholder="Enter Full Address" >
+																			</td>
+																			 </tr>
 																			<!-- <tr>
 																				<td></td>
 																			</tr> -->

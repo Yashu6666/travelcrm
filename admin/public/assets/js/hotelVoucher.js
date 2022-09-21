@@ -133,6 +133,46 @@ function sendEmail() {
   }
 }
 
+function download_pdf() {
+  let q_id = document.getElementById("query_id").value;
+  let base_url = document.getElementById("base_url_id").value;
+  let email_id = document.getElementById("email_id").value;
+  let guest_name = document.getElementById("guest_name").value;
+  let impInfo = CKEDITOR.instances["impInfo"].getData();
+  let board_arr = [];
+  let board = $('input[name^="board"]').each(function () {
+    board_arr.push($(this).val());
+  });
+
+  if (impInfo == "" || impInfo == null) {
+    toastr.error("Please Add Importent Information");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: base_url + "/HotelVoucher/download_pdf",
+      data: {
+        query_id: q_id,
+        email: email_id,
+        board_arr: board_arr,
+        impInfo: impInfo,
+        guest_name:guest_name,
+      },
+      success: function (result) {
+        console.log("🚩 ~ file: hotelVoucher.js ~ line 161 ~ download_pdf ~ result", result)
+        // toastr.success("Email Sent Successfully");
+        // location.href = base_url + "/HotelVoucher/view_hotels_voucher";
+
+      },
+      error: function () {
+        console.log("Error");
+        // toastr.options.positionClass = 'toast-bottom-right';
+        // toastr.error("Error while download");
+      },
+    });
+  }
+}
+
+
 // function sendEmail() {
 //   let q_id = document.getElementById("query_id").value;
 //   let base_url = document.getElementById("base_url_id").value;

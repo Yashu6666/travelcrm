@@ -1745,6 +1745,10 @@ class Query extends CI_Controller
 	public function buildTransfer($q_id = '')
 	{
 		error_reporting(0);
+
+		$data["internal_query"] = $this->db->where('query_id', $q_id)->where('transfer_type', 'internal')->get('query_transfer')->result();
+		$data['return_query'] = $this->db->where('query_id', $q_id)->where('transfer_type', 'return')->get('query_transfer')->result();
+		
 		//echo '<pre>';print_r($q_id);exit;
 		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
 		qp.child,cb.reportsTo,cb.b2bEmail");
@@ -1804,6 +1808,74 @@ class Query extends CI_Controller
 		// echo '<pre>';print_r($data);exit;
 
 		$this->load->view('query/build_transfer', $data);
+	}
+
+	public function buildTransferEdit($q_id = '')
+	{
+		error_reporting(0);
+
+		$data["internal_query"] = $this->db->where('query_id', $q_id)->where('transfer_type', 'internal')->get('query_transfer')->result();
+		$data['return_query'] = $this->db->where('query_id', $q_id)->where('transfer_type', 'return')->get('query_transfer')->result();
+		
+		//echo '<pre>';print_r($q_id);exit;
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
+		qp.child,cb.reportsTo,cb.b2bEmail");
+
+		$this->db->from("b2bcustomerquery cb");
+
+		$this->db->where('qp.queryId', $q_id);
+		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+		$data['view'] = $this->db->get()->row();
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+		$this->load->library('email');
+		$config = array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.googlemail.com',
+			'smtp_port' => 465,
+			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
+			'smtp_pass' => 'xcvbtihuojnhvmrn',
+			'crlf' => "\r\n",
+			'mailtype' => "html",
+			'newline' => "\r\n",
+		);
+
+		$subject = $data['view']->query_id . '
+			 - Diamond Tours LLC Dubai / Pax:' . $data['view']->Packagetravelers . ' 
+			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
+			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
+
+		$this->email->initialize($config);
+		$this->email->from('test.yrpitsolutions.com@gmail.com');
+		$this->email->to($data['view']->b2bEmail);
+		$this->email->subject($subject);
+		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
+		$this->email->message($body);
+		$this->email->send();
+
+		$data['excursion'] = $this->db->get('excursion')->result();
+		$data['listSuppliers'] = $this->db->get('supplier')->result();
+
+		$data['transfer_route'] = $this->db->query("SELECT * FROM transfer_route where transport_type='oneway' AND cost_type='Normal' group by start_city,dest_city")->result();
+		$data['transfer_route1'] = $this->db->query("SELECT * FROM transfer_route where transport_type='round' AND cost_type='Normal' group by start_city,dest_city")->result();
+		// $data['hours_based'] = $this->db->query("SELECT * FROM transfer_route where  cost_type='HourBased'")->result();
+
+		// $data['excursion']= $this->db->get('excursion')->result();
+		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
+		$data['excursion_pvt'] = $this->db->query("SELECT * FROM excursion WHERE type='PVT' ")->result();
+
+		$data['listcities'] = $this->db->get('city_master')->result();
+
+		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
+
+
+
+		// echo '<pre>';print_r($data);exit;
+
+		$this->load->view('query/edit/build_transfer_edit', $data);
 	}
 
 	public function buildVisa($q_id = '')

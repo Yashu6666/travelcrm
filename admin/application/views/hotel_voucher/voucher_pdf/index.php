@@ -179,7 +179,7 @@
                 <th  style="border: 2px solid #000;width: 125px;"><?php print_r($hotel_confirmation[$key]->confirmation_id) ?></th>
                 <?php
                 $created_date = new DateTime($guest->created_at);
-                $booking_date = $created_date->format('d-m-Y');
+                $booking_date = $created_date->format('d-M-Y');
                 ?>
                 <th  style="border: 2px solid #000;width: 125px;">Booking Date</th>
                 <th  style="border: 2px solid #000;width: 125px;"><?php echo $booking_date ?></th>
@@ -197,10 +197,10 @@
                 <th style="border: 2px solid #000;width: 125px;">Check-in</th>
                 <?php
                     $date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);
-					$check_in = $date->format('d-m-Y');
+					$check_in = $date->format('d-M-Y');
 
                     $date->modify('+' . explode(',',$hotel[0]->nights)[$key] . ' day');
-                    $checkout =  $date->format('d-m-Y');
+                    $checkout =  $date->format('d-M-Y');
                 ?>
                  <th style="border: 2px solid #000;width: 125px;"><?php echo $check_in; ?></th>
 

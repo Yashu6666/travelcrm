@@ -88,6 +88,27 @@
                                  <!--  </div> -->
                                 </div>
                               </div>
+
+                              <div style="display:none" id="pvttab">
+
+                              <div class="row form-group mb-3">
+                                <label class="col-md-12 control-label text-left"><b>Upto PAX</b></label>
+                                <div class="col-md-12">
+                                  <input required id="inputTag" class="form-control form-control-lg" type="text" name="pax" value="" data-role="tagsinput">
+                                </div>
+                              </div>
+
+                              <div class="row form-group mb-3">
+                                <label class="col-md-12 control-label text-left"><b>Vehicle Price</b></label>
+                                <div class="col-md-12">
+                                  <input required id="inputTag2" class="form-control form-control-lg" type="text" name="vehicle_price" data-role="tagsinput">
+                                </div>
+                              </div>
+
+                          </div>
+
+                         
+
                               <div class="row form-group mb-3">
                                 <div class="col-md-12">
                                   <table class="table table-striped table-bordered" cellspacing="1" bgcolor="#cccccc">
@@ -248,23 +269,6 @@
                             <div class="col-md-8">
                               <input  type="text" class="form-control" name="tour_time" value="">
                             </div>
-                          </div>
-
-                          <div style="display:none" id="pvttab">
-                      
-                            <div class="row form-group mb-3">
-                              <label class="col-md-4 control-label text-left"><b>Upto PAX</b></label>
-                              <div class="col-md-8">
-                                <input  type="text" id="inputTag" class="form-control" name="pax" value="" data-role="tagsinput">
-                              </div>
-                            </div> 
-
-                            <div class="row form-group mb-3" >
-                              <label class="col-md-4 control-label text-left"><b>Vehicle Price</b></label>
-                              <div class="col-md-8">
-                                <input  type="text" id="inputTag2" class="form-control" value="" name="vehicle_price" data-role="tagsinput">
-                              </div>
-                            </div> 
                           </div>
 
                           <h6 class="mb-3 center" style="font-weight:Bold;align-self:center" ><strong>Operating Time</strong></h6>

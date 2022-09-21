@@ -112,7 +112,7 @@
 
 											<?php
 												$created_date = new DateTime($guest->created_at);
-												$booking_date = $created_date->format('d-F-Y');
+												$booking_date = $created_date->format('d-M-Y');
 												?>
 
 
@@ -150,9 +150,9 @@
 														<div class=" form-row p-3 rounded-lg">
 															<?php
 															$date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);
-															$check_in = $date->format('d-F-Y');
+															$check_in = $date->format('d-M-Y');
 															$date->modify('+' . explode(',',$hotel[0]->nights)[$key] . ' day');
-															$checkout =  $date->format('d-F-Y');
+															$checkout =  $date->format('d-M-Y');
 
 															?>
 															<div class="col d-flex just">
@@ -271,7 +271,7 @@
 											<div class="col-xl-12">
 												<!-- <button id="submtVoucherbtn" type="button" class="float-right new_btn px-3">Submit</button> -->
 												<button onclick="subVoucherAjax()" id="submtVoucherBTN" type="button" class="float-right new_btn px-3">Submit</button>
-												<button onclick="printVoucher()"  id="submtVoucherPrint" type="button" class="mr-3 float-right new_btn px-3">Print</button>
+												<button onclick="download_pdf()"  id="submtVoucherPrint" type="button" class="mr-3 float-right new_btn px-3">Download</button>
 												<button onclick="sendEmail()"  id="submtVoucherEmail" type="button" class="mr-3 float-right new_btn px-3">Send Mail</button>
 											</div>
 										</div>

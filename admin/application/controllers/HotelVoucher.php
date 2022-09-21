@@ -90,6 +90,43 @@ class HotelVoucher extends CI_Controller
 		}
 	}
 
+	public function download_pdf()
+	{
+
+		try {
+
+			$query_id = $_POST['query_id'];
+			$c_email = $_POST['email'];
+			$guest_name = $_POST['guest_name'];
+			$board_arr = $_POST['board_arr'];
+			$impInfo = $_POST['impInfo'];
+
+			$hotel_confirmation = $this->db->where('query_id', $query_id)->get('hotel_voucher_confirmation')->result();
+			$data['hotel_confirmation'] = $hotel_confirmation;
+			
+			$data['details'] = $this->db->where('queryId', $query_id)->get('querypackage')->row();
+			$data['hotel'] = $this->db->where('query_id', $query_id)->get('query_hotel')->result();
+			$data['guest'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
+			$data['query_id'] = $query_id;
+			$data['impInfo'] = $impInfo;
+			$data['board_arr'] = $board_arr;
+			$data['guest_name'] = $guest_name;
+			$body = $this->load->view('hotel_voucher/voucher_pdf/index',$data,TRUE);
+
+			$this->load->library('Pdf');
+			$html =  $this->load->view('hotel_voucher/pdf',$data, true);
+			$dompdf = new Dompdf\DOMPDF();
+			$dompdf->load_html($html);
+			$dompdf->render();
+			$pdf_name = time() . ".pdf";
+			$dompdf->stream($pdf_name);
+
+			echo 'pdf downloaded successfully';
+			
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+		}
+	}
 
 	public function send_mail()
 	{

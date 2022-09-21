@@ -436,8 +436,9 @@ class Query extends CI_Controller
 			'queryId' => $this->input->post('queryId'),
 			'created_date' => $this->input->post('created_date')
 		);
+		// echo "<pre>";print_r($data);return;
 		$query_id = $this->input->post('queryId');
-		$type = $this->input->post('colorRadio');
+		$type = $data['type'];
 		if ($this->db->insert('querypackage', $data)) {
 			$this->session->set_flashdata('successPackage', $type . ' Query Created Sucessfully');
 			redirect('query/package/' . $query_id, 'refresh');
@@ -1256,6 +1257,8 @@ class Query extends CI_Controller
         $excursion_infants_SIC = $this->input->post('excursion_infants_SIC');
 		$total_pax = $excursion_adults_SIC+$excursion_childs_SIC+$excursion_infants_SIC;
 	
+        $hotel_pickup = $this->input->post('hotel_pickup');
+
 		$query_id = $this->input->post('query_id');
 		$query_type = $this->input->post('query_type');
 
@@ -1287,6 +1290,7 @@ class Query extends CI_Controller
 
 			$excursion_data = [
 				'query_id' =>  $query_id ,
+				'hotel_pickup' =>  $hotel_pickup ,
 				'query_type' =>  $query_type ,
 				'excursion_type' =>  $excursion_types_SIC,
 				'excursion_name' =>  implode(',',$excursion_name_SIC) ,
@@ -1399,6 +1403,8 @@ class Query extends CI_Controller
         $excursion_child_PVT = $this->input->post('excursion_child_PVT');
         $excursion_infant_PVT = $this->input->post('excursion_infant_PVT');
 
+        $hotel_pickup = $this->input->post('hotel_pickup');
+
 		$query_id = $this->input->post('query_id');
 		$query_type = $this->input->post('query_type');
 
@@ -1445,6 +1451,7 @@ class Query extends CI_Controller
 		
 		$excursion_data = [
 			'query_id' =>  $query_id ,
+			'hotel_pickup' =>  $hotel_pickup ,
 			'query_type' =>  $query_type ,
 			'excursion_type' =>  $excursion_type_PVT,
 			'excursion_name' =>  implode(',',$excursion_name_PVT) ,
@@ -1632,7 +1639,7 @@ class Query extends CI_Controller
 	public function buildHotel($q_id = '')
 	{
 		//echo '<pre>';print_r($q_id);exit;
-		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,qp.room,
 		qp.child,cb.reportsTo,cb.b2bEmail");
 
 		$this->db->from("b2bcustomerquery cb");
@@ -1640,7 +1647,6 @@ class Query extends CI_Controller
 		$this->db->where('qp.queryId', $q_id);
 		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
 		$data['view'] = $this->db->get()->row();
-		print_r($data['view']);return;
 		$user_id = $this->session->userdata()['admin_id'];
 		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
 

@@ -72,36 +72,9 @@
 
              <select  required  name="roomtype"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
               <option selected value="<?php echo $edit->roomtype;?>"><?php echo $edit->roomtype;?></option>
-              <option value="One-Bedroom Apartment">One-Bedroom Apartment</option>
-              <option value="Two-Bedroom Apartment">Two-Bedroom Apartment</option>
-              <option value="Studio Apartment With Creek View">Studio Apartment With Creek View</option>
-              <option value="Executive Two-Bedrooms Apartment">Executive Two-Bedrooms Apartment</option>
-              <option value="Double or Twin Rooms">Double or Twin Rooms</option>
-              <option value="Triple Rooms">Triple Rooms</option>
-              <option value="Superior Double">Superior Double</option>
-              <option value="Junior Suites">Junior Suites</option>
-              <option value="Classic Double or Twin Rooms">Classic Double or Twin Rooms</option>
-              <option value="Interconnecting Classic Room">Interconnecting Classic Room</option>
-              <option value="Delux Room">Delux Room</option>
-              <option value="Double Deluxe Rooms">Double Deluxe Rooms</option>
-              <option value="Royal Platinum Suite">Royal Platinum Suite</option>
-              <option value="Standard Room">Standard Room</option>
-              <option value="One-Bedroom Executive">One-Bedroom Executive</option>
-              <option value="Studio Premier">Studio Premier</option>
-              <option value="Executive Suite">Executive Suite</option>
-              <option value="Extra Bed / Child">Extra Bed / Child</option>
-              <option value="Presidential Suite">Presidential Suite</option>
-              <option value="Family Room &amp; Twin / Large Superior">Family Room &amp; Twin / Large Superior</option>
-              <option value="Garden View Room">Garden View Room</option>
-              <option value="Ocean View Room">Ocean View Room</option>
-              <option value="Classic Double Room">Classic Double Room</option>
-              <option value="Classic Single Room">Classic Single Room</option>
-              <option value="Superior Single View">Superior Single View</option>
-              <option value="Superior Park View">Superior Park View</option>
-              <option value="Single">Single</option>
-              <option value="Double">Double</option>
-              <option value="Guest Rooms">Guest Rooms</option>
-              <option value="Accessible Rooms">Accessible Rooms</option>
+              <?php foreach($room_types as $value){ ?>
+                <option value="<?php echo $value->name;?>"> <?php echo $value->name;?> </option>
+                <?php } ?>
             </select>
           </div>
         </div>

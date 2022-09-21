@@ -72,8 +72,10 @@
             <div class="col-md-10">
 
              <select  required   name="roomtype[]" id='room-type' multiple class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-              <option value=""></option>
-                <option value="One-Bedroom Apartment">One-Bedroom Apartment</option>
+             <?php foreach($room_types as $value){ ?>
+                <option value="<?php echo $value->name;?>"> <?php echo $value->name;?> </option>
+                <?php } ?>
+                <!-- <option value="One-Bedroom Apartment">One-Bedroom Apartment</option>
               <option value="Two-Bedroom Apartment">Two-Bedroom Apartment</option>
               <option value="Studio Apartment With Creek View">Studio Apartment With Creek View</option>
               <option value="Executive Two-Bedrooms Apartment">Executive Two-Bedrooms Apartment</option>
@@ -102,7 +104,7 @@
               <option value="Single">Single</option>
               <option value="Double">Double</option>
               <option value="Guest Rooms">Guest Rooms</option>
-              <option value="Accessible Rooms">Accessible Rooms</option>
+              <option value="Accessible Rooms">Accessible Rooms</option> -->
             </select>
           </div>
         </div>

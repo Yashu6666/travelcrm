@@ -145,7 +145,6 @@
                     <th>No of Nights</th>
                     <td colspan="3"><?php echo $details->nights;?></td>
                 </tr>
-                <?php print_r(implode(",",$details->excursion_name_SIC)) ?>
                 <tr>
                     <th>SIC</th>
                    <td colspan="3">  <?php print_r(implode(",",$details->excursion_name_SIC)) ?>
@@ -180,16 +179,23 @@
 
         </div>
 
-        
 
         <div class="card4">
             <h4>
                 <u>Inclusion</u>
             </h4>
-            <p><span style='font-size:15px;'>&#9673;&nbsp;</span>Dubai(DXB) Airpot Pick up and Drop Pvt Basis</p>
+            <?php foreach($details->excursion_name_SIC as $key => $val) : ?>
+                <p><span style='font-size:15px;'>&#9673;&nbsp;</span><?php echo $val ?> SIC Basis</p>
+            <?php endforeach ?>
+
+            <?php foreach($details->excursion_name_PVT as $key => $val) : ?>
+                <p><span style='font-size:15px;'>&#9673;&nbsp;</span><?php echo $val ?> PVT Basis</p>
+            <?php endforeach ?>
+            
+            <!-- <p><span style='font-size:15px;'>&#9673;&nbsp;</span>Dubai(DXB) Airpot Pick up and Drop Pvt Basis</p>
             <p><span style='font-size:15px;'>&#9673;&nbsp;</span>Half Day Dubai City tour with Oneway Mono rail</p>
             <p><span style='font-size:15px;'>&#9673;&nbsp;</span>Dhow Cruise with Dinner at Creek</p>
-            <p><span style='font-size:15px;'>&#9673;&nbsp;</span>Burj Khalifa 124th Floor Entry tkt with Transfer</p>
+            <p><span style='font-size:15px;'>&#9673;&nbsp;</span>Burj Khalifa 124th Floor Entry tkt with Transfer</p> -->
             <p><span style='font-size:15px;'>&#9673;&nbsp;</span>5% Vat</p>
             <p><span style='font-size:15px;'>&#9673;&nbsp;</span>All Applicable Tax</p>
             <p><span style='font-size:15px;'>&#9673;&nbsp;</span>All of the above services with the hotel to hotel transfer and ticket</p>

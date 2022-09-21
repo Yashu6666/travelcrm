@@ -478,7 +478,10 @@
         </div>
             <div class="row mt-4 mr-3 ml-3 mb-3 " style="display:none" id="excursiondisplay">
                <div>
-              
+               <div class="d-flex">
+                <label for="" class="">Hotel Pickup</label>
+                <input type="text" class="form-control ml-4 w-25" id="ex_hotel_pickup" name="ex_hotel_pickup" value="" />
+              </div>
                <td><input type="hidden" id="hidden_total_pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" />
 
                 <table id="faqs" class="table table-borderless">
@@ -486,8 +489,7 @@
              <tr>
            
              <th>Excursion Type</th>
-              <th>Hotel Pickup</th>
-              <!-- <th>Excursion Name</th> -->
+              <th>Excursion Name</th>
               <th>Adult</th>
               <th>Child</th>
               <th>Infant</th>
@@ -1927,11 +1929,15 @@ function get_resturant_name(id,row){
         var excursion_infants_SIC =  $("#excursion_infant_SIC").val();
         var QueryId = $('#QueryId').val();
 
+        var ex_hotel_pickup =  $("#ex_hotel_pickup").val();
+
            $.ajax({
           type:"POST",
           dataType: "json",
           url:'<?php echo site_url();?>/Query/getExcursionSICCalculations',
-          data:{'query_id':QueryId,
+          data:{
+            'hotel_pickup':ex_hotel_pickup,
+            'query_id':QueryId,
             'query_type':'package',
             'excursion_types_SIC':excursion_types_SIC,'excursion_adults_SIC':excursion_adults_SIC,'excursion_childs_SIC':excursion_childs_SIC,'excursion_infants_SIC':excursion_infants_SIC,
             'excursion_name_SIC':excursion_name_SIC},
@@ -1961,11 +1967,14 @@ function get_resturant_name(id,row){
        var excursion_infant_PVT =  $("#excursion_infant_PVT").val();
        var QueryId = $('#QueryId').val();
 
+       var ex_hotel_pickup =  $("#ex_hotel_pickup").val();
+
         $.ajax({
          type:"POST",
          dataType: "json",
          url:'<?php echo site_url();?>/Query/getExcursionPVTCalculations',
          data:{
+            'hotel_pickup':ex_hotel_pickup,
             'query_id':QueryId,
             'query_type':'package',
            'excursion_type_PVT':excursion_type_PVT,'excursion_adult_PVT':excursion_adult_PVT,

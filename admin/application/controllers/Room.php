@@ -21,6 +21,7 @@ class Room extends CI_Controller {
 	{
 
 		$data['hotelList'] = $this->db->get('hotel')->result();
+		$data['room_types'] = $this->db->get('room_types')->result();
 		$this->load->view('room/add',$data);
 	}
 
@@ -28,6 +29,8 @@ class Room extends CI_Controller {
 	{
 		$data['edit'] = $this->db->where('id',$id)->get('rooms')->row();
 		$data['hotelList'] = $this->db->get('hotel')->result();
+		$data['room_types'] = $this->db->get('room_types')->result();
+
 		$this->load->view('room/edit',$data);
 	}
 

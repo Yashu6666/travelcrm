@@ -158,13 +158,13 @@
 
 												</td>
 												<?php if($val['Description'] == "Meals") : ?>
-													<?php $build_type = "buildMeals" ?>
+													<?php $build_type = "buildMealsEdit" ?>
 
 												<?php elseif($val['Description'] == "Transfer") : ?>
 													<?php $build_type = "buildTransferEdit" ?>
 
 												<?php elseif($val['Description'] == "Excursion") : ?>
-													<?php $build_type = "buildExcursion" ?>
+													<?php $build_type = "buildExcursionEdit" ?>
 
 												<?php elseif($val['Description'] == "Package") : ?>
 													<?php $build_type = "buildPackage" ?>
@@ -173,7 +173,7 @@
 													<?php $build_type = "buildHotel" ?>
 
 												<?php elseif($val['Description'] == "Visa") : ?>
-													<?php $build_type = "buildVisa" ?>
+													<?php $build_type = "buildVisaEdit" ?>
 												<?php endif; ?>
 
 													<td class="center">

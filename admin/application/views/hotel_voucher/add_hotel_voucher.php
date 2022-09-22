@@ -131,17 +131,12 @@
 															</div>
 
 															<div>
-															<div class="col text-center ">
-															<label for="" class="col-form-label text-white d-flex ml-4">Booking Date: 
-															<input style="flex: 0 0 50%;max-width: 49%;margin-left: 77px !important;" class="col-xl-6 form-control" value="<?php echo $booking_date ?>">
-															</label>
 															<div class="col d-flex justify-content-end">
 																<label for="" class=" col-form-label text-white">Confirmation Number:</label>
 																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" id="conf_number_<?php echo $key; ?>" value="#" name="conf_number[<?php echo $key; ?>]" placeholder="Enter Confirmatin Number Here">
 																<input type="hidden" name="hotel_id[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->hotel_id)[$key]); ?>>
 																<input type="hidden" name="hotel_name[<?php echo $key; ?>]" value='<?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?>'>
 																<input type="hidden" name="booking_date[<?php echo $key; ?>]" value=<?php echo $hotel[0]->created_at; ?>>
-															</div>
 															</div>
 															</div>
 														</div>
@@ -155,6 +150,11 @@
 															$checkout =  $date->format('d-M-Y');
 
 															?>
+															<div class="col d-flex">
+																<label for="" class=" col-form-label">Booking Date</label>
+																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" value="<?php echo $booking_date ?>">
+															</div>
+															
 															<div class="col d-flex just">
 																<label for="" class=" col-form-label">Check-in</label>
 																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $check_in; ?>>
@@ -166,9 +166,10 @@
 
 															<div class="col d-flex">
 																<label for="" class=" col-form-label">No of Nights</label>
-																<span class="input-group-text ml-3" style="height: 34px;" id="basic-addon1"><i class="fa-solid fa-moon"></i></span>
-																<input style="flex: 0 0 50%; max-width: 50%;"  aria-describedby="basic-addon1"  class="form-control col-xl-6" placeholder='<?php print_r(explode(',',$hotel[0]->nights)[$key]); ?>'>
+																<input style="flex: 0 0 50%; max-width: 50%;"  aria-describedby="basic-addon1"  class="mx-3 form-control col-xl-6" placeholder='🌙 <?php print_r(explode(',',$hotel[0]->nights)[$key]); ?>'>
 															</div>
+
+															
 
 															<div class="col d-flex">
 																<label for="" class=" col-form-label">Check-out</label>
@@ -185,7 +186,6 @@
 																	<th scope="col">No of Rooms</th>
 																	<th scope="col">Adults</th>
 																	<th scope="col">Children</th>
-																	<th scope="col">Children Ages</th>
 																	<th scope="col">Meals Board</th>
 																</tr>
 															</thead>
@@ -195,7 +195,6 @@
 																	<td><?php echo $details->room; ?></td>
 																	<td><?php echo $details->adult; ?></td>
 																	<td><?php echo $details->child; ?></td>
-																	<td>--</td>
 																	<td><input type="text" class="form-control" value="<?php echo isset($board[$key]) ? $board[$key] :  "" ?>" name="board[<?php echo $key; ?>]"></td>
 																</tr>
 															</tbody>

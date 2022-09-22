@@ -318,7 +318,7 @@
                             				//echo '<pre>';print_r($vat);exit; ?>
                               <tr class="odd gradeX">
                                
-                                <td class="center"><b> Extra with Bed(adult) </b> </td>
+                                <td class="center" title="Extra Bed (Adult)"><b> Ex Adult </b> </td>
                              
                                 <td class="center"> </td>
                                 <td class="center">  
@@ -364,7 +364,7 @@
 
                               <tr class="odd gradeX">
                             
-                                <td class="center"><b>  Extra with Bed(Child)  </b> </td>
+                                <td class="center" title="Extra Bed (Child)"><b>  Ex CWB  </b> </td>
                              
                                 <td class="center"> </td>
                                 <td class="center">  
@@ -407,7 +407,7 @@
                             				//echo '<pre>';print_r($vat);exit; ?>
                               <tr class="odd gradeX">
                               
-                                <td class="center"><b>   Extra W/O Bed </b> </td>
+                                <td class="center" title="Child Not Bed (CNB)"><b>   Ex CNB </b> </td>
                              
                                 <td class="center"> </td>
                                 <td class="center">  

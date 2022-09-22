@@ -647,17 +647,28 @@
                                                 <div class="row mt-4 mr-3 ml-3 mt-3">
                                                     <div class="col">
                                                         <label for="">Date of Arrival</label> <br />
-                                                        <input class="package_inputs" type="date" placeholder=" " id="specificDate1" name="doa" autocomplete="off" required />
+                                                        <input class="package_inputs" type="date" placeholder=" " id="doa_id" name="doa" autocomplete="off" required />
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">No of Stay</label> <br />
+                                                        <input class="package_inputs" type="number" min="1" placeholder=" " id="no_of_stay" name="no_of_stay" required autocomplete="off" />
                                                     </div>
 
                                                     <div class="col">
                                                         <label for="">Date of Departure</label> <br />
-                                                        <input class=" package_inputs" type="date" placeholder=" " id="endDate1" name="dod" autocomplete="off" />
+                                                        <input class=" package_inputs" type="date" placeholder=" " id="dod_id" name="dod" autocomplete="off" />
                                                     </div>
+                                                    
 
                                                     <div class="col">
                                                         <label for="">Purpose</label> <br />
-                                                        <input class=" package_inputs" type="text" placeholder=" " id="endDate1" name="visa_purpose" autocomplete="off" />
+                                                        <select style="padding: 0px;" class="package_inputs" required name="visa_purpose">
+                                                            <option value="Leisure">Leisure</option>
+                                                            <option value="Business Meetings">Business Meetings</option>
+                                                            <option value="Business Set Up">Business Set Up</option>
+                                                            <option value="Employment">Employment</option>
+                                                        </select>
                                                         </select>
                                                     </div>
 
@@ -1121,6 +1132,19 @@
                                     someDate.setDate(someDate.getDate() + parseInt(numberOfDaysToAdd)); //number  of days to add, e.x. 15 days
                                     var dateFormated = someDate.toISOString().substr(0, 10);
                                     $("#endDate1").val(dateFormated);
+
+                                });
+
+                                $("#no_of_stay").change(function() {
+
+                                var checkindate = $("#doa_id").val();
+
+                                var someDate = new Date(checkindate);
+                                var numberOfDaysToAdd = $("#no_of_stay").val();
+
+                                someDate.setDate(someDate.getDate() + parseInt(numberOfDaysToAdd)); //number  of days to add, e.x. 15 days
+                                var dateFormated = someDate.toISOString().substr(0, 10);
+                                $("#dod_id").val(dateFormated);
 
                                 });
 

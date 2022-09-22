@@ -413,6 +413,7 @@ class Query extends CI_Controller
 		$hotelPrefrence = isset($_POST['hotelPrefrence']) ? implode(',', $_POST['hotelPrefrence']) : "";
 		$doa = isset($_POST['doa']) ? $_POST['doa'] : NULL;
 		$dod = isset($_POST['dod']) ? $_POST['dod'] : NULL;
+		$no_of_stay = isset($_POST['no_of_stay']) ? $_POST['no_of_stay'] : NULL;
 		$visa_purpose = isset($_POST['visa_purpose']) ? $_POST['visa_purpose'] : NULL;
 		$data = array(
 			'goingTo' => $country,
@@ -421,6 +422,7 @@ class Query extends CI_Controller
 			'noDaysFrom' => $this->input->post('noDaysFrom'),
 			'doa' => $doa,
 			'dod' => $dod,
+			'no_of_stay' => $no_of_stay,
 			'visa_purpose' => $visa_purpose,
 			'hotelPrefrence' => $hotelPrefrence,
 			'Packagetravelers' => $this->input->post('adult'),
@@ -1141,6 +1143,136 @@ class Query extends CI_Controller
 		
 	}
 
+	public function saveTransferDataEdit()
+	{
+		// $pickup=$_POST['pickup'];
+		// $dropoff=$_POST['dropoff'];
+		// $person=$_POST['person'];
+	
+		
+		// $dropoff=$this->db->query("SELECT * FROM `transfer_route` WHERE start_city='$pickup' AND  dest_city='$dropoff' AND seat_capacity >= '$person' AND transport_type='round'  LIMIT 1")->row();
+	
+		// $price=$dropoff->cost;
+		
+	  	// $priceperperson=$price/$person;
+		// $route_name = !empty($dropoff->route_name) ? $dropoff->route_name : "";
+		// $dropoff =  !empty($dropoff) ? $dropoff : array() ;
+	 	// echo json_encode(array("data"=>$priceperperson,"route_name"=>$route_name,'row_data' =>$dropoff ));
+
+
+	// 	 $pickup=$_POST['pickup'];
+	// 	 $dropoff=$_POST['dropoff'];
+	// 	 $person=$_POST['person'];
+	// 	 $dropoff=$this->db->query("SELECT * FROM `transfer_route` WHERE start_city='$pickup' AND  dest_city='$dropoff' AND seat_capacity >= '$person' AND transport_type='oneway'  LIMIT 1")->row();
+		 
+	// 	 if(empty($dropoff)){
+	// 		 $dropoff = "";
+	// 		 $dropoff = $this->db->query("SELECT * FROM `transfer_route` WHERE start_city='$pickup' AND  dest_city='$dropoff' AND seat_capacity <= '$person' AND transport_type='oneway'  LIMIT 1")->row();
+	// 	 } 
+ 
+	// 	 $price=$dropoff->cost;
+		 
+	// 	 $priceperperson = $price/$person;
+	// 	 $route_name = !empty($dropoff->route_name) ? $dropoff->route_name : "";
+	// 	 $dropoff =  !empty($dropoff) ? $dropoff : array() ;
+	//    echo json_encode(array("data"=>$priceperperson,"route_name"=>$route_name,'row_data' =>$dropoff ));
+
+  		$query_id = $this->input->post('query_id');
+		$query_type = $this->input->post('query_type');
+		$pax_adult = $this->input->post('pax_adult');
+		$pax_child = $this->input->post('pax_child');
+		$pax_infants = $this->input->post('pax_infants');
+
+		$tableData = $this->input->post('data');
+		if(isset($tableData[0]['internal_transfer_pickup'])) {
+
+		$priceperperson_internal = 0;
+		$person= $pax_adult + $pax_child;
+
+		foreach ($tableData[0]['internal_transfer_pickup'] as $key => $value) {
+			$pickup = $tableData[0]['internal_transfer_pickup'][$key];
+			$dropoff = $tableData[0]['internal_transfer_dropoff'][$key];
+
+			$dropoff_query = $this->db->like('start_city', $pickup)->where('dest_city', $dropoff)->where('seat_capacity >=', $person)->where('transport_type', 'oneway')->get('transfer_route')->result();
+
+			$price = $dropoff_query[0]->cost;
+			$priceperperson_internal += $price/$person;
+		}
+
+
+		$internal_transfer_data = [
+			'query_id' =>  $query_id ,
+			'query_type' =>  $query_type ,
+			'transfer_type' =>  'internal',
+			'transfer_date' =>  implode(',',$tableData[0]['internal_transfer_date']),
+			'pickup' =>  implode(',',$tableData[0]['internal_transfer_pickup']),
+			'dropoff' =>  implode(',',$tableData[0]['internal_transfer_dropoff']),
+			'transfer_route' =>  implode(',',$tableData[0]['internal_transfer_route']),
+			'adult_pax' =>  $pax_adult,
+			'child_pax' =>  $pax_child,
+			'adult_price' => $priceperperson_internal,
+			'child_price'  =>  $priceperperson_internal,
+			'created_by' =>   $this->session->userdata('admin_id'),
+		];
+
+		$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'internal')->get('query_transfer');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $query_id);
+			$this->db->where('transfer_type', 'internal');
+			$this->db->update('query_transfer',$internal_transfer_data);
+		} else {
+			$this->db->insert('query_transfer', $internal_transfer_data);
+		}
+
+		// echo json_encode("transfer details saved successfully");
+		}
+
+		// ----------------------------------------- return -------------------------------------------------
+
+		if(isset($tableData[0]['return_transfer_pickup'])) {
+
+			$priceperperson_return = 0;
+			$person= $pax_adult + $pax_child;
+	
+			foreach ($tableData[0]['return_transfer_pickup'] as $key => $value) {
+				$pickup = $tableData[0]['return_transfer_pickup'][$key];
+				$dropoff = $tableData[0]['return_transfer_dropoff'][$key];
+	
+				$dropoff_query = $this->db->like('start_city', $pickup)->where('dest_city', $dropoff)->where('seat_capacity >=', $person)->where('transport_type', 'round')->get('transfer_route')->result();
+	
+				$price = $dropoff_query[0]->cost;
+				$priceperperson_return += $price/$person;
+			}
+	
+			$return_transfer_data = [
+				'query_id' =>  $query_id ,
+				'query_type' =>  $query_type ,
+				'transfer_type' =>  'return',
+				'transfer_date' =>  implode(',',$tableData[0]['return_transfer_date']),
+				'pickup' =>  implode(',',$tableData[0]['return_transfer_pickup']),
+				'dropoff' =>  implode(',',$tableData[0]['return_transfer_dropoff']),
+				'transfer_route' =>  implode(',',$tableData[0]['return_transfer_route']),
+				'adult_pax' =>  $pax_adult,
+				'child_pax' =>  $pax_child,
+				'adult_price' => $priceperperson_return,
+				'child_price'  =>  $priceperperson_return,
+				'created_by' =>   $this->session->userdata('admin_id'),
+			];
+	
+			$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'return')->get('query_transfer');
+			if ($query->num_rows() > 0) {
+				$this->db->where('query_id', $query_id);
+				$this->db->where('transfer_type', 'return');
+				$this->db->update('query_transfer',$return_transfer_data);
+			} else {
+				$this->db->insert('query_transfer', $return_transfer_data);
+			}
+	
+			}
+
+			echo json_encode(array("internal_price"=> (int)$priceperperson_internal,"return_price"=> (int)$priceperperson_return ));
+		
+	}
 
 
 	public function getMealcalculation()
@@ -1742,6 +1874,44 @@ class Query extends CI_Controller
 		$this->load->view('query/build_excursion', $data);
 	}
 
+	public function buildExcursionEdit($q_id = '')
+	{
+
+		$data["pvt_query"] = $this->db->where('query_id', $q_id)->where('excursion_type', 'PVT')->get('query_excursion')->result();
+		$data['sic_query'] = $this->db->where('query_id', $q_id)->where('excursion_type', 'SIC')->get('query_excursion')->result();
+
+		//echo '<pre>';print_r($q_id);exit;
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
+		qp.child,cb.reportsTo,cb.b2bEmail");
+
+		$this->db->from("b2bcustomerquery cb");
+
+		$this->db->where('qp.queryId', $q_id);
+		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+		$data['view'] = $this->db->get()->row();
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+		$data['listSuppliers'] = $this->db->get('supplier')->result();
+		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+
+		$data['transfer_route'] = $this->db->query("SELECT * FROM transfer_route where transport_type='oneway' AND cost_type='Normal'")->result();
+		$data['transfer_route1'] = $this->db->query("SELECT * FROM transfer_route where transport_type='round' AND cost_type='Normal'")->result();
+		// $data['hours_based'] = $this->db->query("SELECT * FROM transfer_route where  cost_type='HourBased'")->result();
+
+		// $data['excursion']= $this->db->get('excursion')->result();
+		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
+		$data['excursion_pvt'] = $this->db->query("SELECT * FROM excursion WHERE type='PVT' ")->result();
+
+		$data['listcities'] = $this->db->get('city_master')->result();
+		
+		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
+		//echo '<pre>';print_r($data);exit;
+
+		$this->load->view('query/edit/build_excursion_edit', $data);
+	}
+
 	public function buildTransfer($q_id = '')
 	{
 		error_reporting(0);
@@ -1830,31 +2000,6 @@ class Query extends CI_Controller
 		$user_id = $this->session->userdata()['admin_id'];
 		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
 
-		$this->load->library('email');
-		$config = array(
-			'protocol' => 'smtp',
-			'smtp_host' => 'ssl://smtp.googlemail.com',
-			'smtp_port' => 465,
-			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
-			'smtp_pass' => 'xcvbtihuojnhvmrn',
-			'crlf' => "\r\n",
-			'mailtype' => "html",
-			'newline' => "\r\n",
-		);
-
-		$subject = $data['view']->query_id . '
-			 - Diamond Tours LLC Dubai / Pax:' . $data['view']->Packagetravelers . ' 
-			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
-			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
-
-		$this->email->initialize($config);
-		$this->email->from('test.yrpitsolutions.com@gmail.com');
-		$this->email->to($data['view']->b2bEmail);
-		$this->email->subject($subject);
-		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
-		$this->email->message($body);
-		$this->email->send();
-
 		$data['excursion'] = $this->db->get('excursion')->result();
 		$data['listSuppliers'] = $this->db->get('supplier')->result();
 
@@ -1937,6 +2082,41 @@ class Query extends CI_Controller
 		$this->load->view('query/build_visa', $data);
 	}
 
+	public function buildVisaEdit($q_id = '')
+	{
+		//echo '<pre>';print_r($q_id);exit;
+		$data["visa_query"] = $this->db->where('query_id', $q_id)->get('query_visa')->result();
+
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
+		qp.child,cb.reportsTo,cb.b2bEmail");
+
+		$this->db->from("b2bcustomerquery cb");
+
+		$this->db->where('qp.queryId', $q_id);
+		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+		$data['view'] = $this->db->get()->row();
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+		$data['excursion'] = $this->db->get('excursion')->result();
+		$data['listSuppliers'] = $this->db->get('supplier')->result();
+		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+
+		$data['transfer_route'] = $this->db->query("SELECT * FROM transfer_route where transport_type='oneway' AND cost_type='Normal'")->result();
+		$data['transfer_route1'] = $this->db->query("SELECT * FROM transfer_route where transport_type='round' AND cost_type='Normal'")->result();
+		// $data['hours_based'] = $this->db->query("SELECT * FROM transfer_route where  cost_type='HourBased'")->result();
+
+		// $data['excursion']= $this->db->get('excursion')->result();
+		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
+		$data['excursion_pvt'] = $this->db->query("SELECT * FROM excursion WHERE type='PVT' ")->result();
+
+		$data['listcities'] = $this->db->get('city_master')->result();
+		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
+
+
+		$this->load->view('query/edit/build_visa_edit', $data);
+	}
 
 	public function buildMeals($q_id = '')
 	{
@@ -1995,6 +2175,43 @@ class Query extends CI_Controller
 		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
 
 		$this->load->view('query/build_meals', $data);
+	}
+
+	public function buildMealsEdit($q_id = '')
+	{
+		//echo '<pre>';print_r($q_id);exit;
+
+		$data["meal_query"] = $this->db->where('query_id', $q_id)->get('query_meal')->result();
+
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
+		qp.child,cb.reportsTo,cb.b2bEmail");
+
+		$this->db->from("b2bcustomerquery cb");
+
+		$this->db->where('qp.queryId', $q_id);
+		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+		$data['view'] = $this->db->get()->row();
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+		$data['excursion'] = $this->db->get('excursion')->result();
+		$data['listSuppliers'] = $this->db->get('supplier')->result();
+		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+
+		$data['transfer_route'] = $this->db->query("SELECT * FROM transfer_route where transport_type='oneway' AND cost_type='Normal'")->result();
+		$data['transfer_route1'] = $this->db->query("SELECT * FROM transfer_route where transport_type='round' AND cost_type='Normal'")->result();
+		// $data['hours_based'] = $this->db->query("SELECT * FROM transfer_route where  cost_type='HourBased'")->result();
+
+		// $data['excursion']= $this->db->get('excursion')->result();
+		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
+		$data['excursion_pvt'] = $this->db->query("SELECT * FROM excursion WHERE type='PVT' ")->result();
+
+		$data['listcities'] = $this->db->get('city_master')->result();
+
+		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
+
+		$this->load->view('query/edit/build_meals_edit', $data);
 	}
 
 	public function CreateProposalTransfer()

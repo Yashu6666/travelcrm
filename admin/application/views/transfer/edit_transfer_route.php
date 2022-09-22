@@ -80,17 +80,25 @@
                                                             <!-- <span id="spanBilledTo" class="colorRed"></span> -->
                                             </label>
 
-											<label class="input ml-4">
+											<!-- <label class="input ml-4">
                                                             <input class="input__field invoice-width" type="text"
                                                                 name="route_name" placeholder=" "  value="<?php echo $edit->route_name?>"  id="billTo"
                                                                 autocomplete="off" />
                                                             <span class="input__label">Display Name<span
                                                                     class="colorRed">*</span></span>
-                                                            <!-- <span id="spanBilledTo" class="colorRed"></span> -->
-                                            </label>
+                                            </label> -->
 
 
 										</div>
+
+										<div class="col d-flex justify-content-center">
+									<label class="row input" style="width: 43%;">
+										<input class="input__field invoice-width" type="text" name="route_name" placeholder=" "  value="<?php echo $edit->route_name?>" id="billTo" autocomplete="off" />
+										<span class="input__label">Display Name<span class="colorRed">*</span></span>
+									</label>
+									</div>
+
+
 											<div style="margin-top: 50px;">
 
 											</div>

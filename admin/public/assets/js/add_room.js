@@ -130,7 +130,7 @@ $(document).ready(function() {
                   </tr>
                          
                           <tr class="odd gradeX">
-                              <td class="center"><b> Extra with Bed(adult)</b> </td>
+                              <td class="center" title="Extra Bed (Adult)"><b> Ex Adult </b> </td>
                               <td class="center"> </td>
                               <td class="center">
                                   <div class="col-md-12">
@@ -174,7 +174,7 @@ $(document).ready(function() {
               
               
                           <tr class="odd gradeX">
-                              <td class="center"> <b>Extra with Bed(Child)</b> </td>
+                              <td class="center" title="Extra Bed (Child)"><b>  Ex CWB </b> </td>
                               <td class="center"> </td>
                               <td class="center">
                                   <div class="col-md-12">
@@ -205,7 +205,7 @@ $(document).ready(function() {
               
               
                           <tr class="odd gradeX">
-                              <td class="center"><b> Extra W/O Bed</b> </td>
+                              <td class="center" title="Child Not Bed (CNB)"><b>   Ex CNB </b> </td>
                               <td class="center"> </td>
                               <td class="center">
                                   <div class="col-md-12">

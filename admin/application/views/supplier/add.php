@@ -35,7 +35,7 @@
                 </div>
 
             </div>
-            <div class="card-body row">
+            <div class="card-body">
                 <form action="<?php echo site_url();?>supplier/addSupplier" method="post">
                 <div class="container">
                     <div class="row">
@@ -170,7 +170,7 @@
 
         </div>
         
-        <div class="conn">
+        <div class="container">
             <div class="row mt-3">
                 <div class="col">
                 <div class="ml-2"><label style="font-size: small;"><b>Account Name*</b></label></div>

@@ -33,11 +33,8 @@
    <button type="button" id="del_query" onclick="delQuery()" class="new_btn px-5 float-right">Cancel</button>
    </div> -->
 
-   <form id="proposal-form" action="<?php echo site_url();?>query/CreateProposalTransfer" method="post"> 
-   <input type="hidden" id="hotel_name_in" name="hotel_name_in" value="" />
-   <input type="hidden" id="totalprice_transfer" name="totalprice_transfer" value="0" />
-
-
+   <form id="proposal-form" action="<?php echo site_url();?>query/CreateProposalVisa" method="post"> 
+   <input type="hidden" id="totalprice_visa" name="totalprice_visa" value="0" />
    <div class="row mt-5">
     <div class="col-md-12">
      <div class="card-box ">
@@ -81,153 +78,139 @@
 
 
       </div>
-      <div class="mt-5">
-
-       <div>
+    
       
 
        <div class="card-body ">
        
-      
-          <div class="mt-5">
-           <div>
-            <div class="card-head card-head-new">
-             <p>Transfer</p>
-            </div>
-            <div class="row mt-4 mr-3 ml-3 mb-3">
-             <div class="col">
-              <label for="" class="transport-lable"><b>Transport Type</b>
-              :</label>
-              <input type="checkbox" <?php echo count($internal_query) > 0 ? 'checked' : "" ?> name="TransType" id="TrasportTypeCab" class="mr-3 ml-2 " value="Internal Transfer"><span
-              class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
-              <input type="checkbox" <?php echo count($return_query) > 0 ? 'checked' : "" ?> name="TransType" id="TrasportTypeSic" class="mr-3 ml-2 " value="Point to Point Transfer"><span
-              class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
-             </div>
+        <div class="mt-5">
+          <div>
+          
 
-            </div>
-            <div>
-             <table class="table">
-              <thead>
-               <tr>
-                <th scope="col">Transport type</th>
-                <th scope="col">Pax</th>
-                <th scope="col">Form Date</th>
-             
-                <th scope="col">Pickup Location</th>
-                <th scope="col">Drop Off Location</th>
-                <th scope="col">Route Name</th>
-
-
-
-               </tr>
-              </thead>
-              <tbody id="transfer_body">
-               <?php foreach(explode(",",$internal_query[0]->transfer_date) as $key => $value) : ?> 
-               <tr id="PvtCab1<?php echo $key ?>" >
-                <th>Internal Transfer</th>
+          <div class="card-head card-head-new">
+             <p style="margin-top:20px">Visa
                
-                <td><input class="form-control" type="number" id="pax_internal" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCityCab[]" disabled></td>
-                <td><input class="form-control internal_transfer_date" type="date" value="<?php echo (explode(",",$internal_query[0]->transfer_date)[$key]);?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
-               
-                <td>
-                <select id="pickupinternal_<?php echo $key ?>" name="buildTravelToDateCab[]"  class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                  <option value="<?php echo (explode(",",$internal_query[0]->pickup)[$key]);?>" ><?php echo (explode(",",$internal_query[0]->pickup)[$key]);?></option>
-                </select>
-               </td>
-
-                <td>
-                <select id="dropoffinternal_<?php echo $key ?>" name="buildTravelToCityCabDrop[]"  class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                <option value="<?php echo (explode(",",$internal_query[0]->dropoff)[$key]);?>" ><?php echo (explode(",",$internal_query[0]->dropoff)[$key]);?></option>
-                </select>
-                </td>
-
-                <td>
-                    <input id="price_internal" type="hidden" name="price_internal[]" />
-                    <input id="pax_count_internal" type="hidden" name="pax_count_internal[]" />
-                    <input id="total_price_internal" type="hidden" value="0" name="total_price_internal[]" />
-                    <input id="route_nameinternal" class="form-control internal_transfer_route" type="text" value="<?php echo (explode(",",$internal_query[0]->transfer_route)[$key]);?>" placeholder="Route Name" name="buildTravelTypeCab[]">
-                </td>
-
-                <?php if($key == 0) : ?>
-                  <td><a class="new_btn px-3" onclick="transRow()">add</a></td>
-                <?php else : ?>
-                  <td><button class="btn btn-danger btn-xs" type="button" onclick="removeRow('PvtCab1<?php echo $key ?>')"><i class="fa fa-trash"></i></button> </td>
-                <?php endif ?>
-
-               </tr>
-                <?php endforeach ;?>
-
-
-                <?php foreach(explode(",",$return_query[0]->transfer_date) as $key => $value) : ?> 
-                <tr id="Sic1<?php echo $key ?>">
-                <th>Return Transfer</th>
-              <td><input class="form-control" id="pax_point" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC[]" disabled></td>
-              <td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT" type="date" value="<?php echo (explode(",",$return_query[0]->transfer_date)[$key]);?>" name="buildTravelFromdatePVT[]"></td>
-               
-              <td>
-                <select id="pickuppoint_<?php echo $key ?>"  required  name="buildTravelToDateSIC[]"  class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                <option value="<?php echo (explode(",",$return_query[0]->pickup)[$key]);?>"><?php echo (explode(",",$return_query[0]->pickup)[$key]);?></option>
-              </select></td>
-                <td>
-                <select   id="dropoffpoint_<?php echo $key ?>" name="buildTravelToCitySIC[]"  class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                <option value="<?php echo (explode(",",$return_query[0]->dropoff)[$key]);?>"><?php echo (explode(",",$return_query[0]->dropoff)[$key]);?></option>
-              </select>
-                  </td>
-                <td><input id="route_namepoint" class="form-control return_transfer_route" value="<?php echo (explode(",",$return_query[0]->transfer_route)[$key]);?>" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>
-                
-                <input id="price_point" type="hidden" name="price_point[]" />
-                <input id="pax_count_point" type="hidden" name="pax_count_point[]" />
-                <input id="total_price_point" type="hidden" value="0" name="total_price_point[]" />
-
-                <?php if($key == 0) : ?>
-                  <td><a class="new_btn px-3" onclick="transReturnRow()">add</a></td>
-                <?php else : ?>
-                  <td><button class="btn btn-danger btn-xs" type="button" onclick="removeRow('Sic1<?php echo $key ?>')"><i class="fa fa-trash"></i></button> </td>
-                <?php endif ?>
-
-               </tr>
-               <?php endforeach ;?>
-
-
-                 <tr id="Train" style="display: none;">
-                <th>Train</th>
-                <td><input class="form-control" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdateTrain"></td>
-                <td><input class="form-control" type="text" placeholder="From City" name="buildTravelFromCityTrain"></td>
-                <td><input class="form-control" type="date" placeholder="To Date" name="buildTravelToDateTrain"></td>
-                <td><input class="form-control" type="text" placeholder="To City" name="buildTravelToCityTrain"></td>
-                <td><input class="form-control" type="text" placeholder="Type" name="buildTravelTypeTrain"></td>
-                <td><button type="button" class="new_btn px-3">Add</button>
-                </td>
-
-               </tr>
-              </tbody>
-             </table>
-             <div class="d-flex justify-content-end">
-              <button type="button" id="transferSave" class="new_btn px-5">Save</button>
-              </div>
+             <!-- <input type="radio" id="visa_status" name="visa_status" value="Yes"><label for="html">Yes</label>
+             <input type="radio" id="visa_status1" name="visa_status" value="No"><label for="html">No</label></p> -->
             </div>
+            <br>
+              <div class="row mt-4 mr-3 ml-3 mb-3 " style="display:block;" id="visadisplay">
+               <div>
+                <!-- <table class="table table-borderless">
+                 <thead>
+                  <tr>
+                   <th>Visa Category</th>
+                   <th>Entry Type</th>
+                   <th>Validity</th>
+                   <th>Total Gst</th>
+                   <th>Final Price</th>
+
+                  </tr>
+                 </thead>
+                 <tbody>
+                  <tr>
+                   <td><input type="text" class="form-control" name="visaPerAdultCost"></td>
+                   <td><input type="text" class="form-control" name="visaTotalCost"></td>
+                   <td><input type="text" class="form-control" name="visaTotalMarkup"></td>
+                   <td><input type="text" class="form-control" name="visaTotalGST"></td>
+                   <td><input type="text" class="form-control" name="visaFinalPrice"></td>
+
+
+
+
+                  </tr>
+
+                 </tbody>
+                </table> -->
+
+                <table id="faqs" class="table table-borderless">
+            <thead>
+             <tr>
+           
             
-            </div>
-             <hr>
+              <th>Visa Category</th>
+              <th>Entry Type</th>
+              <th>Validity</th>
+              <th>Adult</th>
+              <th>Child</th>
+              <th>Infant</th>
+             </tr>
 
-             <br/> <br/>
+            </thead>
+            <tbody>
+             <tbody>
+              <tr id="myTableRow">
+          
+              
+              <td>
+               <div>
+                <select data-mdl-for="sample2" class="form-control"
+                value=""  tabIndex="-1" id="visa_category_drop_down" name="visa_category_drop_down">
+                <option value="">Select Category</option>
+                <option <?php echo $visa_query[0]->visa_category == "48_hrs" ? "selected" : "" ?> value="48_hrs">48 hrs Transit</option>
+                <option <?php echo $visa_query[0]->visa_category == "96_hrs" ? "selected" : "" ?> value="96_hrs">96 hrs Transit</option>
+                <option <?php echo $visa_query[0]->visa_category == "30_days_tourist" ? "selected" : "" ?> value="30_days_tourist">30 Days Tourist</option>
+                <option <?php echo $visa_query[0]->visa_category == "90_days_single" ? "selected" : "" ?> value="90_days_single">90 Days Single entry</option>
+                <option <?php echo $visa_query[0]->visa_category == "90_days_multi" ? "selected" : "" ?> value="90_days_multi">90 Days Muti Entry</option>
+                 </select>
+              </div>
+             </td>
+             <td>
+              <div>
+               <select data-mdl-for="sample2" class="form-control"
+               value=""  tabIndex="-1" id='entry_type' name="entry_type">
+               <option <?php echo $visa_query[0]->entry_type == "Single Entry" ? "selected" : "" ?> value="Single Entry">Single Entry</option>
+               <option <?php echo $visa_query[0]->entry_type == "Double Entry" ? "selected" : "" ?> value="Double Entry">Double Entry</option>
+               <option <?php echo $visa_query[0]->entry_type == "Multi Entry" ? "selected" : "" ?> value="Multi Entry">Multi Entry</option>
+              </select>
+
              </div>
-                <!-- <div style="float:right;">
-              <button type="button" onclick="mealcalculation()" class="btn btn-success">Save</button></div>
-            </div> -->
+            </td>
+            <!-- <td><input type="text" placeholder="" class="form-control" name="process_time">
+            </td> -->
+           <td>
+             <div>
+              <select data-mdl-for="sample2" class="form-control"
+              value=""  tabIndex="-1" id="visa_validity" name="visa_validity">
+              <option <?php echo $visa_query[0]->validity == "1 Month" ? "selected" : "" ?> value="1 Month">1 Month</option>
+              <option <?php echo $visa_query[0]->validity == "3 Month" ? "selected" : "" ?> value="3 Month">3 Month</option>
+              <option <?php echo $visa_query[0]->validity == "5 Years" ? "selected" : "" ?> value="5 Years">5 Years</option>
+             </select>
+            </div>
+           </td>
 
+           <td><input type="text" placeholder="0" class="form-control" name="adult" value="<?php echo $view->Packagetravelers;?>" disabled>
+           </td>
+           <td><input type="text" placeholder="0" class="form-control" name="child" value="<?php echo $buildpackage->child;?>" disabled>
+           </td>
+           <td><input type="text" placeholder="0" class="form-control"   name="infant" value="<?php echo $buildpackage->infant;?>" disabled> 
+           </td>
+           
+         </tr>
+
+         </tbody>
+        </tbody>
+       </table>
+       
+            <div style="float:right;">
+              <button type="button" onclick="getvisaprice()" class="new_btn px-3">Save</button></div>
+            </div>
+
+               </div>
+
+             
+
+
+
+
+              </div>
+             </div>
+
+            
+             
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
         <script src="<?php echo base_url();?>public/js/validate.js"></script>
-
-        <script>
-         
-        </script>
                           <script>
-
-                            function removeRow(id){
-                              console.log("🚩 ~ file: build_transfer.php ~ line 279 ~ removeRow ~ id", id)
-                              document.getElementById(id).remove()
-                            }
                 
                            $(document).ready(function(){
                             $("#view-proposal-btn").click(function(){
@@ -274,77 +257,38 @@
 
                         $(".card-box").click(function(e){
                           e.stopPropagation(); 
-
-                          
-                        let itrnl_total = 0;
-                        var total_price_internal_arr = $("input[name='total_price_internal[]']")
-                        .map(function(){ 
-                          itrnl_total += parseInt($(this).val());
-                        }).get();
-                        var total_price_internal = itrnl_total;
-                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 285 ~ $ ~ total_price_internal", total_price_internal)
-
-                        let price_total = 0;
-                        var total_price_point_arr = $("input[name='total_price_point[]']")
-                        .map(function(){ 
-                          price_total += parseInt($(this).val());
-                        }).get();
-                        var total_price_point = price_total;
-                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 292 ~ $ ~ total_price_point", total_price_point)
-
-
-
-                        var pax_adult_count = <?php  echo $buildpackage->adult; ?>;
-                        var pax_child_count = <?php  echo $buildpackage->child; ?>;
-                        var pax_infant_count = <?php echo $buildpackage->infant;?>;
-                        
-                        var intrnal_transfer_avg = parseInt(total_price_internal) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
-                        var point_transfer_avg = parseInt(total_price_point) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
-                        
                         // var hotel_rate_adult = $("#hotel_rate_adult").val();
                         // var total_price_internal = $("#total_price_internal").val();
                         // var total_price_point = $("#total_price_point").val();
-                        // var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val(); 
+                        var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val(); 
                         // var total_pax_meal_adult = $("#total_pax_meal_adult").val(); 
                         // var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
                         // var total_pax_sic_adult = $("#total_pax_sic_adult").val();
                         
-                        var sub_total_adult = 
-                          parseInt(intrnal_transfer_avg * (parseInt(pax_adult_count))) + 
-                          parseInt(point_transfer_avg * (parseInt(pax_adult_count)));
-                          // parseInt(total_price_point);
+                        var sub_total_adult =  parseInt(total_pax_visa_price_adult);
 
-                        // var hotel_rate_child = $("#hotel_rate_child").val();
-                        // var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
-                        // var total_pax_sic_hild = $("#total_pax_sic_hild").val();
-                        // var total_pax_meal_child = $("#total_pax_meal_child").val();
-                        // var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
+                       
+                        var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
 
-                        var sub_total_child = 
-                          parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) + 
-                          parseInt(point_transfer_avg * (parseInt(pax_child_count)));
-                        //   parseInt(total_pax_sic_hild)+ 
-                        //   parseInt(total_pax_pvt_hild) + 
-                        //   parseInt(total_pax_meal_child) + 
-                        //   parseInt(total_pax_visa_price_child);
+                        var sub_total_child = parseInt(total_pax_visa_price_child);
 
-                        // var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val(); 
-                        // var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
-                        // var total_pax_sic_infant = $("#total_pax_sic_infant").val();
+                        var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val(); 
+                       
 
-                        // var sub_total_infant = parseInt(total_pax_visa_price_infant) +
-                        //   parseInt(total_pax_pvt_infant)+ 
-                        //   parseInt(total_pax_sic_infant);
-
+                        var sub_total_infant = parseInt(total_pax_visa_price_infant);
+                        
                           
-                        let c_type = document.getElementById('currencyOption').value;
-                        var usd_aed = <?php echo $usd_to_aed->usd_to_aed;?>;
-
+                        
                           // $("#subtotal_adults").html( sub_total_adult );                      
-                          // $("#subtotal_childs").html( sub_total_child ); 
+                          // $("#subtotal_childs").html( sub_total_child );                               
+                          // $("#subtotal_infants").html( sub_total_infant ); 
+
+                          let c_type = document.getElementById('currencyOption').value;
+                          var usd_aed = <?php echo $usd_to_aed->usd_to_aed;?>;
+
                           $("#subtotal_adults").html( c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2)  : sub_total_adult );                      
-                          $("#subtotal_childs").html( c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child );                                 
-                          $("#subtotal_infants").html( 0 ); 
+                          $("#subtotal_childs").html( c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child );                               
+                          $("#subtotal_infants").html( c_type == 'USD' ? (sub_total_infant/ usd_aed).toFixed(2)  : sub_total_infant); 
 
                           var PackageMarkup = $("#PackageMarkup").val();
                           var Mark_up =$("#Mark_up").val();
@@ -356,43 +300,70 @@
 
                              total_adult = (parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100));
                              total_child = (parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
-                            //  total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
+                             total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
 
                           }
                           if(Mark_up == "values"){
+                           
+                            if(sub_total_adult == 0){
+                                total_adult = (parseInt(sub_total_adult));
+                            }else{
+                                total_adult = (parseInt(sub_total_adult) + parseInt(PackageMarkup));
+                            }
+                            if(sub_total_child == 0){
+                                total_child = (parseInt(sub_total_child));
+                            }else{
+                                total_child = (parseInt(sub_total_child) + parseInt(PackageMarkup));
+                            }
 
-                            total_adult = (parseInt(sub_total_adult) + parseInt(PackageMarkup));
-                            total_child = (parseInt(sub_total_child) + parseInt(PackageMarkup));
-                            // total_infant = (parseInt(sub_total_infant) + parseInt(PackageMarkup));
+                            if(sub_total_infant == 0){
+                                total_infant = (parseInt(sub_total_infant));
+                            }else{
+                                total_infant = (parseInt(sub_total_infant) + parseInt(PackageMarkup));
+                            }
+                           
 
                             
                           }
-                        
+                        //   alert(total_child);
                           // $("#totalprice_adult").html( total_adult );
                           // $("#totalprice_childs").html( total_child );
+                          // $("#totalprice_infants").html( total_infant );
+
                           $("#totalprice_adult").html(  c_type == 'USD' ? ( total_adult / usd_aed).toFixed(2)  : total_adult  );
                           $("#totalprice_childs").html(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
-                          $("#totalprice_infants").html( 0 );
+                          $("#totalprice_infants").html(  c_type == 'USD' ? ( total_infant / usd_aed).toFixed(2)  : total_infant  );
 
+                          // var per_pax_adult = (parseInt(total_adult) / 2);
+                          // var per_pax_child = (parseInt(total_child) / 2);
+                          // var per_pax_infant = (parseInt(total_infant) / 2);
+
+                          var pax_adult_count = <?php  echo $buildpackage->adult; ?>;
+                          var pax_child_count = <?php  echo $buildpackage->child; ?>;
+                          var pax_infant_count = <?php echo $buildpackage->infant;?>;
+                          
                           var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / 2 : parseInt(total_adult));
                           var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
-                        //   var per_pax_infant = (parseInt(total_infant) / 2);
+                          var per_pax_infant = (pax_infant_count > 1 ? parseInt(total_infant) / 2 : parseInt(total_infant));
                           
                           // $("#perpax_adult").html(per_pax_adult);
                           // $("#perpax_childs").html( per_pax_child );
-                          $("#perpax_adult").html( c_type == 'USD' ?  ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
-                          $("#perpax_childs").html(  c_type == 'USD' ?  ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child   );
-                          $("#perpax_infants").html( 0 );
+                          // $("#perpax_infants").html( per_pax_infant );
 
                           // $("#perpax_adult_input").val(per_pax_adult);
-                          // $("#perpax_childs_input").val(per_pax_child );
+                          // $("#perpax_childs_input").val( per_pax_child );
+                          // $("#perpax_infants_input").val( per_pax_infant );
+
+                          $("#perpax_adult").html( c_type == 'USD' ?  ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
+                          $("#perpax_childs").html(  c_type == 'USD' ?  ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child   );
+                          $("#perpax_infants").html(  c_type == 'USD' ?    ( per_pax_infant / usd_aed).toFixed(2)  : per_pax_infant  );
+
                           $("#perpax_adult_input").val( c_type == 'USD' ? ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
                           $("#perpax_childs_input").val( c_type == 'USD' ?   ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child  );
-                          $("#perpax_infants_input").val( 0 );
+                          $("#perpax_infants_input").val( c_type == 'USD' ?   ( per_pax_infant / usd_aed).toFixed(2)  : per_pax_infant  );
 
-                          $('#totalprice_transfer').val(c_type == 'USD' ?  ( total_adult / usd_aed).toFixed(2) : total_adult);
-
-                        
+                          var totalprice_visa = total_adult + total_child + total_infant;
+                          $("#totalprice_visa").val( c_type == 'USD' ?  ( totalprice_visa / usd_aed).toFixed(2) : totalprice_visa );
                          })
 
 
@@ -437,98 +408,12 @@
                             $('#addrowss').append(adds);
                           faqs_row2++;
                         }
-
-                        var trans_rows= 0;                    
-                        function transRow(){
-                          var cnt = $('#rows_count').val();
-                          $('#rows_count').val(parseInt(cnt) + parseInt(1));
-                          var adds=' <tr  id="PvtCab'+trans_rows + '"> <th>Internal Transfer</th>';
-                          adds += '<td><input class="form-control" type="number" id="pax_internal'+trans_rows + '" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCityCab[]" disabled></td>';
-                          adds += '<td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate;?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>';
-                          adds += `<td>
-                                    <select id="pickupinternal${trans_rows}"  required  name="buildTravelToDateCab[]"  class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                      <option value="Pickup">Pickup</option>
-                                      <?php foreach($transfer_route as $value){ ?>
-                                      <option value="<?php echo $value->start_city ?>"><?php echo $value->start_city ?></option>
-                                      <?php } ?>
-                                    </select>
-                                  </td>`;
-
-                          adds += `
-                                <td>
-                                  <select id="dropoffinternal${trans_rows}" name="buildTravelToCityCabDrop[]"   class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                  <option value="Drop Off">Drop Off</option>
-                                  </select>
-                                </td>
-                                `;
-
-                          adds += `
-                                <td>
-                                  <input id="price_internal${trans_rows}" type="hidden" name="price_internal[]" />
-                                  <input id="pax_count_internal${trans_rows}" type="hidden" name="pax_count_internal[]" />
-                                  <input id="total_price_internal${trans_rows}" type="hidden" value="0" name="total_price_internal[]" />
-                                  <input id="route_nameinternal${trans_rows}" class="form-control internal_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeCab[]">
-                                </td>
-                                `;
-
-                          adds += '</td> <td><button class="btn btn-danger btn-xs" onClick="$(\'#PvtCab' + trans_rows + '\').remove();"><i class="fa fa-trash"></i></button> </td>';
-                          adds += '</tr>';
-                            $('#transfer_body').append(adds);
-                            pickupFromTransfer(trans_rows);
-                            trans_rows++;
-                        }
-
-
-                        var trans_retrun_rows= 0;                    
-                        function transReturnRow(){
-                          var cnt = $('#rows_count').val();
-                          $('#rows_count').val(parseInt(cnt) + parseInt(1));
-                          var adds=' <tr  id="Sic'+trans_retrun_rows + '"> <th>Return Transfer</th>';
-
-                          adds += '<td><input class="form-control" id="pax_point'+trans_retrun_rows + '" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC[]" disabled></td>';
-                          adds += '<td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT'+trans_retrun_rows + '" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdatePVT[]"></td>';
-
-                          adds += `<td> 
-                                    <select id="pickuppoint${trans_retrun_rows}"  required  name="buildTravelToDateSIC[]"  class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                      <option value="Pickup">Pickup</option>
-                                    </select>
-                                  </td>`;
-                                  
-                          adds += `
-                                <td>
-                                  <select id="dropoffpoint${trans_retrun_rows}" name="buildTravelToCitySIC[]"  class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                  <option value="Drop Off">Drop Off</option>
-                                  </select>
-                                </td>
-                                `;
-
-                          adds += '<td><input id="route_namepoint'+trans_retrun_rows+'" class="form-control return_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>';
-
-                          adds += `
-                                
-                                  <input id="price_point${trans_retrun_rows}" type="hidden" name="price_point[]" />
-                                  <input id="pax_count_point${trans_retrun_rows}" type="hidden" name="pax_count_point[]" />
-                                  <input id="total_price_point${trans_retrun_rows}" type="hidden" value="0" name="total_price_point[]" />
-                               
-                                `;
-
-                          adds += '</td> <td><button class="btn btn-danger btn-xs" onClick="$(\'#Sic' + trans_retrun_rows + '\').remove();"><i class="fa fa-trash"></i></button> </td>';
-                          adds += '</tr>';
-                            $('#transfer_body').append(adds);
-                          pickupFromReturn(trans_retrun_rows);
-
-                            trans_retrun_rows++;
-                        }
-
-                        
-
-                        
 </script>
 
        </table>
 
                </div>
-               </div>
+               
             <div>
              <div class="mt-5">
               <div>
@@ -599,7 +484,7 @@
                   </div>
               </div>
              </div>
-             <div class="mt-5">
+    <div class="mt-5">
               <div>
                <div class="card-head card-head-new ">
                 <p>Terms  :</p>
@@ -616,7 +501,7 @@
         Inclusions
        </button>
       </h2>
-      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse"
+      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse "
       aria-labelledby="panelsStayOpen-headingOne">
       <div class="accordion-body">
        <div class="form-floating">
@@ -661,6 +546,36 @@
     <textarea class="form-control" placeholder="Leave a comment here"
     id="buildPackageConditions" name="buildPackageConditions" style="height: 100px">
     v  Rooms and rates are subject to availability at the time of actual booking.
+
+    v  Standard Check-In: 1500 hrs. & Checkout: 1200 hrs.
+
+    v  Early Check-In and Late Check-Out is subject to availability unless booked and confirmed in advance
+
+    v  Normal timing for airport pick-up & drop transfer is 6.00 am to 10.00 pm and extra charges will be applicable except this timings and subject to available of vehicles
+
+    v  Any change in the number of passengers will lead to a revision of the quote.
+
+    v  Vehicle used in the above quote is based on all guests arriving/ departing together in the same flight. In case additional transfers are required, same will be arranged at an additional cost.
+
+    v  Above quotes based on normal ticket prices, rate will be subject to change if we receive any revise rate at later stage
+
+    v  Itinerary might get changed according to the availability of tours & services and it will be informed and updated to the guest once they reach Dubai
+
+    v  OK TO BOARD Message update as per airline’s policy
+
+    v  Visa processing may take anywhere between 3 – 5 working days to get approved
+
+    v  Issuance of visa will be subject to approval from immigration however once visa is applied charges will be applicable and NO refund will be granted.
+
+    v  In case of overstay – Travel agent will be held accountable to settle the fine imposed by immigration which is AED 100.00 Per day (Subject to revision from immigration).
+
+    v  We need pre-payment for Dubai Visa and Insurance and it’s nonrefundable.
+
+    v  if Excursion tickets are not book then Cancellation policy for the ground services will 4 days prior to arrival is free of charge.
+
+    v  Payment to be made in AED as per the rate of exchange applicable on the day of final payment.
+
+    v  Bank Charges AED 80/- will be Charged Mandatory on the total invoice.
   </textarea>
     <!-- <label for="floatingTextarea2">Comments</label> -->
    </div>
@@ -676,20 +591,33 @@
    Cancellations Policy
   </button>
  </h2>
- <div id="collapseOne" class="accordion-collapse collapse"
+ <div id="collapseOne" class="accordion-collapse collapse "
  aria-labelledby="headingOne" data-bs-parent="#accordionExample">
  <div class="accordion-body">
   <div class="form-floating">
    <textarea class="form-control" placeholder="Leave a comment here"
    id="buildPackageCancellations" name="buildPackageCancellations" style="height: 100px">
         Cancellation Terms: FIT
+        Cancellation Terms:  Groups (MICE)
+
+        25% cancellation within 30 days before travel.
+        25% cancellation within 30 days before travel.
+
+        50% cancellation within 10 days before Travel. 
+        50% cancellation within 15 days before Travel.
+
+        75% cancellation within 07 days before Travel.  
+        100% cancellation within 07 days before Travel.
+        
+        Any cancellation within 04 days will lead to 100% cancellation charge. 
+        Any cancellation within 04 days will lead to 100% cancellation charge.
   </textarea>
    <!-- <label for="floatingTextarea2">Comments</label> -->
   </div>
  </div>
 </div>
 </div>
-<!-- <div class="accordion-item ">
+<div class="accordion-item ">
  <h2 class="accordion-header" id="flush-headingTwo">
   <button class="accordion-button collapsed  width-refund" type="button"
   data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
@@ -703,15 +631,13 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
  <div class="form-floating">
   <textarea class="form-control" placeholder="Leave a comment here"
   id="buildPackageRefund" name="buildPackageRefund" style="height: 100px"></textarea>
-  <label for="floatingTextarea2">Comments</label>
  </div>
 </div>
 </div>
-</div> -->
 </div>
 </div>
 </div>
-
+</div>
 
 
 
@@ -723,7 +649,7 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 <div class="last-btn mt-4 mb-4">
 
  <button id="view-proposal-btn" type="button" class="new_btn px-5 mr-4">View Proposal</button> 
- <!-- <a id="view-proposal" type="button" class="new_btn px-5 mr-4" href="<?php// echo base_url();?>/proposal.html">View Proposal</a>  -->
+ <!-- <a id="view-proposal" type="button" class="contact-next-btn mr-4" href="?php echo base_url();?>/proposal.html">View Proposal</a>  -->
 
 </div>
 
@@ -761,150 +687,7 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 ></script>
 <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js"></script>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
- 
 <script>
-
-  function delQuery(){
-    var QueryId = $('#QueryId').val();
-    $.ajax({ 
-            type: "POST",
-            url: "<?php echo base_url()?>Query/deleteQueryData",
-            data : {'query_id' : QueryId},
-            cache: false,
-            dataType: "json",
-            success: function(response)
-            {
-              toastr.success("Cancelled Successfully");
-              location.href =  "<?php echo site_url();?>Query/view_query";
-            }
-        });
-  }
-
-$('#transferSave').on('click', function() {
-
-  
-console.log("save clicked ")
-
-var pax_adult = <?php  echo $view->Packagetravelers; ?>;
-var pax_child = <?php  echo $buildpackage->child; ?>;
-var pax_infants = <?php  echo $buildpackage->infant; ?>;
-// var total_pax = pax_adult + pax_child + pax_infants;
-var total_pax = pax_adult + pax_child;
-
-var QueryId = $('#QueryId').val();
-
-                var internal_transfer_pickup = [];
-                  $(".internal_transfer_pickup").each(function() {
-                    var cat = $(this).val();
-                    if(cat != "" && cat != 'Pickup'){
-                      internal_transfer_pickup.push($.trim(cat));
-                    }
-                  });
-
-                  var internal_transfer_dropoff = [];
-                  $(".internal_transfer_dropoff").each(function() {
-                    var cat = $(this).val();
-                    if(cat != "" && cat != 'Drop Off'){
-                      internal_transfer_dropoff.push($.trim(cat));
-                     }
-                  });
-
-                  var internal_transfer_route = [];
-                  $(".internal_transfer_route").each(function() {
-                    var cat = $(this).val();
-                    if(cat != "" ){
-                      internal_transfer_route.push($.trim(cat));
-                    }
-                  });
-
-                  var internal_transfer_date = [];
-                  $(".internal_transfer_date").each(function() {
-                    var cat = $(this).val();
-                    if(cat != "" ){
-                      internal_transfer_date.push($.trim(cat));
-                    }
-                  });
-                  // return transfer ---------------------------------
-
-                  var return_transfer_pickup = [];
-                  $(".return_transfer_pickup").each(function() {
-                    var cat = $(this).val();
-                    if(cat != "" && cat != 'Pickup'){
-                      return_transfer_pickup.push($.trim(cat));
-                     }
-                  });
-
-                  var return_transfer_dropoff = [];
-                  $(".return_transfer_dropoff").each(function() {
-                    var cat = $(this).val();
-                     if(cat != "" && cat != 'Drop Off'){
-                      return_transfer_dropoff.push($.trim(cat));
-                     }
-                  });
-
-                  var return_transfer_route = [];
-                  $(".return_transfer_route").each(function() {
-                    var cat = $(this).val();
-                    if(cat != "" ){
-                      return_transfer_route.push($.trim(cat));
-                    }
-                  });
-                  
-                  var return_transfer_date = [];
-                  $(".return_transfer_date").each(function() {
-                    var cat = $(this).val();
-                    if(cat != "" ){
-                      return_transfer_date.push($.trim(cat));
-                    }
-                  });
-
-                  var data= [{
-                      'internal_transfer_pickup' : internal_transfer_pickup,
-                      'internal_transfer_dropoff' : internal_transfer_dropoff,
-                      'internal_transfer_route' : internal_transfer_route,
-                      'internal_transfer_date' : internal_transfer_date,
-
-                      'return_transfer_pickup' : return_transfer_pickup,
-                      'return_transfer_dropoff' : return_transfer_dropoff,
-                      'return_transfer_route' : return_transfer_route,
-                      'return_transfer_date' : return_transfer_date,
-
-                    }];
-                   console.log("🚩 ~ file: build_transfer.php ~ line 932 ~ $ ~ data", data)
-                   
-                  
-                    $.ajax({ 
-                        type: "POST",
-                        url: "<?php echo base_url()?>Query/saveTransferDataEdit",
-                        data : {data : data,'pax_adult':pax_adult,'pax_child':pax_child,'pax_infants':pax_infants,'query_id' : QueryId,'query_type' : 'transfer' },
-                        cache: false,
-                        dataType: "json",
-                        success: function(response)
-                        {
-                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 885 ~ $ ~ response", typeof(response.internal_price))
-
-                          $("#price_internal").val(response.internal_price);
-                          var total_price_internal = response.internal_price * total_pax;
-                          $("#total_price_internal").val(total_price_internal);
-
-                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 885 ~ $ ~ response", (total_price_internal))
-                          
-                          $("#price_point").val(response.return_price);
-                          var total_price_return = response.return_price * total_pax;
-                          $("#total_price_point").val(total_price_return);
-
-                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 885 ~ $ ~ response", (total_price_return))
-
-                          
-                          toastr.success("Transfer Details Saved Successfully");
-
-                        }
-                    });
-});
-
-
   $('#buildHotelCity').on('change', function() {
     var city = $('#buildHotelCity').val();
     $("#buildHotelName").empty();
@@ -992,8 +775,27 @@ $('#buildHotelName').on('change', function() {
         initSample();
         $('.js-example-basic-multiple').select2();
     </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 <script>
+
+function delQuery(){
+    var QueryId = $('#QueryId').val();
+    $.ajax({ 
+            type: "POST",
+            url: "<?php echo base_url()?>Query/deleteQueryData",
+            data : {'query_id' : QueryId},
+            cache: false,
+            dataType: "json",
+            success: function(response)
+            {
+              toastr.success("Cancelled Successfully");
+              location.href =  "<?php echo site_url();?>Query/view_query";
+            }
+        });
+  }
+  
      function getvisaprice(){
       var visa_category_drop_down =  $("#visa_category_drop_down").val();
       var entry_type = $("#entry_type").val();
@@ -1001,19 +803,21 @@ $('#buildHotelName').on('change', function() {
       var pax_child = <?php  echo $buildpackage->child; ?>;
       var pax_infant = <?php echo $buildpackage->infant;?>;
       var visa_validity =  $("#visa_validity").val();
-      console.log(pax_adult + "|" + entry_type + "|" + visa_validity);
+      var QueryId = $('#QueryId').val();
+      
       $.ajax({
           type:"POST",
           dataType: "json",
           url:'<?php echo site_url();?>/Query/getVisaPrice',
-          data:{'pax_adult':pax_adult,'pax_child':pax_child,'pax_infant':pax_infant,'visa_category_drop_down':visa_category_drop_down,'visa_validity':visa_validity,'entry_type':entry_type},
+          data:{'query_id':QueryId,'pax_adult':pax_adult,'query_type': 'visa','pax_child':pax_child,'pax_infant':pax_infant,'visa_category_drop_down':visa_category_drop_down,'visa_validity':visa_validity,'entry_type':entry_type},
           success:function(response){
               console.log(response);
               
               $("#total_pax_visa_price_adult").val(response.per_pax_adult_amt);
               $("#total_pax_visa_price_child").val(response.per_pax_child_amt);
               $("#total_pax_visa_price_infant").val(response.per_pax_infant_amt);
-
+                console.log(response.per_pax_child_amt);
+                toastr.success("Visa Saved Successfully");
              
 
 
@@ -1048,7 +852,7 @@ $('#buildHotelName').on('change', function() {
             $("#total_pax_meal_child").val(response.child_price);
 
 
-
+            toastr.success("Visa Saved Successfully");
             
           }
         })
@@ -1357,13 +1161,20 @@ console.log(response);
     </script>
 
     <script type="text/javascript">
-        $("#visa_status").on("change",function(){
-            // alert(this.value);
-            $("#visadisplay").show();
-        })
-        $("#visa_status1").on("change",function(){
-            $("#visadisplay").hide();
-        })
+        // $("#visa_status").on("change",function(){
+        //     // alert(this.value);
+        //     $("#visadisplay").show();
+        // })
+        // $("#visa_status1").on("change",function(){
+        //     $("#visadisplay").hide();
+        // })
+        // $("#visa_status1").on("change",function(){
+        //     // alert(this.value);
+        //     $("#visadisplay").show();
+        // })
+        // $("#visa_status").on("change",function(){
+        //     $("#visadisplay").hide();
+        // })
 
         $("#excursion_status").on("change",function(){
             // alert(this.value);
@@ -1374,7 +1185,7 @@ console.log(response);
         })
 
        $('#pickupinternal').on('change', function() {
-
+        alert(this.value);
         $.ajax({
           type:"POST",
           dataType: "json",
@@ -1403,6 +1214,7 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
        });
 
        $('#pickuppoint').on('change', function() {
+        alert(this.value);
         $.ajax({
           type:"POST",
           dataType: "json",
@@ -1429,195 +1241,6 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
 
         });
        });
-
-      var pax_adult_count1 = <?php  echo $buildpackage->adult; ?>;
-      var pax_child_count1 = <?php  echo $buildpackage->child; ?>;
-      var pax_infant_count1 = <?php echo $buildpackage->infant;?>;
-      var total_pax1 = pax_adult_count1 + pax_child_count1 + 0;
-       $.ajax({
-          type:"POST",
-          dataType: "json",
-          url:'<?php echo site_url();?>/query/fetchPickup',
-          data:{'pax': total_pax1},
-          success:function(response){
-            $("#pickupinternal").html('<option value="Pickup">Pickup</option>');
-            console.log(response.data.length);
-            if(response.data.length > 0){
-            var options=""
-            for(var i=0;i<response.data.length;i++){
-                console.log(response.data[i].start_city);
-                options+='<option value="'+response.data[i].start_city+'">'+response.data[i].start_city+'</option>';
-            }
-            } else {
-              var options="<option value=''>No Data Found</option>"
-            }
-          $("#pickupinternal").append(options);
-          }
-         });
-
-         
-         $.ajax({
-          type:"POST",
-          dataType: "json",
-          url:'<?php echo site_url();?>/query/fetchPickup1',
-          data:{'pax': total_pax1},
-          success:function(response){
-            $("#pickuppoint").html('<option value="Pickup">Pickup</option>');
-            if(response.data.length > 0){
-            var options=""
-            for(var i=0;i<response.data.length;i++){
-                console.log(response.data[i].start_city);
-                options+='<option value="'+response.data[i].start_city+'">'+response.data[i].start_city+'</option>';
-            }
-          } else {
-            var options="<option value=''>No Data Found</option>"
-          }
-          $("#pickuppoint").append(options);
-          }
-         });
-
-         function pickupFromReturn(id){
-          $.ajax({
-            type:"POST",
-            dataType: "json",
-            url:'<?php echo site_url();?>/query/fetchPickup1',
-            data:{'pax': total_pax1},
-            success:function(response){
-              $("#pickuppoint"+id).html('<option value="Pickup">Pickup</option>');
-              if(response.data.length > 0){
-              var options=""
-              for(var i=0;i<response.data.length;i++){
-                  console.log(response.data[i].start_city);
-                  options+='<option value="'+response.data[i].start_city+'">'+response.data[i].start_city+'</option>';
-              }
-              } else {
-            var options="<option value=''>No Data Found</option>"
-          }
-            $("#pickuppoint"+id).append(options);
-            }
-          });
-       }
-     
-       function pickupFromTransfer(id){
-       $.ajax({
-          type:"POST",
-          dataType: "json",
-          url:'<?php echo site_url();?>/query/fetchPickup',
-          data:{'pax': total_pax1},
-          success:function(response){
-            $("#pickupinternal"+id).html('<option value="Pickup">Pickup</option>');
-            if(response.data.length > 0){
-            var options=""
-            for(var i=0;i<response.data.length;i++){
-                console.log(response.data[i].start_city);
-                options+='<option value="'+response.data[i].start_city+'">'+response.data[i].start_city+'</option>';
-            }
-          } else {
-            var options="<option value=''>No Data Found</option>"
-          }
-          $("#pickupinternal"+id).append(options);
-          }
-         });
-        }
-
-       function pickupInternal(id) {
-          let value = document.getElementById('pickupinternal'+id).value;
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: '<?php echo site_url(); ?>/query/fetchdropoff',
-                data: {
-                    'pickup': document.getElementById('pickupinternal'+id).value,
-                },
-                
-                success: function(response) {
-                    $("#dropoffinternal"+id).html('<option value="dropoff">dropoff</option>');
-                    console.log(response.data.length);
-
-                    var options = ""
-                    for (var i = 0; i < response.data.length; i++) {
-                        console.log(response.data[i].dest_city);
-                        options += '<option value="' + response.data[i].dest_city + '">' + response.data[i].dest_city + '</option>';
-
-                    }
-                    $("#dropoffinternal"+id).append(options);
-                }
-
-            });
-    }
-
-    function dropInternal(id) {
-        let dropValue = document.getElementById('dropoffinternal'+id).value;
-        var value=$("#pickupinternal"+id).val();
-        var pax_internal=$("#pax_internal"+id).val();
-        
-        $.ajax({
-          type:"POST",
-          dataType: "json",
-          url:'<?php echo site_url();?>/query/fetchprice',
-          data:{'dropoff':dropValue ,'pickup':value,'person':pax_internal},
-          success:function(response){
-            $("#route_nameinternal"+id).val(response.route_name);
-           // $("#pax_count_internal").val(response.data[0].seat_capacity);
-             $("#price_internal"+id).val(response.data);
-               var total_price=response.data*pax_internal;
-             $("#total_price_internal"+id).val(total_price);
-           }
-        });
-
-      }
-
-
-
-
-
-      function pickupReturn(id){
-        let value = document.getElementById('pickuppoint'+id).value;
-        $.ajax({
-          type:"POST",
-          dataType: "json",
-          url:'<?php echo site_url();?>/query/fetchdropoff1',
-          data:{'pickup': value },
-          success:function(response){
-            $("#dropoffpoint"+id).html('<option value="dropoff">dropoff</option>');
-            var options=""
-            for(var i=0;i<response.data.length;i++){
-            options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest_city+'</option>';
-            }
-
-
-        $("#dropoffpoint"+id).append(options);
-            // $("#ProposalPage").html(response);
-            // $("#FullPage").hide();
-          }
-
-
-        });
-       }
-
-
-       function dropReturn(id) {
-        let dropValue = document.getElementById('dropoffpoint'+id).value;
-        var value=$("#pickuppoint"+id).val();
-        var pax_internal=$("#pax_point"+id).val();
-        console.log("🚩 ~ file: build_package.php ~ line 2448 ~ dropReturn ~ pax_internal", pax_internal)
-        
-        $.ajax({
-          type:"POST",
-          dataType: "json",
-          url:'<?php echo site_url();?>/query/fetchprice1',
-          data:{'dropoff':dropValue ,'pickup':value,'person':pax_internal},
-          success:function(response){
-            console.log("🚩 ~ file: build_package.php ~ line 2455 ~ dropReturn ~ response", response)
-             $("#route_namepoint"+id).val(response.route_name);
-             $("#price_point"+id).val(response.data);
-               var total_price=response.data*pax_internal;
-             $("#total_price_point"+id).val(total_price);
-
-           }
-        });
-
-      }
 
     
 
@@ -1660,10 +1283,6 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
              $("#price_point").val(response.data);
                var total_price=response.data*pax_internal;
              $("#total_price_point").val(total_price);
-
-             $("#pickuppoint1").val(response.row_data.start_city1);
-             $("#dropoffpoint1").val(response.row_data.dest_city1);
-             $("#route_namepoint1").val(response.row_data.route_name1);
             //var pax_internal=$("#pax_internal").val();
             // alert(pax_internal);
             // alert(response.data[0].seat_capacity);
@@ -1697,44 +1316,6 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
        });
     
 
-       if($('#TrasportTypeCab').is(':checked'))
-        {
-          
-         $('#PvtCab').show();
-        }
-        else
-        {
-          $("#pickupinternal").val('Pickup').trigger("change"); 
-          $("#dropoffinternal").val('dropoff').trigger("change");
-          $("#route_nameinternal").val('');
-          $("#price_internal").val(0);
-          $("#total_price_internal").val(0);
-         $('#PvtCab').hide();
-        }
-
-        if($('#TrasportTypeSic').is(':checked'))
-        {
-
-         
-         $('#Sic1').show();
-         $('#Sic').show();
-        }
-        else
-        {
-          $("#pickuppoint").val('Pickup').trigger("change"); 
-          $("#dropoffpoint").val('dropoff').trigger("change"); 
-          $("#route_namepoint").val('');
-          $("#pickuppoint1").val('');
-          $("#dropoffpoint1").val('');
-          $("#route_namepoint1").val('');
-
-          $("#price_point").val(0);
-          $("#total_price_point").val(0);
-         $('#Sic').hide();
-         $('#Sic').hide();
-        }
-
-
      $("input[name='TransType']").change(function() {
     
         var name = $(this).val();
@@ -1742,16 +1323,10 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
        {
         if($('#TrasportTypeCab').is(':checked'))
         {
-          
          $('#PvtCab').show();
         }
         else
         {
-          $("#pickupinternal").val('Pickup').trigger("change"); 
-          $("#dropoffinternal").val('dropoff').trigger("change");
-          $("#route_nameinternal").val('');
-          $("#price_internal").val(0);
-          $("#total_price_internal").val(0);
          $('#PvtCab').hide();
         }
        }
@@ -1759,23 +1334,10 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
        {
         if($('#TrasportTypeSic').is(':checked'))
         {
-
-         
-         $('#Sic1').show();
          $('#Sic').show();
         }
         else
         {
-          $("#pickuppoint").val('Pickup').trigger("change"); 
-          $("#dropoffpoint").val('dropoff').trigger("change"); 
-          $("#route_namepoint").val('');
-          $("#pickuppoint1").val('');
-          $("#dropoffpoint1").val('');
-          $("#route_namepoint1").val('');
-
-          $("#price_point").val(0);
-          $("#total_price_point").val(0);
-         $('#Sic').hide();
          $('#Sic').hide();
         }
        }
@@ -2140,6 +1702,7 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                      
 </script>
 </script>
+   
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script>
 	CKEDITOR.replace('buildPackageInclusions');
@@ -2165,7 +1728,6 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
     transition: transform .2s ease-in-out,-webkit-transform .2s ease-in-out;
 }
 </style>
-
 
 
 

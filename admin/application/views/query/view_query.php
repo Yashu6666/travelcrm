@@ -167,10 +167,10 @@
 													<?php $build_type = "buildExcursionEdit" ?>
 
 												<?php elseif($val['Description'] == "Package") : ?>
-													<?php $build_type = "buildPackage" ?>
+													<?php $build_type = "buildPackageEdit" ?>
 
 												<?php elseif($val['Description'] == "Hotel") : ?>
-													<?php $build_type = "buildHotel" ?>
+													<?php $build_type = "buildHotelEdit" ?>
 
 												<?php elseif($val['Description'] == "Visa") : ?>
 													<?php $build_type = "buildVisaEdit" ?>
@@ -374,7 +374,7 @@
 
                                 <div class="txtfieldMain textfieldMain_mobile form-group active" style="border: 0px solid #000;">
                                     <label for="b2bagent_mobilenum" class="mobilenumber_labelshow"><b>Mobile Number</b> <span class="colorRed">*</span> </label>
-                                   <input type="tel" pattern="[0-9]{10}" minlength="10" maxlength="10" class="form-control whbg" name="b2bmobileNumber" id="phoenVal" value="" placeholder="Mobile Number" required>
+                                   <input type="tel" class="form-control whbg" name="b2bmobileNumber" id="phoenVal" value="" placeholder="Mobile Number" required>
 	 <span id="spanPhone" class="spanCompany"></span>
                                
                             </div>

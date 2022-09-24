@@ -613,6 +613,7 @@ class Query extends CI_Controller
 		// $data['excursion']= $this->db->get('excursion')->result();
 		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
 		$data['excursion_pvt'] = $this->db->query("SELECT * FROM excursion WHERE type='PVT' ")->result();
+		$data['excursion_TKT'] = $this->db->query("SELECT * FROM excursion WHERE type='TKT' ")->result();
 
 		$data['listcities'] = $this->db->get('city_master')->result();
 
@@ -621,6 +622,80 @@ class Query extends CI_Controller
 		// echo '<pre>';print_r($data);exit;	
 		$this->load->view('query/build_package', $data);
 	}
+
+	public function buildPackageEdit($q_id = '')
+	{
+		//echo '<pre>';print_r($q_id);exit;
+		$data["internal_query"] = $this->db->where('query_id', $q_id)->where('transfer_type', 'internal')->get('query_transfer')->result();
+		$data['return_query'] = $this->db->where('query_id', $q_id)->where('transfer_type', 'return')->get('query_transfer')->result();
+		
+		$data["visa_query"] = $this->db->where('query_id', $q_id)->get('query_visa')->result();
+
+		$data["pvt_query"] = $this->db->where('query_id', $q_id)->where('excursion_type', 'PVT')->get('query_excursion')->result();
+		$data['sic_query'] = $this->db->where('query_id', $q_id)->where('excursion_type', 'SIC')->get('query_excursion')->result();
+		$data['tkt_query'] = $this->db->where('query_id', $q_id)->where('excursion_type', 'TKT')->get('query_excursion')->result();
+		
+		$data["meal_query"] = $this->db->where('query_id', $q_id)->get('query_meal')->result();
+
+		$data["hotel_query"] = $this->db->where('query_id', $q_id)->get('query_hotel')->result();
+
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
+		qp.child,cb.reportsTo,cb.b2bEmail,qp.room");
+
+		$this->db->from("b2bcustomerquery cb");
+
+		$this->db->where('qp.queryId', $q_id);
+		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+		$data['view'] = $this->db->get()->row();
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+		$data['listSuppliers'] = $this->db->get('supplier')->result();
+		$data['transfer_route'] = $this->db->query("SELECT * FROM transfer_route where transport_type='oneway' AND cost_type='Normal' group by start_city,dest_city")->result();
+		$data['transfer_route1'] = $this->db->query("SELECT * FROM transfer_route where transport_type='round' AND cost_type='Normal' group by start_city,dest_city")->result();
+		// $data['hours_based'] = $this->db->query("SELECT * FROM transfer_route where  cost_type='HourBased'")->result();
+		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+
+		// $data['excursion']= $this->db->get('excursion')->result();
+		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
+		$data['excursion_pvt'] = $this->db->query("SELECT * FROM excursion WHERE type='PVT' ")->result();
+		$data['excursion_TKT'] = $this->db->query("SELECT * FROM excursion WHERE type='TKT' ")->result();
+
+		$data['listcities'] = $this->db->get('city_master')->result();
+
+		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
+		
+		// echo '<pre>';print_r($data);exit;	
+		$this->load->view('query/edit/build_package_edit', $data);
+	}
+
+	public function buildHotelEdit($q_id = '')
+	{
+		//echo '<pre>';print_r($q_id);exit;
+		$data["hotel_query"] = $this->db->where('query_id', $q_id)->get('query_hotel')->result();
+
+		//echo '<pre>';print_r($q_id);exit;
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,qp.room,
+		qp.child,cb.reportsTo,cb.b2bEmail");
+
+		$this->db->from("b2bcustomerquery cb");
+
+		$this->db->where('qp.queryId', $q_id);
+		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+		$data['view'] = $this->db->get()->row();
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+		$data['listSuppliers'] = $this->db->get('supplier')->result();
+		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
+		
+		// echo '<pre>';print_r($data);exit;	
+		$this->load->view('query/edit/build_hotel_edit', $data);
+	}
+
+
 	public function get_hotels()
 	{
 
@@ -1468,6 +1543,95 @@ class Query extends CI_Controller
 		}
 	}
 
+	public function getExcursionTKTCalculations(){
+
+		
+		$excursion_types_TKT =  $this->input->post('excursion_types_TKT');
+        $excursion_name_TKT =    $this->input->post('excursion_name_TKT');
+        $excursion_adults_TKT =  $this->input->post('excursion_adults_TKT');
+        $excursion_childs_TKT =  $this->input->post('excursion_childs_TKT');
+        $excursion_infants_TKT = $this->input->post('excursion_infants_TKT');
+		$total_pax = $excursion_adults_TKT+$excursion_childs_TKT+$excursion_infants_TKT;
+	
+        $hotel_pickup = $this->input->post('hotel_pickup');
+
+		$query_id = $this->input->post('query_id');
+		$query_type = $this->input->post('query_type');
+
+		$excursion=array();
+		$excursion_TKT_data =array();
+		$total_adultprice =0; $total_childprice= 0;$total_infantprice= 0;
+
+		if(!empty($excursion_name_TKT)){
+
+		if(!empty($excursion_name_TKT)){
+				foreach($excursion_name_TKT as $k => $val){
+					$excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_TKT[$k]."' AND type='".$excursion_types_TKT."' AND pax >=$total_pax  LIMIT 1")->row();
+					if(empty($excursion)){
+						$excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_TKT[$k]."' AND type='".$excursion_types_TKT."' AND pax <=$total_pax  LIMIT 1")->row();
+					}
+					if($excursion_adults_TKT) {
+						$total_adultprice += (int)$excursion->adultprice * (int)$excursion_adults_TKT;
+					}
+					if($excursion_childs_TKT) {
+						$total_childprice += (int)$excursion->childprice * (int)$excursion_childs_TKT;
+					}
+					if($excursion_infants_TKT) {
+						$total_infantprice += (int)$excursion->infantprice * (int)$excursion_infants_TKT;
+					}
+
+
+				}
+			}
+
+			$excursion_data = [
+				'query_id' =>  $query_id ,
+				'hotel_pickup' =>  $hotel_pickup ,
+				'query_type' =>  $query_type ,
+				'excursion_type' =>  $excursion_types_TKT,
+				'excursion_name' =>  implode(',',$excursion_name_TKT) ,
+				'adult_pax' =>  $excursion_adults_TKT ,
+				'child_pax' =>   $excursion_childs_TKT,
+				'infant_pax' =>  $excursion_infants_TKT ,
+				'adult_price' => $total_adultprice ,
+				'child_price'  =>  $total_childprice ,
+				'infant_price' => $total_infantprice  ,
+				'created_by' =>   $this->session->userdata('admin_id'),
+			];
+	
+			// print_r($excursion_data);return;
+	
+			$query = $this->db->where('query_id', $query_id)->where('excursion_type', $excursion_types_TKT)->get('query_excursion');
+			if ($query->num_rows() > 0) {
+				$this->db->where('query_id', $query_id);
+				$this->db->where('excursion_type', $excursion_types_TKT);
+				$this->db->update('query_excursion',$excursion_data);
+			} else {
+				$this->db->insert('query_excursion', $excursion_data);
+			}
+
+				$excursion_TKT_data['total_adultprice'] = $total_adultprice;
+
+				$excursion_TKT_data['total_childprice'] = $total_childprice;
+
+				$excursion_TKT_data['total_infantprice'] = $total_infantprice;
+
+				echo json_encode($excursion_TKT_data);
+
+		} else {
+			$query = $this->db->where('query_id', $query_id)->where('excursion_type', $excursion_types_TKT)->get('query_excursion');
+			if ($query->num_rows() > 0) {
+				$this->db->where('query_id', $query_id)->where('excursion_type', $excursion_types_TKT)->delete('query_excursion');
+			} 
+
+				$excursion_TKT_data['total_adultprice'] = 0;
+				$excursion_TKT_data['total_childprice'] = 0;
+				$excursion_TKT_data['total_infantprice'] = 0;
+				
+				echo json_encode($excursion_TKT_data);
+		}
+	}
+
 
 	public function getExcursionSICCalculation()
 	{
@@ -1865,6 +2029,7 @@ class Query extends CI_Controller
 		// $data['excursion']= $this->db->get('excursion')->result();
 		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
 		$data['excursion_pvt'] = $this->db->query("SELECT * FROM excursion WHERE type='PVT' ")->result();
+		$data['excursion_TKT'] = $this->db->query("SELECT * FROM excursion WHERE type='TKT' ")->result();
 
 		$data['listcities'] = $this->db->get('city_master')->result();
 		
@@ -1879,6 +2044,7 @@ class Query extends CI_Controller
 
 		$data["pvt_query"] = $this->db->where('query_id', $q_id)->where('excursion_type', 'PVT')->get('query_excursion')->result();
 		$data['sic_query'] = $this->db->where('query_id', $q_id)->where('excursion_type', 'SIC')->get('query_excursion')->result();
+		$data['tkt_query'] = $this->db->where('query_id', $q_id)->where('excursion_type', 'TKT')->get('query_excursion')->result();
 
 		//echo '<pre>';print_r($q_id);exit;
 		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
@@ -1903,6 +2069,7 @@ class Query extends CI_Controller
 		// $data['excursion']= $this->db->get('excursion')->result();
 		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
 		$data['excursion_pvt'] = $this->db->query("SELECT * FROM excursion WHERE type='PVT' ")->result();
+		$data['excursion_tkt'] = $this->db->query("SELECT * FROM excursion WHERE type='TKT' ")->result();
 
 		$data['listcities'] = $this->db->get('city_master')->result();
 		

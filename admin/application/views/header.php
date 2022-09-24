@@ -78,7 +78,7 @@
 			<div class="page-header-inner ">
 				<!-- logo start -->
 				<div class="page-logo">
-					<a href="index.html">
+					<a href="<?php echo base_url();?>login/dashboard">
 						<!-- <span class="logo-default"><img src="<?php echo base_url();?>public/image/logo.png" style="width: 225px;margin-left: -23px !important;margin-top: -8px !important;background:white !important;"/></span> </a> -->
 						<span class="logo-default"><img src="<?php echo base_url();?>public/image/logo.png" style="width: 230px;"/></span> </a>
 				</div>

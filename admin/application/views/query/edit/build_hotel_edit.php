@@ -28,13 +28,18 @@
      </ol>
     </div>
    </div>
-   
+
    <!-- <div class="page-bar ">
    <button type="button" id="del_query" onclick="delQuery()" class="new_btn px-5 float-right">Cancel</button>
    </div> -->
 
-   <form id="proposal-form" action="<?php echo site_url();?>query/CreateProposalExcursion" method="post"> 
-   <input type="hidden" id="totalprice_excursion" name="totalprice_excursion" value="0" />
+   <form id="proposal-form" action="<?php echo site_url();?>query/CreateProposalHotel" method="post"> 
+   <input type="hidden" id="hotel_name_in" name="hotel_name_in" value="" />
+   <input type="hidden" id="rows_count" name="rows_count" value="0"/>
+   <input type="hidden" id="all_cities" name="all_cities" value=""/>
+   <input type="hidden" id="totalprice_hotel" name="totalprice_hotel" value="0"/>
+
+
 
    <div class="row mt-5">
     <div class="col-md-12">
@@ -42,6 +47,7 @@
       <div class=" d-flex justify-content-center align-itom-center">
 
        <table class="table table-bordered mt-5">
+        
         <tbody>
          <tr>
           <th scope="row"><b>Company Name</b> </th>
@@ -59,9 +65,9 @@
          </tr> -->
          <tr>
           <th><b>Check In</b></th>
-          <td><?php echo date('d-m-Y', strtotime($view->specificDate)) ;?></td>
+          <td><?php echo date('d M Y', strtotime($view->specificDate)) ;?></td>
           <th><b>Check Out</b></th>
-          <td><?php echo date('d-m-Y', strtotime($buildpackage->noDaysFrom))  ?></td>
+          <td><?php echo date('d M Y', strtotime($buildpackage->noDaysFrom))  ?></td>
           <th><b>No of Nights</b></th>
           <td><?php echo $buildpackage->night?></td>
          </tr>
@@ -88,184 +94,260 @@
        
         <div class="mt-5">
           <div>
-           
+           <div class="card-head card-head-new">
+            <p>Hotel</p>
            </div>
-          </div>
-         
-             <div class="card-head card-head-new">
-             <p style="margin-top:20px">Excursion
-               
-        </div>
-            <div class="row mt-4 mr-3 ml-3 mb-3 ">
-               <div>
-               <div class="d-flex">
-                <label for="" class="">Hotel Pickup</label>
-                <input type="text" class="form-control ml-4 w-25" id="ex_hotel_pickup" name="ex_hotel_pickup" value="<?php echo !empty($sic_query[0]->hotel_pickup) ? 
-                 $sic_query[0]->hotel_pickup : ( !empty($pvt_query[0]->hotel_pickup) ? $pvt_query[0]->hotel_pickup : $tkt_query[0]->hotel_pickup) ?>" />
+           <div class="row mt-5 mr-3 ml-3 mb-3">
+            <div>
+             <table class="table" id="addrows">
+              <div class="alert alert-danger noOfDaysAlertcls" style="display:none;">
+                <strong>Exceed !</strong> You cannot add more than <b id="noOfDaysAlert"></b> days.
               </div>
-              <td><input type="hidden" id="hidden_total_pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" />
-
-                <table id="faqs" class="table table-borderless">
-            <thead>
-             <tr>
-           
-             <th>Excursion Type</th>
-              <th>Excursion Name</th>
-              <th>Adult</th>
-              <th>Child</th>
-              <th>Infant</th>
-              <th>Action</th>
-             </tr>
-
-            </thead>
-            <tbody>
-             <tbody>
-              <tr id="myTableRow">
-              <td>
-               <div>
-                <select  id="excursion_type_SIC"data-mdl-for="sample2" class="form-control"
-                value="SIC"  tabIndex="-1" name="excursion_type">
-                <option value="SIC">SIC</option>
-               </select>
-
+              <div class="alert alert-danger noOfDaysAlertcls2" id="hotelNoOfDays" style="display:none;">
+                <strong>You Should add Hotels for <b id="noOfDaysAlert"><?php echo $buildpackage->night?></b> days.
               </div>
-             </td>
-              <td>
-               <div>
-                <select required multiple="" id="excursion_name_SIC"  name="excursion_name_SIC[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" >
-                <!-- <select id="excursion_name" data-mdl-for="sample2" class="form-control"
-                value=""  tabIndex="-1" name="excursion"> -->
-                <!-- <option>Select Excursion</option> -->
-                <?php $sic_arr = explode(",",$sic_query[0]->excursion_name) ;?>
-
-                <?php foreach($excursion_sic as $value){ ?>
-                <option <?php echo in_array($value->tourname, $sic_arr) ? "selected" : "" ?> value="<?php echo $value->tourname ?>"><?php echo $value->tourname ?></option>
-            <?php } ?>
-               </select>
-
+              <div style="float:right;">      
+                  <a id="" class="new_btn px-3 ml-0 add-rows" onclick="addrows()">add</a>
+                  <!-- <button type="button" class="new_btn px-5 ml-0 add-rows"  id="addrowsbtn">Add row</button> -->
+                  
               </div>
-             </td>
-       
-          
+              <thead>
+               <tr>
+                <th>Hotel City</th>
+                <th>Check In</th>
+                <th>Nights</th>
+                <th>Category</th>
+                <th>Hotel Name</th>
+                <th>Room Type </th>
+                <th>Bed Type </th>
+                <th>Type </th>
+                <th>Sharing Type </th>
+                <th>Extra </th>
+                <!-- <th>Action</th> -->
 
+               </tr>
+              </thead>
+            
+             
+              <tbody>
+              <?php foreach(explode(",",$hotel_query[0]->hotel_id) as $key => $val) : ?>
 
-           <td><input id="excursion_adult_SIC" type="text" placeholder="0" class="form-control" name="adult" value="<?php echo $view->Packagetravelers;?>" disabled>
-           </td>
-           <td><input id="excursion_child_SIC" type="text" placeholder="0" class="form-control" name="child" value="<?php echo $buildpackage->child;?>" disabled>
-           </td>
-           <td><input id="excursion_infant_SIC" type="text" placeholder="0" class="form-control" name="infant" value="<?php echo $buildpackage->infant;?>" disabled>  
-           </td>
-           <td><button id="sic_cal" type="button" onclick="excursionSICcalculations()" class="new_btn px-3">Save</button>
-                </td>
-         </tr>
+                  <tr id="hotelRow<?php $key?>">
+                  <td>
+                    <select class="form-control get-hotel get_all_city"  required="" name="buildHotelCity[]" id="buildHotelCity" onchange="get_hotel_name('buildHotelCity','');">
+                          <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Dubai" ? "selected" : "" ?> value="Dubai">Dubai</option>
+                          <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "AbuDhabi" ? "selected" : "" ?> value="AbuDhabi">Abu Dhabi</option>
+                          <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Sharjah" ? "selected" : "" ?> value="Sharjah">Sharjah</option>
+                          <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Ajman" ? "selected" : "" ?> value="Ajman">Ajman</option>
+                          <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Sir Baniyas" ? "selected" : "" ?> value="Sir Baniyas">Sir Baniyas</option>
+                          <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Umm Al-Quwain" ? "selected" : "" ?> value="Umm Al-Quwain">Umm Al-Quwain</option>
+                          <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Fujairah" ? "selected" : "" ?> value="Fujairah">Fujairah</option>
+                          <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Ras Al Khaimah" ? "selected" : "" ?> value="Ras Al Khaimah">Ras Al Khaimah</option>
+                          <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Al Ain" ? "selected" : "" ?> value="Al Ain">Al Ain</option>
+                      </select>
+                  </td>
+                  <td>
+                    <input class="form-control get_CheckIn" type="date" value="<?php echo explode(",",$hotel_query[0]->checkin)[$key];?>" name="buildCheckIns[]" id="buildCheckIn" readonly>
+                    <input type="hidden" value="<?php echo $view->room;?>" name="no_of_room" id="no_of_room">
+                  </td>
+                  <td>
+                      <select class="form-control bnights get_no_nights" id="buildNoNights"  name="buildNoNightss[]" required="">
+                          <option value="<?php echo explode(",",$hotel_query[0]->nights)[$key];?>"><?php echo explode(",",$hotel_query[0]->nights)[$key];?></option>
+                          <?php $count_days=1;
+                          for($count_days=1;  $count_days<=$buildpackage->night; $count_days++){
+                          echo "<option value='".$count_days."'>".$count_days."</option>";
+                          }?>                                           
+                      </select>
+                  </td>
+                  <td>
+                  <div>
+                  <select data-mdl-for="sample2" class="form-control get_category" value=""  id="Category" tabIndex="-1" name="Category[]" onchange="get_hotel_name('Category','');">
 
-         </tbody>
-         <tbody>
-              <tr id="myTableRow">
-              <td>
-               <div>
-               <!-- <select required multiple="" id="excursion_type"  name="excursion_type[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" value="PVT"> -->
+                  <option <?php echo explode(",",$hotel_query[0]->category)[$key] == "1" ? "selected" : "" ?> value="1">1</option>
+                  <option <?php echo explode(",",$hotel_query[0]->category)[$key] == "2" ? "selected" : "" ?> value="2">2</option>
+                  <option <?php echo explode(",",$hotel_query[0]->category)[$key] == "3" ? "selected" : "" ?> value="3">3</option>
+                  <option <?php echo explode(",",$hotel_query[0]->category)[$key] == "4" ? "selected" : "" ?> value="4">4</option>
+                  <option <?php echo explode(",",$hotel_query[0]->category)[$key] == "5" ? "selected" : "" ?> value="5">5</option>
+                  </select>
+                  </div>
+                  </td>
+                  <td>
+                  <select class="form-control get_buildHotelName" id="buildHotelName"  required="" name="buildHotelName[]" onchange="get_route_name('buildHotelName','');"  required>
+                    <option value="<?php echo explode(",",$hotel_query[0]->hotel_id)[$key];?>"><?php echo explode(",",$hotel_query[0]->hotel_name)[$key];?></option>
+                  </select>
+                  </td>
+                  <td>
+                  <select class="form-control get_buildRoomType" id="buildRoomType"  required="" name="buildRoomType[]" required>
+                  <option value="<?php echo explode(",",$hotel_query[0]->room_type)[$key];?>"><?php echo explode(",",$hotel_query[0]->room_type)[$key];?></option>
+                    </select>
+                  </td>
+                  <td>
+                  <select class="form-control get_bed_type" id="buildBedType" name="buildBedType[]" required>
+                        <option <?php echo explode(",",$hotel_query[0]->bed_type)[$key] == "Double" ? "selected" : "" ?> value="Double" >Double</option>                                             
+                        <option <?php echo explode(",",$hotel_query[0]->bed_type)[$key] == "Single" ? "selected" : "" ?> value ="Single">Single</option> 
+                    </select>
+                  </td> 
+                  <td>
+                  <select class="form-control get_room_types" id="room_types" name="build_room_types[]" required>
+                        <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "BB" ? "selected" : "" ?> value ="BB">BB</option> 
+                        <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "Room Only" ? "selected" : "" ?> value ="Room Only">Room Only</option> 
+                        <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "HB" ? "selected" : "" ?> value="HB" >HB</option>                                             
+                        <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "FB" ? "selected" : "" ?> value="FB" >FB</option>                                             
+                    </select>
+                  </td> 
+                  <td>
+                  <select class="form-control room_sharing_types" id="room_sharing_types" name="room_sharing_types[]">
+                        <option <?php echo explode(",",$hotel_query[0]->sharing_type)[$key] == "triple_sharing" ? "selected" : "" ?> value ="triple_sharing">Triple Sharing</option> 
+                        <option <?php echo explode(",",$hotel_query[0]->sharing_type)[$key] == "double_sharing" ? "selected" : "" ?> value="double_sharing" >Double Sharing</option>                                             
+                    </select>
+                    </td>
+                  <td>
 
-                <select  id="excursion_type_PVT"data-mdl-for="sample2" class="form-control"
-                value="PVT"  tabIndex="-1" name="excursion_type">
-                <option value="PVT">PVT</option>
-               </select>
-              </div>
-             </td>
+                    <div class="">
+                    <p><input type="checkbox" id="extra_with_adult" <?php  echo $buildpackage->adult > 2 ? 'checked' : ''; ?> name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"> Ex. adult</p>
+                    <p><input type="checkbox" <?php  echo $buildpackage->child > 0 ? 'checked' : ''; ?> id="extra_with_child" name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child"> CWB</p>
+                    <p><input type="checkbox" <?php  echo $buildpackage->infant > 0 ? 'checked' : ''; ?> id="extra_without_bed" name="extra_check[]" value="extra_without_bed" class="check-extra extra_without_bed"> CNB</p>
+                    </div>
+
+                  </td>     
+                  <?php if($key != 0) : ?>
+                  <td><button class="btn btn-danger btn-xs" type="button" onclick="removeRow('hotelRow<?php $key?>')"><i class="fa fa-trash"></i></button> </td>
+                  <?php endif ?>
+
+                  </tr>
+
+              <?php endforeach ?>
+              </tbody>
               
-              <td>
-               <div>
-               <select required multiple="multiple" id="excursion_name_PVT"  name="excursion_name_PVT[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                <!-- <select id="excursion_name" data-mdl-for="sample2" class="form-control"
-                value=""  tabIndex="-1" name="excursion"> -->
-                <!-- <option>Select Excursion</option> -->
+             </table>
+             <div style="float:right;">
+              <button type="button" onclick="hotelcalculation()" class="new_btn px-3">Save</button></div>
+            </div>
 
-                <?php $pvt_arr = explode(",",$pvt_query[0]->excursion_name) ;?>
-
-                <?php foreach($excursion_pvt as $value){ ?>
-                <option <?php echo in_array($value->tourname, $pvt_arr) ? "selected" : "" ?>  value="<?php echo $value->tourname ?>"><?php echo $value->tourname ?></option>
-            <?php } ?>
-
-        </select>
-
-              </div>
-             </td>
-       
-
-           <td><input id="excursion_adult_PVT" type="text" placeholder="0" class="form-control" name="adult" value="<?php echo $view->Packagetravelers;?>" disabled>
-           </td>
-           <td><input id="excursion_child_PVT" type="text" placeholder="0" class="form-control" name="child" value="<?php echo $buildpackage->child;?>" disabled>
-           </td>
-           <td><input id="excursion_infant_PVT" type="text" placeholder="0" class="form-control" name="infant" value="<?php echo $buildpackage->infant;?>" disabled>   
-           </td>
-           <td><button type="button" onclick="excursionPVTcalculations()" class="new_btn px-3">Save</button>
-                </td>
-         </tr>
-
-         </tbody>
-
-         <tbody>
-              <tr id="myTableRow">
-              <td>
-               <div>
-                <select  id="excursion_type_TKT" data-mdl-for="sample2" class="form-control"
-                value="TKT"  tabIndex="-1" name="excursion_type">
-                <option value="TKT">TKT</option>
-               </select>
-
-              </div>
-             </td>
-              
-              <td>
-               <div>
-                <select required multiple="" id="excursion_name_TKT"  name="excursion_name_TKT[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" >
-                
-                <?php $tkt_arr = explode(",",$tkt_query[0]->excursion_name) ;?>
-
-                <?php foreach($excursion_tkt as $value){ ?>
-                <option <?php echo in_array($value->tourname, $tkt_arr) ? "selected" : "" ?> value="<?php echo $value->tourname ?>"><?php echo $value->tourname ?></option>
-                <?php } ?>
-                
-               </select>
-
-              </div>
-             </td>
-       
+           </div>
           
-
-
-           <td><input id="excursion_adult_TKT" type="text" placeholder="0" class="form-control" name="adult" value="<?php echo $view->Packagetravelers;?>" disabled>
-           </td>
-           <td><input id="excursion_child_TKT" type="text" placeholder="0" class="form-control" name="child" value="<?php echo $buildpackage->child;?>" disabled>
-           </td>
-           <td><input id="excursion_infant_TKT" type="text" placeholder="0" class="form-control" name="infant" value="<?php echo $buildpackage->infant;?>" disabled>  
-           </td>
-           <td><button id="TKT_cal" type="button" onclick="excursionTKTcalculations()" class="new_btn px-3">Save</button>
-                </td>
-         </tr>
-
-         </tbody>
          
-        </tbody>
-       </table>
-       
-               </div>
            
+              
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
         <script src="<?php echo base_url();?>public/js/validate.js"></script>
-                          <script>
-                           
+                         
+        
+                         <script>
                 
                            $(document).ready(function(){
-                            $("#view-proposal-btn").click(function(){
-                              $("#proposal-form").submit();
+                            $("#PackageMarkup").bind("keypress", function (e) {  
+                                if (e.keyCode == 13) {  
+                                return false;  
+                                }  
+                            })
+
+                          $("#view-proposal-btn").click(function(){
+
+                          var cities = [];
+                          $(".get_all_city").each(function() {
+                            var city = $(this).val();
+                            cities.push($.trim(city));
+
+                          }); 
+                          
+                          var checkIn = [];
+                          $(".get_CheckIn").each(function() {
+                            var checkInDate = $(this).val();
+                            checkIn.push($.trim(checkInDate));
+
+                          });
+                         
+                          
+                          var noOfNights = [];
+                          $(".get_no_nights").each(function() {
+                            var nights = $(this).val();
+                            noOfNights.push($.trim(nights));
+
+                          });
+
+                          var category = [];
+                          $(".get_category").each(function() {
+                            var star = $(this).val();
+                            category.push($.trim(star));
+
+                          });
+
+                          var hotelName = [];
+                          $(".get_buildHotelName").each(function() {
+                            var hotel_name = $(this).val();
+                            hotelName.push($.trim(hotel_name));
+
+                          });
+
+                          var roomType = [];
+                          $(".get_buildRoomType").each(function() {
+                            var room = $(this).val();
+                            roomType.push($.trim(room));
+
+                          });
+
+                          var bedType = [];
+                          $(".get_bed_type").each(function() {
+                            var bed = $(this).val();
+                            bedType.push($.trim(bed));
+
+                          });
+
+                         
+                      
+
+                          var data= [{
+                              'cities' : cities,
+                              'checkIn' : checkIn,
+                              'nights' : noOfNights,
+                              'category' : category,
+                              'hotelName' : hotelName,
+                              'roomType' : roomType,
+                              'bedType' : bedType,
+                            }];
+                           
+                          
+                          
+                           var total_rows = $('#rows_count').val();
+                           var QueryId = $('#QueryId').val();
+
+                           var buildPackageInclusions = $('#buildPackageInclusions').val();
+                           var buildPackageExclusions = $('#buildPackageExclusions').val();
+                           var buildPackageConditions = $('#buildPackageConditions').val();
+                           var buildPackageCancellations = $('#buildPackageCancellations').val();
+                           var buildPackageRefund = $('#buildPackageRefund').val();
+                            var totalprice_adult = $('#totalprice_adult').text();
+                            var totalprice_childs = $('#totalprice_childs').text();
+                            var totalprice_infants = $('#totalprice_infants').text();
+
+
+
+                            // $.ajax({ 
+                            //     type: "POST",
+                            //     url: "?php echo base_url()?>Query/CreateProposalHotelSave",
+                            //     // data: {cities : cities,checkIn:checkIn,noOfNights:noOfNights,category:category,hotelName:hotelName,roomType:roomType,bedType:bedType,extras:extras},
+                            //     data : {data : data, total_rows : total_rows,QueryId:QueryId,buildPackageInclusions:buildPackageInclusions,
+                            //       buildPackageExclusions:buildPackageExclusions,buildPackageConditions:buildPackageConditions,buildPackageCancellations:buildPackageCancellations,buildPackageRefund:buildPackageRefund,
+                            //       totalprice_adult:totalprice_adult,totalprice_childs:totalprice_childs,totalprice_infants:totalprice_infants},
+                            //     cache: false,
+                            //     success: function(response)
+                            //     {
+                            //         // console.log('success');
+                            //         $("#proposal-form").submit();
+                            //     }
+                            // });
+
+                             
                               // sessionStorage.setItem("href",location.href); 
                             });
+                           
+                            // $("#view-proposal-btn").click(function(){ 
 
-                          //   $('#s2id_excursion_name_SIC select2-search-choice-close').click(function(){
-                          //   $( "#sic_cal" ).trigger( "click" );
-                          // });
+                            //     $("#proposal-form").submit();
+                            // });
+
                             
 
                            var open=true;
@@ -305,47 +387,64 @@
 
                         $(".card-box").click(function(e){
                           e.stopPropagation(); 
-                       
-                        var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
-                        var total_pax_TKT_adult = $("#total_pax_TKT_adult").val();
-                          
-                        var total_pax_sic_adult = $("#total_pax_sic_adult").val();
+                        var hotel_rate_adult = $("#hotel_rate_adult").val();
+                        // var total_price_internal = $("#total_price_internal").val();
+                        // var total_price_point = $("#total_price_point").val();
+                        // var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val(); 
+                        // var total_pax_meal_adult = $("#total_pax_meal_adult").val(); 
+                        // var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
+                        // var total_pax_sic_adult = $("#total_pax_sic_adult").val();
                         
-                        var sub_total_adult =parseInt(total_pax_pvt_adult) +  parseInt(total_pax_TKT_adult) + 
-                          parseInt(total_pax_sic_adult);
+                        var sub_total_adult = parseInt(hotel_rate_adult)
+                        //  +
+                        //   parseInt(total_price_internal)+ 
+                        //   parseInt(total_price_point) + 
+                        //   parseInt(total_pax_visa_price_adult) + 
+                        //   parseInt(total_pax_meal_adult) + 
+                        //   parseInt(total_pax_pvt_adult) + 
+                        //   parseInt(total_pax_sic_adult)
+                          ;
                        
 
-                        var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
-                        var total_pax_sic_hild = $("#total_pax_sic_hild").val();
-                        var total_pax_TKT_child = $("#total_pax_TKT_child").val();
-                      
+                        var hotel_rate_child = $("#hotel_rate_child").val();
+                        // var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
+                        // var total_pax_sic_hild = $("#total_pax_sic_hild").val();
+                        // var total_pax_meal_child = $("#total_pax_meal_child").val();
+                        // var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
 
-                        var sub_total_child =  parseInt(total_pax_sic_hild)+ parseInt(total_pax_TKT_child)+ 
-                          parseInt(total_pax_pvt_hild) ;
-                      
-                        var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
-                        var total_pax_sic_infant = $("#total_pax_sic_infant").val();
-                        var total_pax_TKT_infant = $("#total_pax_TKT_infant").val();
+                        var sub_total_child = parseInt(hotel_rate_child)
+                        //  +
+                        //   parseInt(total_pax_sic_hild)+ 
+                        //   parseInt(total_pax_pvt_hild) + 
+                        //   parseInt(total_pax_meal_child) + 
+                        //   parseInt(total_pax_visa_price_child)
+                          ;
 
-                        var sub_total_infant = parseInt(total_pax_pvt_infant)+ parseInt(total_pax_TKT_infant)+ 
-                          parseInt(total_pax_sic_infant);
-                       
-                          
+                        // var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val(); 
+                        // var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
+                        // var total_pax_sic_infant = $("#total_pax_sic_infant").val();
 
-                          
+                        var hotel_rate_infant = $("#hotel_rate_infant").val();
+                        var sub_total_infant = parseInt(hotel_rate_infant)
+                        //  +
+                        //   parseInt(total_pax_pvt_infant)+ 
+                        //   parseInt(total_pax_sic_infant)
+                          ;
+
+
                         
-                          
-                          // $("#subtotal_adults").html( sub_total_adult );                      
-                          // $("#subtotal_childs").html( sub_total_child );                               
-                          // $("#subtotal_infants").html( sub_total_infant ); 
                           let c_type = document.getElementById('currencyOption').value;
                           var usd_aed = <?php echo $usd_to_aed->usd_to_aed;?>;
 
                           $("#subtotal_adults").html( c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2)  : sub_total_adult );                      
                           $("#subtotal_childs").html( c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child );                               
                           $("#subtotal_infants").html( c_type == 'USD' ? (sub_total_infant/ usd_aed).toFixed(2)  : sub_total_infant); 
+                         
+                          // $("#subtotal_adults").html( sub_total_adult );                      
+                          // $("#subtotal_childs").html( sub_total_child );                               
+                          // $("#subtotal_infants").html( sub_total_infant ); 
 
-                          var PackageMarkup = $("#PackageMarkup").val();
+                          var PackageMarkup = $("#PackageMarkup").val();                      
                           var Mark_up =$("#Mark_up").val();
 
                           var total_adult =0;
@@ -364,9 +463,9 @@
                             total_child = (parseInt(sub_total_child) + parseInt(PackageMarkup));
                             total_infant = (parseInt(sub_total_infant) + parseInt(PackageMarkup));
 
-                            
                           }
-                        
+
+                   
                           // $("#totalprice_adult").html( total_adult );
                           // $("#totalprice_childs").html( total_child );
                           // $("#totalprice_infants").html( total_infant );
@@ -375,11 +474,9 @@
                           $("#totalprice_childs").html(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
                           $("#totalprice_infants").html(  c_type == 'USD' ? ( total_infant / usd_aed).toFixed(2)  : total_infant  );
 
-
                           // var per_pax_adult = (parseInt(total_adult) / 2);
                           // var per_pax_child = (parseInt(total_child) / 2);
                           // var per_pax_infant = (parseInt(total_infant) / 2);
-
                           var pax_adult_count = <?php  echo $buildpackage->adult; ?>;
                           var pax_child_count = <?php  echo $buildpackage->child; ?>;
                           var pax_infant_count = <?php echo $buildpackage->infant;?>;
@@ -388,7 +485,6 @@
                           var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
                           var per_pax_infant = (pax_infant_count > 1 ? parseInt(total_infant) / 2 : parseInt(total_infant));
 
-                          
                           // $("#perpax_adult").html(per_pax_adult);
                           // $("#perpax_childs").html( per_pax_child );
                           // $("#perpax_infants").html( per_pax_infant );
@@ -396,7 +492,6 @@
                           // $("#perpax_adult_input").val(per_pax_adult);
                           // $("#perpax_childs_input").val( per_pax_child );
                           // $("#perpax_infants_input").val( per_pax_infant );
-
                           $("#perpax_adult").html( c_type == 'USD' ?  ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
                           $("#perpax_childs").html(  c_type == 'USD' ?  ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child   );
                           $("#perpax_infants").html(  c_type == 'USD' ?    ( per_pax_infant / usd_aed).toFixed(2)  : per_pax_infant  );
@@ -404,11 +499,13 @@
                           $("#perpax_adult_input").val( c_type == 'USD' ? ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
                           $("#perpax_childs_input").val( c_type == 'USD' ?   ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child  );
                           $("#perpax_infants_input").val( c_type == 'USD' ?   ( per_pax_infant / usd_aed).toFixed(2)  : per_pax_infant  );
-
-                          var totalprice_excursion = total_adult + total_child + total_infant;
-                          $("#totalprice_excursion").val(c_type == 'USD' ?  ( totalprice_excursion / usd_aed).toFixed(2) : totalprice_excursion  );
+                       
+                          var total_price_hotel = total_adult + total_child + total_infant;
+                           $('#totalprice_hotel').val(c_type == 'USD' ?  ( total_price_hotel / usd_aed).toFixed(2) : total_price_hotel);
+                      
                         
                          })
+
 
 
                          $(".check-adult").change(function(){
@@ -490,35 +587,35 @@
                      <option value="precentage">%</option>
                      <option value="values">Value</option>
                     </select></td>
-                    <td><input type="text" class="form-control" name="PackageMarkup" id="PackageMarkup" value="0"></td>
+                    <td><input type="number" class="form-control" name="PackageMarkup" min="0" id="PackageMarkup" value="0"></td>
                    </tr>
                    </table>
                <div></div>
               </br>
                <table class="table table-bordered">
                <tr align="center">
-                   <td type="" name="person" id="person" value=""><span></td>
+                   <td type="text" name="person" id="person" value=""><span></td>
                    <td type="" name="AdultCost" id="AdultCost" value=""><span>Adult</td>
                    <td type="" name="ChildCost" id="ChildCost" value=""><span>Child</td>
                    <td type="" name="InfantCost" id="InfantCost" value=""><span>Infant</td>
                   </tr>
                    <tr  align="center">
                     <td><b>Sub Total</b></td>
-                    <td type="" id="subtotal_adults"  name="subtotal_adults"></td>
-                    <td type="" id="subtotal_childs"  name="subtotal_childs"></td>
-                    <td type="" id="subtotal_infants"  name="subtotal_infants"></td>
+                    <td type="text" id="subtotal_adults"  name="subtotal_adults" value=""></td>
+                    <td type="text" id="subtotal_childs"  name="subtotal_childs" value=""></td>
+                    <td type="text" id="subtotal_infants"  name="subtotal_infants" value=""></td>
                    </tr>
                    <tr  align="center">
                     <td><b>Total Price</b></td>
-                    <td type="" name="totalprice_adult" id="totalprice_adult" value=""></td>
-                    <td type="" name="totalprice_childs" id="totalprice_childs" value=""></td>
-                    <td type="" name="totalprice_infants" id="totalprice_infants" value=""></td>
+                    <td type="text" name="totalprice_adult" id="totalprice_adult" value=""></td>
+                    <td type="text" name="totalprice_childs" id="totalprice_childs" value=""></td>
+                    <td type="text" name="totalprice_infants" id="totalprice_infants" value=""></td>
                    </tr>
                    <tr  align="center">
                     <td><b>Per PAX</b></td>
-                    <td type="" name="perpax_adult" id="perpax_adult" value=""></td>
-                    <td type="" name="perpax_childs" id="perpax_childs" value=""></td>
-                    <td type="" name="perpax_infants" id="perpax_infants" value=""></td>   
+                    <td type="text" name="perpax_adult" id="perpax_adult" value=""></td>
+                    <td type="text" name="perpax_childs" id="perpax_childs" value=""></td>
+                    <td type="text" name="perpax_infants" id="perpax_infants" value=""></td>   
                    </tr>
                </table>
                    <input type="hidden" id="perpax_adult_input" name="perpax_adult_input" value="" />
@@ -528,7 +625,7 @@
                   </div>
               </div>
              </div>
-             <div class="mt-5">
+    <div class="mt-5">
               <div>
                <div class="card-head card-head-new ">
                 <p>Terms  :</p>
@@ -693,8 +790,10 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 <input  type="hidden" id="QueryId" name="QueryId" value="<?php echo $view->query_id;?>">
 <div class="last-btn mt-4 mb-4">
 
+ <!-- <button id="save-proposal-btn" type="button" class="new_btn px-5 mr-4">Save</button>  -->
  <button id="view-proposal-btn" type="button" class="new_btn px-5 mr-4">View Proposal</button> 
- <!-- <a id="view-proposal" type="button" class="new_btn px-3 mr-4" href="<?php //echo base_url();?>/proposal.html">View Proposal</a>  -->
+
+ <!-- <a id="view-proposal" type="button" class="new_btn px-5 mr-4" href="<?php echo base_url();?>/proposal.html">View Proposal</a>  -->
 
 </div>
 
@@ -732,23 +831,37 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 ></script>
 <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js"></script>
 
+
+<!-- <script>
+
+jQuery('#addrows > tbody > tr').each(function(index, value) {
+    console.log($('td:eq(2)', this));
+});
+</script> -->
 <script>
-  $('#buildHotelCity').on('change', function() {
-    var city = $('#buildHotelCity').val();
-    $("#buildHotelName").empty();
+
+
+
+function get_hotel_name(id,row){
+// $('#buildHotelCity,#Category').on('change', function() {
+    var city = $('#buildHotelCity'+row).val();
+    var Category =  $('#Category'+row).val();
+    $("#buildHotelName"+row).empty();
     $.ajax({
           type:"POST",
           dataType: "json",
           url:'<?php echo site_url();?>/Query/get_hotels',
-          data:{'city':city},
-          success:function(response){
+          data:{'city':city,'category':Category},
+          // data:{'city':city},
 
+          success:function(response){
+            // console.log(response);
           var i;
-          $('#buildHotelName').append($("<option>Select</option>"));
+          $('#buildHotelName'+row).append($("<option>Select</option>"));
             for (i = 0; i < response.length; ++i) {
-              var newOption = $('#buildHotelName')
+              var newOption = $('#buildHotelName'+row)
                     .append($("<option></option>")
-                                .attr("value", response[i].id)
+                    .attr("value", response[i].id)
                                 .text(response[i].hotelname));
 
                 // $('#buildHotelName')
@@ -759,13 +872,85 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
           }
          
         })
-});
+// });
 
-// $('.get-hotel').on('change', function() {
+  }
+
+
+  function get_route_name(id,row){
+    var hotel = $('#buildHotelName'+row).val().split("|");
+    // var hotel_id = $('#buildHotelName'+row).val();
+   
+    var hotel_id = hotel[0];
+    $("#buildRoomType"+row).empty();
+    $.ajax({
+          type:"POST",
+          dataType: "json",
+          url:'<?php echo site_url();?>/Query/get_room_type',
+          data:{'hotel_id':hotel_id},
+          success:function(response){
+          var j;
+          $('#buildRoomType'+row).append($("<option>Select Room Type</option>"));
+          for (j = 0; j < response.length; ++j) {
+              // do something with `substr[i]`
+              console.log(response[j]);
+              $('#buildRoomType'+row)
+                  .append($("<option></option>")
+                              .attr("value", response[j].roomtype)
+                              .text(response[j].roomtype));
+
+          }
+
+          }      
+        })
+
+        
+
+
+  }
+
   
-//   alert($(this).val());
-//     var city = $('#buildHotelCity').val();
-//     $("#buildHotelName").empty();
+
+</script>
+
+
+      <!-- <script>
+           var faqs_row = 0;
+         $('#addrowsbtn').on('click' ,function () {
+
+              var bnight = '<td><select class="form-control bnights" id="buildNoNights'+faqs_row+'"  name="buildNoNights'+faqs_row+'" required>';
+                              for (let i = 1; i <= (totalNoOfDays-allocated_days); i++) {
+                                bnight += '<option>'+i+'</option>';
+                              }
+                  bnight += '</select></td>';
+              var room ='<td><select class="form-control get-hotel-room" name="buildRoomType'+faqs_row+'" id="buildRoomType'+faqs_row+'" required></select></td>';
+              addrows += '<tr id="faqs-row' + faqs_row + '">';
+              // addrows += '<td><input class="form-control" type="text" value="" name="buildHotelCity'+faqs_row+'" id="buildHotelCity'+faqs_row+'"></td>';
+              addrows += city;
+              addrows += '<td><input class="form-control" type="date" value="'+f.format("YYYY-MM-DD")+'" name="buildCheckIn'+faqs_row+'" id="buildCheckIn'+faqs_row+'" disabled></td>';
+              addrows += bnight;
+              addrows += ' <td> <div> <select data-mdl-for="sample2" class="form-control" value="" tabIndex="-1" name="Category'+faqs_row+'"> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option> </select> </div> </td>';
+              // addrows += '<td><input class="form-control" type="text" placeholder="Room Type" name="buildRoomType'+faqs_row+'" id="buildRoomType'+faqs_row+'" required=""></td> ';
+              addrows +=  room;
+              addrows += '<td><button type="button" class="btn btn-danger btn-xs cls-btn"  id="del_btn'+faqs_row+'"  onClick="return  removeHotel(this);"><i class="fa fa-trash"></i></button> </td>';
+              addrows += '</tr>';
+            
+                $('#addrows').append(newRow); 
+            faqs_row++;   
+        });
+
+        // function DeleteRows(){
+        //     $("#addrows tr").last().remove();
+        // }
+                  
+    </script> -->
+        
+
+<script>
+
+// $('.get_buildHotelCity').on('change', function() {
+//     var city = $('.get-hotel').val();
+//     // $("#buildHotelName").empty();
 //     $.ajax({
 //           type:"POST",
 //           dataType: "json",
@@ -774,9 +959,70 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 //           success:function(response){
 
 //           var i;
-//           $('#buildHotelName').append($("<option>Select Hotel Name</option>"));
+//           $('.get_buildHotelName').append($("<option>Select</option>"));
 //             for (i = 0; i < response.length; ++i) {
-//                 $('#buildHotelName')
+//               var newOption = $('.get_buildHotelName')
+//                     .append($("<option></option>")
+//                                 .attr("value", response[i].id)
+//                                 .text(response[i].hotelname));
+
+//                 // $('#buildHotelName')
+//                 //     .append("<option value='"+response[i].id+"' selected=selected >"+response[i].hotelname+"</option>");
+
+//             }
+//             // response ='';
+//           }
+         
+//         })
+// });
+
+
+
+// $('#buildHotelCity,#Category').on('change', function() {
+//     var city = $('#buildHotelCity').val();
+//     var Category =  $('#Category').val();
+//     $("#buildHotelName").empty();
+//     $.ajax({
+//           type:"POST",
+//           dataType: "json",
+//           url:'<?php echo site_url();?>/Query/get_hotels',
+//           data:{'city':city,'category':Category},
+//           success:function(response){
+//             console.log(response);
+//           var i;
+//           $('#buildHotelName').append($("<option>Select</option>"));
+//             for (i = 0; i < response.length; ++i) {
+//               var newOption = $('#buildHotelName')
+//                     .append($("<option></option>")
+//                                 .attr("value", response[i].id)
+//                                 .text(response[i].hotelname));
+
+//                 // $('#buildHotelName')
+//                 //     .append("<option value='"+response[i].id+"' selected=selected >"+response[i].hotelname+"</option>");
+
+//             }
+//             // response ='';
+//           }
+         
+//         })
+// });
+
+// $('#buildHotelCity0').on('change', function() {
+  
+ 
+//     var city = $('#buildHotelCity0').val();
+//     // $("#buildHotelName").empty();
+//     $.ajax({
+//           type:"POST",
+//           dataType: "json",
+//           url:'<?php echo site_url();?>/Query/get_hotels',
+//           data:{'city':city},
+//           success:function(response){
+
+//           var i;
+//           $('#buildHotelName0').append($("<option>Select Hotel Name</option>"));
+//             for (i = 0; i < response.length; ++i) {
+//                 $('#buildHotelName0')
 //                     .append($("<option></option>")
 //                                 .attr("value", response[i].id)
 //                                 .text(response[i].hotelname));
@@ -789,45 +1035,78 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 
 
 
-$('#buildHotelName').on('change', function() {
-    var hotel_id = $('#buildHotelName').val();
-    $("#buildRoomType").empty();
-    $.ajax({
-          type:"POST",
-          dataType: "json",
-          url:'<?php echo site_url();?>/Query/get_room_type',
-          data:{'hotel_id':hotel_id},
-          success:function(response){
-          var j;
-          $('#buildRoomType').append($("<option>Select Room Type</option>"));
-          for (j = 0; j < response.length; ++j) {
-              // do something with `substr[i]`
-              console.log(response[j]);
-              $('#buildRoomType')
-                  .html($("<option></option>")
-                              .attr("value", response[j].roomtype)
-                              .text(response[j].roomtype));
+// $('.get_buildHotelName').on('change', function() {
+//     var hotel_id = $('.get_buildHotelName').val();
+//     // $("#buildRoomType").empty();
+//     alert(hotel_id);
+//     $.ajax({
+//           type:"POST",
+//           dataType: "json",
+//           url:'<?php echo site_url();?>/Query/get_room_type',
+//           data:{'hotel_id':hotel_id},
+//           success:function(response){
+//           var j;
+//           $('.get_buildRoomType').append($("<option>Select Room Type</option>"));
+//           for (j = 0; j < response.length; ++j) {
+//               // do something with `substr[i]`
+//               console.log(response[j]);
+//               $('.get_buildRoomType')
+//                   .html($("<option></option>")
+//                               .attr("value", response[j].roomtype)
+//                               .text(response[j].roomtype));
 
-          }
+//           }
 
-          }      
-        })
-});
+//           }      
+//         })
+
+        
+// });
+
+
+
+// $('#buildHotelName').on('change', function() {
+//     var hotel_id = $('#buildHotelName').val();
+//     $("#buildRoomType").empty();
+//     $.ajax({
+//           type:"POST",
+//           dataType: "json",
+//           url:'<?php echo site_url();?>/Query/get_room_type',
+//           data:{'hotel_id':hotel_id},
+//           success:function(response){
+//           var j;
+//           $('#buildRoomType').append($("<option>Select Room Type</option>"));
+//           for (j = 0; j < response.length; ++j) {
+//               // do something with `substr[i]`
+//               console.log(response[j]);
+//               $('#buildRoomType')
+//                   .html($("<option></option>")
+//                               .attr("value", response[j].roomtype)
+//                               .text(response[j].roomtype));
+
+//           }
+
+//           }      
+//         })
+
+        
+// });
 
 </script>
+
   <script>
         console.clear()
         initSample();
         $('.js-example-basic-multiple').select2();
     </script>
 
-<script>
+<!-- <script>
      function getvisaprice(){
       var visa_category_drop_down =  $("#visa_category_drop_down").val();
       var entry_type = $("#entry_type").val();
-      var pax_adult = <?php  echo $view->Packagetravelers; ?>;
-      var pax_child = <?php  echo $buildpackage->child; ?>;
-      var pax_infant = <?php echo $buildpackage->infant;?>;
+      var pax_adult = <?php // echo $view->Packagetravelers; ?>;
+      var pax_child = <?php // echo $buildpackage->child; ?>;
+      var pax_infant = <?php //echo $buildpackage->infant;?>;
       var visa_validity =  $("#visa_validity").val();
       console.log(pax_adult + "|" + entry_type + "|" + visa_validity);
       $.ajax({
@@ -849,7 +1128,7 @@ $('#buildHotelName').on('change', function() {
         });
 
      }
-     </script>
+     </script> -->
 
 <input type="hidden" id="total_pax_visa_price_adult" name="total_pax_visa_price_adult" value="0" />
 <input type="hidden" id="total_pax_visa_price_child" name="total_pax_visa_price_child" value="0" />
@@ -886,26 +1165,9 @@ $('#buildHotelName').on('change', function() {
       </script>
 <input type="hidden" id="total_pax_meal_adult" name="total_pax_meal_adult" value="0" />
 <input type="hidden" id="total_pax_meal_child" name="total_pax_meal_child" value="0" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    
      <script>
       
-      function delQuery(){
-    var QueryId = $('#QueryId').val();
-    $.ajax({ 
-            type: "POST",
-            url: "<?php echo base_url()?>Query/deleteQueryData",
-            data : {'query_id' : QueryId},
-            cache: false,
-            dataType: "json",
-            success: function(response)
-            {
-              toastr.success("Cancelled Successfully");
-              location.href =  "<?php echo site_url();?>Query/view_query";
-            }
-        });
-  }
-  
       function excursionSICcalculation(){
         
         var excursion_types_SIC =  $('select#excursion_type_SIC').val(); //$("#excursion_type_SIC").val();
@@ -928,86 +1190,11 @@ $('#buildHotelName').on('change', function() {
         })
 
       }
-
-      function excursionSICcalculations(){
-        
-        var excursion_types_SIC =  $('select#excursion_type_SIC').val(); //$("#excursion_type_SIC").val();
-        var excursion_name_SIC = $('select#excursion_name_SIC').val();
-        var excursion_adults_SIC =  $("#excursion_adult_SIC").val();
-        var excursion_childs_SIC =  $("#excursion_child_SIC").val();
-        var excursion_infants_SIC =  $("#excursion_infant_SIC").val();
-        var QueryId = $('#QueryId').val();
-
-        var ex_hotel_pickup =  $("#ex_hotel_pickup").val();
-
-
-           $.ajax({
-          type:"POST",
-          dataType: "json",
-          url:'<?php echo site_url();?>/Query/getExcursionSICCalculations',
-          data:{
-            'hotel_pickup':ex_hotel_pickup,
-            'query_id':QueryId,
-            'query_type':'excursion',
-            'excursion_types_SIC':excursion_types_SIC,'excursion_adults_SIC':excursion_adults_SIC,'excursion_childs_SIC':excursion_childs_SIC,'excursion_infants_SIC':excursion_infants_SIC,
-            'excursion_name_SIC':excursion_name_SIC},
-          success:function(response){
-          console.log(response);
-
- 
-             
-                $("#total_pax_sic_adult").val(response.total_adultprice);
-                $("#total_pax_sic_hild").val(response.total_childprice);
-                $("#total_pax_sic_infant").val(response.total_infantprice);
-                toastr.success("Excursion SIC Saved Successfully");
-          
-          }
-        })
-
-      }
-
-      function excursionTKTcalculations(){
-        
-        var excursion_types_TKT =  $('select#excursion_type_TKT').val(); 
-        var excursion_name_TKT = $('select#excursion_name_TKT').val();
-        var excursion_adults_TKT =  $("#excursion_adult_TKT").val();
-        var excursion_childs_TKT =  $("#excursion_child_TKT").val();
-        var excursion_infants_TKT =  $("#excursion_infant_TKT").val();
-        var QueryId = $('#QueryId').val();
-
-        var ex_hotel_pickup =  $("#ex_hotel_pickup").val();
-
-
-           $.ajax({
-          type:"POST",
-          dataType: "json",
-          url:'<?php echo site_url();?>/Query/getExcursionTKTCalculations',
-          data:{
-            'hotel_pickup':ex_hotel_pickup,
-            'query_id':QueryId,
-            'query_type':'excursion',
-            'excursion_types_TKT':excursion_types_TKT,'excursion_adults_TKT':excursion_adults_TKT,'excursion_childs_TKT':excursion_childs_TKT,'excursion_infants_TKT':excursion_infants_TKT,
-            'excursion_name_TKT':excursion_name_TKT},
-          success:function(response){
-             console.log("🚩 ~ file: build_excursion.php ~ line 998 ~ excursionTKTcalculations ~ response", response)
-             
-                $("#total_pax_TKT_adult").val(response.total_adultprice);
-                $("#total_pax_TKT_child").val(response.total_childprice);
-                $("#total_pax_TKT_infant").val(response.total_infantprice);
-                toastr.success("Excursion TKT Saved Successfully");
-          
-          }
-        })
-
-      }
       </script>
 <input type="hidden" id="total_pax_sic_adult" name="total_pax_sic_adult" value="0" />
 <input type="hidden" id="total_pax_sic_hild" name="total_pax_sic_hild" value="0" />
 <input type="hidden" id="total_pax_sic_infant" name="total_pax_sic_infant" value="0" />
 
-<input type="hidden" id="total_pax_TKT_adult" name="total_pax_TKT_adult" value="0" />
-<input type="hidden" id="total_pax_TKT_child" name="total_pax_TKT_child" value="0" />
-<input type="hidden" id="total_pax_TKT_infant" name="total_pax_TKT_infant" value="0" />
 
 
      <script>
@@ -1021,74 +1208,27 @@ $('#buildHotelName').on('change', function() {
         var excursion_adult_PVT =  $("#excursion_adult_PVT").val();
         var excursion_child_PVT =  $("#excursion_child_PVT").val();
         var excursion_infant_PVT =  $("#excursion_infant_PVT").val();
-        var QueryId = $('#QueryId').val();
 
-        console.log(excursion_name_PVT);
+        // console.log(excursion_name_SIC);
        
         $.ajax({
           type:"POST",
           dataType: "json",
           url:'<?php echo site_url();?>/Query/getExcursionPVTCalculation',
           data:{
-            'query_id':QueryId,
-            'query_type':'excursion',
             'excursion_type_PVT':excursion_type_PVT,'excursion_adult_PVT':excursion_adult_PVT,
             'excursion_child_PVT':excursion_child_PVT,'excursion_infant_PVT':excursion_infant_PVT,'excursion_name_PVT':excursion_name_PVT,'total_pax':hidden_total_pax},
           success:function(response){
           console.log(response);
-              $("#total_pax_pvt_adult").val(response.total_adultprice);
+          $("#total_pax_pvt_adult").val(response.total_adultprice);
               $("#total_pax_pvt_hild").val(response.total_childprice);
               $("#total_pax_pvt_infant").val(response.total_infantprice);
-
-
-          } 
+          }
         })
 
 
 
       }
-
-      function excursionPVTcalculations(){
-       
-
-       var hidden_total_pax = $('#hidden_total_pax').val();
-       var excursion_type_PVT =  $("#excursion_type_PVT").val();
-       var excursion_name_PVT = $('select#excursion_name_PVT').val();
-       var excursion_adult_PVT =  $("#excursion_adult_PVT").val();
-       var excursion_child_PVT =  $("#excursion_child_PVT").val();
-       var excursion_infant_PVT =  $("#excursion_infant_PVT").val();
-       var QueryId = $('#QueryId').val();
-
-       var ex_hotel_pickup =  $("#ex_hotel_pickup").val();
-
-        $.ajax({
-         type:"POST",
-         dataType: "json",
-         url:'<?php echo site_url();?>Query/getExcursionPVTCalculations',
-         data:{
-            'hotel_pickup':ex_hotel_pickup,
-            'query_id':QueryId,
-            'query_type':'excursion',
-           'excursion_type_PVT':excursion_type_PVT,'excursion_adult_PVT':excursion_adult_PVT,
-           'excursion_child_PVT':excursion_child_PVT,'excursion_infant_PVT':excursion_infant_PVT,'excursion_name_PVT':excursion_name_PVT,'total_pax':hidden_total_pax},
-         success:function(response){
-            console.log(response);
-
-            if(response.status == 0){
-                toastr.error("Selected PVT allowed "+response.pax+" pax only");
-              } else {
-               $("#total_pax_pvt_adult").val( response.total_adultprice);
-               $("#total_pax_pvt_hild").val( response.total_childprice);
-               $("#total_pax_pvt_infant").val( response.total_infantprice);
-              toastr.success("Excursion PVT Saved Successfully");
-            }
-           
-         }
-       })
-
-      
-
-     }
       </script>
 
       <input type="hidden" id="total_pax_pvt_adult" name="total_pax_pvt_adult" value="0" />
@@ -1098,11 +1238,217 @@ $('#buildHotelName').on('change', function() {
 
       <input type="hidden" id="hotel_name_backup" name="hotel_name_backup" value="" />
 
-     <script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+      <script>
+  function delQuery(){
+    var QueryId = $('#QueryId').val();
+    $.ajax({ 
+            type: "POST",
+            url: "<?php echo base_url()?>Query/deleteQueryData",
+            data : {'query_id' : QueryId},
+            cache: false,
+            dataType: "json",
+            success: function(response)
+            {
+              toastr.success("Cancelled Successfully");
+              location.href = "<?php echo site_url();?>Query/view_query";
+            }
+        });
+  }
+
+function hotelcalculation(){
+
+
+      var total_rows = $('#rows_count').val();
+      var pax_adult = <?php  echo $view->Packagetravelers; ?>;
+      var pax_child = <?php  echo $buildpackage->child; ?>;
+      var pax_infants = <?php  echo $buildpackage->infant; ?>;
+      var total_pax = pax_adult + pax_child + pax_infants;
+      var QueryId = $('#QueryId').val();
+      // var with_adult ='';
+      // var with_child ='';
+      // var without_bed ='';
+      // if ($('#extra_with_adult').is(":checked"))
+      // {
+      //   with_adult = $('#extra_with_adult').val();
+      // }
+      // if ($('#extra_with_child').is(":checked"))
+      // {
+      //   with_child = $('#extra_with_child').val();
+      // }
+      // if ($('#extra_without_bed').is(":checked"))
+      // {
+      //   without_bed = $('#extra_without_bed').val();
+      // }
+    
+      // // console.log(extra_with_adult);
+      // var extra_with_adult = with_adult;
+      // var extra_with_child = with_child;
+      // var extra_without_bed = without_bed;
+                        setTimeout(function(){ $('.noOfDaysAlertcls2').attr("style","display:none;") }, 2000);
+
+                         var extra_with_adult = [];
+                          $(".extra_with_adult").each(function() {
+                            if ($(this).is(":checked"))
+                            {
+                              var with_adult = $(this).val();
+                              extra_with_adult.push($.trim(with_adult));
+                            }else{
+                              var with_adult = "";
+                              extra_with_adult.push($.trim(with_adult));
+                            }
+                          });
+
+                          var extra_with_child = [];
+                          $(".extra_with_child").each(function() {
+                            if ($(this).is(":checked"))
+                            {
+                            var with_child = $(this).val();
+                            extra_with_child.push($.trim(with_child));
+                            }else{
+                              var with_child = "";
+                              extra_with_child.push("");
+                            }
+
+                          });
+                          var extra_without_bed = [];
+                          $(".extra_without_bed").each(function() {
+                            if ($(this).is(":checked"))
+                            {
+                            var without_bed = $(this).val();
+                            extra_without_bed.push($.trim(without_bed));
+                            }else{
+                              var without_bed = "";
+                              extra_without_bed.push("");
+                            }
+                          });
+
+                        
+                          var noOfNights = [];
+                          $(".get_no_nights").each(function() {
+                            var nights = $(this).val();
+                            noOfNights.push($.trim(nights));
+
+                          });
+
+                          var hotelName = [];
+                          $(".get_buildHotelName").each(function() {
+                            var hotel_name = $(this).val();
+                            console.log("🚩 ~ file: build_hotel.php ~ line 1327 ~ $ ~ hotel_name", hotel_name)
+                            hotelName.push($.trim(hotel_name));
+
+                          });
+
+                          var roomType = [];
+                          $(".get_buildRoomType").each(function() {
+                            var room = $(this).val();
+                            roomType.push($.trim(room));
+
+                          });
+
+                          var bedType = [];
+                          $(".get_bed_type").each(function() {
+                            var bed = $(this).val();
+                            bedType.push($.trim(bed));
+
+                          });
+
+                          
+                        var buildHotelCity = [];
+                        $(".get_all_city").each(function() {
+                          var val = $(this).val();
+                          buildHotelCity.push($.trim(val));
+
+                        });
+
+                        var buildCheckIns = [];
+                        $(".get_CheckIn").each(function() {
+                          var val = $(this).val();
+                          buildCheckIns.push($.trim(val));
+                        });
+
+
+                        var Category = [];
+                        $(".get_category").each(function() {
+                          var cat = $(this).val();
+                          Category.push($.trim(cat));
+
+                        });
+
+                        var get_room_types = [];
+                    $(".get_room_types").each(function() {
+                      var cat = $(this).val();
+                      get_room_types.push($.trim(cat));
+                    });
+
+                    var sharing_types = [];
+                    $(".room_sharing_types").each(function() {
+                      var cat = $(this).val();
+                      sharing_types.push($.trim(cat));
+                    });
+
+                        let total_no_of_days = <?php echo $buildpackage->night?>;
+                      
+                      if(noOfNights < total_no_of_days){
+                        $('.noOfDaysAlertcls2').attr("style","display:block;");
+                      }
+                      else {
+                          var data= [{
+                              'nights' : noOfNights,
+                              'hotelName' : hotelName,
+                              'roomType' : roomType,
+                              'bedType' : bedType,
+                              'extra_with_adult' :extra_with_adult,
+                              'extra_with_child' : extra_with_child,
+                              'extra_without_bed' : extra_without_bed,
+                              'buildHotelCity' : buildHotelCity,
+                              'buildCheckIns' : buildCheckIns,
+                              'Category' : Category,
+                              'get_room_types' : get_room_types,
+                              'sharing_types' : sharing_types,
+                              'query_type' : 'hotel',
+                            }];
+                           
+                          
+                          // console.log(data);
+
+                            $.ajax({ 
+                                type: "POST",
+                                url: "<?php echo base_url()?>Query/getHotelCalculation",
+                                data : {data : data, total_rows : total_rows,'pax_adult':pax_adult,'pax_child':pax_child,'pax_infants':pax_infants,'query_id' : QueryId },
+                                cache: false,
+                                dataType: "json",
+                                success: function(response)
+                                {
+                                  // console.log(JSON.parse(response.total_pax_adult_rate));
+                                  $('#hotel_rate_adult').val(response.total_pax_adult_rate);
+                                  $('#hotel_rate_child').val(response.total_pax_child_rate);
+                                  $('#hotel_rate_infant').val(response.total_pax_wo_rate);
+                                  // $('#hotel_rate_adult').val(100);
+                                  // $('#hotel_rate_child').val(200);
+
+                                  toastr.success("Hotel Saved Successfully");
+
+
+                                }
+                            });
+                          }
+  
+
+  }
+  // $('#hotel_name_backup').val( hotel_name_backup);
+
+
+</script>
+
+     <!-- <script>
 
 
       function hotelcalculation(){
-        
+        // alert($('#buildHotelName option:selected').text());
+      $('#hotel_name_in').val($('#buildHotelName option:selected').text());
 
         var with_adult ='';
         var with_child ='';
@@ -1122,36 +1468,57 @@ $('#buildHotelName').on('change', function() {
        
         // console.log(extra_with_adult);
         var extra_with_adult = with_adult;
-        var extra_with_child =with_child;
-        var extra_without_bed =without_bed;
+        var extra_with_child = with_child;
+        var extra_without_bed = without_bed;
 
-        var build_extra_bedtype =  $("#buildExtraBedType").val();
+        // alert()
+
+        
         var pax_adult = <?php  echo $view->Packagetravelers; ?>;
         var pax_child = <?php  echo $buildpackage->child; ?>;
         var total_pax = pax_adult + pax_child;
+
         var build_hotel_name =  $("#buildHotelName").val();
         var build_room_type = $("#buildRoomType").val();
         var no_of_nights = $("#buildNoNights").val();
-
+        var build_extra_bedtype =  $("#buildExtraBedType").val();
         var build_bed_type = $("#buildBedType").val();
-        // var hotel_name_backup =  $("#buildHotelName").val();
-        $.ajax({
-          type:"POST",
-          dataType: "json",
-          url:'<?php echo site_url();?>/Query/getHotelCalculation',
-          data:{'pax_adult':pax_adult,'pax_child':pax_child,'build_room_type':build_room_type,'no_of_nights':no_of_nights,'build_hotel_name':build_hotel_name,'build_bed_type':build_bed_type,'extra_with_adult':extra_with_adult,'extra_with_child':extra_with_child,'extra_without_bed':extra_without_bed},
-          success:function(response){        
-          $('#hotel_rate_adult').val(response.total_pax_adult_rate);
-          $('#hotel_rate_child').val(response.total_pax_child_rate);
+        var hotel_name_backup =  $("#buildHotelName").val();
 
+        var row_cnt = $('#rows_count').val();
+        for(var i=0; i< row_cnt; i++){
+          alert(row_cnt);
+          
+          if(i >= 0){
+            alert(i);
+           build_hotel_name =  $("#buildHotelName"+i).val();
+           build_room_type = $("#buildRoomType"+i).val();
+           no_of_nights = $("#buildNoNights"+i).val();
+           build_extra_bedtype =  $("#buildExtraBedType"+i).val();
+           build_bed_type = $("#buildBedType"+i).val();
           }
-        })
+
+            $.ajax({
+              type:"POST",
+              dataType: "json",
+              url:'<?php echo site_url();?>/Query/getHotelCalculation',
+              data:{'pax_adult':pax_adult,'pax_child':pax_child,'build_room_type':build_room_type,'no_of_nights':no_of_nights,'build_hotel_name':build_hotel_name,'build_bed_type':build_bed_type,'extra_with_adult':extra_with_adult,'extra_with_child':extra_with_child,'extra_without_bed':extra_without_bed},
+              success:function(response){        
+              $('#hotel_rate_adult').val(response.total_pax_adult_rate);
+              $('#hotel_rate_child').val(response.total_pax_child_rate);
+
+              }
+            })
+        
+
+        }
         // $('#hotel_name_backup').val( hotel_name_backup);
 
       }
-</script>
+</script> -->
 <input type="hidden" id="hotel_rate_adult" name="hotel_rate_adult" value="0" />
 <input type="hidden" id="hotel_rate_child" name="hotel_rate_child" value="0" />
+<input type="hidden" id="hotel_rate_infant" name="hotel_rate_infant" value="0" />
     <script>
       function fetchexcursion(){
         // alert("work");
@@ -1169,7 +1536,7 @@ $('#buildHotelName').on('change', function() {
           url:'<?php echo site_url();?>/query/fetchexcursion',
           data:{'excursion_type':excursion_type,'excursion_name':excursion_name,'excursion_adult':parseInt(excursion_adult),'excursion_child':parseInt(excursion_child),'excursion_infant':parseInt(excursion_infant)},
           success:function(response){
-console.log(response);
+          // console.log(response);
           }
         })
       }
@@ -1201,6 +1568,9 @@ console.log(response);
     <!-- icheck -->
     <script src="<?php echo base_url();?>public/js/icheck.min.js"></script>
     <link href="<?php echo base_url();?>public/css/grey.css" rel="stylesheet">
+
+  
+
     <script>
         var cb, optionSet1;
 
@@ -1341,7 +1711,7 @@ console.log(response);
         })
 
        $('#pickupinternal').on('change', function() {
-        alert(this.value);
+        // alert(this.value);
         $.ajax({
           type:"POST",
           dataType: "json",
@@ -1370,7 +1740,7 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
        });
 
        $('#pickuppoint').on('change', function() {
-        alert(this.value);
+        // alert(this.value);
         $.ajax({
           type:"POST",
           dataType: "json",
@@ -1693,16 +2063,73 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
       //   // });
       // });
     </script>
+
+   
      <script src="<?php echo base_url();?>public/js/validate.js"></script>
                 <script>
                
                   $(document).ready(function(){
-                    // var temp = $('#hotel_name_backup').val();
 
-                    // if(temp.length != 0 ){
-                    //   alert("hi");
-                    //        $("#buildHotelName > [value=" + temp + "]").attr("selected", "true");
-                    // }
+                   
+
+                  // $('.get-hotel').bind('change', function() {
+                  //       var city = $('.get-hotel').val();
+                  //       // $("#buildHotelName").empty();
+                  //       $.ajax({
+                  //             type:"POST",
+                  //             dataType: "json",
+                  //             url:'<?php echo site_url();?>/Query/get_hotels',
+                  //             data:{'city':city},
+                  //             success:function(response){
+
+                  //             var i;
+                  //             // $('.get_buildHotelName').append($("<option>Select</option>"));
+                  //               for (i = 0; i < response.length; ++i) {
+                  //                 var newOption = $('.get_buildHotelName')
+                  //                       .append($("<option></option>")
+                  //                                   .attr("value", response[i].id)
+                  //                                   .text(response[i].hotelname));
+
+                                   
+
+                  //               }
+                  //               // response ='';
+                  //             }
+                            
+                  //           })
+                  //   });
+                                        
+                  //   $('.get_buildHotelName').on('change', function() {
+                  //       var hotel_id = $('.get_buildHotelName').val();
+                  //       // $("#buildRoomType").empty();
+                  //       alert(hotel_id);
+                  //       $.ajax({
+                  //             type:"POST",
+                  //             dataType: "json",
+                  //             url:'<?php echo site_url();?>/Query/get_room_type',
+                  //             data:{'hotel_id':hotel_id},
+                  //             success:function(response){
+                  //             var j;
+                  //             $('.get_buildRoomType').append($("<option>Select Room Type</option>"));
+                  //             for (j = 0; j < response.length; ++j) {
+                  //                 // do something with `substr[i]`
+                  //                 console.log(response[j]);
+                  //                 $('.get_buildRoomType')
+                  //                     .html($("<option></option>")
+                  //                                 .attr("value", response[j].roomtype)
+                  //                                 .text(response[j].roomtype));
+
+                  //             }
+
+                  //             }      
+                  //           })
+
+                            
+                  //   });
+
+                    
+
+                  
                     
                           
                   
@@ -1743,30 +2170,43 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                             
                         })
 
-                        
-                        $('.bnights').on("change", function () {
-                          var sum = 0;
-                          // var bet_sum = 0;
+                        // $('.bnights').on("change", function () {
+                        //   var sum = $('#allocated_days').val();
+                        //   var new_sum = 0;
+
+                        //     $('.bnights').each(function () {
+                        //         sum += Number($(this).val());
+                        //     });
+                        //     $('#allocated_days').val(parseInt(sum));
+
+                        // });
+                        // $('.add-rows').on("click", function () {
+                        //   var sums = $('#allocated_days').val();
+                        //   var new_sums = 0;
                           
-                            $('.bnights').each(function () {
-                                sum += Number($(this).val());
-                            });
+                        //     $('.bnights').each(function () {
+                        //         sums += Number($(this).val());
+                        //     });
 
-                            $('#allocated_days').val(sum);
-
-
-                        });
+                        //     $('#allocated_days').val(parseInt(sums)+parseInt(new_sums));
 
 
+                        // });
                         
+                        
+                       
                    
-                        var faqs_row = 0;  
+                        // var faqs_row = 0;  
                        
                         function addrows(){
-                          
+                            var cnt = $('#rows_count').val();
+                             var allocated_days = 0;
+
+                            $('.bnights').each(function () {
+                              allocated_days += Number($(this).val());
+                            });
                           setTimeout(function(){ $('.noOfDaysAlertcls').attr("style","display:none;") }, 2000);
                           var initaldays = parseInt($('#buildNoNights').val());
-                          // alert(initaldays);
 
                           if(isNaN(initaldays) || initaldays == ""){
                             $('#buildNoNights').attr('style',"border-color:red");
@@ -1774,46 +2214,58 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                             $('#buildNoNights').removeAttr('style',"border-color:red");
 
                           
-                          var totalNoOfDays = <?php echo $buildpackage->night?> ;
-                          var allocated_days = parseInt($('#allocated_days').val());
-                          // var allocated_days = parseInt(allocated_day); 
-                          alert(allocated_days);
+                          var totalNoOfDays = <?php echo $buildpackage->night?> ;                       
                           var d = "<?php echo $view->specificDate;?>";                         
                           var f = moment(d).add(allocated_days, 'days');
-
-                         if( totalNoOfDays > allocated_days){
-                          $('#buildNoNights').attr('disabled',true);
+                          $('.bnights').attr('readonly', true);
+                         if( allocated_days < totalNoOfDays ){
+                          $('#rows_count').val(parseInt(cnt) + parseInt(1));
+                          faqs_row=parseInt(cnt) + parseInt(1);
+                          // $('#buildNoNights').attr('disabled',true);
                           var template = '';
-                          var city = '<td><select class="form-control get-hotel" name="buildHotelCity'+faqs_row+'" id="buildHotelCity'+faqs_row+'"><option>Select City</option><option value="Dubai">Dubai</option><option value="AbuDhabi">Abu Dhabi</option><option value="Sharjah">Sharjah</option><option value="Ajman">Ajman</option><option value="Sir Baniyas">Sir Baniyas</option><option value="Umm Al-Quwain">Umm Al-Quwain</option><option value="Fujairah">Fujairah</option><option value="Ras Al Khaimah">Ras Al Khaimah</option><option value="Al Ain">Al Ain</option></select></td>';
-                          var bnight = '<td><select class="form-control bnights" id="buildNoNights'+faqs_row+'"  name="buildNoNights'+faqs_row+'" required>';
+                          var city = '<td><select class="form-control get-hotel get_all_city" name="buildHotelCity[]" id="buildHotelCity'+faqs_row+'" onchange="get_hotel_name(this.id,'+faqs_row+');"><option value="Dubai">Dubai</option><option value="AbuDhabi">Abu Dhabi</option><option value="Sharjah">Sharjah</option><option value="Ajman">Ajman</option><option value="Sir Baniyas">Sir Baniyas</option><option value="Umm Al-Quwain">Umm Al-Quwain</option><option value="Fujairah">Fujairah</option><option value="Ras Al Khaimah">Ras Al Khaimah</option><option value="Al Ain">Al Ain</option></select></td>';
+                          var bnight = '<td><select class="form-control bnights get_no_nights" id="buildNoNights'+faqs_row+'"  name="buildNoNight[]" required>';
                                           for (let i = 1; i <= (totalNoOfDays-allocated_days); i++) {
-                                            bnight += '<option>'+i+'</option>';
+                                            bnight += '<option value="'+ i +'">'+i+'</option>';
                                           }
                               bnight += '</select></td>';
-                          var room ='<td><select class="form-control get-hotel-room" name="buildRoomType'+faqs_row+'" id="buildRoomType'+faqs_row+'" required></select></td>';
+                          var room ='<td><select class="form-control get-hotel-room get_buildRoomType" name="buildRoomType[]" id="buildRoomType'+faqs_row+'" required></select></td>';
                           template += '<tr id="faqs-row' + faqs_row + '">';
                           // template += '<td><input class="form-control" type="text" value="" name="buildHotelCity'+faqs_row+'" id="buildHotelCity'+faqs_row+'"></td>';
                           template += city;
-                          template += '<td><input class="form-control" type="date" value="'+f.format("YYYY-MM-DD")+'" name="buildCheckIn'+faqs_row+'" id="buildCheckIn'+faqs_row+'" disabled></td>';
+                          template += '<td><input class="form-control get_CheckIn" type="date" value="'+f.format("YYYY-MM-DD")+'" name="buildCheckIns[]" id="buildCheckIn'+faqs_row+'" disabled></td>';
                           template += bnight;
-                          template += ' <td> <div> <select data-mdl-for="sample2" class="form-control" value="" tabIndex="-1" name="Category'+faqs_row+'"> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option> </select> </div> </td>';
+                          template += ' <td> <div> <select data-mdl-for="sample2" class="form-control get_category" value="" tabIndex="-1" id="Category'+faqs_row+'" name="Category[]" onchange="get_hotel_name(this.id,'+faqs_row+');"> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option> </select> </div> </td>';
                           // template += '<td><input class="form-control" type="text" placeholder="Room Type" name="buildRoomType'+faqs_row+'" id="buildRoomType'+faqs_row+'" required=""></td> ';
+                        
+                        
+                          template += '<td><select class="form-control get_buildHotelName" id="buildHotelName'+faqs_row+'"  required="" name="buildHotelName[]"  onchange="get_route_name(this.id,'+faqs_row+');" required><option>Select</option></select></td>';
                           template +=  room;
+
+                          template +='<td><select class="form-control get_bed_type" id="buildBedType'+faqs_row+'"  required="" name="buildBedType[]" required><option value="Double" >Double</option><option value = "Single">Single</option></select></td>';
+
+                          template +='<td><select class="form-control get_room_types" id="room_types'+faqs_row+'" name="build_room_types[]" required><option value ="BB">BB</option><option value ="Room Only">Room Only</option><option value="HB" >HB</option><option value="FB" >FB</option></select></td>'; 
+                          
+                          template +='<td><select class="form-control room_sharing_types" id="room_sharing_types'+faqs_row+'" name="room_sharing_types[]" ><option value ="">Select option</option><option value ="triple_sharing">Triple Sharing</option> <option value="double_sharing" >Double Sharing</option></select></td>';
+
+                          template +='<td><input type="checkbox" id="extra_with_adult'+faqs_row+'" name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"><label for="html" style="margin-left: 5%;"> Extra Bed(Adult)</label><br><input type="checkbox" id="extra_with_child'+faqs_row+'" <?php  echo $buildpackage->child > 0 ? 'checked' : ''; ?>  name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child" ><label for="html" style="margin-left: 5%;"> Extra Bed(Child)</label><br><input type="checkbox" id="extra_without_bed'+faqs_row+'" <?php  echo $buildpackage->infant > 0 ? 'checked' : ''; ?> name="extra_check[]" value="extra_without_bed" class="check-extra extra_without_bed"><label for="html" style="margin-left: 5%;"> Extra W/O Bed</label></td>';
+
                           template += '<td><button type="button" class="btn btn-danger btn-xs cls-btn"  id="del_btn'+faqs_row+'"  onClick="return  removeHotel(this);"><i class="fa fa-trash"></i></button> </td>';
                           template += '</tr>';
 
                           $("#addrows").append(template);
-                          $('#allocated_days').val(parseInt($('#buildNoNights'+faqs_row).val()) + parseInt($('#allocated_days').val()) );
+                          $('#allocated_days').val(parseInt($('#buildNoNights'+faqs_row).val()) + parseInt(allocated_days ));
                           
                           $("[type='number']").keypress(function (evt) {
                               evt.preventDefault();
                           });
 
-                          if($("#faqs-row"+faqs_row).length == 0) {
-                            $('#buildNoNights').attr('disabled',false);
-                          }
-                         
+                          // if($("#addrows"+faqs_row).length == 0) {
+                          //   $('#buildNoNights').attr('disabled',false);
+                          // } 
 
+                         
+                          
                         }else{
                           $('#noOfDaysAlert').html(totalNoOfDays);
                           $('.noOfDaysAlertcls').attr("style","display:block;");
@@ -1821,44 +2273,64 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                          
                        
 
-                          // var allocated_days = $('#allocated_days').val();
-                          // if( ($('#allocated_days').val() == "")) allocated_days = parseInt($('#buildNoNights').val());
-                          // // alert(allocated_days);
-                          // var d = "<?php echo $view->specificDate;?>";                         
-                          // var totalNoOfDays = <?php echo $buildpackage->night?> ;
-                          // var f = moment(d).add(allocated_days, 'days');
-                          // if( allocated_days < totalNoOfDays ){
-                          //   // var add=' <tr  id="faqs-row' + faqs_row + '"> <td><input class="form-control" type="text" value="<?php echo $view->goingTo;?>" name="buildHotelCity" id="buildHotelCity"></td> <td><input class="form-control" type="date" value="<?php echo $view->specificDate;?>" name="buildCheckIn" id="buildCheckIn"></td> <td><input class="form-control" type="text" value="1" name="buildNoNights" id="buildNoNights'+ faqs_row +'"></td> <td> <div> <select data-mdl-for="sample2" class="form-control" value="" tabIndex="-1" name="Category"> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option> </select> </div> </td> <td><input class="form-control" type="text" placeholder="Hotel Name" name="buildHotelName" id="buildHotelName" required=""></td> <td><input class="form-control" type="text" placeholder="Room Type" name="buildRoomType" id="buildRoomType" required=""></td> <td><button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + faqs_row + '\').remove();"><i class="fa fa-trash"></i></button> </td> </tr>';
-                          //   // $('#addrows').append(add);  $(\'buildNoNights'+faqs_row+ '\').val();
-                          //   var add=' <tr  id="faqs-row' + faqs_row + '">  <td><input class="form-control" type="date" value="'+f.format("YYYY-MM-DD")+'" name="buildCheckIn'+faqs_row+'" id="buildCheckIn'+faqs_row+'" disabled></td><td><input class="form-control" type="text" value="2" name="buildNoNights'+faqs_row+'" id="buildNoNights'+ faqs_row +'"></td><td><button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + faqs_row + '\').remove()"><i class="fa fa-trash"></i></button> </td> </tr>';
-                          //   $('#addrows').append(add);
-                          //   var Selectedvalue =  $( "#buildNoNights"+faqs_row).val(); 
-                          //   $('#allocated_days').val(parseInt(allocated_days) + parseInt(Selectedvalue) );
-                          //   faqs_row++;   
-                          // }else{
-                          //   alert("Cannot Add more than "+totalNoOfDays+" days");
-                          // }
+                      //     // var allocated_days = $('#allocated_days').val();
+                      //     // if( ($('#allocated_days').val() == "")) allocated_days = parseInt($('#buildNoNights').val());
+                      //     // // alert(allocated_days);
+                      //     // var d = "<?php //echo $view->specificDate;?>";                         
+                      //     // var totalNoOfDays = <?php //echo $buildpackage->night?> ;
+                      //     // var f = moment(d).add(allocated_days, 'days');
+                      //     // if( allocated_days < totalNoOfDays ){
+                      //     //   // var add=' <tr  id="faqs-row' + faqs_row + '"> <td><input class="form-control" type="text" value="<?php echo $view->goingTo;?>" name="buildHotelCity" id="buildHotelCity"></td> <td><input class="form-control" type="date" value="<?php echo $view->specificDate;?>" name="buildCheckIn" id="buildCheckIn"></td> <td><input class="form-control" type="text" value="1" name="buildNoNights" id="buildNoNights'+ faqs_row +'"></td> <td> <div> <select data-mdl-for="sample2" class="form-control" value="" tabIndex="-1" name="Category"> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option> </select> </div> </td> <td><input class="form-control" type="text" placeholder="Hotel Name" name="buildHotelName" id="buildHotelName" required=""></td> <td><input class="form-control" type="text" placeholder="Room Type" name="buildRoomType" id="buildRoomType" required=""></td> <td><button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + faqs_row + '\').remove();"><i class="fa fa-trash"></i></button> </td> </tr>';
+                      //     //   // $('#addrows').append(add);  $(\'buildNoNights'+faqs_row+ '\').val();
+                      //     //   var add=' <tr  id="faqs-row' + faqs_row + '">  <td><input class="form-control" type="date" value="'+f.format("YYYY-MM-DD")+'" name="buildCheckIn'+faqs_row+'" id="buildCheckIn'+faqs_row+'" disabled></td><td><input class="form-control" type="text" value="2" name="buildNoNights'+faqs_row+'" id="buildNoNights'+ faqs_row +'"></td><td><button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + faqs_row + '\').remove()"><i class="fa fa-trash"></i></button> </td> </tr>';
+                      //     //   $('#addrows').append(add);
+                      //     //   var Selectedvalue =  $( "#buildNoNights"+faqs_row).val(); 
+                      //     //   $('#allocated_days').val(parseInt(allocated_days) + parseInt(Selectedvalue) );
+                      //     //   faqs_row++;   
+                      //     // }else{
+                      //     //   alert("Cannot Add more than "+totalNoOfDays+" days");
+                      //     // }
 
 
                         }
                       }
                       
-                      removeHotel =function  removeHotel(data){
+                      removeHotel = function  removeHotel(data){
+                       
+                              // var rowCount = $('#addrows tbody tr').length;
+                              // if(rowCount != 0){
+                              //   $('#buildNoNights').attr('disabled',true);
+                              // }else{
+                              //   $('#buildNoNights').attr('disabled',true);
+                              // }
+
+
                             // console.log(data.closest('tr'));
-                            var allocateddays = parseInt($('#allocated_days').val());                           
+                            var allocateddays = parseInt($('#allocated_days').val());   
+                            
                             var tr = data.closest('tr');
-                            // var lessdays = tr.('select.bnights').val();
-                            // var lessdays =  data.closest('.bnights');
-                            // console.log(lessdays);
-                            var deleted_days = (Number(allocateddays) - Number(lessdays));
-                            $('#allocated_days').val(deleted_days);
-                            data.closest('tr').remove();
+                            
+                            // tr.($('#buildNoNights')).attr('disabled',false);
+                              // // console.log(tr.($('td:eq(3)')));
+                              // var lessdays = tr.('select.bnights').val();
+                              // // // var lessdays =  data.closest('.bnights');
+                              // alert(lessdays);
+                              // // var deleted_days = (Number(allocateddays) - Number(lessdays));
+                              // // $('#allocated_days').val(deleted_days);
+                              data.closest('tr').remove();
+
+                          if($("#faqs-row0").length == 0) {
+                            $('#buildNoNights').attr('readonly', false);
+                          }
+                             
                             
                         }
                      
 </script>
+
+
 </script>
-   
+  
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script>
 	CKEDITOR.replace('buildPackageInclusions');

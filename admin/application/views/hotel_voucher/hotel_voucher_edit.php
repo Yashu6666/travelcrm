@@ -232,13 +232,9 @@
 												<?php foreach (explode(',',$hotel[0]->room_type) as $key => $value) : ?>
 												<p>
 												<?php print_r($hotel_details[$key]->hotelname); ?>, 
-													
-												<?php print_r(explode(',',$hotel[0]->room_type)[$key]); ?>, 
-												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M408 120c0 54.6-73.1 151.9-105.2 192c-7.7 9.6-22 9.6-29.6 0C241.1 271.9 168 174.6 168 120C168 53.7 221.7 0 288 0s120 53.7 120 120zm8 80.4c3.5-6.9 6.7-13.8 9.6-20.6c.5-1.2 1-2.5 1.5-3.7l116-46.4C558.9 123.4 576 135 576 152V422.8c0 9.8-6 18.6-15.1 22.3L416 503V200.4zM137.6 138.3c2.4 14.1 7.2 28.3 12.8 41.5c2.9 6.8 6.1 13.7 9.6 20.6V451.8L32.9 502.7C17.1 509 0 497.4 0 480.4V209.6c0-9.8 6-18.6 15.1-22.3l122.6-49zM327.8 332c13.9-17.4 35.7-45.7 56.2-77V504.3L192 449.4V255c20.5 31.3 42.3 59.6 56.2 77c20.5 25.6 59.1 25.6 79.6 0zM288 152c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40s17.9 40 40 40z"/></svg>
 												
-												
-												<?php if(isset($hotel_details[$key]->hotelmapaddress)) : ?>	
-													<?php print_r($hotel_details[$key]->hotelmapaddress); ?>, 
+												<?php if(isset($hotel_details[$key]->hotel_full_address)) : ?>	
+													<?php print_r($hotel_details[$key]->hotel_full_address); ?>, 
 												<?php endif ?>
 
 												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
@@ -248,6 +244,28 @@
 												<?php endif ?>
 												
 												<?php endforeach ?>
+
+												<p>Guest Relation Contact Number (24x7):- +971 50 351 5408 , +971 4 355 9218</p>
+
+												<p style="font-family: Poppins,sans-serif;">
+Kindly note that Hotel Check- in time is 14:00 hrs. Check-out time is 12:00 hrs. In case of an early arrival before the check in time, rooms must be booked from the previous night with the corresponding charges in order to guarantee an early check in.<br/><br/>
+
+Late checkout is subject to availability and Hotel Policy and Charges may apply. Hotel Reserves the Rights to Cancel the Rooms Booking Automatically After18:00 Hours, If Hotel is not Informed about the late arrivals <br/><br/>
+
+In case of late check in, kindly inform us on info@diamondtoursdubai.com with the flight details, so as to further inform the hotels. Failure to do so will lead to No show and further cancellation of the booking and Diamond Tours LLC Tourism will not be responsible for the same. <br/><br/>
+
+Kindly note Tourism Dirham is to be paid by the guest on check out, If it is not included in the booking amount.  <br/><br/>
+
+As per the new taxation rules of UAE, 5% VAT will be implemented for all hospitality related services from 1st Jan 2018. In case of any Cancellation, No Show, Diamond Tours LLC Cancellation Policy will be apply. Even in case where the hotel has agreed for refund, the cancellation charges will be decided upon Diamond Tours LLC Cancellation Policy It has nothing to do with Hotel and Supplier. Agent are not authorized to speak to the Hotel or Supplier directly.  <br/><br/>
+
+Kindly note few hotels may charge a refundable security deposit at the time of check in, this may be the respective hotel policy, Diamond Tours LLC is not responsible for the same.  <br/><br/>
+
+The extra bed depends on hotel to hotel policy as per the hotel standards. It can be Sofa cum bed / Rollaway Bed / Mattress subject to availability.  <br/><br/>
+
+All rooms are guaranteed on the day of arrival. In case of a no-show, your room(s) will be released and you will be subject to the terms and conditions of the Cancellation/No-Show Policy specified at the time you made the booking.  <br/><br/>
+
+The total price for this booking does not include mini-bar items, telephone usage, laundry service, etc.  
+												</p>
 												</textarea>
 												</div>
 											</div>

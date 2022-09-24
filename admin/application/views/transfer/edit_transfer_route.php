@@ -91,7 +91,7 @@
 
 										</div>
 
-										<div class="col d-flex justify-content-center">
+										<div class="col-12 ml-4">
 									<label class="row input" style="width: 43%;">
 										<input class="input__field invoice-width" type="text" name="route_name" placeholder=" "  value="<?php echo $edit->route_name?>" id="billTo" autocomplete="off" />
 										<span class="input__label">Display Name<span class="colorRed">*</span></span>

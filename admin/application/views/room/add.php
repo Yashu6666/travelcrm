@@ -447,7 +447,7 @@
 </div> -->
 <hr>
 <div class="row form-group mb-3">
-  <label class="col-md-6 control-label text-left">Promo Code</label>
+  <label class="col-md-6 control-label text-left">Hotel Promo Code</label>
   <div class="col-md-6">
     <input required class="form-control" type="text" placeholder=" Promo Code" name="promo_code" value="">
   </div>

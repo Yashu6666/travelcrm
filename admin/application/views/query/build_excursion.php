@@ -214,6 +214,47 @@
 
          </tbody>
          
+
+
+         <tbody>
+              <tr id="myTableRow">
+              <td>
+               <div>
+                <select  id="excursion_type_TKT" data-mdl-for="sample2" class="form-control"
+                value="TKT"  tabIndex="-1" name="excursion_type">
+                <option value="TKT">TKT</option>
+               </select>
+
+              </div>
+             </td>
+              
+              <td>
+               <div>
+                <select required multiple="" id="excursion_name_TKT"  name="excursion_name_TKT[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" >
+                <?php foreach($excursion_TKT as $value){ ?>
+                <option value="<?php echo $value->tourname ?>"><?php echo $value->tourname ?></option>
+                <?php } ?>
+               </select>
+
+              </div>
+             </td>
+       
+          
+
+
+           <td><input id="excursion_adult_TKT" type="text" placeholder="0" class="form-control" name="adult" value="<?php echo $view->Packagetravelers;?>" disabled>
+           </td>
+           <td><input id="excursion_child_TKT" type="text" placeholder="0" class="form-control" name="child" value="<?php echo $buildpackage->child;?>" disabled>
+           </td>
+           <td><input id="excursion_infant_TKT" type="text" placeholder="0" class="form-control" name="infant" value="<?php echo $buildpackage->infant;?>" disabled>  
+           </td>
+           <td><button id="TKT_cal" type="button" onclick="excursionTKTcalculations()" class="new_btn px-3">Save</button>
+                </td>
+         </tr>
+
+         </tbody>
+
+
         </tbody>
        </table>
        
@@ -272,27 +313,29 @@
 
                         $(".card-box").click(function(e){
                           e.stopPropagation(); 
+
                        
                         var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
-
-                          
+                        var total_pax_TKT_adult = $("#total_pax_TKT_adult").val();
                         var total_pax_sic_adult = $("#total_pax_sic_adult").val();
                         
-                        var sub_total_adult =parseInt(total_pax_pvt_adult) + 
+                        var sub_total_adult =parseInt(total_pax_pvt_adult) + parseInt(total_pax_TKT_adult) + 
                           parseInt(total_pax_sic_adult);
                        
 
                         var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
                         var total_pax_sic_hild = $("#total_pax_sic_hild").val();
+                        var total_pax_TKT_child = $("#total_pax_TKT_child").val();
                       
 
-                        var sub_total_child =  parseInt(total_pax_sic_hild)+ 
+                        var sub_total_child =  parseInt(total_pax_sic_hild)+ parseInt(total_pax_TKT_child)+ 
                           parseInt(total_pax_pvt_hild) ;
                       
                         var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
                         var total_pax_sic_infant = $("#total_pax_sic_infant").val();
+                        var total_pax_TKT_infant = $("#total_pax_TKT_infant").val();
 
-                        var sub_total_infant = parseInt(total_pax_pvt_infant)+ 
+                        var sub_total_infant = parseInt(total_pax_pvt_infant)+ parseInt(total_pax_TKT_infant)+ 
                           parseInt(total_pax_sic_infant);
                        
                           
@@ -930,10 +973,49 @@ $('#buildHotelName').on('change', function() {
         })
 
       }
+
+      function excursionTKTcalculations(){
+        
+        var excursion_types_TKT =  $('select#excursion_type_TKT').val(); 
+        var excursion_name_TKT = $('select#excursion_name_TKT').val();
+        var excursion_adults_TKT =  $("#excursion_adult_TKT").val();
+        var excursion_childs_TKT =  $("#excursion_child_TKT").val();
+        var excursion_infants_TKT =  $("#excursion_infant_TKT").val();
+        var QueryId = $('#QueryId').val();
+
+        var ex_hotel_pickup =  $("#ex_hotel_pickup").val();
+
+
+           $.ajax({
+          type:"POST",
+          dataType: "json",
+          url:'<?php echo site_url();?>/Query/getExcursionTKTCalculations',
+          data:{
+            'hotel_pickup':ex_hotel_pickup,
+            'query_id':QueryId,
+            'query_type':'excursion',
+            'excursion_types_TKT':excursion_types_TKT,'excursion_adults_TKT':excursion_adults_TKT,'excursion_childs_TKT':excursion_childs_TKT,'excursion_infants_TKT':excursion_infants_TKT,
+            'excursion_name_TKT':excursion_name_TKT},
+          success:function(response){
+             console.log("🚩 ~ file: build_excursion.php ~ line 998 ~ excursionTKTcalculations ~ response", response)
+             
+                $("#total_pax_TKT_adult").val(response.total_adultprice);
+                $("#total_pax_TKT_child").val(response.total_childprice);
+                $("#total_pax_TKT_infant").val(response.total_infantprice);
+                toastr.success("Excursion TKT Saved Successfully");
+          
+          }
+        })
+
+      }
       </script>
 <input type="hidden" id="total_pax_sic_adult" name="total_pax_sic_adult" value="0" />
 <input type="hidden" id="total_pax_sic_hild" name="total_pax_sic_hild" value="0" />
 <input type="hidden" id="total_pax_sic_infant" name="total_pax_sic_infant" value="0" />
+
+<input type="hidden" id="total_pax_TKT_adult" name="total_pax_TKT_adult" value="0" />
+<input type="hidden" id="total_pax_TKT_child" name="total_pax_TKT_child" value="0" />
+<input type="hidden" id="total_pax_TKT_infant" name="total_pax_TKT_infant" value="0" />
 
 
 

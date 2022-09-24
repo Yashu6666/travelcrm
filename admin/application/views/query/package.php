@@ -566,11 +566,7 @@
                                                         </select>
                                                     </div>
 
-                                                    <div id="child_age_div1" class="col" style="display:none;">
-                                                        <label for="">Child Age</label><br>
-
-                                                        <input id="child_age" name="child_age" class="Travelers-select-package-values" type="text" value="0" />
-                                                    </div>
+                                                        <input id="child_age" name="child_age" class="Travelers-select-package-values" type="hidden" value="0" />
 
                                                     <div class="col">
                                                         <label for="">No. Infant</label><br>
@@ -738,11 +734,7 @@
                                                         </select>
                                                     </div>
 
-                                                    <div id="child_age_div2" class="col" style="display:none;">
-                                                        <label for="">Child Age</label><br>
-
-                                                        <input id="child_age" name="child_age" class="Travelers-select-package-values" type="text" value="0" />
-                                                    </div>
+                                                        <input id="child_age" name="child_age" class="Travelers-select-package-values" type="hidden" value="0" />
 
                                                     <div class="col">
                                                         <label for="">No. Infant</label><br>

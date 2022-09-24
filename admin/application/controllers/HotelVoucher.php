@@ -169,10 +169,29 @@ class HotelVoucher extends CI_Controller
 				'mailtype' => "html",
 				'newline' => "\r\n",
 			);
+
+			$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
+			qp.child,cb.reportsTo,cb.b2bEmail,qp.room");
+
+			$this->db->from("b2bcustomerquery cb");
+
+			$this->db->where('qp.queryId', $query_id);
+			$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+			$data['view'] = $this->db->get()->row();
+
+			$user_id = $this->session->userdata()['admin_id'];
+			$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+
+			$subject = $data['view']->query_id . '
+			 - Diamond Tours LLC Dubai / Pax:' . $data['view']->Packagetravelers . ' 
+			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
+			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
+
 			$this->email->initialize($config);
 			$this->email->from('test.yrpitsolutions.com@gmail.com');
 			$this->email->to($c_email);
-			$this->email->subject('hotel voucher');
+			$this->email->subject($subject);
 
 			$this->load->library('Pdf');
 			$html =  $this->load->view('hotel_voucher/pdf',$data, true);

@@ -238,6 +238,7 @@
                                 
                                 <option <?php echo $edit->type=='SIC'?"Selected":"";?>  value="SIC">SIC</option>
                                 <option  <?php echo $edit->type=='PVT'?"Selected":"";?> value="PVT">PVT</option>
+                                <option  <?php echo $edit->type=='TKT'?"Selected":"";?> value="TKT">TKT</option>
 
                               </select>
                             </div>

@@ -29,9 +29,9 @@
     </div>
    </div>
 
-   <div class="page-bar ">
+   <!-- <div class="page-bar ">
    <button type="button" id="del_query" onclick="delQuery()" class="new_btn px-5 float-right">Cancel</button>
-   </div>
+   </div> -->
 
 
    <form id="proposal-form" action="<?php echo site_url();?>query/CreateProposal" method="post"> 
@@ -94,11 +94,11 @@
            <div class="card-head card-head-new">
             
            <p><i class="fa-solid fa-hotel"></i> Hotel
-           <input type="radio" id="hotel_status" name="hotel_status" value="Yes"><label for="html">Yes</label>
+           <input type="radio" id="hotel_status" name="hotel_status" value="Yes" checked><label for="html">Yes</label>
             <input type="radio" id="hotel_status1" name="hotel_status" value="No"><label for="html">No</label>
           </p>
            </div>
-           <div class="row mt-5 mr-3 ml-3 mb-3" style="display:none" id="hoteldisplay">
+           <div class="row mt-5 mr-3 ml-3 mb-3"  id="hoteldisplay">
             <div>
              <table class="table" id="addrows">
               <div class="alert alert-danger noOfDaysAlertcls" style="display:none;">
@@ -122,37 +122,35 @@
                 <th>Type </th>
                 <th>Sharing Type </th>
                 <th>Extra </th>
-                <!-- <th>Action</th> -->
 
                </tr>
               </thead>
             
              
               <tbody>
-               <tr>
+             <?php foreach(explode(",",$hotel_query[0]->hotel_id) as $key => $val) : ?>
+
+               <tr id="hotelRow<?php $key?>">
                <td>
-                  <!-- <input class="form-control" type="text" value="<?php //echo $view->goingTo;?>" name="buildHotelCity" id="buildHotelCity"> -->
                   <select class="form-control get-hotel get_all_city"  required="" name="buildHotelCity[]" id="buildHotelCity" onchange="get_hotel_name('buildHotelCity','');">
-                        <!-- <option>Select City</option>                       -->
-                        <option value="Dubai">Dubai</option>
-                        <option value="AbuDhabi">Abu Dhabi</option>
-                        <option value="Sharjah">Sharjah</option>
-                        <option value="Ajman">Ajman</option>
-                        <option value="Sir Baniyas">Sir Baniyas</option>
-                        <option value="Umm Al-Quwain">Umm Al-Quwain</option>
-                        <option value="Fujairah">Fujairah</option>
-                        <option value="Ras Al Khaimah">Ras Al Khaimah</option>
-                        <option value="Al Ain">Al Ain</option>
+                        <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Dubai" ? "selected" : "" ?> value="Dubai">Dubai</option>
+                        <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "AbuDhabi" ? "selected" : "" ?> value="AbuDhabi">Abu Dhabi</option>
+                        <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Sharjah" ? "selected" : "" ?> value="Sharjah">Sharjah</option>
+                        <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Ajman" ? "selected" : "" ?> value="Ajman">Ajman</option>
+                        <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Sir Baniyas" ? "selected" : "" ?> value="Sir Baniyas">Sir Baniyas</option>
+                        <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Umm Al-Quwain" ? "selected" : "" ?> value="Umm Al-Quwain">Umm Al-Quwain</option>
+                        <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Fujairah" ? "selected" : "" ?> value="Fujairah">Fujairah</option>
+                        <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Ras Al Khaimah" ? "selected" : "" ?> value="Ras Al Khaimah">Ras Al Khaimah</option>
+                        <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Al Ain" ? "selected" : "" ?> value="Al Ain">Al Ain</option>
                     </select>
                 </td>
                 <td>
-                  <input class="form-control get_CheckIn" type="date" value="<?php echo $view->specificDate;?>" name="buildCheckIns[]" id="buildCheckIn" readonly>
+                  <input class="form-control get_CheckIn" type="date" value="<?php echo explode(",",$hotel_query[0]->checkin)[$key];?>" name="buildCheckIns[]" id="buildCheckIn" readonly>
                   <input type="hidden" value="<?php echo $view->room;?>" name="no_of_room" id="no_of_room">
                 </td>
                 <td>
-                  <!-- <input class="form-control" type="number" value="1" max="<?php //echo $buildpackage->night?>" name="buildNoNights" id="buildNoNights"> -->
                    <select class="form-control bnights get_no_nights" id="buildNoNights"  name="buildNoNightss[]" required="">
-                        <option value="0">Select</option>  
+                        <option value="<?php echo explode(",",$hotel_query[0]->nights)[$key];?>"><?php echo explode(",",$hotel_query[0]->nights)[$key];?></option>
                         <?php $count_days=1;
                         for($count_days=1;  $count_days<=$buildpackage->night; $count_days++){
                         echo "<option value='".$count_days."'>".$count_days."</option>";
@@ -162,62 +160,46 @@
                 <td>
              <div>
               <select data-mdl-for="sample2" class="form-control get_category" value=""  id="Category" tabIndex="-1" name="Category[]" onchange="get_hotel_name('Category','');">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
+              
+              <option <?php echo explode(",",$hotel_query[0]->category)[$key] == "1" ? "selected" : "" ?> value="1">1</option>
+              <option <?php echo explode(",",$hotel_query[0]->category)[$key] == "2" ? "selected" : "" ?> value="2">2</option>
+              <option <?php echo explode(",",$hotel_query[0]->category)[$key] == "3" ? "selected" : "" ?> value="3">3</option>
+              <option <?php echo explode(",",$hotel_query[0]->category)[$key] == "4" ? "selected" : "" ?> value="4">4</option>
+              <option <?php echo explode(",",$hotel_query[0]->category)[$key] == "5" ? "selected" : "" ?> value="5">5</option>
              </select>
             </div>
            </td>
            <td>
-                <!-- <input class="form-control" type="text" placeholder="Hotel Name" name="buildHotelName" id="buildHotelName" required=""> -->
                 <select class="form-control get_buildHotelName" id="buildHotelName"  required="" name="buildHotelName[]" onchange="get_route_name('buildHotelName','');"  required>
-                      <!-- <option>Select</option>                                              -->
-                  </select>
+                  <option value="<?php echo explode(",",$hotel_query[0]->hotel_id)[$key];?>"><?php echo explode(",",$hotel_query[0]->hotel_name)[$key];?></option>
+              </select>
               </td>
               <td>
-                <!-- <input class="form-control" type="text"  placeholder="Room Type" name="buildRoomType" id="buildRoomType" required="">-->
               <select class="form-control get_buildRoomType" id="buildRoomType"  required="" name="buildRoomType[]" required>
-                      <option>Select</option>                                             
+                <option value="<?php echo explode(",",$hotel_query[0]->room_type)[$key];?>"><?php echo explode(",",$hotel_query[0]->room_type)[$key];?></option>
                   </select>
               </td>
               <td>
-                <!-- <input class="form-control" type="text"  placeholder="Room Type" name="buildRoomType" id="buildRoomType" required="">-->
               <select class="form-control get_bed_type" id="buildBedType" name="buildBedType[]" required>
-                      <option value="Double" >Double</option>                                             
-                      <option value ="Single">Single</option> 
+                      <option <?php echo explode(",",$hotel_query[0]->bed_type)[$key] == "Double" ? "selected" : "" ?> value="Double" >Double</option>                                             
+                      <option <?php echo explode(",",$hotel_query[0]->bed_type)[$key] == "Single" ? "selected" : "" ?> value ="Single">Single</option> 
                   </select>
               </td> 
               <td>
               <select class="form-control get_room_types" id="room_types" name="build_room_types[]" required>
-                      <option value ="BB">BB</option> 
-                      <option value ="Room Only">Room Only</option> 
-                      <option value="HB" >HB</option>                                             
-                      <option value="FB" >FB</option>                                             
+                      <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "BB" ? "selected" : "" ?> value ="BB">BB</option> 
+                      <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "Room Only" ? "selected" : "" ?> value ="Room Only">Room Only</option> 
+                      <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "HB" ? "selected" : "" ?> value="HB" >HB</option>                                             
+                      <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "FB" ? "selected" : "" ?> value="FB" >FB</option>                                             
                   </select>
               </td> 
               <td>
               <select class="form-control room_sharing_types" id="room_sharing_types" name="room_sharing_types[]">
-                      <option value ="">Select option</option> 
-                      <option value ="triple_sharing">Triple Sharing</option> 
-                      <option value="double_sharing" >Double Sharing</option>                                             
+                      <option <?php echo explode(",",$hotel_query[0]->sharing_type)[$key] == "triple_sharing" ? "selected" : "" ?> value ="triple_sharing">Triple Sharing</option> 
+                      <option <?php echo explode(",",$hotel_query[0]->sharing_type)[$key] == "double_sharing" ? "selected" : "" ?> value="double_sharing" >Double Sharing</option>                                             
                   </select>
                   </td>
               <td>
-                <!-- <input class="form-control" type="text"  placeholder="Room Type" name="buildRoomType" id="buildRoomType" required="">-->
-                <!-- <select required multiple=""  name="buildExtraBedType[]" id="buildExtraBedType" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" multiple="multiple"> -->
-                <!-- <select class="form-control" id="buildExtraBedType"  required="" name="buildExtraBedType" required> -->
-                      <!-- <option value="extra_with_adult">Extra Bed(Adult)</option> 
-                      <option value="extra_with_child" >Extra Bed(CHild)</option>
-                      <option value="extra_without_bed" >Extra W/O Bed</option>                                             
-                  </select> -->
-
-                  <!-- <div class="d-flex">
-                  <input type="checkbox" id="extra_with_adult" <?php  echo $buildpackage->adult > 2 ? 'checked' : ''; ?> name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"><label for="html" style="margin-left: 5%;">  Extra Bed(Adult)</label><br/> 
-                  <input type="checkbox" <?php  echo $buildpackage->child > 0 ? 'checked' : ''; ?> id="extra_with_child" name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child"><label for="html" style="margin-left: 5%;">  Extra Bed(Child)</label><br/>  
-                  <input type="checkbox" <?php  echo $buildpackage->infant > 0 ? 'checked' : ''; ?> id="extra_without_bed" name="extra_check[]" value="extra_without_bed" class="check-extra extra_without_bed"><label for="html" style="margin-left: 5%;">  Extra W/O Bed</label>
-                  </div> -->
 
                   <div class="">
                   <p><input type="checkbox" id="extra_with_adult" <?php  echo $buildpackage->adult > 2 ? 'checked' : ''; ?> name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"> Ex. adult</p>
@@ -226,9 +208,13 @@
                   </div>
 
               </td>     
-              
+              <?php if($key != 0) : ?>
+                <td><button class="btn btn-danger btn-xs" type="button" onclick="removeRow('hotelRow<?php $key?>')"><i class="fa fa-trash"></i></button> </td>
+              <?php endif ?>
               
          </tr>
+
+         <?php endforeach ?>
 
               </tbody>
               
@@ -243,23 +229,19 @@
            <div>
             <div class="card-head card-head-new">
              <p><i class="fa-solid fa-car"></i> Transfer
-              <input type="radio" id="trans_status" name="trans_status" value="Yes"><label for="html">Yes</label>
+              <input type="radio" id="trans_status" name="trans_status" value="Yes" checked><label for="html">Yes</label>
               <input type="radio" id="trans_status1" name="trans_status" value="No"><label for="html">No</label>
             </p>
             </div>
             </div>
-            <div class="row mt-4 mr-3 ml-3 mb-3" style="display:none" id="transdisplay">
+            <div class="row mt-4 mr-3 ml-3 mb-3"  id="transdisplay">
              <div class="col">
               <label for="" class="transport-lable"><b>Transport Type</b>
               :</label>
-              <input type="checkbox" name="TransType" id="TrasportTypeCab" class="mr-3 ml-2 " value="Internal Transfer"><span
+              <input type="checkbox" <?php echo count($internal_query) > 0 ? 'checked' : "" ?> name="TransType" id="TrasportTypeCab" class="mr-3 ml-2 " value="Internal Transfer"><span
               class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
-              <input type="checkbox" name="TransType" id="TrasportTypeSic" class="mr-3 ml-2 " value="Point to Point Transfer"><span
+              <input type="checkbox" <?php echo count($return_query) > 0 ? 'checked' : "" ?> name="TransType" id="TrasportTypeSic" class="mr-3 ml-2 " value="Point to Point Transfer"><span
               class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
-              <!-- <input type="checkbox" name="TransType" id="TrasportTypeBus" class="mr-3 ml-2 " value="Hourly"><span
-              class="transport-lable-ckeck">Hourly</span><span class="checkmark"></span> -->
-              <!-- <input type="checkbox" name="TransType" id="TrasportTypeTrain" class="mr-3 ml-2 " value="train"><span
-              class="transport-lable-ckeck">Train</span><span class="checkmark"></span> -->
              </div>
 
             <div>
@@ -279,62 +261,72 @@
                </tr>
               </thead>
               <tbody id="transfer_body">
-               <tr id="PvtCab" style="display: none;">
+               <?php foreach(explode(",",$internal_query[0]->transfer_date) as $key => $value) : ?> 
+               <tr id="PvtCab1<?php echo $key ?>" >
                 <th>Internal Transfer</th>
                
                 <td><input class="form-control" type="number" id="pax_internal" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCityCab[]" disabled></td>
+                <td><input class="form-control internal_transfer_date" type="date" value="<?php echo (explode(",",$internal_query[0]->transfer_date)[$key]);?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
                
-                <td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate;?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
-               <td>
-
-                <select id="pickupinternal"  required  name="buildTravelToDateCab[]"  class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                    <option value="Pickup">Pickup</option>
-                <!-- <?php foreach($transfer_route as $value){ ?>
-                <option value="<?php echo $value->start_city ?>"><?php echo $value->start_city ?></option>
-              <?php } ?> -->
-              </select>
-                    
-              </td>
                 <td>
-                <select   id="dropoffinternal" name="buildTravelToCityCabDrop[]"  class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                <option value="Drop Off">Drop Off</option>
+                <select id="pickupinternal_<?php echo $key ?>" name="buildTravelToDateCab[]"  class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                  <option value="<?php echo (explode(",",$internal_query[0]->pickup)[$key]);?>" ><?php echo (explode(",",$internal_query[0]->pickup)[$key]);?></option>
+                </select>
+               </td>
 
-              </select>
-              </td>
+                <td>
+                <select id="dropoffinternal_<?php echo $key ?>" name="buildTravelToCityCabDrop[]"  class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <option value="<?php echo (explode(",",$internal_query[0]->dropoff)[$key]);?>" ><?php echo (explode(",",$internal_query[0]->dropoff)[$key]);?></option>
+                </select>
+                </td>
+
                 <td>
                     <input id="price_internal" type="hidden" name="price_internal[]" />
                     <input id="pax_count_internal" type="hidden" name="pax_count_internal[]" />
                     <input id="total_price_internal" type="hidden" value="0" name="total_price_internal[]" />
-                    <input id="route_nameinternal" class="form-control internal_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeCab[]"></td>
-                <td><a class="new_btn px-3" onclick="transRow()">add</a></td>
+                    <input id="route_nameinternal" class="form-control internal_transfer_route" type="text" value="<?php echo (explode(",",$internal_query[0]->transfer_route)[$key]);?>" placeholder="Route Name" name="buildTravelTypeCab[]">
+                </td>
+
+                <?php if($key == 0) : ?>
+                  <td><a class="new_btn px-3" onclick="transRow()">add</a></td>
+                <?php else : ?>
+                  <td><button class="btn btn-danger btn-xs" type="button" onclick="removeRow('PvtCab1<?php echo $key ?>')"><i class="fa fa-trash"></i></button> </td>
+                <?php endif ?>
+
                </tr>
+                <?php endforeach ;?>
 
 
-                <tr id="Sic" style="display: none;">
+                <?php foreach(explode(",",$return_query[0]->transfer_date) as $key => $value) : ?> 
+                <tr id="Sic1<?php echo $key ?>">
                 <th>Return Transfer</th>
               <td><input class="form-control" id="pax_point" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC[]" disabled></td>
-              <td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdatePVT[]"></td>
+              <td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT" type="date" value="<?php echo (explode(",",$return_query[0]->transfer_date)[$key]);?>" name="buildTravelFromdatePVT[]"></td>
                
               <td>
-                <select id="pickuppoint"  required  name="buildTravelToDateSIC[]"  class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-             <option value="Pickup">Pickup</option>
-                <!-- ?php foreach($transfer_route1 as $value){ ?>
-                <option value="?php echo $value->start_city ?>">?php echo $value->start_city ?></option>
-              ?php } ?> -->
+                <select id="pickuppoint_<?php echo $key ?>"  required  name="buildTravelToDateSIC[]"  class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <option value="<?php echo (explode(",",$return_query[0]->pickup)[$key]);?>"><?php echo (explode(",",$return_query[0]->pickup)[$key]);?></option>
               </select></td>
                 <td>
-                <select   id="dropoffpoint" name="buildTravelToCitySIC[]"  class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                <option value="Drop Off">Drop Off</option>
-
+                <select   id="dropoffpoint_<?php echo $key ?>" name="buildTravelToCitySIC[]"  class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <option value="<?php echo (explode(",",$return_query[0]->dropoff)[$key]);?>"><?php echo (explode(",",$return_query[0]->dropoff)[$key]);?></option>
               </select>
                   </td>
-                <td><input id="route_namepoint" class="form-control return_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>
+                <td><input id="route_namepoint" class="form-control return_transfer_route" value="<?php echo (explode(",",$return_query[0]->transfer_route)[$key]);?>" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>
+                
                 <input id="price_point" type="hidden" name="price_point[]" />
                 <input id="pax_count_point" type="hidden" name="pax_count_point[]" />
                 <input id="total_price_point" type="hidden" value="0" name="total_price_point[]" />
-                <td><a class="new_btn px-3" onclick="transReturnRow()">add</a></td>
+
+                <?php if($key == 0) : ?>
+                  <td><a class="new_btn px-3" onclick="transReturnRow()">add</a></td>
+                <?php else : ?>
+                  <td><button class="btn btn-danger btn-xs" type="button" onclick="removeRow('Sic1<?php echo $key ?>')"><i class="fa fa-trash"></i></button> </td>
+                <?php endif ?>
 
                </tr>
+               <?php endforeach ;?>
+
 
                  <tr id="Train" style="display: none;">
                 <th>Train</th>
@@ -343,7 +335,7 @@
                 <td><input class="form-control" type="date" placeholder="To Date" name="buildTravelToDateTrain"></td>
                 <td><input class="form-control" type="text" placeholder="To City" name="buildTravelToCityTrain"></td>
                 <td><input class="form-control" type="text" placeholder="Type" name="buildTravelTypeTrain"></td>
-                <td><button type="button" class="btn btn-primary">Add</button>
+                <td><button type="button" class="new_btn px-3">Add</button>
                 </td>
 
                </tr>
@@ -359,11 +351,11 @@
               <div class="card-head card-head-new m">
              <p style="margin-top:20px"><i class="fa-brands fa-cc-visa"></i> Visa
                
-             <input type="radio" id="visa_status" name="visa_status" value="Yes"><label for="html">Yes</label>
+             <input type="radio" id="visa_status" name="visa_status" value="Yes" checked><label for="html">Yes</label>
              <input type="radio" id="visa_status1" name="visa_status" value="No"><label for="html">No</label></p>
             </div>
             <br>
-              <div class="row mt-4 mr-3 ml-3 mb-3 " style="display:none" id="visadisplay">
+              <div class="row mt-4 mr-3 ml-3 mb-3 "  id="visadisplay">
                <div>
                 <!-- <table class="table table-borderless">
                  <thead>
@@ -416,11 +408,11 @@
                 <select data-mdl-for="sample2" class="form-control"
                 value=""  tabIndex="-1" id="visa_category_drop_down" name="visa_category_drop_down">
                 <option value="">Select Category</option>
-                <option value="48_hrs">48 hrs Transit</option>
-                <option value="96_hrs">96 hrs Transit</option>
-                <option value="30_days_tourist">30 Days Tourist</option>
-                <option value="90_days_single">90 Days Single entry</option>
-                <option value="90_days_multi">90 Days Multi Entry</option>
+                <option <?php echo $visa_query[0]->visa_category == "48_hrs" ? "selected" : "" ?> value="48_hrs">48 hrs Transit</option>
+                <option <?php echo $visa_query[0]->visa_category == "96_hrs" ? "selected" : "" ?> value="96_hrs">96 hrs Transit</option>
+                <option <?php echo $visa_query[0]->visa_category == "30_days_tourist" ? "selected" : "" ?> value="30_days_tourist">30 Days Tourist</option>
+                <option <?php echo $visa_query[0]->visa_category == "90_days_single" ? "selected" : "" ?> value="90_days_single">90 Days Single entry</option>
+                <option <?php echo $visa_query[0]->visa_category == "90_days_multi" ? "selected" : "" ?> value="90_days_multi">90 Days Muti Entry</option>
                  </select>
               </div>
              </td>
@@ -428,9 +420,9 @@
               <div>
                <select data-mdl-for="sample2" class="form-control"
                value=""  tabIndex="-1" id='entry_type' name="entry_type">
-               <option value="Single Entry">Single Entry</option>
-               <option value="Double Entry">Double Entry</option>
-               <option value="Multi Entry">Multi Entry</option>
+               <option <?php echo $visa_query[0]->entry_type == "Single Entry" ? "selected" : "" ?> value="Single Entry">Single Entry</option>
+               <option <?php echo $visa_query[0]->entry_type == "Double Entry" ? "selected" : "" ?> value="Double Entry">Double Entry</option>
+               <option <?php echo $visa_query[0]->entry_type == "Multi Entry" ? "selected" : "" ?> value="Multi Entry">Multi Entry</option>
               </select>
 
              </div>
@@ -441,9 +433,9 @@
              <div>
               <select data-mdl-for="sample2" class="form-control"
               value=""  tabIndex="-1" id="visa_validity" name="visa_validity">
-              <option value="1 Month">1 Month</option>
-              <option value="3 Month">3 Month</option>
-              <option value="5 Years">5 Years</option>
+              <option <?php echo $visa_query[0]->validity == "1 Month" ? "selected" : "" ?> value="1 Month">1 Month</option>
+              <option <?php echo $visa_query[0]->validity == "3 Month" ? "selected" : "" ?> value="3 Month">3 Month</option>
+              <option <?php echo $visa_query[0]->validity == "5 Years" ? "selected" : "" ?> value="5 Years">5 Years</option>
              </select>
             </div>
            </td>
@@ -472,11 +464,11 @@
              </div>
              <div class="card-head card-head-new">
              <p style="margin-top:20px"><i class="fa-solid fa-place-of-worship"></i> Excursion
-                <input type="radio" id="excursion_status" name="excursion_status" value="Yes"><label for="html">Yes</label>
+                <input type="radio" id="excursion_status" name="excursion_status" value="Yes" checked><label for="html">Yes</label>
               <input type="radio" id="excursion_status1" name="excursion_status" value="No"><label for="html">No</label>
              </p>
         </div>
-            <div class="row mt-4 mr-3 ml-3 mb-3 " style="display:none" id="excursiondisplay">
+            <div class="row mt-4 mr-3 ml-3 mb-3 "  id="excursiondisplay">
                <div>
                <div class="d-flex">
                 <label for="" class="">Hotel Pickup</label>
@@ -516,9 +508,12 @@
                 <!-- <select id="excursion_name" data-mdl-for="sample2" class="form-control"
                 value=""  tabIndex="-1" name="excursion"> -->
                 <!-- <option>Select Excursion</option> -->
+                <?php $sic_arr = explode(",",$sic_query[0]->excursion_name) ;?>
+
                 <?php foreach($excursion_sic as $value){ ?>
-                <option value="<?php echo $value->tourname ?>"><?php echo $value->tourname ?></option>
-            <?php } ?>
+                <option <?php echo in_array($value->tourname, $sic_arr) ? "selected" : "" ?> value="<?php echo $value->tourname ?>"><?php echo $value->tourname ?></option>
+                <?php } ?>
+                
                </select>
 
               </div>
@@ -554,24 +549,11 @@
               <td>
                <div>
                <select required multiple="multiple" id="excursion_name_PVT"  name="excursion_name_PVT[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                <!-- <select id="excursion_name" data-mdl-for="sample2" class="form-control"
-                value=""  tabIndex="-1" name="excursion"> -->
-                <!-- <option>Select Excursion</option> -->
-                <?php 
-                // $total_pax = $view->Packagetravelers+$buildpackage->child;
-                // echo"<pre>";print_r($excursion_pvt);
-                $filter=array();
-                foreach($excursion_pvt as $k=>$value){ 
-                      $filter[$value->tourname] = $value;
-                }
-                  ?>
-                <!-- <option value="<?php //echo $values->tourname ?>"><?php// echo $values->tourname ?></option> -->
-            <?php 
-            foreach($filter as  $values){ 
+               <?php $pvt_arr = explode(",",$pvt_query[0]->excursion_name) ;?>
+                <?php foreach($excursion_pvt as $value){ ?>
+                <option <?php echo in_array($value->tourname, $pvt_arr) ? "selected" : "" ?>  value="<?php echo $value->tourname ?>"><?php echo $value->tourname ?></option>
+            <?php } ?>
 
-              echo '<option value="'.$values->tourname.'">'.$values->tourname.'</option>';
-
-             } ?>
 
            
                </select>
@@ -592,8 +574,6 @@
 
          </tbody>
 
-         
-
          <tbody>
               <tr id="myTableRow">
               <td>
@@ -609,9 +589,13 @@
               <td>
                <div>
                 <select required multiple="" id="excursion_name_TKT"  name="excursion_name_TKT[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" >
+                
+                <?php $tkt_arr = explode(",",$tkt_query[0]->excursion_name) ;?>
+
                 <?php foreach($excursion_TKT as $value){ ?>
-                <option value="<?php echo $value->tourname ?>"><?php echo $value->tourname ?></option>
+                <option <?php echo in_array($value->tourname, $tkt_arr) ? "selected" : "" ?> value="<?php echo $value->tourname ?>"><?php echo $value->tourname ?></option>
                 <?php } ?>
+
                </select>
 
               </div>
@@ -641,12 +625,12 @@
                </div>
                <div class="card-head card-head-new mt-5">
              <p style="margin-top:20px"><i class="fa-solid fa-bowl-rice"></i>	Meal
-             <input type="radio" id="meals_status" name="meals_status" value="Yes"><label for="html">Yes</label>
+             <input type="radio" id="meals_status" name="meals_status" value="Yes" checked><label for="html">Yes</label>
               <input type="radio" id="meals_status1" name="meals_status" value="No"><label for="html">No</label>
             </p>
                
         </div>
-            <div class="row mt-4 mr-3 ml-3 mb-3 " style="display:none" id="mealsdisplay">
+            <div class="row mt-4 mr-3 ml-3 mb-3 "  id="mealsdisplay">
                <div>
               
                
@@ -667,22 +651,23 @@
 
             </thead>
              <tbody id="addrowss">
-              <tr id="myTableRow">
+             <?php foreach(explode(",",$meal_query[0]->transfer_type) as $key => $val) : ?>
+              <tr id="myTableRow<?php echo $key?>">
+                <td>
+                    <input type="radio"  class="transfer_with_or_without" <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "with_transfer" ? "checked" : "" ?>
+                     id="with_transfer" name="transfer_with_or_without_<?php echo $key?>[]" value="with_transfer" onclick="get_resturant_name('with_transfer','');"/> With Transfer<br/>
 
-              <td>
-                  <input type="radio"  class="transfer_with_or_without"  id="with_transfer" name="transfer_with_or_without[]" value="with_transfer" onclick="get_resturant_name('with_transfer','');"/> With Transfer<br/>
-                  <input type="radio" checked="checked" class="transfer_with_or_without" id="without_transfer" name="transfer_with_or_without[]" value="without_transfer" onclick="get_resturant_name('without_transfer','');"/> Without Transfer 
-              </td>
-
+                    <input type="radio" class="transfer_with_or_without" <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "without_transfer" ? "checked" : "" ?>
+                     id="without_transfer" name="transfer_with_or_without_<?php echo $key?>[]" value="without_transfer" onclick="get_resturant_name('without_transfer','');"/> Without Transfer	
+                </td>
               <td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate;?>" min="<?php echo $view->specificDate;?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate. ' + '.(($buildpackage->night)- (1)).' days')); ?>" name="buildCheckIn[]" id="buildCheckIn"></td>
-              
-
               <td>
                <div>
                 <select data-mdl-for="sample2" class="form-control rest_type"
-                value=""  tabIndex="-1" id="res_type" name="res_type[]" onchange="get_resturant_name('res_type','');">
-                <option value="Standard">Standard</option>
-                <option value="Premium">Premium</option>
+                value=""  tabIndex="-1" id="res_type" name="res_type[]"  onchange="get_resturant_name('res_type','');">
+
+                <option <?php echo explode(",",$meal_query[0]->resturant_type)[$key] == "Standard" ? "selected" : "" ?> value="Standard">Standard</option>
+                <option <?php echo explode(",",$meal_query[0]->resturant_type)[$key] == "Premium" ? "selected" : "" ?> value="Premium">Premium</option>
                </select>
 
               </div>
@@ -690,15 +675,18 @@
              <td>
              <select data-mdl-for="sample2" class="form-control res_name"
                 value=""  tabIndex="-1" name="res_name[]" id="res_name" >   
+                <option value="<?php echo explode(",",$meal_query[0]->resturant_name)[$key] ?>" selected><?php echo explode(",",$meal_query[0]->resturant_name)[$key] ?><option>
                 <option>select</option>             
                </select> 
-             <!-- <input class="form-control " type="text" value="" name="res_name[]" id="res_name"></td> -->
+              <!-- <input class="form-control " type="text" value="" name="res_name[]" id="res_name"> -->
+            </td>
+            
              <td>
              <div>
               <select data-mdl-for="sample2" class="form-control meal"
               value=""  tabIndex="-1" id="meal_cal" name="Meal[]">
-              <option value="Dinner">Dinner</option>
-              <option value="Lunch">Lunch</option>
+              <option <?php echo explode(",",$meal_query[0]->meal)[$key] == "Dinner" ? "selected" : "" ?>  value="Dinner">Dinner</option>
+              <option <?php echo explode(",",$meal_query[0]->meal)[$key] == "Lunch" ? "selected" : "" ?> value="Lunch">Lunch</option>
              </select>
             </div>
            </td>
@@ -706,27 +694,29 @@
              <div>
               <select data-mdl-for="sample2" class="form-control meal_type"
               value=""  tabIndex="-1" id="meal_type_cal" name="Meal_Type[]">
-              <option value="Veg">Veg</option>
-              <option value="Non-Veg">Non-Veg</option>
-              <option value="Jain">Jain</option>
+              <option <?php echo explode(",",$meal_query[0]->meal_type)[$key] == "Veg" ? "selected" : "" ?> value="Veg">Veg</option>
+              <option <?php echo explode(",",$meal_query[0]->meal_type)[$key] == "Non-Veg" ? "selected" : "" ?> value="Non-Veg">Non-Veg</option>
+              <option <?php echo explode(",",$meal_query[0]->meal_type)[$key] == "Jain" ? "selected" : "" ?> value="Jain">Jain</option>
              </select>
             </div>
            </td>
-           <td><input type="number" min="1"  id="no_of_meals" class="form-control  no_of_meals" name="no_of_meals[]" >
-
+           <td><input type="number" min="1"  id="no_of_meals"  value="<?php echo explode(",",$meal_query[0]->no_of_meals)[$key]?>" class="form-control  no_of_meals" name="no_of_meals[]" >
        
 
-           <td><input type="text" placeholder="0" id="adult_meal_cal" class="form-control check-adult meal_adult" name="adult[]" >
+           <td><input type="text" placeholder="0" id="adult_meal_cal" value="<?php echo explode(",",$meal_query[0]->adult_pax)[$key]?>" class="form-control check-adult meal_adult" name="adult[]" >
            </td>
-           <td><input type="text" placeholder="0" id="child_meal_cal" class="form-control check-child meal_child" name="child[]" <?php if($buildpackage->child == 0) echo "disabled";?> >
+           <td><input type="text" placeholder="0" id="child_meal_cal" value="<?php echo explode(",",$meal_query[0]->child_pax)[$key]?>" class="form-control check-child meal_child" name="child[]" <?php if($buildpackage->child == 0) echo "disabled";?> >
            </td>
-        
-           <td>      
-            <a class="new_btn px-3 ml-0" onclick="addrowss()">
-              add
-            </a>
-          </td>
+
+        <?php if($key == 0) : ?>
+            <td><a class="new_btn px-3 ml-0" onclick="addrowss()">add</a></td>
+        <?php else : ?>
+            <td><button class="btn btn-danger btn-xs" type="button" onclick="removeRow('myTableRow<?php echo $key ?>')"><i class="fa fa-trash"></i></button> </td>
+        <?php endif ?>
+
          </tr>
+
+         <?php endforeach ?>
          </tbody>
                 </table>
                 <div style="float:right;">
@@ -736,6 +726,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
         <script src="<?php echo base_url();?>public/js/validate.js"></script>
                           <script>
+                            function removeRow(id){
+                              document.getElementById(id).remove()
+                            }
                 
                            $(document).ready(function(){
 
@@ -824,40 +817,40 @@
 
                           // });
 
-                          var data= [{
-                              'cities' : cities,
-                              'checkIn' : checkIn,
-                              'nights' : noOfNights,
-                              'category' : category,
-                              'hotelName' : hotelName,
-                              'roomType' : roomType,
-                              'bedType' : bedType,
-                            }];
+                          // var data= [{
+                          //     'cities' : cities,
+                          //     'checkIn' : checkIn,
+                          //     'nights' : noOfNights,
+                          //     'category' : category,
+                          //     'hotelName' : hotelName,
+                          //     'roomType' : roomType,
+                          //     'bedType' : bedType,
+                          //   }];
                            
                           
                           
-                           var total_rows = $('#rows_count').val();
-                           var QueryId = $('#QueryId').val();
+                          //  var total_rows = $('#rows_count').val();
+                          //  var QueryId = $('#QueryId').val();
 
-                           var buildPackageInclusions = $('#buildPackageInclusions').val();
-                           var buildPackageExclusions = $('#buildPackageExclusions').val();
-                           var buildPackageConditions = $('#buildPackageConditions').val();
-                           var buildPackageCancellations = $('#buildPackageCancellations').val();
+                          //  var buildPackageInclusions = $('#buildPackageInclusions').val();
+                          //  var buildPackageExclusions = $('#buildPackageExclusions').val();
+                          //  var buildPackageConditions = $('#buildPackageConditions').val();
+                          //  var buildPackageCancellations = $('#buildPackageCancellations').val();
                           //  var buildPackageRefund = $('#buildPackageRefund').val();
 
-                            $.ajax({ 
-                                type: "POST",
-                                url: "<?php echo base_url()?>Query/CreateProposalHotelSave",
-                                // data: {cities : cities,checkIn:checkIn,noOfNights:noOfNights,category:category,hotelName:hotelName,roomType:roomType,bedType:bedType,extras:extras},
-                                data : {data : data, total_rows : total_rows,QueryId:QueryId,buildPackageInclusions:buildPackageInclusions,
-                                  buildPackageExclusions:buildPackageExclusions,buildPackageConditions:buildPackageConditions,buildPackageCancellations:buildPackageCancellations},
-                                cache: false,
-                                success: function(response)
-                                {
-                                    console.log('success');
-                                    // $("#proposal-form").submit();
-                                }
-                            });
+                            // $.ajax({ 
+                            //     type: "POST",
+                            //     url: "?php echo base_url()?>Query/CreateProposalHotelSave",
+                            //     // data: {cities : cities,checkIn:checkIn,noOfNights:noOfNights,category:category,hotelName:hotelName,roomType:roomType,bedType:bedType,extras:extras},
+                            //     data : {data : data, total_rows : total_rows,QueryId:QueryId,buildPackageInclusions:buildPackageInclusions,
+                            //       buildPackageExclusions:buildPackageExclusions,buildPackageConditions:buildPackageConditions,buildPackageCancellations:buildPackageCancellations},
+                            //     cache: false,
+                            //     success: function(response)
+                            //     {
+                            //         console.log('success');
+                            //         // $("#proposal-form").submit();
+                            //     }
+                            // });
 
 
                             var total_rows = $('#faqs tbody#addrowss tr').length;
@@ -2117,6 +2110,91 @@ function get_resturant_name(id,row){
 function hotelcalculation(){
 
 
+  var cities = [];
+                          $(".get_all_city").each(function() {
+                            var city = $(this).val();
+                            cities.push($.trim(city));
+
+                          }); 
+                          
+                          var checkIn = [];
+                          $(".get_CheckIn").each(function() {
+                            var checkInDate = $(this).val();
+                            checkIn.push($.trim(checkInDate));
+
+                          });
+                         
+                          
+                          var noOfNights = [];
+                          $(".get_no_nights").each(function() {
+                            var nights = $(this).val();
+                            noOfNights.push($.trim(nights));
+
+                          });
+
+                          var category = [];
+                          $(".get_category").each(function() {
+                            var star = $(this).val();
+                            category.push($.trim(star));
+
+                          });
+
+                          var hotelName = [];
+                          $(".get_buildHotelName").each(function() {
+                            var hotel_name = $(this).val();
+                            hotelName.push($.trim(hotel_name));
+
+                          });
+
+                          var roomType = [];
+                          $(".get_buildRoomType").each(function() {
+                            var room = $(this).val();
+                            roomType.push($.trim(room));
+
+                          });
+
+                          var bedType = [];
+                          $(".get_bed_type").each(function() {
+                            var bed = $(this).val();
+                            bedType.push($.trim(bed));
+
+                          });
+
+
+                          var data= [{
+                              'cities' : cities,
+                              'checkIn' : checkIn,
+                              'nights' : noOfNights,
+                              'category' : category,
+                              'hotelName' : hotelName,
+                              'roomType' : roomType,
+                              'bedType' : bedType,
+                            }];
+                           
+                          
+                          
+                           var total_rows = $('#rows_count').val();
+                           var QueryId = $('#QueryId').val();
+
+                           var buildPackageInclusions = $('#buildPackageInclusions').val();
+                           var buildPackageExclusions = $('#buildPackageExclusions').val();
+                           var buildPackageConditions = $('#buildPackageConditions').val();
+                           var buildPackageCancellations = $('#buildPackageCancellations').val();
+
+                            $.ajax({ 
+                                type: "POST",
+                                url: "<?php echo base_url()?>Query/CreateProposalHotelSave",
+                                data : {data : data, total_rows : total_rows,QueryId:QueryId,buildPackageInclusions:buildPackageInclusions,
+                                  buildPackageExclusions:buildPackageExclusions,buildPackageConditions:buildPackageConditions,buildPackageCancellations:buildPackageCancellations},
+                                cache: false,
+                                success: function(response)
+                                {
+                                  // console.log("🚩 ~ file: build_package_edit.php ~ line 2191 ~ hotelcalculation ~ response", response)
+                                }
+                            });
+
+                            
+
 var total_rows = $('#rows_count').val();
 var pax_adult = <?php  echo $view->Packagetravelers; ?>;
 var pax_child = <?php  echo $buildpackage->child; ?>;
@@ -2279,6 +2357,7 @@ setTimeout(function(){ $('.noOfDaysAlertcls2').attr("style","display:none;") }, 
                           dataType: "json",
                           success: function(response)
                           {
+                            console.log("🚩 ~ file: build_package_edit.php ~ line 2359 ~ hotelcalculation ~ response", response)
                             $('#hotel_rate_adult').val(response.total_pax_adult_rate);
                             $('#hotel_rate_child').val(response.total_pax_child_rate);
                             $('#hotel_rate_infant').val(response.total_pax_wo_rate);
@@ -2286,7 +2365,6 @@ setTimeout(function(){ $('.noOfDaysAlertcls2').attr("style","display:none;") }, 
                           }
                       });
                     }
-
 
 }
 
@@ -2380,13 +2458,23 @@ setTimeout(function(){ $('.noOfDaysAlertcls2').attr("style","display:none;") }, 
                     
                       $.ajax({ 
                           type: "POST",
-                          url: "<?php echo base_url()?>Query/saveTransferData",
+                          url: "<?php echo base_url()?>Query/saveTransferDataEdit",
                           data : {data : data,'pax_adult':pax_adult,'pax_child':pax_child,'pax_infants':pax_infants,'query_id' : QueryId,'query_type' : 'package' },
                           cache: false,
                           dataType: "json",
                           success: function(response)
                           {
-                            toastr.success("Transfer Details Saved Successfully");
+                            $("#price_internal").val(response.internal_price);
+                          var total_price_internal = response.internal_price * total_pax;
+                          $("#total_price_internal").val(total_price_internal);
+
+                          $("#price_point").val(response.return_price);
+                          var total_price_return = response.return_price * total_pax;
+                          $("#total_price_point").val(total_price_return);
+
+
+                          
+                          toastr.success("Transfer Details Saved Successfully");
                           }
                       });
   });

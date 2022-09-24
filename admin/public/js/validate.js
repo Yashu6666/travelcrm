@@ -116,12 +116,12 @@ function validation() {
     if (phoenVal == "") {
         spanPhone.innerHTML = "** Please fill the  Mobile Number";
         return false;
-    } else if (phoenVal.length != 10) {
-        spanPhone.innerHTML = "** Invalid Mobile Number ";
-        return false;
-    } else if ((phoenVal.charAt(0) != 9) && (phoenVal.charAt(0) != 8) && (phoenVal.charAt(0) != 7)) {
-        spanPhone.innerHTML = "**Invalid Mobile Number 8,9,7 ";
-        return false;
+    // } else if (phoenVal.length != 10) {
+    //     spanPhone.innerHTML = "** Invalid Mobile Number ";
+    //     return false;
+    // } else if ((phoenVal.charAt(0) != 9) && (phoenVal.charAt(0) != 8) && (phoenVal.charAt(0) != 7)) {
+    //     spanPhone.innerHTML = "**Invalid Mobile Number 8,9,7 ";
+    //     return false;
     }
 
 

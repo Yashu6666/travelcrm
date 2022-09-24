@@ -94,14 +94,14 @@
                               <div class="row form-group mb-3">
                                 <label class="col-md-12 control-label text-left"><b>Upto PAX</b></label>
                                 <div class="col-md-12">
-                                  <input required id="inputTag" class="form-control form-control-lg" type="text" name="pax" value="" data-role="tagsinput">
+                                  <input id="inputTag" class="form-control form-control-lg" type="text" name="pax" value="" data-role="tagsinput">
                                 </div>
                               </div>
 
                               <div class="row form-group mb-3">
                                 <label class="col-md-12 control-label text-left"><b>Vehicle Price</b></label>
                                 <div class="col-md-12">
-                                  <input required id="inputTag2" class="form-control form-control-lg" type="text" name="vehicle_price" data-role="tagsinput">
+                                  <input id="inputTag2" class="form-control form-control-lg" type="text" name="vehicle_price" data-role="tagsinput">
                                 </div>
                               </div>
 
@@ -259,6 +259,7 @@
                                 <option value="">Select</option>
                                 <option value="SIC">SIC</option>
                                 <option value="PVT">PVT</option>
+                                <option value="TKT">TKT</option>
 
                               </select>
                             </div>

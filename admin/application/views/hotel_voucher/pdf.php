@@ -134,7 +134,7 @@
         </table>
 
     <div style="background-color: #d9a927;">
-    <h4 style="text-align: start;margin-left: 20px;padding:4px;align-items: center;display: flex;font-size: 20px;"><img src="<?php echo base_url('/public/image/question_icon.png'); ?>"style="width: 12px;"> Important Information : Hotel</h4>
+    <h4 style="text-align: start;margin-left: 20px;padding:4px;align-items: center;display: flex;font-size: 20px;"><img src="<?php echo base_url('/public/image/question_icon.png'); ?>"style="width: 12px;"> Note </h4>
     </div>
     <?php echo $impInfo ?>
 </body>

@@ -114,78 +114,129 @@ class Query extends CI_Controller
 	{
 		
 
-		error_reporting(0);
-		
-		$inprogress = $this->db->where('cb.lead_stage', "Inprogress")->join('querypackage qp','cb.query_id=qp.queryId')->group_by('qp.queryId')->get('b2bcustomerquery cb')->result();
-		if (isset($inprogress)) {
-			$data['inprogress'] = count($inprogress);
-		} else {
-			$data['inprogress'] = 0;
-		}
+		// echo"<pre>";print_r($type);die();
 
+
+		error_reporting(0);
+	
+		// inprogress
+		$inprogress_qry = $this->db->select('count(*) as inprogress');
+				$this->db->where('cb.lead_stage', 'Inprogress');
+				$this->db->join('b2bcustomerquery cb','qp.queryId = cb.query_id');
+		if($this->session->userdata('reg_type') != 'Super Admin') $this->db->where('qp.created_by', $this->session->userdata('admin_id'));
+		$inprogress = $inprogress_qry->get('querypackage qp')->row();
+	
+		if (isset($inprogress)) $data['inprogress'] = $inprogress->inprogress;
+		else $data['inprogress'] = 0;
+		//recent
 		$date = new DateTime("now");
 		$curr_date = $date->format('Y-m-d ');
-		$recent = $this->db->query("select * FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW() group by qp.queryId ")->result();
 
-		if (isset($recent)) {
-			$data['recent'] = count($recent);
-		} else {
-			$data['recent'] = 0;
+
+		if($this->session->userdata('reg_type') == 'Super Admin'){
+			$recent = $this->db->query("select count(*) as recent FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW()")->row();
+
+		}else{
+			$recent = $this->db->query("select  count(*) as recent FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW() AND qp.created_by = ".$this->session->userdata('admin_id')." ")->row();
+
 		}
+		if (isset($recent)) $data['recent'] = $recent->recent;
+		else $data['recent'] = 0;
 
-		$confirmed = $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result();
-		if (isset($confirmed)) {
-			$data['confirmed'] = count($confirmed);
-		} else {
-			$data['confirmed'] = 0;
-		}
+		//confirmed
+		$confirmed_qry =  $this->db->select('count(*) as confirmed');
+					$this->db->where('cb.lead_stage', 'Confirmed');
+					$this->db->join('b2bcustomerquery cb','qp.queryId = cb.query_id');
+			if($this->session->userdata('reg_type') != 'Super Admin') $this->db->where('qp.created_by', $this->session->userdata('admin_id'));
+			$confirmed = $confirmed_qry->get('querypackage qp')->row();
 
-		$rejected = $this->db->where('lead_stage', "Rejected")->get('b2bcustomerquery')->result();
-		if (isset($rejected)) {
-			$data['rejected'] = count($rejected);
-		} else {
-			$data['rejected'] = 0;
-		}
-
-
-		$callback = $this->db->where('lead_stage', "Callback")->get('b2bcustomerquery')->result();
-		if (isset($callback)) {
-			$data['callback'] = count($callback);
-		} else {
-			$data['callback'] = 0;
-		}
-
-		$overall = '';
-			$this->db->query("SELECT queryId FROM querypackage")->result();
+			if (isset($confirmed)) $data['confirmed'] = $confirmed->confirmed;
+			else $data['confirmed'] = 0;
 		
-		if (isset($overall)) {
-			$data['overall'] = count($overall);
-		} else {
-			$data['overall'] = 0;
+		//rejected
+		$rejected_qry =  $this->db->select('count(*) as rejected');
+					$this->db->where('cb.lead_stage', 'Rejected');
+					$this->db->join('b2bcustomerquery cb','qp.queryId = cb.query_id');
+			if($this->session->userdata('reg_type') != 'Super Admin') $this->db->where('qp.created_by', $this->session->userdata('admin_id'));
+			$rejected  = $rejected_qry->get('querypackage qp')->row();
+			if (isset($rejected)) $data['rejected'] = $rejected->rejected;
+			else $data['rejected'] = 0;
+
+		//callback
+		$callback_qry =   $this->db->select('count(*) as callback');
+						$this->db->where('cb.lead_stage', 'Callback');
+						$this->db->join('b2bcustomerquery cb','qp.queryId = cb.query_id');
+			if($this->session->userdata('reg_type') != 'Super Admin') $this->db->where('qp.created_by', $this->session->userdata('admin_id'));
+			$callback = $callback_qry->get('querypackage qp')->row();
+
+			if (isset($callback)) $data['callback'] = $callback->callback;
+			else $data['callback'] = 0;
+		
+
+		$overall_qry =  $this->db->select('count(*) as overall');
+			$this->db->join('b2bcustomerquery cb','qp.queryId = cb.query_id');
+			if($this->session->userdata('reg_type') != 'Super Admin') $this->db->where('qp.created_by', $this->session->userdata('admin_id'));
+			$overall = $overall_qry->get('querypackage qp')->row();
+
+			if (isset($overall)) $data['overall'] = $overall->overall;
+			else $data['overall'] = 0;
+			
+
+		if($type == "Overall"){
+
+			$qry =  $this->db->join('b2bcustomerquery cb','qp.queryId = cb.query_id');
+			if($this->session->userdata('reg_type') != 'Super Admin') $this->db->where('qp.created_by', $this->session->userdata('admin_id'));
+			$query = $qry->get('querypackage qp')->result();
+
+		}
+		
+		if($type == "Inprogress"){
+			$qry = $this->db->where('cb.lead_stage', 'Inprogress');
+					$this->db->join('b2bcustomerquery cb','qp.queryId = cb.query_id');
+			if($this->session->userdata('reg_type') != 'Super Admin') $this->db->where('qp.created_by', $this->session->userdata('admin_id'));
+			$query = $qry->get('querypackage qp')->result();
+		}
+
+
+		
+		if($type == "Confirmed"){
+			$qry =  $this->db->where('cb.lead_stage', 'Confirmed');
+					$this->db->join('b2bcustomerquery cb','qp.queryId = cb.query_id');
+			if($this->session->userdata('reg_type') != 'Super Admin') $this->db->where('qp.created_by', $this->session->userdata('admin_id'));
+			$query = $qry->get('querypackage qp')->result();
 		}
 
 		
-		if ($type == 'Inprogress') {
-			$query = $this->db->where('lead_stage', "Inprogress")->get('b2bcustomerquery')->result();
-		} else if ($type == 'Callback') {
-			$query = $this->db->where('lead_stage', "Callback")->get('b2bcustomerquery')->result();
-		} else if ($type == 'Rejected') {
-			$query = $this->db->where('lead_stage', "Rejected")->get('b2bcustomerquery')->result();
-		} else if ($type == 'Confirmed') {
-			$query = $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result();
-		} else if ($type == 'recent') {
-			// $query = $this->db->query("select * FROM b2bcustomerquery where created_at BETWEEN '" . $today_date . " 00:00:00' AND    '" . $today_date . " 11:59:59'")->result();
-			$query = $this->db->query("select * FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW() group by qp.queryId ")->result();
-
-		} else if ($type == 'Overall') {
-			
-				$query = $this->db->query("SELECT * FROM b2bcustomerquery")->result();
-			
-		} else {
-			$query = $this->db->where('lead_stage', "Inprogress")->get('b2bcustomerquery')->result();
+		if($type == "Rejected"){
+			$qry =  $this->db->where('cb.lead_stage', 'Rejected');
+					$this->db->join('b2bcustomerquery cb','qp.queryId = cb.query_id');
+			if($this->session->userdata('reg_type') != 'Super Admin') $this->db->where('qp.created_by', $this->session->userdata('admin_id'));
+			$query  = $qry->get('querypackage qp')->result();
 		}
-		// $query=$this->db->get('b2bcustomerquery')->result();
-		// echo"<pre>";print_r($query);die();
+
+		
+		if($type == "Callback"){
+			$qry =  $this->db->where('cb.lead_stage', 'Callback');
+					$this->db->join('b2bcustomerquery cb','qp.queryId = cb.query_id');
+			if($this->session->userdata('reg_type') != 'Super Admin') $this->db->where('qp.created_by', $this->session->userdata('admin_id'));
+			$query = $qry->get('querypackage qp')->result();
+		}
+
+		
+		$date = new DateTime("now");
+		$curr_date = $date->format('Y-m-d ');
+		if($type == "recent"){
+			if($this->session->userdata('reg_type') == 'Super Admin'){
+				$query = $this->db->query("select *  FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW()")->result();
+
+			}else{
+				$query = $this->db->query("select  * FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW() AND qp.created_by = ".$this->session->userdata('admin_id')." ")->result();
+
+			}
+
+		}
+		
+
 
 		$result = array();
 		foreach ($query as $value) {

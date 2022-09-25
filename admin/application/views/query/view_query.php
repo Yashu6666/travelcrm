@@ -63,14 +63,14 @@
 											</div>
 											<div class="btn-group">
 												<a href="<?php echo site_url();?>query/view_query/Inprogress" id="addRow" class="new_btn " style="background: #3197ffd6;">
-													In Progress (<?php echo $inprogress ?>)
+													In Progress (<?php echo $inprogress?>)
 												</a>
 											</div>
-											<!-- <div class="btn-group">
+											<div class="btn-group">
 												<a href="<?php echo site_url();?>query/view_query/recent" id="addRow" class="new_btn">
 													Recent (<?php echo $recent ?>)
 												</a>
-											</div> -->
+											</div>
 											<div class="btn-group">
 												<a href="<?php echo site_url();?>query/view_query/Confirmed"  id="addRow" class="new_btn" style="background: #08cd04;">
 													Confirmed (<?php echo $confirmed ?>)

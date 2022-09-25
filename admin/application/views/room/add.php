@@ -273,7 +273,11 @@
       </div> -->
     </div>
 
-
+    <div class="row form-group mb-3">
+      <label class="col-md-4 control-label text-left">FIT<span><input type="radio" value="FIT" name="type"></span></label>
+      <label class="col-md-4 control-label text-left">GIT<span><input type="radio" value="GIT" name="type"></span></label>
+    </div>
+              
     <div class="row form-group mb-3">
       <label class="col-md-4 control-label text-left">Select Bed</label>
       <div class="col-md-8">

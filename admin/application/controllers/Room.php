@@ -185,6 +185,7 @@ class Room extends CI_Controller {
 					'created_by' => $this->session->userdata('admin_id'),
 					'hotelname' => $this->input->post('hotelname'),
 					'roomtype' => $roomtype[$key],
+					'group_type' => $this->input->post('type'),
 					'room_desc' => $this->input->post('room_desc'),
 					'roomamenities' => implode(',', $roomamenities),
 					'netrate' => implode(',', $netrate[$key]),
@@ -281,6 +282,7 @@ class Room extends CI_Controller {
 
 		$data = array(	'hotelname' => $this->input->post('hotelname'), 
 						'roomtype' => $this->input->post('roomtype'),
+						'group_type' => $this->input->post('type'),
 						'room_desc' => $this->input->post('room_desc'),
 						'roomamenities' => $roomamenities,
 						'netrate' => $netrate,

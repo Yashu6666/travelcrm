@@ -118,6 +118,7 @@
                 <th>Category</th>
                 <th>Hotel Name</th>
                 <th>Room Type </th>
+                <th>Group Type </th>
                 <th>Bed Type </th>
                 <th>Type </th>
                 <th>Sharing Type </th>
@@ -182,6 +183,13 @@
                       <option>Select</option>                                             
                   </select>
               </td>
+              <td>
+              <select class="form-control get_room_group_type" id="buildRoomGroupType" name="buildRoomGroupType[]" required>
+                      <option value="FIT" >FIT</option>                                             
+                      <option value="GIT" >GIT</option>                                             
+                  </select>
+              </td> 
+
               <td>
                 <!-- <input class="form-control" type="text"  placeholder="Room Type" name="buildRoomType" id="buildRoomType" required="">-->
               <select class="form-control get_bed_type" id="buildBedType" name="buildBedType[]" required>
@@ -2239,6 +2247,13 @@ setTimeout(function(){ $('.noOfDaysAlertcls2').attr("style","display:none;") }, 
                       get_room_types.push($.trim(cat));
                     });
 
+                    var groupType = [];
+                          $(".get_room_group_type").each(function() {
+                            var bed = $(this).val();
+                            groupType.push($.trim(bed));
+
+                          });
+
                     var sharing_types = [];
                     $(".room_sharing_types").each(function() {
                       var cat = $(this).val();
@@ -2252,6 +2267,7 @@ setTimeout(function(){ $('.noOfDaysAlertcls2').attr("style","display:none;") }, 
                     }
                     else {
                     var data= [{
+                        'group_type' : groupType,
                         'nights' : noOfNights,
                         'hotelName' : hotelName,
                         'roomType' : roomType,
@@ -3413,6 +3429,7 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                           template += '<td><select class="form-control get_buildHotelName" id="buildHotelName'+faqs_row+'"  required="" name="buildHotelName[]"  onchange="get_route_name(this.id,'+faqs_row+');" required><option>Select</option></select></td>';
                           template +=  room;
 
+                          template += '<td><select class="form-control get_room_group_type" id="buildRoomGroupType'+faqs_row+'" name="buildRoomGroupType[]" ><option value="FIT" >FIT</option><option value="GIT" >GIT</option></select></td>';
                           template +='<td><select class="form-control get_bed_type" id="buildBedType'+faqs_row+'"  required="" name="buildBedType[]" required><option value="Double" >Double</option><option value = "Single">Single</option></select></td>';
 
                           

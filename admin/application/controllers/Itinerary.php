@@ -20,7 +20,13 @@ class Itinerary extends CI_Controller {
 	public function view()
 	{
 
-		$this->load->view('itinerary/view');
+		$this->db->order_by('id', 'desc');
+		if($this->session->userdata('reg_type') != 'Super Admin'){
+			$this->db->where('created_by' , $this->session->userdata('admin_id'));
+		}
+		$data['view'] = $this->db->get('itinery_data')->result();
+
+		$this->load->view('itinerary/view',$data);
 	}
 
 	public function sendMailItinerary()	

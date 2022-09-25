@@ -24,11 +24,25 @@ class Todo extends CI_Controller {
 
 	public function view()
 	{
-		$data['ListTodo'] = $this->db->order_by('id', 'desc')->where('created_by', $this->session->userdata('admin_username'))->or_where('TodoAssigned' ,$this->session->userdata('admin_username'))->get('todo')->result();
+
+	
+		// 	$data['ListTodo'] = $this->db->order_by('id', 'desc')->where('created_by', $this->session->userdata('admin_id'))->or_where('TodoAssigned' ,$this->session->userdata('admin_id'))->get('todo')->result();
+
+
+		$this->db->select('td.*, us.UserName as created_by_name,urs.UserName as todoAssigned');
+		$this->db->from('todo td');
+		$this->db->join('users us', 'us.id = td.created_by','left');
+		$this->db->join('users urs', 'urs.id = td.TodoAssigned','left');
+		if($this->session->userdata('reg_type') != 'Super Admin'){
+			$this->db->where('td.created_by' , $this->session->userdata('admin_id'));
+			$this->db->or_where('td.TodoAssigned' ,$this->session->userdata('admin_id'));
+		}
+		$data['ListTodo'] = $this->db->get()->result();
+		
 		$data_assign_to = $this->db->get('users')->result();
 		$names = [];
 		foreach ($data_assign_to as $key => $val) {
-		  $names[] = $val->UserName;
+		  $names[$val->id] = $val->UserName;
 		}
 		$data['assign_to'] = $names;
 		$this->load->view('todo/view',$data);
@@ -70,7 +84,8 @@ class Todo extends CI_Controller {
 						'TodoAssigned'=>$this->input->post('TodoAssigned'),
 						'TodoDetails'=>$this->input->post('TodoDetails'),
 						'status'=>$this->input->post('status'),
-						'created_by'=>$this->input->post('created_by'),
+						// 'created_by'=> $this->input->post('created_by'),
+						'created_by' => $this->session->userdata('admin_id'),
 						'query_id'=> $query->row()->query_id
 					);
 

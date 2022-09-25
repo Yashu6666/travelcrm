@@ -14,7 +14,11 @@ class Invoice extends CI_Controller
 
 	public function view_invoice()
 	{
-		$data['listInvoice'] = $this->db->order_by('id', 'desc')->get('invoice')->result();
+		if($this->session->userdata('reg_type') == 'Super Admin'){
+			$data['listInvoice'] = $this->db->order_by('id', 'desc')->get('invoice')->result();
+		}else{
+			$data['listInvoice'] = $this->db->order_by('id', 'desc')->where("created_by" , $this->session->userdata('admin_id'))->get('invoice')->result();
+		}
 		// echo"<pre>";print_r($data['listInvoice']);exit;
 		$this->load->view('invoice/view_invoice', $data);
 	}
@@ -218,7 +222,8 @@ class Invoice extends CI_Controller
 			'finalBalance' => $this->input->post('finalBalance'),
 			'Notes' => $this->input->post('editorNotes'),
 			'TrmsCond' => $this->input->post('editorTrmsCond'),
-			'query_id' => $this->input->post('query_id')
+			'query_id' => $this->input->post('query_id'),
+			'created_by' => $this->session->userdata('admin_id')
 		);
 
 		if ($this->db->insert('invoice', $data)) {

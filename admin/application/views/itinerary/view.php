@@ -50,9 +50,10 @@
             <?php } ?>
 
                             <div class="card-body row ">
-                                <table class="table table-hover">
+								<table class="table datatable table-hover table-checkable order-column full-width" id="example4">
                                     <thead class="table-light">
                                         <tr>
+                                        <th scope="col">S.No</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Guest Name</th>
                                         <th scope="col">Start Destination</th>
@@ -62,28 +63,28 @@
                                         <th scope="col">Action</th>
                                         </tr>
                                     </thead>
-                           <!--          <tbody>
-                                        <?php foreach ($view as $key) {?>
+                                     <tbody>
+                                        <?php $i=1;foreach ($view as $key) {?>
                                            
                                         <tr>
-                                            <td><?php echo $key->company_name;?></td>
-                                            <td><?php echo $key->firstName;?> <?php echo $key->lastName;?></td>
-                                            <td><?php echo $key->designation;?></td>
-                                            <td><?php echo $key->email;?></td>
-                                            <td><?php echo $key->mobile_no;?></td>
-                                            <td><?php echo $key->city;?></td>
-                                            <td><?php echo $key->country;?></td>
-                                            <td><?php echo $key->category;?></td>
-                                            <td><?php echo $key->services;?></td>
-                                            <td><a href="<?php echo site_url();?>supplier/editSupplierDetails/<?php echo $key->id;?>" class="btn btn-primary btn-xs">
-                                                <i class="fa fa-pencil"></i>
-                                            </a> <a href="<?php echo site_url();?>supplier/deleteSupplierDetails/<?php echo $key->id;?>" onclick='return confirm("Are you sure you want to delete?")' class="btn btn-danger btn-xs">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
-                                        </td>
+                                            <td><?php echo $i++;?></td>
+                                            <td><?php echo $key->transfer;?></td>
+                                            <td><?php echo "Guest Name";?></td>
+                                            <td><?php echo $key->transfer_pickup;?></td>
+                                            <td><?php echo $key->transfer_dropoff;?></td>
+                                            <td><?php echo $key->transfer_from_date;?></td>
+                                            <td><?php echo $key->day;?></td>                                          
+                                            <td>
+                                                <a class="btn btn-tbl-edit btn-xs" href="#">
+															<i class="fa fa-edit "></i>
+												</a>
+												<a class="btn btn-tbl-delete btn-xs" href="#" onclick="return confirm('Are you sure to Delete..?')">
+															<i class="fa fa-trash-o "></i>
+												</a>
+                                            </td>
                                         </tr>
                             <?php } ?>
-                    </tbody> -->
+                    </tbody>
                 </table>
 
             </div>

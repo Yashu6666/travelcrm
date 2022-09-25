@@ -147,8 +147,8 @@
                                                 <td><?php echo $key->created_date;?></td>
                                                 <td><?php echo $key->TodoCustomer;?> 
                                                 <td><?php echo $key->Tododay;?></td>
-                                                <td><?php echo $key->created_by;?></td>
-                                                <td><?php echo $key->TodoAssigned;?></td>
+                                                <td><?php echo $key->created_by_name;?></td>
+                                                <td><?php echo $key->todoAssigned;?></td>
                                                 </td>
                                                 <td>
                                                     <select id='task_status_dropdown' name='task_status_dropdown' class='input__field' onchange="changeStatus(this)" >
@@ -254,8 +254,8 @@
                     <div class="col-auto">
                         <label for="">Assigned To</label>
                         <Select class="input__field  w-100" name="TodoAssigned">
-                            <?php foreach($assign_to as $val) :?>
-                            <option value="<?php echo $val ?>"><?php echo $val ?></option>
+                            <?php foreach($assign_to as $k => $val) :?>
+                            <option value="<?php echo $k ?>"><?php echo $val ?></option>
                             <?php endforeach ?>
                         </Select>
                     </div>
@@ -274,7 +274,7 @@
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Status</label>
 
-                     <select name="status" id="" class="todo-status">
+                     <select name="status" id="" class="todo-status" style="height: 100%;">
                   <option value="Active">Active</option>
                     <option value="Pending">Pending</option>
                 </select>

@@ -112,35 +112,20 @@ class Query extends CI_Controller
 
 	public function view_query($type = '')
 	{
-		// $this->db->select("*");
+		
 
-		// $this->db->from("b2bcustomerquery cb");
-
-		// $this->db->join('querypackage qp','cb.query_id=qp.queryId','LEFT');
-		// $this->db->join('querytransfer qt','cb.query_id=qt.queryId','LEFT');
-		// $this->db->join('queryvisa qv','cb.query_id=qv.queryId','LEFT');
-		// $this->db->join('queryhotel qh','cb.query_id=qh.queryId','LEFT');
-		// $this->db->join('queryexcusion qe','cb.query_id=qe.queryId','LEFT');
-
-		// $sql="SELECT * FROM b2bcustomerquery";
 		error_reporting(0);
-		// $inprogress = $this->db->where('lead_stage', "Inprogress")->get('b2bcustomerquery')->result();
+		
 		$inprogress = $this->db->where('cb.lead_stage', "Inprogress")->join('querypackage qp','cb.query_id=qp.queryId')->group_by('qp.queryId')->get('b2bcustomerquery cb')->result();
-
 		if (isset($inprogress)) {
 			$data['inprogress'] = count($inprogress);
 		} else {
 			$data['inprogress'] = 0;
 		}
-		// $today_date = date("Y-m-d");
-		// $recent = $this->db->query("select * FROM b2bcustomerquery where created_at BETWEEN '" . $today_date . " 00:00:00' AND    '" . $today_date . " 11:59:59'")->result();
 
 		$date = new DateTime("now");
 		$curr_date = $date->format('Y-m-d ');
-		// $recent = $this->db->query("select DISTINCT(qp.queryId) FROM b2bcustomerquery as cb join querypackage as qp ON cb.query_id=qp.queryId where DATE(cb.created_at) = '" . $curr_date . "' group by qp.queryId ")->result();
 		$recent = $this->db->query("select * FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW() group by qp.queryId ")->result();
-
-
 
 		if (isset($recent)) {
 			$data['recent'] = count($recent);
@@ -170,7 +155,9 @@ class Query extends CI_Controller
 			$data['callback'] = 0;
 		}
 
-		$overall = $this->db->query("SELECT DISTINCT(queryId) FROM querypackage")->result();
+		$overall = '';
+			$this->db->query("SELECT queryId FROM querypackage")->result();
+		
 		if (isset($overall)) {
 			$data['overall'] = count($overall);
 		} else {
@@ -191,7 +178,9 @@ class Query extends CI_Controller
 			$query = $this->db->query("select * FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW() group by qp.queryId ")->result();
 
 		} else if ($type == 'Overall') {
-			$query = $this->db->query("SELECT * FROM b2bcustomerquery")->result();
+			
+				$query = $this->db->query("SELECT * FROM b2bcustomerquery")->result();
+			
 		} else {
 			$query = $this->db->where('lead_stage', "Inprogress")->get('b2bcustomerquery')->result();
 		}
@@ -209,7 +198,10 @@ class Query extends CI_Controller
 			$created_at = $value->created_at;
 			$id = $value->id;
 
+			
 			$package = $this->db->where('queryId', $query_id)->get('querypackage')->row();
+			
+			
 
 			if (isset($package)) {
 				$res = array("id" => $id, "company_name" => $company_name, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
@@ -230,6 +222,139 @@ class Query extends CI_Controller
 
 		$this->load->view('query/view_query', $data);
 	}
+
+
+	// public function view_query($type = '')
+	// {
+		
+	// 	// $this->db->select("*");
+
+	// 	// $this->db->from("b2bcustomerquery cb");
+
+	// 	// $this->db->join('querypackage qp','cb.query_id=qp.queryId','LEFT');
+	// 	// $this->db->join('querytransfer qt','cb.query_id=qt.queryId','LEFT');
+	// 	// $this->db->join('queryvisa qv','cb.query_id=qv.queryId','LEFT');
+	// 	// $this->db->join('queryhotel qh','cb.query_id=qh.queryId','LEFT');
+	// 	// $this->db->join('queryexcusion qe','cb.query_id=qe.queryId','LEFT');
+
+	// 	// $sql="SELECT * FROM b2bcustomerquery";
+	// 	error_reporting(0);
+	// 	// $inprogress = $this->db->where('lead_stage', "Inprogress")->get('b2bcustomerquery')->result();
+	// 	$inprogress = $this->db->where('cb.lead_stage', "Inprogress")->join('querypackage qp','cb.query_id=qp.queryId')->group_by('qp.queryId')->get('b2bcustomerquery cb')->result();
+
+	// 	if (isset($inprogress)) {
+	// 		$data['inprogress'] = count($inprogress);
+	// 	} else {
+	// 		$data['inprogress'] = 0;
+	// 	}
+	// 	// $today_date = date("Y-m-d");
+	// 	// $recent = $this->db->query("select * FROM b2bcustomerquery where created_at BETWEEN '" . $today_date . " 00:00:00' AND    '" . $today_date . " 11:59:59'")->result();
+
+	// 	$date = new DateTime("now");
+	// 	$curr_date = $date->format('Y-m-d ');
+	// 	// $recent = $this->db->query("select DISTINCT(qp.queryId) FROM b2bcustomerquery as cb join querypackage as qp ON cb.query_id=qp.queryId where DATE(cb.created_at) = '" . $curr_date . "' group by qp.queryId ")->result();
+	// 	$recent = $this->db->query("select * FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW() group by qp.queryId ")->result();
+
+
+
+	// 	if (isset($recent)) {
+	// 		$data['recent'] = count($recent);
+	// 	} else {
+	// 		$data['recent'] = 0;
+	// 	}
+
+	// 	$confirmed = $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result();
+	// 	if (isset($confirmed)) {
+	// 		$data['confirmed'] = count($confirmed);
+	// 	} else {
+	// 		$data['confirmed'] = 0;
+	// 	}
+
+	// 	$rejected = $this->db->where('lead_stage', "Rejected")->get('b2bcustomerquery')->result();
+	// 	if (isset($rejected)) {
+	// 		$data['rejected'] = count($rejected);
+	// 	} else {
+	// 		$data['rejected'] = 0;
+	// 	}
+
+
+	// 	$callback = $this->db->where('lead_stage', "Callback")->get('b2bcustomerquery')->result();
+	// 	if (isset($callback)) {
+	// 		$data['callback'] = count($callback);
+	// 	} else {
+	// 		$data['callback'] = 0;
+	// 	}
+
+	// 	$overall = '';
+	// 		$this->db->query("SELECT queryId FROM querypackage")->result();
+		
+	// 	if (isset($overall)) {
+	// 		$data['overall'] = count($overall);
+	// 	} else {
+	// 		$data['overall'] = 0;
+	// 	}
+
+		
+	// 	if ($type == 'Inprogress') {
+	// 		$query = $this->db->where('lead_stage', "Inprogress")->get('b2bcustomerquery')->result();
+	// 	} else if ($type == 'Callback') {
+	// 		$query = $this->db->where('lead_stage', "Callback")->get('b2bcustomerquery')->result();
+	// 	} else if ($type == 'Rejected') {
+	// 		$query = $this->db->where('lead_stage', "Rejected")->get('b2bcustomerquery')->result();
+	// 	} else if ($type == 'Confirmed') {
+	// 		$query = $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result();
+	// 	} else if ($type == 'recent') {
+	// 		// $query = $this->db->query("select * FROM b2bcustomerquery where created_at BETWEEN '" . $today_date . " 00:00:00' AND    '" . $today_date . " 11:59:59'")->result();
+	// 		$query = $this->db->query("select * FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW() group by qp.queryId ")->result();
+
+	// 	} else if ($type == 'Overall') {
+			
+	// 			$query = $this->db->query("SELECT * FROM b2bcustomerquery")->result();
+			
+	// 	} else {
+	// 		$query = $this->db->where('lead_stage', "Inprogress")->get('b2bcustomerquery')->result();
+	// 	}
+	// 	// $query=$this->db->get('b2bcustomerquery')->result();
+	// 	// echo"<pre>";print_r($query);die();
+
+	// 	$result = array();
+	// 	foreach ($query as $value) {
+	// 		$query_id = $value->query_id;
+	// 		$name = $value->b2bfirstName . ' ' . $value->b2blastName;
+	// 		$mobile = $value->b2bmobileNumber;
+	// 		$lead_stage = $value->lead_stage;
+	// 		$company_name = $value->b2bcompanyName;
+
+	// 		$created_at = $value->created_at;
+	// 		$id = $value->id;
+
+			
+	// 		$package = $this->db->where('queryId', $query_id)->get('querypackage')->row();
+			
+			
+
+	// 		if (isset($package)) {
+	// 			$res = array("id" => $id, "company_name" => $company_name, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
+	// 			$result[] = $res;
+	// 		}
+	// 	}
+
+	// 	$data_assign_to = $this->db->get('users')->result();
+	// 	$names = [];
+	// 	foreach ($data_assign_to as $key => $val) {
+	// 	  $names[] = $val->UserName;
+	// 	}
+	// 	$data['assign_to'] = $names;
+
+	// 	$data['result'] = array_reverse($result);
+
+	// 	$data['users'] = $this->db->query("SELECT * FROM users where userType!='Super Admin'")->result();
+
+	// 	$this->load->view('query/view_query', $data);
+	// }
+
+
+
 
 	// public function view_query($type = '')
 	// {
@@ -384,7 +509,7 @@ class Query extends CI_Controller
 				'b2bmobileNumber' => $this->input->post('b2bmobileNumber'),
 				'reportsTo' => $this->input->post('reportsTo'),
 				'b2bagent_remarks' => $this->input->post('b2bagent_remarks'),
-				'query_id' => $this->input->post('query_id')
+				'query_id' => $this->input->post('query_id'),
 			);
 			$this->db->insert('b2bcustomerquery', $data);
 		}
@@ -434,7 +559,8 @@ class Query extends CI_Controller
 			'type' => $this->input->post('colorRadio'),
 			'currency' => $this->input->post('invoice_currency'),
 			'queryId' => $this->input->post('queryId'),
-			'created_date' => $this->input->post('created_date')
+			'created_date' => $this->input->post('created_date'),
+			'created_by' => $this->session->userdata('admin_id')
 		);
 		// echo "<pre>";print_r($data);return;
 		$query_id = $this->input->post('queryId');

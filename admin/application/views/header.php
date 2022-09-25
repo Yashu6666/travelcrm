@@ -57,7 +57,18 @@
 
 
 
-
+	<style>
+        .smsCode {
+            text-align: center;
+            line-height: 52px;
+            font-size: 50px;
+            border: solid 1px #ccc;
+            box-shadow: 0 0 5px #ccc inset;
+            width:100%;
+            outline: none;
+            border-radius: 3px;
+        }
+    </style>
 
  <link rel="stylesheet" href="<?php echo base_url();?>public/css/style1.css">
 	<style id="cke_ui_color" type="text/css"></style>
@@ -192,32 +203,78 @@
 				</div> -->
 
 				<div class="wrap-login100" style="border-radius: inherit;">
-				<form  action="<?php echo site_url();?>login/loginstock" method="post" >
+				<!-- <form  action="<?php echo site_url();?>login/loginstock" method="post" > -->
+				<!-- <form > -->
+
 					<!-- <span class="login100-form-logo">
 						<i class="zmdi zmdi-flower"></i>
 						
 					</span> -->
 					<img src="<?php echo site_url();?>/public/image/proposalLogo.png" style="width: 50%;align-items: center;margin-left: 20%;">
-					<span class="login100-form-title p-b-30 p-t-27">
-						<p style="color: red;"></p>
-						Log in
-					</span>
-					<p class="text-white-50 mb-5">Please enter your Credentials for loggin into Stocks!</p>
+					<div id="login_content">
+						<span class="login100-form-title p-b-30 p-t-27">
+							<p style="color: red;"></p>
+							Log in
+							
+						</span>
 
-					<div class="wrap-input100 validate-input" data-validate="Enter username">
-						<!-- <input type="text" value="" class="form-control form-control-lg input100" name="username"/> -->
-						<input value="" class="input100" type="text" name="username" placeholder="Username">
-						<span class="focus-input100" data-placeholder=""></span>
+						<p class="text-white-50 mb-5">Please enter your Credentials for loggin into Stocks!</p>
+						<p class="text-white-50 mb-5" id="message_div" style='display:none;'></p>
+						<div class="wrap-input100 validate-input" data-validate="Enter username">
+							<!-- <input type="text" value="" class="form-control form-control-lg input100" name="username"/> -->
+							<input value=""  type="hidden" id="stock_userid" name="stock_userid" >
+							<input value=""  type="hidden" id="stock_email_id" name="stock_email_id" >
+							<input value="" class="input100" type="text" id="stock_username" name="username" placeholder="Username">
+							<span class="focus-input100" data-placeholder=""></span>
+						</div>
+						<div class="wrap-input100 validate-input" data-validate="Enter password">
+							<input value="" class="input100" type="password" id="stock_password" name="pass" placeholder="Password">
+							<span class="focus-input100" data-placeholder=""></span>
+						</div>
+						<!-- <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p> -->
 					</div>
-					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input value="" class="input100" type="password" name="pass" placeholder="Password">
-						<span class="focus-input100" data-placeholder=""></span>
-					</div>
-					<!-- <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p> -->
+					<div id="otp_content" class="row SMSArea" style="display:none;">
 
-					<div class="container-login100-form-btn">
-						<button href="index.html" class="login100-form-btn">
-							Login
+						<span class="text-white-50 mb-5">
+							Please enter the one time password to verify your account.<br/> A code has been sent to <b id="mail_id"></b>
+						</span>
+
+						<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input value="" class="input100" type="text" id="stock_otp" name="stock_otp" placeholder="otp" min="1" max="6">							<span class="focus-input100" data-placeholder=""></span>
+						</div>
+						<p class="text-white-50 mb-5" id="otp_msg_div" style='display:none;'></p>
+						
+
+                        <!-- <div class="col-2">
+                            <input type="text" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}" class="smsCode text-center rounded-lg otpCode" />
+                        </div>
+                        <div class="col-2">
+                            <input type="text" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}" class="smsCode text-center rounded-lg otpCode" />
+                        </div>
+                        <div class="col-2">
+                            <input type="text" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}" class="smsCode text-center rounded-lg otpCode" />
+                        </div>
+                        <div class="col-2">
+                            <input type="text" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}" class="smsCode text-center rounded-lg otpCode" />
+                        </div>
+                        <div class="col-2">
+                            <input type="text" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}" class="smsCode text-center rounded-lg otpCode" />
+                        </div>
+                        <div class="col-2">
+                            <input type="text" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}" class="smsCode text-center rounded-lg otpCode" />
+                        </div> -->
+
+					</div>
+					
+					<div id="get_otp_div"class="container-login100-form-btn">
+						<button  type="button" onclick="getOtp();" class="login100-form-btn">
+							Get Otp
+						</button>
+					</div>
+					<div id="verify_div" class="container-login100-form-btn" style="display:none;">
+					<br/><br/>
+						<button  type="button" onclick="verify_otp();" class="login100-form-btn">
+							Verify
 						</button>
 					</div>
 					<!-- <div class="text-center p-t-90">
@@ -225,7 +282,7 @@
 							Forgot Password?
 						</a>
 					</div> -->
-				</form>
+				<!-- </form> -->
 			</div>
 
 			  </div>

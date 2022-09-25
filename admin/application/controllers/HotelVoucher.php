@@ -201,6 +201,7 @@ class HotelVoucher extends CI_Controller
 					'query_hotel_booking_date' => $booking_date[$key],
 					'query_check_in' => $check_in[$key],
 					'query_check_out' => $check_out[$key],
+					'created_by' => $this->session->userdata('admin_id')
 				];
 
 				$is_data = $this->db->where('query_id', $data_arr['query_id'])
@@ -233,9 +234,12 @@ class HotelVoucher extends CI_Controller
 
 	public function view_hotels_voucher()
 	{
-		$data_conf_tbl = $this->db->order_by("updated_at", "desc")->get('hotel_voucher_confirmation')->result();
+		if($this->session->userdata('reg_type') == 'Super Admin'){
+			$data_conf_tbl = $this->db->order_by("updated_at", "desc")->get('hotel_voucher_confirmation')->result();
+		}else{
+			$data_conf_tbl = $this->db->order_by("updated_at", "desc")->where("created_by" , $this->session->userdata('admin_id'))->get('hotel_voucher_confirmation')->result();
+		}
 		$data['hotels'] = $data_conf_tbl;
-		
 		$this->load->view('hotel_voucher/view_hotels_voucher', $data);
 	}
 

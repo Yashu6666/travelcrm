@@ -415,6 +415,13 @@ class Query extends CI_Controller
 		$dod = isset($_POST['dod']) ? $_POST['dod'] : NULL;
 		$no_of_stay = isset($_POST['no_of_stay']) ? $_POST['no_of_stay'] : NULL;
 		$visa_purpose = isset($_POST['visa_purpose']) ? $_POST['visa_purpose'] : NULL;
+
+		$adult_count = isset($_POST['adult_count']) ? implode(',', $_POST['adult_count']) : "";
+		$child_count = isset($_POST['child_count']) ? implode(',', $_POST['child_count']) : "";
+		$child_age_count = isset($_POST['child_age_count']) ? implode(',', $_POST['child_age_count']) : "";
+		$infant_count = isset($_POST['infant_count']) ? implode(',', $_POST['infant_count']) : "";
+
+
 		$data = array(
 			'goingTo' => $country,
 			'goingFrom' => $goingFrom,
@@ -422,6 +429,10 @@ class Query extends CI_Controller
 			'noDaysFrom' => $this->input->post('noDaysFrom'),
 			'doa' => $doa,
 			'dod' => $dod,
+			'adult_per_room' => $adult_count,
+			'child_per_room' => $child_count,
+			'child_age_per_room' => $child_age_count,
+			'infant_per_room' => $infant_count,
 			'no_of_stay' => $no_of_stay,
 			'visa_purpose' => $visa_purpose,
 			'hotelPrefrence' => $hotelPrefrence,
@@ -438,7 +449,7 @@ class Query extends CI_Controller
 			'queryId' => $this->input->post('queryId'),
 			'created_date' => $this->input->post('created_date')
 		);
-		// echo "<pre>";print_r($data);return;
+		// echo "<pre>";print_r($_POST);return;
 		$query_id = $this->input->post('queryId');
 		$type = $data['type'];
 		if ($this->db->insert('querypackage', $data)) {

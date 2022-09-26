@@ -183,7 +183,7 @@
         }
     </style>
 
-    <link rel="stylesheet" href="<?php echo base_url(); ?>public/css/index.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>public/css/index.css">
 
     <!-- start page container -->
     <div class="page-container">
@@ -282,6 +282,46 @@
 
                                             </div> -->
 
+    </div>
+
+<style>
+.package_input_date {
+    height: 5vh;
+    color: gray;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-container input {
+    border: none;
+    box-sizing: border-box;
+    outline: 0;
+    padding: .75rem;
+    position: relative;
+    width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+</style>
+
                                         <!-- for package -->
                                         <div id="forPackage" style="display:block;">
 
@@ -289,14 +329,41 @@
 
                                                 <input type="hidden" name="queryId" value="<?php echo $b2bDetails->query_id; ?>">
                                                 <input type="hidden" name="created_date" value="<?php echo date('Y-m-d'); ?>">
-                                                <input type="hidden" name="colorRadio" id="service_type" value="">
+                                                <input type="hidden" name="colorRadio" id="service_type" value="Package">
                                                 <div class="row mt-4 mr-3 ml-3 mt-3">
                                                     <div class="col">
-                                                        <label for="">Check IN</label> <br />
+                                                        <div class="d-flex justify-content-around">
+                                                        <label for="">Check In</label>
+                                                        <label for="">Check Out</label>
+                                                        </div>
+                                                        
+                                                        <!-- <div class="input-group-append">
+                                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                        <input class="package_input_date" type="date" placeholder=" " id="specificDate1" name="specificDate" autocomplete="off" required />
+                                                        <span class="input-group-text"><i class="fa-solid fa-moon text-secondary"></i> <input type="number" value="0" style="width: 15px" step="1"></span>
+                                                        </div> -->
 
-                                                        <input class="package_inputs" type="date" placeholder=" " id="specificDate1" name="specificDate" autocomplete="off" required />
+                                                        <div class="form-group mb-4">
+                                                        <div class="datepicker date input-group">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                            </div>
+                                                            <input type="date" placeholder="Choose Date" class="form-control"  id="specificDate1" name="specificDate">
+                                                            <div class="input-group-append">
+                                                            <span class="input-group-text"><i class="fa fa-moon"></i>
+                                                            <input  type="number" min="1" style="width: 18px;text-align: center;" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
+                                                            </span>
+                                                            </div>
+                                                            <input type="date" placeholder="Choose Date" class="form-control"  id="endDate1" name="noDaysFrom">
+                                                        </div>
+                                                        </div>
+
                                                     </div>
-                                                    <div class="col">
+
+        
+
+
+                                                    <!-- <div class="col">
                                                         <label for="">Nights</label> <br />
 
                                                         <input class="package_inputs" type="number" min="1" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
@@ -305,7 +372,7 @@
                                                         <label for="">Check Out</label> <br />
 
                                                         <input class=" package_inputs" type="date" placeholder=" " id="endDate1" name="noDaysFrom" autocomplete="off" />
-                                                    </div>
+                                                    </div> -->
                                                     <div class="col">
                                                         <label for="">Country</label> <br />
 
@@ -351,7 +418,7 @@
 
                                                 <div class="row mt-4 mr-3 ml-3 mt-3">
                                                     <div class="col">
-                                                        <label for="">Quotation Currency</label>
+                                                        <label for="">Quotation Currency</label><br/>   
 
                                                         <select name="invoice_currency" id="currency" class="Travelers-select-package-values">
                                                             <option value="AED">AED</option>
@@ -360,9 +427,15 @@
                                                         </select>
                                                     </div>
                                                     <div class="col">
-                                                        <label for="">No. of Room</label>
-
-                                                        <select name="rooms" id="no_of_rooms" required class="Travelers-select-package-values">
+                                                        <label for="">No. of Room</label><br/>
+                                                        
+                                                        <input type="text" readonly id="room_txt_data" class="package_inputs w-50" value="0 Room (0 Adults, 0 Children )">
+                                                        
+                                                        <div class="form-group row w-50 mx-auto" id="select_no_of_rooms" style="display: none;">
+                                                           <div class="form-group row">
+                                                            <div class="col d-flex mt-2">
+                                                            <label class="col-form-label text-nowrap mx-2">No. of Room</label>
+                                                            <select name="rooms" id="no_of_rooms" required class="w-100 form-control">
                                                             <option value="">Select Rooms</option>
                                                             <?php $i = 1;
                                                             while ($i <= 10) {
@@ -372,9 +445,19 @@
                                                             } ?>
 
                                                         </select>
+                                                            </div>
+                                                        </div>
                                                     </div>
 
-                                                    <div class="col">
+                                                        <div class="form-group row w-50 mx-auto" id="no_of_room_for" style="display: none;">
+                                                        </div>
+                                                    </div>
+                                                        
+                                                    <input type="hidden" name="adult" id="adult_total_count">
+                                                    <input type="hidden" name="child" id="child_total_count">
+                                                    <input type="hidden" name="infant" id="infant_total_count">
+
+                                                    <!-- <div class="col">
                                                         <label for="">No. Adult</label><br>
 
                                                         <select name="adult" id="no_of_adult" required class="Travelers-select-package-values">
@@ -387,9 +470,9 @@
                                                             } ?>
 
                                                         </select>
-                                                    </div>
+                                                    </div> -->
 
-                                                    <div class="col">
+                                                    <!-- <div class="col">
                                                         <label for="">No. Child</label><br>
 
                                                         <select name="child" id="child" required class="Travelers-select-package-values">
@@ -408,8 +491,8 @@
                                                         <label for="">Child Age</label><br>
 
                                                         <input id="child_age" name="child_age" class="Travelers-select-package-values" type="text" value="0" />
-                                                    </div>
-
+                                                    </div> -->
+<!-- 
                                                     <div class="col">
                                                         <label for="">No. Infant</label><br>
 
@@ -424,7 +507,7 @@
 
                                                         </select>
 
-                                                    </div>
+                                                    </div> -->
 
 
                                                 </div>
@@ -1253,3 +1336,181 @@
                                 }
                             }
                         </style>
+
+<script>
+
+    function showRoomData(no_room) {
+        var adult_pax_count = 0;
+        $(".adult_count").each(function() {
+            var val = $(this).val();
+            adult_pax_count += parseInt($.trim(val));
+        });
+
+        var child_pax_count = 0;
+        $(".child_count").each(function() {
+            var val = $(this).val();
+            child_pax_count += parseInt($.trim(val));
+        });
+
+        var infant_pax_count = 0;
+        $(".infant_count").each(function() {
+            var val = $(this).val();
+            infant_pax_count += parseInt($.trim(val));
+        });
+
+        document.getElementById("adult_total_count").value = adult_pax_count;
+        document.getElementById("child_total_count").value = child_pax_count;
+        document.getElementById("infant_total_count").value = infant_pax_count;
+        
+        document.getElementById("room_txt_data").value = `${no_room} Room (${adult_pax_count} Adults, ${child_pax_count} Children , ${infant_pax_count} Infant)`;
+
+    }
+
+    function calPaxTotalCount(){
+        var adult_pax_count = 0;
+        $(".adult_count").each(function() {
+            var val = $(this).val();
+            adult_pax_count += parseInt($.trim(val));
+        });
+
+        var child_pax_count = 0;
+        $(".child_count").each(function() {
+            var val = $(this).val();
+            child_pax_count += parseInt($.trim(val));
+        });
+
+        var infant_pax_count = 0;
+        $(".infant_count").each(function() {
+            var val = $(this).val();
+            infant_pax_count += parseInt($.trim(val));
+        });
+
+        document.getElementById("adult_total_count").value = adult_pax_count;
+        document.getElementById("child_total_count").value = child_pax_count;
+        document.getElementById("infant_total_count").value = infant_pax_count;
+    }
+
+    $("#room_txt_data").click(function() {
+        $("#select_no_of_rooms").attr('style', 'display:block');
+    });
+
+     $("#no_of_rooms").change(function() {
+            var no_of_rooms = $("#no_of_rooms").val();
+
+            if (no_of_rooms > 0) {
+                $("#no_of_room_for").attr('style', 'display:flex');
+
+
+                let data = '';
+                let ad_val ;
+                for(let i=1; i<=no_of_rooms; i++ ){
+                data += `
+                <div class="form-group row">
+                <div class="col d-flex mt-2">
+                <label class="col-form-label text-nowrap mx-2">Room ${i}</label>
+                <select class="form-control mx-2 adult_count" onchange="showRoomData(${no_of_rooms})" name="adult_count[]" id="adult_count${i}">
+                        <option value="0">Select</option>
+                        <option value="1">1 adult</option>
+                        <option value="2">2 adult</option>
+                        <option value="3">3 adult</option>
+                        <option value="4">4 adult</option>
+                        <option value="5">5 adult</option>
+                        <option value="6">6 adult</option>
+                        <option value="7">7 adult</option>
+                        <option value="8">8 adult</option>
+                        <option value="9">9 adult</option>
+                        <option value="10">10 adult</option>
+                       
+                    </select>
+                    <select  class="form-control mx-1 child_count" name="child_count[]" onchange="childAgeDiv(child_ages_div${i},child_count${i})" id="child_count${i}">
+                        <option value="0">Select</option>
+                        <option value="1">1 child</option>
+                        <option value="2">2 child</option>
+                        <option value="3">3 child</option>
+                        <option value="4">4 child</option>
+                        <option value="5">5 child</option>
+                        <option value="6">6 child</option>
+                        <option value="7">7 child</option>
+                        <option value="8">8 child</option>
+                        <option value="9">9 child</option>
+                        <option value="10">10 child</option>
+                    </select>
+
+                    <select  class="form-control mx-1 infant_count" name="infant_count[]" onchange="showRoomData(${no_of_rooms})" id="infant_count${i}">
+                        <option value="0">Select</option>
+                        <option value="1">1 infant</option>
+                        <option value="2">2 infant</option>
+                        <option value="3">3 infant</option>
+                        <option value="4">4 infant</option>
+                        <option value="5">5 infant</option>
+                        <option value="6">6 infant</option>
+                        <option value="7">7 infant</option>
+                        <option value="8">8 infant</option>
+                        <option value="9">9 infant</option>
+                        <option value="10">10 infant</option>
+                    </select>
+
+                </div>
+                </div>
+                <div class="form-group row" id="child_ages_div${i}" style="display: none;"></div>
+                `;
+                }
+                $("#no_of_room_for").empty().append(data);
+
+            } else {
+                $("#no_of_room_for").attr('style', 'display:none');
+            }
+
+        });
+
+                
+        function childAgeDiv(childDiv,childNo){
+            var no_of_rooms = $("#no_of_rooms").val();
+            showRoomData(no_of_rooms);
+
+            var child = $(childNo).val();
+            $(childDiv).attr('style', 'display:block');
+
+            if (child > 0) {
+                $(childDiv).attr('style', 'display:block');
+
+             
+                let data = '';
+                for(let i=1; i<=child; i++ ){
+                data += `
+                  <div class="d-flex col mx-3"> 
+                            <div class="col d-flex ">
+                                <label class="col-1 col-form-label text-nowrap">child ${i}</label>
+                                <input type="text" class="form-control ml-5" placeholder="Child ${i} Age" name="child_age_count[]" id="child_age">
+                            </div></div>`;
+                }
+
+                $(childDiv).empty().append(data);
+            } else {
+                $(childDiv).attr('style', 'display:none');
+            }
+        }
+
+         $("#child_no").change(function() {
+            var child = $("#child_no").val();
+            if (child > 0) {
+                $("#child_ages_div").attr('style', 'display:block');
+
+             
+                let data = '';
+                for(let i=1; i<=child; i++ ){
+                data += `
+                  <div class="d-flex mx-5"> 
+                            <div class="col d-flex ">
+                                <label class="col-1 col-form-label text-nowrap">child ${i}</label>
+                                <input type="text" class="form-control ml-5" name="child_age_count[]" id="child_age">
+                            </div></div>`;
+                }
+
+                $("#child_ages_div").empty().append(data);
+            } else {
+                $("#child_age_div").attr('style', 'display:none');
+            }
+
+        });
+    </script>

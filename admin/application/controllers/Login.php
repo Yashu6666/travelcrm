@@ -325,8 +325,8 @@ class Login extends CI_Controller
 				
 			$modules = explode(',', $res->modules);
 			$is_stocks = in_array('Stocks', $modules);
-
-			if (!empty($res) && $res->userType == 'Stocks') {
+			if (!empty($res)) {
+			// if (!empty($res) && $res->userType == 'Admin') {
 				if ($is_stocks == true) {
 
 					if ($res->otp == $otp) {

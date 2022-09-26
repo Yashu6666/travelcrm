@@ -96,6 +96,22 @@ class stocks extends CI_Controller
 		$data['year_total'] = $year_total;
 		$data['year_remaining'] = $year_remaining;
 
+
+		
+
+		$remaing_tickets = $this->db->select("ticket_name,remaining_ticket")
+					->from('stocks')												
+					->get()->result();
+		$tickets_graph_data =  array();
+		foreach ($remaing_tickets as $tickets) {
+			$tickets_graph_data[$tickets->ticket_name] = $tickets->remaining_ticket;
+		}
+		$ticket_key = implode(",", array_keys($tickets_graph_data));
+		$data['formatted_ticket_key'] = "'" . str_replace(",", "','", $ticket_key) . "'";
+		$ticket_values = implode(",", array_values($tickets_graph_data));
+		$data['formatted_ticket_values'] = "'" . str_replace(",", "','", $ticket_values) . "'";
+
+		// echo "<pre>";print_r($result_string);exit;
 		$this->load->view('dashboardstock/view', $data);
 	}
 

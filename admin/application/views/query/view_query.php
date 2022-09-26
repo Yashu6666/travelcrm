@@ -177,7 +177,7 @@
 												<?php endif; ?>
 
 													<td class="center">
-													<a href="#"><button class="btn btn-tbl-edit btn-xs">
+													<a href="<?php echo site_url(); ?>query/<?php echo 'viewProposal/'.$val['query_id'] ?>"><button class="btn btn-tbl-edit btn-xs">
 															<i class="fa fa-eye "></i>
 														</button></a>
 														

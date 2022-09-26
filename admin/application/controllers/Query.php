@@ -415,6 +415,13 @@ class Query extends CI_Controller
 		$dod = isset($_POST['dod']) ? $_POST['dod'] : NULL;
 		$no_of_stay = isset($_POST['no_of_stay']) ? $_POST['no_of_stay'] : NULL;
 		$visa_purpose = isset($_POST['visa_purpose']) ? $_POST['visa_purpose'] : NULL;
+
+		$adult_count = isset($_POST['adult_count']) ? implode(',', $_POST['adult_count']) : "";
+		$child_count = isset($_POST['child_count']) ? implode(',', $_POST['child_count']) : "";
+		$child_age_count = isset($_POST['child_age_count']) ? implode(',', $_POST['child_age_count']) : "";
+		$infant_count = isset($_POST['infant_count']) ? implode(',', $_POST['infant_count']) : "";
+
+
 		$data = array(
 			'goingTo' => $country,
 			'goingFrom' => $goingFrom,
@@ -422,6 +429,10 @@ class Query extends CI_Controller
 			'noDaysFrom' => $this->input->post('noDaysFrom'),
 			'doa' => $doa,
 			'dod' => $dod,
+			'adult_per_room' => $adult_count,
+			'child_per_room' => $child_count,
+			'child_age_per_room' => $child_age_count,
+			'infant_per_room' => $infant_count,
 			'no_of_stay' => $no_of_stay,
 			'visa_purpose' => $visa_purpose,
 			'hotelPrefrence' => $hotelPrefrence,
@@ -438,7 +449,7 @@ class Query extends CI_Controller
 			'queryId' => $this->input->post('queryId'),
 			'created_date' => $this->input->post('created_date')
 		);
-		// echo "<pre>";print_r($data);return;
+		// echo "<pre>";print_r($_POST);return;
 		$query_id = $this->input->post('queryId');
 		$type = $data['type'];
 		if ($this->db->insert('querypackage', $data)) {
@@ -837,6 +848,7 @@ class Query extends CI_Controller
 		$datas =  array();
 		for ($x = 0; $x < $rows_count; $x++) {
 			$datas[$x]['nights'] = $tableData[0]['nights'][$x];
+			$datas[$x]['group_type'] = $tableData[0]['group_type'][$x];
 			$datas[$x]['hotel_id'] = $tableData[0]['hotelName'][$x];
 			$datas[$x]['room_type'] = $tableData[0]['roomType'][$x];
 			$datas[$x]['bed_types'] = $tableData[0]['bedType'][$x];
@@ -1069,6 +1081,7 @@ class Query extends CI_Controller
 			'nights' => implode(',',$tableData[0]['nights']),
 			'hotel_id' => implode(',',$tableData[0]['hotelName']),
 			'room_type' => implode(',',$tableData[0]['roomType']),
+			'group_type' => implode(',',$tableData[0]['group_type']),
 
 			'hotel_name' => implode(',',$hotel_names),
 			'category' => implode(',',$tableData[0]['Category']),
@@ -2769,6 +2782,85 @@ class Query extends CI_Controller
 
 		$this->load->view('query/newproposal_new', $data);
 	}
+
+	public function viewProposal($q_id = '')
+	{
+		// echo"<pre>";print_r($_POST);exit;
+		// return;
+
+		$adult_total = 0; $child_total = 0; $infant_total = 0;
+
+		$data["internal_query"] = $this->db->where('query_id', $q_id)->where('transfer_type', 'internal')->get('query_transfer')->result();
+		$data['return_query'] = $this->db->where('query_id', $q_id)->where('transfer_type', 'return')->get('query_transfer')->result();
+		
+		if(count($data["internal_query"]) > 0){
+			$adult_total += ($data["internal_query"][0]->adult_price *  $data["internal_query"][0]->adult_pax) ;
+			$child_total += ($data["internal_query"][0]->child_price *  $data["internal_query"][0]->child_pax);
+			} 
+		
+		if(count($data["return_query"]) > 0){
+			$adult_total += ($data["return_query"][0]->adult_price *  $data["return_query"][0]->adult_pax);
+			$child_total +=	($data["return_query"][0]->child_price *  $data["return_query"][0]->child_price);
+		}
+
+		// echo"<pre>";print_r($trasnfer_adult_price);exit;
+
+		$data["visa_query"] = $this->db->where('query_id', $q_id)->get('query_visa')->result();
+		if(count($data["visa_query"]) > 0){
+			$adult_total += $data["visa_query"][0]->adult_price;
+			$child_total += $data["visa_query"][0]->child_price;
+			$infant_total += $data["visa_query"][0]->infant_price;
+		}
+
+		$data["pvt_query"] = $this->db->where('query_id', $q_id)->where('excursion_type', 'PVT')->get('query_excursion')->result();
+		$data['sic_query'] = $this->db->where('query_id', $q_id)->where('excursion_type', 'SIC')->get('query_excursion')->result();
+		$data['tkt_query'] = $this->db->where('query_id', $q_id)->where('excursion_type', 'TKT')->get('query_excursion')->result();
+		
+		if(count($data["pvt_query"]) > 0){
+			$adult_total += $data["pvt_query"][0]->adult_price;
+			$child_total += $data["pvt_query"][0]->child_price;
+			$infant_total += $data["pvt_query"][0]->infant_price;
+		}
+		if(count($data["sic_query"]) > 0){
+			$adult_total += $data["sic_query"][0]->adult_price;
+			$child_total += $data["sic_query"][0]->child_price;
+			$infant_total += $data["sic_query"][0]->infant_price;
+		}
+		if(count($data["tkt_query"]) > 0){
+			$adult_total += $data["tkt_query"][0]->adult_price;
+			$child_total += $data["tkt_query"][0]->child_price;
+			$infant_total += $data["tkt_query"][0]->infant_price;
+		}
+
+		$data["meal_query"] = $this->db->where('query_id', $q_id)->get('query_meal')->result();
+		
+		if(count($data["meal_query"]) > 0){
+			$adult_total += $data["meal_query"][0]->adult_price;
+			$child_total += $data["meal_query"][0]->child_price;
+		}
+		$data["hotel_query"] = $this->db->where('query_id', $q_id)->get('query_hotel')->result();
+
+		if(count($data["hotel_query"]) > 0){
+			$adult_total += $data["hotel_query"][0]->adult_price;
+			$child_total += $data["hotel_query"][0]->child_price;
+			$infant_total += $data["hotel_query"][0]->infant_price;
+		}
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user_data'] = $this->db->where('id', $user_id)->get('users')->row();
+
+		$data["package_query"] = $this->db->where('queryId', $q_id)->get('querypackage')->result();
+		
+		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+		$data['b2bcustomerquery'] = $this->db->where('query_id', $q_id)->get('b2bcustomerquery')->row();
+
+		$data['adult_per_pax'] = $adult_total == 0 || $data["package_query"][0]->adult == 0  ? 0 :  $adult_total / $data["package_query"][0]->adult;
+		$data['child_per_pax'] = $child_total == 0 || $data["package_query"][0]->child  == 0 ? 0 :  $child_total / $data["package_query"][0]->child;
+		$data['infant_per_pax'] = $infant_total == 0 || $data["package_query"][0]->infant == 0 ? 0 : $infant_total / $data["package_query"][0]->infant;
+		$this->load->view('query/view_proposal', $data);
+	}
+
+
 	/*public function CreateProposal()
 	{
 		// echo '<pre>';print_r($_POST);exit;

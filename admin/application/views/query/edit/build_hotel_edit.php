@@ -119,6 +119,7 @@
                 <th>Category</th>
                 <th>Hotel Name</th>
                 <th>Room Type </th>
+                <th>Group Type </th>
                 <th>Bed Type </th>
                 <th>Type </th>
                 <th>Sharing Type </th>
@@ -181,6 +182,12 @@
                   <option value="<?php echo explode(",",$hotel_query[0]->room_type)[$key];?>"><?php echo explode(",",$hotel_query[0]->room_type)[$key];?></option>
                     </select>
                   </td>
+                  <td>
+              <select class="form-control get_room_group_type" id="buildRoomGroupType" name="buildRoomGroupType[]" required>
+                      <option <?php echo explode(",",$hotel_query[0]->group_type)[$key] == "FIT" ? "selected" : "" ?> value="FIT" >FIT</option>                                             
+                      <option <?php echo explode(",",$hotel_query[0]->group_type)[$key] == "GIT" ? "selected" : "" ?> value="GIT" >GIT</option>                                             
+                  </select>
+              </td> 
                   <td>
                   <select class="form-control get_bed_type" id="buildBedType" name="buildBedType[]" required>
                         <option <?php echo explode(",",$hotel_query[0]->bed_type)[$key] == "Double" ? "selected" : "" ?> value="Double" >Double</option>                                             
@@ -292,6 +299,13 @@
                           $(".get_bed_type").each(function() {
                             var bed = $(this).val();
                             bedType.push($.trim(bed));
+
+                          });
+
+                          var groupType = [];
+                          $(".get_room_group_type").each(function() {
+                            var bed = $(this).val();
+                            groupType.push($.trim(bed));
 
                           });
 
@@ -1389,6 +1403,14 @@ function hotelcalculation(){
                       sharing_types.push($.trim(cat));
                     });
 
+                    var groupType = [];
+                          $(".get_room_group_type").each(function() {
+                            var bed = $(this).val();
+                            groupType.push($.trim(bed));
+
+                          });
+
+
                         let total_no_of_days = <?php echo $buildpackage->night?>;
                       
                       if(noOfNights < total_no_of_days){
@@ -1396,6 +1418,7 @@ function hotelcalculation(){
                       }
                       else {
                           var data= [{
+                            'group_type' : groupType,
                               'nights' : noOfNights,
                               'hotelName' : hotelName,
                               'roomType' : roomType,
@@ -2241,6 +2264,8 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                         
                           template += '<td><select class="form-control get_buildHotelName" id="buildHotelName'+faqs_row+'"  required="" name="buildHotelName[]"  onchange="get_route_name(this.id,'+faqs_row+');" required><option>Select</option></select></td>';
                           template +=  room;
+                          
+                          template += '<td><select class="form-control get_room_group_type" id="buildRoomGroupType'+faqs_row+'" name="buildRoomGroupType[]" ><option value="FIT" >FIT</option><option value="GIT" >GIT</option></select></td>';
 
                           template +='<td><select class="form-control get_bed_type" id="buildBedType'+faqs_row+'"  required="" name="buildBedType[]" required><option value="Double" >Double</option><option value = "Single">Single</option></select></td>';
 

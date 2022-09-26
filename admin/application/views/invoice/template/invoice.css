@@ -1,0 +1,31 @@
+* {
+  font-family: arial;
+}
+.invoice_container {
+  padding: 10px 10px;
+}
+
+.in_details {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.product_container {
+  padding: 0 10px;
+  margin-top: 10px;
+}
+.item_table {
+  width: 100%;
+  text-align: left;
+}
+.item_table h2 {
+  text-align: center;
+}
+.item_table td,
+th {
+  padding: 5px 10px;
+}
+.invoice_footer {
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+}

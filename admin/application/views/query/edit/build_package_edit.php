@@ -112,6 +112,7 @@
               </div>
               <thead>
                <tr>
+                <th></th>
                 <th>Hotel City</th>
                 <th>Check In</th>
                 <th>Nights</th>
@@ -129,9 +130,19 @@
             
              
               <tbody>
-             <?php foreach(explode(",",$hotel_query[0]->hotel_id) as $key => $val) : ?>
+             <?php $room_cnt = $buildpackage->room ; $room_loop = 0; foreach(explode(",",$hotel_query[0]->hotel_id) as $key => $val) : ?>
 
                <tr id="hotelRow<?php $key?>">
+               <td class="text-nowrap">Room <?php 
+                  if($room_loop >= $room_cnt){
+                    $room_loop = 0;
+                    echo $room_loop + 1;
+                    $room_loop +=1;
+                  } else {
+                    echo $room_loop + 1;
+                    $room_loop +=1;
+                  }
+                  ?></td>
                <td>
                   <select class="form-control get-hotel get_all_city"  required="" name="buildHotelCity[]" id="buildHotelCity" onchange="get_hotel_name('buildHotelCity','');">
                         <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Dubai" ? "selected" : "" ?> value="Dubai">Dubai</option>
@@ -3494,73 +3505,55 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                             $('#buildNoNights').removeAttr('style',"border-color:red");
 
                           
-                          var totalNoOfDays = <?php echo $buildpackage->night?> ;                       
-                          var d = "<?php echo $view->specificDate;?>";                         
-                          var f = moment(d).add(allocated_days, 'days');
-                          $('.bnights').attr('readonly',true);
-                         if( allocated_days < totalNoOfDays ){
-                          $('#rows_count').val(parseInt(cnt) + parseInt(1));
-                          faqs_row=parseInt(cnt) + parseInt(1);
-                          // $('#buildNoNights').attr('disabled',true);
-                          var template = '';
-                          var city = '<td><select class="form-control get-hotel get_all_city" name="buildHotelCity[]" id="buildHotelCity'+faqs_row+'" onchange="get_hotel_name(this.id,'+faqs_row+');"><option value="Dubai">Dubai</option><option value="AbuDhabi">Abu Dhabi</option><option value="Sharjah">Sharjah</option><option value="Ajman">Ajman</option><option value="Sir Baniyas">Sir Baniyas</option><option value="Umm Al-Quwain">Umm Al-Quwain</option><option value="Fujairah">Fujairah</option><option value="Ras Al Khaimah">Ras Al Khaimah</option><option value="Al Ain">Al Ain</option></select></td>';
-                          var bnight = '<td><select class="form-control bnights get_no_nights" id="buildNoNights'+faqs_row+'"  name="buildNoNightss[]" required="">';
-                               bnight += '<option value="0">Select</option>';
-                                        for (let i = 1; i <= (totalNoOfDays-allocated_days); i++) {
-                                                          bnight += '<option value="'+ i + '">'+i+'</option>';
-                                          }
+                            var totalNoOfDays = <?php echo $buildpackage->night ?>;
+                            var total_rooms = <?php echo $view->room ?>;
+                            var d = "<?php echo $view->specificDate; ?>";
+                            var f = moment(d).add(allocated_days, 'days');
+                            $('.bnights').attr('readonly', true);
+                            // if (allocated_days < totalNoOfDays) {
+                            if (allocated_days) {
+                              $('#rows_count').val(parseInt(cnt) + parseInt(1));
+                              faqs_row = parseInt(cnt) + parseInt(1);
+                              var template = '';
+                              for(let room_no=1; room_no <= total_rooms ; room_no++){
+                              var city = '<td>Room '+room_no+'</td><td><select class="form-control get-hotel get_all_city" name="buildHotelCity[]" id="buildHotelCity' + faqs_row + room_no + '" onchange="get_hotel_name(this.id,' + faqs_row + room_no + ');"><option value="Dubai">Dubai</option><option value="AbuDhabi">Abu Dhabi</option><option value="Sharjah">Sharjah</option><option value="Ajman">Ajman</option><option value="Sir Baniyas">Sir Baniyas</option><option value="Umm Al-Quwain">Umm Al-Quwain</option><option value="Fujairah">Fujairah</option><option value="Ras Al Khaimah">Ras Al Khaimah</option><option value="Al Ain">Al Ain</option></select></td>';
+                              var bnight = '<td><select class="form-control bnights get_no_nights" id="buildNoNights' + faqs_row + room_no + '"  name="buildNoNightss[]" required="">';
+                              bnight += '<option value="0">Select</option>';
+                              for (let i = 1; i <= (totalNoOfDays); i++) {
+                                bnight += '<option value="' + i + '">' + i + '</option>';
+                              }
                               bnight += '</select></td>';
-                          var room ='<td><select class="form-control get-hotel-room get_buildRoomType" name="buildRoomType[]" id="buildRoomType'+faqs_row+'" required></select></td>';
-                          template += '<tr id="faqs-row' + faqs_row + '">';
-                          // template += '<td><input class="form-control" type="text" value="" name="buildHotelCity'+faqs_row+'" id="buildHotelCity'+faqs_row+'"></td>';
-                          template += city;
-                          template += '<td><input class="form-control get_CheckIn" type="date" value="'+f.format("YYYY-MM-DD")+'" name="buildCheckIns[]" id="buildCheckIn'+faqs_row+'" readonly></td>';
-                          template += bnight;
-                          template += ' <td> <div> <select data-mdl-for="sample2" class="form-control get_category" value="" tabIndex="-1" id="Category'+faqs_row+'" name="Category[]" onchange="get_hotel_name(this.id,'+faqs_row+');"> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option> </select> </div> </td>';
-                          // template += '<td><input class="form-control" type="text" placeholder="Room Type" name="buildRoomType'+faqs_row+'" id="buildRoomType'+faqs_row+'" required=""></td> ';
-                        
-                        
-                          template += '<td><select class="form-control get_buildHotelName" id="buildHotelName'+faqs_row+'"  required="" name="buildHotelName[]"  onchange="get_route_name(this.id,'+faqs_row+');" required><option>Select</option></select></td>';
-                          template +=  room;
+                              var room = '<td><select class="form-control get-hotel-room get_buildRoomType" name="buildRoomType[]" id="buildRoomType' + faqs_row + room_no + '" required></select></td>';
+                              template += '<tr id="faqs-row' + faqs_row + room_no + '">';
+                              template += city;
+                              template += '<td><input class="form-control get_CheckIn" type="date" value="' + f.format("YYYY-MM-DD") + '" name="buildCheckIns[]" id="buildCheckIn' + faqs_row + room_no + '" readonly></td>';
+                              template += bnight;
+                              template += ' <td> <div> <select data-mdl-for="sample2" class="form-control get_category" value="" tabIndex="-1" id="Category' + faqs_row + room_no + '" name="Category[]" onchange="get_hotel_name(this.id,' + faqs_row + room_no + ');"> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option> </select> </div> </td>';
+                              template += '<td><select class="form-control get_buildHotelName" id="buildHotelName' + faqs_row + room_no + '"  required="" name="buildHotelName[]"  onchange="get_route_name(this.id,' + faqs_row + room_no + ');" required><option>Select</option></select></td>';
+                              template += room;
 
-                          template += '<td><select class="form-control get_room_group_type" id="buildRoomGroupType'+faqs_row+'" name="buildRoomGroupType[]" ><option value="FIT" >FIT</option><option value="GIT" >GIT</option></select></td>';
-
-                          template +='<td><select class="form-control get_bed_type" id="buildBedType'+faqs_row+'"  required="" name="buildBedType[]" required><option value="Double" >Double</option><option value = "Single">Single</option></select></td>';
-
-                          
-                          template +='<td><select class="form-control get_room_types" id="room_types'+faqs_row+'" name="build_room_types[]" required><option value ="BB">BB</option><option value ="Room Only">Room Only</option><option value="HB" >HB</option><option value="FB" >FB</option></select></td>'; 
-                          template +='<td><select class="form-control room_sharing_types" id="room_sharing_types'+faqs_row+'" name="room_sharing_types[]" ><option value ="">Select option</option><option value ="triple_sharing">Triple Sharing</option> <option value="double_sharing" >Double Sharing</option></select></td>';
-                          template +='<td><div class=""><p><input type="checkbox" id="extra_with_adult'+faqs_row+'" <?php  echo $buildpackage->adult > 2 ? 'checked' : ''; ?> name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"> Ex. adult</p><p><input type="checkbox" <?php  echo $buildpackage->child > 0 ? 'checked' : ''; ?> id="extra_with_child'+faqs_row+'" name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child"> CWB</p><p><input type="checkbox" <?php  echo $buildpackage->infant > 0 ? 'checked' : ''; ?> id="extra_without_bed'+faqs_row+'" name="extra_check[]" value="extra_without_bed" class="check-extra extra_without_bed"> CNB</p></div></td>';
-                         
-                          // <td>
-                          // <input type="checkbox"  id="extra_with_adult'+faqs_row+'" <?php  echo $buildpackage->adult > 2 ? 'checked' : ''; ?> name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult">
-                          // <label for="html" style="margin-left: 5%;"> Extra Bed(Adult)</label><br>
-                          // <input type="checkbox" id="extra_with_child'+faqs_row+'" <?php  echo $buildpackage->child > 0 ? 'checked' : ''; ?> name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child" >
-                          // <label for="html" style="margin-left: 5%;"> Extra Bed(Child)</label><br>
-                          // <input type="checkbox" id="extra_without_bed'+faqs_row+'" name="extra_check[]" <?php  echo $buildpackage->infant > 0 ? 'checked' : ''; ?> value="extra_without_bed" class="check-extra extra_without_bed">
-                          // <label for="html" style="margin-left: 5%;"> Extra W/O Bed</label>
-                          // </td>';
+                              template += '<td><select class="form-control get_room_group_type" id="buildRoomGroupType' + faqs_row + room_no + '" name="buildRoomGroupType[]" ><option value="FIT" >FIT</option><option value="GIT" >GIT</option></select></td>';
+                              template += '<td><select class="form-control get_bed_type" id="buildBedType' + faqs_row + room_no + '"  required="" name="buildBedType[]" required><option value="Double" >Double</option><option value = "Single">Single</option></select></td>';
 
 
-                          template += '<td><button type="button" class="btn btn-danger btn-xs cls-btn"  id="del_btn'+faqs_row+'"  onClick="return  removeHotel(this);"><i class="fa fa-trash"></i></button> </td>';
-                          template += '</tr>';
+                              template += '<td><select class="form-control get_room_types" id="room_types' + faqs_row + room_no + '" name="build_room_types[]" required><option value ="BB">BB</option><option value ="Room Only">Room Only</option><option value="HB" >HB</option><option value="FB" >FB</option></select></td>';
+                              template += '<td><select class="form-control room_sharing_types" id="room_sharing_types' + faqs_row + room_no + '" name="room_sharing_types[]" ><option value ="">Select option</option><option value ="triple_sharing">Triple Sharing</option> <option value="double_sharing" >Double Sharing</option></select></td>';
+                              template += '<td><div class=""><p><input type="checkbox" id="extra_with_adult' + faqs_row + room_no + '" <?php echo $buildpackage->adult > 2 ? 'checked' : ''; ?> name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"> Ex. adult</p><p><input type="checkbox" <?php echo $buildpackage->child > 0 ? 'checked' : ''; ?> id="extra_with_child' + faqs_row + room_no + '" name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child"> CWB</p><p><input type="checkbox" <?php echo $buildpackage->infant > 0 ? 'checked' : ''; ?> id="extra_without_bed' + faqs_row + room_no + '" name="extra_check[]" value="extra_without_bed" class="check-extra extra_without_bed"> CNB</p></div></td>';
 
-                          $("#addrows").append(template);
-                          $('#allocated_days').val(parseInt($('#buildNoNights'+faqs_row).val()) + parseInt(allocated_days ));
-                          
-                          $("[type='number']").keypress(function (evt) {
-                              evt.preventDefault();
-                          });
+                              template += '<td><button type="button" class="btn btn-danger btn-xs cls-btn"  id="del_btn' + faqs_row + room_no + '"  onClick="return  removeHotel(this);"><i class="fa fa-trash"></i></button> </td>';
+                              template += '</tr>';
+                              }
+                              $("#addrows").append(template);
+                              $('#allocated_days').val(parseInt($('#buildNoNights' + faqs_row + room_no).val()) + parseInt(allocated_days));
 
-                          // if($("#addrows"+faqs_row).length == 0) {
-                          //   $('#buildNoNights').attr('disabled',false);
-                          // }
-                         
-                          
-                        }else{
-                          $('#noOfDaysAlert').html(totalNoOfDays);
-                          $('.noOfDaysAlertcls').attr("style","display:block;");
-                        }
+                              $("[type='number']").keypress(function(evt) {
+                                evt.preventDefault();
+                              });
+
+                            } else {
+                              $('#noOfDaysAlert').html(totalNoOfDays);
+                              $('.noOfDaysAlertcls').attr("style", "display:block;");
+                            }
                          
                        
 

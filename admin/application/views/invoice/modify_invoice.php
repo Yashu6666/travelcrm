@@ -205,7 +205,7 @@
                                                         <div class="mb-3">
                                                             <input type="number" class="form-control invoiceRate" id="invoiceRate"
                                                                 name="invoiceRate[]" aria-describedby="emailHelp"
-                                                                value="<?php echo $edit_invoice->invoiceRate?>" autocomplete="off">
+                                                                value="<?php echo ($edit_invoice->invoiceRate - (($edit_invoice->invoiceRate * 5) / 100 ))  ?>" autocomplete="off">
                                                             <b><span id="spanRate" class="colorRed"></span></b>
                                                         </div>
                                                     </td>

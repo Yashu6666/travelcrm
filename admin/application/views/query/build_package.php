@@ -131,7 +131,7 @@
 
                                 <?php for($i=1; $i <= $view->room; $i++) : ?>
                                 <tr>
-                                  <td>Room <?php echo $i?></td>
+                                  <td class="text-nowrap">Room <?php echo $i?></td>
                                   <td>
                                     <select class="form-control get-hotel get_all_city" required="" name="buildHotelCity[]" id="buildHotelCity<?php echo "_".$i?>" onchange="get_hotel_name_new('buildHotelCity','<?php echo '_'.$i ?>');">
                                       <option value="Dubai">Dubai</option>

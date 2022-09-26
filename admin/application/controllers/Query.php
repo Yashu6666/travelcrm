@@ -41,7 +41,7 @@ class Query extends CI_Controller
 			// $this->load->view('query/email_templates/proposal', $data);
 			// return;	
 			if ($data['details']->type == 'package'){
-				$body = $this->load->view('query/email_templates/proposal_package', $data, TRUE);
+				$body = $this->load->view('query/email_templates/package/package_mail', $data, TRUE);
 				echo "Email Sent package";
 			}
 			elseif ($data['details']->type == 'transfer'){

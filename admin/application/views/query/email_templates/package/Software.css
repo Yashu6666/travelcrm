@@ -1,0 +1,143 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.maindiv {
+  background-color: aliceblue;
+  height: 308vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 15px;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.head {
+  background-color: white;
+  height: 100%;
+  width: 40rem;
+  padding: 7rem;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.75);
+  color: hsl(205, 86%, 27%);
+}
+
+.head .head1,
+.head2 {
+  margin-bottom: 1rem;
+}
+
+.head .head4 {
+  /* background-color: red; */
+  display: flex;
+  height: 13rem;
+  width: 40rem;
+  margin-top: 1.5rem;
+}
+
+.head .head4 .left {
+  /* background-color: thistle; */
+  height: 12rem;
+  width: 10rem;
+}
+
+.head .head4 .right {
+  /* background-color: silver; */
+  height: 12rem;
+  width: 30rem;
+}
+.head .head4 .right p {
+  padding: 1.5px;
+}
+
+.head .head4 .left p {
+  padding: 1.5px;
+}
+
+.head .head5 p {
+  padding: 1.5px;
+}
+
+.head .head6 {
+  color: red;
+  margin-top: 2rem;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.head .head7,
+.head8,
+.head9 {
+  margin-top: 2rem;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.head .head9 p i {
+  font-size: 10px;
+}
+
+.head .head10 {
+  display: flex;
+  margin-top: 2rem;
+}
+
+.head .head10 .left {
+  /* background-color: wheat; */
+  height: 16rem;
+  width: 30rem;
+}
+
+.head .head10 .left p {
+  padding: 3px;
+}
+
+.head .head10 .right {
+  /* background-color: tan; */
+  height: 16rem;
+  width: 10rem;
+}
+
+.head .head10 .right p {
+  padding: 3px;
+  margin-left: 20px;
+}
+
+.head .head10 .right .point {
+  visibility: hidden;
+}
+
+.head .head11 p i {
+  font-size: 10px;
+}
+
+.head .head11 u {
+  margin-bottom: 5px;
+}
+
+.head .head11 p {
+  padding: 1.5px;
+}
+
+.items {
+  width: 100%;
+  text-align: left;
+  /* padding-bottom: 30px;
+  padding-top: 30px; */
+}
+.items td,
+th {
+  padding: 5px 10px;
+  border-collapse: collapse;
+}
+@media print {
+  .head {
+    font-size: 16.5px;
+  }
+  .head .head9 > span {
+    margin-top: 10px;
+  }
+  .head11 {
+    margin-top: 2rem;
+  }
+}

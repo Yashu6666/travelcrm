@@ -348,13 +348,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                         <div class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                             </div>
-                                                            <input type="date" placeholder="Choose Date" class="form-control"  id="specificDate1" name="specificDate">
+                                                            <input type="date" placeholder="Choose Date" class="form-control w-auto"  id="specificDate1" name="specificDate">
                                                             <div class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-moon"></i>
                                                             <input  type="number" min="1" style="width: 18px;text-align: center;" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
                                                             </span>
                                                             </div>
-                                                            <input type="date" placeholder="Choose Date" class="form-control"  id="endDate1" name="noDaysFrom">
+                                                            <input type="date" placeholder="Choose Date" class="form-control w-auto"  id="endDate1" name="noDaysFrom">
                                                         </div>
                                                         </div>
 

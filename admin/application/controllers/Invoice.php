@@ -115,13 +115,44 @@ class Invoice extends CI_Controller
 			'newline' => "\r\n",
 		);
 
-		$subject = 'Invoice Details';
+		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.adult,qp.infant,
+		qp.child,cb.reportsTo,cb.b2bEmail,qp.room");
+
+		$this->db->from("b2bcustomerquery cb");
+
+		$this->db->where('qp.queryId', $data['printInvoice']->query_id);
+		$this->db->join('querypackage qp', 'cb.query_id=qp.queryId', 'LEFT');
+		$data['view'] = $this->db->get()->row();
+
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+
+
+		$subject =
+		'DT/DHIREN/DXB/'. ($data['view']->adult + $data['view']->child + $data['view']->infant)  . ' Pax  
+		/ ' . $data['view']->query_id . ' / ' . $data['printInvoice']->invoiceNumber  ;
+
+		$this->load->library('Pdf');
+		$html =  $this->load->view('invoice/template/invoice',$data, true);
+		$dompdf = new Dompdf\DOMPDF();
+		$dompdf->load_html($html);
+		$dompdf->render();
+		$output = $dompdf->output();
+		$pdf_name = time() . ".pdf";
+		file_put_contents(FCPATH . '/public/uploads/hotelVoucher/'.$pdf_name, $output);
+		$file_name = base_url('/public/uploads/hotelVoucher/' . $pdf_name);
+		$this->email->attach($file_name);
 
 		$this->email->initialize($config);
 		$this->email->from('test.yrpitsolutions.com@gmail.com');
 		$this->email->to($email);
+		// $this->email->cc('info@diamondtoursdubai.com');
 		$this->email->subject($subject);
-		$body = $this->load->view('invoice/template/invoice_mail', $data, TRUE);
+		// $body = $this->load->view('invoice/template/invoice_mail', $data, TRUE);
+		$body = '<p>Dear Sir/Ma&rsquo;am</p>
+		<p>Your Booking has been confirmed Find attached corresponding document and Query Id. <strong><u>'.$subject.'</u></strong>&nbsp; dated '. $data['view']->specificDate .' for AED '.$data['printInvoice']->finalTotalInvoice. ' ,</p>
+		<p>Regards, DIAMOND TOURS LLC This Is auto generate Email Please Do not Reply on This Email (For Contact send email on&nbsp;<a href="mailto:info@diamondtoursdubai.com" rel="noreferrer noopener" target="_blank" title="mailto:info@diamondtoursdubai.com">info@diamondtoursdubai.com</a>)<br><br>Thanks &amp; Regards,<br><br>DIAMOND TOUR LLC<br>BUR DUBAI, MENA BAZAR, 50-B STREET ,COSMOS LANE, OPP: COSMOS STORE , Dubai , UAE<br>E-Mail :&nbsp;<a href="mailto:Info@diamondtoursdubai.com" rel="noreferrer noopener" target="_blank" title="mailto:info@diamondtoursdubai.com">Info@diamondtoursdubai.com</a> ,&nbsp;<a href="http://www.diamondstoursdubai.com/" rel="noreferrer noopener" target="_blank" title="http://www.diamondstoursdubai.com/">www.diamondstoursdubai.com</a></p>
+		<p><br></p>';
 		$this->email->message($body);
 		$this->email->send();
 

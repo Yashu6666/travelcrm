@@ -459,49 +459,47 @@
                         <div class="accordion-body">
                             <div id="editor1">
                     <?php foreach($proposalDetails['hotelName'] as $key => $val) : ?>
-                        <?php echo $proposalDetails['noOfNights'][0] ?> Nights at Hotel  <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?><br>
+                        <p><?php echo $proposalDetails['noOfNights'][0] ?> Nights at Hotel  <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></p>
                         <?php if($proposalDetails['build_room_types'][0] == 'BB') : ?>
-                            <?php echo $proposalDetails['noOfNights'][0] ?> Breakfast in Hotel  <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?><br>
+                            <p><?php echo $proposalDetails['noOfNights'][0] ?> Breakfast in Hotel  <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></p>
                         <?php endif ?>
                     <?php endforeach ?>
 
                     <?php foreach($proposalDetails['in_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
-                        <?php echo $proposalDetails['internal_route'][$key] ?><br>
+                        <p> <?php echo $proposalDetails['internal_route'][$key] ?></p>
                     <?php endif ?>
                     <?php endforeach ?>
 
                     <?php foreach($proposalDetails['pp_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
-                        <?php echo $proposalDetails['return_route'][$key] ?><br>
+                        <p><?php echo $proposalDetails['return_route'][$key] ?></p>
                     
                         <?php endif ?>
                     <?php endforeach ?>
                     
                     <?php if(!empty($proposalDetails['visa_category_drop_down'])) : ?>
-                    Dubai Single entry tourist  visa with Covid 19 Inbound insurance<br>
+                        <p> UAE Normal Single Entry Tourist Visa With Covid-19 Inbound Insurance (Subject To Immigration Approval)</p>
                     <?php endif ?>
 
                     <?php if(isset($proposalDetails['excursion_name_SIC'])) : ?>
                     <?php foreach($proposalDetails['excursion_name_SIC'] as $key => $val) : ?>
-                        <?php echo $val ?> <br>
+                        <p> <?php echo $val ?> </p>
                     <?php endforeach ?>
                     <?php endif ?>
                 
                     <?php if(isset($proposalDetails['excursion_name_PVT'])) : ?>
                     <?php foreach($proposalDetails['excursion_name_PVT'] as $key => $val) : ?>
-                        <?php echo $val ?><br>
+                        <p> <?php echo $val ?></p>
                     <?php endforeach ?>
                     <?php endif ?>
 
                     <?php if($proposalDetails['res_name'][0] != 'select') : ?>
                         <?php foreach($proposalDetails['res_name'] as $key => $val) : ?>
-                            <?php echo $proposalDetails['no_of_meals'][$key]." ".$proposalDetails['Meal'][$key]." ".$proposalDetails['res_type'][$key]." ".$proposalDetails['Meal_Type'][$key]; ?> 
-                            Meal Coupons in <?php echo $proposalDetails['res_name'][$key]?><br>
+                            <p> <?php echo $proposalDetails['no_of_meals'][$key]." ".$proposalDetails['Meal'][$key]." ".$proposalDetails['res_type'][$key]." ".$proposalDetails['Meal_Type'][$key]; ?> 
+                            Meal Coupons in <?php echo $proposalDetails['res_name'][$key]?><p>
                         <?php endforeach ?>
                     <?php endif ?>
-
-
                             </div>
                         
                         </div>

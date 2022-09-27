@@ -383,6 +383,7 @@
 															 <select required data-placeholder="Select" class="form-select1" name="propertytype">
 																<option value="Apartment">Apartment</option>
 																<option value="Hotel">Hotel</option>
+																<option value="Hotel_Apartment">Hotel & Apartment</option>
 																<option value="Guest House">Guest House</option>
 																<option value="Residence">Residence</option>
 																<option value="Resort">Resort</option>
@@ -391,6 +392,8 @@
 															 </select>
 														  </div>
 													   </div>
+
+													   
 
 													   <div class="row1 form-group mb-3">
 														  <label class="col-md-4 control-label1 text-left">Supplier</label>

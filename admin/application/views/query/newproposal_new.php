@@ -500,6 +500,12 @@
                             Meal Coupons in <?php echo $proposalDetails['res_name'][$key]?><p>
                         <?php endforeach ?>
                     <?php endif ?>
+
+                    Tourism Dirhams Fees
+                    Vat 5% Inclusive
+                    All Applicable Taxes
+                    All of the above services with the hotel to hotel transfer and ticket
+                    All Tours & Transfers on sharing Basis except airport transfer
                             </div>
                         
                         </div>
@@ -997,6 +1003,7 @@
         "buildRoomType" : <?php echo json_encode($proposalDetails['roomType']) ?>,
         "hotelPrefrence" : "<?php echo $buildpackage->hotelPrefrence ?>",
         "room_sharing_types" : <?php echo json_encode($proposalDetails['room_sharing_types']) ?> ,
+        "build_room_types" : <?php echo json_encode($proposalDetails['build_room_types']) ?> ,
         "query_ID" : <?php echo $buildpackage->queryId ?>
         };
 

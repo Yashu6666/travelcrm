@@ -378,6 +378,7 @@ class Query extends CI_Controller
 		if (isset($query_id1)) {
 			$data = array(
 				'b2bcompanyName' => $this->input->post('b2bcompanyName'),
+				'b2bCompanyAddress' => $this->input->post('b2bCompanyAddress'),
 				'b2bEmail' => $this->input->post('b2bEmail'),
 				'b2bfirstName' => $this->input->post('b2bfirstName'),
 				'b2blastName' => $this->input->post('b2blastName'),

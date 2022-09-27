@@ -344,6 +344,16 @@
 
                             </div>
                         </div>
+
+						<div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                            <div class="form-group dropdown-menuWidth">
+                                <label for="b2bagencyname"><b>Company Address</b> <span class="colorRed">*</span></label>
+                                <input type="text" autocomplete="off" class="form-control whbg" name="b2bCompanyAddress" id="b2bCompanyAddress" placeholder="Company Address" value="" required>
+                                <br><span id="spanCompany" class="spanCompany"></span>
+
+                            </div>
+                        </div>
+
                         <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
                             <div class="form-group">
                                 <label for="b2bagency_emailid"><b>Email-Id</b> <span class="colorRed">*</span></label>

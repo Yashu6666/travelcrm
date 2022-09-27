@@ -205,7 +205,7 @@
                                                         <div class="mb-3">
                                                             <input type="number" class="form-control invoiceRate" id="invoiceRate"
                                                                 name="invoiceRate[]" aria-describedby="emailHelp"
-                                                                value="<?php echo ($edit_invoice->invoiceRate - (($edit_invoice->invoiceRate * 5) / 100 ))  ?>" autocomplete="off">
+                                                                step="any"  value="<?php echo $edit_invoice->invoiceRate ?>" autocomplete="off">
                                                             <b><span id="spanRate" class="colorRed"></span></b>
                                                         </div>
                                                     </td>
@@ -241,7 +241,7 @@
                                                         <div class="mb-3">
                                                             <input type="number" class="form-control Taxable invoiceTaxableAmount"
                                                                 id="invoiceTaxableAmount" name="invoiceTaxableAmount[]" aria-describedby="emailHelp"
-                                                                value ="<?php echo $edit_invoice->invoiceAmount?>" autocomplete="off">
+                                                                step="any"  value ="<?php echo $edit_invoice->invoiceAmount?>" autocomplete="off">
 
                                                         </div>
                                                     </td>
@@ -277,7 +277,7 @@
                                                     <td>
                                                         <div class="mb-3">
                                                             <input type="number" class="form-control invoiceVatAmount"
-                                                                 aria-describedby="emailHelp" id="invoiceVatAmount" name="invoiceVatAmount[]" 
+                                                            step="any"  aria-describedby="emailHelp" id="invoiceVatAmount" name="invoiceVatAmount[]" 
                                                                 value="<?php echo $edit_invoice->invoiceVatChoice?>" autocomplete="off"> 
                                                         </div>
                                                     </td>
@@ -292,7 +292,7 @@
                                                         <div class="mb-3">
                                                             <input type="number" class="form-control invoiceTotalAmount"
                                                                 id="invoiceTotalAmount" aria-describedby="emailHelp" name="invoiceTotalAmount" 
-                                                                value="<?php echo $edit_invoice->invoiceTotalAmount?>" autocomplete="off">
+                                                                step="any"  value="<?php echo $edit_invoice->invoiceTotalAmount?>" autocomplete="off">
                                                         </div>
                                                     </td>
                                                     <!-- <td><input type="text" class="form-control"
@@ -338,6 +338,17 @@
                                             </div>
                                         </div>
 
+
+                                        <div class="d-flex justify-content-end border">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-auto">
+                                                    <label for="inputPassword6" class="col-form-label">Bank Charges</label>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <input type="number" step="any" name="bank_charges" id="bank_charges" class="form-control" value="<?php echo $edit_invoice->bank_charges?>">
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div class="d-flex justify-content-end border">
                                             <div class="row g-3 align-items-center">
@@ -500,6 +511,8 @@ $(window).click(function() {
         var finalAdvance_S  = $('#finalAdvance').val();      
         var totalInvoice_S = (qty_s * rate_S);
         var vatAmount_S = (parseInt(totalInvoice_S) * parseInt(vat_percentage_S) / 100);
+        var bank_charges = $('#bank_charges').val();
+
         var vatTotalAmount_s = (totalInvoice_S + vatAmount_S);
         $('#invoiceTaxableAmount').val(totalInvoice_S);
         $('#invoiceVatAmount').val(vatAmount_S);
@@ -553,7 +566,7 @@ $(window).click(function() {
 
     $('#finalVAT').val( parseFloat(sum_vatAmount) );
     
-    $('#finalTotalInvoice').val( sum_finalTotalAmount);
+    $('#finalTotalInvoice').val( sum_finalTotalAmount  + parseInt(bank_charges));
     // common
     $('#com_invoiceTaxableAmount').val(invoiceTaxableAmount);
     $('#com_invoiceRate').val(sum_invoiceRate);

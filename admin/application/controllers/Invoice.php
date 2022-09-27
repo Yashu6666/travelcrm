@@ -44,7 +44,9 @@ class Invoice extends CI_Controller
 		// $data['currency'] = $query_type->currency;
 		$data['pax'] = $query_type->adult + $query_type->child + $query_type->infant;
 		$query_price = $this->db->where('query_id', $query_id)->get('pricing_info')->row();
-		$data['price'] = $query_price->package_price / $data['pax'];
+
+		$remove_vat_amount = (($query_price->package_price * 5 ) / 100);
+		$data['price'] = ($query_price->package_price - $remove_vat_amount )  / $data['pax'];
 		// if($query_type->type == "Package") {
 		
 		// 	$query_type = $this->db->where('queryId', $query_id)->get('querypackage')->row();
@@ -94,14 +96,47 @@ class Invoice extends CI_Controller
 
 	}
 
+	// public function download_pdf()
+	// {
+
+	// 	try {
+
+			
+	// 	$data['invoice'] = $this->db->where('query_id', '8878')->get('invoice')->row();
+	// 	$data['query_package'] = $this->db->where('queryId', '8878')->get('querypackage')->row();
+	// 	$data['b2b'] = $this->db->where('query_id', '8878')->get('b2bcustomerquery')->row();
+	// 	$data['query_hotel'] = $this->db->where('query_id', '8878')->get('query_hotel')->row();
+
+	// 		$this->load->library('Pdf');
+	// 		// $this->load->view('invoice/template/invoice',$data);return;
+	// 		$html =  $this->load->view('invoice/template/invoice',$data, true);
+	// 		$dompdf = new Dompdf\DOMPDF();
+	// 		$dompdf->load_html($html);
+	// 		$dompdf->render();
+	// 		$pdf_name = time() . ".pdf";
+	// 		$dompdf->stream($pdf_name);
+
+	// 		// echo 'pdf downloaded successfully';
+			
+	// 	} catch (\Exception $e) {
+	// 		echo $e->getMessage();
+	// 	}
+	// }
+
 	public function sendMailInvoice()
 	{
+		try {
 		$email = $this->input->post('email');
 		$id = $this->input->post('pay_id');
 
 		$data['printInvoice'] = $this->db->where('id', $id)->get('invoice')->row();
 		$data['query_data'] = $this->db->where('id', $data['printInvoice']->query_id)->get('queries')->row();
 		// echo '<pre>';print_r($data);exit;
+
+		$data['invoice'] = $this->db->where('query_id', $data['printInvoice']->query_id)->get('invoice')->row();
+		$data['query_package'] = $this->db->where('queryId', $data['printInvoice']->query_id)->get('querypackage')->row();
+		$data['b2b'] = $this->db->where('query_id', $data['printInvoice']->query_id)->get('b2bcustomerquery')->row();
+		$data['query_hotel'] = $this->db->where('query_id', $data['printInvoice']->query_id)->get('query_hotel')->row();
 
 		$this->load->library('email');
 		$config = array(
@@ -154,9 +189,18 @@ class Invoice extends CI_Controller
 		<p>Regards, DIAMOND TOURS LLC This Is auto generate Email Please Do not Reply on This Email (For Contact send email on&nbsp;<a href="mailto:info@diamondtoursdubai.com" rel="noreferrer noopener" target="_blank" title="mailto:info@diamondtoursdubai.com">info@diamondtoursdubai.com</a>)<br><br>Thanks &amp; Regards,<br><br>DIAMOND TOUR LLC<br>BUR DUBAI, MENA BAZAR, 50-B STREET ,COSMOS LANE, OPP: COSMOS STORE , Dubai , UAE<br>E-Mail :&nbsp;<a href="mailto:Info@diamondtoursdubai.com" rel="noreferrer noopener" target="_blank" title="mailto:info@diamondtoursdubai.com">Info@diamondtoursdubai.com</a> ,&nbsp;<a href="http://www.diamondstoursdubai.com/" rel="noreferrer noopener" target="_blank" title="http://www.diamondstoursdubai.com/">www.diamondstoursdubai.com</a></p>
 		<p><br></p>';
 		$this->email->message($body);
-		$this->email->send();
 
-		echo json_encode(["msg" => "Email Send Successfully"]);
+		if ($this->email->send()) {
+			$this->load->helper("file");
+			delete_files(FCPATH . '/public/uploads/hotelVoucher');
+
+			echo 'Your Email has successfully been sent.';
+		} else {
+			show_error($this->email->print_debugger());
+		}
+	} catch (\Exception $e) {
+		echo $e->getMessage();
+	}
 	}
 
 	public function sendMailRemainder()
@@ -204,6 +248,8 @@ class Invoice extends CI_Controller
 			'invoiceNumber' => $this->input->post('invoiceNumber'),
 			'invoiceClientAddress' => $this->input->post('invoiceClientAddress'),
 			'invoicePhoneNumber' => $this->input->post('invoicePhoneNumber'),
+			'bank_charges' => $this->input->post('bank_charges'),
+
 			// 'ClientCity'=>$this->input->post('ClientCity'),
 			// 'ClientVat'=>$this->input->post('ClientVat'),
 
@@ -310,6 +356,7 @@ class Invoice extends CI_Controller
 			'invoiceNumber' => $this->input->post('invoiceNumber'),
 			'invoiceClientAddress' => $this->input->post('invoiceClientAddress'),
 			'invoicePhoneNumber' => $this->input->post('invoicePhoneNumber'),
+			'bank_charges' => $this->input->post('bank_charges'),
 			// 'ClientCity'=>$this->input->post('ClientCity'),
 			// 'ClientVat'=>$this->input->post('ClientVat'),
 
@@ -355,7 +402,7 @@ class Invoice extends CI_Controller
 			'finalBalance' => $this->input->post('finalBalance'),
 			'Notes' => $this->input->post('editorNotes'),
 			'TrmsCond' => $this->input->post('editorTrmsCond'),
-			'query_id' => $this->input->post('query_id')
+			// 'query_id' => $this->input->post('query_id')
 		);
 
 		if ($this->db->where('id', $id)->update('invoice', $data)) {

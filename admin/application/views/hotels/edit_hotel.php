@@ -459,6 +459,7 @@
 																<select required data-placeholder="Select" class="form-select1" name="propertytype">
 																	<option  <?php echo $edit->propertytype=="Apartment"?"selected":"";?> value="Apartment">Apartment</option>
 																	<option <?php echo $edit->propertytype=="Hotel"?"selected":"";?>  value="Hotel">Hotel</option>
+																	<option <?php echo $edit->propertytype=="Hotel_Apartment"?"selected":"";?>value="Hotel_Apartment">Hotel & Apartment</option>
 																	<option <?php echo $edit->propertytype=="Guest House"?"selected":"";?>  value="Guest House">Guest House</option>
 																	<option <?php echo $edit->propertytype=="Residence"?"selected":"";?>  value="Residence">Residence</option>
 																	<option <?php echo $edit->propertytype=="Resort"?"selected":"";?>  value="Resort">Resort</option>

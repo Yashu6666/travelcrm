@@ -348,13 +348,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                         <div class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                             </div>
-                                                            <input type="date" placeholder="Choose Date" class="form-control w-auto"  id="specificDate1" name="specificDate">
+                                                            <input type="date" placeholder="Choose Date" class="form-control"  id="specificDate1" name="specificDate">
                                                             <div class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-moon"></i>
                                                             <input  type="number" min="1" style="width: 18px;text-align: center;" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
                                                             </span>
                                                             </div>
-                                                            <input type="date" placeholder="Choose Date" class="form-control w-auto"  id="endDate1" name="noDaysFrom">
+                                                            <input type="date" placeholder="Choose Date" class="form-control"  id="endDate1" name="noDaysFrom">
                                                         </div>
                                                         </div>
 
@@ -394,7 +394,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                         </select>
                                                     </div>
 
-                                                    <div class="col">
+                                                    <!-- <div class="col">
                                                         <label for="">Rating</label> <br />
                                                         <select style="padding: 0px;" class="package_inputs" id="rating" required name="hotelPrefrence[]">
                                                             <option value="">Select Rating</option>
@@ -404,7 +404,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                             <option value="4">⭐⭐⭐⭐ 4</option>
                                                             <option value="5">⭐⭐⭐⭐⭐ 5</option>
                                                         </select>
-                                                    </div>
+                                                    </div> -->
 
                                                 </div>
 
@@ -417,6 +417,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                 </div>
 
                                                 <div class="row mt-4 mr-3 ml-3 mt-3">
+
+                                                <div class="col">
+                                                        <label for="">Rating</label> <br />
+                                                        <select style="padding: 0px;" class="package_inputs" id="rating" required name="hotelPrefrence[]">
+                                                            <option value="">Select Rating</option>
+                                                            <option value="1">⭐ 1</option>
+                                                            <option value="2">⭐⭐ 2</option>
+                                                            <option value="3">⭐⭐⭐ 3</option>
+                                                            <option value="4">⭐⭐⭐⭐ 4</option>
+                                                            <option value="5">⭐⭐⭐⭐⭐ 5</option>
+                                                        </select>
+                                                    </div>
+
+
                                                     <div class="col">
                                                         <label for="">Quotation Currency</label><br/>   
 

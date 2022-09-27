@@ -5,55 +5,201 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Invoice</title>
     <link rel="stylesheet" type="text/css" href="invoice.css" />
+    <style>
+      * {
+  font-family: arial;
+}
+.invoice_container {
+  padding: 10px 10px;
+}
+
+.in_details {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.product_container {
+  padding: 0 10px;
+  margin-top: 10px;
+}
+.item_table {
+  width: 100%;
+  text-align: left;
+}
+.item_table h2 {
+  text-align: left;
+}
+.item_table td,
+th {
+  padding: 5px 10px;
+}
+.invoice_footer {
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+th {
+  font-size: 14px;
+}
+  .tx_cntr {
+  text-align: center;
+  }
+    </style>
   </head>
   <body>
+    <?php function numtowords($num){ 
+            $decones = array( 
+                        '01' => "One", 
+                        '02' => "Two", 
+                        '03' => "Three", 
+                        '04' => "Four", 
+                        '05' => "Five", 
+                        '06' => "Six", 
+                        '07' => "Seven", 
+                        '08' => "Eight", 
+                        '09' => "Nine", 
+                        10 => "Ten", 
+                        11 => "Eleven", 
+                        12 => "Twelve", 
+                        13 => "Thirteen", 
+                        14 => "Fourteen", 
+                        15 => "Fifteen", 
+                        16 => "Sixteen", 
+                        17 => "Seventeen", 
+                        18 => "Eighteen", 
+                        19 => "Nineteen" 
+                        );
+            $ones = array( 
+                        0 => " ",
+                        1 => "One",     
+                        2 => "Two", 
+                        3 => "Three", 
+                        4 => "Four", 
+                        5 => "Five", 
+                        6 => "Six", 
+                        7 => "Seven", 
+                        8 => "Eight", 
+                        9 => "Nine", 
+                        10 => "Ten", 
+                        11 => "Eleven", 
+                        12 => "Twelve", 
+                        13 => "Thirteen", 
+                        14 => "Fourteen", 
+                        15 => "Fifteen", 
+                        16 => "Sixteen", 
+                        17 => "Seventeen", 
+                        18 => "Eighteen", 
+                        19 => "Nineteen" 
+                        ); 
+            $tens = array( 
+                        0 => "",
+                        2 => "Twenty", 
+                        3 => "Thirty", 
+                        4 => "Forty", 
+                        5 => "Fifty", 
+                        6 => "Sixty", 
+                        7 => "Seventy", 
+                        8 => "Eighty", 
+                        9 => "Ninety" 
+                        ); 
+            $hundreds = array( 
+                        "Hundred", 
+                        "Thousand", 
+                        "Million", 
+                        "Billion", 
+                        "Trillion", 
+                        "Quadrillion" 
+                        ); //limit t quadrillion 
+            $num = number_format($num,2,".",","); 
+            $num_arr = explode(".",$num); 
+            $wholenum = $num_arr[0]; 
+            $decnum = $num_arr[1]; 
+            $whole_arr = array_reverse(explode(",",$wholenum)); 
+            krsort($whole_arr); 
+            $rettxt = ""; 
+            foreach($whole_arr as $key => $i){ 
+                if($i < 20){ 
+                    $rettxt .= $ones[$i]; 
+                }
+                elseif($i < 100){ 
+                    $rettxt .= $tens[substr($i,0,1)]; 
+                    $rettxt .= " ".$ones[substr($i,1,1)]; 
+                }
+                else{ 
+                    $rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]; 
+                    $rettxt .= " ".$tens[substr($i,1,1)]; 
+                    $rettxt .= " ".$ones[substr($i,2,1)]; 
+                } 
+                if($key > 0){ 
+                    $rettxt .= " ".$hundreds[$key]." "; 
+                } 
+
+            } 
+            $rettxt = $rettxt." DIRHAMS";
+
+            if($decnum > 0){ 
+                $rettxt .= " and "; 
+                if($decnum < 20){ 
+                    $rettxt .= $decones[$decnum]; 
+                }
+                elseif($decnum < 100){ 
+                    $rettxt .= $tens[substr($decnum,0,1)]; 
+                    $rettxt .= " ".$ones[substr($decnum,1,1)]; 
+                }
+                $rettxt = $rettxt.""; 
+            } 
+            return $rettxt;} 
+    ?>
     <div class="invoice_container">
         <div class="in_details">
           <table class="item_table" border="1" cellspacing="0">
             <tr>
               <th rowspan="3" colspan="2">
-                <img src="<?php echo base_url();?>public/image/proposalLogo.png" style="width:30% !important;" alt="" />
+                <img src="<?php echo base_url();?>public/image/proposalLogo.png" style="width: 250px !important;" alt="" />
               </th>
               <th colspan="2">
                 <h2>PROFORMA INVOICE</h2>
               </th>
             </tr>
             <tr>
-              <th>CHECK IN DATE :</th>
-              <td>12/11/2022</td>
+              <th>INVOICE ID/REFF. NO.</th>
+              <td><?php echo $invoice->invoiceNumber ?></td>
             </tr>
+
             <tr>
-              <th>CHECK OUT DATE :</th>
-              <td>22/11/2022</td>
+              <th>CHECK IN DATE :</th>
+              <td><?php echo $query_package->specificDate ?></td>
             </tr>
             <tr>
               <th>INVOICE DATE :</th>
-              <td>01/12/2022</td>
-              <th>INVOICE ID/REFF. NO.</th>
-              <td>0983/2293884</td>
+              <td><?php echo $invoice->invoiceDate ?></td>
+              <th>CHECK OUT DATE :</th>
+              <td><?php echo $query_package->noDaysFrom ?></td>
             </tr>
             <tr>
               <th>CUSTOMER/AGENT NAME :</th>
-              <td>aaaaa nnnnnnn</td>
+              <td><?php echo $b2b->b2bcompanyName ?></td>
               <th>No. OF NIGHTS :</th>
-              <td></td>
+              <td><?php echo $query_package->night ?></td>
             </tr>
             <tr>
               <th>CUSTOMER/AGENT ADDRESS :</th>
-              <td>aaaaaaaannnnnnnnnnn</td>
+              <td><?php echo isset($b2b->b2bCompanyAddress) ? $b2b->b2bCompanyAddress : "" ?></td>
               <th>HOTEL NAME :</th>
-              <td></td>
+              <td><?php echo isset($query_hotel->hotel_name) ? $query_hotel->hotel_name : "" ?></td>
             </tr>
             <tr>
               <th>MODES OF PAYMENT :</th>
               <td>cash</td>
               <th>No. OF ROOMS:</th>
-              <td></td>
+              <td><?php echo $query_package->room ?></td>
             </tr>
           </table>
         </div>
       </div>
-      <div class="product_container">
+    <div class="invoice_container">
+
+      <div class="in_details">
         
         <table class="item_table" border="1" cellspacing="0">
           <tr>
@@ -63,60 +209,40 @@
             <th>AMT (ADE)</th>
           </tr>
           <tr>
-            <td>20,000</td>
-            <td>2</td>
-            <td>2000</td>
-            <td>38000</td>
+            <td class="tx_cntr"><?php echo $query_package->type ?></td>
+            <td class="tx_cntr"><?php echo $invoice->invoiceQty ?></td>
+            <td class="tx_cntr"><?php echo $invoice->finalTotalInvoice - $invoice->bank_charges ?></td>
+            <td class="tx_cntr"><?php echo $invoice->finalTotalInvoice - $invoice->bank_charges ?></td>
           </tr>
           <tr>
-            <td>20,000</td>
-            <td>2</td>
-            <td>2000</td>
-            <td>38000</td>
-          </tr>
-          <tr>
-            <td>20,000</td>
-            <td>2</td>
-            <td>2000</td>
-            <td>38000</td>
-          </tr>
-          <tr>
-            <td>20,000</td>
-            <td>2</td>
-            <td>2000</td>
-            <td>38000</td>
-          </tr>
-          <tr>
-            <th></th>
             <th></th>
             <th colspan="2">Sub Total</th>
-
-            <th>152000</th>
+            <th ><?php echo $invoice->finalTotalInvoice - $invoice->bank_charges ?></th>
           </tr>
           <tr>
             <th></th>
 
             <th colspan="2">BANK TRANSFER CHARGES</th>
-            <th></th>
-            <th></th>
+            <th><?php echo $invoice->bank_charges ?></th>
           </tr>
           <tr>
             <th></th>
             <th colspan="2">ADVANCE RECEIVED</th>
-            <th></th>
-            <th></th>
+            <th><?php echo $invoice->finalAdvance ?></th>
           </tr>
           <tr>
             <th colspan="2">ABOVE COST INCLUSIVE OF 5% VAT</th>
-            <th colspan="2">TOTAL</th>
-            <th></th>
+            <th >TOTAL</th>
+            <th ><?php echo $invoice->finalTotalInvoice?></th>
           </tr>
+         
           <tr>
             <th>AMOUNT IN WORDS :</th>
             <th>AED</th>
-            <th colspan="3">TWO THOUSAND AND TEN DIRHAMS ONLY /-</th>
+            <th colspan="2"><?php echo numtowords($invoice->finalTotalInvoice) ?></th>
           </tr>
         </table>
+      </div>
       </div>
       <div class="invoice_footer">
         <table class="item_table" border="1" cellspacing="0">

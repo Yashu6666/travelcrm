@@ -45,18 +45,18 @@
 											</div>
 										</div>
 
-										<div class="tools mt-2">
+										<!-- <div class="tools mt-2">
 											<div class="d-flex mx-5">
 											<a href="#"><i class="fa-solid fa-file-pdf fa-2x mx-4"></i></a>
 											<a href="#"><i class="fa-solid fa-file-excel fa-2x"></i></a>
 											</div>
-										</div>
+										</div> -->
 									</div>
 									
 									<div class="table-scrollable">
 										<table
 											class="full-width no-footer order-column table table-hover text-center"
-											id="example4">
+											id="exampleReport2">
 										
 											<thead>
 												<tr>
@@ -67,43 +67,20 @@
 													<th class="center">Total Amount</th>
 													<th class="center">Completed</th>
 													<th class="center"> Pending </th>
-													<!-- <th class="center"> Cold </th>
-													<th class="center"> Verbal Confirmed </th>
-													<th class="center"> Confirmed Payment Failed </th>
-													<th class="center"> Own </th>
-													<th class="center"> Rejected Lost </th>
-													<th class="center"> Verbal Confirmed </th>
-													<th class="center"> Confirmed Payment Failed </th>  -->
-													
 												</tr>
 											</thead>
 											<tbody>
-										<?php foreach($query_report as $key){ 
-											$reportsTo=$key->reportsTo;
-											$countsent= $this->db->query("SELECT * FROM b2bcustomerquery WHERE status='Sent' AND reportsTo='$reportsTo'")->result();
-											$countnotsent= $this->db->query("SELECT * FROM b2bcustomerquery WHERE status='pending' AND reportsTo='$reportsTo'")->result();
-											$total=count($countsent)+count($countnotsent);
-											?>			
+											<?php foreach($result as $val) : ?>
 												<tr>
-													<td><?php echo $key->reportsTo;?></td>
-													<td><?php echo $total;?></td>
-													<td><?php echo count($countsent);?></td>
-													<td><?php echo count($countnotsent);?></td>
-													<td>0</td>
-													<td>0</td>
-													<td>0</td>
-													
-													<!-- <td>0</td>
-													<td>0</td>
-													<td>0</td>
-													<td>0</td>
-													<td>0</td>
-													<td>0</td>
-													<td>0</td>
-													<td>0</td>
-													<td>0</td> -->
+												<td><?php echo $val['user'];?></td>
+												<td><?php echo $val['total_queries'];?></td>
+												<td><?php echo $val['total_invoice_val'];?></td>
+												<td><?php echo $val['bal_invoice_val'];?></td>
+												<td><?php echo $val['received_invoice_val'];?></td>
+												<td><?php echo $val['completed'];?></td>
+												<td><?php echo $val['pending'];?></td>
 												</tr>
-										<?php }?>			
+											<?php endforeach ?>   	
 
 											</tbody>
 										</table>
@@ -120,3 +97,48 @@
 
 		<!-- end page container -->
 		<?php $this->load->view('footer');?>
+
+		
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">  
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.print.min.js"></script>
+<script>
+
+$(document).ready(function() {
+  $('#exampleReport2').DataTable( {
+	  dom: 'Bfrtip',
+	  buttons: [
+			  {
+				  extend: 'pdfHtml5',
+				  text: '<i class="fa-solid fa-file-pdf fa-2x"></i>',
+				  title: 'Invoice Report',
+			  },
+			  {
+				  extend: 'excelHtml5',
+				  text: '<i class="fa-solid fa-file-excel fa-2x"></i>',
+				  title: 'Invoice Report',
+			  },
+			 
+	  ]
+  } );
+} );
+</script>
+
+<style>
+  .dataTables_filter {
+  float: left !important;
+  }
+
+  .dataTables_wrapper .dt-buttons {
+	  float: right;
+	  font-size: 2.5rem !important;
+  }
+</style>

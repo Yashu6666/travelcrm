@@ -106,10 +106,13 @@ $this->session->unset_userdata ( 'success' );
 														<a class="btn btn-tbl-edit btn-xs" href="<?php echo site_url();?>HotelVoucher/editVoucherDetails/<?php echo $value->query_id;?>">
 															<i class="fa fa-edit "></i>
 														</a>
-														<a id="resend" data-id="<?php echo $value->query_id?>" href="#" onclick="resendmail(this);" class="btn btn-tbl-delete btn-xs"><i class="fa fa-envelope "></i></a>
+														<!-- <a id="resend" data-id="<?php echo $value->query_id?>" href="#" onclick="resendmail(this);" class="btn btn-tbl-delete btn-xs"><i class="fa fa-envelope "></i></a> -->
+														<a type="button" class="btn btn-tbl-delete btn-xs" onclick="modalEmail('<?php echo $value->query_id?>','<?php echo $agent_emails[$key] ?>')"
+														 id="resendBtn" data-id="<?php echo $value->query_id?>" data-bs-toggle="modal" data-bs-target="#sendMail"><i class="fa fa-envelope "></i></a>
 
 													</td>
 												</tr>
+												
 											<?php endforeach; ?>
 												<?php endif?>
 
@@ -488,6 +491,29 @@ $this->session->unset_userdata ( 'success' );
 					</div>
 				</div>
 			</div>
+
+<div class="modal fade" id="sendMail" tabindex="-1" aria-labelledby="sendMailModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sendMailModalLabel">Send Email</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+      </div>
+      <div class="modal-body">
+		<label class="input__label">Email</label>
+			<input class="form-control" type="text" placeholder=" " id="voucherEmailId" 
+				autocomplete="off" />
+			<input class="form-control" type="hidden" placeholder=" " id="voucherQuery" 
+			autocomplete="off" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="new_btn px-3" data-bs-dismiss="modal">Close</button>
+        <button type="button" onclick="resendmail('voucherQuery','voucherEmailId')" id="send_voucher_mail" class="new_btn px-3">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 			<!-- end chat sidebar -->
 		</div>
 		<!-- end page container -->
@@ -503,6 +529,12 @@ $this->session->unset_userdata ( 'success' );
 		<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script>
 	// CKEDITOR.replace('impInfo');
+	function modalEmail(id,mail){
+		document.getElementById('voucherQuery').value = id;
+		document.getElementById('voucherEmailId').value = mail;
+	}
+
+	
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -512,9 +544,11 @@ $this->session->unset_userdata ( 'success' );
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 		<script>
-			function resendmail(d){
+			function resendmail(id,email){
 
-				var query_id= d.getAttribute("data-id");
+				var query_id= document.getElementById(id).value;
+				var email_value= document.getElementById(email).value;
+
 				var base_url = '<?php echo base_url()?>';
 				$.ajax({
 					url: base_url + "HotelVoucher/getVoucherDetails",
@@ -523,7 +557,7 @@ $this->session->unset_userdata ( 'success' );
 					data : { 'query_id':query_id },
 					success: function(result) {
 					// console.log(result);
-					resendEmail(result);
+					resendEmail(result,email_value);
 				}});
 			}
 		</script>

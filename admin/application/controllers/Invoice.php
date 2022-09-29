@@ -296,7 +296,8 @@ class Invoice extends CI_Controller
 			'finalBalance' => $this->input->post('finalBalance'),
 			'Notes' => $this->input->post('editorNotes'),
 			'TrmsCond' => $this->input->post('editorTrmsCond'),
-			'query_id' => $this->input->post('query_id')
+			'query_id' => $this->input->post('query_id'),
+			'created_by' => $this->session->userdata('admin_id')
 		);
 
 		if ($this->db->insert('invoice', $data)) {

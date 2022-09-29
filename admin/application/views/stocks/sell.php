@@ -50,7 +50,8 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th scope="col">SL.No</th>
-                                        <th scope="col">Company Name</th>
+                                        <th scope="col">Travel Agent Name</th>
+                                        <th scope="col">Guest Name</th>
                                         <th scope="col">Ticket Name</th>
                                         <th scope="col">No.of tickets</th>
                                         <th scope="col">Sold Date</th>
@@ -67,9 +68,11 @@
 
                                         <tr>
                                             <td><?php echo $i; ?></td>
-                                            <td><?php echo $key->company_first_name.' '.$key->company_last_name; ?></td>
+                                            <td><?php echo $key->travel_agent_name; ?></td>
+                                            <td><?php echo $key->guest_name; ?></td>
+                                            <!-- <td><?php //echo $key->company_first_name.' '.$key->company_last_name; ?></td> -->
                                             <td><?php echo $key->ticket_name; ?></td>
-                                            <td><?php echo $key->no_of_tickets; ?></td>
+                                            <td><?php echo $key->no_of_tickets_adults + $key->no_of_tickets_childs; ?></td>
                                             <td><?php echo $key->sold_date; ?></td>
                                             <td><?php echo $key->sold_by; ?></td>
                                             <td><a href="<?php echo site_url(); ?>stocks/delete_stock2/<?php echo $key->id; ?>" class="btn btn-danger btn-xs">
@@ -122,25 +125,31 @@
                 <div class="modal-body">
 
                     <div class="d-flex form-group ">
-                        <label for="" class="col-sm-4 col-form-label">First Name</label>
+                        <label for="" class="col-sm-4 col-form-label">Travel Agent</label>
                         <div class="col-sm-8">
-                            <input type="text" name="f_name" class="form-control" required class="form-control" placeholder="First Name">
+                            <input type="text" name="f_name" class="form-control" required class="form-control" placeholder="Travel Agent">
                         </div>
                     </div>
 
                     <div class="d-flex form-group ">
-                        <label for="" class="col-sm-4 col-form-label">Last Name</label>
+                        <label for="" class="col-sm-4 col-form-label">Guest Name</label>
                         <div class="col-sm-8">
-                            <input type="text" name="l_name" class="form-control" required class="form-control" placeholder="Last Name">
+                            <input type="text" name="l_name" class="form-control" required class="form-control" placeholder="Guest Name">
+                        </div>
+                    </div>
+                    <div class="d-flex form-group ">
+                        <label for="" class="col-sm-4 col-form-label">Booking Date</label>
+                        <div class="col-sm-8">
+                            <input type="date" name="b_date" class="form-control" required class="form-control">
                         </div>
                     </div>
                     
-                    <div class="d-flex form-group ">
+                    <!-- <div class="d-flex form-group ">
                         <label for="" class="col-sm-4 col-form-label">Sold Date</label>
                         <div class="col-sm-8">
-                            <input disabled value="<?php echo date('d-m-Y') ?>" name="sell_date"  class="form-control" placeholder="Added Date">
+                            <input disabled value="<?php// echo date('d-m-Y') ?>" name="sell_date"  class="form-control" placeholder="Added Date">
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="d-flex form-group ">
                         <label for="" class="col-sm-4 col-form-label">Ticket Name</label>
@@ -149,9 +158,41 @@
                         </div>
                     </div>
                     <div class="d-flex form-group ">
+                        <label for="" class="col-sm-4 col-form-label">Type of Pax</label>
+                        <div class="col-sm-8">
+                            <select id="pax_type_select" name="pax_type_select" class="form-control form-control-sm">
+                                <option value="Both">Both</option>
+                                <option value="Adult">Adult</option>
+                                <option value="Child">Child</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex form-group ">
+                        <label for="" class="col-sm-4 col-form-label">Ticket Type</label>
+                        <div class="col-sm-8">
+                            <select id="tkt_type" name="tkt_type" class="form-control form-control-sm">
+                                <option value="Bronze">Bronze</option>
+                                <option value="Silver">Silver</option>
+                                <option value="Gold">Gold</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="d-flex form-group" id="no_of_tickets_div">
                         <label for="" class="col-sm-4 col-form-label">No of Ticket(s)</label>
                         <div class="col-sm-8">
                             <input type="number" min='1' required name="no_of_tickets" class="form-control">
+                        </div>
+                    </div> -->
+                    <div class="d-flex form-group " id="no_of_tickets_adults_div" style="flex !important">
+                        <label for="" class="col-sm-4 col-form-label">No of Ticket(s)<br>(Adults)</label>
+                        <div class="col-sm-8">
+                            <input type="number" min='1'  name="no_of_tickets_adults" class="form-control">
+                        </div>
+                    </div>
+                    <div class="d-flex form-group " id="no_of_tickets_childs_div" style="flex !important;">
+                        <label for="" class="col-sm-4 col-form-label">No of Ticket(s)<br>(Child)</label>
+                        <div class="col-sm-8">
+                            <input type="number" min='1'  name="no_of_tickets_childs" class="form-control">
                         </div>
                     </div>
                     <div class="d-flex form-group ">
@@ -181,5 +222,26 @@
             });
         }
     });
+
+
+    $( "#pax_type_select" ).change(function() {
+        var pax_type = $(this).val();
+        if(pax_type == "Adult"){
+            $('#no_of_tickets_adults_div').attr('style','flex !important');
+            $('#no_of_tickets_childs_div').attr('style','display:none !important;');
+            // $('#no_of_tickets_div').attr('style','display:none !important;');
+        }else if(pax_type == "Child"){
+            $('#no_of_tickets_adults_div').attr('style','display:none !important;');
+            // $('#no_of_tickets_div').attr('style','display:none !important;');
+            $('#no_of_tickets_childs_div').attr('style','flex !important');
+        }else if(pax_type == "Both"){
+            // $('#no_of_tickets_div').attr('style','display:block !important;');
+            $('#no_of_tickets_adults_div').attr('style','flex !important');
+            $('#no_of_tickets_childs_div').attr('style','flex !important');
+        }
+
+    });
+
+    
 </script>
 

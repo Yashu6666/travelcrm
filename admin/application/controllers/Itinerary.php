@@ -85,6 +85,8 @@ class Itinerary extends CI_Controller {
 		// print_r($query_id);
 		$hotel = $this->db->where('query_id',$query_id)->get('query_hotel')->result();
 		// print_r($hotel);
+		$data['data_conf'] = $this->db->where('query_id',$query_id)->get('hotel_voucher_confirmation')->row();
+
 		
 		$data['hotel_city'] = explode(',',$hotel[0]->hotel_city);
 		$data['hotel_name'] = explode(',',$hotel[0]->hotel_name);

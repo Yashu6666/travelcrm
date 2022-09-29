@@ -76,6 +76,8 @@ $this->session->unset_userdata ( 'success' );
 												<tr><th class="center"> SL.NO</th>
 													<th class="center">Query ID </th>
 													<th class="center"> Confirmation Id </th>
+													<th class="center">Agent Name </th>
+													<th class="center">Guest Name </th>
 													<th class="center">Hotel Name </th>
 													<th class="center"> Booking Date </th>
 												 	<th class="center"> Check In </th> 
@@ -91,6 +93,8 @@ $this->session->unset_userdata ( 'success' );
 													<td class="center"><?php echo $key + 1 ?></td>
 													<td class="center"><?php echo $value->query_id ?></td>
 													<td class="center"><?php echo $value->confirmation_id ?></td>
+													<td class="center"><?php echo $agent_names[$key] ?></td>
+													<td class="center"><?php echo $value->guest_name ?></td>
 													<td class="center"><?php echo $value->query_hotel_name ?></td>
 													<td class="center"><?php echo $value->query_hotel_booking_date ?></td>
 													<td class="center"><?php echo $value->query_check_in ?></td>

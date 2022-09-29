@@ -291,7 +291,15 @@ class HotelVoucher extends CI_Controller
 	{
 		$data_conf_tbl = $this->db->order_by("updated_at", "desc")->get('hotel_voucher_confirmation')->result();
 		$data['hotels'] = $data_conf_tbl;
-		
+
+
+		$agent_names = [];
+		foreach($data_conf_tbl as $val){
+			$data_b2b = $this->db->where('query_id', $val->query_id)->get('b2bcustomerquery')->row();
+			array_push($agent_names,$data_b2b->b2bcompanyName);
+		}
+		$data['agent_names'] = $agent_names;
+
 		$this->load->view('hotel_voucher/view_hotels_voucher', $data);
 	}
 

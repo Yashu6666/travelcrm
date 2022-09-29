@@ -22,6 +22,7 @@ class Invoice extends CI_Controller
 	public function modify_invoice($id)
 	{
 		$data['edit_invoice'] = $this->db->where('id', $id)->get('invoice')->row();
+		$data['details'] = $this->db->where('query_id', $data['edit_invoice']->query_id)->get('b2bcustomerquery')->row();
 
 		$this->load->view('invoice/modify_invoice', $data);
 	}

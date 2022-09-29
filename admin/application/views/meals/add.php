@@ -75,6 +75,7 @@
 								<option value="Veg">Veg</option>
 								<option value="Non-veg">Non Veg</option>
 								<option value="Jain">Jain</option>
+								<option value="Panjabi">Panjabi</option>
 
 							</select>
 

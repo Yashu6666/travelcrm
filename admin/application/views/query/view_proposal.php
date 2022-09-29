@@ -297,7 +297,7 @@
                         </div>
                     </div>
                     <div>
-                        <img src="<?php echo base_url(); ?>public/image/4.jpg" alt="">
+                        <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
                         <h5><b>Hotel Name : </b> <?php echo explode(",",$hotel_query[0]->hotel_name)[$key];?></h5>
                         <b>Room Type : </b> <?php echo explode(",",$hotel_query[0]->room_type)[$key];?>
                     </div>
@@ -319,7 +319,7 @@
                             <h5 class="text-light" style="padding: 7px;"> SIC </h5>
                         </div>
                             <?php foreach(explode(",",$sic_query[0]->excursion_name) as $key => $value) : ?> 
-                            <img src="<?php echo base_url(); ?>public/image/4.jpg" alt="">
+                            <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
                             <h5><?php echo $value ?></h5><br />
                         <?php endforeach ?>
                 </div>
@@ -331,7 +331,7 @@
                         <h5 class="text-light" style="padding: 7px;"> PVT</h5>
                     </div>
                     <?php foreach(explode(",",$pvt_query[0]->excursion_name) as $k => $v) : ?>
-                        <img src="<?php echo base_url(); ?>public/image/4.jpg" alt="">
+                        <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
                         <h5><?php echo $v ?></h5>
                     <?php endforeach ?>
                 </div>
@@ -344,7 +344,7 @@
                             <h5 class="text-light" style="padding: 7px;"> TKT </h5>
                         </div>
                             <?php foreach(explode(",",$sic_query[0]->excursion_name) as $key => $value) : ?> 
-                            <img src="<?php echo base_url(); ?>public/image/4.jpg" alt="">
+                            <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
                             <h5><?php echo $value ?></h5><br />
                         <?php endforeach ?>
                 </div>

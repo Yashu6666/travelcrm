@@ -320,7 +320,7 @@ textarea{
                 </div>
             </div>
             <div>
-                <img src="<?php echo base_url(); ?>public/image/4.jpg" alt="">
+                <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
                 <h5><b>Hotel Name : </b> <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></h5>
                 <b>Room Type : </b> <?php echo $proposalDetails['roomType'][$key] ?>
             </div>

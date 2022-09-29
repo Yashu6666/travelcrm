@@ -118,7 +118,7 @@
                                   <th>Room Type </th>
                                   <th>Group Type </th>
                                   <th>Bed Type </th>
-                                  <th>Type </th>
+                                  <th>Meal Type </th>
                                   <th>Sharing Type </th>
                                   <th>Extra </th>
                                   <!-- <th>Action</th> -->
@@ -201,9 +201,8 @@
                                   </td>
                                   <td>
                                     <select class="form-control room_sharing_types" id="room_sharing_types" name="room_sharing_types[]">
-                                      <option value="">Select option</option>
-                                      <option value="triple_sharing">Triple Sharing</option>
                                       <option value="double_sharing">Double Sharing</option>
+                                      <option value="triple_sharing">Triple Sharing</option>
                                     </select>
                                   </td>
                                   <td>
@@ -244,7 +243,7 @@
                             <label for="" class="transport-lable"><b>Transport Type</b>
                               :</label>
                             <input type="checkbox" name="TransType" id="TrasportTypeCab" class="mr-3 ml-2 " value="Internal Transfer"><span class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
-                            <input type="checkbox" name="TransType" id="TrasportTypeSic" class="mr-3 ml-2 " value="Point to Point Transfer"><span class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
+                            <input type="checkbox" name="TransType" id="TrasportTypeSic" checked class="mr-3 ml-2 " value="Point to Point Transfer"><span class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
                             <!-- <input type="checkbox" name="TransType" id="TrasportTypeBus" class="mr-3 ml-2 " value="Hourly"><span
               class="transport-lable-ckeck">Hourly</span><span class="checkmark"></span> -->
                             <!-- <input type="checkbox" name="TransType" id="TrasportTypeTrain" class="mr-3 ml-2 " value="train"><span
@@ -1118,7 +1117,6 @@
                                 $("#perpax_childs_input").val(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
                                 $("#perpax_infants_input").val(c_type == 'USD' ? Math.floor(per_pax_infant / usd_aed) : Math.floor(per_pax_infant));
                                 var totalprice_package = total_adult + total_child + total_infant;
-                                console.log("🚩 ~ file: build_package.php ~ line 1043 ~ $ ~ totalprice_package", totalprice_package)
                                 // var totalprice_package = c_type == 'USD' ?  Math.floor( totalprice_package / usd_aed)  : Math.floor(totalprice_package);
 
                                 $("#totalprice_package").val(totalprice_package);
@@ -2422,6 +2420,7 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
       'return_transfer_date': return_transfer_date,
 
     }];
+    console.log("🚩 ~ file: build_package.php ~ line 2424 ~ $ ~ data", data)
 
 
     $.ajax({
@@ -2438,6 +2437,7 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
       cache: false,
       dataType: "json",
       success: function(response) {
+        console.log("🚩 ~ file: build_package.php ~ line 2440 ~ $ ~ response", response)
         toastr.success("Transfer Details Saved Successfully");
       }
     });
@@ -3028,8 +3028,8 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
   });
 
 
-
-
+  $('#Sic').show();
+  
   $("input[name='TransType']").change(function() {
 
     var name = $(this).val();
@@ -3492,7 +3492,7 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 
 
         template += '<td><select class="form-control get_room_types" id="room_types' + faqs_row + room_no + '" name="build_room_types[]" required><option value ="BB">BB</option><option value ="Room Only">Room Only</option><option value="HB" >HB</option><option value="FB" >FB</option></select></td>';
-        template += '<td><select class="form-control room_sharing_types" id="room_sharing_types' + faqs_row + room_no + '" name="room_sharing_types[]" ><option value ="">Select option</option><option value ="triple_sharing">Triple Sharing</option> <option value="double_sharing" >Double Sharing</option></select></td>';
+        template += '<td><select class="form-control room_sharing_types" id="room_sharing_types' + faqs_row + room_no + '" name="room_sharing_types[]" ><option value="double_sharing" >Double Sharing</option><option value ="triple_sharing">Triple Sharing</option> </select></td>';
         template += '<td><div class=""><p><input type="checkbox" id="extra_with_adult' + faqs_row + room_no + '" <?php echo $buildpackage->adult > 2 ? 'checked' : ''; ?> name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"> Ex. adult</p><p><input type="checkbox" <?php echo $buildpackage->child > 0 ? 'checked' : ''; ?> id="extra_with_child' + faqs_row + room_no + '" name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child"> CWB</p><p><input type="checkbox" <?php echo $buildpackage->infant > 0 ? 'checked' : ''; ?> id="extra_without_bed' + faqs_row + room_no + '" name="extra_check[]" value="extra_without_bed" class="check-extra extra_without_bed"> CNB</p></div></td>';
 
         template += '<td><button type="button" class="btn btn-danger btn-xs cls-btn"  id="del_btn' + faqs_row + room_no + '"  onClick="return  removeHotel(this);"><i class="fa fa-trash"></i></button> </td>';

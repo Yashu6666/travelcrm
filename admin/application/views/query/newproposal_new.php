@@ -312,7 +312,7 @@
                 </div>
             </div>
             <div>
-                <img src="<?php echo base_url(); ?>public/image/4.jpg" alt="">
+                <!-- <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> --> -->
                 <h5><b>Hotel Name : </b> <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></h5>
                 <b>Room Type : </b> <?php echo $proposalDetails['roomType'][$key] ?>
             </div>
@@ -353,7 +353,7 @@
                     <h5 class="text-light" style="padding: 7px;"> SIC </h5>
                 </div>
             <?php foreach($proposalDetails['excursion_name_SIC'] as $keys => $vals) : ?>
-                <img src="<?php echo base_url(); ?>public/image/4.jpg" alt="">
+                <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
                 <h5><?php echo $vals ?></h5><br/>
             <?php endforeach ?>
             </div>
@@ -365,7 +365,7 @@
                     <h5 class="text-light" style="padding: 7px;"> PVT</h5>
                 </div>
             <?php foreach($proposalDetails['excursion_name_PVT'] as $keyss => $valss) : ?>
-                <img src="<?php echo base_url(); ?>public/image/4.jpg" alt="">
+                <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
                 <h5><?php echo $valss ?></h5>
             <?php endforeach ?>
             </div>
@@ -790,7 +790,13 @@
                                     <input class="input__field " type="text" placeholder=" " autocomplete="off" />
                                     <span class="input__label">Sender Email </span></span>
                                 </label><br> -->
-                                <div class="mt-2"> <b>Cheak In/Out</b> : <?php echo $buildpackage->specificDate ?>/<?php echo $buildpackage->noDaysFrom ?></div>
+                                <?php
+                                $date = new DateTime($buildpackage->specificDate);
+                                $date2 = new DateTime( $buildpackage->noDaysFrom);
+                                $check_in = $date->format('d-M-Y');
+                                $check_out = $date2->format('d-M-Y');
+                                ?>
+                                <div class="mt-2"> <b>Cheak In/Out</b> : <?php echo $check_in ?>/<?php echo $check_out ?></div>
                                 <div class="mt-2"> <b>Destinations</b> : <?php echo $buildpackage->goingTo ?>, <?php echo $buildpackage->goingFrom ?></div>
                             </div>
                             <!-- <div class="col">

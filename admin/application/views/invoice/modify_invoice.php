@@ -127,6 +127,15 @@
                                                         </label>
 
                                                     </td>
+
+                                                    <td><label class="input">
+                                                            <input class="input__field invoice-second" type="text"
+                                                                name="invoiceAgencyName" placeholder=" " id="" value="<?php echo isset($details->b2bmobileNumber)?$details->b2bcompanyName:"" ?>" autocomplete="off" />
+                                                            <span class="input__label">Agency Name</span>
+
+                                                        </label>
+
+                                                    </td>
                                                     <!-- <td>
                                                         <label class="input">
                                                             <input class="input__field invoice-second" type="text"

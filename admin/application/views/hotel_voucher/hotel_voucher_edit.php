@@ -209,7 +209,7 @@
 													<tbody>
 														<tr>
 															<td><input type="text" id="guest_name" class="form-control" name="guest_name[<?php echo $key; ?>]"></td>
-															<td><?php echo $guest->b2bfirstName." ".$guest->b2blastName ?></td>
+															<td><?php echo $guest->b2bcompanyName ?></td>
 															<td><?php echo $guest->b2bEmail ?></td>
 															<td><?php echo $guest->b2bmobileNumber ?></td>
 														</tr>

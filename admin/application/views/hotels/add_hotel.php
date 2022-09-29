@@ -80,7 +80,6 @@
 																			<td>
 																			   <!-- <input required type="text" class="form-control Places pac-target-input"  name="hotelmapaddress" value="" placeholder="Enter Address" > -->
 																			   <select class="form-control"   required="" name="hotelmapaddress">
-																					<option>Select City</option>                      
 																					<option value="Dubai">Dubai</option>
 																					<option value="AbuDhabi">Abu Dhabi</option>
 																					<option value="Sharjah">Sharjah</option>
@@ -262,7 +261,7 @@
 															 </div>
 														  </div>
 														  <div class="row form-group mb-3">
-															 <label class="col-md-2 control-label text-left">Payment Options</label>
+															 <label class="col-md-2 control-label text-left text-nowrap">Payment Options</label>
 															 <div class="col-md-10">
 															
 																<select required multiple=""  name="hotelpayments[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
@@ -294,7 +293,7 @@
 															 </div>
 														  </div>
 														  <div class="row form-group mb-3">
-															 <label class="col-md-2 control-label text-left">Policy And Terms</label>
+															 <label class="col-md-2 control-label text-left text-nowrap">Policy And Terms</label>
 															 <div class="col-md-10">
 																<textarea required name="hotelpolicy" placeholder="Policy..." class="form-control" id="" cols="30" rows="7"></textarea>
 															 </div>
@@ -381,8 +380,8 @@
 														  <label class="col-md-4 control-label1 text-left">Property Type</label>
 														  <div class="col-md-8">
 															 <select required data-placeholder="Select" class="form-select1" name="propertytype">
+																 <option value="Hotel">Hotel</option>
 																<option value="Apartment">Apartment</option>
-																<option value="Hotel">Hotel</option>
 																<option value="Hotel_Apartment">Hotel & Apartment</option>
 																<option value="Guest House">Guest House</option>
 																<option value="Residence">Residence</option>
@@ -615,7 +614,7 @@
 							<label class="col-md-2 control-label text-left"></label>
 							<div class="col-md-12 d-flex">
 								<input required name="hotelemail[]" type="text"  placeholder="Email" class="form-control mr-2" value="">
-								<button type="button" class="btn btn-danger ml-5 mt-0 py-2"  onclick="removeNewEmails(${"email_row"+email_row_id})"></i></button>
+								<button type="button" class="btn btn-danger ml-5 mt-0 py-2"  onclick="removeNewEmails(${"email_row"+email_row_id})"><i class="fa fa-trash"></i></button>
 							</div>
 						</div>`;
 			$("#new_hotel_email_ids").append(row_data);
@@ -632,7 +631,7 @@
 							<label class="col-md-2 control-label text-left"></label>
 							<div class="col-md-12 d-flex">
 								<input required name="contact_person[]" type="text"  placeholder="Contact Person Name" class="form-control mr-2" value="">
-								<button type="button" class="btn btn-danger ml-5 mt-0 py-2"  onclick="removeNewEmails(${"contact_names"+contact_names_id})"></i></button>
+								<button type="button" class="btn btn-danger ml-5 mt-0 py-2"  onclick="removeNewEmails(${"contact_names"+contact_names_id})"><i class="fa fa-trash"></i></button>
 							</div>
 						</div>`;
 			$("#new_contact_person_names").append(row_data);
@@ -645,7 +644,7 @@
 							<label class="col-md-2 control-label text-left"></label>
 							<div class="col-md-12 d-flex">
 								<input required name="phone[]" type="text"  placeholder="Phone" class="form-control mr-2" value="">
-								<button type="button" class="btn btn-danger ml-5 mt-0 py-2"  onclick="removeNewEmails(${"new_phone"+new_phone_id})"></i></button>
+								<button type="button" class="btn btn-danger ml-5 mt-0 py-2"  onclick="removeNewEmails(${"new_phone"+new_phone_id})"><i class="fa fa-trash"></i></button>
 							</div>
 						</div>`;
 			$("#new_phone").append(row_data);

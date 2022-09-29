@@ -294,11 +294,14 @@ class HotelVoucher extends CI_Controller
 
 
 		$agent_names = [];
+		$agent_emails = [];
 		foreach($data_conf_tbl as $val){
 			$data_b2b = $this->db->where('query_id', $val->query_id)->get('b2bcustomerquery')->row();
 			array_push($agent_names,$data_b2b->b2bcompanyName);
+			array_push($agent_emails,$data_b2b->b2bEmail);
 		}
 		$data['agent_names'] = $agent_names;
+		$data['agent_emails'] = $agent_emails;
 
 		$this->load->view('hotel_voucher/view_hotels_voucher', $data);
 	}

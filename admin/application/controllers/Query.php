@@ -209,7 +209,7 @@ class Query extends CI_Controller
 			$created_at = $value->created_at;
 			$id = $value->id;
 
-			$package = $this->db->where('queryId', $query_id)->get('querypackage')->row();
+			$package = $this->db->where('queryId', $query_id)->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->row();
 
 			if (isset($package)) {
 				$res = array("id" => $id, "company_name" => $company_name, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
@@ -448,7 +448,8 @@ class Query extends CI_Controller
 			'type' => $this->input->post('colorRadio'),
 			'currency' => $this->input->post('invoice_currency'),
 			'queryId' => $this->input->post('queryId'),
-			'created_date' => $this->input->post('created_date')
+			'created_date' => $this->input->post('created_date'),
+			'created_by' => $this->session->userdata('admin_id')
 		);
 		// echo "<pre>";print_r($_POST);return;
 		$query_id = $this->input->post('queryId');
@@ -464,10 +465,14 @@ class Query extends CI_Controller
 
 	public function updatestatus()
 	{
+		
 		$id = $_POST['id'];
 		$status = $_POST['status'];
+		$query_id = $this->db->where('id', $id)->get('b2bcustomerquery')->row();
 		// $type = $_POST['type'];
-		$data = array( 'lead_stage' => $status);
+		$data = array('lead_stage' => $status);
+		$package = $this->db->where('queryId', $query_id->query_id)->update('querypackage', $data);
+
 		$this->db->where('id', $id)->update('b2bcustomerquery', $data);
 		echo json_encode("updated");
 	}
@@ -3298,6 +3303,10 @@ class Query extends CI_Controller
 			'query_id' => $this->input->post('followUpQueryId'),
 			'followUpRemarks' => $this->input->post('followUpRemarks')
 		);
+
+		$data_package = ["follow_up_status" => $this->input->post('followUpQueryStatus')];
+		$package = $this->db->where('queryId',  $this->input->post('followUpQueryId'))->update('querypackage', $data_package);
+
 		if ($this->db->insert('followups', $data)) {
 			// echo "<script>alert('Follow Added Sucessfully');window.location='" . $redirect_url . "';</script>";
 			$this->session->set_flashdata('success','Follow Added Sucessfully');

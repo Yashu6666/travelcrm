@@ -205,11 +205,11 @@ function download_pdf() {
 //   //   },
 //   // });
 // }
-function resendEmail(result) {
+function resendEmail(result,email) {
   // console.log(result.hotel_conformation.board);
   let q_id = result.query_id;
   let base_url = document.getElementById("base_url_id").value;
-  let email_id = result.guest.b2bEmail;
+  let email_id = email;
   let impInfo = "";//result.hotel_conformation.impInfo;
   let board_arr = result.hotel_conformation.board;
   

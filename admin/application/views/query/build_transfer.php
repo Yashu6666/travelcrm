@@ -100,7 +100,7 @@
               :</label>
               <input type="checkbox" name="TransType" id="TrasportTypeCab" class="mr-3 ml-2 " value="Internal Transfer"><span
               class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
-              <input type="checkbox" name="TransType" id="TrasportTypeSic" class="mr-3 ml-2 " value="Point to Point Transfer"><span
+              <input type="checkbox" name="TransType" checked id="TrasportTypeSic" class="mr-3 ml-2 " value="Point to Point Transfer"><span
               class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
               <!-- <input type="checkbox" name="TransType" id="TrasportTypeBus" class="mr-3 ml-2 " value="Hourly"><span
               class="transport-lable-ckeck">Hourly</span><span class="checkmark"></span> -->
@@ -1760,6 +1760,8 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
         });
        });
     
+        
+       $('#Sic').show();
 
      $("input[name='TransType']").change(function() {
     

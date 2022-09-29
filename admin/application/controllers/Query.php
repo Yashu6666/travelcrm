@@ -1227,6 +1227,8 @@ class Query extends CI_Controller
 			} else {
 				$this->db->insert('query_transfer', $return_transfer_data);
 			}
+
+			echo json_encode("transfer details saved successfully");
 	
 			}
 		

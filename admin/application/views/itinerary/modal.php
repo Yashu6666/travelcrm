@@ -63,13 +63,13 @@
                         <section id="aside" class="mt-4" style="display: flex;">
                             <section id="recipientcase" class="col-md-6">
                                 <label>Check In </label>
-                                <input type="date" name="check_in_date" id="check_in_date" class="form-control check_in_date" >
+                                <input type="date" value="<?php echo $package->specificDate ?>" name="check_in_date" id="check_in_date" class="form-control check_in_date" >
                                 <!-- <input type="date" name="check_in_date" id="check_in_date" class="form-control check_in_date" value="<?php echo isset($details['checkindate']) ? $details['checkindate'] : "" ;?>" readonly > -->
                             </section>
 
                             <section id="recipientcase" class="col-md-6">
                                 <label>Check Out</label>
-                                <input type="date" name="check_out_date" id="check_out_date" class="form-control txtinput check_out_date" >
+                                <input type="date"  value="<?php echo $package->noDaysFrom ?>" name="check_out_date" id="check_out_date" class="form-control txtinput check_out_date" >
                                 <!-- <input type="date" name="check_out_date" id="check_out_date" class="form-control txtinput check_out_date" min="<?php echo $details['checkindate'];?>" max="<?php echo $details['checkoutdate'];?>" value=""> -->
                             </section>
                         </section>

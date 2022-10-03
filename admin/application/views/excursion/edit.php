@@ -146,7 +146,7 @@
 
                               <!-- Address and Map -->
                               <div class="panel panel-default">
-                                <div class="panel-heading"><strong> Address</strong></div>
+                                <div class="panel-heading"><strong> City</strong></div>
                                 <div class="well well-sm" style="margin-bottom: 0px;">
                                   <div class="col-md-12 form-horizontal">
                                     <table class="table">

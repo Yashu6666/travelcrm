@@ -1189,7 +1189,6 @@ class Query extends CI_Controller
 			$this->db->insert('query_transfer', $internal_transfer_data);
 		}
 
-		echo json_encode("transfer details saved successfully");
 		}
 
 		// ----------------------------------------- return -------------------------------------------------
@@ -1233,10 +1232,9 @@ class Query extends CI_Controller
 				$this->db->insert('query_transfer', $return_transfer_data);
 			}
 
-			echo json_encode("transfer details saved successfully");
 	
 			}
-		
+			echo json_encode("transfer details saved successfully");
 	}
 
 	public function saveTransferDataEdit()
@@ -2707,6 +2705,7 @@ class Query extends CI_Controller
 			// 'excursion_name_PVT' => $_POST['excursion'][1],
 			'excursion_name_SIC' => isset($_POST['excursion_name_SIC']) ? $_POST['excursion_name_SIC'] : NULL,
 			'excursion_name_PVT' => isset($_POST['excursion_name_PVT']) ? $_POST['excursion_name_PVT'] : NULL,
+			'excursion_name_TKT' => isset($_POST['excursion_name_TKT']) ? $_POST['excursion_name_TKT'] : NULL,
 
 			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
 			'buildPackageExclusions' => $_POST['buildPackageExclusions'],

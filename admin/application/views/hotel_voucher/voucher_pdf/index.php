@@ -268,7 +268,7 @@
             <tbody>
                 <tr>
                     <td style="border: 2px solid #000;width: 125px;"><?php print_r($hotel_confirmation[0]->guest_name) ?></td>
-                    <td style="border: 2px solid #000;width: 125px;"><?php echo $guest->b2bfirstName." ".$guest->b2blastName ?></td>
+                    <td style="border: 2px solid #000;width: 125px;"><?php echo $guest->b2bcompanyName ?></td>
                     <td style="border: 2px solid #000;width: 125px;"><?php echo $guest->b2bEmail ?></td>
                     <td style="border: 2px solid #000;width: 125px;"><?php echo $guest->b2bmobileNumber ?></td>
                 </tr>

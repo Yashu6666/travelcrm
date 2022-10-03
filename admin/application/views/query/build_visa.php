@@ -146,10 +146,9 @@
                <div>
                 <select data-mdl-for="sample2" class="form-control"
                 value=""  tabIndex="-1" id="visa_category_drop_down" name="visa_category_drop_down">
-                <option value="">Select Category</option>
+                <option value="30_days_tourist">30 Days Tourist</option>
                 <option value="48_hrs">48 hrs Transit</option>
                 <option value="96_hrs">96 hrs Transit</option>
-                <option value="30_days_tourist">30 Days Tourist</option>
                 <option value="90_days_single">90 Days Single entry</option>
                 <option value="90_days_multi">90 Days Muti Entry</option>
                  </select>

@@ -283,10 +283,10 @@
       <div class="col-md-8">
 
         <select required class="form-control children" id="bed" name="bed">
+          <option value="Double Bed">Double Bed</option>
          <option value="Twin Bed">Twin Bed</option>
          <option value="King Bed">King Bed</option>
          <option value="Queen Bed">Queen Bed</option>
-         <option value="Double Bed">Double Bed</option>
          <option value="Single Bed">Single Bed</option>
          <option value="Sofa Bed">Sofa Bed</option>
          <option value="Standard Bed">Standard Bed</option>
@@ -313,10 +313,12 @@
 
       <select required class="form-control children" name="bedtype" id="bedtype">
        <option value="">Select Bed Type</option>
+       <option value="Twin Bed">Twin Bed</option>
        <option value="Extra Bed">Extra Bed</option>
        <option value="Mattres">Mattres</option>
        <option value="Cot">Cot</option>
        <option value="Sofa cum Bed">Sofa cum Bed</option>
+       <option value="Not Applicable">Not Applicable</option>
      </select>
 
      <script>

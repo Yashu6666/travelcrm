@@ -527,8 +527,11 @@
        <option <?php echo $edit->bedtype =="Extra Bed" ? "Selected":"";?> value="Extra Bed">Extra Bed</option>
        <option  <?php echo $edit->bedtype =="Mattres" ?"Selected":"";?> value="Mattres">Mattres</option>
        <option  <?php echo $edit->bedtype =="Cot" ? "Selected":"";?> value="Cot">Cot</option>
+       <option  <?php echo $edit->bedtype =="Twin Bed" ? "Selected":"";?> value="Twin Bed">Twin Bed</option>
+       <option  <?php echo $edit->bedtype =="Not Applicable" ? "Selected":"";?> value="Not Applicable">Not Applicable</option>
        <option  <?php echo $edit->bedtype =="Sofa cum Bed" ? "Selected": "";?> value="Sofa cum Bed">Sofa cum Bed</option>
-     </select>
+     
+      </select>
 
      <script>
       $('.children option[value=]').attr('selected', 'selected');

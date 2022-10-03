@@ -231,6 +231,7 @@ textarea{
         }
 
     </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
    
 </head>
 
@@ -297,7 +298,7 @@ textarea{
       
         <div class=" second">
             <div class=" bg-primary ">
-                <h3 class="text-light" style="padding: 7px;">Excursions</h3>                
+                <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-place-of-worship"></i>  Excursions</h3>                
             </div>
             <div>
                  <div class="head">
@@ -305,8 +306,9 @@ textarea{
                 </div>
                 <?php foreach($proposalDetails['excursion_name_SIC'] as $key => $val) : ?>
 
-                <img src="<?php echo base_url();?>public/image/4.jpg" alt="">
+               <ul><li>
                 <h5><?php echo $val ?></h5><br/>
+                </li></ul>
                 <?php endforeach ?>
             </div>
             <div>
@@ -314,10 +316,23 @@ textarea{
                     <h5 class="text-light" style="padding: 7px;"> PVT</h5>
                 </div>
                 <?php foreach($proposalDetails['excursion_name_PVT'] as $keys => $vals) : ?>
-                <img src="<?php echo base_url();?>public/image/4.jpg" alt="">
+               <ul><li>
                 <h5><?php echo $vals ?></h5><br/>
+                </li></ul>
                 <?php endforeach ?>
-            </div>           
+            </div>     
+            
+            <div>
+                 <div class="head">
+                    <h5 class="text-light" style="padding: 7px;"> TKT</h5>
+                </div>
+                <?php foreach($proposalDetails['excursion_name_TKT'] as $keys => $vals) : ?>
+               <ul><li>
+                <h5><?php echo $vals ?></h5><br/>
+                </li></ul>
+                <?php endforeach ?>
+            </div>     
+
         </div>
 
         <br/><br/>

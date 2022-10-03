@@ -230,6 +230,7 @@ textarea{
         }
 
     </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
    
 </head>
 
@@ -293,7 +294,7 @@ textarea{
        
         <div class=" second">
             <div class=" bg-primary ">
-                <h3 class="text-light" style="padding: 7px;">Meals Details</h3>                
+                <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-bowl-rice"></i> Meals Details</h3>                
             </div>
             <div>
             <table class="table table-bordered">

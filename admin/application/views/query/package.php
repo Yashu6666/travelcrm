@@ -443,10 +443,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                     <div class="col">
                                                         <label for="">No. of Room</label><br/>
                                                         
-                                                        <input type="text" readonly id="room_txt_data" class="package_inputs w-50" value="0 Room (0 Adults, 0 Children )">
+                                                        <input type="text" readonly id="room_txt_data" class="package_inputs" value="0 Room (0 Adults, 0 Children )">
                                                         
-                                                        <div class="form-group row w-50 mx-auto" id="select_no_of_rooms" style="display: none;">
-                                                           <div class="form-group row">
+                                                        <div class="border-1 form-group mx-auto rounded-lg row" id="select_no_of_rooms" style="display: none;">
+                                                           <div class="form-group row mr-5">
                                                             <div class="col d-flex mt-2">
                                                             <label class="col-form-label text-nowrap mx-2">No. of Room</label>
                                                             <select name="rooms" id="no_of_rooms" required class="w-100 form-control">
@@ -461,10 +461,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                         </select>
                                                             </div>
                                                         </div>
+
+                                                        <div class="form-group row mx-auto" id="no_of_room_for" style="display: none;">
+                                                        </div>
+                                                        
                                                     </div>
 
-                                                        <div class="form-group row w-50 mx-auto" id="no_of_room_for" style="display: none;">
-                                                        </div>
+                                                       
                                                     </div>
                                                         
                                                     <input type="hidden" name="adult" id="adult_total_count">
@@ -1353,6 +1356,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 <script>
 
+$(document).mouseup(function(e) 
+{
+    var container = $("#select_no_of_rooms");
+
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+        container.hide();
+    }
+});
+
     function showRoomData(no_room) {
         var adult_pax_count = 0;
         $(".adult_count").each(function() {
@@ -1405,7 +1418,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     $("#room_txt_data").click(function() {
-        $("#select_no_of_rooms").attr('style', 'display:block');
+        $("#select_no_of_rooms").attr('style', 'display:block;border: 1px solid;');
     });
 
      $("#no_of_rooms").change(function() {

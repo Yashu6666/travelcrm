@@ -126,7 +126,7 @@
             <tbody>
                 <tr>
                     <td><?php print_r($hotel_confirmation[0]->guest_name) ?></td>
-                    <td><?php echo $guest->b2bfirstName." ".$guest->b2blastName ?></td>
+                    <td><?php echo $guest->b2bcompanyName ?></td>
                     <td><?php echo $guest->b2bEmail ?></td>
                     <td><?php echo $guest->b2bmobileNumber ?></td>
                 </tr>

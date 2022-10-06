@@ -99,7 +99,7 @@
                               </div>
 
                               <div class="row form-group mb-3">
-                                <label class="col-md-12 control-label text-left"><b>Vehicle Price</b></label>
+                                <label class="col-md-12 control-label text-left"><b>Vehicle Rate</b></label>
                                 <div class="col-md-12">
                                   <input id="inputTag2" class="form-control form-control-lg" type="text" name="vehicle_price" data-role="tagsinput">
                                 </div>
@@ -115,9 +115,9 @@
                                     <tbody>
                                       <tr bgcolor="#efefef" style="text-align:center;font-weight:bold">
                                         <td width="80"></td>
-                                        <td width="100">Adults</td>
-                                        <td width="100">Child</td>
-                                        <td width="100">Infant</td>
+                                        <td width="100"><i class="fa fa-male" aria-hidden="true"></i> Adults</td>
+                                        <td width="100"><i class="fa-solid fa-child"></i> Child</td>
+                                        <td width="100"><i class="fa-solid fa-baby"></i> Infant</td>
                                       </tr>
                                       <!-- <tr bgcolor="#ffffff" style="text-align:center">
                                         <td>Quantity</td>
@@ -129,7 +129,7 @@
                                             readonly="" size="" value=""></td>
                                       </tr> -->
                                       <tr bgcolor="#ffffff" style="text-align:center">
-                                        <td><b>Ticket Price</b></td>
+                                        <td><b>Ticket Rate</b></td>
                                         <td><input type="text" class="form-control input-sm adult" name="adultprice"
                                             size="" value=""></td>
                                         <td><input type="text" class="form-control input-sm child" 
@@ -167,7 +167,8 @@
 
                               <!-- Address and Map -->
                               <div class="panel panel-default">
-                                <div class="panel-heading"><strong> Address </strong></div>
+                                <div class="panel-heading"><strong> City </strong></div>
+                                <!-- <div class="panel-heading"><strong> Address </strong></div> -->
                                 <div class="well well-sm" style="margin-bottom: 0px;">
                                   <div class="col-md-12 form-horizontal">
                                     <table class="table">
@@ -177,7 +178,7 @@
                                           <td>
                                             <input type="text" class="form-control Places pac-target-input"
                                             
-                                              name="tourmapaddress" value="" placeholder="Enter Address"
+                                              name="tourmapaddress" value="" placeholder="Enter City"
                                               autocomplete="off">
                                           </td>
                                         </tr>
@@ -267,8 +268,8 @@
 
                           <div class="row form-group mb-3">
                             <label class="col-md-4 control-label text-left text-nowrap"><b>Tour Time Hrs</b></label>
-                            <div class="col-md-8">
-                              <input  type="text" class="form-control" name="tour_time" value="">
+                            <div class="col-md-8 tour_validity">
+                              <input  type="time" class="form-control" name="tour_time" value="">
                             </div>
                           </div>
 
@@ -346,10 +347,15 @@
                           <div class="panel-footer">
                          
                             <div class="col-lg-12 p-t-20 text-center">
+                            <a href="<?php echo base_url();?>excursion/view_excursion">
+                          <button type="button" class="new_btn px-5" style="border: none;">
+                              Close
+                          </button>
+                          </a>
                               <input type="submit" 
                                 class="new_btn px-5"></button>
                             </div>
-                          </div>
+                          </div> 
                         </div>
                       </div>
                     </div>
@@ -613,3 +619,10 @@ $("#pvttab").show();
       $('.timepicker').clockface();
     });
   </script>                                  
+
+  <style>
+    
+    .tour_validity input[type=time]::-webkit-datetime-edit-ampm-field {
+      display: none;
+      }
+  </style>

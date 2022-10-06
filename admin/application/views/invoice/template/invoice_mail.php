@@ -206,12 +206,12 @@
                           </thead>
                             <tr>
                               <td><?php echo $printInvoice->invoiceCategory;?></td>
-                              <td><?php echo $printInvoice->invoiceRate;?></td>
+                              <td><?php echo ceil($printInvoice->invoiceRate);?></td>
                               <td><?php echo $printInvoice->invoiceQty;?></td>
-                              <td><?php echo $printInvoice->invoiceSubtotal;?></td>
-                              <td><?php echo $printInvoice->invoiceVat;?></td>
+                              <td><?php echo ceil($printInvoice->invoiceSubtotal);?></td>
+                              <td><?php echo ceil($printInvoice->invoiceVat);?></td>
                               <td><?php echo $printInvoice->invoiceVatChoice;?></td>
-                              <td><?php echo $printInvoice->finalTotalInvoice;?></td>
+                              <td><?php echo ceil($printInvoice->finalTotalInvoice);?></td>
                             </tr>
 
                             <tr>

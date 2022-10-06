@@ -237,7 +237,8 @@
             background: #d9a927 !important;
         }
     </style>
-
+	<link href="<?php echo base_url();?>public/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -306,14 +307,14 @@
     <?php foreach($proposalDetails['hotelName'] as $key => $val) : ?>
         <div class=" second">
             <div class=" bg-primary ">
-                <h3 class="text-light" style="padding: 7px;">Hotel</h3>
+                <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-hotel"></i> Hotel</h3>
                 <div class="head">
                     <h5 class="text-light" style="padding: 7px;"><?php print_r($proposalDetails['hotels'][$key]->hotelname) ?> - No of Nights <?php echo $proposalDetails['noOfNights'][$key] ?> </h5>
                 </div>
             </div>
             <div>
-                <!-- <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> --> -->
-                <h5><b>Hotel Name : </b> <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></h5>
+                
+                <h5> <b>Hotel Name : </b> <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></h5>
                 <b>Room Type : </b> <?php echo $proposalDetails['roomType'][$key] ?>
             </div>
         </div>
@@ -342,20 +343,26 @@
         </div> -->
 
         <br /><br />
-        <?php if(isset($proposalDetails['excursion_name_SIC']) || isset($proposalDetails['excursion_name_PVT'])  ) : ?>
+        <?php if(isset($proposalDetails['excursion_name_SIC']) || isset($proposalDetails['excursion_name_PVT']) || isset($proposalDetails['excursion_name_TKT'])  ) : ?>
         <div class=" second">
             <div class=" bg-primary ">
-                <h3 class="text-light" style="padding: 7px;">Sightseeing</h3>
+                <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-place-of-worship"></i> Sightseeing</h3>
             </div>
             <div>
             <?php if(isset($proposalDetails['excursion_name_SIC'])) : ?>
             <div class="head">
                     <h5 class="text-light" style="padding: 7px;"> SIC </h5>
+                   
                 </div>
+
             <?php foreach($proposalDetails['excursion_name_SIC'] as $keys => $vals) : ?>
                 <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
-                <h5><?php echo $vals ?></h5><br/>
+            <ul><li>
+                <h5><?php echo $vals ?></h5>
+            </li></ul>
+
             <?php endforeach ?>
+
             </div>
             <div>
             <?php endif ?>
@@ -366,16 +373,34 @@
                 </div>
             <?php foreach($proposalDetails['excursion_name_PVT'] as $keyss => $valss) : ?>
                 <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
+            <ul><li>
                 <h5><?php echo $valss ?></h5>
+                </li></ul>
+
             <?php endforeach ?>
             </div>
+            <?php endif ?>
+
+            <div>
+            <?php if(isset($proposalDetails['excursion_name_TKT'])) : ?>
+            <div class="head">
+                    <h5 class="text-light" style="padding: 7px;"> TKT </h5>
+                </div>
+            <?php foreach($proposalDetails['excursion_name_TKT'] as $keys => $vals) : ?>
+                <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
+            <ul><li>
+                <h5><?php echo $vals ?></h5><br/>
+            </li></ul>
+            <?php endforeach ?>
+            </div>
+
         <?php endif ?>
         </div>
         <?php endif ?>
         <br /><br />
         <div class=" second">
             <div class=" bg-primary ">
-                <h3 class="text-light" style="padding: 7px;">Transfer</h3>
+                <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-car"></i> Transfer</h3>
             </div>
             <div>
                 <table class="table table-bordered">
@@ -392,9 +417,13 @@
 
                     <tbody>
                         <tr align="center">
+                        <?php
+                                $date = new DateTime($proposalDetails['in_transfer_date'][$key]);
+                                $date_trans = $date->format('d-M-Y');
+                                ?>
                             <!-- <td><b>Per PAX</b></td> -->
                             <td>Internal Transfer</td>
-                            <td> <?php echo $proposalDetails['in_transfer_date'][$key] ?></td>
+                            <td> <?php echo $date_trans ?></td>
                             <td> <?php echo $proposalDetails['in_transfer_pickup'][$key] ?></td>
                             <td> <?php echo $proposalDetails['in_transfer_dropoff'][$key] ?></td>
 
@@ -408,9 +437,13 @@
                     <!-- ?php if($proposalDetails['pp_transfer_pickup'] != 'Pickup') : ?> -->
                     <tbody>
                         <tr align="center">
+                        <?php
+                                $date = new DateTime($proposalDetails['pp_transfer_date'][$key]);
+                                $date_pp = $date->format('d-M-Y');
+                                ?>
                             <!-- <td><b>Per PAX</b></td> -->
                             <td>Point to Point Transfer</td>
-                            <td> <?php echo $proposalDetails['pp_transfer_date'][$key] ?></td>
+                            <td> <?php echo $date_pp ?></td>
                             <td> <?php echo $proposalDetails['pp_transfer_pickup'][$key] ?></td>
                             <td> <?php echo $proposalDetails['pp_transfer_dropoff'][$key] ?></td>
 
@@ -796,7 +829,7 @@
                                 $check_in = $date->format('d-M-Y');
                                 $check_out = $date2->format('d-M-Y');
                                 ?>
-                                <div class="mt-2"> <b>Cheak In/Out</b> : <?php echo $check_in ?>/<?php echo $check_out ?></div>
+                                <div class="mt-2"> <b>Check In/Out</b> : <?php echo $check_in ?>/<?php echo $check_out ?></div>
                                 <div class="mt-2"> <b>Destinations</b> : <?php echo $buildpackage->goingTo ?>, <?php echo $buildpackage->goingFrom ?></div>
                             </div>
                             <!-- <div class="col">

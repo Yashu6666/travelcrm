@@ -758,11 +758,18 @@
                             <section id="" class="col-md-12 mt-4">
                                 <label>Excursion Name</label>
                                 <!-- <select required multiple="" id="excursion_name"  name="excursion[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" > -->
-                                <select id="excursion_name"  required  name="excursion"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                <!-- <select id="excursion_name"  required  name="excursion"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                        <?php foreach($excursion_data as $value){ ?>
+                                            <option value="<?php echo $value ?>"><?php echo $value ?></option>
+                                        <?php } ?>
+                                </select> -->
+
+                                <select  required   name="excursion[]" id='excursion_name' multiple class="js-example-basic-multiple2 w-100 bg-white form-control form-control-lg">
                                         <?php foreach($excursion_data as $value){ ?>
                                             <option value="<?php echo $value ?>"><?php echo $value ?></option>
                                         <?php } ?>
                                 </select>
+                                
                             </section>
                         
                        <section id="" class="col-md-12 mt-4">
@@ -793,7 +800,6 @@
                         <div class="ls-group-input">
                             <button type="button" class="new_btn px-3"  id="searchExcursionButton" aria-hidden="true"> Submit </button>
                         </div>
-                        <!-- <span id="norecords" style="color: red;"></span> -->
                     </section>
                 </section>
                    
@@ -925,3 +931,12 @@
 
   }  
 </script>
+<!-- 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-multiple').select2();
+    });
+</script> -->

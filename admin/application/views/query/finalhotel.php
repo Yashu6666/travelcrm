@@ -232,7 +232,7 @@ textarea{
         }
 
     </style>
-   
+	<link href="<?php echo base_url();?>public/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -314,7 +314,7 @@ textarea{
     <?php foreach($proposalDetails['hotel_name'] as $key => $val) : ?>
         <div class=" second">
             <div class=" bg-primary ">
-                <h3 class="text-light" style="padding: 7px;">Hotel</h3>
+                <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-hotel"></i> Hotel</h3>
                 <div class="head">
                     <h5 class="text-light" style="padding: 7px;"><?php print_r($proposalDetails['hotels'][$key]->hotelname) ?> - No of Nights <?php echo $proposalDetails['nights'][$key] ?> </h5>
                 </div>

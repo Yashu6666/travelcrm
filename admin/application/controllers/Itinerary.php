@@ -82,17 +82,18 @@ class Itinerary extends CI_Controller {
 
 	public function searchDetails(){
 		$query_id=$_POST['query_id'];
-		// print_r($query_id);
+		// print_r($query_id);exit;
 		$hotel = $this->db->where('query_id',$query_id)->get('query_hotel')->result();
 		// print_r($hotel);
-		$data['data_conf'] = $this->db->where('query_id',$query_id)->get('hotel_voucher_confirmation')->row();
-
+		$data['data_conf'] = $this->db->where('query_id',(int)$query_id)->get('hotel_voucher_confirmation')->row();
+		// print_r($data['data_conf']);exit;
 		
 		$data['hotel_city'] = explode(',',$hotel[0]->hotel_city);
 		$data['hotel_name'] = explode(',',$hotel[0]->hotel_name);
 		$data['room_type'] = explode(',',$hotel[0]->room_type);
 		$data['category'] = explode(',',$hotel[0]->category);
 
+		$data['hotel_name'] = array_unique($data['hotel_name']);
 		// $transfer = $this->db->get_where('query_transfer', array('query_id' => $query_id))->row();
 		$transfer_types = [];
 		$transfer_pickup = [];

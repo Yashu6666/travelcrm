@@ -94,9 +94,9 @@
                                     <tbody>
                                       <tr bgcolor="#efefef" style="text-align:center;font-weight:bold">
                                         <td width="80"></td>
-                                        <td width="120">Adults</td>
-                                        <td width="90">Child</td>
-                                        <td width="100">Infant</td>
+                                        <td width="100"><i class="fa fa-male" aria-hidden="true"></i> Adults</td>
+                                        <td width="100"><i class="fa-solid fa-child"></i> Child</td>
+                                        <td width="100"><i class="fa-solid fa-baby"></i> Infant</td>
                                       </tr>
                                       <!-- <tr bgcolor="#ffffff" style="text-align:center">
                                         <td>Quantity</td>
@@ -108,7 +108,7 @@
                                             readonly="" size="" value="<?php echo $edit->maxinfant;?>"></td>
                                       </tr> -->
                                       <tr bgcolor="#ffffff" style="text-align:center">
-                                        <td>Price</td>
+                                        <td>Ticket Rate</td>
                                         <td><input type="text" class="form-control input-sm adult" name="adultprice"
                                             size="" value="<?php echo $edit->adultprice;?>"></td>
                                         <td><input type="text" class="form-control input-sm child" 
@@ -146,7 +146,7 @@
 
                               <!-- Address and Map -->
                               <div class="panel panel-default">
-                                <div class="panel-heading"><strong> Address</strong></div>
+                                <div class="panel-heading"><strong> City</strong></div>
                                 <div class="well well-sm" style="margin-bottom: 0px;">
                                   <div class="col-md-12 form-horizontal">
                                     <table class="table">
@@ -246,8 +246,8 @@
 
                           <div class="row form-group mb-3">
                             <label class="col-md-4 control-label text-left text-nowrap"><b>Tour Time Hrs</b></label>
-                            <div class="col-md-8">
-                              <input  type="text" class="form-control" name="tour_time" value="<?php echo $edit->tour_time ?>">
+                            <div class="col-md-8 tour_validity">
+                              <input  type="time" class="form-control" name="tour_time" value="<?php echo $edit->tour_time ?>">
                             </div>
                           </div>
 
@@ -261,7 +261,7 @@
                           </div> 
 
                           <div class="row form-group mb-3">
-                            <label class="col-md-4 control-label text-left"><b>Vehicle Price</b></label>
+                            <label class="col-md-4 control-label text-left"><b>Vehicle Rate</b></label>
                             <div class="col-md-8">
                               <input  type="text" class="form-control"  value="<?php echo $edit->vehicle_price;?>"  name="vehicle_price">
                             </div>
@@ -342,6 +342,11 @@
                           <div class="panel-footer">
                          
                             <div class="col-lg-12 p-t-20 text-center">
+                            <a href="<?php echo base_url();?>excursion/view_excursion">
+            <button type="button" class="new_btn px-5" style="border: none;">
+                Close
+            </button>
+            </a>
                               <input type="submit" 
                                 class="new_btn px-5" value="Update"></button>
                             </div>
@@ -616,3 +621,10 @@ $("#pvttab").show();
       $('.timepicker').clockface();
     });
   </script>                                  
+
+<style>
+    
+    .tour_validity input[type=time]::-webkit-datetime-edit-ampm-field {
+      display: none;
+      }
+  </style>

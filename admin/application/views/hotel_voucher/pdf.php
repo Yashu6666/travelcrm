@@ -46,7 +46,7 @@
     <th>Hotel Name</th>
     <th style="white-space: nowrap;"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?> 
         <?php if(isset($hotel_details[$key]->hotelstars)) : ?>	
-	    <?php echo str_repeat("⭐",$hotel_details[$key]->hotelstars); ?>
+	    <?php echo str_repeat("*",$hotel_details[$key]->hotelstars); ?>
 	    <?php endif ?>
     </th>
     <th>Confirmation Number</th>
@@ -126,7 +126,7 @@
             <tbody>
                 <tr>
                     <td><?php print_r($hotel_confirmation[0]->guest_name) ?></td>
-                    <td><?php echo $guest->b2bfirstName." ".$guest->b2blastName ?></td>
+                    <td><?php echo $guest->b2bcompanyName ?></td>
                     <td><?php echo $guest->b2bEmail ?></td>
                     <td><?php echo $guest->b2bmobileNumber ?></td>
                 </tr>

@@ -140,7 +140,7 @@ $(document).ready(function() {
                               </td>
                               <td class="center">
                                   <div class="col-md-10">
-                                      <input name="netrate_extra[${index}][]" type="text" class="form-control " value="">
+                                      <input name="netrate_extra[${index}][]" id="netrate_extra[${index}]" onchange="changeTripleVal('double[${index}]','netrate_extra[${index}]','triple[${index}]')" type="text" class="form-control " value="">
                                   </div><br>
                                   <div class="col-md-10">
                                       
@@ -148,7 +148,7 @@ $(document).ready(function() {
                               </td>
                               <td class="center">
                                   <div class="col-md-10">
-                                      <input name="netrate_extra[${index}][]" type="text" class="form-control " value="">
+                                      <input name="netrate_extra[${index}][]" id="netrate_extra_bb[${index}]" onchange="changeTripleVal('double_bb[${index}]','netrate_extra_bb[${index}]','triple_bb[${index}]')" type="text" class="form-control " value="">
                                   </div><br>
                                   <div class="col-md-10">
                                       
@@ -156,7 +156,7 @@ $(document).ready(function() {
                               </td>
                               <td class="center">
                                   <div class="col-md-10">
-                                      <input name="netrate_extra[${index}][]" type="text" class="form-control " value="">
+                                      <input name="netrate_extra[${index}][]" id="netrate_extra_hb[${index}]" onchange="changeTripleVal('double_hb[${index}]','netrate_extra_hb[${index}]','triple_hb[${index}]')" type="text" class="form-control " value="">
                                   </div><br>
                                   <div class="col-md-10">
                                       
@@ -164,7 +164,7 @@ $(document).ready(function() {
                               </td>
                               <td class="center">
                                   <div class="col-md-10">
-                                      <input name="netrate_extra[${index}][]" type="text" class="form-control " value="">
+                                      <input name="netrate_extra[${index}][]" id="netrate_extra_fb[${index}]" onchange="changeTripleVal('double_fb[${index}]','netrate_extra_fb[${index}]','triple_fb[${index}]')" type="text" class="form-control " value="">
                                   </div><br>
                                   <div class="col-md-10">
                                       
@@ -173,6 +173,52 @@ $(document).ready(function() {
                           </tr>
               
               
+                <tr class="odd gradeX">
+                    <td class="center"><b> Triple</b> </td>
+                    <td class="center"> </td>
+                    <td class="center">
+                        <div class="col-md-12">
+                            <p>Net Rate</p>
+                        </div><br>
+                        <div class="col-md-10">
+                            TDF
+                        </div>
+                    </td>
+                    <td class="center">
+                        <div class="col-md-10">
+                            <input name="netrate_triple[${index}][]" id="triple[${index}]" type="text" class="netrate_triple form-control " value="">
+                        </div><br>
+                        <div class="col-md-10">
+                            <input name="vat_triple[${index}][]" id='tripleVat[${index}]' type="text" class="vat_triple form-control " value="">
+                        </div>
+                    </td>
+                    <td class="center">
+                        <div class="col-md-10">
+                            <input name="netrate_triple[${index}][]" id="triple_bb[${index}]" type="text" class="netrate_triple form-control " value="">
+                        </div><br>
+                        <div class="col-md-10">
+                            <input name="vat_triple[${index}][]" id='tripleVat_bb[${index}]'  type="text" class="vat_triple form-control " value="">
+                        </div>
+                    </td>
+                    <td class="center">
+                        <div class="col-md-10">
+                            <input name="netrate_triple[${index}][]" id="triple_hb[${index}]" type="text" class="netrate_triple form-control " value="">
+                        </div><br>
+                        <div class="col-md-10">
+                            <input name="vat_triple[${index}][]" id='tripleVat_hb[${index}]'  type="text" class="vat_triple form-control " value="">
+                        </div>
+                    </td>
+                    <td class="center">
+                        <div class="col-md-10">
+                            <input name="netrate_triple[${index}][]" id="triple_fb[${index}]" type="text" class="netrate_triple form-control " value="">
+                        </div><br>
+                        <div class="col-md-10">
+                            <input name="vat_triple[${index}][]" id='tripleVat_fb[${index}]'  type="text" class="vat_triple form-control " value="">
+                        </div>
+                    </td>
+    
+                </tr>
+
                           <tr class="odd gradeX">
                               <td class="center" title="Extra Bed (Child)"><b>  Ex CWB </b> </td>
                               <td class="center"> </td>
@@ -257,4 +303,11 @@ $(document).ready(function() {
     console.log(sing_val);
     console.log(doub_val);
     doub_val.value = sing_val;
+  }
+
+  function changeTripleVal(double,extra,triple){
+    let double_val = document.getElementById(double).value;
+    let extra_val = document.getElementById(extra).value;
+    let triple_val = document.getElementById(triple);
+    triple_val.value = parseInt(double_val) + parseInt(extra_val);
   }

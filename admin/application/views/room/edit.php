@@ -218,6 +218,17 @@
       </div>
 
     <div class="tab-pane wow fadeIn animated in" id="CONTACT">
+    <div class="d-flex">
+          <div class=" form-group mb-3  col-6">
+          <label class=" control-label text-left">Valid From</label>
+          <input required class="form-control" type="date" placeholder="Extra beds" name="from_date" id="from_date" value="<?php echo $edit->from_date;?>">
+          </div>
+          <div class=" form-group mb-3 col-6">
+          <label class=" control-label text-left">Valid Till</label>
+          <input required class="form-control" type="Date" placeholder="Beds charges" name="to_date" id="to_date" value="<?php echo $edit->to_date;?>">
+        </div>
+      </div>
+
           <div class="table-scrollable">
   <table class="table table-hover table-checkable order-column full-width"
                               id="example4">
@@ -358,6 +369,50 @@
                                 </div>  -->
                               </td>  
                               </tr>
+
+                              <?php $net_d = explode(',', $edit->netrate_triple);
+                            		$vat_d = explode(',', $edit->vat_triple);
+                            				//echo '<pre>';print_r($vat);exit; ?>
+                              <tr class="odd gradeX">
+                                <td class="center"><b> Triple</b> </td>
+                             
+                                <td class="center"> </td>
+                                <td class="center">  
+                                  <div class="col-md-12">
+                                <p>Net Rate</p>
+                                </div><br>
+                                <div class="col-md-10">
+                               TDF
+                                </div> </td>
+                                <td class="center">  <div class="col-md-10">
+                                  <input name="netrate_triple[]" id="triple1" type="text"  class="form-control " value="<?php echo (!empty($net_d[0])?$net_d[0]:''); ?>">
+                                </div><br>
+                                <div class="col-md-10">
+                                  <input name="vat_triple[]" type="text" id="tripleV1" class="form-control " value="<?php echo (!empty($vat_d[0])?$vat_d[0]:''); ?>">
+                                </div> </td>
+                                <td class="center"> <div class="col-md-10">
+                                  <input name="netrate_triple[]" id="triple2" type="text"  class="form-control " value="<?php echo (!empty($net_d[1])?$net_d[1]:''); ?>">
+                                </div><br>
+                                <div class="col-md-10">
+                                  <input name="vat_triple[]" type="text" id="tripleV2"  class="form-control " value="<?php echo (!empty($vat_d[1])?$vat_d[1]:''); ?>">
+                                </div> </td>
+                                <td class="center"> <div class="col-md-10">
+                                  <input name="netrate_triple[]" id="triple3" type="text"  class="form-control " value="<?php echo (!empty($net_d[2])?$net_d[2]:''); ?>">
+                                </div><br>
+                                <div class="col-md-10">
+                                  <input name="vat_triple[]" id="tripleV3" type="text"  class="form-control " value="<?php echo (!empty($vat_d[2])?$vat_d[2]:''); ?>">
+                                </div> </td>
+                                <td class="center"> <div class="col-md-10">
+                                  <input name="netrate_triple[]" id="triple4" type="text"  class="form-control " value="<?php echo (!empty($net_d[3])?$net_d[3]:''); ?>">
+                                </div><br>
+                                <div class="col-md-10">
+                                  <input name="vat_triple[]" id="tripleV4" type="text"  class="form-control " value="<?php echo (!empty($vat_d[3])?$vat_d[3]:''); ?>">
+                                </div> </td>
+
+                              </tr>
+
+
+
                               <?php $net_ec= explode(',', $edit->netrate_extra_child);
                             		$vat_ec = explode(',', $edit->vat_extra_child);
                             				//echo '<pre>';print_r($vat);exit; ?>
@@ -495,8 +550,20 @@
       <div class="col-md-8">
 
         <select required class="form-control children" name="bed">
-         <option value="Twin Bed"  <?php echo $edit->bed=="Twin Bed"?"selected":"";?>>Twin Bed</option>
-         <option value="King Bed" <?php echo $edit->bed=="King Bed"?"selected":"";?>>King Bed</option>
+         <!-- <option value="Twin Bed"  <?php echo $edit->bed=="TwinBed"?"selected":"";?>>Twin Bed</option> -->
+
+         <option value="Double Bed" <?php echo $edit->bed=="Double Bed"?"selected":"";?> >Double Bed</option>
+         <option value="Single Bed" <?php echo $edit->bed=="Single Bed"?"selected":"";?> >Single Bed</option>
+         <option value="Triple Bed" <?php echo $edit->bed=="Triple Bed"?"selected":"";?> >Triple Bed</option>
+         <option value="Quad Bed" <?php echo $edit->bed=="Quad Bed"?"selected":"";?> >Quad Bed</option>
+         <option value="Twin Bed" <?php echo $edit->bed=="Twin Bed"?"selected":"";?> >Twin Bed</option>
+         <option value="One Bed Room" <?php echo $edit->bed=="One Bed Room"?"selected":"";?> >One Bed Room</option>
+         <option value="Two Bed Room" <?php echo $edit->bed=="Two Bed Room"?"selected":"";?> >Two Bed Room</option>
+         <option value="Three Bed Room" <?php echo $edit->bed=="Three Bed Room"?"selected":"";?> >Three Bed Room</option>
+         <option value="Four Bed Room" <?php echo $edit->bed=="Four Bed Room"?"selected":"";?> >Four Bed Room</option>
+         <option value="Five Bed Room" <?php echo $edit->bed=="Five Bed Room"?"selected":"";?> >Five Bed Room</option>
+         
+         <!-- <option value="King Bed" <?php echo $edit->bed=="King Bed"?"selected":"";?>>King Bed</option>
          <option value="Queen Bed" <?php echo $edit->bed=="Queen Bed"?"selected":"";?>>Queen Bed</option>
          <option value="Double Bed" <?php echo $edit->bed=="Double Bed"?"selected":"";?>>Double Bed</option>
          <option value="Single Bed" <?php echo $edit->bed=="Single Bed"?"selected":"";?>>Single Bed</option>
@@ -508,7 +575,7 @@
          <option value="Bunk Bed" <?php echo $edit->bed=="Bunk Bed"?"selected":"";?>>Bunk Bed</option>
          <option value="Futton" <?php echo $edit->bed=="Futton"?"selected":"";?>>Futton</option>
          <option value="Murphy" <?php echo $edit->bed=="Murphy"?"selected":"";?>>Murphy</option>
-         <option value="Tatami Mats" <?php echo $edit->bed=="Tatami Mats"?"selected":"";?>>Tatami Mats</option>
+         <option value="Tatami Mats" <?php echo $edit->bed=="Tatami Mats"?"selected":"";?>>Tatami Mats</option> -->
 
        </select>
 
@@ -527,8 +594,11 @@
        <option <?php echo $edit->bedtype =="Extra Bed" ? "Selected":"";?> value="Extra Bed">Extra Bed</option>
        <option  <?php echo $edit->bedtype =="Mattres" ?"Selected":"";?> value="Mattres">Mattres</option>
        <option  <?php echo $edit->bedtype =="Cot" ? "Selected":"";?> value="Cot">Cot</option>
+       <option  <?php echo $edit->bedtype =="Twin Bed" ? "Selected":"";?> value="Twin Bed">Twin Bed</option>
+       <option  <?php echo $edit->bedtype =="Not Applicable" ? "Selected":"";?> value="Not Applicable">Not Applicable</option>
        <option  <?php echo $edit->bedtype =="Sofa cum Bed" ? "Selected": "";?> value="Sofa cum Bed">Sofa cum Bed</option>
-     </select>
+     
+      </select>
 
      <script>
       $('.children option[value=]').attr('selected', 'selected');
@@ -655,7 +725,7 @@
   </div>
 </div>
 <hr>
-<div class="row form-group mb-3">
+<!-- <div class="row form-group mb-3">
   <label class="col-md-4 control-label text-left">Valid From</label>
   <div class="col-md-8">
     <input required class="form-control" type="date" placeholder="Extra beds" id="from_date" name="from_date" value="<?php echo $edit->from_date;?>">
@@ -666,7 +736,7 @@
   <div class="col-md-8">
     <input required class="form-control" type="Date" placeholder="Beds charges" id="to_date" name="to_date" value="<?php echo $edit->to_date;?>">
   </div>
-</div>
+</div> -->
 <div class="row form-group mb-3">
   <label class="col-md-4 control-label text-left">Currency</label>
   <div class="col-md-8">

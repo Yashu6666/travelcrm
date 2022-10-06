@@ -265,7 +265,7 @@
 															 <div class="col-md-10">
 															
 																<select required multiple=""  name="hotelpayments[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-																	<option value="bank_transfer">
+																	<option value="bank_transfer" selected>
 																	  Bank Transfer              
 																   </option>   
 																  <option value="Skrill">
@@ -314,7 +314,7 @@
 														  <div class="row form-group mb-3">
 															 <label class="col-md-12 control-label text-left">Hotel's Website</label>
 															 <div class="col-md-12">
-																<input required name="hotelwebsite" type="text" placeholder="Website" class="form-control " value="">
+																<input required name="hotelwebsite" type="text" placeholder="Website" class="form-control " value="www">
 															 </div>
 														  </div>
 
@@ -368,9 +368,9 @@
 														  <label class="col-md-4 control-label1 text-left">Category</label>
 														  <div class="col-md-8">
 															 <select required data-placeholder="Select" class="form-select1" name="hotelstars">
+																 <option value="3"> 3</option>
 																<option value="1"> 1</option>
 																<option value="2"> 2</option>
-																<option value="3"> 3</option>
 																<option value="4"> 4</option>
 																<option value="5"> 5</option>
 															 </select>

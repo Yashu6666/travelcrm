@@ -47,12 +47,35 @@ $this->session->unset_userdata ( 'success' );
 											</div>
 								<div class="card-body ">
 									<div class="row p-b-20">
-										<div class="col-md-6 col-sm-6 col-6">
+										<div class="col-12">
+										<div class="d-flex justify-content-between">
+
 											<div class="btn-group">
 												<a href="<?php echo site_url();?>excursion/add_excursion" id="addRow" class="new_btn px-3">
 													Add New <i class="fa fa-plus"></i>
 												</a>
 											</div>
+											<div class="d-flex">
+											<div class="btn-group">
+												<a href="<?php echo site_url();?>excursion/view_excursion/SIC"  id="addRow" class="new_btn ml-0">
+													SIC
+												</a>
+											</div>
+
+											<div class="btn-group">
+												<a href="<?php echo site_url();?>excursion/view_excursion/PVT"  id="addRow" class="new_btn ml-2">
+													PVT
+												</a>
+											</div>
+
+											<div class="btn-group">
+												<a href="<?php echo site_url();?>excursion/view_excursion/TKT"  id="addRow" class="new_btn ml-2">
+													TKT
+												</a>
+											</div>
+											</div>
+											</div>
+
 										</div>
 										<div class="col-md-6 col-sm-6 col-6">
 											

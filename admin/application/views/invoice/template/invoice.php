@@ -135,26 +135,26 @@ th {
                 } 
 
             } 
-            $rettxt = $rettxt." DIRHAMS";
+            $rettxt = $rettxt;
 
-            if($decnum > 0){ 
-                $rettxt .= " and "; 
-                if($decnum < 20){ 
-                    $rettxt .= $decones[$decnum]; 
-                }
-                elseif($decnum < 100){ 
-                    $rettxt .= $tens[substr($decnum,0,1)]; 
-                    $rettxt .= " ".$ones[substr($decnum,1,1)]; 
-                }
-                $rettxt = $rettxt.""; 
-            } 
+            // if($decnum > 0){ 
+            //     $rettxt .= " and "; 
+            //     if($decnum < 20){ 
+            //         $rettxt .= $decones[$decnum]; 
+            //     }
+            //     elseif($decnum < 100){ 
+            //         $rettxt .= $tens[substr($decnum,0,1)]; 
+            //         $rettxt .= " ".$ones[substr($decnum,1,1)]; 
+            //     }
+            //     $rettxt = $rettxt.""; 
+            // } 
             return $rettxt;} 
     ?>
     <div class="invoice_container">
         <div class="in_details">
           <table class="item_table" border="1" cellspacing="0">
             <tr>
-              <th rowspan="3" colspan="2">
+              <th rowspan="2" colspan="2">
                 <img src="<?php echo base_url();?>public/image/proposalLogo.png" style="width: 250px !important;" alt="" />
               </th>
               <th colspan="2">
@@ -162,20 +162,29 @@ th {
               </th>
             </tr>
             <tr>
-              <th>INVOICE ID/REFF. NO.</th>
-              <td><?php echo $invoice->invoiceNumber ?></td>
+              <th>QUERY ID/REFF. NO.</th>
+              <td><?php echo $invoice->query_id ?></td>
             </tr>
 
             <tr>
-              <th>CHECK IN DATE :</th>
-              <td><?php echo $query_package->specificDate ?></td>
-            </tr>
-            <tr>
+              <?php $date = new DateTime($invoice->invoiceDate);
+              $invoiceDate = $date->format('d-m-Y'); ?>
               <th>INVOICE DATE :</th>
-              <td><?php echo $invoice->invoiceDate ?></td>
+              <td><?php echo $invoiceDate ?></td>
+              <?php $date = new DateTime($query_package->specificDate);
+              $specificDate = $date->format('d-m-Y'); ?>
+              <th>CHECK IN DATE :</th>
+              <td><?php echo $specificDate ?></td>
+          </tr>
+          <tr>
+              <th>HOTEL CONFIRMATION NUMBER :</th>
+              <td><?php echo $query_hotel_voucher->confirmation_id ?></td>
+
               <th>CHECK OUT DATE :</th>
-              <td><?php echo $query_package->noDaysFrom ?></td>
-            </tr>
+              <?php $date = new DateTime($query_package->noDaysFrom);
+              $checkout = $date->format('d-m-Y'); ?>
+              <td><?php echo $checkout ?></td>
+          </tr>
             <tr>
               <th>CUSTOMER/AGENT NAME :</th>
               <td><?php echo $b2b->b2bcompanyName ?></td>
@@ -186,7 +195,11 @@ th {
               <th>CUSTOMER/AGENT ADDRESS :</th>
               <td><?php echo isset($b2b->b2bCompanyAddress) ? $b2b->b2bCompanyAddress : "" ?></td>
               <th>HOTEL NAME :</th>
-              <td><?php echo isset($query_hotel->hotel_name) ? $query_hotel->hotel_name : "" ?></td>
+              <td><?php echo isset($query_hotel->hotel_name) ? $query_hotel->hotel_name : "" ?>
+              <?php if(isset($query_package->hotelPrefrence)) : ?>	
+                <?php echo str_repeat("*",$query_package->hotelPrefrence); ?>
+              <?php endif ?>
+            </td>
             </tr>
             <tr>
               <th>MODES OF PAYMENT :</th>
@@ -206,34 +219,34 @@ th {
             <th>Services</th>
             <th>Qty</th>
             <th>Rate</th>
-            <th>AMT (ADE)</th>
+            <th>AMT</th>
           </tr>
           <tr>
             <td class="tx_cntr"><?php echo $query_package->type ?></td>
             <td class="tx_cntr"><?php echo $invoice->invoiceQty ?></td>
-            <td class="tx_cntr"><?php echo $invoice->finalTotalInvoice - $invoice->bank_charges ?></td>
-            <td class="tx_cntr"><?php echo $invoice->finalTotalInvoice - $invoice->bank_charges ?></td>
+            <td class="tx_cntr"><?php echo ceil($invoice->finalTotalInvoice - $invoice->bank_charges) ?></td>
+            <td class="tx_cntr"><?php echo ceil($invoice->finalTotalInvoice - $invoice->bank_charges) ?></td>
           </tr>
           <tr>
             <th></th>
             <th colspan="2">Sub Total</th>
-            <th ><?php echo $invoice->finalTotalInvoice - $invoice->bank_charges ?></th>
+            <th ><?php echo ceil($invoice->finalTotalInvoice - $invoice->bank_charges) ?></th>
           </tr>
           <tr>
             <th></th>
 
             <th colspan="2">BANK TRANSFER CHARGES</th>
-            <th><?php echo $invoice->bank_charges ?></th>
+            <th><?php echo ceil($invoice->bank_charges) ?></th>
           </tr>
           <tr>
             <th></th>
             <th colspan="2">ADVANCE RECEIVED</th>
-            <th><?php echo $invoice->finalAdvance ?></th>
+            <th><?php echo ceil($invoice->finalAdvance) ?></th>
           </tr>
           <tr>
             <th colspan="2">ABOVE COST INCLUSIVE OF 5% VAT</th>
             <th >TOTAL</th>
-            <th ><?php echo $invoice->finalTotalInvoice?></th>
+            <th ><?php echo ceil( $invoice->finalTotalInvoice)?></th>
           </tr>
          
           <tr>

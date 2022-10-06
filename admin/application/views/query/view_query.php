@@ -66,11 +66,6 @@
 													In Progress (<?php echo $inprogress ?>)
 												</a>
 											</div>
-											<!-- <div class="btn-group">
-												<a href="<?php echo site_url();?>query/view_query/recent" id="addRow" class="new_btn">
-													Recent (<?php echo $recent ?>)
-												</a>
-											</div> -->
 											<div class="btn-group">
 												<a href="<?php echo site_url();?>query/view_query/Confirmed"  id="addRow" class="new_btn" style="background: #08cd04;">
 													Confirmed (<?php echo $confirmed ?>)
@@ -218,43 +213,51 @@
 				<div class="modal-body">
 				
 					<div>
-						<input type="radio" name="followUptype"  value="call" checked="">Call
+						<input type="radio" name="followUptype"  value="payment">Payment
+						<input type="radio" name="followUptype"  value="call">Call
 						<input type="radio"  name="followUptype" value="meeting">Meeting
 						<input type="radio" name="followUptype" value="todo">To Do
-						<input type="radio" name="followUptype" value="none">None
-						<p class="inline">Remind in <b>15mins</b></p>
+						<input type="radio" name="followUptype" value="visa">Visa
 					</div>
-					<div class="mt-2">
+					<!-- <div class="mt-2">
 						<input type="radio" name="followUpday" checked=""  value="today">Today
 						<input type="radio" name="followUpday" value="tomorrow">Tomorrow
 						<input type="radio" name="followUpday" value="2days">in 2 Days
 						<input type="radio" name="followUpday" value="3days">in 3 Days
-					</div>
+					</div> -->
 
 
 					<div class="row mb-3 mt-2 ">
 
-						<div class="col">
+						<!-- <div class="col">
 							<label class="input">
 								<input class="input__field input-time" type="time" placeholder="" name="followUpTime" autocomplete="off" />
 								<span class="input__label">Time</span>
 							</label>
 							
-						</div>
+						</div> -->
+
+					<div class="col">
+                    	<label for="">Date</label>
+                        <input class="input__field" type="date" name="followUpday" placeholder=" " autocomplete="off" />
+                    </div>
+
+                    <div class="col">
+                    	<label for="">Time</label>
+                        <input class="input__field" name="followUpTime" type="time" placeholder=" " autocomplete="off" />
+                    </div>
+
 					</div>
 
 					<div class="row  mb-3">
 						<div class="col">
-							<label class="input mr-3">
-								<input class="input__field fname" type="text" placeholder="" id="followUpCustomerName" autocomplete="off" name="followUpCustomer" />
-								<span class="input__label">Customer</span>
-							</label><br>
-							
+							<label for="">Customer</label>
+							<input class="input__field" type="text" id="followUpCustomerName" autocomplete="off" name="followUpCustomer" />
+						</div>
 
-						</div> 
-						<div class="col ml-5">
-							<label for="" class="ml-5" >Assign To</label>
-							<select name="followUpAssignTo" id="" class="Travelers-select-visa-tour ml-3">
+						<div class="col">
+							<label for="">Assign To</label>
+							<select name="followUpAssignTo" id="" class="input__field">
 								<?php foreach($assign_to as $val) :?>
 								<?php if($val == $this->session->userdata('admin_username')) :?>
 									<option selected value="<?php echo $val ?>"><?php echo $val ?></option>
@@ -264,17 +267,22 @@
 								<?php endforeach ?>
 							</select>
 						</div>
-						
+
 					</div>
 					<input type="hidden" id="followUpQueryId" name="followUpQueryId">
 					<div class="row  ">
-						<div class="col">
+						<!-- <div class="col">
 							<label class="input mr-5" >
 								<input class="input__field fname" type="text" placeholder="" autocomplete="off" name="followUpdetails" />
 								<span class="input__label">Details</span>
 							</label><br>
 							
 
+						</div> -->
+
+						<div class="col">
+							<label for="">Details</label>
+							<textarea class="input__field" type="text" name="followUpdetails" autocomplete="off" name="followUpCustomer"></textarea>
 						</div>
 						
 					</div>
@@ -299,10 +307,9 @@
 						<span class="input__label">Remarks</span>
 
 					</label><br>
-					<div class="d-flex justify-content-between mr-5 ml-5 mt-2" style="margin-bottom:10px !important">
-
-						<a href="#" class="query-modal-btn mr-3 close-modal-btn">Cancel</a>
-						<button type="submit" class="query-modal-btn">Submit</button>
+					<div class="d-flex float-right mr-5 ml-5 mt-2" style="margin-bottom:10px !important">
+						<a href="#" class="new_btn mr-3">Cancel</a>
+						<button type="submit" class="new_btn mx-3">Submit</button>
 					</div>
 					</form>
 				</div>

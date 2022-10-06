@@ -368,9 +368,9 @@
 														  <label class="col-md-4 control-label1 text-left">Category</label>
 														  <div class="col-md-8">
 															 <select required data-placeholder="Select" class="form-select1" name="hotelstars">
+																 <option value="3"> 3</option>
 																<option value="1"> 1</option>
 																<option value="2"> 2</option>
-																<option value="3"> 3</option>
 																<option value="4"> 4</option>
 																<option value="5"> 5</option>
 															 </select>

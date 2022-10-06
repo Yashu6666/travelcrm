@@ -80,6 +80,15 @@ class Room extends CI_Controller {
 		if (isset($_POST['netrate_extra_wo'])) {
 			$netrate_extra_wo = $_POST['netrate_extra_wo'];
 		}
+
+		if (isset($_POST['netrate_triple'])) {
+			$netrate_triple = $_POST['netrate_triple'];
+		}
+
+		if (isset($_POST['vat_triple'])) {
+			$vat_triple = $_POST['vat_triple'];
+		}
+
 		try {
 			foreach ($roomtype as $key => $val) {
 				$insert_data = array(
@@ -92,6 +101,10 @@ class Room extends CI_Controller {
 					'netrate_extra' => implode(',', $netrate_extra[$key]),
 					'vat' => implode(',', $vat[$key]),
 					'vat_double' => implode(',', $vat_double[$key]),
+
+					'netrate_triple' => implode(',', $netrate_triple[$key]),
+					'vat_triple' => implode(',', $vat_triple[$key]),
+
 					// 'vat_extra' => implode(',', $vat_extra[$key]),
 					'netrate_extra_child' => implode(',', $netrate_extra_child[$key]),
 					// 'vat_extra_child' => implode(',', $vat_extra_child[$key]),
@@ -178,6 +191,16 @@ class Room extends CI_Controller {
 		if (isset($netrate_extra_wo_post)) {
 			$netrate_extra_wo = $netrate_extra_wo_post;
 		}
+
+		if (isset($_POST['netrate_triple'])) {
+			$netrate_triple = $_POST['netrate_triple'];
+		}
+
+		if (isset($_POST['vat_triple'])) {
+			$vat_triple = $_POST['vat_triple'];
+		}
+
+
 		try {
 			foreach ($roomtype as $key => $val) {
 				$insert_data = array(
@@ -193,6 +216,10 @@ class Room extends CI_Controller {
 					'netrate_extra' => implode(',', $netrate_extra[$key]),
 					'vat' => implode(',', $vat[$key]),
 					'vat_double' => implode(',', $vat_double[$key]),
+
+					'netrate_triple' => implode(',', $netrate_triple[$key]),
+					'vat_triple' => implode(',', $vat_triple[$key]),
+					
 					// 'vat_extra' => implode(',', $vat_extra[$key]),
 					'netrate_extra_child' => implode(',', $netrate_extra_child[$key]),
 					// 'vat_extra_child' => implode(',', $vat_extra_child[$key]),
@@ -277,6 +304,13 @@ class Room extends CI_Controller {
 			$netrate_extra_child = implode(',', $_POST['netrate_extra_child']);
 		}
 
+		if (isset($_POST['netrate_triple'])) {
+			$netrate_triple =  implode(',', $_POST['netrate_triple']);
+		}
+
+		if (isset($_POST['vat_triple'])) {
+			$vat_triple =  implode(',', $_POST['vat_triple']);
+		}
 		
 		
 
@@ -294,6 +328,9 @@ class Room extends CI_Controller {
 						
 						'promo_code' => $this->input->post('promo_code'),
 						'created_by' => $this->session->userdata('admin_id'),
+
+						'netrate_triple' => $netrate_triple,
+						'vat_triple' => $vat_triple,
 
 						'netrate_extra_child'=>$netrate_extra_child,
 						// 'vat_extra_child'=>$vat_extra_child,

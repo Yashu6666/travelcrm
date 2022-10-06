@@ -172,7 +172,7 @@
                 <th  style="border: 2px solid #000;width: 125px;">Hotel Name</th>
                 <th  style="border: 2px solid #000;width: 125px;white-space: nowrap;"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?>
                     <?php if(isset($hotel_details[$key]->hotelstars)) : ?>	
-                        <?php echo str_repeat("⭐",$hotel_details[$key]->hotelstars); ?>
+                        <?php echo str_repeat("*",$hotel_details[$key]->hotelstars); ?>
                     <?php endif ?>
                 </th>
                 <th  style="border: 2px solid #000;width: 125px;">Confirmation Number</th>

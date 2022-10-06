@@ -111,6 +111,8 @@
                   <!-- <button type="button" class="new_btn px-5 ml-0 add-rows"  id="addrowsbtn">Add row</button> -->
                   
               </div>
+              <?php $room_cnt = $buildpackage->room ; $room_loop = 0; foreach(explode(",",$hotel_query[0]->hotel_id) as $key => $val) : ?>
+
               <thead>
                <tr>
                 <th></th>
@@ -125,7 +127,6 @@
             
              
               <tbody>
-              <?php $room_cnt = $buildpackage->room ; $room_loop = 0; foreach(explode(",",$hotel_query[0]->hotel_id) as $key => $val) : ?>
                   <tr id="hotelRow<?php $key?>">
                   <td class="text-nowrap">Room <?php 
                   if($room_loop >= $room_cnt){
@@ -187,7 +188,6 @@
                   </td>
                         </tbody>
                         <tbody>
-              <?php if($key < 1) : ?>
               <thead>
                <tr>
                 <th></th>
@@ -200,7 +200,6 @@
 
                </tr>
               </thead>
-              <?php endif ?>
                   <td></td>
                   <td>
               <select class="form-control get_room_group_type" id="buildRoomGroupType" name="buildRoomGroupType[]" required>
@@ -224,7 +223,8 @@
                   </td> 
                   <td>
                   <select class="form-control room_sharing_types" id="room_sharing_types" name="room_sharing_types[]">
-                    <option <?php echo explode(",",$hotel_query[0]->sharing_type)[$key] == "double_sharing" ? "selected" : "" ?> value="double_sharing" >Double Sharing</option>                                             
+                    <option <?php echo explode(",",$hotel_query[0]->sharing_type)[$key] == "double_sharing" ? "selected" : "" ?> value="double_sharing" >Double Sharing</option>  
+                    <option <?php echo explode(",",$hotel_query[0]->sharing_type)[$key] == "single_sharing" ? "selected" : "" ?> value="single_sharing">Single Sharing</option>
                         <option <?php echo explode(",",$hotel_query[0]->sharing_type)[$key] == "triple_sharing" ? "selected" : "" ?> value ="triple_sharing">Triple Sharing</option> 
                     </select>
                     </td>
@@ -243,8 +243,8 @@
 
                   </tr>
 
-              <?php endforeach ?>
               </tbody>
+              <?php endforeach ?>
               
              </table>
              <div style="float:right;">
@@ -2302,6 +2302,17 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
 
                               template += `
 <tbody id="faqs-row${faqs_row}${room_no}">
+<thead>
+  <tr>
+  <th></th>
+  <th>Hotel City</th>
+  <th>Check In</th>
+  <th>Nights</th>
+  <th>Category</th>
+  <th>Hotel Name</th>
+  <th>Room Type </th>
+  </tr>
+</thead>
 <tbody>
 <tr>
    <td>Room${room_no}</td>
@@ -2343,6 +2354,16 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
    <td><select class="form-control get-hotel-room get_buildRoomType" name="buildRoomType[]" id="buildRoomType${faqs_row}${room_no}" required></select></td>
    </tr>
 
+   <thead>
+    <tr>
+    <th></th>
+    <th>Group Type </th>
+    <th>Bed Type </th>
+    <th>Meal Type </th>
+    <th>Sharing Type </th>
+    <th colspan="2">Extra </th>
+    </tr>
+  </thead>
    <tr>
    <td></td>
    <td>
@@ -2368,6 +2389,7 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
    <td>
       <select class="form-control room_sharing_types" id="room_sharing_types${faqs_row}${room_no}" name="room_sharing_types[]" >
          <option value="double_sharing" >Double Sharing</option>
+         <option value="single_sharing">Single Sharing</option>
          <option value ="triple_sharing">Triple Sharing</option>
       </select>
    </td>

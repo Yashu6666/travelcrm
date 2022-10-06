@@ -64,7 +64,7 @@ class Todo extends CI_Controller {
 			$dt = date('Y-m-d', strtotime($Date. ' + 3 days'));
 		}
 		$data = array('Todotype'=>$this->input->post('Todotype'),
-						'Tododay'=>$dt,
+						'Tododay'=>$this->input->post('Tododay'),
 						'TodoTime'=>$this->input->post('TodoTime'),
 						'TodoCustomer'=>$this->input->post('TodoCustomer'),
 						'TodoAssigned'=>$this->input->post('TodoAssigned'),

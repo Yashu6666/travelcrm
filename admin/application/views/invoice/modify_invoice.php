@@ -522,10 +522,10 @@ $(window).click(function() {
         var vatAmount_S = (parseInt(totalInvoice_S) * parseInt(vat_percentage_S) / 100);
         var bank_charges = $('#bank_charges').val();
 
-        var vatTotalAmount_s = (totalInvoice_S + vatAmount_S);
-        $('#invoiceTaxableAmount').val(totalInvoice_S);
-        $('#invoiceVatAmount').val(vatAmount_S);
-        $('#invoiceTotalAmount').val(vatTotalAmount_s);
+        var vatTotalAmount_s = Math.ceil(totalInvoice_S + vatAmount_S);
+        $('#invoiceTaxableAmount').val(Math.ceil(totalInvoice_S));
+        $('#invoiceVatAmount').val(Math.ceil(vatAmount_S));
+        $('#invoiceTotalAmount').val(Math.ceil(vatTotalAmount_s));
         // $("#finalBalance").val(parseInt(vatTotalAmount_s) - parseInt(finalAdvance_S));
         $(".invoiceRate,.invoicePax").change(function(){
         var qty = $('.invoicePax').map(function(){  return  this.value }).get()
@@ -554,20 +554,20 @@ $(window).click(function() {
     var sum_invoicePax = 0;
 
     $(".invoiceRate").each(function(){
-        sum_invoiceRate += parseFloat($(this).val());
+        sum_invoiceRate += Math.ceil(parseFloat($(this).val()));
     });
     $(".invoicePax").each(function(){
-        sum_invoicePax += parseFloat($(this).val());
+        sum_invoicePax += Math.ceil(parseFloat($(this).val()));
     });
 
     $(".invoiceTaxableAmount").each(function(){
-        invoiceTaxableAmount += parseFloat($(this).val());
+        invoiceTaxableAmount += Math.ceil(parseFloat($(this).val()));
     });
     $(".invoiceVatAmount").each(function(){
-        sum_vatAmount += parseFloat($(this).val());
+        sum_vatAmount += Math.ceil(parseFloat($(this).val()));
     });
     $(".invoiceTotalAmount").each(function(){
-        sum_finalTotalAmount += parseFloat($(this).val());
+        sum_finalTotalAmount += Math.ceil(parseFloat($(this).val()));
     });
 
 

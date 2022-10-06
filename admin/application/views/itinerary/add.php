@@ -597,7 +597,7 @@ $this
                                                 <th class="small smallbold">No of Pax</th>
                                                 <th class="small smallbold">CheckIn Date</th>
                                                 <th class="small smallbold">CheckOut Date</th>
-                                                <th class="small smallbold"></th>
+                                                <th class="small smallbold">Action</th>
                                               </tr>
                                             </thead>
                                             <tbody id="hotelbody<?php echo $i ?>"></tbody>
@@ -632,7 +632,8 @@ $this
                                                   <th class="small smallbold">Pickup</th>
                                                   <th class="small smallbold">Drop Off</th>
                                                   <th class="small smallbold">Route Name</th>
-                                                  <th class="sma ll smallbold" style="visibility: hidden;">Transport</th>
+                                                  <th class="small smallbold">Action</th>
+                                                  <!-- <th class="sma ll smallbold" style="visibility: hidden;">Transport</th> -->
 
                                                   <!-- <th class="small smallbold"></th> -->
                                                 </tr>
@@ -777,6 +778,7 @@ $this
                                                     <th class="small smallbold">Adult</th>
                                                     <th class="small smallbold">Child</th>
                                                     <th class="small smallbold">Infant</th>
+                                                    <th class="small smallbold">Action</th>
                                                   </tr>
                                                 </thead>
                                                 <tbody id="excursion_body<?php echo $i ?>"></tbody>
@@ -1137,7 +1139,7 @@ $this
     var modalid = $("#modal_hotel").val();
     var Hotel_name_city_select = $("#Hotel_name_city_select").val();
     var selectStarRating = $("#selectStarRating").val();
-    var buildHotelName = $("#buildHotelName").text();
+    var buildHotelName = $("#buildHotelName").val();
 
     var buildRoomType = $("#buildRoomType").val();
 
@@ -1147,15 +1149,16 @@ $this
     // var modalid= $("#modalid").val();
 
 
-
+    let hotel_row_count = 0;
     var tabl = "";
-    tabl = '<tr class="odd gradeX">';
+    tabl = '<tr class="odd gradeX" id="hotel_row'+hotel_row_count+'">';
     tabl += '<td class="hotel_data_hotelname' + modalid + '" >' + buildHotelName + '</td>';
     tabl += '<td class="hotel_data_hotelstar' + modalid + '">' + selectStarRating + '</td>';
     tabl += '<td class="hotel_data_roomtype' + modalid + '">' + buildRoomType + '</td>';
     tabl += '<td class="hotel_data_pax' + modalid + '">' + <?php echo ((int)$package->adult + (int)$package->child) ?> + '</td>';
     tabl += '<td class="hotel_data_checkin' + modalid + '">' + check_in_date + '</td>';
     tabl += '<td class="hotel_data_checkout' + modalid + '">' + check_out_date + '</td>';
+    tabl += '<td><button class="btn btn-danger btn-xs" onClick="$(\'#hotel_row' + hotel_row_count + '\').remove();" ><i class="fa fa-trash"></i></button> </td>';
 
     tabl += '</tr>';
     // $('#hotelbody').append(tabl);
@@ -1165,7 +1168,7 @@ $this
     // $('#allhotel').show();
 
 
-    $("#hotelresult_256346_2261" + modalid + " tbody#hotelbody" + modalid).empty().append(tabl);
+    $("#hotelresult_256346_2261" + modalid + " tbody#hotelbody" + modalid).append(tabl);
     // $("#hotelresult_256346_2261"+modalid+" tbody#hotelbody"+modalid).append(tabl);
 
 
@@ -1207,16 +1210,17 @@ $this
     var return_hours = $("#return_hours").val();
     var return_mins = $("#return_mins").val();
 
+    let transfer_row_count = 0;
 
     var transfer_body = "";
-    transfer_body = '<tr class="odd gradeX">';
+    transfer_body = '<tr class="odd gradeX" id="transfer_row'+transfer_row_count+'">';
     transfer_body += '<td class="transfer_data_type' + modalid + '">' + type + '</td>';
     transfer_body += '<td class="transfer_data_pax' + modalid + '">' + <?php echo ((int)$package->adult + (int)$package->child) ?> + '</td>';
     transfer_body += '<td class="transfer_data_fromdate' + modalid + '">' + transfer_from_date + '</td>';
     transfer_body += '<td class="transfer_data_pickup' + modalid + '">' + pickupinternal + '</td>';
     transfer_body += '<td class="transfer_data_dropoff' + modalid + '">' + dropoffinternal + '</td>';
     transfer_body += '<td class="transfer_data_routename' + modalid + '">' + route_nameinternal + '</td>';
-    transfer_body += '<td class="transfer_data_type' + modalid + '" style="visibility: hidden;">' + transfer + '</td>';
+    // transfer_body += '<td class="transfer_data_type' + modalid + '" style="visibility: hidden;">' + transfer + '</td>';
 
     transfer_body += '<td style="display:none" class="arrival_airline' + modalid + '">' + arrival_airline + '</td>';
     transfer_body += '<td style="display:none" class="arrival_flight' + modalid + '">' + arrival_flight + '</td>';
@@ -1227,13 +1231,14 @@ $this
     transfer_body += '<td style="display:none" class="return_flight' + modalid + '">' + return_flight + '</td>';
     transfer_body += '<td style="display:none" class="return_hours' + modalid + '">' + return_hours + '</td>';
     transfer_body += '<td style="display:none" class="return_mins' + modalid + '">' + return_mins + '</td>';
+    transfer_body += '<td><button class="btn btn-danger btn-xs" onClick="$(\'#transfer_row' + transfer_row_count + '\').remove();" ><i class="fa fa-trash"></i></button> </td>';
     transfer_body += '</tr>';
 
     // $('#transfer_body').append(transfer_body);
     // alert("hi");
 
     // alert(modalid);
-    $("#transfer_result_256346_2261" + modalid + " tbody#transfer_body" + modalid).empty().append(transfer_body);
+    $("#transfer_result_256346_2261" + modalid + " tbody#transfer_body" + modalid).append(transfer_body);
 
     $("#transferModal").modal('hide');
 
@@ -1262,8 +1267,9 @@ $this
     var meal_adult = $("#meal_adult").val();
     var meal_child = $("#meal_child").val();
 
+    let meals_row_count = 0;
     var meals_body = "";
-    meals_body = '<tr class="odd gradeX">';
+    meals_body = '<tr class="odd gradeX" id="meals_row'+meals_row_count+'">';
     // meals_body += '<td class="center">' + meals_date + '</td>';
     meals_body += '<td class="meals_transfer_type' + modalid + '" >' + meals_transfer_type + '</td>';
     meals_body += '<td class="meal_data_resturant_name' + modalid + '" >' + resturant_name + '</td>';
@@ -1272,12 +1278,13 @@ $this
     meals_body += '<td class="meal_data_type' + modalid + '">' + meal_type + '</td>';
     meals_body += '<td class="meal_data_adult' + modalid + '">' + meal_adult + '</td>';
     meals_body += '<td class="meal_data_child' + modalid + '">' + meal_child + '</td>';
+    meals_body += '<td><button class="btn btn-danger btn-xs" onClick="$(\'#meals_row' + meals_row_count + '\').remove();" ><i class="fa fa-trash"></i></button> </td>';
     meals_body += '</tr>';
 
     // $('#meals_body').append(meals_body);
 
 
-    $("#meals_result_256346_2261" + modalid + " tbody#meals_body" + modalid).empty().append(meals_body);
+    $("#meals_result_256346_2261" + modalid + " tbody#meals_body" + modalid).append(meals_body);
 
     $("#mealsModal").modal('hide');
 
@@ -1286,10 +1293,10 @@ $this
 
 
   // Excursion modal script start //
-
+  let excursion_row_count = 0;
   $('#searchExcursionButton').on("click", function() {
 
-
+    excursion_row_count += 1;
     var modalid = $("#modal_excursion").val();
     var excursion_type = $("#excursion_type").val();
     var excursion_name = $("#excursion_name").val();
@@ -1298,17 +1305,16 @@ $this
     var excursion_infant = $("#excursion_infant").val();
 
     var excursion_body = "";
-    excursion_body = '<tr class="odd gradeX">';
+    excursion_body = '<tr class="odd gradeX" id="excursion_row'+excursion_row_count+'">';
     excursion_body += '<td class="excursion_data_excursion_type' + modalid + '">' + excursion_type + '</td>';
     excursion_body += '<td class="excursion_data_excursion_name' + modalid + '">' + excursion_name + '</td>';
     excursion_body += '<td class="excursion_data_excursion_adult' + modalid + '">' + excursion_adult + '</td>';
     excursion_body += '<td class="excursion_data_excursion_child' + modalid + '">' + excursion_child + '</td>';
     excursion_body += '<td class="excursion_data_excursion_infant' + modalid + '">' + excursion_infant + '</td>';
-    excursion_body += '</tr>';
+    excursion_body += '<td class="excursion_data_excursion_infant' + modalid + '"><button class="btn btn-danger btn-xs" onClick="$(\'#excursion_row' + excursion_row_count + '\').remove();" ><i class="fa fa-trash"></i></button> </td>';
+    // excursion_body += '</tr>'; onClick="$(\'#excursion_row' + excursion_row_count + '\').remove();"   onclick=$(document.getElementById(excursion_row'+excursion_row_count+').remove())  onClick="$(\'#excursion_row' + excursion_row_count + '\').remove();"
 
-
-
-    $("#excursion_result_256346_2261" + modalid + " tbody#excursion_body" + modalid).empty().append(excursion_body);
+    $("#excursion_result_256346_2261" + modalid + " tbody#excursion_body" + modalid).append(excursion_body);
 
     $("#excursionModal").modal('hide');
 
@@ -1759,3 +1765,20 @@ $this
   //           });
   //        });
 </script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-multiple2').select2();
+    });
+</script>
+
+<style>
+  .select2-container--default {
+    width: 100% !important;
+  }
+</style>

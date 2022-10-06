@@ -84,7 +84,12 @@ class Invoice extends CI_Controller
 	{
 		$data['printInvoice'] = $this->db->where('id', $id)->get('invoice')->row();
 		$data['query_data'] = $this->db->where('id', $data['printInvoice']->query_id)->get('queries')->row();
-		// echo '<pre>';print_r($data);exit;
+		$data['invoice'] = $this->db->where('query_id', $data['printInvoice']->query_id)->get('invoice')->row();
+		$data['query_package'] = $this->db->where('queryId', $data['printInvoice']->query_id)->get('querypackage')->row();
+		$data['b2b'] = $this->db->where('query_id', $data['printInvoice']->query_id)->get('b2bcustomerquery')->row();
+		$data['query_hotel'] = $this->db->where('query_id', $data['printInvoice']->query_id)->get('query_hotel')->row();
+		$data['query_hotel_voucher'] = $this->db->where('query_id', $data['printInvoice']->query_id)->get('hotel_voucher_confirmation')->row();
+		
 		$this->load->view('invoice/invoice', $data);
 		// $html = $this->load->view('invoice/invoice',$data,TRUE);
 
@@ -138,6 +143,7 @@ class Invoice extends CI_Controller
 		$data['query_package'] = $this->db->where('queryId', $data['printInvoice']->query_id)->get('querypackage')->row();
 		$data['b2b'] = $this->db->where('query_id', $data['printInvoice']->query_id)->get('b2bcustomerquery')->row();
 		$data['query_hotel'] = $this->db->where('query_id', $data['printInvoice']->query_id)->get('query_hotel')->row();
+		$data['query_hotel_voucher'] = $this->db->where('query_id', $data['printInvoice']->query_id)->get('hotel_voucher_confirmation')->row();
 
 		$this->load->library('email');
 		$config = array(

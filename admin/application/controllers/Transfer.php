@@ -213,7 +213,7 @@ class Transfer extends CI_Controller {
 					'start_city' => $this->input->post('start_city'),
 					'dest_city' => $this->input->post('dest_city'),
 					'route_name' => $this->input->post('route_name'),
-					'cost_type' => $this->input->post('intervaltype'),
+					'cost_type'=> ($this->input->post('intervaltype') != null) ? $this->input->post('intervaltype') : "",
 
 					'seat_capacity' => $seat_capacity[$key],
 					'currency' => $currency[$key],
@@ -248,7 +248,7 @@ class Transfer extends CI_Controller {
 			'dest_city' => $this->input->post('dest_city'),
 			'route_name' => $this->input->post('route_name'),
 		
-			'cost_type'=> $this->input->post('intervaltype'),
+			'cost_type'=> ($this->input->post('intervaltype') != null) ? $this->input->post('intervaltype') : "",
 			'seat_capacity' => $this->input->post('seat_capacity'),
 			'currency' => $this->input->post('currency'),
 			'cost' => $this->input->post('cost'),

@@ -243,6 +243,16 @@
       </div>
 
       <div class="tab-pane wow fadeIn animated in" id="CONTACT">
+        <div class="d-flex">
+          <div class=" form-group mb-3  col-6">
+          <label class=" control-label text-left">Valid From</label>
+          <input required class="form-control" type="date" placeholder="Extra beds" name="from_date" id="from_date" value="">
+          </div>
+          <div class=" form-group mb-3 col-6">
+          <label class=" control-label text-left">Valid Till</label>
+          <input required class="form-control" type="Date" placeholder="Beds charges" name="to_date" id="to_date" value="">
+        </div>
+        </div>
      <div class="accordion" id="accordionMain">
         <p class="text-center">Please Select Room Type ! </p>
      </div>                   
@@ -283,11 +293,18 @@
       <div class="col-md-8">
 
         <select required class="form-control children" id="bed" name="bed">
-          <option value="Double Bed">Double Bed</option>
-         <option value="Twin Bed">Twin Bed</option>
-         <option value="King Bed">King Bed</option>
-         <option value="Queen Bed">Queen Bed</option>
+         <option value="Double Bed">Double Bed</option>
          <option value="Single Bed">Single Bed</option>
+         <option value="Triple Bed">Triple Bed</option>
+         <option value="Quad Bed">Quad Bed</option>
+         <option value="Twin Bed">Twin Bed</option>
+         <option value="One Bed Room">One Bed Room</option>
+         <option value="Two Bed Room">Two Bed Room</option>
+         <option value="Three Bed Room">Three Bed Room</option>
+         <option value="Four Bed Room">Four Bed Room</option>
+         <option value="Five Bed Room">Five Bed Room</option>
+
+         <!-- <option value="Queen Bed">Queen Bed</option>
          <option value="Sofa Bed">Sofa Bed</option>
          <option value="Standard Bed">Standard Bed</option>
          <option value="1 King Bed or 2 Twin Bed(s)">1 King Bed or 2 Twin Bed(s)</option>
@@ -296,8 +313,7 @@
          <option value="Bunk Bed">Bunk Bed</option>
          <option value="Futton">Futton</option>
          <option value="Murphy">Murphy</option>
-         <option value="Tatami Mats">Tatami Mats</option>
-
+         <option value="Tatami Mats">Tatami Mats</option> -->
        </select>
 
        <script>
@@ -465,7 +481,7 @@
   </div>
 </div>
 <hr>
-<div class="row form-group mb-3">
+<!-- <div class="row form-group mb-3">
   <label class="col-md-4 control-label text-left">Valid From</label>
   <div class="col-md-8">
     <input required class="form-control" type="date" placeholder="Extra beds" name="from_date" id="from_date" value="">
@@ -476,7 +492,7 @@
   <div class="col-md-8">
     <input required class="form-control" type="Date" placeholder="Beds charges" name="to_date" id="to_date" value="">
   </div>
-</div>
+</div> -->
 <div class="row form-group mb-3">
   <label class="col-md-4 control-label text-left">Currency</label>
   <div class="col-md-8">

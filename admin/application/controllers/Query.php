@@ -1450,6 +1450,155 @@ class Query extends CI_Controller
 
 		echo json_encode($meal_calculation_data);
 	}
+
+	public function getMealcalculationNew()
+	{
+		$rows_count = $this->input->post('total_rows');
+		$tableData = $this->input->post('data');
+		$datas =  array();
+		for ($x = 0; $x < $rows_count; $x++) {
+
+			$datas[$x]['resturants'] = $tableData[0]['resturants'][$x];
+			$datas[$x]['meals'] = $tableData[0]['meals'][$x];
+			$datas[$x]['meal_types'] = $tableData[0]['meal_types'][$x];
+			$datas[$x]['meal_adults'] = isset($tableData[0]['meal_adults'][$x]) ? $tableData[0]['meal_adults'][$x] : 0;
+			$datas[$x]['meal_childs'] = isset($tableData[0]['meal_childs'][$x]) ? $tableData[0]['meal_childs'][$x] : 0;
+			$datas[$x]['no_of_meals'] = isset($tableData[0]['no_of_meals'][$x]) ? $tableData[0]['no_of_meals'][$x] : 0;
+			$datas[$x]['resturants_name'] = isset($tableData[0]['resturants_name'][$x]) ? $tableData[0]['resturants_name'][$x] : "";
+			$datas[$x]['resturants_transfer'] = isset($tableData[0]['resturants_transfer'][$x]) ? $tableData[0]['resturants_transfer'][$x] : "";
+		}
+
+		$meal_calculation = array();
+		$meal_calculation_data = array();
+		$meal_calculation_data['adult_prices'] = 0;
+		$meal_calculation_data['child_prices'] = 0;
+		foreach ($datas as $k => $val) {
+			$this->db->select("*");
+			$this->db->from("meals");
+			$this->db->where('resturant_type', $val['resturants']);
+			$this->db->where('meal_name', $val['meals']);
+			$this->db->where('meal_type', $val['meal_types']);
+			$this->db->where('transfer', $val['resturants_transfer']);
+			$this->db->where('resturant_name', $val['resturants_name']);
+			$meal_calculation[] = $this->db->get()->result_array();
+
+			if (array_key_exists('0', $meal_calculation[$k])) {
+				$meal_calculation_data['adult_prices'] += ((int)($meal_calculation[$k][0]['adult_price']) * (($val['no_of_meals'] * $val['meal_adults'])));
+				$meal_calculation_data['child_prices'] += ((int)($meal_calculation[$k][0]['child_rate']) * (($val['no_of_meals'] * $val['meal_childs'])));
+			}
+		}
+
+		$query_id = $this->input->post('query_id');
+		$query_type = $this->input->post('query_type');
+
+		$meals_query_data = [
+			'query_id' =>  $query_id ,
+			'query_type' =>  $query_type ,
+			'transfer_type' =>  implode(',',$tableData[0]['resturants_transfer']),
+			'date' =>  implode(',',$tableData[0]['checkIn_date']),
+			'resturant_type' =>  implode(',',$tableData[0]['resturants']),
+			'resturant_name' =>  implode(',',$tableData[0]['resturants_name']),
+			'meal' =>  implode(',',$tableData[0]['meals']),
+			'meal_type' =>  implode(',',$tableData[0]['meal_types']),
+			'adult_pax' =>  implode(',',$tableData[0]['meal_adults']),
+			'child_pax' =>  implode(',',$tableData[0]['meal_childs']),
+			'no_of_meals' =>  implode(',',$tableData[0]['no_of_meals']),
+			'adult_price' => $meal_calculation_data['adult_prices'] ,
+			'child_price'  =>  $meal_calculation_data['child_prices'] ,
+			'created_by' =>   $this->session->userdata('admin_id'),
+		];
+
+		// ----------------------------------------- internal -------------------------------------------------
+
+		$pax_adult = $tableData[0]['pax_adult'];
+		$pax_child = $tableData[0]['pax_child'];
+		$pax_infants = $this->input->post('pax_infants');
+
+		$tableData = $this->input->post('data');
+
+		$priceperperson_internal = 0;
+
+		if(array_key_exists('internal_transfer_pickup', $tableData[0])) {
+
+		$person= $pax_adult + $pax_child;
+
+		foreach ($tableData[0]['internal_transfer_pickup'] as $key => $value) {
+			$pickup = $tableData[0]['internal_transfer_pickup'][$key];
+			$dropoff = $tableData[0]['internal_transfer_dropoff'][$key];
+
+			$dropoff_query = $this->db->like('start_city', $pickup)->where('dest_city', $dropoff)->where('seat_capacity >=', $person)->where('transport_type', 'oneway')->get('transfer_route')->result();
+
+			$price = $dropoff_query[0]->cost;
+			$priceperperson_internal += $price/$person;
+		}
+
+
+		// $internal_transfer_data = [
+		// 	'query_id' =>  $query_id ,
+		// 	'query_type' =>  $query_type ,
+		// 	'transfer_type' =>  'internal',
+		// 	'transfer_date' =>  implode(',',$tableData[0]['internal_transfer_date']),
+		// 	'pickup' =>  implode(',',$tableData[0]['internal_transfer_pickup']),
+		// 	'dropoff' =>  implode(',',$tableData[0]['internal_transfer_dropoff']),
+		// 	'transfer_route' =>  implode(',',$tableData[0]['internal_transfer_route']),
+		// 	'adult_pax' =>  $pax_adult,
+		// 	'child_pax' =>  $pax_child,
+		// 	'adult_price' => $priceperperson_internal,
+		// 	'child_price'  =>  $priceperperson_internal,
+		// 	'created_by' =>   $this->session->userdata('admin_id'),
+		// ];
+
+		}
+		// ----------------------------------------- return -------------------------------------------------
+		$priceperperson_return = 0;
+
+		if(array_key_exists('return_transfer_pickup', $tableData[0])) {
+
+			$person= $pax_adult + $pax_child;
+	
+			foreach ($tableData[0]['return_transfer_pickup'] as $key => $value) {
+				$pickup = $tableData[0]['return_transfer_pickup'][$key];
+				$dropoff = $tableData[0]['return_transfer_dropoff'][$key];
+	
+				$dropoff_query = $this->db->like('start_city', $pickup)->where('dest_city', $dropoff)->where('seat_capacity >=', $person)->where('transport_type', 'round')->get('transfer_route')->result();
+	
+				$price = $dropoff_query[0]->cost;
+				$priceperperson_return += $price/$person;
+			}
+	
+			// $return_transfer_data = [
+			// 	'query_id' =>  $query_id ,
+			// 	'query_type' =>  $query_type ,
+			// 	'transfer_type' =>  'return',
+			// 	'transfer_date' =>  implode(',',$tableData[0]['return_transfer_date']),
+			// 	'pickup' =>  implode(',',$tableData[0]['return_transfer_pickup']),
+			// 	'dropoff' =>  implode(',',$tableData[0]['return_transfer_dropoff']),
+			// 	'transfer_route' =>  implode(',',$tableData[0]['return_transfer_route']),
+			// 	'adult_pax' =>  $pax_adult,
+			// 	'child_pax' =>  $pax_child,
+			// 	'adult_price' => $priceperperson_return,
+			// 	'child_price'  =>  $priceperperson_return,
+			// 	'created_by' =>   $this->session->userdata('admin_id'),
+			// ];
+	
+
+			}
+			
+		$meal_calculation_data['adult_prices'] = $meal_calculation_data['adult_prices'] + ($priceperperson_internal * $pax_adult);
+		$meal_calculation_data['child_prices'] = $meal_calculation_data['child_prices'] + ($priceperperson_return * $pax_child );
+
+		$query = $this->db->where('query_id', $query_id)->get('query_meal');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $query_id);
+			$this->db->update('query_meal',$meals_query_data);
+		} else {
+			$this->db->insert('query_meal', $meals_query_data);
+		}
+
+		echo json_encode($meal_calculation_data);
+	}
+
+
 	// public function getMealcalculation(){
 
 	// 	 $res_name =  $this->input->post('res_name');
@@ -1937,6 +2086,66 @@ class Query extends CI_Controller
 
 		echo json_encode($total_pax_visa_price);
 	}
+
+
+	public function getOTBPrice()
+	{
+
+		$pax_adult = $this->input->post('pax_adult');
+		$pax_child = $this->input->post('pax_child');
+		$pax_infant = $this->input->post('pax_infant');
+		$query_id = $this->input->post('query_id');
+		$category = $this->input->post('category');
+		$query_type = $this->input->post('query_type');
+		
+		$this->db->select("*");
+		$this->db->from("visa");
+		$this->db->where('visa_category', $category);
+		$visa_calculation = $this->db->get()->result_array();
+
+		$total_pax_visa_price = array();
+		$per_pax_adult = 0;
+		$per_pax_child = 0;
+		$per_pax_infant = 0;
+		if ($pax_adult) {
+			$per_pax_adult = $visa_calculation[0]['adult'];
+		}
+		if ($pax_child) {
+			$per_pax_child = $visa_calculation[0]['child'];
+		}
+		if ($pax_infant) {
+			$per_pax_infant = $visa_calculation[0]['infant'];
+		}
+
+		$visa_data = [
+			'query_id' =>  $query_id ,
+			'query_type' =>  $query_type ,
+			'visa_category' => $category,
+			'adult_pax' =>  $pax_adult ,
+			'child_pax' =>   $pax_child,
+			'infant_pax' =>  $pax_infant ,
+			'adult_price' =>  $per_pax_adult * $pax_adult ,
+			'child_price'  =>  $per_pax_child * $pax_child ,
+			'infant_price' => $per_pax_infant * $pax_infant  ,
+			'created_by' =>   $this->session->userdata('admin_id'),
+		];
+
+
+		$query = $this->db->where('query_id', $query_id)->get('query_visa');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $query_id);
+			$this->db->update('query_visa',$visa_data);
+		} else {
+			$this->db->insert('query_visa', $visa_data);
+		}
+
+		$total_pax_visa_price['per_pax_adult_amt'] = $per_pax_adult * $pax_adult;
+		$total_pax_visa_price['per_pax_child_amt'] = $per_pax_child * $pax_child;
+		$total_pax_visa_price['per_pax_infant_amt'] =  $per_pax_infant * $pax_infant;
+
+		echo json_encode($total_pax_visa_price);
+	}
+
 
 	public function get_room_type()
 	{
@@ -3293,7 +3502,7 @@ class Query extends CI_Controller
 
 		$data = array(
 			'followUptype' => $this->input->post('followUptype'),
-			'followUpday' => $dt,
+			'followUpday' => $this->input->post('followUpday'),
 			'followUpTime' => $this->input->post('followUpTime'),
 			'followUpCustomer' => $this->input->post('followUpCustomer'),
 			'followUpAssignTo' => $this->input->post('followUpAssignTo'),

@@ -419,7 +419,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                 <div class="row mt-4 mr-3 ml-3 mt-3">
 
                                                 <div class="col">
-                                                        <label for="">Rating</label> <br />
+                                                        <label for="">Hotel Rating</label> <br />
                                                         <select style="padding: 0px;" class="package_inputs" id="rating" required name="hotelPrefrence[]">
                                                             <option value="">Select Rating</option>
                                                             <option value="1">⭐ 1</option>
@@ -445,11 +445,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                         
                                                         <input type="text" readonly id="room_txt_data" class="package_inputs" value="0 Room (0 Adults, 0 Children )">
                                                         
-                                                        <div class="border-1 form-group mx-auto rounded-lg row" id="select_no_of_rooms" style="display: none;">
-                                                           <div class="form-group row mr-5">
+                                                        <div class="border-1 form-group mx-auto rounded-lg row w-75" id="select_no_of_rooms" style="display: none;">
+                                                           <div class="form-group row">
                                                             <div class="col d-flex mt-2">
                                                             <label class="col-form-label text-nowrap mx-2">No. of Room</label>
-                                                            <select name="rooms" id="no_of_rooms" required class="w-100 form-control">
+                                                            <input type="number" name="rooms" id="no_of_rooms" required class=" form-control" />
+                                                            <!-- <select name="rooms" id="no_of_rooms" required class="w-100 form-control">
                                                             <option value="">Select Rooms</option>
                                                             <?php $i = 1;
                                                             while ($i <= 10) {
@@ -458,7 +459,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                             <?php $i++;
                                                             } ?>
 
-                                                        </select>
+                                                        </select> -->
                                                             </div>
                                                         </div>
 
@@ -1435,48 +1436,9 @@ $(document).mouseup(function(e)
                 <div class="form-group row">
                 <div class="col d-flex mt-2">
                 <label class="col-form-label text-nowrap mx-2">Room ${i}</label>
-                <select class="form-control mx-2 adult_count" onchange="showRoomData(${no_of_rooms})" name="adult_count[]" id="adult_count${i}">
-                        <option value="0">Select</option>
-                        <option value="1">1 adult</option>
-                        <option value="2">2 adult</option>
-                        <option value="3">3 adult</option>
-                        <option value="4">4 adult</option>
-                        <option value="5">5 adult</option>
-                        <option value="6">6 adult</option>
-                        <option value="7">7 adult</option>
-                        <option value="8">8 adult</option>
-                        <option value="9">9 adult</option>
-                        <option value="10">10 adult</option>
-                       
-                    </select>
-                    <select  class="form-control mx-1 child_count" name="child_count[]" onchange="childAgeDiv(child_ages_div${i},child_count${i})" id="child_count${i}">
-                        <option value="0">Select</option>
-                        <option value="1">1 child</option>
-                        <option value="2">2 child</option>
-                        <option value="3">3 child</option>
-                        <option value="4">4 child</option>
-                        <option value="5">5 child</option>
-                        <option value="6">6 child</option>
-                        <option value="7">7 child</option>
-                        <option value="8">8 child</option>
-                        <option value="9">9 child</option>
-                        <option value="10">10 child</option>
-                    </select>
-
-                    <select  class="form-control mx-1 infant_count" name="infant_count[]" onchange="showRoomData(${no_of_rooms})" id="infant_count${i}">
-                        <option value="0">Select</option>
-                        <option value="1">1 infant</option>
-                        <option value="2">2 infant</option>
-                        <option value="3">3 infant</option>
-                        <option value="4">4 infant</option>
-                        <option value="5">5 infant</option>
-                        <option value="6">6 infant</option>
-                        <option value="7">7 infant</option>
-                        <option value="8">8 infant</option>
-                        <option value="9">9 infant</option>
-                        <option value="10">10 infant</option>
-                    </select>
-
+                    <input type="number" value="0" class=" form-control mx-2 adult_count" onchange="showRoomData(${no_of_rooms})" name="adult_count[]" id="adult_count${i}" />
+                    <input type="number" value="0" class=" form-control mx-1 child_count" name="child_count[]" onchange="childAgeDiv(child_ages_div${i},child_count${i})" id="child_count${i}" />
+                    <input type="number" value="0" class=" form-control mx-1 infant_count" name="infant_count[]" onchange="showRoomData(${no_of_rooms})" id="infant_count${i}" />
                 </div>
                 </div>
                 <div class="form-group row" id="child_ages_div${i}" style="display: none;"></div>

@@ -221,26 +221,33 @@
             </div>
             <div class="modal-body" >
 
-                <div style="margin-left: 20%;">
-                <input type="radio" name="Todotype"  value="call" checked="">Call
+                <div >
+                <input type="radio" name="Todotype"  value="payment" >Payment
+                <input type="radio" name="Todotype"  value="call" >Call
                 <input type="radio"  name="Todotype" value="meeting">Meeting
                 <input type="radio" name="Todotype" value="todo">To Do
-                <p class="inline" style="display:none;">Remind in <b>15mins</b></p>
+                <input type="radio" name="Todotype" value="visa">Visa
             </div>
-            <div class="mt-2" style="display:none;">
-                <input type="radio" name="Tododay" checked=""  value="today">Today
+            <!-- <div class="mt-2">
+             <input type="radio" name="Tododay" checked=""  value="today">Today
                 <input type="radio" name="Tododay" value="tomorrow">Tomorrow
                 <input type="radio" name="Tododay" value="2days">in 2 Days
-                <input type="radio" name="Tododay" value="3days">in 3 Days
-            </div>
+                <input type="radio" name="Tododay" value="3days">in 3 Days 
+            </div> -->
 
 
                 <div class="row mb-3 mt-2 ">
 
                     <div class="col">
-                    <label for="">Time</label>
-                        <input class="input__field w-50" name="TodoTime" type="time" placeholder=" " autocomplete="off" />
+                    <label for="">Date</label>
+                        <input class="input__field" type="date" name="Tododay" placeholder=" " autocomplete="off" />
                     </div>
+
+                    <div class="col">
+                    <label for="">Time</label>
+                        <input class="input__field" name="TodoTime" type="time" placeholder=" " autocomplete="off" />
+                    </div>
+
                 </div>
 
 
@@ -319,3 +326,13 @@
 
     }
 </script>
+
+
+<style>
+.modal-header {
+    background-color: #d9a927;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+}
+</style>

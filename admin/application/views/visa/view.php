@@ -48,6 +48,11 @@
 									<div class="row p-b-20">
 										<div class="col-md-6 col-sm-6 col-6">
 											<div class="btn-group">
+												<?php if(!$is_otb) : ?>
+												<a href="<?php echo site_url();?>visa/add_otb" id="addRow" class="new_btn px-3 mr-3 ">
+													Add OTB <i class="fa fa-plus"></i>
+												</a>
+												<?php endif ?>
 												<a href="<?php echo site_url();?>visa/add_visa" id="addRow" class="new_btn px-3">
 													Add Visa <i class="fa fa-plus"></i>
 												</a>
@@ -81,7 +86,7 @@
 										<tr>
 													<td><?php echo $cnt;?> </td>
                                                     <td><?php echo str_replace('_', ' ', $key->visa_category) ;?></td>
-                                                    <td><?php echo $key->entry_type;?></td>
+                                                    <td><?php echo isset($key->entry_type) ? $key->entry_type : "--";?></td>
                                                     <!-- <td><?php echo $key->process_time;?></td>
                                                     <td><?php echo $key->visa_validity;?></td> -->
                                                     <td><?php echo $key->adult;?></td>

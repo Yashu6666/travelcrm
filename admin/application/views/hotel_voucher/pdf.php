@@ -46,7 +46,7 @@
     <th>Hotel Name</th>
     <th style="white-space: nowrap;"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?> 
         <?php if(isset($hotel_details[$key]->hotelstars)) : ?>	
-	    <?php echo str_repeat("⭐",$hotel_details[$key]->hotelstars); ?>
+	    <?php echo str_repeat("*",$hotel_details[$key]->hotelstars); ?>
 	    <?php endif ?>
     </th>
     <th>Confirmation Number</th>

@@ -14,6 +14,16 @@ class Visa extends CI_Controller {
 	public function view_visa()
 	{
 		$data['view'] = $this->db->order_by('id', 'DESC')->get('visa')->result(); 
+		$is_otb = false;
+
+		foreach($data['view'] as $val){
+			if($val->visa_category == "OTB"){
+				$is_otb = true;
+			}
+		}
+
+		$data['is_otb'] = $is_otb;
+
 		$this->load->view('visa/view',$data);
 	}
 
@@ -23,12 +33,21 @@ class Visa extends CI_Controller {
 		$this->load->view('visa/add');
 	}
 
+	public function add_otb()
+	{
+		
+		$this->load->view('visa/otb');
+	}
+
 	public function edit_visa($id)
 	{
 	
 	$data['edit'] = $this->db->where('id',$id)->get('visa')->row();
-	//echo '<pre>';print_r($data['edit_files']);exit();
+	if($data['edit']->visa_category == "OTB"){
+		$this->load->view('visa/edit_otb',$data);
+	} else {
 		$this->load->view('visa/edit_visa',$data);
+	}
 	}
 
 
@@ -347,6 +366,7 @@ class Visa extends CI_Controller {
 	{
 		
 		$visa_category =  $this->input->post('visa_category');
+
 		$entry_type = $this->input->post('entry_type');
 		$process_time = $this->input->post('process_time');
 		$visa_validity =$this->input->post('visa_validity');

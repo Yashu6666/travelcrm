@@ -111,6 +111,8 @@
                   <!-- <button type="button" class="new_btn px-5 ml-0 add-rows"  id="addrowsbtn">Add row</button> -->
                   
               </div>
+              <?php for($i=1; $i <= $view->room; $i++) : ?>
+
               <thead>
                <tr>
                 <th></th>
@@ -128,7 +130,6 @@
             
              
               <tbody>
-              <?php for($i=1; $i <= $view->room; $i++) : ?>
                                 <tr>
                                   <td class="text-nowrap">Room <?php echo $i?></td>
                                   <td>
@@ -182,7 +183,6 @@
 
               </tbody>
 
-              <?php if($i < 2) : ?>
               <thead>
                <tr>
                 <th></th>
@@ -191,13 +191,8 @@
                 <th>Meal Type </th>
                 <th>Sharing Type </th>
                 <th colspan="2">Extra </th>
-                <!-- <th>Action</th> -->
-
                </tr>
               </thead>
-              <?php endif ?>
-            
-             
               <tbody>
                                 <tr>
                                   <td></td>
@@ -225,6 +220,7 @@
                                   <td>
                                     <select class="form-control room_sharing_types" id="room_sharing_types" name="room_sharing_types[]">
                                       <option value="double_sharing">Double Sharing</option>
+                                      <option value="single_sharing">Single Sharing</option>
                                       <option value="triple_sharing">Triple Sharing</option>
                                     </select>
                                   </td>
@@ -239,10 +235,8 @@
 
 
                                 </tr>
-
-                                <?php endfor ?>
-
               </tbody>
+              <?php endfor ?>
               
              </table>
              <div style="float:right;">
@@ -2354,6 +2348,17 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                               // }
 template += `
 <tbody id="faqs-row${faqs_row}${room_no}">
+<thead>
+  <tr>
+  <th></th>
+  <th>Hotel City</th>
+  <th>Check In</th>
+  <th>Nights</th>
+  <th>Category</th>
+  <th>Hotel Name</th>
+  <th>Room Type </th>
+  </tr>
+</thead>
 <tbody>
 <tr>
    <td>Room${room_no}</td>
@@ -2395,6 +2400,16 @@ template += `
    <td><select class="form-control get-hotel-room get_buildRoomType" name="buildRoomType[]" id="buildRoomType${faqs_row}${room_no}" required></select></td>
    </tr>
 
+   <thead>
+    <tr>
+    <th></th>
+    <th>Group Type </th>
+    <th>Bed Type </th>
+    <th>Meal Type </th>
+    <th>Sharing Type </th>
+    <th colspan="2">Extra </th>
+    </tr>
+  </thead>
    <tr>
    <td></td>
    <td>
@@ -2420,6 +2435,7 @@ template += `
    <td>
       <select class="form-control room_sharing_types" id="room_sharing_types${faqs_row}${room_no}" name="room_sharing_types[]" >
          <option value="double_sharing" >Double Sharing</option>
+         <option value="single_sharing">Single Sharing</option>
          <option value ="triple_sharing">Triple Sharing</option>
       </select>
    </td>

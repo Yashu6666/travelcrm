@@ -11,9 +11,17 @@ class Excursion extends CI_Controller {
 	}
 
 
-	public function view_excursion()
+	public function view_excursion($type = '')
 	{
-		$data['view'] = $this->db->order_by("id", "desc")->get('excursion')->result();
+		if($type == "TKT"){
+			$data['view'] = $this->db->order_by("id", "desc")->where('type',$type)->get('excursion')->result();
+		} elseif($type == "SIC"){
+			$data['view'] = $this->db->order_by("id", "desc")->where('type',$type)->get('excursion')->result();
+		}elseif($type == "PVT"){
+			$data['view'] = $this->db->order_by("id", "desc")->where('type',$type)->get('excursion')->result();
+		} else{
+			$data['view'] = $this->db->order_by("id", "desc")->get('excursion')->result();
+		}
 		$this->load->view('excursion/view',$data);
 	}
 

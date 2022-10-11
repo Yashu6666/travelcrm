@@ -51,7 +51,7 @@
           <th><b>Enquiry Id</b></th>
           <td><?php echo $view->query_id;?></td>
           <th><b>Enquiry For</b></th>
-          <td><b>Package</b></td>
+          <td><b>Transfer</b></td>
          </tr>
          <!-- <tr>
           <th><b>Enquiry Details</b></th>

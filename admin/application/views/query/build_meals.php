@@ -49,7 +49,7 @@
           <th><b>Enquiry Id</b></th>
           <td><?php echo $view->query_id;?></td>
           <th><b>Enquiry For</b></th>
-          <td><b>Package</b></td>
+          <td><b>Meals</b></td>
          </tr>
          <!-- <tr>
           <th><b>Enquiry Details</b></th>
@@ -124,6 +124,7 @@
                <div>
                 <select data-mdl-for="sample2" class="form-control rest_type"
                 value=""  tabIndex="-1" id="res_type" name="res_type[]"  onchange="get_resturant_name('res_type','');">
+                <option value="">Select Option</option>
                 <option value="Standard">Standard</option>
                 <option value="Premium">Premium</option>
                </select>

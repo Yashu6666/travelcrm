@@ -31,10 +31,10 @@
 								Add Meals
 							</header>
 						</div>
-						<div class="card-body row">
+						<!-- <div class="card-body row">
 						<input type="radio" id="with_transfer" name="transfer[]" value="with_transfer" /> With Transfer
 						<input type="radio" id="without_transfer" name="transfer[]" value="without_transfer" checked="checked"/> Without Transfer	
-						</div>
+						</div> -->
 						<div class="card-body row">
 						
 						<div class="col-lg-3 p-t-20">
@@ -105,13 +105,13 @@
 </div>
 </div>
 
-<div class="col-lg-3 p-t-20">
+<!-- <div class="col-lg-3 p-t-20">
 <div class="">
 <label class="" for="text1"><b>Upto Pax</b></label>
 
 	<input class="form-control" type="text" id="upto_pax" name="upto_pax">
 </div>
-</div>
+</div> -->
 <!-- <div class="col-lg-4 p-t-20">
 <div class="mdl-textfield mdl-js-textfield">
 	<input class="mdl-textfield__input" type="text" id="text1" name="price">

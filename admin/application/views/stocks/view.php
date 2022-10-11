@@ -70,10 +70,11 @@
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $key->created_at; ?></td>
                                             <td><?php echo $key->ticket_name; ?></td>
-                                            <td><?php echo $key->no_ticket; ?></td>
+                                            <td><?php echo $key->adult_ticket + $key->child_ticket; ?></td>
                                             <td><?php echo $key->validity; ?></td>
                                             <td><?php echo $key->uploaded_by; ?></td>
-                                            <td><?php echo $key->remaining_ticket; ?></td>
+                                            <td><?php echo $key->remaining_ticket_adult + $key->remaining_ticket_child; ?></td>
+                                            <!-- <td><?php //echo $key->remaining_ticket; ?></td> -->
                                             <td><a href="<?php echo site_url(); ?>stocks/delete_stock/<?php echo $key->id; ?>" class="btn btn-danger btn-xs">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
@@ -139,9 +140,30 @@
                     </div>
 
                     <div class="d-flex form-group ">
-                        <label for="" class="col-sm-4 col-form-label">Expiry Date</label>
+                        <label for="" class="col-sm-4 col-form-label">Type of Pax</label>
                         <div class="col-sm-8">
-                            <input type="date" required name="validity"      class="form-control">
+                            <select id="pax_type_select" name="pax_type_select" class="form-control form-control-sm">
+                                <option value="Adult">Adult</option>
+                                <option value="Child">Child</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex form-group ">
+                        <label for="" class="col-sm-4 col-form-label">Ticket Type</label>
+                        <div class="col-sm-8">
+                            <select id="tkt_type" name="tkt_type" class="form-control form-control-sm">
+                                <option value="Bronze">Bronze</option>
+                                <option value="Silver">Silver</option>
+                                <option value="Gold">Gold</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex form-group ">
+                        <label for="" class="col-sm-4 col-form-label">Valid Till</label>
+                        <div class="col-sm-8">
+                            <input type="date" required name="validity" class="form-control">
                         </div>
                     </div>
 

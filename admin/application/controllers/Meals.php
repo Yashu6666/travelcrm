@@ -29,8 +29,8 @@ class Meals extends CI_Controller {
 			'meal_type'=>$this->input->post('meal_type'),
 			'adult_price'=>$this->input->post('adult_price'),
 			'child_rate'=>$this->input->post('child_price'),
-			'upto_pax'=>$this->input->post('upto_pax'),
-			'transfer' => $this->input->post('transfer')[0]
+			// 'upto_pax'=>$this->input->post('upto_pax'),
+			// 'transfer' => $this->input->post('transfer')[0]
     );
 	// print_r($data);exit;
 if($this->db->insert('meals',$data))
@@ -74,8 +74,8 @@ redirect('meals/view_meals','refresh');
 		'meal_type'=>$this->input->post('meal_type'),
 		'adult_price'=>$this->input->post('adult_price'),
 		'child_rate'=>$this->input->post('child_price'),
-		'upto_pax'=>$this->input->post('upto_pax'),
-		'transfer' => $this->input->post('transfer')[0]
+		// 'upto_pax'=>$this->input->post('upto_pax'),
+		// 'transfer' => $this->input->post('transfer')[0]
 	);
 
 	$id=$this->input->post('id');

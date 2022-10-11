@@ -574,7 +574,190 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                         </div>
 
-                                        <!-- for transfer and excursion -->
+                                          <!-- for excursion -->
+
+                                          <div id="forExcursion" style="display:none;">
+
+                                        <form  onsubmit="return validatePackage();" action="<?php echo site_url(); ?>query/addQueryPackage" method="post">
+
+                                            <input type="hidden" name="queryId" value="<?php echo $b2bDetails->query_id; ?>">
+                                            <input type="hidden" name="created_date" value="<?php echo date('Y-m-d'); ?>">
+                                            <input type="hidden" name="colorRadio" id="service_type22" value="">
+
+                                            <div class="row mt-4 mr-3 ml-3 mt-3">
+                                                <!-- <div class="col">
+                                                    <label for="">Check IN</label> <br />
+                                                    <input class="package_inputs" type="date" placeholder=" " id="specificDate22" name="specificDate" autocomplete="off" required />
+                                                </div>
+                                                <div class="col">
+                                                    <label for="">Nights</label> <br />
+
+                                                    <input class="package_inputs" type="number" min="1" placeholder=" " id="goingFrom22" name="night" required autocomplete="off" />
+                                                </div>
+                                                <div class="col">
+                                                    <label for="">Check Out</label> <br />
+
+                                                    <input class=" package_inputs" type="date" placeholder=" " id="endDate22" name="noDaysFrom" autocomplete="off" />
+                                                </div> -->
+
+                                                
+                                                <div class="col">
+                                                        <div class="d-flex justify-content-around">
+                                                        <label for="">Tour Date</label>
+                                                        <label for="">End Date</label>
+                                                        </div>
+
+                                                        <div class="form-group mb-4">
+                                                        <div class="datepicker date input-group">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                            </div>
+                                                            <input type="date" placeholder="Choose Date" class="form-control"  id="specificDate22" name="specificDate">
+                                                            <div class="input-group-append">
+                                                            <span class="input-group-text"><i class="fa fa-moon"></i>
+                                                            <input  type="number" min="1" style="width: 18px;text-align: center;" placeholder=" " id="goingFrom22" name="night" required autocomplete="off" />
+                                                            </span>
+                                                            </div>
+                                                            <input type="date" placeholder="Choose Date" class="form-control"  id="endDate22" name="noDaysFrom">
+                                                        </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                <div class="col">
+                                                    <label for="">Country</label> <br />
+
+                                                    <input class="package_inputs" type="text" placeholder=" " name="country[]" value="United Arab Emirates" required autocomplete="off" />
+                                                </div>
+                                                <div class="col">
+                                                    <label for="">City</label> <br />
+                                                    <select style="padding: 0px;" class="package_inputs" required name="goingFrom[]">
+                                                        <option value="">Select City</option>
+                                                        <option selected value="Dubai">Dubai</option>
+                                                        <option value="AbuDhabi">Abu Dhabi</option>
+                                                        <option value="Sharjah">Sharjah</option>
+                                                        <option value="Ajman">Ajman</option>
+
+                                                        <option value="Umm Al-Quwain">Umm Al-Quwain</option>
+                                                        <option value="Fujairah">Fujairah</option>
+                                                        <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                                                        <option value="Al Ain">Al Ain</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
+                                            <div id="addrows"></div>
+
+                                            <div class="row mt-4 mr-3 ml-3 mt-3">
+                                                <div class="col">
+                                                    <label for="">Quotation Currency</label>
+
+                                                    <select name="invoice_currency" id="" class="Travelers-select-package-values">
+                                                        <option value="AED">AED</option>
+                                                        <option value="USD">USD</option>
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="">No. Adult</label><br>
+
+                                                    <select name="adult" id="" required class="Travelers-select-package-values">
+                                                        <option value="">Select Adult</option>
+                                                        <?php $i = 1;
+                                                        while ($i <= 10) {
+                                                        ?>
+                                                            <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                        <?php $i++;
+                                                        } ?>
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="">No. Child</label><br>
+
+                                                    <select name="child" id="child22" required class="Travelers-select-package-values">
+                                                        <option value="0">0</option>
+                                                        <?php $i = 1;
+                                                        while ($i <= 10) {
+                                                        ?>
+                                                            <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                        <?php $i++;
+                                                        } ?>
+
+                                                    </select>
+                                                </div>
+
+                                                    <input id="child_age22" name="child_age" class="Travelers-select-package-values" type="hidden" value="0" />
+
+                                                <div class="col">
+                                                    <label for="">No. Infant</label><br>
+
+                                                    <select name="infant" id="" required class="Travelers-select-package-values">
+                                                        <option value="0">0</option>
+                                                        <?php $i = 1;
+                                                        while ($i <= 10) {
+                                                        ?>
+                                                            <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                                        <?php $i++;
+                                                        } ?>
+
+                                                    </select>
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="d-flex  justify-content-end mt-4 mb-4" style="margin-bottom:50px !important;margin-top:50px !important">
+                                                <?php if (isset($buildpackage->queryId)) {
+                                                    if ($buildpackage->type == 'Package') {
+                                                ?>
+                                                        <a href="<?php echo site_url(); ?>query/buildPackage/<?php echo $b2bDetails->query_id; ?>">
+
+                                                            <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                        </a>
+                                                    <?php } else if ($buildpackage->type == 'Transfer') { ?>
+                                                        <a href="<?php echo site_url(); ?>query/buildTransfer/<?php echo $b2bDetails->query_id; ?>">
+
+                                                            <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                        </a>
+                                                    <?php } else if ($buildpackage->type == 'Visa') { ?>
+                                                        <a href="<?php echo site_url(); ?>query/buildVisa/<?php echo $b2bDetails->query_id; ?>">
+
+                                                            <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                        </a>
+                                                    <?php } else if ($buildpackage->type == 'Hotel') { ?>
+                                                        <a href="<?php echo site_url(); ?>query/buildHotel/<?php echo $b2bDetails->query_id; ?>">
+
+                                                            <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                        </a>
+                                                    <?php } else if ($buildpackage->type == 'Excursion') { ?>
+                                                        <a href="<?php echo site_url(); ?>query/buildExcursion/<?php echo $b2bDetails->query_id; ?>">
+
+                                                            <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                        </a>
+                                                    <?php } else if ($buildpackage->type == 'Meals') { ?>
+                                                        <a href="<?php echo site_url(); ?>query/buildMeals/<?php echo $b2bDetails->query_id; ?>">
+
+                                                            <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
+                                                        </a>
+                                                <?php }
+                                                }
+
+                                                ?>
+
+                                                <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Save</button>
+                                            </div>
+                                        </form>
+                                        </div>
+
+
+
+                                        <!-- for transfer -->
 
 
                                         <div id="forTransEx" style="display:none;">
@@ -588,19 +771,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                                 <div class="row mt-4 mr-3 ml-3 mt-3">
                                                     <div class="col">
-                                                        <label for="">Check IN</label> <br />
-                                                        <input class="package_inputs" type="date" placeholder=" " id="specificDate1" name="specificDate" autocomplete="off" required />
+                                                        <label for="">Service Date</label> <br />
+                                                        <input class="package_inputs" type="date" placeholder=" " id="specificDate11" name="specificDate" autocomplete="off" required />
                                                     </div>
                                                     <div class="col">
                                                         <label for="">Nights</label> <br />
 
-                                                        <input class="package_inputs" type="number" min="1" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
+                                                        <input class="package_inputs" type="number" min="1" placeholder=" " id="goingFrom11" name="night" required autocomplete="off" />
                                                     </div>
-                                                    <div class="col">
+                                                    <div class="col" hidden>
                                                         <label for="">Check Out</label> <br />
 
-                                                        <input class=" package_inputs" type="date" placeholder=" " id="endDate1" name="noDaysFrom" autocomplete="off" />
+                                                        <input class=" package_inputs" type="hidden" placeholder=" " id="endDate11" name="noDaysFrom" autocomplete="off" />
                                                     </div>
+
+
                                                     <div class="col">
                                                         <label for="">Country</label> <br />
 
@@ -652,10 +837,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                         </select>
                                                     </div>
 
-                                                    <div class="col">
+                                                    <div class="col" >
                                                         <label for="">No. Child</label><br>
 
-                                                        <select name="child" id="child1" required class="Travelers-select-package-values">
+                                                        <select name="child" id="child11" required class="Travelers-select-package-values">
                                                             <option value="0">0</option>
                                                             <?php $i = 1;
                                                             while ($i <= 10) {
@@ -669,7 +854,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                                         <input id="child_age" name="child_age" class="Travelers-select-package-values" type="hidden" value="0" />
 
-                                                    <div class="col">
+                                                    <div class="col" hidden>
                                                         <label for="">No. Infant</label><br>
 
                                                         <select name="infant" id="" required class="Travelers-select-package-values">
@@ -911,17 +1096,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                                 <div class="row mt-4 mr-3 ml-3 mt-3">
                                                     <div class="col">
-                                                        <label for="">Check IN</label> <br />
+                                                        <label for="">From Date</label> <br />
 
                                                         <input class="package_inputs" type="date" placeholder=" " id="specificDate1" name="specificDate" autocomplete="off" required />
                                                     </div>
-                                                    <div class="col">
+                                                    <div class="col" hidden>
                                                         <label for="">Nights</label> <br />
 
-                                                        <input class="package_inputs" type="number" min="1" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
+                                                        <input class="package_inputs" type="number" value="0" min="1" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
                                                     </div>
                                                     <div class="col">
-                                                        <label for="">Check Out</label> <br />
+                                                        <label for="">To Date</label> <br />
 
                                                         <input class=" package_inputs" type="date" placeholder=" " id="endDate1" name="noDaysFrom" autocomplete="off" />
                                                     </div>
@@ -1095,18 +1280,28 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                             $('input[name="colorRadio1"]').change(function(e) {
                                 const valueType = $(this).attr("value");
                                 console.log("🚩 ~ file: package.php ~ line 834 ~ $ ~ valueType", valueType)
-                                if (valueType == "Transfer" || valueType == "Excursion") {
-                                    document.getElementById("forTransEx").style.display = "block";
+                                if (valueType == "Excursion") {
+                                    document.getElementById("forExcursion").style.display = "block";
+                                    document.getElementById("forTransEx").style.display = "none";
                                     document.getElementById("forPackage").style.display = "none";
+                                    document.getElementById("forVisa").style.display = "none";
+                                    document.getElementById("forMeals").style.display = "none";
+                                    document.getElementById("service_type22").value = valueType;
+                                    console.log("🚩 ~ file: package.php ~ line 1031 ~ $ ~ document.getElementById", document.getElementById("service_type22").value)
+
+                                } else if (valueType == "Transfer" ) {
+                                    document.getElementById("forPackage").style.display = "none";
+                                    document.getElementById("forExcursion").style.display = "none";
+                                    document.getElementById("forTransEx").style.display = "block";
                                     document.getElementById("forVisa").style.display = "none";
                                     document.getElementById("forMeals").style.display = "none";
                                     document.getElementById("service_type2").value = valueType;
                                     console.log("🚩 ~ file: package.php ~ line 1031 ~ $ ~ document.getElementById", document.getElementById("service_type2").value)
 
-
                                 } else if (valueType == "Package" || valueType == "Hotel") {
                                     document.getElementById("forPackage").style.display = "block";
                                     document.getElementById("forTransEx").style.display = "none";
+                                    document.getElementById("forExcursion").style.display = "none";
                                     document.getElementById("forVisa").style.display = "none";
                                     document.getElementById("forMeals").style.display = "none";
                                     document.getElementById("service_type").value = valueType;
@@ -1116,6 +1311,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                 } else if (valueType == "Visa") {
                                     document.getElementById("forVisa").style.display = "block";
                                     document.getElementById("forTransEx").style.display = "none";
+                                    document.getElementById("forExcursion").style.display = "none";
                                     document.getElementById("forPackage").style.display = "none";
                                     document.getElementById("forMeals").style.display = "none";
                                     document.getElementById("service_type3").value = valueType;
@@ -1125,6 +1321,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                 } else if (valueType == "Meals") {
                                     document.getElementById("forMeals").style.display = "block";
                                     document.getElementById("forVisa").style.display = "none";
+                                    document.getElementById("forExcursion").style.display = "none";
                                     document.getElementById("forTransEx").style.display = "none";
                                     document.getElementById("forPackage").style.display = "none";
                                     document.getElementById("service_type4").value = valueType;
@@ -1222,9 +1419,35 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                     var someDate = new Date(checkindate);
                                     var numberOfDaysToAdd = $("#goingFrom1").val();
 
-                                    someDate.setDate(someDate.getDate() + parseInt(numberOfDaysToAdd)); //number  of days to add, e.x. 15 days
+                                    someDate.setDate(someDate.getDate() + parseInt(numberOfDaysToAdd)); 
                                     var dateFormated = someDate.toISOString().substr(0, 10);
                                     $("#endDate1").val(dateFormated);
+
+                                });
+
+                                $("#goingFrom22").change(function() {
+
+                                var checkindate = $("#specificDate22").val();
+
+                                var someDate = new Date(checkindate);
+                                var numberOfDaysToAdd = $("#goingFrom22").val();
+
+                                someDate.setDate(someDate.getDate() + parseInt(numberOfDaysToAdd)); 
+                                var dateFormated = someDate.toISOString().substr(0, 10);
+                                $("#endDate22").val(dateFormated);
+
+                                });
+
+                                $("#goingFrom11").change(function() {
+
+                                var checkindate = $("#specificDate11").val();
+
+                                var someDate = new Date(checkindate);
+                                var numberOfDaysToAdd = $("#goingFrom11").val();
+
+                                someDate.setDate(someDate.getDate() + parseInt(numberOfDaysToAdd)); 
+                                var dateFormated = someDate.toISOString().substr(0, 10);
+                                $("#endDate11").val(dateFormated);
 
                                 });
 
@@ -1454,6 +1677,7 @@ $(document).mouseup(function(e)
 
                 
         function childAgeDiv(childDiv,childNo){
+            let div_id = $(childDiv).attr('id').replace('child_ages_div','');
             var no_of_rooms = $("#no_of_rooms").val();
             showRoomData(no_of_rooms);
 
@@ -1471,14 +1695,16 @@ $(document).mouseup(function(e)
                             <div class="col d-flex ">
                                 <label class="col-1 col-form-label text-nowrap">child ${i}</label>
                                 <input type="text" class="form-control ml-5" placeholder="Child ${i} Age" name="child_age_count[]" id="child_age">
+                                <input type="radio" class="form-control" id="child_with_bed${i}" name="child_with_or_wo_count[${div_id}][${i}]" value="1" checked><label for="html">CWB</label>
+                                <input type="radio" class="form-control" id="child_with_out_bed${i}" name="child_with_or_wo_count[${div_id}][${i}]" value="0"><label for="html">CNB</label>
                             </div></div>`;
                 }
-
                 $(childDiv).empty().append(data);
             } else {
                 $(childDiv).attr('style', 'display:none');
             }
         }
+
 
          $("#child_no").change(function() {
             var child = $("#child_no").val();
@@ -1491,7 +1717,7 @@ $(document).mouseup(function(e)
                 data += `
                   <div class="d-flex mx-5"> 
                             <div class="col d-flex ">
-                                <label class="col-1 col-form-label text-nowrap">child ${i}</label>
+                                <label class="col-1 col-form-label text-nowrap">child ${i} </label>
                                 <input type="text" class="form-control ml-5" name="child_age_count[]" id="child_age">
                             </div></div>`;
                 }

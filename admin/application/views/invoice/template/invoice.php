@@ -168,21 +168,21 @@ th {
 
             <tr>
               <?php $date = new DateTime($invoice->invoiceDate);
-              $invoiceDate = $date->format('d-m-Y'); ?>
+              $invoiceDate = $date->format('d-M-Y'); ?>
               <th>INVOICE DATE :</th>
               <td><?php echo $invoiceDate ?></td>
               <?php $date = new DateTime($query_package->specificDate);
-              $specificDate = $date->format('d-m-Y'); ?>
+              $specificDate = $date->format('d-M-Y'); ?>
               <th>CHECK IN DATE :</th>
               <td><?php echo $specificDate ?></td>
           </tr>
-          <tr>
+          <!-- <tr>
               <th>HOTEL CONFIRMATION NUMBER :</th>
               <td><?php echo $query_hotel_voucher->confirmation_id ?></td>
 
               <th>CHECK OUT DATE :</th>
               <?php $date = new DateTime($query_package->noDaysFrom);
-              $checkout = $date->format('d-m-Y'); ?>
+              $checkout = $date->format('d-M-Y'); ?>
               <td><?php echo $checkout ?></td>
           </tr>
             <tr>
@@ -207,7 +207,49 @@ th {
               <th>No. OF ROOMS:</th>
               <td><?php echo $query_package->room ?></td>
             </tr>
-          </table>
+          </table> -->
+          <tr>
+                        <th>MODES OF PAYMENT :</th>
+                        <td>cash</td>
+
+                        <th>CHECK OUT DATE :</th>
+                        <?php $date = new DateTime($query_package->noDaysFrom);
+                        $checkout = $date->format('d-M-Y'); ?>
+                        <td><?php echo $checkout ?></td>
+                    </tr>
+                    <tr>
+                        <th>CUSTOMER/AGENT NAME :</th>
+                        <td><?php echo $b2b->b2bcompanyName ?></td>
+                        <th>No. OF NIGHTS :</th>
+                        <td><?php echo $query_package->night ?></td>
+                    </tr>
+                    <tr>
+                        <th>CUSTOMER/AGENT ADDRESS :</th>
+                        <td><?php echo isset($b2b->b2bCompanyAddress) ? $b2b->b2bCompanyAddress : "" ?></td>
+                        <th>No. OF ROOMS:</th>
+                        <td><?php echo $query_package->room ?></td>
+                    </tr>
+
+                    <?php foreach($hotel_details as $key => $val) : ?>
+                       
+                    <tr>
+                        <th>HOTEL CONFIRMATION NUMBER <?php echo $key + 1 ?> :</th>
+                        <td><?php echo $query_hotel_voucher[$key]->confirmation_id ?></td>
+                        <th>HOTEL NAME <?php echo $key + 1 ?> :</th>
+                        <td> <?php echo $val->hotelname; ?> 
+                            <!-- ?php echo str_repeat("*", $val->hotelstars); ?> -->
+                            <span style="color: #fae937;">
+                            <?php for($i=0;$i<$val->hotelstars;$i++) : ?>
+                              *
+                            <?php endfor ?>
+                            </span>
+
+                        </td>
+                    </tr>
+                    <?php endforeach ?>
+
+                    
+                </table>
         </div>
       </div>
     <div class="invoice_container">
@@ -269,7 +311,7 @@ th {
           </tr>
           <tr>
             <th>Current Account No.:</th>
-            <td>*1012432644501</td>
+            <td>1012432644501</td>
           </tr>
           <tr>
             <th>IBAN</th>
@@ -301,7 +343,7 @@ th {
             <td colspan="2">Tel: <b>+971 4 355 9218</b></td>
           </tr> -->
           <tr>
-            <td colspan="2"><b>THIS IS COMPUTER GENERATED INVOICE, HENCE NO SIGNATURE IS REQUIRED.</b></td>
+            <td colspan="2" style="text-align: center;"><b>THIS IS COMPUTER GENERATED INVOICE, HENCE NO SIGNATURE IS REQUIRED.</b></td>
           </tr>
         </table>
       </div>

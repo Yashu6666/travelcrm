@@ -411,11 +411,12 @@ class Query extends CI_Controller
 		// echo '<pre>';print_r($_POST['child_with_or_wo_count']);
 
 		$with_or_wo = [];
+		if(isset($_POST['hotelPrefrence'])){
 		foreach ($_POST['child_with_or_wo_count'] as $key => $wo) {
 			foreach ($wo as $key => $val) {
 				array_push($with_or_wo,$val);
 			}
-		}
+		}}
 		
 		$child_with_or_wo_bed = implode(',', $with_or_wo);
 		$country = implode(',', $_POST['country']);

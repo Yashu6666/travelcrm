@@ -67,10 +67,10 @@ function validation() {
     } else if (!isNaN(firstName)) {
         spanFname.innerHTML = "** Only Characters are allowed ";
         return false;
-    } else if ((firstName.length <= 2) || (firstName.length >= 20)) {
-        spanFname.innerHTML = "** First Name should be between 2 to 20 Character ";
-        return false;
-    }
+    // } else if ((firstName.length <= 2) || (firstName.length >= 20)) {
+    //     spanFname.innerHTML = "** First Name should be between 2 to 20 Character ";
+    //     return false;
+    // }
 
 
 

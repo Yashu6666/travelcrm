@@ -32,10 +32,10 @@
 						</div>
 						<form action="<?php echo site_url();?>meals/update_meals" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="id" value="<?php echo $edit->id;?>" />
-						<div class="card-body row">
+						<!-- <div class="card-body row">
 						<input type="radio" id="with_transfer" name="transfer[]" value="with_transfer" <?php echo $edit->transfer== "with_transfer" ? "checked=checked":"" ?>/> With Transfer
 						<input type="radio" id="without_transfer" name="transfer[]" value="without_transfer" <?php echo $edit->transfer== "without_transfer"? "checked=checked":"" ?>/> Without Transfer	
-						</div>
+						</div> -->
 						<div class="card-body row">
 						<div class="col-lg-3 p-t-20">
 								<div>
@@ -103,13 +103,13 @@
 </div>
 </div>
 
-<div class="col-lg-3 p-t-20">
+<!-- <div class="col-lg-3 p-t-20">
 <div class="">
 <label class="" for="text1"><b>Upto Pax</b></label>
 
 	<input class="form-control" value=" <?php echo $edit->upto_pax ?>" type="text" id="upto_pax" name="upto_pax">
 </div>
-</div>
+</div> -->
 <!-- <div class="col-lg-4 p-t-20">
 <div class="mdl-textfield mdl-js-textfield">
 	<input class="mdl-textfield__input" type="text" id="text1" name="price">

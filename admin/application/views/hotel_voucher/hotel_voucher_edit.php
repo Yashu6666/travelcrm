@@ -219,7 +219,7 @@
 
 											<div class="mt-3 row d-flex align-items-baseline new_bg_header">
 												<div class="col-xl-12">
-													<h4 style="color: white;" class="text-white">Important Information : Hotel</strong></h4>
+													<h4 style="color: white;" class="text-white">Notes</strong></h4>
 												</div>
 											</div>
 

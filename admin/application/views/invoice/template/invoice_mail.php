@@ -204,7 +204,7 @@
                               <th class="center"> Total </th>
                             </tr>
                           </thead>
-                            <tr>
+                            <t r>
                               <td><?php echo $printInvoice->invoiceCategory;?></td>
                               <td><?php echo ceil($printInvoice->invoiceRate);?></td>
                               <td><?php echo $printInvoice->invoiceQty;?></td>

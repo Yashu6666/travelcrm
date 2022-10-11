@@ -112,21 +112,10 @@ class Query extends CI_Controller
 
 	public function view_query($type = '')
 	{
-		// $this->db->select("*");
-
-		// $this->db->from("b2bcustomerquery cb");
-
-		// $this->db->join('querypackage qp','cb.query_id=qp.queryId','LEFT');
-		// $this->db->join('querytransfer qt','cb.query_id=qt.queryId','LEFT');
-		// $this->db->join('queryvisa qv','cb.query_id=qv.queryId','LEFT');
-		// $this->db->join('queryhotel qh','cb.query_id=qh.queryId','LEFT');
-		// $this->db->join('queryexcusion qe','cb.query_id=qe.queryId','LEFT');
-
-		// $sql="SELECT * FROM b2bcustomerquery";
 		error_reporting(0);
 		// $inprogress = $this->db->where('lead_stage', "Inprogress")->get('b2bcustomerquery')->result();
-		$inprogress = $this->db->where('cb.lead_stage', "Inprogress")->join('querypackage qp','cb.query_id=qp.queryId')->group_by('qp.queryId')->get('b2bcustomerquery cb')->result();
-
+		// $inprogress = $this->db->distinct()->select('query_id')->where('cb.lead_stage', "Inprogress")->where('cb.reportsTo', $this->session->userdata('admin_username'))->join('querypackage qp','cb.query_id=qp.queryId')->group_by('qp.queryId')->get('b2bcustomerquery cb')->result();
+		$inprogress = $this->db->where('lead_stage', "Inprogress")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 		if (isset($inprogress)) {
 			$data['inprogress'] = count($inprogress);
 		} else {
@@ -138,9 +127,8 @@ class Query extends CI_Controller
 		$date = new DateTime("now");
 		$curr_date = $date->format('Y-m-d ');
 		// $recent = $this->db->query("select DISTINCT(qp.queryId) FROM b2bcustomerquery as cb join querypackage as qp ON cb.query_id=qp.queryId where DATE(cb.created_at) = '" . $curr_date . "' group by qp.queryId ")->result();
-		$recent = $this->db->query("select * FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW() group by qp.queryId ")->result();
-
-
+		$recent = $this->db->query("select * FROM querypackage where created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW()")->result();
+		// $recent = $this->db->where('lead_stage', "Inprogress")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 
 		if (isset($recent)) {
 			$data['recent'] = count($recent);
@@ -148,72 +136,85 @@ class Query extends CI_Controller
 			$data['recent'] = 0;
 		}
 
-		$confirmed = $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result();
+		// $confirmed = $this->db->where('lead_stage', "Confirmed")->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery')->result();
+		$confirmed = $this->db->where('lead_stage', "Confirmed")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
+
 		if (isset($confirmed)) {
 			$data['confirmed'] = count($confirmed);
 		} else {
 			$data['confirmed'] = 0;
 		}
 
-		$rejected = $this->db->where('lead_stage', "Rejected")->get('b2bcustomerquery')->result();
+		// $rejected = $this->db->where('lead_stage', "Rejected")->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery')->result();
+		$rejected = $this->db->where('lead_stage', "Rejected")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
+
 		if (isset($rejected)) {
 			$data['rejected'] = count($rejected);
 		} else {
 			$data['rejected'] = 0;
 		}
 
+		// $callback = $this->db->where('lead_stage', "Callback")->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery')->result();
+		$callback = $this->db->where('lead_stage', "Callback")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 
-		$callback = $this->db->where('lead_stage', "Callback")->get('b2bcustomerquery')->result();
 		if (isset($callback)) {
 			$data['callback'] = count($callback);
 		} else {
 			$data['callback'] = 0;
 		}
 
-		$overall = $this->db->query("SELECT DISTINCT(queryId) FROM querypackage")->result();
+		$overall = $this->db->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
+		// $overall = $this->db->query("SELECT DISTINCT(queryId) FROM querypackage")->result();
 		if (isset($overall)) {
 			$data['overall'] = count($overall);
 		} else {
 			$data['overall'] = 0;
-		}
+		};
 
 		
 		if ($type == 'Inprogress') {
-			$query = $this->db->where('lead_stage', "Inprogress")->get('b2bcustomerquery')->result();
+			$query = $this->db->where('lead_stage', "Inprogress")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 		} else if ($type == 'Callback') {
-			$query = $this->db->where('lead_stage', "Callback")->get('b2bcustomerquery')->result();
+			$query = $this->db->where('lead_stage', "Callback")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 		} else if ($type == 'Rejected') {
-			$query = $this->db->where('lead_stage', "Rejected")->get('b2bcustomerquery')->result();
+			$query = $this->db->where('lead_stage', "Rejected")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 		} else if ($type == 'Confirmed') {
-			$query = $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result();
+			$query = $this->db->where('lead_stage', "Confirmed")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 		} else if ($type == 'recent') {
 			// $query = $this->db->query("select * FROM b2bcustomerquery where created_at BETWEEN '" . $today_date . " 00:00:00' AND    '" . $today_date . " 11:59:59'")->result();
 			$query = $this->db->query("select * FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW() group by qp.queryId ")->result();
 
 		} else if ($type == 'Overall') {
-			$query = $this->db->query("SELECT * FROM b2bcustomerquery")->result();
+			$query = $this->db->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 		} else {
-			$query = $this->db->where('lead_stage', "Inprogress")->get('b2bcustomerquery')->result();
+			$query = $this->db->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 		}
 		// $query=$this->db->get('b2bcustomerquery')->result();
 		// echo"<pre>";print_r($query);die();
 
 		$result = array();
+		$result_query_id = [];
 		foreach ($query as $value) {
-			$query_id = $value->query_id;
-			$name = $value->b2bfirstName . ' ' . $value->b2blastName;
-			$mobile = $value->b2bmobileNumber;
+			$query_id = $value->queryId;
 			$lead_stage = $value->lead_stage;
-			$company_name = $value->b2bcompanyName;
-
 			$created_at = $value->created_at;
 			$id = $value->id;
 
+			$b2bQuery = $this->db->where('query_id', $query_id)->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery')->row();
+			$name = $b2bQuery->b2bfirstName . ' ' . $b2bQuery->b2blastName;
+			$mobile = $b2bQuery->b2bmobileNumber;
+			$company_name = $b2bQuery->b2bcompanyName;
+
+
+			if(!in_array($value->queryId, $result_query_id, true)){
+				
 			$package = $this->db->where('queryId', $query_id)->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->row();
 
 			if (isset($package)) {
 				$res = array("id" => $id, "company_name" => $company_name, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
 				$result[] = $res;
+			}
+			array_push($result_query_id, $value->queryId);
 			}
 		}
 
@@ -407,8 +408,16 @@ class Query extends CI_Controller
 
 	public function addQueryPackage()
 	{
-		//echo '<pre>';print_r($_POST);exit;
+		// echo '<pre>';print_r($_POST['child_with_or_wo_count']);
 
+		$with_or_wo = [];
+		foreach ($_POST['child_with_or_wo_count'] as $key => $wo) {
+			foreach ($wo as $key => $val) {
+				array_push($with_or_wo,$val);
+			}
+		}
+		
+		$child_with_or_wo_bed = implode(',', $with_or_wo);
 		$country = implode(',', $_POST['country']);
 		$goingFrom = implode(',', $_POST['goingFrom']);
 		$hotelPrefrence = isset($_POST['hotelPrefrence']) ? implode(',', $_POST['hotelPrefrence']) : "";
@@ -421,7 +430,6 @@ class Query extends CI_Controller
 		$child_count = isset($_POST['child_count']) ? implode(',', $_POST['child_count']) : "";
 		$child_age_count = isset($_POST['child_age_count']) ? implode(',', $_POST['child_age_count']) : "";
 		$infant_count = isset($_POST['infant_count']) ? implode(',', $_POST['infant_count']) : "";
-
 
 		$data = array(
 			'goingTo' => $country,
@@ -449,7 +457,8 @@ class Query extends CI_Controller
 			'currency' => $this->input->post('invoice_currency'),
 			'queryId' => $this->input->post('queryId'),
 			'created_date' => $this->input->post('created_date'),
-			'created_by' => $this->session->userdata('admin_id')
+			'created_by' => $this->session->userdata('admin_id'),
+			'child_with_or_wo_bed' => $child_with_or_wo_bed,
 		);
 		// echo "<pre>";print_r($_POST);return;
 		$query_id = $this->input->post('queryId');
@@ -1004,6 +1013,20 @@ class Query extends CI_Controller
 				// $per_pax_adult = $net_rate + $vat;
 				// $total_pax_adult_rate = ($pax_adult * ($net_rate + $vat)) * $no_of_nights;
 				// $hotels_calculation_data['netrate_double'] = $hotels_calculation[0]['netrate_double'];
+			} else if ($val['bed_types'] == "Triple") {
+				$net_rate_array = explode(",", $hotels_calculation[$k][0]['netrate_triple']);
+				$vat_array = explode(",", $hotels_calculation[$k][0]['vat_triple']);
+
+				$net_rate = $net_rate_array[$room_val_index];
+
+				$vat = 	$vat_array[$room_val_index];
+
+				if (!empty($val['extra_with_adult'])) {
+					$net_rate_extra_array = explode(",", $hotels_calculation[$k][0]['netrate_extra']);
+					$net_rate_extra = $net_rate_extra_array[$room_val_index];
+				} else {
+					$net_rate_extra = 0;
+				}
 			} else {
 				$net_rate = 0;
 				$vat = 0;
@@ -1128,12 +1151,12 @@ class Query extends CI_Controller
 	
 	public function get_resturant_name()
 	{
-		$type_transfer = $this->input->post('transfer');
+		// $type_transfer = $this->input->post('transfer');
 		$type_resturant = $this->input->post('rest_type');
 			$this->db->select("id,resturant_name");
 			$this->db->from("meals");
 			$this->db->where('resturant_type', $type_resturant);
-			$this->db->where('transfer', $type_transfer);
+			// $this->db->where('transfer', $type_transfer);
 			$resturant_name = $this->db->get()->result();
 			// echo"<pre>";print_r($resturant_name);exit;
 		echo json_encode($resturant_name);
@@ -1456,7 +1479,7 @@ class Query extends CI_Controller
 		$rows_count = $this->input->post('total_rows');
 		$tableData = $this->input->post('data');
 		$datas =  array();
-		for ($x = 0; $x < $rows_count; $x++) {
+		for ($x = 0; $x <= $rows_count; $x++) {
 
 			$datas[$x]['resturants'] = $tableData[0]['resturants'][$x];
 			$datas[$x]['meals'] = $tableData[0]['meals'][$x];
@@ -1478,7 +1501,7 @@ class Query extends CI_Controller
 			$this->db->where('resturant_type', $val['resturants']);
 			$this->db->where('meal_name', $val['meals']);
 			$this->db->where('meal_type', $val['meal_types']);
-			$this->db->where('transfer', $val['resturants_transfer']);
+			// $this->db->where('transfer', $val['resturants_transfer']);
 			$this->db->where('resturant_name', $val['resturants_name']);
 			$meal_calculation[] = $this->db->get()->result_array();
 
@@ -1874,7 +1897,7 @@ class Query extends CI_Controller
 
 		if(!empty($excursion_name_PVT)) {
 		
-		$total_pax = $excursion_adult_PVT+$excursion_child_PVT+$excursion_infant_PVT;
+		$total_pax = $excursion_adult_PVT+$excursion_child_PVT;
 		
 
 		$excursion=array();
@@ -1884,27 +1907,30 @@ class Query extends CI_Controller
 		if(!empty($excursion_name_PVT)){
 
 			foreach($excursion_name_PVT as $k => $val){
-				$excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_PVT[$k]."' AND type='".$excursion_type_PVT."'  AND pax >=$total_pax  LIMIT 1")->row();
+				// $excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_PVT[$k]."' AND type='".$excursion_type_PVT."'  AND pax >=$total_pax  LIMIT 1")->row();
+				$excursion =$this->db->where('tourname',$excursion_name_PVT[$k])->where('type',$excursion_type_PVT)->where('pax >=',$total_pax)->get('excursion')->row();
 				if(empty($excursion)){
-					$excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_PVT[$k]."' AND type='".$excursion_type_PVT."'  AND pax <=$total_pax  LIMIT 1")->row();
+					// $excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_PVT[$k]."' AND type='".$excursion_type_PVT."'  AND pax <=$total_pax  LIMIT 1")->row();
+					$excursion =$this->db->where('tourname',$excursion_name_PVT[$k])->where('type',$excursion_type_PVT)->where('pax <=',$total_pax)->get('excursion')->row();
 				}
 
-				if($excursion->pax <= $total_pax){
+				if($excursion->pax < $total_pax){
 					echo json_encode(["status"=>0,"pax"=>$excursion->pax]);
 					return;
 				}
 
 
 				if($excursion_adult_PVT) {
-					$total_adultprice += ((((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->adultprice)) * (int)$excursion_adult_PVT ; //$excursion->adultprice * $excursion_adult_PVT;
+					$total_adultprice += (ceil((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->adultprice) * (int)$excursion_adult_PVT ; //$excursion->adultprice * $excursion_adult_PVT;
 					// $total_adultprice += ( (int)$excursion->adultprice) * (int)$excursion_adult_PVT ; //$excursion->adultprice * $excursion_adult_PVT;
 				}
 				if($excursion_child_PVT) {
-					$total_childprice += (((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->childprice) * (int)$excursion_child_PVT  ; // $excursion->childprice * $excursion_child_PVT;
+					$total_childprice += (ceil((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->childprice) * (int)$excursion_child_PVT  ; // $excursion->childprice * $excursion_child_PVT;
 					// $total_childprice += ( (int)$excursion->childprice) * (int)$excursion_child_PVT  ; // $excursion->childprice * $excursion_child_PVT;
 				}
 				if($excursion_infant_PVT) {
-					$total_infantprice += (((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->infantprice) * (int)$excursion_infant_PVT ;//$excursion->infantprice * $excursion_infant_PVT;
+					// $total_infantprice += (((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->infantprice) * (int)$excursion_infant_PVT ;//$excursion->infantprice * $excursion_infant_PVT;
+					$total_infantprice += ( (int)$excursion->infantprice) * (int)$excursion_infant_PVT ;//$excursion->infantprice * $excursion_infant_PVT;
 					// $total_infantprice += ( (int)$excursion->infantprice) * (int)$excursion_infant_PVT ;//$excursion->infantprice * $excursion_infant_PVT;
 				}
 

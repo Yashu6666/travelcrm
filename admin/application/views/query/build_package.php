@@ -205,6 +205,7 @@
                                     <select class="form-control get_bed_type" id="buildBedType" name="buildBedType[]" required>
                                       <option value="Double">Double</option>
                                       <option value="Single">Single</option>
+                                      <option value="Triple">Triple</option>
                                     </select>
                                   </td>
                                   <td>
@@ -728,6 +729,7 @@
                                   <td>
                                     <div>
                                       <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type" name="res_type[]" onchange="get_resturant_name('res_type','');">
+                                        <option value="">Select Option</option>
                                         <option value="Standard">Standard</option>
                                         <option value="Premium">Premium</option>
                                       </select>
@@ -1500,6 +1502,7 @@
                                   <td type="" name="person" id="person" value=""><span></td>
                                   <td type="" name="AdultCost" id="AdultCost" value=""><span>Adult</td>
                                   <td type="" name="ChildCost" id="ChildCost" value=""><span>Child</td>
+                                  <!-- <td type="" name="ChildCost" id="ChildCost" value=""><span>CNB</td> -->
                                   <td type="" name="InfantCost" id="InfantCost" value=""><span>Infant</td>
                                 </tr>
                                 <tr align="center">
@@ -1673,7 +1676,9 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js"></script>
 
 <script>
-  function get_resturant_name(id, row) {
+  function 
+  
+  get_resturant_name(id, row) {
     // var transfer = $('#'+id).val();
 
     var transfer = $('input[name="transfer_with_or_without' + row + '[]"]:checked').val();
@@ -4211,7 +4216,7 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
         // template += room;
 
         // template += '<td><select class="form-control get_room_group_type" id="buildRoomGroupType' + faqs_row + room_no + '" name="buildRoomGroupType[]" ><option value="FIT" >FIT</option><option value="GIT" >GIT</option></select></td>';
-        // template += '<td><select class="form-control get_bed_type" id="buildBedType' + faqs_row + room_no + '"  required="" name="buildBedType[]" required><option value="Double" >Double</option><option value = "Single">Single</option></select></td>';
+        // template += '<td><select class="form-control get_bed_type" id="buildBedType' + faqs_row + room_no + '"  required="" name="buildBedType[]" required><option value="Double" >Double</option><option value = "Single">Single</option><option value="Triple" >Triple</option></select></td>';
 
 
         // template += '<td><select class="form-control get_room_types" id="room_types' + faqs_row + room_no + '" name="build_room_types[]" required><option value ="BB">BB</option><option value ="Room Only">Room Only</option><option value="HB" >HB</option><option value="FB" >FB</option></select></td>';
@@ -4299,6 +4304,7 @@ template += `
       <select class="form-control get_bed_type" id="buildBedType${faqs_row}${room_no}"  required="" name="buildBedType[]" required>
          <option value="Double" >Double</option>
          <option value = "Single">Single</option>
+         <option value = "Triple">Triple</option>
       </select>
    </td>
    <td>

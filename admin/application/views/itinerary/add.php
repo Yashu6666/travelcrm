@@ -496,15 +496,16 @@ $this
                   <!-- bootstrap end -->
                   <?php
                   for ($i = 0; $i < $details['nights']; $i++) { ?>
-                    <div class="panel-heading row panel-defaultchange mt-2" style="background: #d9a927;" onclick="clickaccordion('2261_1<?php echo $i ?>')">
-                      <p class="ml-4" style="font-weight: bold;font-size: medium;">Day <?php echo $i + 1 ?> - <?php
-                                                                                                              echo date('d-m-Y', strtotime($details['checkindate'] . ' + ' . $i . ' days'))
-
-                                                                                                              ?>
-                      </p><span class="" id="itntxt_256346" style=" margin-left: 60%;font-size: 12px;">No Hotel&nbsp;,&nbsp;No Activity&nbsp;,&nbsp;No SightSeeing Added</span>
-
-                      <a href="javascript:void(0)" class="minus active ml-4"><i class="fa fa-angle-down large"></i></a>
-
+                    <div class="mt-2 panel-defaultchange panel-heading row" style="background: #d9a927;" onclick="clickaccordion('2261_1<?php echo $i ?>')">
+                    <div class="w-100">
+										  <textarea id="day_ck<?php echo $i ?>" name="day_ck<?php echo $i ?>"></textarea>
+                    </div>
+                    <div class="mt-2 d-flex justify-content-lg-between w-100">
+                      <p class="ml-4" style="font-weight: bold;font-size: medium;">Day <?php echo $i + 1 ?> - <?php echo date('d-m-Y', strtotime($details['checkindate'] . ' + ' . $i . ' days')) ?>
+                      </p>
+                      <!-- <span class="" id="itntxt_256346" style=" margin-left: 60%;font-size: 12px;">&nbsp; </span> -->
+                      <p><a href="javascript:void(0)" class="minus active mr-4 float-right"><i class="fa fa-angle-down large"></i></a></p>
+                    </div>
 
                       <input type="hidden" id="accdnid_2261_1<?php echo $i ?>" name="accdnid_2261_1<?php echo $i ?>" value="active">
 
@@ -1782,3 +1783,12 @@ $this
     width: 100% !important;
   }
 </style>
+
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script>
+  let nights = "<?php echo $details['nights'] ?>";
+  for(let i=0; i < parseInt(nights); i++){
+	  console.log("🚩 ~ file: add.php ~ line 1791 ~ $ ~ i", i)
+	  CKEDITOR.replace('day_ck'+i);
+  }
+</script>

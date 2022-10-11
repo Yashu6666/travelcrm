@@ -1100,11 +1100,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                                         <input class="package_inputs" type="date" placeholder=" " id="specificDate1" name="specificDate" autocomplete="off" required />
                                                     </div>
-                                                    <div class="col" hidden>
+                                                    <!-- <div class="col" hidden>
                                                         <label for="">Nights</label> <br />
 
-                                                        <input class="package_inputs" type="number" value="0" min="1" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
-                                                    </div>
+                                                    </div> -->
+                                                    <input class="package_inputs" type="hidden" value="0" min="1" placeholder=" " value="0" id="goingFrom1" name="night" required autocomplete="off" />
+
                                                     <div class="col">
                                                         <label for="">To Date</label> <br />
 
@@ -1144,7 +1145,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                         </select>
                                                     </div>
                                                     <div class="col">
-                                                        <label for="">No. of Room</label>
+                                                        <label for="">No. of Room</label><br/>
 
                                                         <select name="rooms" id="" required class="Travelers-select-package-values">
                                                             <option value="">Select Rooms</option>
@@ -1194,7 +1195,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                         <input id="child_age" name="child_age" class="Travelers-select-package-values" type="text" value="0" />
                                                     </div>
 
-                                                    <div class="col">
+                                                    <!-- <div class="col">
                                                         <label for="">No. Infant</label><br>
 
                                                         <select name="infant" id="" required class="Travelers-select-package-values">
@@ -1208,8 +1209,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                                         </select>
 
-                                                    </div>
+                                                    </div> -->
 
+                                                    <input id="infant" name="infant" class="Travelers-select-package-values" type="hidden" value="0" />
 
                                                 </div>
 

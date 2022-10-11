@@ -199,7 +199,47 @@
 
              
 
+               <div>
+                          <div class="card-head card-head-new m">
+                            <p style="margin-top:20px"><i class="fa-brands fa-cc-visa"></i> OTB
 
+                              <!-- <input type="radio" id="otb_status" name="otb_status" value="Yes"><label for="html">Yes</label>
+                              <input type="radio" id="otb_status1" name="otb_status" value="No"><label for="html">No</label> -->
+                            </p>
+                          </div>
+                          <br>
+                          <div class="row mt-4 mr-3 ml-3 mb-3 " id="otbdisplay">
+                            <div>
+                              <table id="faqs" class="table table-borderless">
+                                <thead>
+                                  <tr>
+                                    <th>Category</th>
+                                    <th>Adult</th>
+                                    <th>Child</th>
+                                    <th>Infant</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                <tbody>
+                                  <tr id="myTableRow">
+                                    <td>
+                                    <input type="text" placeholder="0" class="form-control" name="OTB" value="OTB" disabled>
+                                    </td>
+                                    <td><input type="text" placeholder="0" class="form-control" name="otb_adult"  id="otb_adult" value="<?php echo $view->Packagetravelers; ?>">
+                                    </td>
+                                    <td><input type="text" placeholder="0" class="form-control" name="otb_child" id="otb_child" value="<?php echo $buildpackage->child; ?>">
+                                    </td>
+                                    <td><input type="text" placeholder="0" class="form-control" name="otb_infant" id="otb_infant" value="<?php echo $buildpackage->infant; ?>">
+                                    </td>
+                                    <td><button type="button" onclick="getOTBprice()" class="new_btn px-3">Save</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
 
 
               </div>
@@ -263,18 +303,21 @@
                         // var total_pax_meal_adult = $("#total_pax_meal_adult").val(); 
                         // var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
                         // var total_pax_sic_adult = $("#total_pax_sic_adult").val();
+                        var total_pax_otb_price_adult = $("#total_pax_otb_price_adult").val();
                         
-                        var sub_total_adult =  parseInt(total_pax_visa_price_adult);
+                        var sub_total_adult =  parseInt(total_pax_visa_price_adult) + parseInt(total_pax_otb_price_adult) ;
 
+                        var total_pax_otb_price_child = $("#total_pax_otb_price_child").val();
                        
                         var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
 
-                        var sub_total_child = parseInt(total_pax_visa_price_child);
+                        var sub_total_child = parseInt(total_pax_visa_price_child) + parseInt(total_pax_otb_price_child);
 
                         var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val(); 
+                        var total_pax_otb_price_infant = $("#total_pax_otb_price_infant").val();
                        
 
-                        var sub_total_infant = parseInt(total_pax_visa_price_infant);
+                        var sub_total_infant = parseInt(total_pax_visa_price_infant) + parseInt(total_pax_otb_price_infant);
                         
                           
                         
@@ -824,12 +867,50 @@ function delQuery(){
         });
 
      }
+
+     function getOTBprice() {
+
+var category = "OTB";
+var pax_adult = $("#otb_adult").val();
+var pax_child = $("#otb_child").val();
+var pax_infant = $("#otb_infant").val();
+var QueryId = $('#QueryId').val();
+
+$.ajax({
+  type: "POST",
+  dataType: "json",
+  url: '<?php echo site_url(); ?>/Query/getOTBPrice',
+  data: {
+    'query_type': 'package',
+    'pax_adult': pax_adult,
+    'pax_child': pax_child,
+    'pax_infant': pax_infant,
+    'category': category,
+    'query_id': QueryId
+  },
+  success: function(response) {
+  console.log("🚩 ~ file: build_package.php ~ line 1924 ~ getOTBprice ~ response", response)
+
+    $("#total_pax_otb_price_adult").val(response.per_pax_adult_amt);
+    $("#total_pax_otb_price_child").val(response.per_pax_child_amt);
+    $("#total_pax_otb_price_infant").val(response.per_pax_infant_amt);
+
+    toastr.success("OTB Saved Successfully");
+
+  }
+});
+
+}
      </script>
 
 <input type="hidden" id="total_pax_visa_price_adult" name="total_pax_visa_price_adult" value="0" />
 <input type="hidden" id="total_pax_visa_price_child" name="total_pax_visa_price_child" value="0" />
 <input type="hidden" id="total_pax_visa_price_infant" name="total_pax_visa_price_infant" value="0" />
 
+
+<input type="hidden" id="total_pax_otb_price_adult" name="total_pax_otb_price_adult" value="0" />
+<input type="hidden" id="total_pax_otb_price_child" name="total_pax_otb_price_child" value="0" />
+<input type="hidden" id="total_pax_otb_price_infant" name="total_pax_otb_price_infant" value="0" />
 
       <script>
         function mealcalculation(){

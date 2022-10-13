@@ -497,13 +497,32 @@
                           // var per_pax_child = (parseInt(total_child) / 2);
                           // var per_pax_infant = (parseInt(total_infant) / 2);
                           var pax_adult_count = <?php  echo $buildpackage->adult; ?>;
-                          var pax_child_count = <?php  echo $buildpackage->child; ?>;
-                          var pax_infant_count = <?php echo $buildpackage->infant;?>;
+                          // var pax_child_count = ?php  echo $buildpackage->child; ?>;
+                          // var pax_infant_count = ?php echo $buildpackage->infant;?>;
                           
-                          var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / 2 : parseInt(total_adult));
-                          var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
-                          var per_pax_infant = (pax_infant_count > 1 ? parseInt(total_infant) / 2 : parseInt(total_infant));
+                          var pax_cnb_count_data = <?php print_r(json_encode($buildpackage->cnb_per_room)); ?>;
+                                // var pax_cnb_count = ?php echo $buildpackage->cnb_per_room; ?>;
+                                let cnb_arr = pax_cnb_count_data.split(",");
+                                var pax_infant_count = 0;
+                                cnb_arr.forEach(x => {
+                                  pax_infant_count += parseInt(x);
+                                });
 
+                            var pax_cwb_count_data = <?php print_r(json_encode($buildpackage->cwb_per_room)); ?>;
+                            // var pax_cwb_count = ?php echo $buildpackage->cwb_per_room; ?>;
+                            let cwb_arr = pax_cwb_count_data.split(",");
+                            var pax_child_count = 0;
+                            cwb_arr.forEach(x => {
+                              pax_child_count += parseInt(x);
+                            });
+
+                          // var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / 2 : parseInt(total_adult));
+                          // var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
+                          // var per_pax_infant = (pax_infant_count > 1 ? parseInt(total_infant) / 2 : parseInt(total_infant));
+                         
+                          var per_pax_adult = Math.ceil(pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
+                          var per_pax_child = Math.ceil(pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
+                          var per_pax_infant = Math.ceil(pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
                           // $("#perpax_adult").html(per_pax_adult);
                           // $("#perpax_childs").html( per_pax_child );
                           // $("#perpax_infants").html( per_pax_infant );
@@ -615,8 +634,8 @@
                <tr align="center">
                    <td type="text" name="person" id="person" value=""><span></td>
                    <td type="" name="AdultCost" id="AdultCost" value=""><span>Adult</td>
-                   <td type="" name="ChildCost" id="ChildCost" value=""><span>Child</td>
-                   <td type="" name="InfantCost" id="InfantCost" value=""><span>Infant</td>
+                   <td type="" name="ChildCost" id="ChildCost" value=""><span>CWB</td>
+                   <td type="" name="InfantCost" id="InfantCost" value=""><span>CNB</td>
                   </tr>
                    <tr  align="center">
                     <td><b>Sub Total</b></td>

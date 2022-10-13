@@ -512,13 +512,29 @@
                           // var per_pax_child = (parseInt(total_child) / 2);
                           // var per_pax_infant = (parseInt(total_infant) / 2);
                           var pax_adult_count = <?php  echo $buildpackage->adult; ?>;
-                          var pax_child_count = <?php  echo $buildpackage->child; ?>;
-                          var pax_infant_count = <?php echo $buildpackage->infant;?>;
+                          // var pax_child_count = <?php  echo $buildpackage->child; ?>;
+                          // var pax_infant_count = <?php echo $buildpackage->infant;?>;
                           
-                          var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / 2 : parseInt(total_adult));
-                          var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
-                          var per_pax_infant = (pax_infant_count > 1 ? parseInt(total_infant) / 2 : parseInt(total_infant));
+                          var pax_cnb_count_data = <?php print_r(json_encode($buildpackage->cnb_per_room)); ?>;
+                                // var pax_cnb_count = ?php echo $buildpackage->cnb_per_room; ?>;
+                                let cnb_arr = pax_cnb_count_data.split(",");
+                                var pax_infant_count = 0;
+                                cnb_arr.forEach(x => {
+                                  pax_infant_count += parseInt(x);
+                                });
 
+                            var pax_cwb_count_data = <?php print_r(json_encode($buildpackage->cwb_per_room)); ?>;
+                            // var pax_cwb_count = ?php echo $buildpackage->cwb_per_room; ?>;
+                            let cwb_arr = pax_cwb_count_data.split(",");
+                            var pax_child_count = 0;
+                            cwb_arr.forEach(x => {
+                              pax_child_count += parseInt(x);
+                            });
+
+                            var per_pax_adult = Math.ceil(pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
+                          var per_pax_child = Math.ceil(pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
+                          var per_pax_infant = Math.ceil(pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
+                         
                           // $("#perpax_adult").html(per_pax_adult);
                           // $("#perpax_childs").html( per_pax_child );
                           // $("#perpax_infants").html( per_pax_infant );
@@ -630,8 +646,8 @@
                <tr align="center">
                    <td type="text" name="person" id="person" value=""><span></td>
                    <td type="" name="AdultCost" id="AdultCost" value=""><span>Adult</td>
-                   <td type="" name="ChildCost" id="ChildCost" value=""><span>Child</td>
-                   <td type="" name="InfantCost" id="InfantCost" value=""><span>Infant</td>
+                   <td type="" name="ChildCost" id="ChildCost" value=""><span>CWB</td>
+                   <td type="" name="InfantCost" id="InfantCost" value=""><span>CNB</td>
                   </tr>
                    <tr  align="center">
                     <td><b>Sub Total</b></td>
@@ -1481,6 +1497,194 @@ function hotelcalculation(){
   
 
   }
+
+  
+function hotelcalculation1(){
+
+
+var total_rows = $('#rows_count').val();
+var pax_adult = <?php  echo $view->Packagetravelers; ?>;
+var pax_child = <?php  echo $buildpackage->child; ?>;
+var pax_infants = <?php  echo $buildpackage->infant; ?>;
+var total_pax = pax_adult + pax_child + pax_infants;
+var QueryId = $('#QueryId').val();
+// var with_adult ='';
+// var with_child ='';
+// var without_bed ='';
+// if ($('#extra_with_adult').is(":checked"))
+// {
+//   with_adult = $('#extra_with_adult').val();
+// }
+// if ($('#extra_with_child').is(":checked"))
+// {
+//   with_child = $('#extra_with_child').val();
+// }
+// if ($('#extra_without_bed').is(":checked"))
+// {
+//   without_bed = $('#extra_without_bed').val();
+// }
+
+// // console.log(extra_with_adult);
+// var extra_with_adult = with_adult;
+// var extra_with_child = with_child;
+// var extra_without_bed = without_bed;
+                  setTimeout(function(){ $('.noOfDaysAlertcls2').attr("style","display:none;") }, 2000);
+
+                   var extra_with_adult = [];
+                    $(".extra_with_adult").each(function() {
+                      if ($(this).is(":checked"))
+                      {
+                        var with_adult = $(this).val();
+                        extra_with_adult.push($.trim(with_adult));
+                      }else{
+                        var with_adult = "";
+                        extra_with_adult.push($.trim(with_adult));
+                      }
+                    });
+
+                    var extra_with_child = [];
+                    $(".extra_with_child").each(function() {
+                      if ($(this).is(":checked"))
+                      {
+                      var with_child = $(this).val();
+                      extra_with_child.push($.trim(with_child));
+                      }else{
+                        var with_child = "";
+                        extra_with_child.push("");
+                      }
+
+                    });
+                    var extra_without_bed = [];
+                    $(".extra_without_bed").each(function() {
+                      if ($(this).is(":checked"))
+                      {
+                      var without_bed = $(this).val();
+                      extra_without_bed.push($.trim(without_bed));
+                      }else{
+                        var without_bed = "";
+                        extra_without_bed.push("");
+                      }
+                    });
+
+                  
+                    var noOfNights = [];
+                    $(".get_no_nights").each(function() {
+                      var nights = $(this).val();
+                      noOfNights.push($.trim(nights));
+
+                    });
+
+                    var hotelName = [];
+                    $(".get_buildHotelName").each(function() {
+                      var hotel_name = $(this).val();
+                      console.log("🚩 ~ file: build_hotel.php ~ line 1327 ~ $ ~ hotel_name", hotel_name)
+                      hotelName.push($.trim(hotel_name));
+
+                    });
+
+                    var roomType = [];
+                    $(".get_buildRoomType").each(function() {
+                      var room = $(this).val();
+                      roomType.push($.trim(room));
+
+                    });
+
+                    var bedType = [];
+                    $(".get_bed_type").each(function() {
+                      var bed = $(this).val();
+                      bedType.push($.trim(bed));
+
+                    });
+
+                    
+                  var buildHotelCity = [];
+                  $(".get_all_city").each(function() {
+                    var val = $(this).val();
+                    buildHotelCity.push($.trim(val));
+
+                  });
+
+                  var buildCheckIns = [];
+                  $(".get_CheckIn").each(function() {
+                    var val = $(this).val();
+                    buildCheckIns.push($.trim(val));
+                  });
+
+
+                  var Category = [];
+                  $(".get_category").each(function() {
+                    var cat = $(this).val();
+                    Category.push($.trim(cat));
+
+                  });
+
+                  var get_room_types = [];
+              $(".get_room_types").each(function() {
+                var cat = $(this).val();
+                get_room_types.push($.trim(cat));
+              });
+
+              var sharing_types = [];
+              $(".room_sharing_types").each(function() {
+                var cat = $(this).val();
+                sharing_types.push($.trim(cat));
+              });
+
+              var groupType = [];
+                    $(".get_room_group_type").each(function() {
+                      var bed = $(this).val();
+                      groupType.push($.trim(bed));
+
+                    });
+
+
+                  let total_no_of_days = <?php echo $buildpackage->night?>;
+                
+                if(noOfNights < total_no_of_days){
+                  $('.noOfDaysAlertcls2').attr("style","display:block;");
+                }
+                else {
+                    var data= [{
+                      'group_type' : groupType,
+                        'nights' : noOfNights,
+                        'hotelName' : hotelName,
+                        'roomType' : roomType,
+                        'bedType' : bedType,
+                        'extra_with_adult' :extra_with_adult,
+                        'extra_with_child' : extra_with_child,
+                        'extra_without_bed' : extra_without_bed,
+                        'buildHotelCity' : buildHotelCity,
+                        'buildCheckIns' : buildCheckIns,
+                        'Category' : Category,
+                        'get_room_types' : get_room_types,
+                        'sharing_types' : sharing_types,
+                        'query_type' : 'hotel',
+                      }];
+                     
+                    
+                    // console.log(data);
+
+                      $.ajax({ 
+                          type: "POST",
+                          url: "<?php echo base_url()?>Query/getHotelCalculation",
+                          data : {data : data, total_rows : total_rows,'pax_adult':pax_adult,'pax_child':pax_child,'pax_infants':pax_infants,'query_id' : QueryId },
+                          cache: false,
+                          dataType: "json",
+                          success: function(response)
+                          {
+                            // console.log(JSON.parse(response.total_pax_adult_rate));
+                            $('#hotel_rate_adult').val(response.total_pax_adult_rate);
+                            $('#hotel_rate_child').val(response.total_pax_child_rate);
+                            $('#hotel_rate_infant').val(response.total_pax_wo_rate);
+                            // $('#hotel_rate_adult').val(100);
+                            // $('#hotel_rate_child').val(200);
+
+                          }
+                      });
+                    }
+
+
+}
   // $('#hotel_name_backup').val( hotel_name_backup);
 
 
@@ -2489,6 +2693,7 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
   
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script>
+  hotelcalculation1();
 	CKEDITOR.replace('buildPackageInclusions');
 	CKEDITOR.replace('buildPackageExclusions');
 	CKEDITOR.replace('buildPackageConditions');

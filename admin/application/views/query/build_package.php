@@ -1160,6 +1160,14 @@
                                 var pax_child_count = <?php echo $buildpackage->child; ?>;
                                 var pax_infant_count = <?php echo $buildpackage->infant; ?>;
 
+                                var pax_cnb_count_data = <?php print_r(json_encode($buildpackage->cnb_per_room)); ?>;
+                                // var pax_cnb_count = ?php echo $buildpackage->cnb_per_room; ?>;
+                                let cnb_arr = pax_cnb_count_data.split(",");
+                                var pax_cnb_count = 0;
+                                cnb_arr.forEach(x => {
+                                  pax_cnb_count += parseInt(x);
+                                });
+
                                 var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val();
                                 var total_pax_otb_price_adult = $("#total_pax_otb_price_adult").val();
                                 var total_pax_meal_adult = $("#total_pax_meal_adult").val();
@@ -1210,11 +1218,12 @@
                                 var total_pax_TKT_infant = $("#total_pax_TKT_infant").val();
 
                                 var sub_total_infant = parseInt(total_pax_visa_price_infant) + parseInt(total_pax_otb_price_infant) +
-                                  parseInt(hotel_rate_infant) +
+                                  // parseInt(hotel_rate_infant) +
                                   parseInt(total_pax_TKT_infant) +
                                   parseInt(total_pax_pvt_infant) +
                                   parseInt(total_pax_sic_infant);
 
+                                var sub_total_cnb = parseInt(hotel_rate_infant); 
 
                                 let c_type = document.getElementById('currencyOption').value;
                                 var usd_aed = <?php echo $usd_to_aed->usd_to_aed; ?>;
@@ -1222,6 +1231,7 @@
                                 $("#subtotal_adults").html(c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2) : sub_total_adult);
                                 $("#subtotal_childs").html(c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child);
                                 $("#subtotal_infants").html(c_type == 'USD' ? (sub_total_infant / usd_aed).toFixed(2) : sub_total_infant);
+                                $("#subtotal_cnb").html(c_type == 'USD' ? (sub_total_cnb / usd_aed).toFixed(2) : sub_total_cnb);
 
                                 var PackageMarkup = $("#PackageMarkup").val();
                                 var Mark_up = $("#Mark_up").val();
@@ -1234,6 +1244,7 @@
                                   total_adult = (parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100));
                                   total_child = (parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
                                   total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
+                                  total_cnb = (parseInt(sub_total_cnb) + (parseInt(sub_total_cnb) * parseInt(PackageMarkup) / 100));
 
                                 }
 
@@ -1244,12 +1255,14 @@
                                   total_adult = pax_adult_count > 0 ? (parseInt(sub_total_adult) + parseInt(markup_per * pax_adult_count)) : 0;
                                   total_child = pax_child_count > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * pax_child_count)) : 0;
                                   total_infant = pax_infant_count > 0 ? (parseInt(sub_total_infant) + parseInt(markup_per * pax_infant_count)) : 0;
+                                  total_cnb = pax_cnb_count > 0 ? (parseInt(sub_total_cnb) + parseInt(markup_per * pax_cnb_count)) : 0;
 
                                 }
 
                                 $("#totalprice_adult").html(c_type == 'USD' ? (total_adult / usd_aed).toFixed(2) : total_adult);
                                 $("#totalprice_childs").html(c_type == 'USD' ? (total_child / usd_aed).toFixed(2) : total_child);
                                 $("#totalprice_infants").html(c_type == 'USD' ? (total_infant / usd_aed).toFixed(2) : total_infant);
+                                $("#totalprice_cnb").html(c_type == 'USD' ? (total_cnb / usd_aed).toFixed(2) : total_cnb);
 
                                 var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
 
@@ -1257,14 +1270,18 @@
 
                                 var per_pax_infant = (pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
 
+                                var per_pax_cnb = (pax_cnb_count > 1 ? (parseInt(total_cnb) / pax_cnb_count) : parseInt(total_cnb));
+
                                 $("#perpax_adult").html(c_type == 'USD' ? Math.floor(per_pax_adult / usd_aed) : Math.floor(per_pax_adult));
                                 $("#perpax_childs").html(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
                                 $("#perpax_infants").html(c_type == 'USD' ? Math.floor(per_pax_infant / usd_aed) : Math.floor(per_pax_infant));
+                                $("#perpax_cnb").html(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
 
                                 $("#perpax_adult_input").val(c_type == 'USD' ? Math.floor(per_pax_adult / usd_aed) : Math.floor(per_pax_adult));
                                 $("#perpax_childs_input").val(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
                                 $("#perpax_infants_input").val(c_type == 'USD' ? Math.floor(per_pax_infant / usd_aed) : Math.floor(per_pax_infant));
-                                var totalprice_package = total_adult + total_child + total_infant;
+                                $("#perpax_cnb_input").val(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
+                                var totalprice_package = total_adult + total_child + total_infant + total_cnb;
                                 // var totalprice_package = c_type == 'USD' ?  Math.floor( totalprice_package / usd_aed)  : Math.floor(totalprice_package);
 
                                 $("#totalprice_package").val(totalprice_package);
@@ -1501,31 +1518,35 @@
                                 <tr align="center">
                                   <td type="" name="person" id="person" value=""><span></td>
                                   <td type="" name="AdultCost" id="AdultCost" value=""><span>Adult</td>
-                                  <td type="" name="ChildCost" id="ChildCost" value=""><span>Child</td>
-                                  <!-- <td type="" name="ChildCost" id="ChildCost" value=""><span>CNB</td> -->
+                                  <td type="" name="ChildCost" id="ChildCost" value=""><span>CWB</td>
+                                  <td type="" name="ChildCost" id="ChildCost" value=""><span>CNB</td>
                                   <td type="" name="InfantCost" id="InfantCost" value=""><span>Infant</td>
                                 </tr>
                                 <tr align="center">
                                   <td><b>Sub Total</b></td>
                                   <td type="" id="subtotal_adults" name="subtotal_adults"></td>
                                   <td type="" id="subtotal_childs" name="subtotal_childs"></td>
+                                  <td type="" id="subtotal_cnb" name="subtotal_cnb"></td>
                                   <td type="" id="subtotal_infants" name="subtotal_infants"></td>
                                 </tr>
                                 <tr align="center">
                                   <td><b>Total Price</b></td>
                                   <td type="" name="totalprice_adult" id="totalprice_adult" value=""></td>
                                   <td type="" name="totalprice_childs" id="totalprice_childs" value=""></td>
+                                  <td type="" name="totalprice_cnb" id="totalprice_cnb" value=""></td>
                                   <td type="" name="totalprice_infants" id="totalprice_infants" value=""></td>
                                 </tr>
                                 <tr align="center">
                                   <td><b>Per PAX</b></td>
                                   <td type="" name="perpax_adult" id="perpax_adult" value=""></td>
                                   <td type="" name="perpax_childs" id="perpax_childs" value=""></td>
+                                  <td type="" name="perpax_cnb" id="perpax_cnb" value=""></td>
                                   <td type="" name="perpax_infants" id="perpax_infants" value=""></td>
                                 </tr>
                               </table>
                               <input type="hidden" id="perpax_adult_input" name="perpax_adult_input" value="" />
                               <input type="hidden" id="perpax_childs_input" name="perpax_childs_input" value="" />
+                              <input type="hidden" id="perpax_cnb_input" name="perpax_cnb_input" value="" />
                               <input type="hidden" id="perpax_infants_input" name="perpax_infants_input" value="" />
 
                             </div>
@@ -2204,8 +2225,6 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 
 
   }
-    console.log("🚩 ~ file: build_package.php ~ line 2133 ~ mealcalculation ~ resturants_transfer", resturants_transfer)
-    console.log("🚩 ~ file: build_package.php ~ line 2133 ~ mealcalculation ~ resturants_transfer", resturants_transfer)
 </script>
 <input type="hidden" id="total_pax_meal_adult" name="total_pax_meal_adult" value="0" />
 <input type="hidden" id="total_pax_meal_child" name="total_pax_meal_child" value="0" />
@@ -2627,7 +2646,7 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 
 
   }
-
+  
   $('#transferSave').on('click', function() {
 
     var pax_adult = <?php echo $view->Packagetravelers; ?>;
@@ -2736,6 +2755,118 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
       }
     });
   });
+
+  function transfer_cal(){
+    var pax_adult = <?php echo $view->Packagetravelers; ?>;
+    var pax_child = <?php echo $buildpackage->child; ?>;
+    var pax_infants = <?php echo $buildpackage->infant; ?>;
+    var total_pax = pax_adult + pax_child + pax_infants;
+    var QueryId = $('#QueryId').val();
+
+    var internal_transfer_pickup = [];
+    $(".internal_transfer_pickup").each(function() {
+      var cat = $(this).val();
+      if (cat != "" && cat != 'Pickup') {
+        internal_transfer_pickup.push($.trim(cat));
+      }
+    });
+
+    var internal_transfer_dropoff = [];
+    $(".internal_transfer_dropoff").each(function() {
+      var cat = $(this).val();
+      if (cat != "" && cat != 'Drop Off') {
+        internal_transfer_dropoff.push($.trim(cat));
+      }
+    });
+
+    var internal_transfer_route = [];
+    $(".internal_transfer_route").each(function() {
+      var cat = $(this).val();
+      if (cat != "") {
+        internal_transfer_route.push($.trim(cat));
+      }
+    });
+
+    var internal_transfer_date = [];
+    $(".internal_transfer_date").each(function() {
+      var cat = $(this).val();
+      if (cat != "") {
+        internal_transfer_date.push($.trim(cat));
+      }
+    });
+
+    // return transfer ---------------------------------
+
+    var return_transfer_pickup = [];
+    $(".return_transfer_pickup").each(function() {
+      var cat = $(this).val();
+      if (cat != "" && cat != 'Pickup') {
+        return_transfer_pickup.push($.trim(cat));
+      }
+    });
+
+    var return_transfer_dropoff = [];
+    $(".return_transfer_dropoff").each(function() {
+      var cat = $(this).val();
+      if (cat != "" && cat != 'Drop Off') {
+        return_transfer_dropoff.push($.trim(cat));
+      }
+    });
+
+    var return_transfer_route = [];
+    $(".return_transfer_route").each(function() {
+      var cat = $(this).val();
+      if (cat != "") {
+        return_transfer_route.push($.trim(cat));
+      }
+    });
+
+    var return_transfer_date = [];
+    $(".return_transfer_date").each(function() {
+      var cat = $(this).val();
+      if (cat != "") {
+        return_transfer_date.push($.trim(cat));
+      }
+    });
+
+    var data = [{
+      'internal_transfer_pickup': internal_transfer_pickup,
+      'internal_transfer_dropoff': internal_transfer_dropoff,
+      'internal_transfer_route': internal_transfer_route,
+      'internal_transfer_date': internal_transfer_date,
+
+      'return_transfer_pickup': return_transfer_pickup,
+      'return_transfer_dropoff': return_transfer_dropoff,
+      'return_transfer_route': return_transfer_route,
+      'return_transfer_date': return_transfer_date,
+
+    }];
+    console.log("🚩 ~ file: build_package.php ~ line 2424 ~ $ ~ data", data)
+
+
+    $.ajax({
+      type: "POST",
+      url: "<?php echo base_url() ?>Query/saveTransferData",
+      data: {
+        data: data,
+        'pax_adult': pax_adult,
+        'pax_child': pax_child,
+        'pax_infants': pax_infants,
+        'query_id': QueryId,
+        'query_type': 'package'
+      },
+      cache: false,
+      dataType: "json",
+      success: function(response) {
+        console.log("🚩 ~ file: build_package.php ~ line 2440 ~ $ ~ response", response)
+        toastr.success("Transfer Details Saved Successfully");
+      }
+    });
+
+    transfer_cal();
+    console.log("🚩 ~ file: build_package.php ~ line 2632 ~ data", data)
+
+  }
 </script>
 <input type="hidden" id="hotel_rate_adult" name="hotel_rate_adult" value="0" />
 <input type="hidden" id="hotel_rate_child" name="hotel_rate_child" value="0" />

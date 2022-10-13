@@ -229,8 +229,10 @@
 												<input type="hidden" id="email_id" name="email_id" value=<?php echo $guest->b2bEmail; ?>>
 												<input type="hidden" id="base_url_id" name="base_url" value=<?php echo site_url(); ?>>
 												<textarea id="impInfo" name="impInfo">
+												<ul style="font-family: Poppins,sans-serif;">
+
 												<?php foreach (explode(',',$hotel[0]->room_type) as $key => $value) : ?>
-												<p>
+												<li>
 												<?php print_r($hotel_details[$key]->hotelname); ?>, 
 												
 												<?php if(isset($hotel_details[$key]->hotel_full_address)) : ?>	
@@ -240,32 +242,32 @@
 												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
 												
 												<?php if(isset($hotel_details[$key]->hotelphone)) : ?>	
-													<?php print_r($hotel_details[$key]->hotelphone); ?></p> 
+													<?php print_r($hotel_details[$key]->hotelphone); ?></li><br/> 
 												<?php endif ?>
 												
 												<?php endforeach ?>
 
-												<p>Guest Relation Contact Number (24x7):- +971 50 351 5408 , +971 4 355 9218</p>
+												<li>Guest Relation Contact Number (24x7):- +971 50 351 5408 , +971 4 355 9218</li> <br/>
 
-												<p style="font-family: Poppins,sans-serif;">
-Kindly note that Hotel Check- in time is 14:00 hrs. Check-out time is 12:00 hrs. In case of an early arrival before the check in time, rooms must be booked from the previous night with the corresponding charges in order to guarantee an early check in.<br/><br/>
+<li>Kindly note that Hotel Check- in time is 14:00 hrs. Check-out time is 12:00 hrs. In case of an early arrival before the check in time, rooms must be booked from the previous night with the corresponding charges in order to guarantee an early check in.</li> <br/>
 
-Late checkout is subject to availability and Hotel Policy and Charges may apply. Hotel Reserves the Rights to Cancel the Rooms Booking Automatically After18:00 Hours, If Hotel is not Informed about the late arrivals <br/><br/>
+<li>Late checkout is subject to availability and Hotel Policy and Charges may apply. Hotel Reserves the Rights to Cancel the Rooms Booking Automatically After18:00 Hours, If Hotel is not Informed about the late arrivals </li> <br/>
 
-In case of late check in, kindly inform us on info@diamondtoursdubai.com with the flight details, so as to further inform the hotels. Failure to do so will lead to No show and further cancellation of the booking and Diamond Tours LLC Tourism will not be responsible for the same. <br/><br/>
+<li>In case of late check in, kindly inform us on info@diamondtoursdubai.com with the flight details, so as to further inform the hotels. Failure to do so will lead to No show and further cancellation of the booking and Diamond Tours LLC Tourism will not be responsible for the same. </li> <br/>
 
-Kindly note Tourism Dirham is to be paid by the guest on check out, If it is not included in the booking amount.  <br/><br/>
+<li>Kindly note Tourism Dirham is to be paid by the guest on check out, If it is not included in the booking amount.  </li> <br/>
 
-As per the new taxation rules of UAE, 5% VAT will be implemented for all hospitality related services from 1st Jan 2018. In case of any Cancellation, No Show, Diamond Tours LLC Cancellation Policy will be apply. Even in case where the hotel has agreed for refund, the cancellation charges will be decided upon Diamond Tours LLC Cancellation Policy It has nothing to do with Hotel and Supplier. Agent are not authorized to speak to the Hotel or Supplier directly.  <br/><br/>
+<li>As per the new taxation rules of UAE, 5% VAT will be implemented for all hospitality related services from 1st Jan 2018. In case of any Cancellation, No Show, Diamond Tours LLC Cancellation Policy will be apply. Even in case where the hotel has agreed for refund, the cancellation charges will be decided upon Diamond Tours LLC Cancellation Policy It has nothing to do with Hotel and Supplier. Agent are not authorized to speak to the Hotel or Supplier directly.  </li> <br/>
 
-Kindly note few hotels may charge a refundable security deposit at the time of check in, this may be the respective hotel policy, Diamond Tours LLC is not responsible for the same.  <br/><br/>
+<li>Kindly note few hotels may charge a refundable security deposit at the time of check in, this may be the respective hotel policy, Diamond Tours LLC is not responsible for the same.  </li> <br/>
 
-The extra bed depends on hotel to hotel policy as per the hotel standards. It can be Sofa cum bed / Rollaway Bed / Mattress subject to availability.  <br/><br/>
+<li>The extra bed depends on hotel to hotel policy as per the hotel standards. It can be Sofa cum bed / Rollaway Bed / Mattress subject to availability.  </li> <br/>
 
-All rooms are guaranteed on the day of arrival. In case of a no-show, your room(s) will be released and you will be subject to the terms and conditions of the Cancellation/No-Show Policy specified at the time you made the booking.  <br/><br/>
+<li>All rooms are guaranteed on the day of arrival. In case of a no-show, your room(s) will be released and you will be subject to the terms and conditions of the Cancellation/No-Show Policy specified at the time you made the booking.  </li> <br/>
 
-The total price for this booking does not include mini-bar items, telephone usage, laundry service, etc.  
-												</p>
+<li>The total price for this booking does not include mini-bar items, telephone usage, laundry service. etc.</li> <br/>
+												<!-- </p> -->
+												</ul>
 												</textarea>
 												</div>
 											</div>

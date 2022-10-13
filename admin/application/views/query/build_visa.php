@@ -881,7 +881,7 @@ $.ajax({
   dataType: "json",
   url: '<?php echo site_url(); ?>/Query/getOTBPrice',
   data: {
-    'query_type': 'package',
+    'query_type': 'visa',
     'pax_adult': pax_adult,
     'pax_child': pax_child,
     'pax_infant': pax_infant,

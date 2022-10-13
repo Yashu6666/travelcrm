@@ -409,16 +409,38 @@ class Query extends CI_Controller
 	public function addQueryPackage()
 	{
 		// echo '<pre>';print_r($_POST['child_with_or_wo_count']);
-
+		// exit;
+		$cwb = [];
+		$cnb = [];
 		$with_or_wo = [];
+
+		if(isset($_POST['child_with_or_wo_count'])){
+			foreach($_POST['child_with_or_wo_count'] as $key => $val){
+			$with=0;$without=0;
+			foreach($val as $k){
+				$with_result = $k == 1 ? true : false;
+				$wo_result = $k == 0 ? true : false;
+				if($with_result){
+					$with += 1;
+				} elseif($wo_result) {
+					$without += 1;
+				}
+			}
+			array_push($cwb,$with);
+			array_push($cnb,$without);
+		}
+
 		if(isset($_POST['hotelPrefrence'])){
 		foreach ($_POST['child_with_or_wo_count'] as $key => $wo) {
 			foreach ($wo as $key => $val) {
 				array_push($with_or_wo,$val);
 			}
 		}}
+	}
 		
 		$child_with_or_wo_bed = implode(',', $with_or_wo);
+		$cnb_count = implode(',', $cnb);
+		$cwb_count = implode(',', $cwb);
 		$country = implode(',', $_POST['country']);
 		$goingFrom = implode(',', $_POST['goingFrom']);
 		$hotelPrefrence = isset($_POST['hotelPrefrence']) ? implode(',', $_POST['hotelPrefrence']) : "";
@@ -439,6 +461,8 @@ class Query extends CI_Controller
 			'noDaysFrom' => $this->input->post('noDaysFrom'),
 			'doa' => $doa,
 			'dod' => $dod,
+			'cwb_per_room' => $cwb_count,
+			'cnb_per_room' => $cnb_count,
 			'adult_per_room' => $adult_count,
 			'child_per_room' => $child_count,
 			'child_age_per_room' => $child_age_count,
@@ -653,8 +677,11 @@ class Query extends CI_Controller
 	public function buildPackageEdit($q_id = '')
 	{
 		//echo '<pre>';print_r($q_id);exit;
-		$data["internal_query"] = $this->db->where('query_id', $q_id)->where('transfer_type', 'internal')->get('query_transfer')->result();
-		$data['return_query'] = $this->db->where('query_id', $q_id)->where('transfer_type', 'return')->get('query_transfer')->result();
+		$data["internal_query"] = $this->db->where('query_id', $q_id)->where('query_type', 'package')->where('transfer_type', 'internal')->get('query_transfer')->result();
+		$data['return_query'] = $this->db->where('query_id', $q_id)->where('query_type', 'package')->where('transfer_type', 'return')->get('query_transfer')->result();
+
+		$data["internal_query1"] = $this->db->where('query_id', $q_id)->where('query_type', 'meals')->where('transfer_type', 'internal')->get('query_transfer')->result();
+		$data['return_query1'] = $this->db->where('query_id', $q_id)->where('query_type', 'meals')->where('transfer_type', 'return')->get('query_transfer')->result();
 		
 		$data["visa_query"] = $this->db->where('query_id', $q_id)->get('query_visa')->result();
 
@@ -844,25 +871,19 @@ class Query extends CI_Controller
 		$pax_child = $this->input->post('pax_child');
 		$pax_infants = $this->input->post('pax_infants');
 
-		// $build_room_type = $this->input->post('build_room_type');
-		// $no_of_nights = $this->input->post('no_of_nights');
-		// $build_hotel_name = $this->input->post('build_hotel_name');
-		// $build_bed_type = $this->input->post('build_bed_type');
-
-		// $extra_with_adult = $this->input->post('extra_with_adult');
-		// $extra_with_child =$this->input->post('extra_with_child');
-		// $extra_without_bed =$this->input->post('extra_without_bed');
-
 
 		$rows_count = $this->input->post('total_rows') + 1;
 		$QueryId = $this->input->post('query_id');
+		$buildpackage = $this->db->where('queryId', $QueryId)->get('querypackage')->row();
+		$with_or_wo_bed = explode(",",$buildpackage->child_with_or_wo_bed);
+		$no_childs_room = explode(",",$buildpackage->child_per_room);
+		$cwb_room = explode(",",$buildpackage->cwb_per_room);
+		$cnb_room = explode(",",$buildpackage->cnb_per_room);
 
 		$tableData = $this->input->post('data');
-		
-		// print_r($tableData);
 
 		$datas =  array();
-		for ($x = 0; $x < $rows_count; $x++) {
+		for ($x = 0; $x <= $rows_count; $x++) {
 			$datas[$x]['nights'] = $tableData[0]['nights'][$x];
 			$datas[$x]['group_type'] = $tableData[0]['group_type'][$x];
 			$datas[$x]['hotel_id'] = $tableData[0]['hotelName'][$x];
@@ -871,7 +892,10 @@ class Query extends CI_Controller
 			$datas[$x]['extra_with_adult'] = $tableData[0]['extra_with_adult'][$x];
 			$datas[$x]['extra_with_child'] = $tableData[0]['extra_with_child'][$x];
 			$datas[$x]['extra_without_bed'] = $tableData[0]['extra_without_bed'][$x];
-
+			$datas[$x]['no_childs_room'] = $no_childs_room[$x];
+			$datas[$x]['cwb'] = $cwb_room[$x];
+			$datas[$x]['cnb'] = $cnb_room[$x];
+			
 			$datas[$x]['buildHotelCity'] = $tableData[0]['buildHotelCity'][$x];
 			$datas[$x]['buildCheckIns'] = $tableData[0]['buildCheckIns'][$x];
 			$datas[$x]['Category'] = $tableData[0]['Category'][$x];
@@ -880,8 +904,8 @@ class Query extends CI_Controller
 			
 		}
 		$no_of_nights = ($tableData[0]['nights']);
-		// print_r();exit;
-		
+		// print_r($datas);exit;
+
 		$hotel_names = [];
 		foreach ($tableData[0]['hotelName'] as $key => $value) {
 			$this->db->select('hotelname');
@@ -891,22 +915,6 @@ class Query extends CI_Controller
 			$hotel_names[] = $name->row()->hotelname;
 		}
 
-		// $hotel_query_data = [
-		// 	'nights' => implode(',',$tableData[0]['nights']),
-		// 	'hotel_id' => implode(',',$tableData[0]['hotelName']),
-		// 	'room_type' => implode(',',$tableData[0]['roomType']),
-
-		// 	'hotel_name' => implode(',',$hotel_names),
-		// 	'category' => implode(',',$tableData[0]['Category']),
-		// 	'checkin' => implode(',',$tableData[0]['buildCheckIns']),
-		// 	'hotel_city' => implode(',',$tableData[0]['buildHotelCity']),
-
-		// ];
-
-		// $this->db->where('query_id', $QueryId);
-		// $this->db->update('query_hotel',$hotel_query_data);
-
-		// echo"<pre>";print_r($datas[0]['room_type']);exit;
 		$hotels_calculation = array();
 		$hotel_calculation_data['total_pax_adult_rate'] = 0;
 		$hotel_calculation_data['total_pax_child_rate'] = 0;
@@ -917,7 +925,6 @@ class Query extends CI_Controller
 			$this->db->where('roomtype', $val['room_type']);
 			$this->db->where('hotelname', $val['hotel_id']);
 			$hotels_calculation[] = $this->db->get()->result_array();
-			// print_r($hotels_calculation);
 
 			$hotels_calculation_data = array();
 
@@ -939,51 +946,49 @@ class Query extends CI_Controller
 				$vat_extra_array = explode(",", $hotels_calculation[$k][0]['vat_extra']);
 				
 				$net_rate_extra = $netrate_extra_array[$room_val_index];
-				// $vat_extra = $vat_extra_array[0];
 			} else {
 				$net_rate_extra = 0;
 				$vat_extra = 0;
 			}
-			if ($val['extra_with_child']) {
+ 
 
-				if (!empty($val['extra_with_child'])) {
-					$netrate_extra_child_array = explode(",", $hotels_calculation[$k][0]['netrate_extra_child']);
-					// $vat_extra_child_array = explode(",", $hotels_calculation[$k][0]['vat_extra_child']);
-					$netrate_extra_child = $netrate_extra_child_array[$room_val_index];
-					// $vat_extra_child = $vat_extra_child_array[0];
-				}  else {
-					$netrate_extra_child = 0;
-				}
+			// if ($val['extra_with_child']) {
 
-			} else {
-				$netrate_extra_child = 0;
-			}
-			if ($val['extra_without_bed']) {
+			// 	if (!empty($val['extra_with_child'])) {
+			// 		$netrate_extra_child_array = explode(",", $hotels_calculation[$k][0]['netrate_extra_child']);
+			// 		$netrate_extra_child = $netrate_extra_child_array[$room_val_index];
+			// 	}  else {
+			// 		$netrate_extra_child = 0;
+			// 	}
 
-				if (!empty($val['extra_without_bed'])) {
-					$netrate_extra_wo_array = explode(",", $hotels_calculation[$k][0]['netrate_extra_wo']);
-					// $vat_extra_wo_array = explode(",", $hotels_calculation[$k][0]['vat_extra_wo']);
-					$netrate_extra_wo = $netrate_extra_wo_array[$room_val_index];
-					// $vat_extra_wo = $vat_extra_wo_array[0];
-				}  else {
-					$netrate_extra_wo = 0;
-				}
-			} else {
-				$netrate_extra_wo = 0;
-				$vat_extra_wo = 0;
-			}
+			// } else {
+			// 	$netrate_extra_child = 0;
+			// }
 
+			// if ($val['extra_without_bed']) {
+
+			// 	if (!empty($val['extra_without_bed'])) {
+			// 		$netrate_extra_wo_array = explode(",", $hotels_calculation[$k][0]['netrate_extra_wo']);
+			// 		$netrate_extra_wo = $netrate_extra_wo_array[$room_val_index];
+			// 	}  else {
+			// 		$netrate_extra_wo = 0;
+			// 	}
+			// } else {
+			// 	$netrate_extra_wo = 0;
+			// 	$vat_extra_wo = 0;
+			// }
+
+			$netrate_extra_child_array = explode(",", $hotels_calculation[$k][0]['netrate_extra_child']);
+			$netrate_extra_child = $netrate_extra_child_array[$room_val_index];
+			// print_r($netrate_extra_child);//exit;
+
+			$netrate_extra_wo_array = explode(",", $hotels_calculation[$k][0]['netrate_extra_wo']);
+			$netrate_extra_wo = $netrate_extra_wo_array[$room_val_index];
+			// print_r($netrate_extra_wo);exit;
 
 			
 
 			if ($val['bed_types'] == "Single") {
-				// $net_rate_array = explode (",", $hotels_calculation[0]['netrate']);
-				// $vat_array = explode (",", $hotels_calculation[0]['vat']); 
-				// $net_rate= $net_rate_array[0];	
-				// $vat = 	$vat_array[0];
-				// $per_pax_adult = $net_rate + $vat;
-				// $total_pax_adult_rate = ($pax_adult * ($net_rate + $vat)) * $no_of_nights;
-
 				$net_rate_array = explode(",", $hotels_calculation[$k][0]['netrate']);
 				$vat_array = explode(",", $hotels_calculation[$k][0]['vat']);
 				$net_rate = $net_rate_array[$room_val_index];
@@ -1011,9 +1016,7 @@ class Query extends CI_Controller
 				} else {
 					$net_rate_extra = 0;
 				}
-				// $per_pax_adult = $net_rate + $vat;
-				// $total_pax_adult_rate = ($pax_adult * ($net_rate + $vat)) * $no_of_nights;
-				// $hotels_calculation_data['netrate_double'] = $hotels_calculation[0]['netrate_double'];
+				
 			} else if ($val['bed_types'] == "Triple") {
 				$net_rate_array = explode(",", $hotels_calculation[$k][0]['netrate_triple']);
 				$vat_array = explode(",", $hotels_calculation[$k][0]['vat_triple']);
@@ -1041,71 +1044,21 @@ class Query extends CI_Controller
 			$total_per_pax_wo = (int)$netrate_extra_wo;
 
 
-			// if ($pax_adult == 1) {
-			// 	$hotel_calculation_data['total_pax_adult_rate'] += ((int)$pax_adult != 0  ? (int)$total_per_pax_adult / (int)$pax_adult : (int)$pax_adult) * (int)$val['nights'];
-			// } else {
-			
-			// 	if ($val['nights'] == 1) {
-			// 		$hotel_calculation_data['total_pax_adult_rate'] += ((int)$pax_adult != 0  ? (int)$total_per_pax_adult / (int)$pax_adult : (int)$pax_adult) * array_sum($no_of_nights);
-			// 	} else {
-			// 	print_r(($total_per_pax_adult));
-			// 	print_r("---------");
-			// 	print_r((int)$val['nights']);
-			// 	print_r("---------");
-
-			// 		$ad_pax = (int)$total_per_pax_adult / (int)$pax_adult;
-			// 		$ad_pax1 = $ad_pax * (int)$val['nights'];
-			// 		print_r("---------");
-			// 		print_r($ad_pax1);
-			// 		print_r("---------");
-			// 		$hotel_calculation_data['total_pax_adult_rate'] += ((int)$pax_adult != 0  ? (int)$total_per_pax_adult / (int)$pax_adult : (int)$pax_adult) * (int)$val['nights'];
-			// 	}
-
-			// 	// $pax_adult_price = (int)$pax_adult != 0  ? (int)$total_per_pax_adult / (int)$pax_adult : (int)$pax_adult ;
-			// 	// $hotel_calculation_data['total_pax_adult_rate'] += $pax_adult_price * (int)$no_of_nights;
-			// 	// print_r($pax_adult_price);
-			// 	// print_r("---------");
-			// 	// print_r($total_per_pax_adult);
-			// 	// print_r("---------");
-			// 	// print_r(array_sum($no_of_nights));
-			// 	// print_r("---------");
-				
-			// 	// // print_r(((int)$total_per_pax_adult / (int)$pax_adult) * (int)$no_of_nights);
-			// 	// print_r(gettype((int)$pax_adult));
-
-			// }
-
-					// if ($val['nights'] == 1) {
-					// 	$hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult);
-					// } else {
-						// $hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult) * $val['nights'];
-					// }
-
-			// if ($pax_adult == 1) {
-
-			// 	$hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult) * $val['nights'];
-			// echo '<pre>';print_r($hotel_calculation_data['total_pax_adult_rate']); 
-
-			// } else {
-
-			// 	if ($val['nights'] == 1) {
-			// 		$hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult);
-			// 	} else {
-			// 		$hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult) * $val['nights'];
-			// 	}
-			// }
-			
-			
-			// $hotel_calculation_data['total_pax_adult_rate'] += ($pax_adult != 0  ? $total_per_pax_adult / $pax_adult : $pax_adult ) * $val['nights'];
 			$hotel_calculation_data['total_pax_adult_rate'] += (($total_per_pax_adult)) *  $val['nights'];
 
-			$hotel_calculation_data['total_pax_child_rate'] += (($pax_child * ($total_per_pax_child)) * $val['nights']);
+			$hotel_calculation_data['total_pax_child_rate'] += (($total_per_pax_child * ($val['cwb'])) * $val['nights']);
 
-			$hotel_calculation_data['total_pax_wo_rate'] += (($pax_infants * ($total_per_pax_wo)) * $val['nights']);
+			$hotel_calculation_data['total_pax_wo_rate'] += (($total_per_pax_wo * ($val['cnb'])) * $val['nights']);
 
-			// $hotel_calculation_data['total_pax_adult_rate'] = ($pax_adult * ($per_pax_adult)) * $no_of_nights;
+			// print_r("====================");
+			// print_r($total_per_pax_adult);
+			// print_r($total_per_pax_child);
+			// print_r($total_per_pax_wo);
+			// print_r("====================");
 
 		}
+
+		
 		// 100 * 3 = 300 * 2 =  / 3
 		$hotel_query_data = [
 			'nights' => implode(',',$tableData[0]['nights']),
@@ -1124,7 +1077,8 @@ class Query extends CI_Controller
 			
 			'adult_price' => $hotel_calculation_data['total_pax_adult_rate'],
 			'child_price' => $hotel_calculation_data['total_pax_child_rate'],
-			'infant_price' => $hotel_calculation_data['total_pax_wo_rate'],
+			'infant_price' => 0,
+			'cnb_price' => $hotel_calculation_data['total_pax_wo_rate'],
 
 			'type' => implode(',',$tableData[0]['get_room_types']),
 			'bed_type' => implode(',',$tableData[0]['bedType']),
@@ -1204,10 +1158,11 @@ class Query extends CI_Controller
 			'created_by' =>   $this->session->userdata('admin_id'),
 		];
 
-		$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'internal')->get('query_transfer');
+		$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'internal')->where('query_type', $query_type)->get('query_transfer');
 		if ($query->num_rows() > 0) {
 			$this->db->where('query_id', $query_id);
 			$this->db->where('transfer_type', 'internal');
+			$this->db->where('query_type', $query_type);
 			$this->db->update('query_transfer',$internal_transfer_data);
 		} else {
 			$this->db->insert('query_transfer', $internal_transfer_data);
@@ -1247,10 +1202,11 @@ class Query extends CI_Controller
 				'created_by' =>   $this->session->userdata('admin_id'),
 			];
 	
-			$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'return')->get('query_transfer');
+			$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'return')->where('query_type', $query_type)->get('query_transfer');
 			if ($query->num_rows() > 0) {
 				$this->db->where('query_id', $query_id);
 				$this->db->where('transfer_type', 'return');
+				$this->db->where('query_type', $query_type);
 				$this->db->update('query_transfer',$return_transfer_data);
 			} else {
 				$this->db->insert('query_transfer', $return_transfer_data);
@@ -1333,14 +1289,16 @@ class Query extends CI_Controller
 			'created_by' =>   $this->session->userdata('admin_id'),
 		];
 
-		$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'internal')->get('query_transfer');
+		$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'internal')->where('query_type', $query_type)->get('query_transfer');
 		if ($query->num_rows() > 0) {
 			$this->db->where('query_id', $query_id);
 			$this->db->where('transfer_type', 'internal');
+			$this->db->where('query_type', $query_type);
 			$this->db->update('query_transfer',$internal_transfer_data);
 		} else {
 			$this->db->insert('query_transfer', $internal_transfer_data);
 		}
+
 
 		// echo json_encode("transfer details saved successfully");
 		}
@@ -1377,10 +1335,11 @@ class Query extends CI_Controller
 				'created_by' =>   $this->session->userdata('admin_id'),
 			];
 	
-			$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'return')->get('query_transfer');
+			$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'return')->where('query_type', $query_type)->get('query_transfer');
 			if ($query->num_rows() > 0) {
 				$this->db->where('query_id', $query_id);
 				$this->db->where('transfer_type', 'return');
+				$this->db->where('query_type', $query_type);
 				$this->db->update('query_transfer',$return_transfer_data);
 			} else {
 				$this->db->insert('query_transfer', $return_transfer_data);
@@ -1388,7 +1347,7 @@ class Query extends CI_Controller
 	
 			}
 
-			echo json_encode(array("internal_price"=> (int)$priceperperson_internal,"return_price"=> (int)$priceperperson_return ));
+			echo json_encode(array("internal_price"=> isset($priceperperson_internal) ? (int)$priceperperson_internal : 0,"return_price"=> isset($priceperperson_return) ? (int)$priceperperson_return : 0 ));
 		
 	}
 
@@ -1557,20 +1516,30 @@ class Query extends CI_Controller
 		}
 
 
-		// $internal_transfer_data = [
-		// 	'query_id' =>  $query_id ,
-		// 	'query_type' =>  $query_type ,
-		// 	'transfer_type' =>  'internal',
-		// 	'transfer_date' =>  implode(',',$tableData[0]['internal_transfer_date']),
-		// 	'pickup' =>  implode(',',$tableData[0]['internal_transfer_pickup']),
-		// 	'dropoff' =>  implode(',',$tableData[0]['internal_transfer_dropoff']),
-		// 	'transfer_route' =>  implode(',',$tableData[0]['internal_transfer_route']),
-		// 	'adult_pax' =>  $pax_adult,
-		// 	'child_pax' =>  $pax_child,
-		// 	'adult_price' => $priceperperson_internal,
-		// 	'child_price'  =>  $priceperperson_internal,
-		// 	'created_by' =>   $this->session->userdata('admin_id'),
-		// ];
+		$internal_transfer_data = [
+			'query_id' =>  $query_id ,
+			'query_type' =>  'meals' ,
+			'transfer_type' =>  'internal',
+			// 'transfer_date' =>  implode(',',$tableData[0]['internal_transfer_date']),
+			'pickup' =>  implode(',',$tableData[0]['internal_transfer_pickup']),
+			'dropoff' =>  implode(',',$tableData[0]['internal_transfer_dropoff']),
+			'transfer_route' =>  implode(',',$tableData[0]['internal_transfer_route']),
+			'adult_pax' =>  $pax_adult,
+			'child_pax' =>  $pax_child,
+			'adult_price' => $priceperperson_internal,
+			'child_price'  =>  $priceperperson_internal,
+			'created_by' =>   $this->session->userdata('admin_id'),
+		];
+
+		$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'internal')->where('query_type', 'meals')->get('query_transfer');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $query_id);
+			$this->db->where('transfer_type', 'internal');
+			$this->db->where('query_type', 'meals');
+			$this->db->update('query_transfer',$internal_transfer_data);
+		} else {
+			$this->db->insert('query_transfer', $internal_transfer_data);
+		}
 
 		}
 		// ----------------------------------------- return -------------------------------------------------
@@ -1590,20 +1559,30 @@ class Query extends CI_Controller
 				$priceperperson_return += $price/$person;
 			}
 	
-			// $return_transfer_data = [
-			// 	'query_id' =>  $query_id ,
-			// 	'query_type' =>  $query_type ,
-			// 	'transfer_type' =>  'return',
-			// 	'transfer_date' =>  implode(',',$tableData[0]['return_transfer_date']),
-			// 	'pickup' =>  implode(',',$tableData[0]['return_transfer_pickup']),
-			// 	'dropoff' =>  implode(',',$tableData[0]['return_transfer_dropoff']),
-			// 	'transfer_route' =>  implode(',',$tableData[0]['return_transfer_route']),
-			// 	'adult_pax' =>  $pax_adult,
-			// 	'child_pax' =>  $pax_child,
-			// 	'adult_price' => $priceperperson_return,
-			// 	'child_price'  =>  $priceperperson_return,
-			// 	'created_by' =>   $this->session->userdata('admin_id'),
-			// ];
+			$return_transfer_data = [
+				'query_id' =>  $query_id ,
+				'query_type' =>  'meals' ,
+				'transfer_type' =>  'return',
+				// 'transfer_date' =>  implode(',',$tableData[0]['return_transfer_date']),
+				'pickup' =>  implode(',',$tableData[0]['return_transfer_pickup']),
+				'dropoff' =>  implode(',',$tableData[0]['return_transfer_dropoff']),
+				'transfer_route' =>  implode(',',$tableData[0]['return_transfer_route']),
+				'adult_pax' =>  $pax_adult,
+				'child_pax' =>  $pax_child,
+				'adult_price' => $priceperperson_return,
+				'child_price'  =>  $priceperperson_return,
+				'created_by' =>   $this->session->userdata('admin_id'),
+			];
+
+			$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'return')->where('query_type', 'meals')->get('query_transfer');
+			if ($query->num_rows() > 0) {
+				$this->db->where('query_id', $query_id);
+				$this->db->where('transfer_type', 'return');
+				$this->db->where('query_type', 'meals');
+				$this->db->update('query_transfer',$return_transfer_data);
+			} else {
+				$this->db->insert('query_transfer', $return_transfer_data);
+			}
 	
 
 			}
@@ -2099,9 +2078,10 @@ class Query extends CI_Controller
 		];
 
 
-		$query = $this->db->where('query_id', $query_id)->get('query_visa');
+		$query = $this->db->where('query_id', $query_id)->where('visa_category', $visa_category_drop_down)->get('query_visa');
 		if ($query->num_rows() > 0) {
 			$this->db->where('query_id', $query_id);
+			$this->db->where('visa_category', $visa_category_drop_down);
 			$this->db->update('query_visa',$visa_data);
 		} else {
 			$this->db->insert('query_visa', $visa_data);
@@ -2158,9 +2138,10 @@ class Query extends CI_Controller
 		];
 
 
-		$query = $this->db->where('query_id', $query_id)->get('query_visa');
+		$query = $this->db->where('query_id', $query_id)->where('visa_category', $category)->get('query_visa');
 		if ($query->num_rows() > 0) {
 			$this->db->where('query_id', $query_id);
+			$this->db->where('visa_category', $category);
 			$this->db->update('query_visa',$visa_data);
 		} else {
 			$this->db->insert('query_visa', $visa_data);
@@ -2602,9 +2583,10 @@ class Query extends CI_Controller
 	public function buildMealsEdit($q_id = '')
 	{
 		//echo '<pre>';print_r($q_id);exit;
-
+		$data["internal_query"] = $this->db->where('query_id', $q_id)->where('transfer_type', 'internal')->get('query_transfer')->result();
+		$data['return_query'] = $this->db->where('query_id', $q_id)->where('transfer_type', 'return')->get('query_transfer')->result();
 		$data["meal_query"] = $this->db->where('query_id', $q_id)->get('query_meal')->result();
-
+		
 		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
 		qp.child,cb.reportsTo,cb.b2bEmail");
 

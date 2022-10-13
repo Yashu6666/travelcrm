@@ -121,7 +121,10 @@
 
                </tr>
               </thead>
+
               <tbody id="transfer_body">
+              
+              <?php if(!empty($internal_query)) : ?>
                <?php foreach(explode(",",$internal_query[0]->transfer_date) as $key => $value) : ?> 
                <tr id="PvtCab1<?php echo $key ?>" >
                 <th>Internal Transfer</th>
@@ -156,7 +159,9 @@
 
                </tr>
                 <?php endforeach ;?>
+                <?php endif ?>
 
+                <?php if(!empty($return_query)) : ?>
 
                 <?php foreach(explode(",",$return_query[0]->transfer_date) as $key => $value) : ?> 
                 <tr id="Sic1<?php echo $key ?>">
@@ -187,6 +192,7 @@
 
                </tr>
                <?php endforeach ;?>
+               <?php endif ?>
 
 
                  <tr id="Train" style="display: none;">
@@ -765,7 +771,6 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
  
 <script>
-
   function delQuery(){
     var QueryId = $('#QueryId').val();
     $.ajax({ 
@@ -904,6 +909,122 @@ var QueryId = $('#QueryId').val();
                     });
 });
 
+function saveTransferDefault(){
+  
+var pax_adult = <?php  echo $view->Packagetravelers; ?>;
+var pax_child = <?php  echo $buildpackage->child; ?>;
+var pax_infants = <?php  echo $buildpackage->infant; ?>;
+// var total_pax = pax_adult + pax_child + pax_infants;
+var total_pax = pax_adult + pax_child;
+
+var QueryId = $('#QueryId').val();
+
+                var internal_transfer_pickup = [];
+                  $(".internal_transfer_pickup").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" && cat != 'Pickup'){
+                      internal_transfer_pickup.push($.trim(cat));
+                    }
+                  });
+
+                  var internal_transfer_dropoff = [];
+                  $(".internal_transfer_dropoff").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" && cat != 'Drop Off'){
+                      internal_transfer_dropoff.push($.trim(cat));
+                     }
+                  });
+
+                  var internal_transfer_route = [];
+                  $(".internal_transfer_route").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" ){
+                      internal_transfer_route.push($.trim(cat));
+                    }
+                  });
+
+                  var internal_transfer_date = [];
+                  $(".internal_transfer_date").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" ){
+                      internal_transfer_date.push($.trim(cat));
+                    }
+                  });
+                  // return transfer ---------------------------------
+
+                  var return_transfer_pickup = [];
+                  $(".return_transfer_pickup").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" && cat != 'Pickup'){
+                      return_transfer_pickup.push($.trim(cat));
+                     }
+                  });
+
+                  var return_transfer_dropoff = [];
+                  $(".return_transfer_dropoff").each(function() {
+                    var cat = $(this).val();
+                     if(cat != "" && cat != 'Drop Off'){
+                      return_transfer_dropoff.push($.trim(cat));
+                     }
+                  });
+
+                  var return_transfer_route = [];
+                  $(".return_transfer_route").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" ){
+                      return_transfer_route.push($.trim(cat));
+                    }
+                  });
+                  
+                  var return_transfer_date = [];
+                  $(".return_transfer_date").each(function() {
+                    var cat = $(this).val();
+                    if(cat != "" ){
+                      return_transfer_date.push($.trim(cat));
+                    }
+                  });
+
+                  var data= [{
+                      'internal_transfer_pickup' : internal_transfer_pickup,
+                      'internal_transfer_dropoff' : internal_transfer_dropoff,
+                      'internal_transfer_route' : internal_transfer_route,
+                      'internal_transfer_date' : internal_transfer_date,
+
+                      'return_transfer_pickup' : return_transfer_pickup,
+                      'return_transfer_dropoff' : return_transfer_dropoff,
+                      'return_transfer_route' : return_transfer_route,
+                      'return_transfer_date' : return_transfer_date,
+
+                    }];
+                   console.log("🚩 ~ file: build_transfer.php ~ line 932 ~ $ ~ data", data)
+                   
+                  
+                    $.ajax({ 
+                        type: "POST",
+                        url: "<?php echo base_url()?>Query/saveTransferDataEdit",
+                        data : {data : data,'pax_adult':pax_adult,'pax_child':pax_child,'pax_infants':pax_infants,'query_id' : QueryId,'query_type' : 'transfer' },
+                        cache: false,
+                        dataType: "json",
+                        success: function(response)
+                        {
+                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 885 ~ $ ~ response", typeof(response.internal_price))
+
+                          $("#price_internal").val(response.internal_price);
+                          var total_price_internal = response.internal_price * total_pax;
+                          $("#total_price_internal").val(total_price_internal);
+
+                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 885 ~ $ ~ response", (total_price_internal))
+                          
+                          $("#price_point").val(response.return_price);
+                          var total_price_return = response.return_price * total_pax;
+                          $("#total_price_point").val(total_price_return);
+
+                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 885 ~ $ ~ response", (total_price_return))
+
+                          
+                        }
+                    });
+}
 
   $('#buildHotelCity').on('change', function() {
     var city = $('#buildHotelCity').val();
@@ -2142,6 +2263,8 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
 </script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script>
+saveTransferDefault();
+
 	CKEDITOR.replace('buildPackageInclusions');
 	CKEDITOR.replace('buildPackageExclusions');
 	CKEDITOR.replace('buildPackageConditions');

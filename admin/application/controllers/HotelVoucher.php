@@ -111,12 +111,26 @@ class HotelVoucher extends CI_Controller
 			$data['impInfo'] = $impInfo;
 			$data['board_arr'] = $board_arr;
 			$data['guest_name'] = $guest_name;
+
+			$hotel_ids = explode(',',$data['hotel'][0]->hotel_id);
+
+			$data['hotel_details'] = [];
+			foreach($hotel_ids as $id){
+				$data_hotel = $this->db->where('id', $id)->get('hotel')->row();
+				array_push($data['hotel_details'],$data_hotel);
+			}
+			// $this->load->view('hotel_voucher/voucher_pdf/index',$data);return;
+			
 			$body = $this->load->view('hotel_voucher/voucher_pdf/index',$data,TRUE);
 
 			$this->load->library('Pdf');
 			$html =  $this->load->view('hotel_voucher/pdf',$data, true);
 			$dompdf = new Dompdf\DOMPDF();
 			$dompdf->load_html($html);
+			// $paper_size = array(0,0,360,360);
+			// $dompdf->set_paper($paper_size);
+			// $dompdf->set_paper(DEFAULT_PDF_PAPER_SIZE, 'portrait');
+			$dompdf->set_paper("A3", "portrait");
 			$dompdf->render();
 			$pdf_name = time() . ".pdf";
 			$dompdf->stream($pdf_name);
@@ -150,6 +164,14 @@ class HotelVoucher extends CI_Controller
 			$data['board_arr'] = $board_arr;
 			$data['guest_name'] = $guest_name;
 			$body = $this->load->view('hotel_voucher/voucher_pdf/index',$data,TRUE);
+
+			$hotel_ids = explode(',',$data['hotel'][0]->hotel_id);
+
+			$data['hotel_details'] = [];
+			foreach($hotel_ids as $id){
+				$data_hotel = $this->db->where('id', $id)->get('hotel')->row();
+				array_push($data['hotel_details'],$data_hotel);
+			}
 
 			// $html = $this->load->view('hotel_voucher/pdf', $data, true);
 			// $mPdf = new \Mpdf\Mpdf();
@@ -197,6 +219,7 @@ class HotelVoucher extends CI_Controller
 			$html =  $this->load->view('hotel_voucher/pdf',$data, true);
 			$dompdf = new Dompdf\DOMPDF();
 			$dompdf->load_html($html);
+			$dompdf->set_paper("A3", "portrait");
 			$dompdf->render();
 			$output = $dompdf->output();
 			$pdf_name = time() . ".pdf";

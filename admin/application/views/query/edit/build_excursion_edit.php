@@ -1000,6 +1000,11 @@ $('#buildHotelName').on('change', function() {
         })
 
       }
+
+
+     
+
+     
       </script>
 <input type="hidden" id="total_pax_sic_adult" name="total_pax_sic_adult" value="0" />
 <input type="hidden" id="total_pax_sic_hild" name="total_pax_sic_hild" value="0" />
@@ -1861,6 +1866,115 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
    
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script>
+
+function excursionPVTcalculations1(){
+       
+
+       var hidden_total_pax = $('#hidden_total_pax').val();
+       var excursion_type_PVT =  $("#excursion_type_PVT").val();
+       var excursion_name_PVT = $('select#excursion_name_PVT').val();
+       var excursion_adult_PVT =  $("#excursion_adult_PVT").val();
+       var excursion_child_PVT =  $("#excursion_child_PVT").val();
+       var excursion_infant_PVT =  $("#excursion_infant_PVT").val();
+       var QueryId = $('#QueryId').val();
+
+       var ex_hotel_pickup =  $("#ex_hotel_pickup").val();
+
+        $.ajax({
+         type:"POST",
+         dataType: "json",
+         url:'<?php echo site_url();?>Query/getExcursionPVTCalculations',
+         data:{
+            'hotel_pickup':ex_hotel_pickup,
+            'query_id':QueryId,
+            'query_type':'excursion',
+           'excursion_type_PVT':excursion_type_PVT,'excursion_adult_PVT':excursion_adult_PVT,
+           'excursion_child_PVT':excursion_child_PVT,'excursion_infant_PVT':excursion_infant_PVT,'excursion_name_PVT':excursion_name_PVT,'total_pax':hidden_total_pax},
+         success:function(response){
+            console.log(response);
+
+            if(response.status == 0){
+                toastr.error("Selected PVT allowed "+response.pax+" pax only");
+              } else {
+               $("#total_pax_pvt_adult").val( response.total_adultprice);
+               $("#total_pax_pvt_hild").val( response.total_childprice);
+               $("#total_pax_pvt_infant").val( response.total_infantprice);
+              // toastr.success("Excursion PVT Saved Successfully");
+            }
+           
+         }
+       })
+     }
+
+      function excursionSICcalculations1(){
+        
+        var excursion_types_SIC =  $('select#excursion_type_SIC').val(); //$("#excursion_type_SIC").val();
+        var excursion_name_SIC = $('select#excursion_name_SIC').val();
+        var excursion_adults_SIC =  $("#excursion_adult_SIC").val();
+        var excursion_childs_SIC =  $("#excursion_child_SIC").val();
+        var excursion_infants_SIC =  $("#excursion_infant_SIC").val();
+        var QueryId = $('#QueryId').val();
+
+        var ex_hotel_pickup =  $("#ex_hotel_pickup").val();
+          $.ajax({
+          type:"POST",
+          dataType: "json",
+          url:'<?php echo site_url();?>/Query/getExcursionSICCalculations',
+          data:{
+            'hotel_pickup':ex_hotel_pickup,
+            'query_id':QueryId,
+            'query_type':'excursion',
+            'excursion_types_SIC':excursion_types_SIC,'excursion_adults_SIC':excursion_adults_SIC,'excursion_childs_SIC':excursion_childs_SIC,'excursion_infants_SIC':excursion_infants_SIC,
+            'excursion_name_SIC':excursion_name_SIC},
+          success:function(response){
+          console.log(response);
+                $("#total_pax_sic_adult").val(response.total_adultprice);
+                $("#total_pax_sic_hild").val(response.total_childprice);
+                $("#total_pax_sic_infant").val(response.total_infantprice);
+                // toastr.success("Excursion SIC Saved Successfully");
+          }
+        })
+      }
+
+      function excursionTKTcalculations1(){
+        
+        var excursion_types_TKT =  $('select#excursion_type_TKT').val(); 
+        var excursion_name_TKT = $('select#excursion_name_TKT').val();
+        var excursion_adults_TKT =  $("#excursion_adult_TKT").val();
+        var excursion_childs_TKT =  $("#excursion_child_TKT").val();
+        var excursion_infants_TKT =  $("#excursion_infant_TKT").val();
+        var QueryId = $('#QueryId').val();
+
+        var ex_hotel_pickup =  $("#ex_hotel_pickup").val();
+
+
+           $.ajax({
+          type:"POST",
+          dataType: "json",
+          url:'<?php echo site_url();?>/Query/getExcursionTKTCalculations',
+          data:{
+            'hotel_pickup':ex_hotel_pickup,
+            'query_id':QueryId,
+            'query_type':'excursion',
+            'excursion_types_TKT':excursion_types_TKT,'excursion_adults_TKT':excursion_adults_TKT,'excursion_childs_TKT':excursion_childs_TKT,'excursion_infants_TKT':excursion_infants_TKT,
+            'excursion_name_TKT':excursion_name_TKT},
+          success:function(response){
+             console.log("🚩 ~ file: build_excursion.php ~ line 998 ~ excursionTKTcalculations ~ response", response)
+             
+                $("#total_pax_TKT_adult").val(response.total_adultprice);
+                $("#total_pax_TKT_child").val(response.total_childprice);
+                $("#total_pax_TKT_infant").val(response.total_infantprice);
+                // toastr.success("Excursion TKT Saved Successfully");
+          
+          }
+        })
+
+      }
+      
+      excursionPVTcalculations1();
+      excursionSICcalculations1();
+      excursionTKTcalculations1();
+
 	CKEDITOR.replace('buildPackageInclusions');
 	CKEDITOR.replace('buildPackageExclusions');
 	CKEDITOR.replace('buildPackageConditions');

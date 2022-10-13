@@ -251,6 +251,7 @@
 
            </div>
           </div>
+
           <div class="mt-5">
            <div>
             <div class="card-head card-head-new">
@@ -287,6 +288,8 @@
                </tr>
               </thead>
               <tbody id="transfer_body">
+              <?php if(!empty($internal_query)) : ?>
+
                <?php foreach(explode(",",$internal_query[0]->transfer_date) as $key => $value) : ?> 
                <tr id="PvtCab1<?php echo $key ?>" >
                 <th>Internal Transfer</th>
@@ -321,9 +324,10 @@
 
                </tr>
                 <?php endforeach ;?>
+                <?php endif ?>
 
-
-                <?php foreach(explode(",",$return_query[0]->transfer_date) as $key => $value) : ?> 
+              <?php if(!empty($return_query)) : ?>
+                <?php foreach(explode(",",$return_query[0]->pickup) as $key => $value) : ?> 
                 <tr id="Sic1<?php echo $key ?>">
                 <th>Return Transfer</th>
               <td><input class="form-control" id="pax_point" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC[]" disabled></td>
@@ -352,6 +356,7 @@
 
                </tr>
                <?php endforeach ;?>
+               <?php endif ?>
 
 
                  <tr id="Train" style="display: none;">
@@ -483,11 +488,49 @@
 
         </div>
 
-
-
-
-
              </div>
+
+             <div>
+                          <div class="card-head card-head-new m">
+                            <p style="margin-top:20px"><i class="fa-brands fa-cc-visa"></i> OTB
+
+                              <input type="radio" id="otb_status" name="otb_status" value="Yes" checked><label for="html">Yes</label>
+                              <input type="radio" id="otb_status1" name="otb_status" value="No"><label for="html">No</label>
+                            </p>
+                          </div>
+                          <br>
+                          <div class="row mt-4 mr-3 ml-3 mb-3 " id="otbdisplay">
+                            <div>
+                              <table id="faqs" class="table table-borderless">
+                                <thead>
+                                  <tr>
+                                    <th>Category</th>
+                                    <th>Adult</th>
+                                    <th>Child</th>
+                                    <th>Infant</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                <tbody>
+                                  <tr id="myTableRow">
+                                    <td>
+                                    <input type="text" placeholder="0" class="form-control" name="OTB" value="OTB" disabled>
+                                    </td>
+                                    <td><input type="text" placeholder="0" class="form-control" name="otb_adult"  id="otb_adult" value="<?php echo $view->Packagetravelers; ?>">
+                                    </td>
+                                    <td><input type="text" placeholder="0" class="form-control" name="otb_child" id="otb_child" value="<?php echo $buildpackage->child; ?>">
+                                    </td>
+                                    <td><input type="text" placeholder="0" class="form-control" name="otb_infant" id="otb_infant" value="<?php echo $buildpackage->infant; ?>">
+                                    </td>
+                                    <td><button type="button" onclick="getOTBprice()" class="new_btn px-3">Save</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
              <div class="card-head card-head-new">
              <p style="margin-top:20px"><i class="fa-solid fa-place-of-worship"></i> Excursion
                 <input type="radio" id="excursion_status" name="excursion_status" value="Yes" checked><label for="html">Yes</label>
@@ -656,98 +699,172 @@
             </p>
                
         </div>
-            <div class="row mt-4 mr-3 ml-3 mb-3 "  id="mealsdisplay">
-               <div>
-              
-               
-                <table id="faqs" class="table table-borderless">
-            <thead>
-             <tr>
-             <th style="width: 200;">Transfer Type</th>
-             <th>Date</th>
-             <th>Resturant Type</th>
-             <th>Resturant Name</th>
-              <th>Meal</th>
-              <th>Meal Type</th>
-              <th>No. of Meals</th>
-              <th style="width:100">Adult</th>
-              <th style="width:100">Child</th>
-              <th>Action</th>
-             </tr>
+        <div class="row mt-4 mr-3 ml-3 mb-3 " id="mealsdisplay">
 
-            </thead>
-             <tbody id="addrowss">
-             <?php foreach(explode(",",$meal_query[0]->transfer_type) as $key => $val) : ?>
-              <tr id="myTableRow<?php echo $key?>">
-                <td>
-                    <input type="radio"  class="transfer_with_or_without" <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "with_transfer" ? "checked" : "" ?>
-                     id="with_transfer" name="transfer_with_or_without_<?php echo $key?>[]" value="with_transfer" onclick="get_resturant_name('with_transfer','');"/> With Transfer<br/>
+<div id="addrowss">
+<?php foreach(explode(",",$meal_query[0]->transfer_type) as $key => $val) : ?>
+  <div>
+    <table id="faqs" class="table table-borderless">
+      <thead>
+        <tr>
+          <th style="width: 200;">Transfer Type</th>
+          <th>Date</th>
+          <th>Resturant Type</th>
+          <th>Resturant Name</th>
+          <th>Meal</th>
+          <th>Meal Type</th>
+          <th>No. of Meals</th>
+          <th style="width:100">Adult</th>
+          <th style="width:100">Child</th>
+          <th>Action</th>
+        </tr>
 
-                    <input type="radio" class="transfer_with_or_without" <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "without_transfer" ? "checked" : "" ?>
-                     id="without_transfer" name="transfer_with_or_without_<?php echo $key?>[]" value="without_transfer" onclick="get_resturant_name('without_transfer','');"/> Without Transfer	
-                </td>
-              <td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate;?>" min="<?php echo $view->specificDate;?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate. ' + '.(($buildpackage->night)- (1)).' days')); ?>" name="buildCheckIn[]" id="buildCheckIn"></td>
-              <td>
-               <div>
-                <select data-mdl-for="sample2" class="form-control rest_type"
-                value=""  tabIndex="-1" id="res_type" name="res_type[]"  onchange="get_resturant_name('res_type','');">
+      </thead>
+      <tbody>
+        <tr id="myTableRow">
 
-                <option <?php echo explode(",",$meal_query[0]->resturant_type)[$key] == "Standard" ? "selected" : "" ?> value="Standard">Standard</option>
-                <option <?php echo explode(",",$meal_query[0]->resturant_type)[$key] == "Premium" ? "selected" : "" ?> value="Premium">Premium</option>
-               </select>
+          <td>
+            <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "with_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="with_transfer" name="transfer_with_or_without[]" value="with_transfer" onclick="get_resturant_name('with_transfer','');" /> With Transfer<br />
+            <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "without_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="without_transfer" name="transfer_with_or_without[]" value="without_transfer" onclick="get_resturant_name('without_transfer','');" /> Without Transfer
+          </td>
 
-              </div>
-             </td>
-             <td>
-             <select data-mdl-for="sample2" class="form-control res_name"
-                value=""  tabIndex="-1" name="res_name[]" id="res_name" >   
-                <option value="<?php echo explode(",",$meal_query[0]->resturant_name)[$key] ?>" selected><?php echo explode(",",$meal_query[0]->resturant_name)[$key] ?><option>
-                <option>select</option>             
-               </select> 
-              <!-- <input class="form-control " type="text" value="" name="res_name[]" id="res_name"> -->
-            </td>
-            
-             <td>
-             <div>
-              <select data-mdl-for="sample2" class="form-control meal"
-              value=""  tabIndex="-1" id="meal_cal" name="Meal[]">
+          <td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="buildCheckIn[]" id="buildCheckIn"></td>
+
+
+          <td>
+            <div>
+              <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type" name="res_type[]" onchange="get_resturant_name('res_type','');">
+              <option <?php echo explode(",",$meal_query[0]->resturant_type)[$key] == "Standard" ? "selected" : "" ?> value="Standard">Standard</option>
+              <option <?php echo explode(",",$meal_query[0]->resturant_type)[$key] == "Premium" ? "selected" : "" ?> value="Premium">Premium</option>
+              </select>
+
+            </div>
+          </td>
+          <td>
+            <select data-mdl-for="sample2" class="form-control res_name" value="" tabIndex="-1" name="res_name[]" id="res_name">
+            <option value="<?php echo explode(",",$meal_query[0]->resturant_name)[$key]?>" ><?php echo explode(",",$meal_query[0]->resturant_name)[$key]?></option>
+            </select>
+            <!-- <input class="form-control " type="text" value="" name="res_name[]" id="res_name"></td> -->
+          <td>
+            <div>
+              <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal" name="Meal[]">
               <option <?php echo explode(",",$meal_query[0]->meal)[$key] == "Dinner" ? "selected" : "" ?>  value="Dinner">Dinner</option>
               <option <?php echo explode(",",$meal_query[0]->meal)[$key] == "Lunch" ? "selected" : "" ?> value="Lunch">Lunch</option>
-             </select>
+              </select>
             </div>
-           </td>
-             <td>
-             <div>
-              <select data-mdl-for="sample2" class="form-control meal_type"
-              value=""  tabIndex="-1" id="meal_type_cal" name="Meal_Type[]">
+          </td>
+          <td>
+            <div>
+              <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal" name="Meal_Type[]">
               <option <?php echo explode(",",$meal_query[0]->meal_type)[$key] == "Veg" ? "selected" : "" ?> value="Veg">Veg</option>
               <option <?php echo explode(",",$meal_query[0]->meal_type)[$key] == "Non-Veg" ? "selected" : "" ?> value="Non-Veg">Non-Veg</option>
               <option <?php echo explode(",",$meal_query[0]->meal_type)[$key] == "Jain" ? "selected" : "" ?> value="Jain">Jain</option>
-             </select>
+              </select>
             </div>
-           </td>
-           <td><input type="number" min="1"  id="no_of_meals"  value="<?php echo explode(",",$meal_query[0]->no_of_meals)[$key]?>" class="form-control  no_of_meals" name="no_of_meals[]" >
-       
+          </td>
+          <td><input type="number" min="1" id="no_of_meals" value="<?php echo explode(",",$meal_query[0]->no_of_meals)[$key]?>" class="form-control  no_of_meals" name="no_of_meals[]">
 
-           <td><input type="text" placeholder="0" id="adult_meal_cal" value="<?php echo explode(",",$meal_query[0]->adult_pax)[$key]?>" class="form-control check-adult meal_adult" name="adult[]" >
-           </td>
-           <td><input type="text" placeholder="0" id="child_meal_cal" value="<?php echo explode(",",$meal_query[0]->child_pax)[$key]?>" class="form-control check-child meal_child" name="child[]" <?php if($buildpackage->child == 0) echo "disabled";?> >
-           </td>
 
-        <?php if($key == 0) : ?>
-            <td><a class="new_btn px-3 ml-0" onclick="addrowss()">add</a></td>
-        <?php else : ?>
-            <td><button class="btn btn-danger btn-xs" type="button" onclick="removeRow('myTableRow<?php echo $key ?>')"><i class="fa fa-trash"></i></button> </td>
-        <?php endif ?>
 
-         </tr>
+          <td><input type="text" value="<?php echo $view->Packagetravelers; ?>" placeholder="0" id="adult_meal_cal" class="form-control check-adult meal_adult" name="adult[]">
+          </td>
+          <td><input type="text" value="<?php echo $buildpackage->child; ?>" placeholder="0" id="child_meal_cal" class="form-control check-child meal_child" name="child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>
+          </td>
 
-         <?php endforeach ?>
-         </tbody>
-                </table>
-                <div style="float:right;">
-              <button type="button" onclick="mealcalculation()" class="new_btn px-3">Save</button></div>
-            </div>
+          <td>
+            <a class="new_btn px-3 ml-0" onclick="addrowss()">
+              add
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- __________________________________________________________________________________________________ -->
+    <?php if(explode(",",$meal_query[0]->transfer_type)[$key] == "with_transfer") : ?>
+    <div class="">
+      <div class="" id="mealTransferMain">
+        <div class="">
+          <label for="" class="transport-lable"><b>Transport Type</b>:</label>
+          <input type="checkbox" name="mealTransTypeInt" id="mealTransTypeInt" class="mr-3 ml-2 " value="Internal Transfer"><span class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
+          <input type="checkbox" name="mealTransTypeRet" id="mealTransTypeRet" checked class="mr-3 ml-2 " value="Point to Point Transfer"><span class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
+        </div>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Transport type</th>
+                <th scope="col">Pax</th>
+                <th scope="col">Form Date</th>
+                <th scope="col">Pickup Location</th>
+                <th scope="col">Drop Off Location </th>
+                <th scope="col">Route Name</th>
+              </tr>
+            </thead>
+            <tbody id="transfer_body" style="border-bottom: #ff000000;">
+              <?php if (!empty($internal_query1)) : ?>
+                <?php foreach (explode(",", $internal_query1[0]->transfer_date) as $key => $value) : ?>
+                  <tr id="mealInternalTransfer">
+                    <th>Internal Transfer</th>
+                    <td><input class="form-control" type="number" id="pax_internal_meal" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="buildTravelFromCityCab[]" disabled></td>
+                    <td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate; ?>" id="internal_meal_date" name="internal_meal_date[]"></td>
+                    <td>
+                      <select id="pickup_internal_meal" required name="pickup_internal_meal[]" class="pickup_internal_meal js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                        <option value="<?php echo (explode(",", $internal_query1[0]->pickup)[$key]); ?>"><?php echo (explode(",", $internal_query1[0]->pickup)[$key]); ?></option>
+                      </select>
+                    </td>
+                    <td>
+                      <select id="dropoff_internal_meal" name="dropoff_internal_meal[]" class="dropoff_internal_meal js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                        <option value="<?php echo (explode(",", $internal_query1[0]->dropoff)[$key]); ?>"><?php echo (explode(",", $internal_query1[0]->dropoff)[$key]); ?></option>
+                      </select>
+                    </td>
+                    <td>
+                      <input id="route_name_internal_meal" value="<?php echo (explode(",", $internal_query1[0]->transfer_route)[$key]); ?>" name="route_name_internal_meal[]" class="form-control route_name_internal_meal" type="text" placeholder="Route Name">
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
+              <?php endif ?>
+
+              <?php if (!empty($return_query1)) : ?>
+                <?php foreach (explode(",", $return_query1[0]->transfer_date) as $key => $value) : ?>
+                  <tr id="mealReturnTransfer">
+                    <th>Return Transfer</th>
+                    <td><input class="form-control" id="pax_return_meal" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="pax_return_meal[]" disabled></td>
+                    <td><input class="form-control return_transfer_date" id="return_meal_date" type="date" value="<?php echo $view->specificDate; ?>" name="return_meal_date[]"></td>
+                    <td>
+                      <select id="pickup_return_meal" required name="pickup_return_meal[]" class="pickup_return_meal js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                        <option value="<?php echo (explode(",", $return_query1[0]->pickup)[$key]); ?>"><?php echo (explode(",", $return_query1[0]->pickup)[$key]); ?></option>
+                      </select>
+                    </td>
+                    <td>
+                      <select id="dropoff_return_meal" name="dropoff_return_meal[]" class="dropoff_return_meal js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                        <option value="<?php echo (explode(",", $return_query1[0]->dropoff)[$key]); ?>"><?php echo (explode(",", $return_query1[0]->dropoff)[$key]); ?></option>
+                      </select>
+                    </td>
+                    <td><input id="route_name_return_meal" value="<?php echo (explode(",", $return_query1[0]->transfer_route)[$key]); ?>" class="form-control route_name_return_meal" type="text" placeholder="Route Name" name="route_name_return_meal[]"></td>
+                  </tr>
+
+                <?php endforeach; ?>
+              <?php endif ?>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+    <?php endif ?>
+
+    <!-- ___________________________________________________________________________________________________________ -->
+  </div>
+  <?php endforeach; ?>
+
+
+</div>
+
+<div>
+  <button type="button" onclick="mealcalculation()" class="new_btn px-3 float-end">Save</button>
+</div>
+</div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
         <script src="<?php echo base_url();?>public/js/validate.js"></script>
@@ -1046,6 +1163,14 @@
                         var pax_child_count = <?php  echo $buildpackage->child; ?>;
                         var pax_infant_count = <?php echo $buildpackage->infant;?>;
 
+                        var pax_cnb_count_data = <?php print_r(json_encode($buildpackage->cnb_per_room)); ?>;
+                        // var pax_cnb_count = ?php echo $buildpackage->cnb_per_room; ?>;
+                        let cnb_arr = pax_cnb_count_data.split(",");
+                        var pax_cnb_count = 0;
+                        cnb_arr.forEach(x => {
+                          pax_cnb_count += parseInt(x);
+                        });
+                        
                         var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val(); 
                         var total_pax_meal_adult = $("#total_pax_meal_adult").val(); 
                         var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
@@ -1091,19 +1216,21 @@
                         var total_pax_TKT_infant = $("#total_pax_TKT_infant").val();
 
                         var sub_total_infant = parseInt(total_pax_visa_price_infant) +
-                        parseInt(hotel_rate_infant) +
+                        // parseInt(hotel_rate_infant) +
                         parseInt(total_pax_TKT_infant)+ 
                         parseInt(total_pax_pvt_infant)+ 
                         parseInt(total_pax_sic_infant);
 
-                          
+                        var sub_total_cnb = parseInt(hotel_rate_infant); 
+
                           let c_type = document.getElementById('currencyOption').value;
                           var usd_aed = <?php echo $usd_to_aed->usd_to_aed;?>;
 
                           $("#subtotal_adults").html( c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2)  : sub_total_adult );                      
                           $("#subtotal_childs").html( c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child );                               
                           $("#subtotal_infants").html( c_type == 'USD' ? (sub_total_infant/ usd_aed).toFixed(2)  : sub_total_infant); 
-
+                          $("#subtotal_cnb").html(c_type == 'USD' ? (sub_total_cnb / usd_aed).toFixed(2) : sub_total_cnb)     
+                          
                           var PackageMarkup = $("#PackageMarkup").val();
                           var Mark_up =$("#Mark_up").val();
 
@@ -1115,6 +1242,7 @@
                              total_adult = (parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100));
                              total_child = (parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
                              total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
+                             total_cnb = (parseInt(sub_total_cnb) + (parseInt(sub_total_cnb) * parseInt(PackageMarkup) / 100));
 
                           }
                           
@@ -1125,27 +1253,33 @@
                             total_adult = pax_adult_count > 0 ? (parseInt(sub_total_adult) + parseInt(markup_per * pax_adult_count)) : 0 ;
                             total_child = pax_child_count > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * pax_child_count)) : 0 ;
                             total_infant = pax_infant_count > 0 ? (parseInt(sub_total_infant) + parseInt(markup_per * pax_infant_count)) : 0 ;
+                            total_cnb = pax_cnb_count > 0 ? (parseInt(sub_total_cnb) + parseInt(markup_per * pax_cnb_count)) : 0;
                             
                           }
                         
                           $("#totalprice_adult").html(  c_type == 'USD' ? ( total_adult / usd_aed).toFixed(2)  : total_adult  );
                           $("#totalprice_childs").html(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
                           $("#totalprice_infants").html(  c_type == 'USD' ? ( total_infant / usd_aed).toFixed(2)  : total_infant  );
+                          $("#totalprice_cnb").html(c_type == 'USD' ? (total_cnb / usd_aed).toFixed(2) : total_cnb);
 
                           var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
 
                           var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_child_count: parseInt(total_child));
                           
                           var per_pax_infant = (pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
+                          var per_pax_cnb = (pax_cnb_count > 1 ? (parseInt(total_cnb) / pax_cnb_count) : parseInt(total_cnb));
                           
                           $("#perpax_adult").html( c_type == 'USD' ?  Math.floor( per_pax_adult / usd_aed)  : Math.floor(per_pax_adult)  );
                           $("#perpax_childs").html(  c_type == 'USD' ?  Math.floor( per_pax_child / usd_aed)  : Math.floor(per_pax_child)   );
                           $("#perpax_infants").html(  c_type == 'USD' ?    Math.floor( per_pax_infant / usd_aed)  : Math.floor(per_pax_infant)  );
+                          $("#perpax_cnb").html(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
 
                           $("#perpax_adult_input").val( c_type == 'USD' ? Math.floor( per_pax_adult / usd_aed)  : Math.floor(per_pax_adult)  );
                           $("#perpax_childs_input").val( c_type == 'USD' ?   Math.floor( per_pax_child / usd_aed)  : Math.floor(per_pax_child)  );
                           $("#perpax_infants_input").val( c_type == 'USD' ?   Math.floor( per_pax_infant / usd_aed)  : Math.floor(per_pax_infant)  );
-                          var totalprice_package = total_adult + total_child + total_infant;
+                          $("#perpax_cnb_input").val(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
+                          var totalprice_package = total_adult + total_child + total_infant + total_cnb;
+                                
                           console.log("🚩 ~ file: build_package.php ~ line 1043 ~ $ ~ totalprice_package", totalprice_package)
                           // var totalprice_package = c_type == 'USD' ?  Math.floor( totalprice_package / usd_aed)  : Math.floor(totalprice_package);
 
@@ -1196,27 +1330,94 @@
                         //   faqs_row2++;
                         // }
 
-                        var faqs_row2= 0;                    
-                        function addrowss(){
-                          var cnt = $('#rows_count').val();
-                          $('#rows_count').val(parseInt(cnt) + parseInt(1));
-                          var adds=' <tr  id="faqs-row'+faqs_row2 + '">';   
-                          adds +='<td><input type="radio"   id="with_transfer'+faqs_row2 + '" class="transfer_with_or_without" name="transfer_with_or_without'+faqs_row2 +'[]" value="with_transfer" onclick="get_resturant_name(this.id,'+faqs_row2+');"/> With Transfer<br/><input type="radio" class="transfer_with_or_without" checked="checked" id="without_transfer'+faqs_row2 + '" name="transfer_with_or_without'+faqs_row2 +'[]" value="without_transfer" onclick="get_resturant_name(this.id,'+faqs_row2+');"/> Without Transfer </td>';                                             
-                          adds += '<td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate;?>" min="<?php echo $view->specificDate;?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate. ' + '.(($buildpackage->night)- (1)).' days')); ?>" name="buildCheckIn[]" id="buildCheckIn'+faqs_row2 + '"></td>';
-                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type'+faqs_row2 + '" name="res_type[]" onchange="get_resturant_name(this.id,'+faqs_row2+');"> <option value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';                          
-                          // adds += '<td><input class="form-control " type="text" value="" name="res_name[]" id="res_name'+faqs_row2 + '"></td>';
-                          adds += '<td><select data-mdl-for="sample2" class="form-control res_name" value=""  tabIndex="-1" name="res_name[]" id="res_name'+faqs_row2 +'"  ><option>select</option></select></td>'
-                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal'+faqs_row2 + '" name="Meal[]"> <option value="Dinner">Dinner</option> <option value="Lunch">Lunch</option>  </select> </div> </td>';
-                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal'+faqs_row2 + '" name="Meal_Type[]"> <option value="Veg">Veg</option> <option value="Non-Veg">Non-Veg</option> <option value="Jain">Jain</option> </select> </div> </td>';
-                          adds +=  '<td><input type="number" id="no_of_meals'+faqs_row2 +'" class="form-control no_of_meals" name="no_of_meals[]" >';
-                          adds += ' <td><input type="text" placeholder="0" class="form-control meal_adult" id="adult_meal_cal'+faqs_row2 + '" name="adult[]" > </td>';
-                          adds += '<td><input type="text" placeholder="0" class="form-control meal_child" id="child_meal_cal'+faqs_row2 + '" name="child[]" <?php if($buildpackage->child == 0) echo "disabled";?>>';
-                          adds += '</td> <td><button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + faqs_row2 + '\').remove();"><i class="fa fa-trash"></i></button> </td>';
-                          // adds += '</td> <td><button class="btn btn-danger btn-xs" onClick="return removeMeals(this)"><i class="fa fa-trash"></i></button> </td>';
-                          adds += '</tr>';
-                            $('#addrowss').append(adds);
-                          faqs_row2++;
-                        }
+                        var faqs_row2 = 1;
+                            
+                            function addrowss() {
+                              var cnt = $('#rows_count').val();
+                              $('#rows_count').val(parseInt(cnt) + parseInt(1));
+                              var adds = '<div class="row mb-3" style="border-top: 1px solid;" id="faqs-row' + faqs_row2 + '"> <table style="border-spacing: 10px;border-collapse: separate;"> <thead><tr><th style="width: 200;">Transfer Type</th><th>Date</th><th>Resturant Type</th><th>Resturant Name</th><th>Meal</th><th>Meal Type</th><th>No. of Meals</th><th style="width:100">Adult</th><th style="width:100">Child</th><th>Action</th></tr></thead><tbody style="border-bottom: #ff000000;"> <tr>';
+                              adds += '<td><input type="radio"   id="with_transfer' + faqs_row2 + '" onchange="mealsTransferTypeChange('+faqs_row2+')" class="transfer_with_or_without" name="transfer_with_or_without' + faqs_row2 + '[]" value="with_transfer" onclick="get_resturant_name(this.id,' + faqs_row2 + ');"/> With Transfer<br/><input type="radio" class="transfer_with_or_without" checked="checked" onchange="mealsTransferTypeHide('+faqs_row2+')" id="without_transfer' + faqs_row2 + '" name="transfer_with_or_without' + faqs_row2 + '[]" value="without_transfer" onclick="get_resturant_name(this.id,' + faqs_row2 + ');"/> Without Transfer </td>';
+                              adds += '<td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="buildCheckIn[]" id="buildCheckIn' + faqs_row2 + '"></td>';
+                              adds += '<td> <div> <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type' + faqs_row2 + '" name="res_type[]" onchange="get_resturant_name(this.id,' + faqs_row2 + ');"> <option value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';
+                              // adds += '<td><input class="form-control " type="text" value="" name="res_name[]" id="res_name'+faqs_row2 + '"></td>';
+                              adds += '<td><select data-mdl-for="sample2" class="form-control res_name" value=""  tabIndex="-1" name="res_name[]" id="res_name' + faqs_row2 + '"  ><option>select</option></select></td>'
+                              adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal' + faqs_row2 + '" name="Meal[]"> <option value="Dinner">Dinner</option> <option value="Lunch">Lunch</option>  </select> </div> </td>';
+                              adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal' + faqs_row2 + '" name="Meal_Type[]"> <option value="Veg">Veg</option> <option value="Non-Veg">Non-Veg</option> <option value="Jain">Jain</option> </select> </div> </td>';
+                              adds += '<td><input type="number" id="no_of_meals' + faqs_row2 + '" class="form-control no_of_meals" name="no_of_meals[]" >';
+                              adds += ' <td><input type="text" placeholder="0" class="form-control meal_adult" id="adult_meal_cal' + faqs_row2 + '" name="adult[]" > </td>';
+                              adds += '<td><input type="text" placeholder="0" class="form-control meal_child" id="child_meal_cal' + faqs_row2 + '" name="child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>';
+                              adds += '</td> <td><button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + faqs_row2 + '\').remove();"><i class="fa fa-trash"></i></button> </td>';
+                              // adds += '</td> <td><button class="btn btn-danger btn-xs" onClick="return removeMeals(this)"><i class="fa fa-trash"></i></button> </td>';
+                              adds += '</tr> </tbody> </table>';
+
+                              adds +=  `<div class="">
+                                <div class="row mt-4 mr-3 ml-3 mb-3" id="mealTransferMain${faqs_row2}" style="display: none;">
+                                  <div class="col">
+                                    <label for="" class="transport-lable"><b>Transport Type</b>:</label>
+                                    <input type="checkbox" name="mealTransTypeInt" id="mealTransTypeInt${faqs_row2}" onchange="mealsInterTransferShowHide(${faqs_row2})" class="mr-3 ml-2 " value="Internal Transfer"><span class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
+                                    <input type="checkbox" name="mealTransTypeRet" id="mealTransTypeRet${faqs_row2}" onchange="mealsReturnTransferShowHide(${faqs_row2})" checked class="mr-3 ml-2 " value="Point to Point Transfer"><span class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
+                                  </div>
+                                  <div>
+                                    <table class="table">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">Transport type</th>
+                                          <th scope="col">Pax</th>
+                                          <th scope="col">Form Date</th>
+                                          <th scope="col">Pickup Location</th>
+                                          <th scope="col">Drop Off Location </th>
+                                          <th scope="col">Route Name</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody id="transfer_body${faqs_row2}">
+                                        <tr id="mealInternalTransfer${faqs_row2}" style="display: none;">
+                                          <th>Internal Transfer</th>
+                                          <td><input class="form-control" type="number" id="pax_internal_meal${faqs_row2}" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="buildTravelFromCityCab[]" disabled></td>
+                                          <td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate; ?>" id="internal_meal_date${faqs_row2}" name="internal_meal_date[]"></td>
+                                          <td>
+                                            <select id="pickup_internal_meal${faqs_row2}" onchange="fetchMealInternalTransferDropoff(${faqs_row2})" required name="pickup_internal_meal[]" class="pickup_internal_meal js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                              <option value="">Pickup</option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <select id="dropoff_internal_meal${faqs_row2}" onchange="fetchMealInternalTransferPrice(${faqs_row2})" name="dropoff_internal_meal[]" class="dropoff_internal_meal js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                              <option value="">Drop Off</option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <input id="route_name_internal_meal${faqs_row2}" name="route_name_internal_meal[]" class="form-control route_name_internal_meal" type="text" placeholder="Route Name">
+                                          </td>
+                                        </tr>
+
+                                        <tr id="mealReturnTransfer${faqs_row2}">
+                                          <th>Return Transfer</th>
+                                          <td><input class="form-control" id="pax_return_meal${faqs_row2}" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="pax_return_meal[]" disabled></td>
+                                          <td><input class="form-control return_transfer_date" id="return_meal_date${faqs_row2}" type="date" value="<?php echo $view->specificDate; ?>" name="return_meal_date[]"></td>
+                                          <td>
+                                            <select id="pickup_return_meal${faqs_row2}" onchange="fetchMealReturnTransferDropoff(${faqs_row2})" required name="pickup_return_meal[]" class="pickup_return_meal js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                              <option value="">Pickup</option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <select id="dropoff_return_meal${faqs_row2}" onchange="fetchMealReturnTransferPrice(${faqs_row2})"  name="dropoff_return_meal[]" class="dropoff_return_meal js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                              <option value="">Drop Off</option>
+                                            </select>
+                                          </td>
+                                          <td><input id="route_name_return_meal${faqs_row2}" class="form-control route_name_return_meal" type="text" placeholder="Route Name" name="route_name_return_meal[]"></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                    
+                                  </div>
+                                  </div>
+                                  </div> </div>`;
+
+                              $('#addrowss').append(adds);
+                              mealsReturnTransferShowHide(faqs_row2);
+                              $('#total_rows_meal').val(parseInt(faqs_row2));
+ 
+                              faqs_row2++;
+                            }
 
                         var trans_rows= 0;                    
                         function transRow(){
@@ -1347,35 +1548,41 @@
                    </table>
                <div></div>
               </br>
-               <table class="table table-bordered">
-               <tr align="center">
-                   <td type="" name="person" id="person" value=""><span></td>
-                   <td type="" name="AdultCost" id="AdultCost" value=""><span>Adult</td>
-                   <td type="" name="ChildCost" id="ChildCost" value=""><span>Child</td>
-                   <td type="" name="InfantCost" id="InfantCost" value=""><span>Infant</td>
-                  </tr>
-                   <tr  align="center">
-                    <td><b>Sub Total</b></td>
-                    <td type="" id="subtotal_adults"  name="subtotal_adults"></td>
-                    <td type="" id="subtotal_childs"  name="subtotal_childs"></td>
-                    <td type="" id="subtotal_infants"  name="subtotal_infants"></td>
-                   </tr>
-                   <tr  align="center">
-                    <td><b>Total Price</b></td>
-                    <td type="" name="totalprice_adult" id="totalprice_adult" value=""></td>
-                    <td type="" name="totalprice_childs" id="totalprice_childs" value=""></td>
-                    <td type="" name="totalprice_infants" id="totalprice_infants" value=""></td>
-                   </tr>
-                   <tr  align="center">
-                    <td><b>Per PAX</b></td>
-                    <td type="" name="perpax_adult" id="perpax_adult" value=""></td>
-                    <td type="" name="perpax_childs" id="perpax_childs" value=""></td>
-                    <td type="" name="perpax_infants" id="perpax_infants" value=""></td>   
-                   </tr>
-               </table>
-                   <input type="hidden" id="perpax_adult_input" name="perpax_adult_input" value="" />
-                   <input type="hidden" id="perpax_childs_input" name="perpax_childs_input" value="" />
-                   <input type="hidden" id="perpax_infants_input" name="perpax_infants_input" value="" />
+              <table class="table table-bordered">
+                                <tr align="center">
+                                  <td type="" name="person" id="person" value=""><span></td>
+                                  <td type="" name="AdultCost" id="AdultCost" value=""><span>Adult</td>
+                                  <td type="" name="ChildCost" id="ChildCost" value=""><span>CWB</td>
+                                  <td type="" name="ChildCost" id="ChildCost" value=""><span>CNB</td>
+                                  <td type="" name="InfantCost" id="InfantCost" value=""><span>Infant</td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Sub Total</b></td>
+                                  <td type="" id="subtotal_adults" name="subtotal_adults"></td>
+                                  <td type="" id="subtotal_childs" name="subtotal_childs"></td>
+                                  <td type="" id="subtotal_cnb" name="subtotal_cnb"></td>
+                                  <td type="" id="subtotal_infants" name="subtotal_infants"></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Total Price</b></td>
+                                  <td type="" name="totalprice_adult" id="totalprice_adult" value=""></td>
+                                  <td type="" name="totalprice_childs" id="totalprice_childs" value=""></td>
+                                  <td type="" name="totalprice_cnb" id="totalprice_cnb" value=""></td>
+                                  <td type="" name="totalprice_infants" id="totalprice_infants" value=""></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Per PAX</b></td>
+                                  <td type="" name="perpax_adult" id="perpax_adult" value=""></td>
+                                  <td type="" name="perpax_childs" id="perpax_childs" value=""></td>
+                                  <td type="" name="perpax_cnb" id="perpax_cnb" value=""></td>
+                                  <td type="" name="perpax_infants" id="perpax_infants" value=""></td>
+                                </tr>
+                              </table>
+                              <input type="hidden" id="perpax_adult_input" name="perpax_adult_input" value="" />
+                              <input type="hidden" id="perpax_childs_input" name="perpax_childs_input" value="" />
+                              <input type="hidden" id="perpax_cnb_input" name="perpax_cnb_input" value="" />
+                              <input type="hidden" id="perpax_infants_input" name="perpax_infants_input" value="" />
+
 
                   </div>
               </div>
@@ -1806,6 +2013,40 @@ function get_resturant_name(id,row){
         });
 
      }
+
+     function getOTBprice() {
+
+var category = "OTB";
+var pax_adult = $("#otb_adult").val();
+var pax_child = $("#otb_child").val();
+var pax_infant = $("#otb_infant").val();
+var QueryId = $('#QueryId').val();
+
+$.ajax({
+  type: "POST",
+  dataType: "json",
+  url: '<?php echo site_url(); ?>/Query/getOTBPrice',
+  data: {
+    'query_type': 'package',
+    'pax_adult': pax_adult,
+    'pax_child': pax_child,
+    'pax_infant': pax_infant,
+    'category': category,
+    'query_id': QueryId
+  },
+  success: function(response) {
+  console.log("🚩 ~ file: build_package.php ~ line 1924 ~ getOTBprice ~ response", response)
+
+    $("#total_pax_otb_price_adult").val(response.per_pax_adult_amt);
+    $("#total_pax_otb_price_child").val(response.per_pax_child_amt);
+    $("#total_pax_otb_price_infant").val(response.per_pax_infant_amt);
+
+    toastr.success("OTB Saved Successfully");
+
+  }
+});
+
+}
      </script>
 
 <input type="hidden" id="total_pax_visa_price_adult" name="total_pax_visa_price_adult" value="0" />
@@ -2737,6 +2978,14 @@ console.log(response);
         $("#visa_status1").on("change",function(){
             $("#visadisplay").hide();
         })
+
+        $("#otb_status").on("change", function() {
+          $("#otbdisplay").show();
+        })
+
+      $("#otb_status1").on("change", function() {
+        $("#otbdisplay").hide();
+      })
 
         $("#excursion_status").on("change",function(){
             // alert(this.value);
@@ -3743,6 +3992,239 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
 
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script>
+
+function saveTransferDefault(){
+  
+  var pax_adult = <?php  echo $view->Packagetravelers; ?>;
+  var pax_child = <?php  echo $buildpackage->child; ?>;
+  var pax_infants = <?php  echo $buildpackage->infant; ?>;
+  // var total_pax = pax_adult + pax_child + pax_infants;
+  var total_pax = pax_adult + pax_child;
+  
+  var QueryId = $('#QueryId').val();
+  
+                  var internal_transfer_pickup = [];
+                    $(".internal_transfer_pickup").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" && cat != 'Pickup'){
+                        internal_transfer_pickup.push($.trim(cat));
+                      }
+                    });
+  
+                    var internal_transfer_dropoff = [];
+                    $(".internal_transfer_dropoff").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" && cat != 'Drop Off'){
+                        internal_transfer_dropoff.push($.trim(cat));
+                       }
+                    });
+  
+                    var internal_transfer_route = [];
+                    $(".internal_transfer_route").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" ){
+                        internal_transfer_route.push($.trim(cat));
+                      }
+                    });
+  
+                    var internal_transfer_date = [];
+                    $(".internal_transfer_date").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" ){
+                        internal_transfer_date.push($.trim(cat));
+                      }
+                    });
+                    // return transfer ---------------------------------
+  
+                    var return_transfer_pickup = [];
+                    $(".return_transfer_pickup").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" && cat != 'Pickup'){
+                        return_transfer_pickup.push($.trim(cat));
+                       }
+                    });
+  
+                    var return_transfer_dropoff = [];
+                    $(".return_transfer_dropoff").each(function() {
+                      var cat = $(this).val();
+                       if(cat != "" && cat != 'Drop Off'){
+                        return_transfer_dropoff.push($.trim(cat));
+                       }
+                    });
+  
+                    var return_transfer_route = [];
+                    $(".return_transfer_route").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" ){
+                        return_transfer_route.push($.trim(cat));
+                      }
+                    });
+                    
+                    var return_transfer_date = [];
+                    $(".return_transfer_date").each(function() {
+                      var cat = $(this).val();
+                      if(cat != "" ){
+                        return_transfer_date.push($.trim(cat));
+                      }
+                    });
+  
+                    var data= [{
+                        'internal_transfer_pickup' : internal_transfer_pickup,
+                        'internal_transfer_dropoff' : internal_transfer_dropoff,
+                        'internal_transfer_route' : internal_transfer_route,
+                        'internal_transfer_date' : internal_transfer_date,
+  
+                        'return_transfer_pickup' : return_transfer_pickup,
+                        'return_transfer_dropoff' : return_transfer_dropoff,
+                        'return_transfer_route' : return_transfer_route,
+                        'return_transfer_date' : return_transfer_date,
+  
+                      }];
+                     console.log("🚩 ~ file: build_transfer.php ~ line 932 ~ $ ~ data", data)
+                     
+                    
+                      $.ajax({ 
+                          type: "POST",
+                          url: "<?php echo base_url()?>Query/saveTransferDataEdit",
+                          data : {data : data,'pax_adult':pax_adult,'pax_child':pax_child,'pax_infants':pax_infants,'query_id' : QueryId,'query_type' : 'transfer' },
+                          cache: false,
+                          dataType: "json",
+                          success: function(response)
+                          {
+                          console.log("🚩 ~ file: build_transfer_edit.php ~ line 885 ~ $ ~ response", typeof(response.internal_price))
+  
+                            $("#price_internal").val(response.internal_price);
+                            var total_price_internal = response.internal_price * total_pax;
+                            $("#total_price_internal").val(total_price_internal);
+  
+                          console.log("🚩 ~ file: build_transfer_edit.php ~ line 885 ~ $ ~ response", (total_price_internal))
+                            
+                            $("#price_point").val(response.return_price);
+                            var total_price_return = response.return_price * total_pax;
+                            $("#total_price_point").val(total_price_return);
+  
+                          console.log("🚩 ~ file: build_transfer_edit.php ~ line 885 ~ $ ~ response", (total_price_return))
+  
+                            
+                          }
+                      });
+  }
+
+  saveTransferDefault();
+
+  
+  function transfer_cal(){
+    var pax_adult = <?php echo $view->Packagetravelers; ?>;
+    var pax_child = <?php echo $buildpackage->child; ?>;
+    var pax_infants = <?php echo $buildpackage->infant; ?>;
+    var total_pax = pax_adult + pax_child + pax_infants;
+    var QueryId = $('#QueryId').val();
+
+    var internal_transfer_pickup = [];
+    $(".internal_transfer_pickup").each(function() {
+      var cat = $(this).val();
+      if (cat != "" && cat != 'Pickup') {
+        internal_transfer_pickup.push($.trim(cat));
+      }
+    });
+
+    var internal_transfer_dropoff = [];
+    $(".internal_transfer_dropoff").each(function() {
+      var cat = $(this).val();
+      if (cat != "" && cat != 'Drop Off') {
+        internal_transfer_dropoff.push($.trim(cat));
+      }
+    });
+
+    var internal_transfer_route = [];
+    $(".internal_transfer_route").each(function() {
+      var cat = $(this).val();
+      if (cat != "") {
+        internal_transfer_route.push($.trim(cat));
+      }
+    });
+
+    var internal_transfer_date = [];
+    $(".internal_transfer_date").each(function() {
+      var cat = $(this).val();
+      if (cat != "") {
+        internal_transfer_date.push($.trim(cat));
+      }
+    });
+
+    // return transfer ---------------------------------
+
+    var return_transfer_pickup = [];
+    $(".return_transfer_pickup").each(function() {
+      var cat = $(this).val();
+      if (cat != "" && cat != 'Pickup') {
+        return_transfer_pickup.push($.trim(cat));
+      }
+    });
+
+    var return_transfer_dropoff = [];
+    $(".return_transfer_dropoff").each(function() {
+      var cat = $(this).val();
+      if (cat != "" && cat != 'Drop Off') {
+        return_transfer_dropoff.push($.trim(cat));
+      }
+    });
+
+    var return_transfer_route = [];
+    $(".return_transfer_route").each(function() {
+      var cat = $(this).val();
+      if (cat != "") {
+        return_transfer_route.push($.trim(cat));
+      }
+    });
+
+    var return_transfer_date = [];
+    $(".return_transfer_date").each(function() {
+      var cat = $(this).val();
+      if (cat != "") {
+        return_transfer_date.push($.trim(cat));
+      }
+    });
+
+    var data = [{
+      'internal_transfer_pickup': internal_transfer_pickup,
+      'internal_transfer_dropoff': internal_transfer_dropoff,
+      'internal_transfer_route': internal_transfer_route,
+      'internal_transfer_date': internal_transfer_date,
+
+      'return_transfer_pickup': return_transfer_pickup,
+      'return_transfer_dropoff': return_transfer_dropoff,
+      'return_transfer_route': return_transfer_route,
+      'return_transfer_date': return_transfer_date,
+
+    }];
+    console.log("🚩 ~ file: build_package.php ~ line 2424 ~ $ ~ data", data)
+
+
+    $.ajax({
+      type: "POST",
+      url: "<?php echo base_url() ?>Query/saveTransferData",
+      data: {
+        data: data,
+        'pax_adult': pax_adult,
+        'pax_child': pax_child,
+        'pax_infants': pax_infants,
+        'query_id': QueryId,
+        'query_type': 'package'
+      },
+      cache: false,
+      dataType: "json",
+      success: function(response) {
+        console.log("🚩 ~ file: build_package.php ~ line 2440 ~ $ ~ response", response)
+        toastr.success("Transfer Details Saved Successfully");
+      }
+    });
+
+    transfer_cal();
+    console.log("🚩 ~ file: build_package.php ~ line 2632 ~ data", data)
+
+  }
+
   CKEDITOR.replace('buildPackageInclusions');
   CKEDITOR.replace('buildPackageExclusions');
   CKEDITOR.replace('buildPackageConditions');

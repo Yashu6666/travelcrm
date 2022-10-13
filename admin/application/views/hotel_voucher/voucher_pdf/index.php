@@ -170,26 +170,48 @@
         <thead>
             <tr>
                 <th  style="border: 2px solid #000;width: 125px;">Hotel Name</th>
+                <th style="border: 2px solid #000;width: 125px;">Check-in</th>
+                <th style="border: 2px solid #000;width: 125px;">No of Nights </th>
+               
+                <th  style="border: 2px solid #000;width: 125px;">Confirmation Number</th>
+                <th style="border: 2px solid #000;width: 125px;">Check-out </th>
+                
+                <th  style="border: 2px solid #000;width: 125px;">Booking Date</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
                 <th  style="border: 2px solid #000;width: 125px;white-space: nowrap;"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?>
                     <?php if(isset($hotel_details[$key]->hotelstars)) : ?>	
                         <?php echo str_repeat("*",$hotel_details[$key]->hotelstars); ?>
                     <?php endif ?>
                 </th>
-                <th  style="border: 2px solid #000;width: 125px;">Confirmation Number</th>
-                <th  style="border: 2px solid #000;width: 125px;"><?php print_r($hotel_confirmation[$key]->confirmation_id) ?></th>
                 <?php
+                    $date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);
+					$check_in = $date->format('d-M-Y');
+
+                    $date->modify('+' . explode(',',$hotel[0]->nights)[$key] . ' day');
+                    $checkout =  $date->format('d-M-Y');
+                ?>
+                 <th style="border: 2px solid #000;width: 125px;"><?php echo $check_in; ?></th>
+
+                 <?php
                 $created_date = new DateTime($guest->created_at);
                 $booking_date = $created_date->format('d-M-Y');
                 ?>
-                <th  style="border: 2px solid #000;width: 125px;">Booking Date</th>
+                 <th style="border: 2px solid #000;width: 125px;"><?php print_r(explode(',',$hotel[0]->nights)[$key]); ?></th>	
+                 <th  style="border: 2px solid #000;width: 125px;"><?php print_r($hotel_confirmation[$key]->confirmation_id) ?></th>
+
+                <th style="border: 2px solid #000;width: 125px;"><?php echo $checkout; ?></th>
                 <th  style="border: 2px solid #000;width: 125px;"><?php echo $booking_date ?></th>
-                
+
             </tr>
-        </thead>
+        </tbody>
     </table>
     </div>
 
-    <div class="units">
+    <!-- <div class="units">
     <table style="width:100%; margin-bottom:20px">
         <thead>
             <tr>
@@ -212,7 +234,7 @@
             </tr>
         </thead>
     </table>
-    </div>
+    </div> -->
 
         <div class="units" style="overflow-x: auto;">
             <table style="width:100%; margin-bottom:20px">

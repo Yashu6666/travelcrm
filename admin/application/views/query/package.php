@@ -774,11 +774,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                         <label for="">Service Date</label> <br />
                                                         <input class="package_inputs" type="date" placeholder=" " id="specificDate11" name="specificDate" autocomplete="off" required />
                                                     </div>
-                                                    <div class="col">
-                                                        <label for="">Nights</label> <br />
+                                                    <!-- <div class="col">
+                                                        <label for="">Nights</label> <br /> -->
 
-                                                        <input class="package_inputs" type="number" min="1" placeholder=" " id="goingFrom11" name="night" required autocomplete="off" />
-                                                    </div>
+                                                        <input class="package_inputs" type="hidden" value="1" id="goingFrom11" name="night" required autocomplete="off" />
+                                                    <!-- </div> -->
                                                     <div class="col" hidden>
                                                         <label for="">Check Out</label> <br />
 
@@ -1098,18 +1098,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                     <div class="col">
                                                         <label for="">From Date</label> <br />
 
-                                                        <input class="package_inputs" type="date" placeholder=" " id="specificDate1" name="specificDate" autocomplete="off" required />
+                                                        <input class="package_inputs" type="date" placeholder=" " id="specificDate12" name="specificDate" autocomplete="off" required />
                                                     </div>
                                                     <!-- <div class="col" hidden>
                                                         <label for="">Nights</label> <br />
 
                                                     </div> -->
-                                                    <input class="package_inputs" type="hidden" value="0" min="1" placeholder=" " value="0" id="goingFrom1" name="night" required autocomplete="off" />
+                                                    <input class="package_inputs" type="hidden" value="0" min="1" placeholder=" " value="0" id="goingFrom12" name="night" required autocomplete="off" />
 
                                                     <div class="col">
                                                         <label for="">To Date</label> <br />
 
-                                                        <input class=" package_inputs" type="date" placeholder=" " id="endDate1" name="noDaysFrom" autocomplete="off" />
+                                                        <input class=" package_inputs" type="date" placeholder=" " id="endDate12" name="noDaysFrom" autocomplete="off" />
                                                     </div>
                                                     <div class="col">
                                                         <label for="">Country</label> <br />
@@ -1192,7 +1192,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                     <div id="child_age_div3" class="col" style="display:none;">
                                                         <label for="">Child Age</label><br>
 
-                                                        <input id="child_age" name="child_age" class="Travelers-select-package-values" type="text" value="0" />
+                                                        <input id="child_age12" name="child_age" class="Travelers-select-package-values" type="text" value="0" />
                                                     </div>
 
                                                     <!-- <div class="col">

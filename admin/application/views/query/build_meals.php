@@ -67,8 +67,8 @@
                       <td> <?php echo $buildpackage->goingFrom ?></td>
                       <th><b>No of Pax</b></th>
                       <th><b>Adult</b>: <?php echo $view->Packagetravelers; ?> </th>
-                      <th><b>Child: </b><?php echo $buildpackage->child; ?></th>
-                      <th> <b>Infant :</b> <?php echo $buildpackage->infant; ?></th>
+                      <th colspan="2"><b>Child: </b><?php echo $buildpackage->child; ?></th>
+                      <!-- <th> <b>Infant :</b> <?php echo $buildpackage->infant; ?></th> -->
 
                     </tr>
                   </tbody>

@@ -58,9 +58,9 @@
           <td></td>
          </tr> -->
          <tr>
-          <th><b>Check In</b></th>
+          <th><b>Tour Date</b></th>
           <td><?php echo date('d-m-Y', strtotime($view->specificDate)) ;?></td>
-          <th><b>Check Out</b></th>
+          <th><b>End Date</b></th>
           <td><?php echo date('d-m-Y', strtotime($buildpackage->noDaysFrom))  ?></td>
           <th><b>No of Nights</b></th>
           <td><?php echo $buildpackage->night?></td>

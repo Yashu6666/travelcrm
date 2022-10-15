@@ -119,7 +119,7 @@ class HotelVoucher extends CI_Controller
 				$data_hotel = $this->db->where('id', $id)->get('hotel')->row();
 				array_push($data['hotel_details'],$data_hotel);
 			}
-			// $this->load->view('hotel_voucher/voucher_pdf/index',$data);return;
+			// $this->load->view('hotel_voucher/pdf',$data);return;
 			
 			$body = $this->load->view('hotel_voucher/voucher_pdf/index',$data,TRUE);
 
@@ -180,7 +180,6 @@ class HotelVoucher extends CI_Controller
 			// $mPdf->Output(FCPATH . '/public/uploads/hotelVoucher/' . $pdf_name, "F");
 
 			// $this->load->config('email');
-			$this->load->library('email');
 			$config = array(
 				'protocol' => 'smtp',
 				'smtp_host' => 'ssl://smtp.googlemail.com',
@@ -190,7 +189,12 @@ class HotelVoucher extends CI_Controller
 				'crlf' => "\r\n",
 				'mailtype' => "html",
 				'newline' => "\r\n",
+				'starttls'  => true,
+				'charset' => 'utf-8',
+          		'wordwrap' => TRUE,
+				'charset'  => 'iso-8859-1',
 			);
+			$this->load->library('email');
 
 			$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
 			qp.child,cb.reportsTo,cb.b2bEmail,qp.room");

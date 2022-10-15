@@ -350,9 +350,9 @@ textarea{
                 </thead>
                <tbody>
                    <tr align="center">
-                    <td > <?php  echo $proposalDetails['perpax_adult'] ?></td>
-                    <td ><?php  echo $proposalDetails['perpax_childs'] ?></td>
-                    <td ><?php echo $proposalDetails['perpax_infants'] ?></td>                   
+                    <td > <?php  echo $proposalDetails['perpax_adult'] * $buildpackage->adult  ?></td>
+                    <td ><?php  echo $proposalDetails['perpax_childs'] * $buildpackage->child  ?></td>
+                    <td ><?php echo $proposalDetails['perpax_infants']  * $buildpackage->infant ?></td>                   
 
                    </tr>
                </tbody></table>
@@ -680,11 +680,16 @@ textarea{
 
                         <div class="row mt-3">
                             <div class="col">
-                               
-                                <div class="mt-2"> <b>Cheak In/Out</b> : <?php echo $buildpackage->specificDate ?>/<?php echo $buildpackage->noDaysFrom ?></div>
+                            <?php
+                                $date = new DateTime($buildpackage->specificDate);
+                                $date_checkin = $date->format('d-M-Y');
+                                $date1 = new DateTime($buildpackage->specificDate);
+                                $date_checkout = $date1->format('d-M-Y');
+                                ?>
+                                <div class="mt-2"> <b>Check In/Out</b> : <?php echo $date_checkin ?>/<?php echo $date_checkout ?></div>
                                 <div class="mt-2"> <b>Destinations</b> :  <?php echo $buildpackage->goingTo ?>,  <?php echo $buildpackage->goingFrom ?></div>
                             </div>
-                            <!-- <div class="col">
+                            <!-- <div class="col">  
                                 <div class="form-floating">
                                     <textarea class="form-control" style="height: 100px;"
                                         placeholder="Leave a comment here" id="floatingTextarea"></textarea>

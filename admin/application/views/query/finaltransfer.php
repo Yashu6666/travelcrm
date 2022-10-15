@@ -310,14 +310,19 @@ textarea{
                     <th> Pick Up</th>
                     <th> Drop Off </th>
                 </thead>
+                <?php if(isset($proposalDetails['in_transfer_pickup']) && !empty($proposalDetails['in_transfer_pickup'])) : ?> 
                 <?php foreach($proposalDetails['in_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
 
                     <tbody>
                         <tr align="center">
                             <!-- <td><b>Per PAX</b></td> -->
+                            <?php
+                                $date = new DateTime($proposalDetails['in_transfer_date'][$key]);
+                                $date_trans = $date->format('d-M-Y');
+                                ?>
                             <td>Internal Transfer</td>
-                            <td> <?php echo $proposalDetails['in_transfer_date'][$key] ?></td>
+                            <td> <?php echo $date_trans ?></td>
                             <td> <?php echo $proposalDetails['in_transfer_pickup'][$key] ?></td>
                             <td> <?php echo $proposalDetails['in_transfer_dropoff'][$key] ?></td>
 
@@ -325,15 +330,20 @@ textarea{
                     </tbody>
                     <?php endif ?>
                     <?php endforeach ?>
+                    <?php endif ?>
 
+                    <?php if(isset($proposalDetails['pp_transfer_pickup'])  && !empty($proposalDetails['pp_transfer_pickup'])) : ?> 
                     <?php foreach($proposalDetails['pp_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
                     <!-- ?php if($proposalDetails['pp_transfer_pickup'] != 'Pickup') : ?> -->
                     <tbody>
                         <tr align="center">
-                            <!-- <td><b>Per PAX</b></td> -->
+                        <?php
+                                $date = new DateTime($proposalDetails['pp_transfer_date'][$key]);
+                                $date_pp = $date->format('d-M-Y');
+                                ?>
                             <td>Point to Point Transfer</td>
-                            <td> <?php echo $proposalDetails['pp_transfer_date'][$key] ?></td>
+                            <td> <?php echo $date_pp ?></td>
                             <td> <?php echo $proposalDetails['pp_transfer_pickup'][$key] ?></td>
                             <td> <?php echo $proposalDetails['pp_transfer_dropoff'][$key] ?></td>
 
@@ -341,11 +351,11 @@ textarea{
                     </tbody>
                     <?php endif ?>
                     <?php endforeach ?>
+                    <?php endif ?>
             
             </table>
             </div>           
         </div>
-
         <br/><br/>
         <div class=" second">
             <div class=" bg-primary ">
@@ -694,8 +704,11 @@ textarea{
 
                         <div class="row mt-3">
                             <div class="col">
-                               
-                                <div class="mt-2"> <b>Cheak In/Out</b> : <?php echo $buildpackage->specificDate ?>/<?php echo $buildpackage->noDaysFrom ?></div>
+                            <?php
+                                $date = new DateTime($buildpackage->specificDate);
+                                $date_t = $date->format('d-M-Y');
+                                ?>
+                                <div class="mt-2"> <b>Service Date</b> : <?php echo $date_t ?></div>
                                 <div class="mt-2"> <b>Destinations</b> :  <?php echo $buildpackage->goingTo ?>,  <?php echo $buildpackage->goingFrom ?></div>
                             </div>
                             <!-- <div class="col">

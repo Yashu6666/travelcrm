@@ -45,36 +45,28 @@
 
        <table class="table table-bordered mt-5">
         <tbody>
+        <tr>
+          <th><b>Enquiry For</b></th>
+          <td colspan="3"><b>Transfer</b></td>
+          </tr>
          <tr>
           <th scope="row"><b>Company Name</b> </th>
           <td><?php echo $view->b2bcompanyName;?></td>
           <th><b>Enquiry Id</b></th>
           <td><?php echo $view->query_id;?></td>
-          <th><b>Enquiry For</b></th>
-          <td><b>Transfer</b></td>
+          
          </tr>
-         <!-- <tr>
-          <th><b>Enquiry Details</b></th>
-          <td></td>
-          <td></td>
-          <td></td>
-         </tr> -->
          <tr>
-          <th><b>Check In</b></th>
+          <th><b>Service Date</b></th>
           <td><?php echo date('d M Y', strtotime($view->specificDate)) ;?></td>
-          <th><b>Check Out</b></th>
-          <td><?php echo date('d M Y', strtotime($buildpackage->noDaysFrom))  ?></td>
-          <th><b>No of Nights</b></th>
-          <td><?php echo $buildpackage->night?></td>
+          <th ><b>City</b></th>
+          <td> <?php echo $buildpackage->goingFrom ?></td>
          </tr>
          <tr>
-          <th><b>City</b></th>
-          <td>  <?php echo $buildpackage->goingFrom ?></td>
           <th><b>No of Pax</b></th>
           <th><b>Adult</b>: <?php echo $view->Packagetravelers;?>  </th>
           <th><b>Child: </b><?php echo $buildpackage->child;?></th>
-          <th> <b>Infant :</b> <?php echo $buildpackage->infant;?></th>
-
+          <th><b>Infant :</b> <?php echo $buildpackage->infant;?></th>
          </tr>
         </tbody>
        </table>
@@ -390,8 +382,8 @@
                           $("#perpax_childs").html(  c_type == 'USD' ?  ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child   );
                           $("#perpax_infants").html( 0 );
 
-                          // $("#perpax_adult_input").val(per_pax_adult);
-                          // $("#perpax_childs_input").val(per_pax_child );
+                          $("#perpax_adult_input").val(per_pax_adult);
+                          $("#perpax_childs_input").val(per_pax_child );
                           $("#perpax_adult_input").val( c_type == 'USD' ? ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
                           $("#perpax_childs_input").val( c_type == 'USD' ?   ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child  );
                           $("#perpax_infants_input").val( 0 );

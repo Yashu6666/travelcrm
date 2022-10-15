@@ -315,9 +315,20 @@ textarea{
                     <td ><?php echo $proposalDetails['visa_validity'] ?></td>                   
 
                    </tr>
+                <?php if(!empty($otb)) : ?>
+                   <tr align="center">
+                    <td>OTB</td>
+                    <td >--</td>
+                    <td >--</td>                   
+                   </tr>
+                <?php endif ?>
+
+
                </tbody></table>
             </div>           
         </div>
+
+        
 
         <div class=" second">
             <div class=" bg-primary ">

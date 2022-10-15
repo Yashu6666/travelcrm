@@ -25,6 +25,9 @@
             padding: 10px;
             white-space: nowrap;
         }
+        .div_flex {
+            display: flex;
+        }
 
     </style>
 </head>
@@ -36,28 +39,44 @@
     </div>
 
     <div class="mainDiv" style="background-color: #d9a927;text-align: center;font-size: 20px;">
-        <h4 style="padding: 8px;"><i class="fa-solid fa-receipt"></i> Accommodation Voucher</h4>
+        <h4 style="padding: 20px;color:white"><i class="fa-solid fa-receipt"></i> Accommodation Voucher</h4>
     </div>
-    <div class="mainDiv" style="background-color: #d9a927;">
-        <h4 style="text-align: start;margin-left: 20px;padding:2px;align-items: center;display: flex;font-size: 20px;"><img src="<?php echo base_url('/public/image/page_icon.png'); ?>" style="width: 12px;"> Hotel Details</h4>
-    </div>
+    <!-- <div class="mainDiv" style="background-color: #d9a927;">
+        <h4 style="text-align: start; color:white; margin-left: 20px;padding:2px;align-items: center;display: flex;font-size: 20px;"><img src="<?php echo base_url('/public/image/page_icon.png'); ?>" style="width: 12px;"> Hotel Details</h4>
+    </div> -->
 
+    <div>
+</div>
     <?php foreach (explode(',', $hotel[0]->hotel_name) as $key => $value) : ?>
 
+        <div class="div_flex" style="height:auto;width:100%;background-color: #d9a927;margin-top:0px;font-size: 18px;">
+        <h4 style="margin-left:20px;float: left;color:white; padding-top: 0px;padding-bottom:16px; width: 55%;">Hotel Name :
+        <?php print_r(explode(',', $hotel[0]->hotel_name)[$key]) ?>
+                        <?php if (isset($hotel_details[$key]->hotelstars)) : ?>
+                            <span style="color: #efe717;">
+                            <?php for($i=0;$i<$hotel_details[$key]->hotelstars;$i++) : ?>
+                              *
+                            <?php endfor ?>
+                            </span>
+                        <?php endif ?>      
+        </h4>
+    <h4 style="text-align:right;color:white;margin-left: auto; padding-top: 0px;padding-bottom:16px; width: 45%;">Confirmation Number : <?php print_r($hotel_confirmation[$key]->confirmation_id) ?>
+    &nbsp;&nbsp;</h4>
+    </div>
         <table style="width: 100%; margin-top:20px">
             <thead>
                 <tr>
-                    <th>Hotel Name</th>
+                    <!-- <th>Hotel Name</th> -->
                     <th>Check-in</th>
                     <th>No of Nights </th>
-                    <th>Confirmation Number</th>
+                    <!-- <th>Confirmation Number</th> -->
                     <th>Check-out </th>
-                    <th>Booking Date</th>
+                    <th colspan="2">Booking Date</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><?php print_r(explode(',', $hotel[0]->hotel_name)[$key]) ?>
+                    <!-- <td><?php print_r(explode(',', $hotel[0]->hotel_name)[$key]) ?>
                         <?php if (isset($hotel_details[$key]->hotelstars)) : ?>
                             <span style="color: #efe717;">
                             <?php for($i=0;$i<$hotel_details[$key]->hotelstars;$i++) : ?>
@@ -65,7 +84,7 @@
                             <?php endfor ?>
                             </span>
                         <?php endif ?>
-                    </td>
+                    </td> -->
                     <?php
                     $date = new DateTime(explode(',', $hotel[0]->checkin)[$key]);
                     $check_in = $date->format('d-M-Y');
@@ -78,9 +97,9 @@
                     $booking_date = $created_date->format('d-M-Y');
                     ?>
                     <td><?php print_r(explode(',', $hotel[0]->nights)[$key]); ?></td>
-                    <td><?php print_r($hotel_confirmation[$key]->confirmation_id) ?></td>
+                    <!-- <td><?php print_r($hotel_confirmation[$key]->confirmation_id) ?></td> -->
                     <td><?php echo $checkout; ?></td>
-                    <td><?php echo $booking_date ?></td>
+                    <td colspan="2"><?php echo $booking_date ?></td>
                 </tr>
             </tbody>
 
@@ -89,7 +108,7 @@
                 <th>No of Rooms</th>
                 <th>Adults</th>
                 <th>Children</th>
-                <th colspan="2">Meals Board</th>
+                <th >Meals Board</th>
             </tr>
             <tbody>
                 <tr>
@@ -100,7 +119,7 @@
                     <?php if ($board_arr[$key] == '') : ?>
                         <td>----</td>
                     <?php else : ?>
-                        <td colspan="2">
+                        <td     >
                             <?php print_r($hotel_confirmation[$key]->board) ?>
                         </td>
                     <?php endif ?>
@@ -138,7 +157,7 @@
 
 
     <div style="background-color: #d9a927;">
-        <h4 style="text-align: start;margin-left: 20px;padding:2px;align-items: center;display: flex;font-size: 20px;"><img src="<?php echo base_url('/public/image/user_icon.png'); ?>" style="width: 12px;"> Guest Details</h4>
+        <h4 style="color:white;text-align: start;padding:20px;align-items: center;display: flex;font-size: 20px;">Guest Details</h4>
     </div>
 
     <table style="width:100%;margin-top:20px">
@@ -162,7 +181,7 @@
     </table>
 
     <div style="background-color: #d9a927;">
-        <h4 style="text-align: start;margin-left: 20px;padding:4px;align-items: center;display: flex;font-size: 20px;"><img src="<?php echo base_url('/public/image/question_icon.png'); ?>" style="width: 12px;"> Note </h4>
+        <h4 style="color:white;text-align: start;padding:20px;align-items: center;display: flex;font-size: 20px;"> Note </h4>
     </div>
     <?php echo $impInfo ?>
 </body>

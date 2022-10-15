@@ -45,35 +45,28 @@
 
        <table class="table table-bordered mt-5">
         <tbody>
+          <tr>
+          <th><b>Enquiry For</b></th>
+          <td colspan="3"><b>Transfer</b></td>
+          </tr>
          <tr>
           <th scope="row"><b>Company Name</b> </th>
           <td><?php echo $view->b2bcompanyName;?></td>
           <th><b>Enquiry Id</b></th>
           <td><?php echo $view->query_id;?></td>
-          <th><b>Enquiry For</b></th>
-          <td><b>Transfer</b></td>
+          
          </tr>
-         <!-- <tr>
-          <th><b>Enquiry Details</b></th>
-          <td></td>
-          <td></td>
-          <td></td>
-         </tr> -->
          <tr>
-          <th><b>Check In</b></th>
+          <th><b>Service Date</b></th>
           <td><?php echo date('d M Y', strtotime($view->specificDate)) ;?></td>
-          <th><b>Check Out</b></th>
-          <td><?php echo date('d M Y', strtotime($buildpackage->noDaysFrom))  ?></td>
-          <th><b>No of Nights</b></th>
-          <td><?php echo $buildpackage->night?></td>
+          <th ><b>City</b></th>
+          <td> <?php echo $buildpackage->goingFrom ?></td>
          </tr>
          <tr>
-          <th><b>City</b></th>
-          <td>  <?php echo $buildpackage->goingFrom ?></td>
           <th><b>No of Pax</b></th>
           <th><b>Adult</b>: <?php echo $view->Packagetravelers;?>  </th>
           <th><b>Child: </b><?php echo $buildpackage->child;?></th>
-          <th> <b>Infant :</b> <?php echo $buildpackage->infant;?></th>
+          <th><b>Infant :</b> <?php echo $buildpackage->infant;?></th>
 
          </tr>
         </tbody>
@@ -415,8 +408,8 @@
                           $("#totalprice_childs").html(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
                           $("#totalprice_infants").html( 0 );
 
-                          var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / 2 : parseInt(total_adult));
-                          var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
+                          var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
+                          var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_adult_count : parseInt(total_child));
                         //   var per_pax_infant = (parseInt(total_infant) / 2);
                           
                           // $("#perpax_adult").html(per_pax_adult);

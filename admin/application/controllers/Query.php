@@ -408,7 +408,7 @@ class Query extends CI_Controller
 
 	public function addQueryPackage()
 	{
-		// echo '<pre>';print_r($_POST['child_with_or_wo_count']);
+		// echo '<pre>';print_r($_POST);
 		// exit;
 		$cwb = [];
 		$cnb = [];
@@ -2633,21 +2633,21 @@ class Query extends CI_Controller
 			'buildPackageExclusions' => $_POST['buildPackageExclusions'],
 			'buildPackageConditions' => $_POST['buildPackageConditions'],
 			'buildPackageCancellations' => $_POST['buildPackageCancellations'],
-			'buildTravelFromdateCab' => $_POST['buildTravelFromdateCab'],
+			'buildTravelFromdateCab' => isset($_POST['buildTravelFromdateCab']) ? $_POST['buildTravelFromdateCab'] : '',
 
-			'pickupinternal' => $_POST['buildTravelToDateCab'],
+			'pickupinternal' => isset($_POST['buildTravelToDateCab']) ? $_POST['buildTravelToDateCab'] : '',
 			// 'dropoffinternal' => $_POST['buildTravelFromdateSIC'],
 
-			'pickuppoint' => $_POST['buildTravelToDateSIC'],
-			'currencyOption' => $_POST['currencyOption'],
+			'pickuppoint' => isset($_POST['buildTravelToDateSIC']) ? $_POST['buildTravelToDateSIC'] : '',
+			'currencyOption' => isset($_POST['currencyOption']) ? $_POST['currencyOption'] : '',
 
-			'in_transfer_date' => $_POST['buildTravelFromdateCab'],
-			'in_transfer_pickup' => $_POST['buildTravelToDateCab'],
-			'in_transfer_dropoff' => $_POST['buildTravelToCityCabDrop'],
+			'in_transfer_date' => isset($_POST['buildTravelFromdateCab']) ? $_POST['buildTravelFromdateCab'] : '',
+			'in_transfer_pickup' => isset($_POST['buildTravelToDateCab']) ? $_POST['buildTravelToDateCab'] : '',
+			'in_transfer_dropoff' => isset($_POST['buildTravelToCityCabDrop']) ? $_POST['buildTravelToCityCabDrop'] : '',
 
-			'pp_transfer_date' => $_POST['buildTravelFromdatePVT'],
-			'pp_transfer_pickup' => $_POST['buildTravelToDateSIC'],
-			'pp_transfer_dropoff' => $_POST['buildTravelToCitySIC']
+			'pp_transfer_date' => isset($_POST['buildTravelFromdatePVT']) ? $_POST['buildTravelFromdatePVT'] : '',
+			'pp_transfer_pickup' => isset($_POST['buildTravelToDateSIC']) ? $_POST['buildTravelToDateSIC'] : '',
+			'pp_transfer_dropoff' => isset($_POST['buildTravelToCitySIC']) ? $_POST['buildTravelToCitySIC'] : ''
 		);
 
 		$data['pricing_info'] = array(
@@ -2770,6 +2770,7 @@ class Query extends CI_Controller
 		}
 
 		$data['buildpackage'] = $this->db->where('queryId', $_POST['QueryId'])->get('querypackage')->row();
+		$data['otb'] = $this->db->where('query_id', $_POST['QueryId'])->where('visa_category','OTB')->get('query_visa')->row();
 
 
 		$updatedata = array('status' => "Sent");
@@ -3182,6 +3183,7 @@ class Query extends CI_Controller
 			// 'excursion_name_PVT' => $_POST['excursion'][1],
 			'excursion_name_SIC' => $_POST['excursion_name_SIC'],
 			'excursion_name_PVT' => $_POST['excursion_name_PVT'],
+			'excursion_name_TKT' => $_POST['excursion_name_TKT'],
 
 			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
 			'buildPackageExclusions' => $_POST['buildPackageExclusions'],

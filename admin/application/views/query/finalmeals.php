@@ -332,7 +332,7 @@ textarea{
                    <tr align="center">
                     <td > <?php  echo $proposalDetails['perpax_adult'] ?></td>
                     <td ><?php  echo $proposalDetails['perpax_childs'] ?></td>
-                    <!-- <td ><?php //echo $proposalDetails['perpax_infants'] ?></td>                    -->
+                    <!-- <td ><?php //echo $proposalDetails['perpax_infants'] ?></td>-->
 
                    </tr>
                </tbody></table>

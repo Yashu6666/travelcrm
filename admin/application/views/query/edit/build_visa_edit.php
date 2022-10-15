@@ -42,7 +42,7 @@
 
        <table class="table table-bordered mt-5">
         <tbody>
-         <tr>
+        <tr>
           <th scope="row"><b>Company Name</b> </th>
           <td><?php echo $view->b2bcompanyName;?></td>
           <th><b>Enquiry Id</b></th>
@@ -50,19 +50,13 @@
           <th><b>Enquiry For</b></th>
           <td><b>Visa</b></td>
          </tr>
-         <!-- <tr>
-          <th><b>Enquiry Details</b></th>
-          <td></td>
-          <td></td>
-          <td></td>
-         </tr> -->
          <tr>
-          <th><b>Check In</b></th>
-          <td><?php echo date('d M Y', strtotime($view->specificDate)) ;?></td>
-          <th><b>Check Out</b></th>
-          <td><?php echo date('d M Y', strtotime($buildpackage->noDaysFrom))  ?></td>
-          <th><b>No of Nights</b></th>
-          <td><?php echo $buildpackage->night?></td>
+          <th><b>Date of Arrival</b></th>
+          <td><?php echo date('d M Y', strtotime($buildpackage->doa)) ;?></td>
+          <th><b>Date of Departure</b></th>
+          <td><?php echo date('d M Y', strtotime($buildpackage->dod))  ?></td>
+          <th><b>No of Stay</b></th>
+          <td><?php echo $buildpackage->no_of_stay?></td>
          </tr>
          <tr>
           <th><b>City</b></th>

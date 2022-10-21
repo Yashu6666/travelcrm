@@ -324,8 +324,8 @@
                         .map(function(){ 
                           price_total += parseInt($(this).val());
                         }).get();
-                        var total_price_point = price_total;
-
+                        var total_price_point = Math.ceil(price_total);
+                        console.log("🚩 ~ file: build_transfer.php ~ line 328 ~ $ ~ total_price_point", total_price_point)
 
 
                         var pax_adult_count = <?php  echo $buildpackage->adult; ?>;
@@ -344,8 +344,8 @@
                         // var total_pax_sic_adult = $("#total_pax_sic_adult").val();
                         
                         var sub_total_adult = 
-                          parseInt(intrnal_transfer_avg * (parseInt(pax_adult_count))) + 
-                          parseInt(point_transfer_avg * (parseInt(pax_adult_count)));
+                        Math.ceil(parseInt(intrnal_transfer_avg * (parseInt(pax_adult_count))) + 
+                          parseInt(point_transfer_avg * (parseInt(pax_adult_count))));
                           // parseInt(total_price_point);
 
                         // var hotel_rate_child = $("#hotel_rate_child").val();
@@ -355,8 +355,8 @@
                         // var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
 
                         var sub_total_child = 
-                          parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) + 
-                          parseInt(point_transfer_avg * (parseInt(pax_child_count)));
+                          Math.ceil(parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) + 
+                          parseInt(point_transfer_avg * (parseInt(pax_child_count))));
                         //   parseInt(total_pax_sic_hild)+ 
                         //   parseInt(total_pax_pvt_hild) + 
                         //   parseInt(total_pax_meal_child) + 
@@ -388,15 +388,15 @@
                           var total_infant = 0;
                           if(Mark_up == "precentage"){
 
-                             total_adult = (parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100));
-                             total_child = (parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
+                             total_adult = Math.ceil((parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100)));
+                             total_child = Math.ceil(parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
                             //  total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
 
                           }
                           if(Mark_up == "values"){
 
-                            total_adult = (parseInt(sub_total_adult) + parseInt(PackageMarkup));
-                            total_child = (parseInt(sub_total_child) + parseInt(PackageMarkup));
+                            total_adult = Math.ceil(parseInt(sub_total_adult) + parseInt(PackageMarkup));
+                            total_child = Math.ceil(parseInt(sub_total_child) + parseInt(PackageMarkup));
                             // total_infant = (parseInt(sub_total_infant) + parseInt(PackageMarkup));
 
                             
@@ -414,19 +414,18 @@
                           
                           // $("#perpax_adult").html(per_pax_adult);
                           // $("#perpax_childs").html( per_pax_child );
-                          $("#perpax_adult").html( c_type == 'USD' ?  ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
-                          $("#perpax_childs").html(  c_type == 'USD' ?  ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child   );
+                          $("#perpax_adult").html( c_type == 'USD' ?  Math.ceil( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
+                          $("#perpax_childs").html(  c_type == 'USD' ?  Math.ceil( per_pax_child / usd_aed).toFixed(2)  : per_pax_child   );
                           $("#perpax_infants").html( 0 );
 
                           // $("#perpax_adult_input").val(per_pax_adult);
                           // $("#perpax_childs_input").val(per_pax_child );
-                          $("#perpax_adult_input").val( c_type == 'USD' ? ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
-                          $("#perpax_childs_input").val( c_type == 'USD' ?   ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child  );
+                          $("#perpax_adult_input").val( c_type == 'USD' ? Math.ceil( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
+                          $("#perpax_childs_input").val( c_type == 'USD' ?   Math.ceil( per_pax_child / usd_aed).toFixed(2)  : per_pax_child  );
                           $("#perpax_infants_input").val( 0 );
 
-                          $('#totalprice_transfer').val(c_type == 'USD' ?  ( total_adult / usd_aed).toFixed(2) : total_adult);
+                          $('#totalprice_transfer').val(c_type == 'USD' ?  Math.ceil( total_adult / usd_aed).toFixed(2) : total_adult);
 
-                        
                          })
 
 

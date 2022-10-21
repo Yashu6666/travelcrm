@@ -34,7 +34,8 @@
             justify-content: center;
             flex-direction: column;
             font-size: 15px;
-            font-family: "Roboto Condensed", sans-serif;
+            font-family: "Times New Roman", Times, serif !important;
+            color: black !important;
           }
 
           .head {
@@ -85,14 +86,16 @@
           .head .head6 {
             color: red;
             margin-top: 2rem;
-            font-family: "Roboto Condensed", sans-serif;
+            font-family: "Times New Roman", Times, serif !important;
+
           }
 
           .head .head7,
           .head8,
           .head9 {
             margin-top: 2rem;
-            font-family: "Roboto Condensed", sans-serif;
+           font-family: "Times New Roman", Times, serif !important;
+
           }
 
           .head .head9 p i {
@@ -144,13 +147,12 @@
           .items {
             width: 100%;
             text-align: left;
-            /* padding-bottom: 30px;
-            padding-top: 30px; */
           }
           .items td,
           th {
             padding: 5px 10px;
             border-collapse: collapse;
+            border: double !important;
           }
           @media print {
             .head {
@@ -163,7 +165,15 @@
               margin-top: 2rem;
             }
           }
-
+          table {
+            border: double !important;
+          }
+          td {
+            border: double !important;
+          }
+          div{
+            color: black !important;
+          }
     </style>
   </head>
 
@@ -191,7 +201,12 @@
             </tr>
             <?php if($details->perpax_childs > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php echo $details->perpax_childs ?></span> Child</td>
+              <td><span style="color: red;">AED <?php echo $details->perpax_childs ?></span> Child With Bed</td>
+            </tr>
+            <?php endif ?>
+            <?php if(isset($details->perpax_cnb) && $details->perpax_cnb > 0 ) : ?>
+            <tr>
+            <td><span style="color: red;">AED <?php echo $details->perpax_cnb ?></span> Child With Not Bed</td>
             </tr>
             <?php endif ?>
             <?php if($details->perpax_infants > 0) : ?>
@@ -249,7 +264,7 @@
 
             <tr>
               <th>No. of Rooms</th>
-              <td colspan="3"><?php echo $details->no_of_room ?> Rooms</td>
+              <td colspan="3"><?php echo $details->no_of_room ?> Room(s)</td>
             </tr>
           </table>
         </div>
@@ -257,10 +272,10 @@
         <div class="head5">
           <br />
           <br />
-          <b><u>Package Inclusions:</u></b><br></br>
+          <b><u>Above Rate Inclusive of:</u></b>
           <!-- <p><i class="fa-solid fa-circle-dot"></i>
             05 Nights stay at the mentioned hotel</p> -->
-          <p><i class="fa-solid fa-circle-dot"></i>
+          <p>
           <?php echo $details->inclusions ?></p>
           <!-- <p style="margin-top: -22px;"><i class="fa-solid fa-circle-dot"></i>
             Tourism Dirhams Fees</p>
@@ -272,12 +287,6 @@
             All of the above services with the hotel to hotel transfer and ticket</p>
           <p><i class="fa-solid fa-circle-dot"></i>
             All Tours & Transfers on sharing Basis except airport transfer</p> -->
-            Tourism Dirhams Fees<br/>
-            Vat 5% Inclusive<br/>
-            All Applicable Taxes<br/>
-            All of the above services with the hotel to hotel transfer and ticket<br/>
-            All Tours & Transfers on sharing Basis except airport transfer
-         
         </div>
         <div class="head7">
           Kindly note that the above rates are only a quote, no rooms or
@@ -286,88 +295,89 @@
         </div>
         <div class="head8">
           <b
-            >Thanks & Regards <br><br />
-            <img src="<?php echo base_url();?>public/image/thanks_regards.jpg" alt="" />
-          <b></b> </b>
+            >Thanks & Regards<br />
+            <!-- <img src="<?php echo base_url();?>public/image/thanks_regards.jpg" alt="" /> -->
+            <?php echo $details->admin_name ?>
+          </b>
         </div>
         <div class="head9">
           <span
             ><b><u>GENERAL TERMS AND CONDITIONS :</u></b></span> <br></br>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> Rooms and rates are subject
+            &#10146; Rooms and rates are subject
             to availability at the time of actual booking.
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> Standard Check-In: 1500 hrs.
+            &#10146; Standard Check-In: 1500 hrs.
             & Checkout: 1200 hrs.
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> Early Check-In and Late
+            &#10146; Early Check-In and Late
             Check-Out is subject to availability unless booked and confirmed in
             advance
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> Normal timing for airport
+            &#10146; Normal timing for airport
             pick-up & drop transfer is 6.00 am to 10.00 pm and extra charges
             will be applicable except this timings and subject to available of
             vehicles
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> Any change in the number of
+            &#10146; Any change in the number of
             passengers will lead to a revision of the quote.
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> Vehicle used in the above
+            &#10146; Vehicle used in the above
             quote is based on all guests arriving/ departing together in the
             same flight. In case additional transfers are required, same will be
             arranged at an additional cost.
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> Above quotes based on normal
+            &#10146; Above quotes based on normal
             ticket prices, rate will be subject to change if we receive any
             revise rate at later stage
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i>
+            &#10146;
               Itinerary might get changed according to the availability of
               tours & services and it will be informed and updated to the guest
               once they reach Dubai
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> OK TO BOARD Message update as
+            &#10146; OK TO BOARD Message update as
             per airline’s policy
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> Visa processing may take
+            &#10146; Visa processing may take
             anywhere between 3 – 5 working days to get approved
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> Issuance of visa will be
+            &#10146; Issuance of visa will be
             subject to approval from immigration however once visa is applied
             charges will be applicable and NO refund will be granted.
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> In case of overstay – Travel
+            &#10146; In case of overstay – Travel
             agent will be held accountable to settle the fine imposed by
             immigration which is AED 100.00 Per day (Subject to revision from
             immigration).
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> We need pre-payment for Dubai
+            &#10146; We need pre-payment for Dubai
             Visa and Insurance and it’s nonrefundable.
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> if Excursion tickets are not
+            &#10146; If Excursion tickets are not
             book then Cancellation policy for the ground services will 4 days
             prior to arrival is free of charge.
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i>
+            &#10146;
               Payment to be made in AED as per the rate of exchange applicable
               on the day of final payment.
           </p>
           <p>
-            <i class="fa-solid fa-circle-dot"></i> Bank Charges AED 80/- will be
+            &#10146; Bank Charges AED 80/- will be
             Charged Mandatory on the total invoice.
           </p>
         </div>
@@ -376,11 +386,11 @@
             <p>
               <u><b>Cancellation Terms: FIT</b> <br></br></u>
             </p>
-            <p>25% cancellation within 30 days before travel.</p>
-            <p>50% cancellation within 10 days before Travel.</p>
-            <p>75% cancellation within 07 days before Travel.</p>
+            <p>&#10146; 25% cancellation within 30 days before travel.</p>
+            <p>&#10146; 50% cancellation within 10 days before Travel.</p>
+            <p>&#10146; 75% cancellation within 07 days before Travel.</p>
             <p>
-              Any cancellation within 04 days will lead to 100% cancellation
+            &#10146; Any cancellation within 04 days will lead to 100% cancellation
               charge. </p>
           </div>
          <br></br>
@@ -388,13 +398,13 @@
           <div class="right">
             <u><b>Cancellation Terms:  Groups (MICE)</b><br></br></u>
             
-            <p>25% cancellation within 30 days before travel.</p>
+            <p>&#10146; 25% cancellation within 30 days before travel.</p>
             
-            <p>50% cancellation within 15 days before Travel.</p>
+            <p>&#10146; 50% cancellation within 15 days before Travel.</p>
             
-            <p>100% cancellation within 07 days before Travel.</p>
+            <p>&#10146; 100% cancellation within 07 days before Travel.</p>
             
-            <p>Any cancellation within 04 days will lead to 100% cancellation charge.</p>
+            <p>&#10146; Any cancellation within 04 days will lead to 100% cancellation charge.</p>
           </div>
         </div>
         <!-- <div class="head11">

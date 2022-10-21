@@ -207,6 +207,7 @@
                                     <select class="form-control get_bed_type" id="buildBedType" name="buildBedType[]" required>
                                       <option value="Double">Double</option>
                                       <option value="Single">Single</option>
+                                      <option value = "Triple">Triple</option>
                                     </select>
                                   </td>
                                   <td>
@@ -2441,6 +2442,7 @@ template += `
       <select class="form-control get_bed_type" id="buildBedType${faqs_row}${room_no}"  required="" name="buildBedType[]" required>
          <option value="Double" >Double</option>
          <option value = "Single">Single</option>
+         <option value = "Triple">Triple</option>
       </select>
    </td>
    <td>

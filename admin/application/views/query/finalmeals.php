@@ -611,9 +611,11 @@ textarea{
                     <div class="row">
                         <div class="col">
                             <label class="input">
+                            <?php $date = new DateTime($buildpackage->specificDate);
+                            $new_df = $date->format('d-M-Y'); ?>
                             <input class="input__field  width-input" id="pro_sub" type="text" 
-                                value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo $buildpackage->Packagetravelers ?>/ 
-                                <?php echo $buildpackage->specificDate ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName.' '.$admin_user_data->LastName); ?> " />
+                                value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo ($buildpackage->adult + $buildpackage->child) ?>/ 
+                                <?php echo $new_df ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName.' '.$admin_user_data->LastName); ?> " />
                                 <span class="input__label">Email Subject</span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>

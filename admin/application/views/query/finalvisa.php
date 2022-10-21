@@ -624,8 +624,10 @@ textarea{
                     <div class="row">
                         <div class="col">
                             <label class="input">
-                            <input class="input__field   width-input" id="pro_sub" value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo $buildpackage->Packagetravelers ?>/ 
-                                <?php echo $buildpackage->specificDate ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName.' '.$admin_user_data->LastName); ?> " type="text" placeholder=" " autocomplete="off" />
+                            <?php $date = new DateTime($buildpackage->doa);
+                            $new_df = $date->format('d-M-Y'); ?>
+                            <input class="input__field   width-input" id="pro_sub" value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo ($buildpackage->adult + $buildpackage->child + $buildpackage->infant) ?>/ 
+                                <?php echo $new_df ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName.' '.$admin_user_data->LastName); ?> " type="text" placeholder=" " autocomplete="off" />
                                 <span class="input__label">Email Subject</span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>
@@ -676,7 +678,7 @@ textarea{
                         <div class="row mt-3">
                             <div class="col">
                                
-                                <div class="mt-2"> <b>Cheak In/Out</b> : <?php echo $buildpackage->specificDate ?>/<?php echo $buildpackage->noDaysFrom ?></div>
+                                <div class="mt-2"> <b>Check In/Out</b> : <?php echo $buildpackage->doa ?>/<?php echo $buildpackage->dod ?></div>
                                 <div class="mt-2"> <b>Destinations</b> :  <?php echo $buildpackage->goingTo ?>,  <?php echo $buildpackage->goingFrom ?></div>
                             </div>
                             <!-- <div class="col">
@@ -831,19 +833,22 @@ textarea{
     btn.addEventListener("click", () => {
         
         let data_arr = {
-            "checkin" : "<?php echo date("jS F Y", strtotime($buildpackage->specificDate)) ?>",
-            "checkout" : "<?php echo date("jS F Y", strtotime($buildpackage->noDaysFrom)) ?>",
-            "nights" : "<?php echo $buildpackage->night ?>",
+            "checkin" : "<?php echo date("jS F Y", strtotime($buildpackage->doa)) ?>",
+            "checkout" : "<?php echo date("jS F Y", strtotime($buildpackage->dod)) ?>",
+            "nights" : "<?php echo $buildpackage->no_of_stay ?>",
             "pax_adult" : "<?php echo $buildpackage->adult ?>",
             "pax_child" : "<?php echo $buildpackage->child ?>",
             "pax_infant" : "<?php echo $buildpackage->infant ?>",
             "per_pax_adult" : "<?php echo $proposalDetails['perpax_adult']; ?>",
             "per_pax_child" : "<?php echo $proposalDetails['perpax_childs']; ?>",
             "per_pax_infant" : "<?php echo $proposalDetails['perpax_infants']; ?>",
-            "room" : "<?php echo $buildpackage->night  ?>",
+            "room" : "<?php echo $buildpackage->no_of_stay  ?>",
             "visa_category_drop_down" : "<?php echo $proposalDetails['visa_category_drop_down']  ?>",
             "entry_type" : "<?php echo $proposalDetails['entry_type']  ?>",
             "visa_validity" : "<?php echo $proposalDetails['visa_validity']  ?>",
+            "otb" : <?php echo json_encode($otb)  ?>,
+            "visa_data" : <?php echo json_encode($visa_data)  ?>,
+            "purpose" : "<?php echo $buildpackage->visa_purpose ?>",
             
             // "hotel" : "?php echo $proposalDetails['hotelName'] ?>",
             "type" : 'visa',

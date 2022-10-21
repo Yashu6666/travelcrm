@@ -652,9 +652,11 @@ textarea{
                     <div class="row">
                         <div class="col">
                             <label class="input">
+                            <?php $date = new DateTime($buildpackage->specificDate);
+                            $new_df = $date->format('d-M-Y'); ?>
                                 <input class="input__field  width-input" id="pro_sub" type="text" 
-                                value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo $buildpackage->Packagetravelers ?>/ 
-                                <?php echo $buildpackage->specificDate ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName.' '.$admin_user_data->LastName); ?> " />
+                                value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo ($buildpackage->adult + $buildpackage->child + $buildpackage->infant) ?>/ 
+                                <?php echo $new_df ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName.' '.$admin_user_data->LastName); ?> " />
                                 <span class="input__label">Email Subject</span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>
@@ -898,9 +900,11 @@ textarea{
         "in_transfer_date" : <?php echo json_encode($proposalDetails['in_transfer_date'])  ?>,
         "in_transfer_pickup" : <?php echo json_encode($proposalDetails['in_transfer_pickup'])  ?>,
         "in_transfer_dropoff" : <?php echo json_encode($proposalDetails['in_transfer_dropoff'])  ?>,
+        "internal_transfer_route" : <?php echo json_encode($proposalDetails['internal_transfer_route'])  ?>,
         "pp_transfer_date" : <?php echo json_encode($proposalDetails['pp_transfer_date'])  ?>,
         "pp_transfer_pickup" : <?php echo json_encode($proposalDetails['pp_transfer_pickup'])  ?>,
         "pp_transfer_dropoff" : <?php echo json_encode($proposalDetails['pp_transfer_dropoff'])  ?>,
+        "return_transfer_pickup" : <?php echo json_encode($proposalDetails['return_transfer_pickup'])  ?>,
 
         "perpax_adult" : "<?php echo $proposalDetails['perpax_adult']  ?>",
         "perpax_childs" : "<?php echo $proposalDetails['perpax_childs']  ?>",

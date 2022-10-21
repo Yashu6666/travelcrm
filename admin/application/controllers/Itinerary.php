@@ -17,6 +17,50 @@ class Itinerary extends CI_Controller {
 		$this->load->view('itinerary/add',$data);
 	}
 
+	public function test()
+	{
+		// $q_id =  '8749';	
+		// $query_package = $this->db->where('queryId',$q_id)->get('querypackage')->row();	
+		// $query = $this->db->query("SELECT * FROM b2bcustomerquery WHERE query_id=".$q_id)->row();	
+		// $itinery = $this->db->query("SELECT * FROM itinery_data WHERE query_id=".$q_id)->result();	
+		// $data['query'] = $query;
+		// $data['itinery'] = $itinery;
+		// $data['query_hotel_voucher'] = $this->db->where('query_id', $q_id)->get('hotel_voucher_confirmation')->result();
+		// $data['query_package'] = $query_package;	
+
+		// $this->load->view('itinerary/templates/itinery_mail',$data);
+		// // print_r($data['query_hotel_voucher']);
+		// return;
+		try
+    {
+		
+		// $this->load->view('itinerary/templates/itinery_mail');
+		$q_id =  '8749';	
+		$query = $this->db->query("SELECT * FROM b2bcustomerquery WHERE query_id=".$q_id)->row();	
+		$itinery = $this->db->query("SELECT * FROM itinery_data WHERE query_id=".$q_id)->result();	
+		$data['query'] = $query;	
+		$data['itinery'] = $itinery;	
+		$data['query_hotel_voucher'] = $this->db->where('query_id', $q_id)->get('hotel_voucher_confirmation')->result();
+		$query_package = $this->db->where('queryId',$q_id)->get('querypackage')->row();	
+		$data['query_package'] = $query_package;	
+
+			$data['hotel_details'] = [];
+			$this->load->library('Pdf');
+			$html =  $this->load->view('itinerary/templates/itinery_mail',$data, true);
+			$dompdf = new Dompdf\DOMPDF();
+			$dompdf->load_html($html);
+			$dompdf->set_paper("A3", "portrait");
+			$dompdf->render();
+			$pdf_name = time() . ".pdf";
+			$dompdf->stream($pdf_name);
+
+	} catch(Exception $e){
+		echo '<strong>Errormessage:</strong>'.$e->getMessage().'<br />';
+        echo $e->getTraceAsString();
+	}
+
+	}
+
 	public function view()
 	{
 
@@ -32,32 +76,61 @@ class Itinerary extends CI_Controller {
 			$itinery = $this->db->query("SELECT * FROM itinery_data WHERE query_id=".$q_id)->result();	
 			$data['query'] = $query;	
 			$data['itinery'] = $itinery;	
+			$data['query_hotel_voucher'] = $this->db->where('query_id', $q_id)->get('hotel_voucher_confirmation')->result();
+			$query_package = $this->db->where('queryId',$q_id)->get('querypackage')->row();	
+			$data['query_package'] = $query_package;	
+
+			$data['hotel_details'] = [];	
+			
 			$this->load->library('email');	
 			$config = array(	
 				'protocol' => 'smtp',	
 				'smtp_host' => 'ssl://smtp.googlemail.com',	
 				'smtp_port' => 465,	
-				'smtp_user' => 'test.yrpitsolutions.com@gmail.com',	
-				'smtp_pass' => 'xcvbtihuojnhvmrn',	
+				'smtp_user' => 'devsum2@gmail.com',	
+				'smtp_pass' => 'kidueonawxajhfae',	
 				'crlf' => "\r\n",	
 				'mailtype' => "html",	
 				'newline' => "\r\n",	
 			);	
-			// $body = $this->load->view('query/email_templates/proposal', $data, TRUE);	
-			// print_r($body);	
-			// return;	
-			// print_r($data['details']);	
-			// print_r($data['details2']);	
-			// return;	
+			
+			$this->load->library('Pdf');
+			$html =  $this->load->view('itinerary/templates/itinery_mail',$data, true);
+			$dompdf = new Dompdf\DOMPDF();
+			$dompdf->load_html($html);
+			$dompdf->set_paper("A3", "portrait");
+			$dompdf->render();
+			$output = $dompdf->output();
+			$pdf_name = time() . ".pdf";
+			file_put_contents(FCPATH . '/public/uploads/hotelVoucher/'.$pdf_name, $output);
+			$file_name = base_url('/public/uploads/hotelVoucher/' . $pdf_name);
+			$this->email->attach($file_name);
+
+			$message = '
+			<!DOCTYPE html> 
+			<html lang="en">';
+			$message .= '<p>Hello ,</p>';
+			$message .= '<p> Please find Itinerary Below.</p>';
+			$message .= '</br>';
+			$message .= '<p>Thank you,</p>';
+			$message .= '</body></html>';
+
 			$this->email->initialize($config);	
-			$this->email->from('test.yrpitsolutions.com@gmail.com');	
+			$this->email->from('devsum2@gmail.com');	
 			$this->email->to('sumanth@yrpitsolutions.com');	
 			$this->email->cc('');	
-			$this->email->subject('itinery');	
-			$body = $this->load->view('query/email_templates/itinery', $data, TRUE);	
-			$this->email->message($body);	
-			$this->email->send();	
-			echo "Email Sent";	
+			$this->email->subject('itinery');
+			$this->email->message($message); 
+
+			if ($this->email->send()) {
+				$this->load->helper("file");
+				delete_files(FCPATH . '/public/uploads/hotelVoucher');
+
+				echo 'Your Email has successfully been sent.';
+			} else {
+				show_error($this->email->print_debugger());
+			}
+
 		} catch (\Exception $e) {	
 			$this->session->set_flashdata('error', 'Something Went Wrong');	
 		}	
@@ -276,18 +349,26 @@ class Itinerary extends CI_Controller {
 	
 	public function saveItinerary(){
 
-	$arrival_airline = $this->input->post('arrival_airline');
+	try {
+	$description = $this->input->post('description');
 	$arrival_flight = $this->input->post('arrival_flight');
-	$arrival_hours = $this->input->post('arrival_hours');
-	$arrival_mins = $this->input->post('arrival_mins');
+	$arrival_time = $this->input->post('arrival_time');
+	$arrival_from = $this->input->post('arrival_from');
+	$arrival_airport = $this->input->post('arrival_airport');
+	$arrival_drop = $this->input->post('arrival_drop');
+	$arrival_date = $this->input->post('arrival_date');
+	$arrival_transfer_type = $this->input->post('arrival_transfer_type');
 
-	$return_airline = $this->input->post('return_airline');
 	$return_flight = $this->input->post('return_flight');
-	$return_hours = $this->input->post('return_hours');
-	$return_mins = $this->input->post('return_mins');
+	$return_time = $this->input->post('return_time');
+	$return_departure = $this->input->post('return_departure');
+	$return_airport = $this->input->post('return_airport');
+	$return_pickup = $this->input->post('return_pickup');
+	$return_date = $this->input->post('return_date');
+	$return_transfer_type = $this->input->post('return_transfer_type');
 
-	$arrival_data = $arrival_airline.','.$arrival_flight.','.$arrival_hours.':'.$arrival_mins;
-	$return_data = $return_airline.','.$return_flight.','.$return_hours.':'.$return_mins;
+	$arrival_data = $arrival_flight.','.$arrival_time.','.$arrival_from.','.$arrival_airport.','.$arrival_drop.','.$arrival_date.','.$arrival_transfer_type;
+	$return_data = $return_flight.','.$return_time.','.$return_departure.','.$return_airport.','.$return_pickup.','.$return_date.','.$return_transfer_type;
 
 	$data = array(
 			'hotel_name' => $this->input->post('hotel_data_hotelname'),
@@ -319,6 +400,8 @@ class Itinerary extends CI_Controller {
 			'day' => $this->input->post('day'),
 			'arrival_transfer' => $arrival_data,
 			'return_transfer' => $return_data,
+			'description' => $description,
+			'pickup_time' => $this->input->post('pickup_time'),
 			'created_by' =>   $this->session->userdata('admin_id'),
 
 		);
@@ -334,13 +417,9 @@ class Itinerary extends CI_Controller {
 		else{
 			$this->db->insert('itinery_data',$data);
 		}
-
-		// $this->db->replace('itinery_data', $data);
-
-		// $this->db->insert('itinery_data',$data);
-
-		echo json_encode("success");
-
+	} catch(Exception $e){
+		echo "<pre>";$e;
+	}
 	}
 
 }

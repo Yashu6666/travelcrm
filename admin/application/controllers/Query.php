@@ -23,24 +23,17 @@ class Query extends CI_Controller
 				'protocol' => 'smtp',
 				'smtp_host' => 'ssl://smtp.googlemail.com',
 				'smtp_port' => 465,
-				'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
-				'smtp_pass' => 'xcvbtihuojnhvmrn',
+				'smtp_user' => 'devsum2@gmail.com',
+				'smtp_pass' => 'kidueonawxajhfae',
 				'crlf' => "\r\n",
 				'mailtype' => "html",
 				'newline' => "\r\n",
 			);
 			
 			$data['details'] = $data_en;
-			// echo"<pre>";print_r($data['details']);exit;return;
-
-			// $body = $this->load->view('query/email_templates/proposal', $data, TRUE);	
-			// print_r($body);	
-			// return;	
-			// print_r($data['details']);	
-			// print_r($data['details2']);	
-			// $this->load->view('query/email_templates/proposal', $data);
-			// return;	
+			
 			if ($data['details']->type == 'package'){
+				// $this->load->view('query/email_templates/package/package_mail', $data);return;
 				$body = $this->load->view('query/email_templates/package/package_mail', $data, TRUE);
 				echo "Email Sent package";
 			}
@@ -50,10 +43,13 @@ class Query extends CI_Controller
 			}elseif($data['details']->type == 'hotel'){
 				$body = $this->load->view('query/email_templates/temp_hotel', $data, TRUE);
 			}elseif($data['details']->type == 'visa'){
+				// $body = $this->load->view('query/email_templates/temp_visa', $data);return;
 				$body = $this->load->view('query/email_templates/temp_visa', $data, TRUE);
 			}elseif($data['details']->type == 'excursions'){
+				// $body = $this->load->view('query/email_templates/temp_excursion', $data);return;
 				$body = $this->load->view('query/email_templates/temp_excursion', $data, TRUE);
 			}elseif($data['details']->type == 'meals'){
+				// $body = $this->load->view('query/email_templates/temp_meal', $data);return;
 				$body = $this->load->view('query/email_templates/temp_meal', $data, TRUE);
 			}
 			else {
@@ -61,7 +57,7 @@ class Query extends CI_Controller
 			}
 
 			$this->email->initialize($config);
-			$this->email->from('test.yrpitsolutions.com@gmail.com');
+			$this->email->from('devsum2@gmail.com');
 			$this->email->to($data_en->cus_email);
 			$this->email->cc($data_en->cc_email);
 			$this->email->subject($data_en->subject);
@@ -546,7 +542,7 @@ class Query extends CI_Controller
 	   	$priceperperson = $price/$person;
 		$route_name = !empty($dropoff->route_name) ? $dropoff->route_name : "";
 		$dropoff =  !empty($dropoff) ? $dropoff : array() ;
-	  echo json_encode(array("data"=>$priceperperson,"route_name"=>$route_name,'row_data' =>$dropoff ));
+	  echo json_encode(array("data"=>ceil($priceperperson),"route_name"=>$route_name,'row_data' =>$dropoff ));
 	}
 	public function fetchdropoff1(){
 		$pickup=$_POST['pickup'];
@@ -568,7 +564,7 @@ class Query extends CI_Controller
 	  	$priceperperson=$price/$person;
 		$route_name = !empty($dropoff->route_name) ? $dropoff->route_name : "";
 		$dropoff =  !empty($dropoff) ? $dropoff : array() ;
-	 	echo json_encode(array("data"=>$priceperperson,"route_name"=>$route_name,'row_data' =>$dropoff ));
+	 	echo json_encode(array("data"=>ceil($priceperperson),"route_name"=>$route_name,'row_data' =>$dropoff ));
 	
 	}
 
@@ -635,8 +631,8 @@ class Query extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
-			'smtp_pass' => 'xcvbtihuojnhvmrn',
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'kidueonawxajhfae',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -648,7 +644,7 @@ class Query extends CI_Controller
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
 		$this->email->initialize($config);
-		$this->email->from('test.yrpitsolutions.com@gmail.com');
+		$this->email->from('devsum2@gmail.com');
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -883,7 +879,7 @@ class Query extends CI_Controller
 		$tableData = $this->input->post('data');
 
 		$datas =  array();
-		for ($x = 0; $x <= $rows_count; $x++) {
+		for ($x = 0; $x < $rows_count; $x++) {
 			$datas[$x]['nights'] = $tableData[0]['nights'][$x];
 			$datas[$x]['group_type'] = $tableData[0]['group_type'][$x];
 			$datas[$x]['hotel_id'] = $tableData[0]['hotelName'][$x];
@@ -2187,8 +2183,8 @@ class Query extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
-			'smtp_pass' => 'xcvbtihuojnhvmrn',
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'kidueonawxajhfae',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -2200,7 +2196,7 @@ class Query extends CI_Controller
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
 		$this->email->initialize($config);
-		$this->email->from('test.yrpitsolutions.com@gmail.com');
+		$this->email->from('devsum2@gmail.com');
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -2235,8 +2231,8 @@ class Query extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
-			'smtp_pass' => 'xcvbtihuojnhvmrn',
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'kidueonawxajhfae',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -2248,7 +2244,7 @@ class Query extends CI_Controller
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
 		$this->email->initialize($config);
-		$this->email->from('test.yrpitsolutions.com@gmail.com');
+		$this->email->from('devsum2@gmail.com');
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -2340,8 +2336,8 @@ class Query extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
-			'smtp_pass' => 'xcvbtihuojnhvmrn',
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'kidueonawxajhfae',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -2353,7 +2349,7 @@ class Query extends CI_Controller
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
 		$this->email->initialize($config);
-		$this->email->from('test.yrpitsolutions.com@gmail.com');
+		$this->email->from('devsum2@gmail.com');
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -2439,6 +2435,7 @@ class Query extends CI_Controller
 		$data['view'] = $this->db->get()->row();
 
 		$user_id = $this->session->userdata()['admin_id'];
+		$data['visa_data'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
 		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
 
 		$this->load->library('email');
@@ -2446,8 +2443,8 @@ class Query extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
-			'smtp_pass' => 'xcvbtihuojnhvmrn',
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'kidueonawxajhfae',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -2459,7 +2456,7 @@ class Query extends CI_Controller
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
 		$this->email->initialize($config);
-		$this->email->from('test.yrpitsolutions.com@gmail.com');
+		$this->email->from('devsum2@gmail.com');
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -2541,8 +2538,8 @@ class Query extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
-			'smtp_pass' => 'xcvbtihuojnhvmrn',
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'kidueonawxajhfae',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -2554,7 +2551,7 @@ class Query extends CI_Controller
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
 		$this->email->initialize($config);
-		$this->email->from('test.yrpitsolutions.com@gmail.com');
+		$this->email->from('devsum2@gmail.com');
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -2644,10 +2641,13 @@ class Query extends CI_Controller
 			'in_transfer_date' => isset($_POST['buildTravelFromdateCab']) ? $_POST['buildTravelFromdateCab'] : '',
 			'in_transfer_pickup' => isset($_POST['buildTravelToDateCab']) ? $_POST['buildTravelToDateCab'] : '',
 			'in_transfer_dropoff' => isset($_POST['buildTravelToCityCabDrop']) ? $_POST['buildTravelToCityCabDrop'] : '',
+			'internal_transfer_route' => isset($_POST['buildTravelTypeCab']) ? $_POST['buildTravelTypeCab'] : '',
 
 			'pp_transfer_date' => isset($_POST['buildTravelFromdatePVT']) ? $_POST['buildTravelFromdatePVT'] : '',
 			'pp_transfer_pickup' => isset($_POST['buildTravelToDateSIC']) ? $_POST['buildTravelToDateSIC'] : '',
-			'pp_transfer_dropoff' => isset($_POST['buildTravelToCitySIC']) ? $_POST['buildTravelToCitySIC'] : ''
+			'pp_transfer_dropoff' => isset($_POST['buildTravelToCitySIC']) ? $_POST['buildTravelToCitySIC'] : '',
+			'return_transfer_pickup' => isset($_POST['buildTravelTypeSIC']) ? $_POST['buildTravelTypeSIC'] : ''
+
 		);
 
 		$data['pricing_info'] = array(
@@ -2751,6 +2751,9 @@ class Query extends CI_Controller
 
 
 		);
+		$data['query_package_data'] = $this->db->where('queryId', $_POST['QueryId'])->get('querypackage')->row();
+		$data['visa_data'] = $this->db->where('query_id', $_POST['QueryId'])->where('visa_category !=', 'OTB')->get('query_visa')->row();
+
 		$data['pricing_info'] = array(
 			'query_id' => $_POST['QueryId'],
 			'user_id' => $this->session->userdata('admin_id'),
@@ -2784,13 +2787,9 @@ class Query extends CI_Controller
 
 	public function CreateProposalMealsSave()
 	{
-		$rows_count = $this->input->post('total_rows');
+		try{
+		$rows_count = $this->input->post('total_rows') + 1;
 		$QueryId = $this->input->post('QueryId');
-		$buildPackageInclusions = $this->input->post('buildPackageInclusions');
-		$buildPackageExclusions = $this->input->post('buildPackageExclusions');
-		$buildPackageConditions = $this->input->post('buildPackageConditions');
-		$buildPackageCancellations = $this->input->post('buildPackageCancellations');
-		$buildPackageRefund = $this->input->post('buildPackageRefund');
 		$totalprice_adult = $this->input->post('totalprice_adult');
 		$totalprice_childs = $this->input->post('totalprice_childs');
 		$totalprice_infants = $this->input->post('totalprice_infants');
@@ -2798,7 +2797,6 @@ class Query extends CI_Controller
 		$total_pricing = (int)$totalprice_adult + (int)$totalprice_childs + (int)$totalprice_infants;
 
 		$tableData = $this->input->post('data');
-		// echo"<pre>";print_r($tableData);exit;
 		$datas =  array();
 		for ($x = 0; $x < $rows_count; $x++) {
 			$datas[$x]['query_id'] = $QueryId;
@@ -2810,10 +2808,6 @@ class Query extends CI_Controller
 			$datas[$x]['child'] = isset($tableData[0]['meal_childs'][$x]) ? $tableData[0]['meal_childs'][$x] : 0;
 			$datas[$x]['resturant_name'] = isset($tableData[0]['resturants_name'][$x]) ? $tableData[0]['resturants_name'][$x] : "";
 			$datas[$x]['transfer'] = isset($tableData[0]['resturants_transfer'][$x]) ? $tableData[0]['resturants_transfer'][$x] : "";
-			$datas[$x]['buildPackageInclusions'] = $buildPackageInclusions;
-			$datas[$x]['buildPackageExclusions'] = $buildPackageExclusions;
-			$datas[$x]['buildPackageConditions'] = $buildPackageConditions;
-			$datas[$x]['buildPackageCancellations'] = $buildPackageCancellations;
 			// $datas[$x]['buildPackageRefund'] = $buildPackageRefund;
 			$datas[$x]['total_price'] = $total_pricing;
 		}
@@ -2829,6 +2823,9 @@ class Query extends CI_Controller
 
 		// echo"<pre>";print_r($datas);exit;
 		echo json_encode($datas);
+	} catch(Exception $e){
+		echo $e->getMessage();
+	}
 	}
 
 	public function CreateProposalMeals()
@@ -2965,6 +2962,7 @@ class Query extends CI_Controller
 			'Meal' => $_POST['Meal'],
 			'Meal_Type' => $_POST['Meal_Type'],
 			'no_of_meals' => $_POST['no_of_meals'],
+			'transfer_with_or_without' => $_POST['transfer_with_or_without'],
 
 			'visa_category_drop_down' => $_POST['visa_category_drop_down'],
 			'entry_type' => $_POST['entry_type'],
@@ -2973,8 +2971,12 @@ class Query extends CI_Controller
 			'return_route' => $_POST['buildTravelTypeSIC'],
 			'buildRoomType' => $_POST['buildRoomType'],
 			'room_sharing_types' => $_POST['room_sharing_types'],
-
+			'admin_name' => $this->session->userdata('admin_username'),
 		);
+
+		if(isset($_POST['buildHotelName'])){
+			$data['proposalDetails']['perpax_cnb'] =  $_POST['perpax_cnb_input'];
+		}
 
 		$user_id = $this->session->userdata()['admin_id'];
 		$data['admin_user_data'] = $this->db->where('id', $user_id)->get('users')->row();
@@ -3184,6 +3186,7 @@ class Query extends CI_Controller
 			'excursion_name_SIC' => $_POST['excursion_name_SIC'],
 			'excursion_name_PVT' => $_POST['excursion_name_PVT'],
 			'excursion_name_TKT' => $_POST['excursion_name_TKT'],
+			'ex_hotel_pickup' => $_POST['ex_hotel_pickup'],
 
 			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
 			'buildPackageExclusions' => $_POST['buildPackageExclusions'],

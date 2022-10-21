@@ -167,8 +167,8 @@ class Invoice extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
-			'smtp_pass' => 'xcvbtihuojnhvmrn',
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'kidueonawxajhfae',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -203,7 +203,7 @@ class Invoice extends CI_Controller
 		$this->email->attach($file_name);
 
 		$this->email->initialize($config);
-		$this->email->from('test.yrpitsolutions.com@gmail.com');
+		$this->email->from('devsum2@gmail.com');
 		$this->email->to($email);
 		// $this->email->cc('info@diamondtoursdubai.com');
 		$this->email->subject($subject);
@@ -234,8 +234,8 @@ class Invoice extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'test.yrpitsolutions.com@gmail.com',
-			'smtp_pass' => 'xcvbtihuojnhvmrn',
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'kidueonawxajhfae',
 			'crlf' => "\r\n",
 			'mailtype' => "html",
 			'newline' => "\r\n",
@@ -245,7 +245,7 @@ class Invoice extends CI_Controller
 		$subject = $this->input->post('subject');
 
 		$this->email->initialize($config);
-		$this->email->from('test.yrpitsolutions.com@gmail.com');
+		$this->email->from('devsum2@gmail.com');
 		$this->email->to($email);
 		$this->email->subject($subject);
 		$this->email->message($this->input->post('body'));

@@ -17,6 +17,7 @@
 
         body {
             min-height: 100vh;
+            
         }
 
         .second {
@@ -418,9 +419,9 @@
                     <tbody>
                         <tr align="center">
                         <?php
-                                $date = new DateTime($proposalDetails['in_transfer_date'][$key]);
-                                $date_trans = $date->format('d-M-Y');
-                                ?>
+                            $date = new DateTime($proposalDetails['in_transfer_date'][$key]);
+                            $date_trans = $date->format('d-M-Y');
+                            ?>
                             <!-- <td><b>Per PAX</b></td> -->
                             <td>Internal Transfer</td>
                             <td> <?php echo $date_trans ?></td>
@@ -491,54 +492,55 @@
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <div id="editor1">
-                    <?php foreach($proposalDetails['hotelName'] as $key => $val) : ?>
-                        <p><?php echo $proposalDetails['noOfNights'][0] ?> Nights at Hotel  <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></p>
+                        <p>&#10146; <?php echo $buildpackage->night ?> Nights stay at the mentioned hotel</p>
                         <?php if($proposalDetails['build_room_types'][0] == 'BB') : ?>
-                            <p><?php echo $proposalDetails['noOfNights'][0] ?> Breakfast in Hotel  <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></p>
+                            <p>&#10146; <?php echo $buildpackage->night ?> Breakfast Buffet Breakfast in the Hotel</p>
                         <?php endif ?>
-                    <?php endforeach ?>
 
                     <?php foreach($proposalDetails['in_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
-                        <p> <?php echo $proposalDetails['internal_route'][$key] ?></p>
+                        <p>&#10146; <?php echo $proposalDetails['internal_route'][$key] ?></p>
                     <?php endif ?>
                     <?php endforeach ?>
 
                     <?php foreach($proposalDetails['pp_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
-                        <p><?php echo $proposalDetails['return_route'][$key] ?></p>
+                        <p>&#10146; <?php echo $proposalDetails['return_route'][$key] ?></p>
                     
                         <?php endif ?>
                     <?php endforeach ?>
-                    
-                    <?php if(!empty($proposalDetails['visa_category_drop_down'])) : ?>
-                        <p> UAE Normal Single Entry Tourist Visa With Covid-19 Inbound Insurance (Subject To Immigration Approval)</p>
-                    <?php endif ?>
 
                     <?php if(isset($proposalDetails['excursion_name_SIC'])) : ?>
                     <?php foreach($proposalDetails['excursion_name_SIC'] as $key => $val) : ?>
-                        <p> <?php echo $val ?> </p>
+                        <p>&#10146; <?php echo $val ?> </p>
                     <?php endforeach ?>
                     <?php endif ?>
                 
                     <?php if(isset($proposalDetails['excursion_name_PVT'])) : ?>
                     <?php foreach($proposalDetails['excursion_name_PVT'] as $key => $val) : ?>
-                        <p> <?php echo $val ?></p>
+                        <p>&#10146; <?php echo $val ?></p>
                     <?php endforeach ?>
                     <?php endif ?>
 
                     <?php if($proposalDetails['res_name'][0] != 'select') : ?>
                         <?php foreach($proposalDetails['res_name'] as $key => $val) : ?>
-                            <p> <?php echo $proposalDetails['no_of_meals'][$key]." ".$proposalDetails['Meal'][$key]." ".$proposalDetails['res_type'][$key]." ".$proposalDetails['Meal_Type'][$key]; ?> 
-                            Meal Coupons in <?php echo $proposalDetails['res_name'][$key]?><p>
+                            <p>&#10146; <?php echo $proposalDetails['no_of_meals'][$key]." ".$proposalDetails['Meal'][$key]." Meal Coupons (".$proposalDetails['res_type'][$key]." ".$proposalDetails['res_name'][$key].") ".
+                            ($proposalDetails['transfer_with_or_without'][$key] == 'without_transfer' ? 'Without Transfer' : 'With Transfer'); ?> 
+                            </p>
                         <?php endforeach ?>
                     <?php endif ?>
 
-                    Tourism Dirhams Fees
-                    Vat 5% Inclusive
-                    All Applicable Taxes
-                    All of the above services with the hotel to hotel transfer and ticket
-                    All Tours & Transfers on sharing Basis except airport transfer
+                    <?php if(!empty($proposalDetails['visa_category_drop_down'])) : ?>
+                        <p>&#10146; UAE Normal Single Entry Tourist Visa With Covid-19 Inbound Insurance (Subject To Immigration Approval)</p>
+                    <?php endif ?>
+                    <p>&#10146; Tourism Dirhams Fees</p>
+                    <p>&#10146; Vat 5% Inclusive</p>
+                    <p>&#10146; All Applicable Taxes</p>
+                    <p>&#10146; All of the above services with the hotel to hotel transfer and ticket</p>
+                    <?php if(isset($proposalDetails['excursion_name_SIC'])) : ?>
+                        <p>&#10146; All Tours & Transfers on sharing Basis except airport transfer</p>
+                    <?php endif ?>
+
                             </div>
                         
                         </div>
@@ -767,8 +769,10 @@
                     <div class="row">
                         <div class="col">
                             <label class="input">
-                                <input class="input__field   width-input" id="pro_sub" value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo $buildpackage->Packagetravelers ?>/ 
-                                <?php echo $buildpackage->specificDate ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName.' '.$admin_user_data->LastName); ?> " type="text" placeholder=" " autocomplete="off" />
+                            <?php $date = new DateTime($buildpackage->specificDate);
+                            $new_df = $date->format('d-M-Y'); ?>
+                                <input class="input__field   width-input" id="pro_sub" value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo ($buildpackage->adult + $buildpackage->child + $buildpackage->infant)  ?>/ 
+                                <?php echo $new_df ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName.' '.$admin_user_data->LastName); ?> " type="text" placeholder=" " autocomplete="off" />
                                 <span class="input__label">Email Subject</span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>
@@ -1038,8 +1042,10 @@
         "excursion_name_PVT" : <?php echo json_encode($proposalDetails['excursion_name_PVT']) ?>, 
         "perpax_adult" : "<?php echo $proposalDetails['perpax_adult']  ?>",
         "perpax_childs" : "<?php echo $proposalDetails['perpax_childs']  ?>",
+        "perpax_cnb" : "<?php echo isset($proposalDetails['perpax_cnb']) ? $proposalDetails['perpax_cnb'] : 0  ?>",
         "perpax_infants" : "<?php echo $proposalDetails['perpax_infants']  ?>",
         "buildRoomType" : <?php echo json_encode($proposalDetails['roomType']) ?>,
+        "admin_name" : "<?php echo $proposalDetails['admin_name']  ?>",
         "hotelPrefrence" : "<?php echo $buildpackage->hotelPrefrence ?>",
         "room_sharing_types" : <?php echo json_encode($proposalDetails['room_sharing_types']) ?> ,
         "build_room_types" : <?php echo json_encode($proposalDetails['build_room_types']) ?> ,

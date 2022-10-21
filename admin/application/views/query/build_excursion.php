@@ -962,6 +962,7 @@ $('#buildHotelName').on('change', function() {
                 $("#total_pax_sic_hild").val(response.total_childprice);
                 $("#total_pax_sic_infant").val(response.total_infantprice);
                 toastr.success("Excursion SIC Saved Successfully");
+                $(".card-box").click();
           
           }
         })
@@ -991,12 +992,11 @@ $('#buildHotelName').on('change', function() {
             'excursion_types_TKT':excursion_types_TKT,'excursion_adults_TKT':excursion_adults_TKT,'excursion_childs_TKT':excursion_childs_TKT,'excursion_infants_TKT':excursion_infants_TKT,
             'excursion_name_TKT':excursion_name_TKT},
           success:function(response){
-             console.log("🚩 ~ file: build_excursion.php ~ line 998 ~ excursionTKTcalculations ~ response", response)
-             
                 $("#total_pax_TKT_adult").val(response.total_adultprice);
                 $("#total_pax_TKT_child").val(response.total_childprice);
                 $("#total_pax_TKT_infant").val(response.total_infantprice);
                 toastr.success("Excursion TKT Saved Successfully");
+                $(".card-box").click();
           
           }
         })
@@ -1084,6 +1084,7 @@ $('#buildHotelName').on('change', function() {
                $("#total_pax_pvt_hild").val( response.total_childprice);
                $("#total_pax_pvt_infant").val( response.total_infantprice);
               toastr.success("Excursion PVT Saved Successfully");
+              $(".card-box").click();
             }
            
          }

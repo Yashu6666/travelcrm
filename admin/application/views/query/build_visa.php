@@ -854,7 +854,7 @@ function delQuery(){
               $("#total_pax_visa_price_infant").val(response.per_pax_infant_amt);
                 console.log(response.per_pax_child_amt);
                 toastr.success("Visa Saved Successfully");
-             
+                $('.card-box').click();
 
 
           }
@@ -890,6 +890,7 @@ $.ajax({
     $("#total_pax_otb_price_infant").val(response.per_pax_infant_amt);
 
     toastr.success("OTB Saved Successfully");
+    $('.card-box').click();
 
   }
 });

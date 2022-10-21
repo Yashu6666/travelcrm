@@ -1698,7 +1698,7 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
         $("#total_pax_meal_child").val(response.child_prices);
 
         toastr.success("Meals Saved Successfully");
-
+        $('.card-box').click();
 
       }
     })

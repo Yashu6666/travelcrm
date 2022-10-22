@@ -276,46 +276,193 @@ class Login extends CI_Controller
 		$this->load->view('dashboard', $data);
 	}
 
-
-
-	public function loginstock()
+	public function loginstock_otp()
 	{
 
 
-		$this->form_validation->set_rules('username', 'Username', 'trim|required');
-		$this->form_validation->set_rules('pass', 'Password', 'trim|required');
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+
+
+		$res = $this->db->where('UserName', $username)->where('password', $password)->get('users')->row();
+		// echo"<pre>";print_r($username);exit;
+
+		if (!empty($res)) {
+
+			$otp = $this->sendOtp($res->emialId);
+			if($otp){
+
+				$otp_data = array(
+					'otp'=>$otp,
+					'user_id'=>$res->id,
+					'mobile_number' => $res->phoneNumber,
+					'email_id' => $res->emialId,
+					'sent_time' =>  date("Y-m-d h:i:s"),
+				);
+			
+				$this->db->insert('otp',$otp_data);
+				echo json_encode(["msg" => "success","code" => true,"mail_id" => $res->emialId,"user_id" => $res->id]);
+			}
+		}else{
+			echo json_encode(["msg" => "User Name or Password Mismatch..","code" => false]);
+		}
+
+	}
+
+	public function loginstock()
+	{
+		$user_id = $this->input->post('user_id');
+		$email_id = $this->input->post('email_id');
+		$otp = $this->input->post('otp');
+		// $res = $this->db->where('user_id', $user_id)->where('email_id', $email_id)->get('otp')->order_by('sent_time', 'DESC')->limit(1)->row();
+
 
 		$data['status'] = '';
 		$redirect_url = site_url() . 'login/dashboard';
-		if ($this->form_validation->run() !== FALSE) {
+		$res = $this->db->select('us.*,ot.*')->from('users  us')->join('otp  ot', 'us.id = ot.user_id', 'inner')->where('us.id', $user_id)->order_by('sent_time', 'DESC')->limit(1)->get()->row();
 
-			$loginEmail = $this->input->post('username');
-			$loginPassword = $this->input->post('pass');
-
-
-			$res = $this->db->where('UserName', $loginEmail)->where('password', $loginPassword)->get('users')->row();
+				// echo"<pre>";print_r($res);exit;
+				
 			$modules = explode(',', $res->modules);
 			$is_stocks = in_array('Stocks', $modules);
+			if (!empty($res)) {
+			// if (!empty($res) && $res->userType == 'Admin') {
+				if ($is_stocks == true) {
 
-			// if (!empty($res) && $res->userType == 'Stocks') {
-			if (!empty($res) && $is_stocks == true) {
+					if ($res->otp == $otp) {
+						$sessionAdminInfo = array(
+							'admin_id' => $res->id,
+							'admin_username' => $res->UserName,
+							'reg_type' => $res->userType,
+							'for_stocks' => TRUE,
+							'admin_logged_in' => TRUE,
+							'access_stocks' => TRUE,
+							'stock_logged_in' => TRUE
+						);
+						$this->session->set_userdata($sessionAdminInfo);
+						// redirect('stocks/dashboardstock', 'refresh');
 
-				$sessionAdminInfo = array(
-					'admin_id' => $res->id,
-					'admin_username' => $res->UserName,
-					'reg_type' => $res->userType,
-					'for_stocks' => TRUE,
-					'admin_logged_in' => TRUE,
-					'access_stocks' => TRUE,
-					'stock_logged_in' => TRUE
-				);
-				$this->session->set_userdata($sessionAdminInfo);
-				redirect('stocks/dashboardstock', 'refresh');
-			} else {
+						$update_data = array(
+							'verified_time' => date("Y-m-d h:i:s"),
+							'status' => 'Verified'
+							);
+							
+						$this->db->update('otp',$update_data,'otp_id='.$res->otp_id,);
+
+						$redirect_url = base_url().'/stocks/dashboardstock';
+						echo json_encode(["msg" => "Success","code" => true,"redirect_url" =>$redirect_url ]);
+
+					}else{
+						echo json_encode(["msg" => "Wrong Otp","code" => false]);
+					}
+				}
+			} else {			
 				echo "<script>alert('Login Failed. Please check Login details..!!');window.location='" . $redirect_url . "';</script>";
 			}
-		}
+		
+
+		// SELECT * FROM otp WHERE user_id='12' AND email_id='rajasekar123.svks@gmail.com' ORDER BY sent_time DESC LIMIT 1
+
+		// $this->form_validation->set_rules('username', 'Username', 'trim|required');
+		// $this->form_validation->set_rules('pass', 'Password', 'trim|required');
+
+		// $data['status'] = '';
+		// $redirect_url = site_url() . 'login/dashboard';
+		// if ($this->form_validation->run() !== FALSE) {
+
+		// 	$loginEmail = $this->input->post('username');
+		// 	$loginPassword = $this->input->post('pass');
+
+
+		// 	$res = $this->db->where('UserName', $loginEmail)->where('password', $loginPassword)->get('users')->row();
+		// 	// echo"<pre>";print_r($res);exit;
+		// 	$modules = explode(',', $res->modules);
+		// 	$is_stocks = in_array('Stocks', $modules);
+
+		// 	// if (!empty($res) && $res->userType == 'Stocks') {
+		// 	if (!empty($res) && $is_stocks == true) {
+
+		// 		// $otp = $this->sendOtp($res->emialId);
+		// 		// if($otp){
+
+		// 		// 	$otp_data = array(
+		// 		// 		'otp'=>$otp,
+		// 		// 		'user_id'=>$res->id,
+		// 		// 		'mobile_number' => $res->phoneNumber,
+		// 		// 		'email_id' => $res->emialId,
+		// 		// 		'sent_time' =>  date("Y-m-d h:i:s"),
+		// 		// 	);
+				
+		// 		// 	$this->db->insert('otp',$otp_data);
+
+
+		// 			$sessionAdminInfo = array(
+		// 				'admin_id' => $res->id,
+		// 				'admin_username' => $res->UserName,
+		// 				'reg_type' => $res->userType,
+		// 				'for_stocks' => TRUE,
+		// 				'admin_logged_in' => TRUE,
+		// 				'access_stocks' => TRUE,
+		// 				'stock_logged_in' => TRUE
+		// 			);
+		// 			$this->session->set_userdata($sessionAdminInfo);
+		// 			redirect('stocks/dashboardstock', 'refresh');
+		// 		// }
+				
+		// 	} else {
+		// 		echo "<script>alert('Login Failed. Please check Login details..!!');window.location='" . $redirect_url . "';</script>";
+		// 	}
+		// }else{
+		// 	echo "<script>alert('Login Failed. Please check Login details..!!');window.location='" . $redirect_url . "';</script>";
+
+		// }
 	}
+	
+	// public function loginstock()
+	// {
+
+
+	// 	$this->form_validation->set_rules('username', 'Username', 'trim|required');
+	// 	$this->form_validation->set_rules('pass', 'Password', 'trim|required');
+
+	// 	$data['status'] = '';
+	// 	$redirect_url = site_url() . 'login/dashboard';
+	// 	if ($this->form_validation->run() !== FALSE) {
+
+	// 		$loginEmail = $this->input->post('username');
+	// 		$loginPassword = $this->input->post('pass');
+
+
+	// 		$res = $this->db->where('UserName', $loginEmail)->where('password', $loginPassword)->get('users')->row();
+	// 		// echo"<pre>";print_r($res);exit;
+	// 		$modules = explode(',', $res->modules);
+	// 		$is_stocks = in_array('Stocks', $modules);
+
+	// 		// if (!empty($res) && $res->userType == 'Stocks') {
+	// 		if (!empty($res) && $is_stocks == true) {
+
+
+	// 				$sessionAdminInfo = array(
+	// 					'admin_id' => $res->id,
+	// 					'admin_username' => $res->UserName,
+	// 					'reg_type' => $res->userType,
+	// 					'for_stocks' => TRUE,
+	// 					'admin_logged_in' => TRUE,
+	// 					'access_stocks' => TRUE,
+	// 					'stock_logged_in' => TRUE
+	// 				);
+	// 				$this->session->set_userdata($sessionAdminInfo);
+	// 				redirect('stocks/dashboardstock', 'refresh');
+	// 			// }
+				
+	// 		} else {
+	// 			echo "<script>alert('Login Failed. Please check Login details..!!');window.location='" . $redirect_url . "';</script>";
+	// 		}
+	// 	}else{
+	// 		echo "<script>alert('Login Failed. Please check Login details..!!');window.location='" . $redirect_url . "';</script>";
+
+	// 	}
+	// }
 
 	public  function logout()
 	{
@@ -328,4 +475,101 @@ class Login extends CI_Controller
 		$this->session->sess_destroy();
 		redirect('login/index');
 	}
+
+
+// 	    public function sendOtp(){
+//         $otp = random_int(100000, 999999);
+//         $message =  "OTP to login to your account on travel CRM application is ".$otp.". OTP is valid for one login attempt or 5 mins only.
+// Do not share it with anyone.
+
+// Regards
+// travel CRM";
+
+//         $this->load->library("phpmailer_library");
+//         $mail = $this->phpmailer_library->load();
+//         $mail->isSMTP();
+// 		//$mail->SMTPDebug  = 1;  
+// 		/*$mail->SMTPAuth   = TRUE;
+// 		$mail->SMTPSecure = "tls";
+// 		$mail->Port       = 587;
+// 		$mail->Host       = "smtp.gmail.com";
+// 	    $mail->Username = 'noreplyfonalytics@gmail.com';
+//         $mail->Password = 'sidmm@SIDMM2@22';
+// 		$mail->IsHTML(true);
+// 		$mail->AddAddress($this->session->userdata("email"), "");
+// 		$mail->SetFrom("noreplyfonalytics@gmail.com", "noreplyfonalytics");
+//         $mail->AddReplyTo("noreplyfonalytics", "noreplyfonalytics");*/
+        
+//         $mail->SMTPAuth   = TRUE;
+// 		$mail->SMTPSecure = "tls";
+// 		$mail->Port       = 587;
+// 		$mail->Host       = "us2.smtp.mailhostbox.com";
+// 	    $mail->Username = 'otp@sidmm.com';
+//      $mail->Password = 'D*I@BMgxc6';
+// 		$mail->IsHTML(true);
+// 		$mail->AddAddress($this->session->userdata("email"), "");
+// 		$mail->SetFrom("otp@sidmm.com", "OTP SIDMM");
+//         $mail->AddReplyTo("otp@sidmm.com", "OTP SIDMM");
+//         $mail->Subject = "OTP to login fonalytics. (".$otp.")";
+//         $contents = "<b>".$message."</b> <br/><br/><b>Thank you <br/>Fonalytics Team</b>";
+//         $mail->MsgHTML($contents); 
+//         $mail->Send();
+// 		// if(!$mail->Send())  {
+//         //     var_dump($mail);exit;
+//         // }
+//         $sms = rawurlencode($message);
+// 		$urlInit  ="http://textart.in/api/sendhttp.php?authkey=6211Ae8nmXFYW5c262f3e&sender=FONALS&route=4&mobiles=".$this->session->userdata("mobile_number")."&message=".$sms."&country=91&PE_ID=1201160517572765195&DLT_TE_ID=1207164675010756950";
+		
+//         $c = curl_init();
+//         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+//         curl_setopt($c, CURLOPT_URL, $urlInit);
+//         $response = curl_exec($c);
+//         curl_close($c);
+//         $this->common_model->insert_otp($otp,$this->session->userdata("user_id"),$this->session->userdata("mobile_number"),$this->session->userdata("email"));
+    
+//     }
+
+
+	public function sendOtp($mail_id)
+	{
+		$email = $mail_id;
+
+		$otp = random_int(100000, 999999);
+        $message =  "OTP to login to your account on travel CRM application is ".$otp.". OTP is valid for one login attempt or 5 mins only.
+Do not share it with anyone.
+
+Regards
+travel CRM";
+
+		$this->load->library('email');
+		$config = array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.googlemail.com',
+			'smtp_port' => 465,
+			'smtp_user' => 'devsum2@gmail.com',
+			'smtp_pass' => 'kidueonawxajhfae',
+			'crlf' => "\r\n",
+			'mailtype' => "html",
+			'newline' => "\r\n",
+		);
+
+		$subject = 'Otp Verification';
+
+		$this->email->initialize($config);
+		$this->email->from('devsum2@gmail.com');
+		$this->email->to($email);
+		$this->email->subject($subject);
+		$contents = "<b>".$message."</b> <br/><br/><b>Thank you <br/>travel CRM Team</b>";
+		$this->email->message($contents); 
+		// $body = $this->load->view('invoice/template/invoice_mail', $data, TRUE);
+		// $this->email->message($body);
+		$this->email->send();
+
+		// echo json_encode(["msg" => "Email Send Successfully"]);
+
+
+		return $otp;
+	}
+
+
 }

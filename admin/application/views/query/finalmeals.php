@@ -838,6 +838,8 @@ textarea{
         // "res_name" : "?php echo isset($buildmeal->resturent_name) ? $buildmeal->resturent_name : "" ?>", 
         // "Meal" : "?php echo isset($buildmeal->meal) ? $buildmeal->meal : "" ?>",
         // "Meal_Type" :"?php echo isset($buildmeal->meal_type) ? $buildmeal->meal_type : "" ?>",
+        "meals_data" : <?php echo json_encode($meals_data)  ?>,
+
         "type" : 'meals',
         "user" : "<?php echo $proposalDetails['loggedInUser']  ?>",
         "date" : "<?php echo isset($buildmeal->date) ? date("jS F Y", strtotime($buildmeal->date)) : "" ?>",

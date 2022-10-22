@@ -106,8 +106,10 @@
               <div class="alert alert-danger noOfDaysAlertcls2" id="hotelNoOfDays" style="display:none;">
                 <strong>You Should add Hotels for <b id="noOfDaysAlert"><?php echo $buildpackage->night?></b> days.
               </div>
-              <div style="float:right;">      
+              <div style="float:right;">     
+              <?php if($view->room > 1) : ?> 
                   <a id="" class="new_btn px-3 ml-0 add-rows" onclick="addrows()">add</a>
+              <?php endif ?>  
                   <!-- <button type="button" class="new_btn px-5 ml-0 add-rows"  id="addrowsbtn">Add row</button> -->
                   
               </div>
@@ -150,7 +152,7 @@
                                     <input type="hidden" value="<?php echo $view->room; ?>" name="no_of_room" id="no_of_room">
                                   </td>
                                   <td>
-                                    <select class="form-control bnights get_no_nights" id="buildNoNights" name="buildNoNightss[]" required="">
+                                    <select class="form-control bnights get_no_nights" id="buildNoNights" name="buildNoNight[]" required="">
                                       <option value="0">Select</option>
                                       <?php $count_days = 1;
                                       for ($count_days = 1; $count_days <= $buildpackage->night; $count_days++) {
@@ -1540,6 +1542,7 @@ function hotelcalculation(){
                                   // $('#hotel_rate_child').val(200);
 
                                   toastr.success("Hotel Saved Successfully");
+                                  $('.card-box').click();
 
 
                                 }
@@ -2340,7 +2343,7 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                               }
                               for(let room_no=1; room_no <= total_rooms ; room_no++){
                               // var city = '<td>Room '+room_no+'</td><td><select class="form-control get-hotel get_all_city" name="buildHotelCity[]" id="buildHotelCity' + faqs_row + room_no + '" onchange="get_hotel_name(this.id,' + faqs_row + room_no + ');"><option value="Dubai">Dubai</option><option value="AbuDhabi">Abu Dhabi</option><option value="Sharjah">Sharjah</option><option value="Ajman">Ajman</option><option value="Sir Baniyas">Sir Baniyas</option><option value="Umm Al-Quwain">Umm Al-Quwain</option><option value="Fujairah">Fujairah</option><option value="Ras Al Khaimah">Ras Al Khaimah</option><option value="Al Ain">Al Ain</option></select></td>';
-                              // var bnight = '<td><select class="form-control bnights get_no_nights" id="buildNoNights' + faqs_row + room_no + '"  name="buildNoNightss[]" required="">';
+                              // var bnight = '<td><select class="form-control bnights get_no_nights" id="buildNoNights' + faqs_row + room_no + '"  name="buildNoNight[]" required="">';
                               // bnight += '<option value="0">Select</option>';
                               // for (let i = 1; i <= (totalNoOfDays); i++) {
                               //   bnight += '<option value="' + i + '">' + i + '</option>';
@@ -2397,7 +2400,7 @@ template += `
    </td>
    <td><input class="form-control get_CheckIn" type="date" value="${f.format("YYYY-MM-DD")}" name="buildCheckIns[]" id="buildCheckIn${faqs_row}${room_no}" readonly></td>
    <td>
-      <select class="form-control bnights get_no_nights" id="buildNoNights${faqs_row}${room_no}"  name="buildNoNightss[]" required="">
+      <select class="form-control bnights get_no_nights" id="buildNoNights${faqs_row}${room_no}"  name="buildNoNight[]" required="">
         ${no_of_night}
       </select>
    </td>

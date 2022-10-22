@@ -273,20 +273,8 @@
           <br />
           <br />
           <b><u>Above Rate Inclusive of:</u></b>
-          <!-- <p><i class="fa-solid fa-circle-dot"></i>
-            05 Nights stay at the mentioned hotel</p> -->
           <p>
           <?php echo $details->inclusions ?></p>
-          <!-- <p style="margin-top: -22px;"><i class="fa-solid fa-circle-dot"></i>
-            Tourism Dirhams Fees</p>
-          <p><i class="fa-solid fa-circle-dot"></i>
-            Vat 5% Inclusive</p>
-          <p><i class="fa-solid fa-circle-dot"></i>
-            All Applicable Taxes</p>
-          <p><i class="fa-solid fa-circle-dot"></i>
-            All of the above services with the hotel to hotel transfer and ticket</p>
-          <p><i class="fa-solid fa-circle-dot"></i>
-            All Tours & Transfers on sharing Basis except airport transfer</p> -->
         </div>
         <div class="head7">
           Kindly note that the above rates are only a quote, no rooms or
@@ -296,7 +284,6 @@
         <div class="head8">
           <b
             >Thanks & Regards<br />
-            <!-- <img src="<?php echo base_url();?>public/image/thanks_regards.jpg" alt="" /> -->
             <?php echo $details->admin_name ?>
           </b>
         </div>

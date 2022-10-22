@@ -627,8 +627,10 @@ textarea{
                     <div class="row">
                         <div class="col">
                             <label class="input">
-                                <input class="input__field  width-input" id="pro_sub" value="Hotel Proposal" type="text" placeholder=" "
-                                    autocomplete="off" />
+                            <?php $date = new DateTime($buildpackage->specificDate);
+                            $new_df = $date->format('d-M-Y'); ?>
+                                <input class="input__field   width-input" id="pro_sub" value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo ($buildpackage->adult + $buildpackage->child + $buildpackage->infant)  ?>/ 
+                                <?php echo $new_df ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName.' '.$admin_user_data->LastName); ?> " type="text" placeholder=" " autocomplete="off" />
                                 <span class="input__label">Email Subject</span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>
@@ -675,8 +677,13 @@ textarea{
 
                         <div class="row mt-3">
                             <div class="col">
-                               
-                                <div class="mt-2"> <b>Cheak In/Out</b> : <?php echo $buildpackage->specificDate ?>/<?php echo $buildpackage->noDaysFrom ?></div>
+                            <?php
+                                $date = new DateTime($buildpackage->specificDate);
+                                $date2 = new DateTime( $buildpackage->noDaysFrom);
+                                $check_in = $date->format('d-M-Y');
+                                $check_out = $date2->format('d-M-Y');
+                                ?>
+                                <div class="mt-2"> <b>Check In/Out</b> : <?php echo $check_in ?>/<?php echo $check_out ?></div>
                                 <div class="mt-2"> <b>Destinations</b> :  <?php echo $buildpackage->goingTo ?>,  <?php echo $buildpackage->goingFrom ?></div>
                             </div>
                             <!-- <div class="col">
@@ -858,6 +865,9 @@ textarea{
         // "buildRoomType" : <?php// echo $proposalDetails['roomType'][0] ?>,
         "room_sharing_types" : <?php echo json_encode($proposalDetails['room_sharing_types']) ?> ,
         "hotelPrefrence" : "<?php echo $buildpackage->hotelPrefrence ?>",
+        "build_room_types" : <?php echo json_encode($proposalDetails['build_room_types']) ?> ,
+        "buildRoomType" : <?php echo json_encode($proposalDetails['roomType']) ?>,
+
         "query_ID" : <?php echo $buildpackage->queryId ?>
         };
 

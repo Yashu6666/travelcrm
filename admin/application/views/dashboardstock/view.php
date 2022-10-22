@@ -23,50 +23,7 @@
 						</div>
                         
 					</div>
-                    <div class="state-overview">
-						<div class="row" >
-							<div class="col-xl-4 col-md-6 col-12">
-								<div class="info-box bg-blue">
-									<span class="info-box-icon push-bottom"><i class="material-icons">style</i></span>
-									<div class="info-box-content">
-										<span class="info-box-text">Total Tickets</span>
-										<span class="info-box-number"><?php echo $total_ticket ?></span>
-										<div class="progress">
-											<div class="progress-bar width-100"></div>
-										</div>
-										<!-- <span class="progress-description">
-											60% Increase in 28 Days
-										</span> -->
-									</div>
-									<!-- /.info-box-content -->
-								</div>
-								<!-- /.info-box -->
-							</div>
-							<!-- /.col -->
-							<div class="col-xl-4 col-md-6 col-12">
-								<div class="info-box bg-orange">
-									<span class="info-box-icon push-bottom"><i
-											class="material-icons">card_travel</i></span>
-									<div class="info-box-content">
-										<span class="info-box-text">Remaining Tickets</span>
-										<span class="info-box-number"><?php echo $remaning_ticket ?></span>
-										<div class="progress">
-											<div class="progress-bar width-100"></div>
-										</div>
-										<!-- <span class="progress-description">
-											40% Increase in 28 Days
-										</span> -->
-									</div>
-									<!-- /.info-box-content -->
-								</div>
-								<!-- /.info-box -->
-							</div>
-							<!-- /.col -->
-						
-					
-							<!-- /.col -->
-						</div>
-					</div>
+
 					<!-- start widget -->
 					<div class="state-overview">
 
@@ -106,10 +63,85 @@
                                     </div>
                                 </div>
                             </div> -->
-                        </div>
                         
+							<div class="state-overview col-6">
+								<div class="" >
+										<div class="">
+									<!-- <div class="col-xl-4 col-md-6 col-12"> -->
+										<div class="info-box bg-blue">
+											<span class="info-box-icon push-bottom"><i class="material-icons">style</i></span>
+											<div class="info-box-content">
+												<span class="info-box-text">Total Tickets</span>
+												<span class="info-box-number"><?php echo $total_ticket ?></span>
+												<div class="progress">
+													<div class="progress-bar width-100"></div>
+												</div>
+												<!-- <span class="progress-description">
+													60% Increase in 28 Days
+												</span> -->
 											</div>
+											<!-- /.info-box-content -->
+										</div>
+										<!-- /.info-box -->
+									</div>
+									<!-- /.col -->
+									<!-- <div class="col-xl-4 col-md-6 col-12"> -->
+									<div class="">
+										<div class="info-box bg-orange">
+											<span class="info-box-icon push-bottom"><i
+													class="material-icons">card_travel</i></span>
+											<div class="info-box-content">
+												<span class="info-box-text">Remaining Tickets</span>
+												<span class="info-box-number"><?php echo $remaning_ticket ?></span>
+												<div class="progress">
+													<div class="progress-bar width-100"></div>
+												</div>
+												<!-- <span class="progress-description">
+													40% Increase in 28 Days
+												</span> -->
+											</div>
+											<!-- /.info-box-content -->
+										</div>
+										<!-- /.info-box -->
+									</div>
+									<!-- /.col -->
+								
+							
+									<!-- /.col -->
+								</div>
+							</div>
+						</div>
+                        
+					</div>
 					<!-- end widget -->
+                    
+
+					<div class="state-overview">
+
+                        <div class="row">
+                            
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="card card-box">
+                                    <div class="card-head">
+                                        <header>Remaining Tickets</header>
+                                        <div class="tools">
+                                            <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                                            <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                                            <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body no-padding height-9">
+                                        <div class="row">
+										<canvas id="remain_ticket"></canvas>
+                                            <!-- <canvas id="bar-chart2"></canvas> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+                    </div>	
+					
+					
 					<!-- chart start -->
 					<!-- Chart end -->
 					
@@ -168,7 +200,7 @@
     }
 		}
 	});
-		});
+});
 
         $(document).ready(function() 
 		{
@@ -205,5 +237,50 @@
 		}
 	});
 		});
+
+
+		
+
+		
+
+
     </script>
+	<script>
+		new Chart(document.getElementById("remain_ticket"), {
+			type: 'bar',
+			data: {
+			labels: [<?php echo $formatted_ticket_key ;?>],
+			datasets: [
+				{
+				label: "Tickets Remaining",
+				backgroundColor: "lightpink",
+				data : [<?php echo $formatted_ticket_values ;?>],
+				}
+			]
+			},
+			options: {
+			legend: { display: false },
+			title: {
+				display: true,
+			},
+
+			scales: {
+				xAxes: [{
+					barPercentage: 0.4
+				}],
+				yAxes: [{
+
+					stacked: true,
+					ticks: {
+						min: 0,
+						stepSize: 1,
+					}
+
+				}]
+			}
+
+			}
+		
+		});
+</script>
         <!-- end page content -->

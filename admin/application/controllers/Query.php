@@ -41,6 +41,7 @@ class Query extends CI_Controller
 				// $this->load->view('query/email_templates/proposal_transfer', $data);return;
 				$body = $this->load->view('query/email_templates/proposal_transfer', $data, TRUE);
 			}elseif($data['details']->type == 'hotel'){
+				// $body = $this->load->view('query/email_templates/temp_hotel', $data);return;
 				$body = $this->load->view('query/email_templates/temp_hotel', $data, TRUE);
 			}elseif($data['details']->type == 'visa'){
 				// $body = $this->load->view('query/email_templates/temp_visa', $data);return;
@@ -868,7 +869,7 @@ class Query extends CI_Controller
 		$pax_infants = $this->input->post('pax_infants');
 
 
-		$rows_count = $this->input->post('total_rows') + 1;
+		$rows_count = $this->input->post('total_rows');
 		$QueryId = $this->input->post('query_id');
 		$buildpackage = $this->db->where('queryId', $QueryId)->get('querypackage')->row();
 		$with_or_wo_bed = explode(",",$buildpackage->child_with_or_wo_bed);
@@ -879,7 +880,7 @@ class Query extends CI_Controller
 		$tableData = $this->input->post('data');
 
 		$datas =  array();
-		for ($x = 0; $x < $rows_count; $x++) {
+		for ($x = 0; $x <= $rows_count; $x++) {
 			$datas[$x]['nights'] = $tableData[0]['nights'][$x];
 			$datas[$x]['group_type'] = $tableData[0]['group_type'][$x];
 			$datas[$x]['hotel_id'] = $tableData[0]['hotelName'][$x];
@@ -2832,13 +2833,14 @@ class Query extends CI_Controller
 	{
 		// echo"<pre>";print_r($_POST);exit;
 		$data = array();
+
+		
 		$data['proposalDetails'] = array(
 
 			'query_id' => $_POST['QueryId'],
 			'perpax_adult' =>  $_POST['perpax_adult_input'],
 			'perpax_childs' =>  $_POST['perpax_childs_input'],
 			'perpax_infants' => $_POST['perpax_infants_input'],
-
 			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
 			'buildPackageExclusions' => $_POST['buildPackageExclusions'],
 			'buildPackageConditions' => $_POST['buildPackageConditions'],
@@ -2855,7 +2857,7 @@ class Query extends CI_Controller
 			'loggedInUser' => $this->session->userdata('admin_username')
 
 		);
-
+		$data['proposalDetails']['perpax_cnb'] =  $_POST['perpax_cnb_input'];
 		$user_id = $this->session->userdata()['admin_id'];
 		$data['admin_user_data'] = $this->db->where('id', $user_id)->get('users')->row();
 
@@ -2890,6 +2892,7 @@ class Query extends CI_Controller
 		// echo"<pre>";print_r($data);exit;
 		$data['buildhotel'] = $this->db->where('query_id', $_POST['QueryId'])->get('query_hotel')->row();
 		$data['buildmeal'] = $this->db->where('query_id', $_POST['QueryId'])->get('query_meals')->row();
+		$data['meals_data'] = $this->db->where('query_id', $_POST['QueryId'])->get('query_meal')->row();
 		// $this->db->insert('package',$data['proposalDetails']);
 
 
@@ -3278,14 +3281,15 @@ class Query extends CI_Controller
 			$datas[$x]['total_price'] = $total_pricing;
 			$datas[$x]['created_by'] = $created_by;
 		}
+		
 
-		$query = $this->db->where('query_id', $QueryId)->get('query_hotel');
-		if ($query->num_rows() > 0) {
-			$this->db->where('query_id', $QueryId)->delete('query_hotel');
-			$this->db->insert_batch('query_hotel', $datas);
-		} else {
-			$this->db->insert_batch('query_hotel', $datas);
-		}
+		// $query = $this->db->where('query_id', $QueryId)->get('query_hotel');
+		// if ($query->num_rows() > 0) {
+		// 	$this->db->where('query_id', $QueryId)->delete('query_hotel');
+		// 	$this->db->insert_batch('query_hotel', $datas);
+		// } else {
+		// 	$this->db->insert_batch('query_hotel', $datas);
+		// }
 
 		echo json_encode($datas);
 	}
@@ -3315,8 +3319,10 @@ class Query extends CI_Controller
 			'exclusions' => $_POST['buildPackageExclusions'],
 			'query_id' => $_POST['QueryId'],
 			'buildPackageConditions' => $_POST['buildPackageConditions'],
-			'loggedInUser' => $this->session->userdata('admin_username')
-
+			'loggedInUser' => $this->session->userdata('admin_username'),
+			'room_sharing_types' => $_POST['room_sharing_types'],
+			'build_room_types' => $_POST['build_room_types'],
+			'roomType' => $_POST['buildRoomType'],
 
 		);
 		
@@ -3341,6 +3347,8 @@ class Query extends CI_Controller
 
 
 
+		$user_id = $this->session->userdata()['admin_id'];
+		$data['admin_user_data'] = $this->db->where('id', $user_id)->get('users')->row();
 
 		$data['buildpackage'] = $this->db->where('queryId', $_POST['QueryId'])->get('querypackage')->row();
 		$data['b2bcustomerquery'] = $this->db->where('query_id', $_POST['QueryId'])->get('b2bcustomerquery')->row();

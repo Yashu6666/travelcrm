@@ -83,7 +83,7 @@ class stocks extends CI_Controller
 		}
 
 		$data['total_ticket'] = $total_ticket;
-		$data['remaning_ticket'] = $remaning_ticket;	
+		$data['remaning_ticket'] = $remaning_ticket;
 
 		$data['today_total'] = $today_total;
 		$data['today_remaining'] = $today_remaining;

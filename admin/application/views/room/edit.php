@@ -56,12 +56,10 @@
             <div class="row form-group mb-3">
               <label class="col-md-2 control-label text-left"><b>Hotel</b></label>
               <div class="col-md-10">
-
                <select required  name="hotelname"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                 <?php 
-                // print_r($hotelList);
                 foreach($hotelList as $key){ ?>
-                <option value="<?php echo $key->id;?>"> <?php echo $key->hotelname;?> </option>
+                <option <?php echo $edit->hotelname == $key->id ? "selected" : "" ;?> value="<?php echo $key->id;?>"> <?php echo $key->hotelname;?> </option>
                 <?php } ?>
               </select>
             </div>

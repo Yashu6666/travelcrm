@@ -47,7 +47,7 @@ class Query extends CI_Controller
 				// $body = $this->load->view('query/email_templates/temp_visa', $data);return;
 				$body = $this->load->view('query/email_templates/temp_visa', $data, TRUE);
 			}elseif($data['details']->type == 'excursions'){
-				// $body = $this->load->view('query/email_templates/temp_excursion', $data);return;
+				$body = $this->load->view('query/email_templates/temp_excursion', $data);return;
 				$body = $this->load->view('query/email_templates/temp_excursion', $data, TRUE);
 			}elseif($data['details']->type == 'meals'){
 				// $body = $this->load->view('query/email_templates/temp_meal', $data);return;
@@ -208,7 +208,7 @@ class Query extends CI_Controller
 			$package = $this->db->where('queryId', $query_id)->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->row();
 
 			if (isset($package)) {
-				$res = array("id" => $id, "company_name" => $company_name, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
+				$res = array("id" => $id, "company_name" => $company_name, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "qp_id" => $package->id, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
 				$result[] = $res;
 			}
 			array_push($result_query_id, $value->queryId);
@@ -499,12 +499,11 @@ class Query extends CI_Controller
 		
 		$id = $_POST['id'];
 		$status = $_POST['status'];
-		$query_id = $this->db->where('id', $id)->get('b2bcustomerquery')->row();
-		// $type = $_POST['type'];
+		// $query_id = $this->db->where('id', $id)->get('b2bcustomerquery')->row();
+		// // $type = $_POST['type'];
 		$data = array('lead_stage' => $status);
-		$package = $this->db->where('queryId', $query_id->query_id)->update('querypackage', $data);
-
-		$this->db->where('id', $id)->update('b2bcustomerquery', $data);
+		$package = $this->db->where('id', $id)->update('querypackage', $data);
+		// $this->db->where('id', $id)->update('b2bcustomerquery', $data);
 		echo json_encode("updated");
 	}
 
@@ -2668,7 +2667,7 @@ class Query extends CI_Controller
 		} else {
 			$this->db->insert('pricing_info', $data['pricing_info']);
 		}
-
+		// print_r($data['pricing_info']);exit; return;
 		$updatedata = array('status' => "Sent");
 		$this->db->where('query_id', $_POST['QueryId'])->update('b2bcustomerquery', $updatedata);
 

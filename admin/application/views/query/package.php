@@ -348,13 +348,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                         <div class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                             </div>
-                                                            <input type="date" placeholder="Choose Date" class="form-control"  id="specificDate1" name="specificDate">
+                                                            <input type="date" min="<?php echo date("Y-m-d") ?>" placeholder="Choose Date" class="form-control"  id="specificDate1" name="specificDate">
                                                             <div class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-moon"></i>
                                                             <input  type="number" min="1" style="width: 18px;text-align: center;" placeholder=" " id="goingFrom1" name="night" required autocomplete="off" />
                                                             </span>
                                                             </div>
-                                                            <input type="date" placeholder="Choose Date" class="form-control"  id="endDate1" name="noDaysFrom">
+                                                            <input type="date" min="<?php echo date("Y-m-d") ?>" placeholder="Choose Date" class="form-control"  id="endDate1" name="noDaysFrom">
                                                         </div>
                                                         </div>
 
@@ -612,13 +612,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                         <div class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                             </div>
-                                                            <input type="date" placeholder="Choose Date" class="form-control"  id="specificDate22" name="specificDate">
+                                                            <input type="date" min="<?php echo date("Y-m-d") ?>" placeholder="Choose Date" class="form-control"  id="specificDate22" name="specificDate">
                                                             <div class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-moon"></i>
                                                             <input  type="number" min="1" style="width: 18px;text-align: center;" placeholder=" " id="goingFrom22" name="night" required autocomplete="off" />
                                                             </span>
                                                             </div>
-                                                            <input type="date" placeholder="Choose Date" class="form-control"  id="endDate22" name="noDaysFrom">
+                                                            <input type="date" min="<?php echo date("Y-m-d") ?>" placeholder="Choose Date" class="form-control"  id="endDate22" name="noDaysFrom">
                                                         </div>
                                                         </div>
 
@@ -772,7 +772,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                 <div class="row mt-4 mr-3 ml-3 mt-3">
                                                     <div class="col">
                                                         <label for="">Service Date</label> <br />
-                                                        <input class="package_inputs" type="date" placeholder=" " id="specificDate11" name="specificDate" autocomplete="off" required />
+                                                        <input class="package_inputs" type="date" min="<?php echo date("Y-m-d") ?>" placeholder=" " id="specificDate11" name="specificDate" autocomplete="off" required />
                                                     </div>
                                                     <!-- <div class="col">
                                                         <label for="">Nights</label> <br /> -->
@@ -929,7 +929,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                 <div class="row mt-4 mr-3 ml-3 mt-3">
                                                     <div class="col">
                                                         <label for="">Date of Arrival</label> <br />
-                                                        <input class="package_inputs" type="date" placeholder=" " id="doa_id" name="doa" autocomplete="off" required />
+                                                        <input class="package_inputs" type="date" min="<?php echo date("Y-m-d") ?>" placeholder=" " id="doa_id" name="doa" autocomplete="off" required />
                                                     </div>
 
                                                     <div class="col">
@@ -939,7 +939,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                                     <div class="col">
                                                         <label for="">Date of Departure</label> <br />
-                                                        <input class=" package_inputs" type="date" placeholder=" " id="dod_id" name="dod" autocomplete="off" />
+                                                        <input class=" package_inputs" type="date" min="<?php echo date("Y-m-d") ?>" placeholder=" " id="dod_id" name="dod" autocomplete="off" />
                                                     </div>
                                                     
 
@@ -1098,7 +1098,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                     <div class="col">
                                                         <label for="">From Date</label> <br />
 
-                                                        <input class="package_inputs" type="date" placeholder=" " id="specificDate12" name="specificDate" autocomplete="off" required />
+                                                        <input class="package_inputs" type="date" min="<?php echo date("Y-m-d") ?>" placeholder=" " id="specificDate12" name="specificDate" autocomplete="off" required />
                                                     </div>
                                                     <!-- <div class="col" hidden>
                                                         <label for="">Nights</label> <br />
@@ -1109,7 +1109,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                     <div class="col">
                                                         <label for="">To Date</label> <br />
 
-                                                        <input class=" package_inputs" type="date" placeholder=" " id="endDate12" name="noDaysFrom" autocomplete="off" />
+                                                        <input class=" package_inputs" type="date" min="<?php echo date("Y-m-d") ?>" placeholder=" " id="endDate12" name="noDaysFrom" autocomplete="off" />
                                                     </div>
                                                     <div class="col">
                                                         <label for="">Country</label> <br />
@@ -1144,7 +1144,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                                         </select>
                                                     </div>
-                                                    <div class="col">
+                                                    <div class="col" hidden>
                                                         <label for="">No. of Room</label><br/>
 
                                                         <select name="rooms" id="" required class="Travelers-select-package-values">
@@ -1189,7 +1189,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                         </select>
                                                     </div>
 
-                                                    <div id="child_age_div3" class="col" style="display:none;">
+                                                    <div hidden id="child_age_div3" class="col" style="display:none;">
                                                         <label for="">Child Age</label><br>
 
                                                         <input id="child_age12" name="child_age" class="Travelers-select-package-values" type="text" value="0" />

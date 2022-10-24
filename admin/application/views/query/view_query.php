@@ -135,13 +135,12 @@
 													<td class="center"><?php echo $val['nopax'] ?></td>
 												
 													<td class="center d-flex flex-column">
-													
-														<select  id="mySelect<?php echo $val['id'] ?>" onchange="myFunction(<?php echo $val['id'] ?>)"  <?php echo $val['lead_stage']=="Confirmed"?"disabled":""  ?> >
-															<option <?php echo $val['lead_stage']=="Inprogress"?"selected":"" ?> value="Inprogress">Inprogress</option>
+														<select  id="mySelect<?php echo $val['id'] ?>" onchange="myFunction(<?php echo $val['qp_id'] ?>)"  <?php echo $val['lead_stage']=="Confirmed"?"disabled":""  ?> >
+															<option <?php echo $val['lead_stage']=="Inprogress" ? "selected" : "" ?> value="Inprogress">Inprogress</option>
 															<!-- <option <?php //echo $val['lead_stage']=="Recent"?"selected":""  ?>  value="Recent">Recent</option> -->
-															<option  <?php echo $val['lead_stage']=="Confirmed"?"selected":""  ?> value="Confirmed">Confirmed</option>
-															<option <?php echo $val['lead_stage']=="Rejected"?"selected":""  ?> value="Rejected">Rejected</option>
-															<option <?php echo $val['lead_stage']=="Callback"?"selected":""  ?> value="Callback">Callback</option>
+															<option  <?php echo $val['lead_stage']=="Confirmed" ? "selected" : ""  ?> value="Confirmed">Confirmed</option>
+															<option <?php echo $val['lead_stage']=="Rejected" ? "selected" : ""  ?> value="Rejected">Rejected</option>
+															<option <?php echo $val['lead_stage']=="Callback" ? "selected" : ""  ?> value="Callback">Callback</option>
 															<!-- <option <?php //echo $val['lead_stage']=="Overall"?"selected":""  ?> value="Overall">Overall</option> -->
 														</select>
 													

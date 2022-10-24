@@ -10,6 +10,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css  "
     />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
               /*!
         * Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com
@@ -252,17 +253,24 @@
           <br />
           <b><u>Above Rate Inclusive of:</u></b>
           <p>
-          <?php foreach($details->excursion_name_SIC as $key => $val) : ?>
+            
+            <?php if(!empty($details->excursion_name_SIC)) : ?>
+            <?php foreach($details->excursion_name_SIC as $key => $val) : ?>
                 <p>&#10146; <?php echo $val ?></p>
             <?php endforeach ?>
+            <?php endif ?>
 
-            <?php foreach($details->excursion_name_PVT as $key => $val) : ?>
-                <p>&#10146; <?php echo $val ?></p>
+            <?php if(!empty($details->excursion_name_PVT)) : ?>
+            <?php foreach($details->excursion_name_PVT as $key1 => $val1) : ?>
+                <p>&#10146; <?php echo $val1 ?></p>
             <?php endforeach ?>
+            <?php endif ?>
 
-            <?php foreach($details->excursion_name_TKT as $key => $val) : ?>
-                <p>&#10146; <?php echo $val ?></p>
+            <?php if(!empty($details->excursion_name_TKT)) : ?>
+            <?php foreach($details->excursion_name_TKT as $key2 => $val2) : ?>
+                <p>&#10146; <?php echo $val2 ?></p>
             <?php endforeach ?>
+            <?php endif ?>
 
             </p>
             <p>&#10146; Tourism Dirhams Fees</p>

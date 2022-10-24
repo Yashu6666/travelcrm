@@ -46,8 +46,26 @@ class Invoice extends CI_Controller
 		$data['pax'] = $query_type->adult + $query_type->child + $query_type->infant;
 		$query_price = $this->db->where('query_id', $query_id)->get('pricing_info')->row();
 
-		$remove_vat_amount = (($query_price->package_price * 5 ) / 100);
-		$data['price'] = ($query_price->package_price - $remove_vat_amount )  / $data['pax'];
+		if($query_type->type == "Transfer"){
+			$QType = "transfer_price";
+		}
+		elseif($query_type->type == "Hotel"){
+			$QType = "hotel_price";
+		}
+		elseif($query_type->type == "Meals"){
+			$QType = "meal_price";
+		}
+		elseif($query_type->type == "Visa"){
+			$QType = "visa_price";
+		}
+		elseif($query_type->type == "Excursion"){
+			$QType = "excursion_price";
+		}
+		elseif($query_type->type == "Package"){
+			$QType = "package_price";
+		}
+		$remove_vat_amount = (($query_price->$QType * 5 ) / 100);
+		$data['price'] = ($query_price->$QType - $remove_vat_amount )  / $data['pax'];
 		// if($query_type->type == "Package") {
 		
 		// 	$query_type = $this->db->where('queryId', $query_id)->get('querypackage')->row();

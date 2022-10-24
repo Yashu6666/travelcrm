@@ -139,23 +139,23 @@
 					}
 				</style>
 
-				<?php 
+				<?php
 				date_default_timezone_set('asia/kolkata');
 				$cur_date = date('Y-m-d');
 
-				$todo_data= $this->db->query("SELECT * FROM todo WHERE Tododay='$cur_date'")->result();
-				$query_data= $this->db->query("SELECT * FROM followups WHERE followUpday='$cur_date'")->result();
+				$todo_data = $this->db->query("SELECT * FROM todo WHERE Tododay='$cur_date'")->result();
+				$query_data = $this->db->query("SELECT * FROM followups WHERE followUpday='$cur_date'")->result();
 
 				$all_data = [];
-				
+
 				foreach ($todo_data as $key => $value) {
-					$data_arr = ["type_notification" => "Todo","type" => $value->Todotype, "customer" => $value->TodoCustomer, "assigned" => $value->TodoAssigned ];
-					array_push($all_data,$data_arr);
+					$data_arr = ["type_notification" => "Todo", "type" => $value->Todotype, "customer" => $value->TodoCustomer, "assigned" => $value->TodoAssigned];
+					array_push($all_data, $data_arr);
 				}
 
 				foreach ($query_data as $key => $value) {
-					$data_arr = ["type_notification" => "Followup","type" => $value->followUptype, "customer" => $value->followUpCustomer, "assigned" => $value->followUpAssignTo ];
-					array_push($all_data,$data_arr);
+					$data_arr = ["type_notification" => "Followup", "type" => $value->followUptype, "customer" => $value->followUpCustomer, "assigned" => $value->followUpAssignTo];
+					array_push($all_data, $data_arr);
 				}
 
 				?>
@@ -169,12 +169,17 @@
 							</div>
 
 							<ul class="dropdown-menu dropdown-menu-default animated jello" style="width: 20rem !important;">
-								<?php foreach($all_data as $val) : ?>
-								<li>
-									<a class="text-wrap" href="<?php echo site_url(); ?>login/dashboard"><span class="notification_txt"><?php echo $val['type_notification']; echo ' - '.$val['type']; echo ' > '.$val['customer']; echo ' ('.$val['assigned'].')'; ?></span></a>
-								</li>
-								<!-- <li>
-									<a class="text-wrap" href="<?php echo site_url(); ?>login/dashboard"><span class="notification_txt"><?php echo $val->Todotype; echo ' '.$val->TodoCustomer; echo ' ('.$val->TodoAssigned.')'; ?></span></a>
+								<?php foreach ($all_data as $val) : ?>
+									<li>
+										<a class="text-wrap" href="<?php echo site_url(); ?>login/dashboard"><span class="notification_txt"><?php echo $val['type_notification'];
+																																			echo ' - ' . $val['type'];
+																																			echo ' > ' . $val['customer'];
+																																			echo ' (' . $val['assigned'] . ')'; ?></span></a>
+									</li>
+									<!-- <li>
+									<a class="text-wrap" href="<?php echo site_url(); ?>login/dashboard"><span class="notification_txt"><?php echo $val->Todotype;
+																																		echo ' ' . $val->TodoCustomer;
+																																		echo ' (' . $val->TodoAssigned . ')'; ?></span></a>
 								</li> -->
 								<?php endforeach ?>
 							</ul>
@@ -280,80 +285,60 @@
 					</span> -->
 							<img src="<?php echo site_url(); ?>/public/image/proposalLogo.png" style="width: 50%;align-items: center;margin-left: 20%;">
 							<div id="login_content">
-						<span class="login100-form-title p-b-30 p-t-27">
-							<p style="color: red;"></p>
-							Log in
-							
-						</span>
+								<span class="login100-form-title p-b-30 p-t-27">
+									<p style="color: red;"></p>
+									Log in
 
-						<p class="text-white-50 mb-5">Please enter your Credentials for loggin into Stocks!</p>
-						<p class="text-white-50 mb-5" id="message_div" style='display:none;'></p>
-						<div class="wrap-input100 validate-input" data-validate="Enter username">
-							<!-- <input type="text" value="" class="form-control form-control-lg input100" name="username"/> -->
-							<input value=""  type="hidden" id="stock_userid" name="stock_userid" >
-							<input value=""  type="hidden" id="stock_email_id" name="stock_email_id" >
-							<input value="" class="input100" type="text" id="stock_username" name="username" placeholder="Username">
-							<span class="focus-input100" data-placeholder=""></span>
-						</div>
-						<div class="wrap-input100 validate-input" data-validate="Enter password">
-							<input value="" class="input100" type="password" id="stock_password" name="pass" placeholder="Password">
-							<span class="focus-input100" data-placeholder=""></span>
-						</div>
-						<!-- <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p> -->
-					</div>
-					<div id="otp_content" class="row SMSArea" style="display:none;">
+								</span>
 
-						<span class="text-white-50 mb-5">
-							Please enter the one time password to verify your account.<br/> A code has been sent to <b id="mail_id"></b>
-						</span>
+								<p class="text-white-50 mb-5">Please enter your Credentials for loggin into Stocks!</p>
+								<p class="text-white-50 mb-5" id="message_div" style='display:none;'></p>
+								<div class="wrap-input100 validate-input" data-validate="Enter username">
+									<!-- <input type="text" value="" class="form-control form-control-lg input100" name="username"/> -->
+									<input value="" type="hidden" id="stock_userid" name="stock_userid">
+									<input value="" type="hidden" id="stock_email_id" name="stock_email_id">
+									<input value="" class="input100" type="text" id="stock_username" name="username" placeholder="Username">
+									<span class="focus-input100" data-placeholder=""></span>
+								</div>
+								<div class="wrap-input100 validate-input" data-validate="Enter password">
+									<input value="" class="input100" type="password" id="stock_password" name="pass" placeholder="Password">
+									<span class="focus-input100" data-placeholder=""></span>
+								</div>
+								<!-- <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p> -->
+							</div>
+							<div id="otp_content" class="row SMSArea" style="display:none;">
 
-						<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input value="" class="input100" type="text" id="stock_otp" name="stock_otp" placeholder="otp" min="1" max="6">							<span class="focus-input100" data-placeholder=""></span>
-						</div>
-						<p class="text-white-50 mb-5" id="otp_msg_div" style='display:none;'></p>
-						
+								<span class="text-white-50 mb-5">
+									Please enter the one time password to verify your account.<br /> A code has been sent to <b id="mail_id"></b>
+								</span>
 
-                        <!-- <div class="col-2">
-                            <input type="text" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}" class="smsCode text-center rounded-lg otpCode" />
-                        </div>
-                        <div class="col-2">
-                            <input type="text" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}" class="smsCode text-center rounded-lg otpCode" />
-                        </div>
-                        <div class="col-2">
-                            <input type="text" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}" class="smsCode text-center rounded-lg otpCode" />
-                        </div>
-                        <div class="col-2">
-                            <input type="text" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}" class="smsCode text-center rounded-lg otpCode" />
-                        </div>
-                        <div class="col-2">
-                            <input type="text" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}" class="smsCode text-center rounded-lg otpCode" />
-                        </div>
-                        <div class="col-2">
-                            <input type="text" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}" class="smsCode text-center rounded-lg otpCode" />
-                        </div> -->
+								<div class="wrap-input100 validate-input" data-validate="Enter password">
+									<input value="" class="input100" type="text" id="stock_otp" name="stock_otp" placeholder="otp" min="1" max="6"> <span class="focus-input100" data-placeholder=""></span>
+								</div>
+								<p class="text-white-50 mb-5" id="otp_msg_div" style='display:none;'></p>
 
-					</div>
-					
-					<div id="get_otp_div"class="container-login100-form-btn">
-						<button  type="button" onclick="getOtp();" class="login100-form-btn">
-							Get Otp
-						</button>
-					</div>
-					<div id="verify_div" class="container-login100-form-btn" style="display:none;">
-					<br/><br/>
-						<button  type="button" onclick="verify_otp();" class="login100-form-btn">
-							Verify
-						</button>
-					</div>
-					<!-- <div class="text-center p-t-90">
+							</div>
+
+							<div id="get_otp_div" class="container-login100-form-btn">
+								<button type="button" onclick="getOtp();" class="login100-form-btn">
+									Get Otp
+								</button>
+							</div>
+							<div id="verify_div" class="container-login100-form-btn" style="display:none;">
+								<br /><br />
+								<button type="button" onclick="verify_otp();" class="login100-form-btn">
+									Verify
+								</button>
+							</div>
+							<!-- <div class="text-center p-t-90">
 						<a class="txt1" href="#">
 							Forgot Password?
 						</a>
 					</div> -->
-				<!-- </form> -->
-			</div>
+							</form>
+					</div>
 
-			  </div>
+				</div>
 			</div>
-		  </div>
+		</div>
 		<!-- end header -->

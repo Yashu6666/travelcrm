@@ -47,7 +47,7 @@ class Query extends CI_Controller
 				// $body = $this->load->view('query/email_templates/temp_visa', $data);return;
 				$body = $this->load->view('query/email_templates/temp_visa', $data, TRUE);
 			}elseif($data['details']->type == 'excursions'){
-				$body = $this->load->view('query/email_templates/temp_excursion', $data);return;
+				// $body = $this->load->view('query/email_templates/temp_excursion', $data);return;
 				$body = $this->load->view('query/email_templates/temp_excursion', $data, TRUE);
 			}elseif($data['details']->type == 'meals'){
 				// $body = $this->load->view('query/email_templates/temp_meal', $data);return;

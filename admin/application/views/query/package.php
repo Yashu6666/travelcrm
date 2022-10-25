@@ -1144,20 +1144,22 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                                         </select>
                                                     </div>
-                                                    <div class="col" hidden>
+                                                    <input class="rooms" type="hidden" placeholder=" " name="rooms"/>
+
+                                                    <!-- <div class="col" hidden>
                                                         <label for="">No. of Room</label><br/>
 
                                                         <select name="rooms" id="" required class="Travelers-select-package-values">
                                                             <option value="">Select Rooms</option>
-                                                            <?php $i = 1;
+                                                            ?php $i = 1;
                                                             while ($i <= 10) {
                                                             ?>
-                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                            <?php $i++;
+                                                                <option value="?php echo $i ?>">?php echo $i ?></option>
+                                                            ?php $i++;
                                                             } ?>
 
                                                         </select>
-                                                    </div>
+                                                    </div> -->
 
                                                     <div class="col">
                                                         <label for="">No. Adult</label><br>

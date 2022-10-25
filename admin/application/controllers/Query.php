@@ -1430,6 +1430,83 @@ class Query extends CI_Controller
 		echo json_encode($meal_calculation_data);
 	}
 
+	public function getExcursionMealCalc()
+	{
+		$rows_count = $this->input->post('total_rows');
+
+		$tableData = $this->input->post('data');
+
+		$datas =  array();
+		for ($x = 0; $x < $rows_count; $x++) {
+			$datas[$x]['resturants'] = $tableData[0]['resturants'][$x];
+			$datas[$x]['meals'] = $tableData[0]['meals'][$x];
+			$datas[$x]['meal_types'] = $tableData[0]['meal_types'][$x];
+			$datas[$x]['meal_adults'] = isset($tableData[0]['meal_adults'][$x]) ? $tableData[0]['meal_adults'][$x] : 0;
+			$datas[$x]['meal_childs'] = isset($tableData[0]['meal_childs'][$x]) ? $tableData[0]['meal_childs'][$x] : 0;
+			$datas[$x]['no_of_meals'] = isset($tableData[0]['no_of_meals'][$x]) ? $tableData[0]['no_of_meals'][$x] : 0;
+			$datas[$x]['resturants_name'] = isset($tableData[0]['resturants_name'][$x]) ? $tableData[0]['resturants_name'][$x] : "";
+		}
+
+		$meal_calculation = array();
+		$meal_calculation_data = array();
+		$meal_calculation_data['adult_prices'] = 0;
+		$meal_calculation_data['child_prices'] = 0;
+		foreach ($datas as $k => $val) {
+			$this->db->select("*");
+			$this->db->from("meals");
+			$this->db->where('resturant_type', $val['resturants']);
+			$this->db->where('meal_name', $val['meals']);
+			$this->db->where('meal_type', $val['meal_types']);
+			$this->db->where('resturant_name', $val['resturants_name']);
+			$meal_calculation[] = $this->db->get()->result_array();
+			
+		
+			if (array_key_exists('0', $meal_calculation[$k])) {
+
+				$total_meal_pax = 0; $meal_price_per_adult = 0; $meal_price_per_child = 0; $adult_meals_pax =  0; $child_meals_pax =  0;
+
+				$total_meal_pax = (int)$val['meal_adults'] + (int)$val['meal_childs'];
+				$meal_price_per_adult = (int)($meal_calculation[$k][0]['adult_price']);
+				$meal_price_per_child = (int)($meal_calculation[$k][0]['child_rate']);
+				$adult_meals_pax =  (int)$val['no_of_meals'] - $val['meal_childs'];
+				$child_meals_pax =  $val['meal_childs'];
+				
+				$meal_calculation_data['adult_prices'] += $meal_price_per_adult * $adult_meals_pax;
+				$meal_calculation_data['child_prices'] += $meal_price_per_child * $child_meals_pax;
+			
+			}
+		}
+
+		$query_id = $this->input->post('query_id');
+		$query_type = "excursion";
+
+		$meals_query_data = [
+			'query_id' =>  $query_id ,
+			'query_type' =>  $query_type ,
+			'date' =>  implode(',',$tableData[0]['meals_date']),
+			'resturant_type' =>  implode(',',$tableData[0]['resturants']),
+			'resturant_name' =>  implode(',',$tableData[0]['resturants_name']),
+			'meal' =>  implode(',',$tableData[0]['meals']),
+			'meal_type' =>  implode(',',$tableData[0]['meal_types']),
+			'adult_pax' =>  implode(',',$tableData[0]['meal_adults']),
+			'child_pax' =>  implode(',',$tableData[0]['meal_childs']),
+			'no_of_meals' =>  implode(',',$tableData[0]['no_of_meals']),
+			'adult_price' => $meal_calculation_data['adult_prices'] ,
+			'child_price'  =>  $meal_calculation_data['child_prices'] ,
+			'created_by' =>   $this->session->userdata('admin_id'),
+		];
+
+		$query = $this->db->where('query_id', $query_id)->get('query_meal');
+		if ($query->num_rows() > 0) {
+			$this->db->where('query_id', $query_id);
+			$this->db->update('query_meal',$meals_query_data);
+		} else {
+			$this->db->insert('query_meal', $meals_query_data);
+		}
+
+		echo json_encode($meal_calculation_data);
+	}
+
 	public function getMealcalculationNew()
 	{
 		$rows_count = $this->input->post('total_rows');
@@ -1461,10 +1538,19 @@ class Query extends CI_Controller
 			$this->db->where('resturant_name', $val['resturants_name']);
 			$meal_calculation[] = $this->db->get()->result_array();
 
-			if (array_key_exists('0', $meal_calculation[$k])) {
-				$meal_calculation_data['adult_prices'] += ((int)($meal_calculation[$k][0]['adult_price']) * (($val['no_of_meals'] * $val['meal_adults'])));
-				$meal_calculation_data['child_prices'] += ((int)($meal_calculation[$k][0]['child_rate']) * (($val['no_of_meals'] * $val['meal_childs'])));
-			}
+			// if (array_key_exists('0', $meal_calculation[$k])) {
+			// 	$meal_calculation_data['adult_prices'] += ((int)($meal_calculation[$k][0]['adult_price']) * (($val['no_of_meals'] * $val['meal_adults'])));
+			// 	$meal_calculation_data['child_prices'] += ((int)($meal_calculation[$k][0]['child_rate']) * (($val['no_of_meals'] * $val['meal_childs'])));
+			// }
+
+				$meal_price_per_adult = (int)($meal_calculation[$k][0]['adult_price']);
+				$meal_price_per_child = (int)($meal_calculation[$k][0]['child_rate']);
+				$adult_meals_pax =  (int)$val['no_of_meals'] - $val['meal_childs'];
+				$child_meals_pax =  $val['meal_childs'];
+				
+				$meal_calculation_data['adult_prices'] += $meal_price_per_adult * $adult_meals_pax;
+				$meal_calculation_data['child_prices'] += $meal_price_per_child * $child_meals_pax;
+
 		}
 
 		$query_id = $this->input->post('query_id');
@@ -2277,8 +2363,9 @@ class Query extends CI_Controller
 		$data["pvt_query"] = $this->db->where('query_id', $q_id)->where('excursion_type', 'PVT')->get('query_excursion')->result();
 		$data['sic_query'] = $this->db->where('query_id', $q_id)->where('excursion_type', 'SIC')->get('query_excursion')->result();
 		$data['tkt_query'] = $this->db->where('query_id', $q_id)->where('excursion_type', 'TKT')->get('query_excursion')->result();
+		$data['meals'] = $this->db->where('query_id', $q_id)->where('query_type', 'excursion')->get('query_meal')->row();
 
-		//echo '<pre>';print_r($q_id);exit;
+		// echo '<pre>';print_r($data['meals']);exit;
 		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
 		qp.child,cb.reportsTo,cb.b2bEmail");
 
@@ -2856,7 +2943,7 @@ class Query extends CI_Controller
 			'loggedInUser' => $this->session->userdata('admin_username')
 
 		);
-		$data['proposalDetails']['perpax_cnb'] =  $_POST['perpax_cnb_input'];
+		$data['proposalDetails']['perpax_cnb'] =  isset($_POST['perpax_cnb_input']) ? $_POST['perpax_cnb_input'] : "";
 		$user_id = $this->session->userdata()['admin_id'];
 		$data['admin_user_data'] = $this->db->where('id', $user_id)->get('users')->row();
 

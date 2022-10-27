@@ -688,6 +688,7 @@ class Query extends CI_Controller
 		$data["meal_query"] = $this->db->where('query_id', $q_id)->get('query_meal')->result();
 
 		$data["hotel_query"] = $this->db->where('query_id', $q_id)->get('query_hotel')->result();
+		$data['meals'] = $this->db->where('query_id', $q_id)->where('query_type', 'excursion')->get('query_meal')->row();
 
 		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,
 		qp.child,cb.reportsTo,cb.b2bEmail,qp.room");

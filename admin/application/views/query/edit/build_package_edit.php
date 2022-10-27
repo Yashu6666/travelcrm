@@ -690,6 +690,80 @@
         </tbody>
        </table>
        
+       <?php if(!empty($meals)) : ?>
+                          <div class="card-head card-head-new mt-5">
+                            <p style="margin-top:20px"><i class="fa-solid fa-bowl-rice"></i> Meal </p>
+                          </div>
+                          <div id="ex_addrowss">
+                            <table id="meals_table" class="table table-borderless">
+                              <thead>
+                                <tr>
+                                  <th>Date</th>
+                                  <th>Resturant Type</th>
+                                  <th>Resturant Name</th>
+                                  <th>Meal</th>
+                                  <th>Meal Type</th>
+                                  <th>No. of Meals</th>
+                                  <th style="width:100">Adult</th>
+                                  <th style="width:100">Child</th>
+                                  <th>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody id="ex_mealsRow">
+                          <?php foreach(explode(",",$meals->date) as $key => $val) : ?>
+                                <tr id="meals_tr<?php echo $key ?>" >
+                                  <td><input class="form-control ex_meals_date" min="<?php echo date("Y-m-d") ?>" type="date" value="<?php echo explode(",",$meals->date)[$key] ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="ex_meals_date[]" id="ex_meals_date"></td>
+                                  <td>
+                                    <div>
+                                      <select data-mdl-for="sample2" class="form-control ex_res_type" value="" tabIndex="-1" id="ex_res_type" name="ex_res_type[]" onchange="get_resturant_name('ex_res_type','');">
+                                        <option <?php echo explode(",",$meals->resturant_type)[$key] == "Standard" ? "selected" : "" ?> value="Standard">Standard</option>
+                                        <option <?php echo explode(",",$meals->resturant_type)[$key] == "Premium" ? "selected" : "" ?> value="Premium">Premium</option>
+                                      </select>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <select data-mdl-for="sample2" class="form-control ex_res_name" value="" tabIndex="-1" name="ex_res_name[]" id="ex_res_name">
+                                      <option value="<?php echo explode(",",$meals->resturant_name)[$key]?>" ><?php echo explode(",",$meals->resturant_name)[$key]?></option>
+                                    </select>
+                                  <td>
+                                    <div>
+                                      <select data-mdl-for="sample2" class="form-control ex_meal" value="" tabIndex="-1" id="ex_meal_cal" name="ex_meal[]">
+                                      <option <?php echo explode(",",$meals->meal)[$key] == "Dinner" ? "selected" : "" ?>  value="Dinner">Dinner</option>
+                                        <option <?php echo explode(",",$meals->meal)[$key] == "Lunch" ? "selected" : "" ?> value="Lunch">Lunch</option>
+                                      </select>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div>
+                                      <select data-mdl-for="sample2" class="form-control ex_meal_type" value="" tabIndex="-1" id="ex_meal_type_cal" name="ex_meal_type[]">
+                                      <option <?php echo explode(",",$meals->meal_type)[$key] == "Veg" ? "selected" : "" ?> value="Veg">Veg</option>
+                                        <option <?php echo explode(",",$meals->meal_type)[$key] == "Non-Veg" ? "selected" : "" ?> value="Non-Veg">Non-Veg</option>
+                                        <option <?php echo explode(",",$meals->meal_type)[$key] == "Jain" ? "selected" : "" ?> value="Jain">Jain</option>
+                                      </select>
+                                    </div>
+                                  </td>
+                                  <td><input type="number" min="1" id="ex_no_of_meals" class="form-control  ex_no_of_meals" value="<?php echo explode(",",$meals->no_of_meals)[$key]?>" name="ex_no_of_meals[]">
+                                  <td><input type="text" value="<?php echo $view->Packagetravelers; ?>" placeholder="0" id="adult_meal_cal" class="form-control check-adult ex_meal_adult" name="ex_meal_adult[]">
+                                  </td>
+                                  <td><input type="text" value="<?php echo $buildpackage->child; ?>" placeholder="0" id="child_meal_cal" class="form-control check-child ex_meal_child" name="ex_meal_child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>
+                                  </td>
+
+                                  <?php if(!$key > 0) : ?>
+                                    <td><a class="new_btn px-3 ml-0" onclick="ex_addrowss()"> add</a></td>
+                                    <?php else : ?>
+                                    <td><button class="btn btn-danger btn-xs" onClick="removeID(meals_tr<?php echo $key ?>)"><i class="fa fa-trash"></i></button> </td>
+                                  <?php endif ?>  
+                                  
+                                </tr>
+                          <?php endforeach ?>  
+
+                              </tbody>
+                            </table>
+                            <div>
+                              <button type="button" onclick="excursionMeal()" class="new_btn px-3 float-end">Save</button>
+                            </div>
+                          </div>
+                          <?php endif ?>  
                </div>
                </div>
                <div class="card-head card-head-new mt-5">
@@ -1175,8 +1249,8 @@
                         var total_pax_meal_adult = $("#total_pax_meal_adult").val(); 
                         var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
                         var total_pax_sic_adult = $("#total_pax_sic_adult").val();
-
                         var total_pax_TKT_adult = $("#total_pax_TKT_adult").val();
+                        var total_pax_meals_adult = $("#total_pax_meals_adult").val();
 
                         
                         var intrnal_transfer_avg = parseInt(total_price_internal) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
@@ -1189,6 +1263,7 @@
                           parseInt(point_transfer_avg * (parseInt(pax_adult_count))) + 
 
                           parseInt(total_pax_TKT_adult) + 
+                          parseInt(total_pax_meals_adult) + 
                           parseInt(total_pax_visa_price_adult) + 
                           parseInt(total_pax_meal_adult) + 
                           parseInt(total_pax_pvt_adult) + 
@@ -1200,12 +1275,14 @@
                         var total_pax_meal_child = $("#total_pax_meal_child").val();
                         var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
                         var total_pax_TKT_child = $("#total_pax_TKT_child").val();
+                        var total_pax_meals_child = $("#total_pax_meals_child").val();
 
                         var sub_total_child = parseInt(hotel_rate_child) +
                           parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) + 
                           parseInt(point_transfer_avg * (parseInt(pax_child_count))) + 
                           parseInt(total_pax_sic_hild)+ 
                           parseInt(total_pax_pvt_hild) + 
+                          parseInt(total_pax_meals_child) + 
                           parseInt(total_pax_meal_child) + parseInt(total_pax_TKT_child) + 
                           parseInt(total_pax_visa_price_child);
                           
@@ -1320,6 +1397,173 @@
     
 
                         })
+
+                        function get_resturant_name_ex(id, row) {
+                              var transfer = $('input[name="transfer_with_or_without' + row + '[]"]:checked').val();
+                              var rest_type = $('#ex_res_type' + row).val();
+                              $("#ex_res_name" + row).empty();
+                              $.ajax({
+                                type: "POST",
+                                dataType: "json",
+                                url: '<?php echo site_url(); ?>/Query/get_resturant_name',
+                                data: {
+                                  'transfer': transfer,
+                                  'rest_type': rest_type
+                                },
+
+                                success: function(response) {
+                                  console.log(response);
+                                  var i;
+                                  $('#ex_res_name' + row).append($("<option>Select</option>"));
+                                  for (i = 0; i < response.length; ++i) {
+                                    var newOption = $('#ex_res_name' + row)
+                                      .append($("<option></option>")
+                                        .attr("value", response[i].resturant_name)
+                                        .text(response[i].resturant_name));
+
+
+                                  }
+                                }
+
+                              })
+
+                            }
+
+                        function removeID(id){
+                          console.log("🚩 ~ file: build_excursion_edit.php ~ line 280 ~ removeID ~ id", id)
+                          id.remove();
+                        }
+                        
+                        var ex_faqs_row2 = 1;
+                            var meal_adult_count = <?php echo $view->Packagetravelers; ?>;
+                            var meal_child_count = <?php echo $buildpackage->child; ?>;
+                            function ex_addrowss() {
+                              var cnt = $('#ex_rows_count').val();
+                              $('#ex_rows_count').val(parseInt(cnt) + parseInt(1));
+                              var adds = '';
+                              adds += '<tr id="ex_faqs-row' + ex_faqs_row2 + '"><td><input class="form-control ex_meals_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="ex_meals_date[]" id="meals_date' + ex_faqs_row2 + '"></td>';
+                              adds += '<td> <div> <select data-mdl-for="sample2" class="form-control ex_res_type" value="" tabIndex="-1" id="ex_res_type' + ex_faqs_row2 + '" name="ex_res_type[]" onchange="get_resturant_name_ex(this.id,' + ex_faqs_row2 + ');"> <option value="">Select Option</option> <option value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';
+                              adds += '<td><select data-mdl-for="sample2" class="form-control ex_res_name" value=""  tabIndex="-1" name="ex_res_name[]" id="ex_res_name' + ex_faqs_row2 + '"  ><option>select</option></select></td>'
+                              adds += '<td> <div> <select data-mdl-for="sample2" class="form-control ex_meal" value="" tabIndex="-1" id="ex_meal_cal' + ex_faqs_row2 + '" name="ex_meal[]"> <option value="Dinner">Dinner</option> <option value="Lunch">Lunch</option>  </select> </div> </td>';
+                              adds += '<td> <div> <select data-mdl-for="sample2" class="form-control ex_meal_type" value="" tabIndex="-1" id="ex_meal_type_cal' + ex_faqs_row2 + '" name="ex_meal_type[]"> <option value="Veg">Veg</option> <option value="Non-Veg">Non-Veg</option> <option value="Jain">Jain</option> </select> </div> </td>';
+                              adds += '<td><input type="number" id="ex_no_of_meals' + ex_faqs_row2 + '" class="form-control ex_no_of_meals" name="ex_no_of_meals[]" >';
+                              adds += ' <td><input type="text" placeholder="0" value="'+meal_adult_count+'" class="form-control ex_meal_adult" id="adult_meal_cal' + ex_faqs_row2 + '" name="ex_meal_adult[]" > </td>';
+                              adds += '<td><input type="text" placeholder="0"  value="'+meal_child_count+'" class="form-control ex_meal_child" id="child_meal_cal' + ex_faqs_row2 + '" name="ex_meal_child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>';
+                              adds += '</td> <td><button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + ex_faqs_row2 + '\').remove();"><i class="fa fa-trash"></i></button> </td>';
+                              adds += '</tr>';
+
+                              $('#ex_mealsRow').append(adds);
+                              // mealsReturnTransferShowHide(ex_faqs_row2);
+                              // $('#total_rows_meal').val(parseInt(ex_faqs_row2));
+
+                              ex_faqs_row2++;
+                            }
+
+                            $("#ex_meals_status").on("change", function() {
+                              $("#ex_addrowss").show();
+                            })
+
+                            $("#ex_meals_status1").on("change", function() {
+                              $("#ex_addrowss").hide();
+                            })
+
+                            function excursionMeal() {
+                              var total_rows = $('#meals_table tbody#ex_mealsRow tr').length;
+                              console.log("🚩 ~ file: build_package.php ~ line 1409 ~ excursionMeal ~ total_rows", total_rows)
+                              var QueryId = $('#QueryId').val();
+
+                              var resturants_name = [];
+                              $(".ex_res_name").each(function() {
+                                var resturant_name = $(this).val();
+                                resturants_name.push($.trim(resturant_name));
+
+                              });
+
+                              var resturants = [];
+                              $(".ex_res_type").each(function() {
+                                var resturant = $(this).val();
+                                resturants.push($.trim(resturant));
+
+                              });
+
+                              var meals = [];
+                              $(".ex_meal").each(function() {
+                                var meal = $(this).val();
+                                meals.push($.trim(meal));
+
+                              });
+
+
+                              var meal_types = [];
+                              $(".ex_meal_type").each(function() {
+                                var meal_type = $(this).val();
+                                meal_types.push($.trim(meal_type));
+
+                              });
+
+                              var meal_adults = [];
+                              $(".ex_meal_adult").each(function() {
+                                var meal_adult = $(this).val();
+                                if (!meal_adult) meal_adult = 0;
+                                meal_adults.push($.trim(meal_adult));
+
+                              });
+
+                              var meal_childs = [];
+                              $(".ex_meal_child").each(function() {
+                                var meal_child = $(this).val();
+                                if (!meal_child) meal_child = 0;
+                                meal_childs.push($.trim(meal_child));
+
+                              });
+
+                              var no_of_meals = [];
+                              $(".ex_no_of_meals").each(function() {
+                                var no_of_meal = $(this).val();
+                                if (!no_of_meal) no_of_meal = 0;
+                                no_of_meals.push($.trim(no_of_meal));
+
+                              });
+
+                              var meals_date = [];
+                              $(".ex_meals_date").each(function() {
+                                var meals = $(this).val();
+                                meals_date.push($.trim(meals));
+
+                              });
+
+                              var data = [{
+                                'resturants': resturants,
+                                'meals': meals,
+                                'meal_types': meal_types,
+                                'meal_adults': meal_adults,
+                                'meal_childs': meal_childs,
+                                'resturants_name': resturants_name,
+                                'no_of_meals': no_of_meals,
+                                'meals_date': meals_date,
+
+                              }];
+
+                              $.ajax({
+                              type: "POST",
+                              dataType: "json",
+                              url: '<?php echo site_url(); ?>/Query/getExcursionMealCalc',
+                              data: {
+                              data: data,
+                              total_rows: total_rows,
+                              query_id: QueryId,
+
+                              },
+                              success: function(response) {
+                              console.log(response);
+                              $("#total_pax_meals_adult").val(response.adult_prices);
+                              $("#total_pax_meals_child").val(response.child_prices);
+                              $(".card-box").click();
+                              toastr.success("Meals Saved Successfully");
+                              }
+                              })
+
+                            }
 
                    
                         // var faqs_row2= 0;                    
@@ -2240,7 +2484,8 @@ $.ajax({
 <input type="hidden" id="total_pax_TKT_adult" name="total_pax_TKT_adult" value="0" />
 <input type="hidden" id="total_pax_TKT_child" name="total_pax_TKT_child" value="0" />
 <input type="hidden" id="total_pax_TKT_infant" name="total_pax_TKT_infant" value="0" />
-
+<input type="hidden" id="total_pax_meals_adult" name="total_pax_meals_adult" value="0" />
+<input type="hidden" id="total_pax_meals_child" name="total_pax_meals_child" value="0" />
 
      <script>
       

@@ -1472,8 +1472,8 @@ class Query extends CI_Controller
 				$adult_meals_pax =  (int)$val['no_of_meals'] - $val['meal_childs'];
 				$child_meals_pax =  $val['meal_childs'];
 				
-				$meal_calculation_data['adult_prices'] += $meal_price_per_adult * $adult_meals_pax;
-				$meal_calculation_data['child_prices'] += $meal_price_per_child * $child_meals_pax;
+				$meal_calculation_data['adult_prices'] += $meal_price_per_adult * (int)$val['no_of_meals'] * $val['meal_adults'];
+				$meal_calculation_data['child_prices'] += $meal_price_per_child * (int)$val['no_of_meals'] * $val['meal_childs'];
 			
 			}
 		}
@@ -1510,10 +1510,12 @@ class Query extends CI_Controller
 
 	public function getMealcalculationNew()
 	{
-		$rows_count = $this->input->post('total_rows');
+		// $rows_count = $this->input->post('total_rows');
 		$tableData = $this->input->post('data');
+		$rows_count = count($tableData[0]['resturants']);
+		// print_r(count($tableData[0]['resturants']));return;
 		$datas =  array();
-		for ($x = 0; $x <= $rows_count; $x++) {
+		for ($x = 0; $x < $rows_count; $x++) {
 
 			$datas[$x]['resturants'] = $tableData[0]['resturants'][$x];
 			$datas[$x]['meals'] = $tableData[0]['meals'][$x];
@@ -1549,8 +1551,12 @@ class Query extends CI_Controller
 				$adult_meals_pax =  (int)$val['no_of_meals'] - $val['meal_childs'];
 				$child_meals_pax =  $val['meal_childs'];
 				
-				$meal_calculation_data['adult_prices'] += $meal_price_per_adult * $adult_meals_pax;
-				$meal_calculation_data['child_prices'] += $meal_price_per_child * $child_meals_pax;
+				// $meal_calculation_data['adult_prices'] += $meal_price_per_adult * $adult_meals_pax;
+				// $meal_calculation_data['child_prices'] += $meal_price_per_child * $child_meals_pax;
+				// print_r($val['meal_adults']);
+				// print_r($val['meal_childs']);
+				$meal_calculation_data['adult_prices'] += $meal_price_per_adult * (int)$val['no_of_meals'] * $val['meal_adults'];
+				$meal_calculation_data['child_prices'] += $meal_price_per_child * (int)$val['no_of_meals'] * $val['meal_childs'];
 
 		}
 
@@ -1613,6 +1619,9 @@ class Query extends CI_Controller
 			'child_price'  =>  $priceperperson_internal,
 			'created_by' =>   $this->session->userdata('admin_id'),
 		];
+		
+		$meal_calculation_data['adult_prices'] = $meal_calculation_data['adult_prices'] + ($priceperperson_internal * $pax_adult);
+		$meal_calculation_data['child_prices'] = $meal_calculation_data['child_prices'] + ($priceperperson_internal * $pax_child );
 
 		$query = $this->db->where('query_id', $query_id)->where('transfer_type', 'internal')->where('query_type', 'meals')->get('query_transfer');
 		if ($query->num_rows() > 0) {
@@ -1669,8 +1678,7 @@ class Query extends CI_Controller
 	
 
 			}
-			
-		$meal_calculation_data['adult_prices'] = $meal_calculation_data['adult_prices'] + ($priceperperson_internal * $pax_adult);
+		$meal_calculation_data['adult_prices'] = $meal_calculation_data['adult_prices'] + ($priceperperson_return * $pax_adult);
 		$meal_calculation_data['child_prices'] = $meal_calculation_data['child_prices'] + ($priceperperson_return * $pax_child );
 
 		$query = $this->db->where('query_id', $query_id)->get('query_meal');

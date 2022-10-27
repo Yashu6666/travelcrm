@@ -663,8 +663,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                                 <div class="col">
                                                     <label for="">No. Adult</label><br>
+                                                    <input class="package_inputs" type="number" placeholder="" name="adult" required autocomplete="off" />
 
-                                                    <select name="adult" id="" required class="Travelers-select-package-values">
+                                                    <!-- <select name="adult" id="" required class="Travelers-select-package-values">
                                                         <option value="">Select Adult</option>
                                                         <?php $i = 1;
                                                         while ($i <= 10) {
@@ -672,41 +673,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                                                             <option value="<?php echo $i ?>"><?php echo $i ?></option>
                                                         <?php $i++;
                                                         } ?>
-
-                                                    </select>
+                                                    </select> -->
                                                 </div>
 
                                                 <div class="col">
                                                     <label for="">No. Child</label><br>
-
-                                                    <select name="child" id="child22" required class="Travelers-select-package-values">
-                                                        <option value="0">0</option>
-                                                        <?php $i = 1;
-                                                        while ($i <= 10) {
-                                                        ?>
-                                                            <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                        <?php $i++;
-                                                        } ?>
-
-                                                    </select>
+                                                    <input class="package_inputs" type="number" placeholder="" name="child" id="child22" required autocomplete="off" />
                                                 </div>
 
                                                     <input id="child_age22" name="child_age" class="Travelers-select-package-values" type="hidden" value="0" />
 
                                                 <div class="col">
                                                     <label for="">No. Infant</label><br>
-
-                                                    <select name="infant" id="" required class="Travelers-select-package-values">
-                                                        <option value="0">0</option>
-                                                        <?php $i = 1;
-                                                        while ($i <= 10) {
-                                                        ?>
-                                                            <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                        <?php $i++;
-                                                        } ?>
-
-                                                    </select>
-
+                                                    <input class="package_inputs" type="number" placeholder="" name="infant" required autocomplete="off" />
                                                 </div>
 
 
@@ -824,50 +803,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                                     <div class="col">
                                                         <label for="">No. Adult</label><br>
-
-                                                        <select name="adult" id="" required class="Travelers-select-package-values">
-                                                            <option value="">Select Adult</option>
-                                                            <?php $i = 1;
-                                                            while ($i <= 10) {
-                                                            ?>
-                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                            <?php $i++;
-                                                            } ?>
-
-                                                        </select>
+                                                        <input class="package_inputs" type="number" placeholder="" name="adult" required autocomplete="off" />
                                                     </div>
 
                                                     <div class="col" >
                                                         <label for="">No. Child</label><br>
-
-                                                        <select name="child" id="child11" required class="Travelers-select-package-values">
-                                                            <option value="0">0</option>
-                                                            <?php $i = 1;
-                                                            while ($i <= 10) {
-                                                            ?>
-                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                            <?php $i++;
-                                                            } ?>
-
-                                                        </select>
+                                                        <input class="package_inputs" type="number" placeholder="" name="child" id="child11" required autocomplete="off" />
                                                     </div>
 
                                                         <input id="child_age" name="child_age" class="Travelers-select-package-values" type="hidden" value="0" />
 
                                                     <div class="col" hidden>
                                                         <label for="">No. Infant</label><br>
-
-                                                        <select name="infant" id="" required class="Travelers-select-package-values">
-                                                            <option value="0">0</option>
-                                                            <?php $i = 1;
-                                                            while ($i <= 10) {
-                                                            ?>
-                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                            <?php $i++;
-                                                            } ?>
-
-                                                        </select>
-
+                                                        <input class="package_inputs" type="number" placeholder="" name="infant" required autocomplete="off" />
                                                     </div>
 
 
@@ -992,49 +940,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                                     <div class="col">
                                                         <label for="">No. Adult</label><br>
-
-                                                        <select name="adult" id="" required class="Travelers-select-package-values">
-                                                            <option value="">Select Adult</option>
-                                                            <?php $i = 1;
-                                                            while ($i <= 10) {
-                                                            ?>
-                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                            <?php $i++;
-                                                            } ?>
-
-                                                        </select>
+                                                        <input class="package_inputs" type="number" placeholder="" name="adult" required autocomplete="off" />
                                                     </div>
 
                                                     <div class="col">
                                                         <label for="">No. Child</label><br>
-
-                                                        <select name="child" id="child2" required class="Travelers-select-package-values">
-                                                            <option value="0">0</option>
-                                                            <?php $i = 1;
-                                                            while ($i <= 10) {
-                                                            ?>
-                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                            <?php $i++;
-                                                            } ?>
-
-                                                        </select>
+                                                        <input class="package_inputs" type="number" placeholder="" name="child" id="child2" required autocomplete="off" />
                                                     </div>
 
                                                         <input id="child_age" name="child_age" class="Travelers-select-package-values" type="hidden" value="0" />
 
                                                     <div class="col">
                                                         <label for="">No. Infant</label><br>
-                                                        <select name="infant" id="" required class="Travelers-select-package-values">
-                                                            <option value="0">0</option>
-                                                            <?php $i = 1;
-                                                            while ($i <= 10) {
-                                                            ?>
-                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                            <?php $i++;
-                                                            } ?>
-
-                                                        </select>
-
+                                                        <input class="package_inputs" type="number" placeholder="" name="infant" required autocomplete="off" />
                                                     </div>
 
 
@@ -1163,32 +1081,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                                     <div class="col">
                                                         <label for="">No. Adult</label><br>
-
-                                                        <select name="adult" id="" required class="Travelers-select-package-values">
-                                                            <option value="">Select Adult</option>
-                                                            <?php $i = 1;
-                                                            while ($i <= 10) {
-                                                            ?>
-                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                            <?php $i++;
-                                                            } ?>
-
-                                                        </select>
+                                                        <input class="package_inputs" type="number" placeholder="" name="adult" required autocomplete="off" />
                                                     </div>
 
                                                     <div class="col">
                                                         <label for="">No. Child</label><br>
-
-                                                        <select name="child" id="child3" required class="Travelers-select-package-values">
-                                                            <option value="0">0</option>
-                                                            <?php $i = 1;
-                                                            while ($i <= 10) {
-                                                            ?>
-                                                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                                                            <?php $i++;
-                                                            } ?>
-
-                                                        </select>
+                                                        <input class="package_inputs" type="number" placeholder="" name="child" id="child3" required autocomplete="off" />
                                                     </div>
 
                                                     <div hidden id="child_age_div3" class="col" style="display:none;">
@@ -1660,8 +1558,15 @@ $(document).mouseup(function(e)
                 let ad_val ;
                 for(let i=1; i<=no_of_rooms; i++ ){
                 data += `
-                <div class="form-group row">
+                <div class="form-group">
+                <div class="mt-2">
+                    <label class="col-form-label text-nowrap mx-4"></label>
+                    <label class="col-form-label text-nowrap mx-5">Adult</label>
+                    <label class="col-form-label text-nowrap mx-4">Child</label>
+                    <label class="col-form-label text-nowrap mx-5">Infant</label>
+                </div>
                 <div class="col d-flex mt-2">
+                    
                 <label class="col-form-label text-nowrap mx-2">Room ${i}</label>
                     <input type="number" value="0" class=" form-control mx-2 adult_count" onchange="showRoomData(${no_of_rooms})" name="adult_count[]" id="adult_count${i}" />
                     <input type="number" value="0" class=" form-control mx-1 child_count" name="child_count[]" onchange="childAgeDiv(child_ages_div${i},child_count${i})" id="child_count${i}" />

@@ -158,9 +158,9 @@
 
 
 
-                                    <td><input type="text" value="<?php echo $view->Packagetravelers; ?>" placeholder="0" id="adult_meal_cal" class="form-control check-adult meal_adult" name="adult[]">
+                                    <td><input type="text" disabled value="<?php echo $view->Packagetravelers; ?>" placeholder="0" id="adult_meal_cal" class="form-control check-adult meal_adult" name="adult[]">
                                     </td>
-                                    <td><input type="text" value="<?php echo $buildpackage->child; ?>" placeholder="0" id="child_meal_cal" class="form-control check-child meal_child" name="child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>
+                                    <td><input type="text" disabled value="<?php echo $buildpackage->child; ?>" placeholder="0" id="child_meal_cal" class="form-control check-child meal_child" name="child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>
                                     </td>
 
                                     <td>
@@ -575,14 +575,14 @@ function addrowss() {
   var adds = '<div class="row mb-3" style="border-top: 1px solid;" id="faqs-row' + faqs_row2 + '"> <table style="border-spacing: 10px;border-collapse: separate;"> <thead><tr><th style="width: 200;">Transfer Type</th><th>Date</th><th>Resturant Type</th><th>Resturant Name</th><th>Meal</th><th>Meal Type</th><th>No. of Meals</th><th style="width:100">Adult</th><th style="width:100">Child</th><th>Action</th></tr></thead><tbody style="border-bottom: #ff000000;"> <tr>';
   adds += '<td><input type="radio"   id="with_transfer' + faqs_row2 + '" onchange="mealsTransferTypeChange(' + faqs_row2 + ')" class="transfer_with_or_without" name="transfer_with_or_without' + faqs_row2 + '[]" value="with_transfer" onclick="get_resturant_name(this.id,' + faqs_row2 + ');"/> With Transfer<br/><input type="radio" class="transfer_with_or_without" checked="checked" onchange="mealsTransferTypeHide(' + faqs_row2 + ')" id="without_transfer' + faqs_row2 + '" name="transfer_with_or_without' + faqs_row2 + '[]" value="without_transfer" onclick="get_resturant_name(this.id,' + faqs_row2 + ');"/> Without Transfer </td>';
   adds += '<td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="buildCheckIn[]" id="buildCheckIn' + faqs_row2 + '"></td>';
-  adds += '<td> <div> <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type' + faqs_row2 + '" name="res_type[]" onchange="get_resturant_name(this.id,' + faqs_row2 + ');"> <option value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';
+  adds += '<td> <div> <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type' + faqs_row2 + '" name="res_type[]" onchange="get_resturant_name(this.id,' + faqs_row2 + ');"> <option value="">Select Option</option> <option value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';
   // adds += '<td><input class="form-control " type="text" value="" name="res_name[]" id="res_name'+faqs_row2 + '"></td>';
   adds += '<td><select data-mdl-for="sample2" class="form-control res_name" value=""  tabIndex="-1" name="res_name[]" id="res_name' + faqs_row2 + '"  ><option>select</option></select></td>'
   adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal' + faqs_row2 + '" name="Meal[]"> <option value="Dinner">Dinner</option> <option value="Lunch">Lunch</option>  </select> </div> </td>';
   adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal' + faqs_row2 + '" name="Meal_Type[]"> <option value="Veg">Veg</option> <option value="Non-Veg">Non-Veg</option> <option value="Jain">Jain</option> </select> </div> </td>';
   adds += '<td><input type="number" id="no_of_meals' + faqs_row2 + '" class="form-control no_of_meals" name="no_of_meals[]" >';
-  adds += ' <td><input type="text" placeholder="0" class="form-control meal_adult" id="adult_meal_cal' + faqs_row2 + '" name="adult[]" > </td>';
-  adds += '<td><input type="text" placeholder="0" class="form-control meal_child" id="child_meal_cal' + faqs_row2 + '" name="child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>';
+  adds += ' <td><input type="text" placeholder="0" disabled value="<?php echo $view->Packagetravelers; ?>"  class="form-control meal_adult" id="adult_meal_cal' + faqs_row2 + '" name="adult[]" > </td>';
+  adds += '<td><input type="text" placeholder="0" disabled value="<?php echo $buildpackage->child; ?>" class="form-control meal_child" id="child_meal_cal' + faqs_row2 + '" name="child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>';
   adds += '</td> <td><button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + faqs_row2 + '\').remove();"><i class="fa fa-trash"></i></button> </td>';
   // adds += '</td> <td><button class="btn btn-danger btn-xs" onClick="return removeMeals(this)"><i class="fa fa-trash"></i></button> </td>';
   adds += '</tr> </tbody> </table>';
@@ -1543,7 +1543,7 @@ function mealsTransferTypeChange(row) {
     });
   }
 
- function mealcalculation() {
+ function mealcalculation(param=0) {
     var total_rows = $('#faqs tbody#addrowss tr').length;
     var QueryId = $('#QueryId').val();
 
@@ -1715,8 +1715,10 @@ function mealsTransferTypeChange(row) {
         $("#total_pax_meal_adult").val(response.adult_prices);
         $("#total_pax_meal_child").val(response.child_prices);
 
-        toastr.success("Meals Saved Successfully");
-
+        if(param != 1){
+          toastr.success("Meals Saved Successfully");
+        }
+        $(".card-box").click();
 
       }
     })
@@ -1726,6 +1728,7 @@ function mealsTransferTypeChange(row) {
 </script>
 <input type="hidden" id="total_pax_meal_adult" name="total_pax_meal_adult" value="0" />
 <input type="hidden" id="total_pax_meal_child" name="total_pax_meal_child" value="0" />
+<input type="hidden" id="total_rows_meal" name="total_rows_meal" value="0" />
 
 <script>
   function excursionSICcalculation() {
@@ -2424,9 +2427,7 @@ function mealsTransferTypeChange(row) {
     //        $("#buildHotelName > [value=" + temp + "]").attr("selected", "true");
     // }
 
-
-
-
+    mealcalculation(1);
 
     var open = true;
     $("#travelers").click(function() {

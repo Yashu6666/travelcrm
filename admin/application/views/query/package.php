@@ -813,10 +813,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
                                                         <input id="child_age" name="child_age" class="Travelers-select-package-values" type="hidden" value="0" />
 
-                                                    <div class="col" hidden>
+                                                    <!-- <div class="col" >
                                                         <label for="">No. Infant</label><br>
-                                                        <input class="package_inputs" type="number" placeholder="" name="infant" required autocomplete="off" />
-                                                    </div>
+                                                    </div> -->
+                                                    
+                                                    <input class="package_inputs" type="hidden" placeholder="" value="0" name="infant" required autocomplete="off" />
 
 
                                                 </div>

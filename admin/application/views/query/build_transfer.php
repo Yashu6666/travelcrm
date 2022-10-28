@@ -404,12 +404,12 @@
                         
                           // $("#totalprice_adult").html( total_adult );
                           // $("#totalprice_childs").html( total_child );
-                          $("#totalprice_adult").html(  c_type == 'USD' ? ( total_adult / usd_aed).toFixed(2)  : total_adult  );
-                          $("#totalprice_childs").html(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
+                          $("#totalprice_adult").html(  c_type == 'USD' ? Math.ceil( total_adult / usd_aed).toFixed(2)  : total_adult  );
+                          $("#totalprice_childs").html(  c_type == 'USD' ? Math.ceil( total_child / usd_aed).toFixed(2)  : total_child  );
                           $("#totalprice_infants").html( 0 );
 
-                          var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
-                          var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_adult_count : parseInt(total_child));
+                          var per_pax_adult = Math.ceil(pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
+                          var per_pax_child = Math.ceil(pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
                         //   var per_pax_infant = (parseInt(total_infant) / 2);
                           
                           // $("#perpax_adult").html(per_pax_adult);

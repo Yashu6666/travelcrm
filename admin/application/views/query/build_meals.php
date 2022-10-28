@@ -489,9 +489,9 @@
                             var pax_child_count = <?php echo $buildpackage->child; ?>;
                             var pax_infant_count = <?php echo $buildpackage->infant; ?>;
 
-                            var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / 2 : parseInt(total_adult));
-                            var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
-                            var per_pax_infant = (pax_infant_count > 1 ? parseInt(total_infant) / 2 : parseInt(total_infant));
+                            var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
+                            var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
+                            var per_pax_infant = (pax_infant_count > 1 ? parseInt(total_infant) / pax_infant_count : parseInt(total_infant));
 
 
                             // $("#perpax_adult").html(per_pax_adult);

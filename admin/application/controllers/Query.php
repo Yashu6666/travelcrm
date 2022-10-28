@@ -869,7 +869,7 @@ class Query extends CI_Controller
 		$pax_infants = $this->input->post('pax_infants');
 
 
-		$rows_count = $this->input->post('total_rows');
+		// $rows_count = $this->input->post('total_rows');
 		$QueryId = $this->input->post('query_id');
 		$buildpackage = $this->db->where('queryId', $QueryId)->get('querypackage')->row();
 		$with_or_wo_bed = explode(",",$buildpackage->child_with_or_wo_bed);
@@ -878,9 +878,14 @@ class Query extends CI_Controller
 		$cnb_room = explode(",",$buildpackage->cnb_per_room);
 
 		$tableData = $this->input->post('data');
-
+		$rows_count = count($tableData[0]['group_type']);
+		// print_r($no_childs_room);
+		// print_r("===========");
+		// print_r($with_or_wo_bed);
+		// print_r("===========");
+		// print_r($cwb_room);exit;
 		$datas =  array();
-		for ($x = 0; $x <= $rows_count; $x++) {
+		for ($x = 0; $x < $rows_count; $x++) {
 			$datas[$x]['nights'] = $tableData[0]['nights'][$x];
 			$datas[$x]['group_type'] = $tableData[0]['group_type'][$x];
 			$datas[$x]['hotel_id'] = $tableData[0]['hotelName'][$x];
@@ -890,8 +895,8 @@ class Query extends CI_Controller
 			$datas[$x]['extra_with_child'] = $tableData[0]['extra_with_child'][$x];
 			$datas[$x]['extra_without_bed'] = $tableData[0]['extra_without_bed'][$x];
 			$datas[$x]['no_childs_room'] = $no_childs_room[$x];
-			$datas[$x]['cwb'] = $cwb_room[$x];
-			$datas[$x]['cnb'] = $cnb_room[$x];
+			$datas[$x]['cwb'] = isset($cwb_room[$x]) ? $cwb_room[$x] : 0;
+			$datas[$x]['cnb'] = isset($cnb_room[$x]) ? $cnb_room[$x] : 0;
 			
 			$datas[$x]['buildHotelCity'] = $tableData[0]['buildHotelCity'][$x];
 			$datas[$x]['buildCheckIns'] = $tableData[0]['buildCheckIns'][$x];

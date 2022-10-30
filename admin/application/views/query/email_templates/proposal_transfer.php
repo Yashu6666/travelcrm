@@ -199,11 +199,11 @@
               <th rowspan="3" colspan="3">
                 <h2>Transfer Rates</h2>
               </th>
-              <td><span style="color: red;">AED <?php echo $details->perpax_adult ?></span> Adult </td>
+              <td><span style="color: red;">AED <?php echo $details->perpax_adult ?></span>Per Adult </td>
             </tr>
             <?php if($details->perpax_childs > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php echo $details->perpax_childs ?></span> Child</td>
+              <td><span style="color: red;">AED <?php echo $details->perpax_childs ?></span>Per Child</td>
             </tr>
             <?php endif ?>
           </table>
@@ -266,7 +266,7 @@
         </div>
         <div class="head9">
           <span
-            ><b><u>GENERAL TERMS AND CONDITIONS :</u></b></span> <br></br>
+            ><b><u>GENERAL TERMS AND CONDITIONS :</u></b></span> <br>
           <p>
             &#10146; Rooms and rates are subject
             to availability at the time of actual booking.
@@ -348,7 +348,7 @@
         <div class="head10"> </div>
           <div class="left">
             <p>
-              <u><b>Cancellation Terms: FIT</b> <br></br></u>
+              <u><b>Cancellation Terms: FIT</b> <br></u>
             </p>
             <p>&#10146; 25% cancellation within 30 days before travel.</p>
             <p>&#10146; 50% cancellation within 10 days before Travel.</p>
@@ -360,7 +360,7 @@
          <br></br>
           <div class="head11">
           <div class="right">
-            <u><b>Cancellation Terms:  Groups (MICE)</b><br></br></u>
+            <u><b>Cancellation Terms:  Groups (MICE)</b><br></u>
             
             <p>&#10146; 25% cancellation within 30 days before travel.</p>
             

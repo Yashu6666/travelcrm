@@ -208,16 +208,16 @@
               <th rowspan="5">
                 <h2>Hotel Rates</h2>
               </th>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_adult ?></span> Adult <?php echo $details->room_sharing_types[0] != "" ? ($details->room_sharing_types[0] == "triple_sharing" ? "Per Person on Triple Sharing Basis" : "Per Person on Double Sharing Basis") : "" ?> </td>
+              <td><span style="color: red;">AED <?php echo $details->per_pax_adult ?></span>Per Adult <?php echo $details->room_sharing_types[0] != "" ? ($details->room_sharing_types[0] == "triple_sharing" ? "Per Person on Triple Sharing Basis" : "Per Person on Double Sharing Basis") : "" ?> </td>
             </tr>
             <?php if($details->per_pax_child > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_child ?></span> Child With Bed</td>
+              <td><span style="color: red;">AED <?php echo $details->per_pax_child ?></span>Per Child With Bed</td>
             </tr>
             <?php endif ?>
             <?php if(isset($details->per_pax_infant) && $details->per_pax_infant > 0 ) : ?>
             <tr>
-            <td><span style="color: red;">AED <?php echo $details->per_pax_infant ?></span> Child With Not Bed</td>
+            <td><span style="color: red;">AED <?php echo $details->per_pax_infant ?></span>Per Child With Not Bed</td>
             </tr>
             <?php endif ?>
           </table>
@@ -289,7 +289,7 @@
         </div>
         <div class="head9">
           <span
-            ><b><u>GENERAL TERMS AND CONDITIONS :</u></b></span> <br></br>
+            ><b><u>GENERAL TERMS AND CONDITIONS :</u></b></span> <br>
           <p>
             &#10146; Rooms and rates are subject
             to availability at the time of actual booking.
@@ -371,7 +371,7 @@
         <div class="head10"> </div>
           <div class="left">
             <p>
-              <u><b>Cancellation Terms: FIT</b> <br></br></u>
+              <u><b>Cancellation Terms: FIT</b> <br></u>
             </p>
             <p>&#10146; 25% cancellation within 30 days before travel.</p>
             <p>&#10146; 50% cancellation within 10 days before Travel.</p>
@@ -383,7 +383,7 @@
          <br></br>
           <div class="head11">
           <div class="right">
-            <u><b>Cancellation Terms:  Groups (MICE)</b><br></br></u>
+            <u><b>Cancellation Terms:  Groups (MICE)</b><br></u>
             
             <p>&#10146; 25% cancellation within 30 days before travel.</p>
             

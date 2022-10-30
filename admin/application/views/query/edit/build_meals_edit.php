@@ -113,19 +113,19 @@
 
                                 </thead>
                                 <tbody>
-                                  <tr id="myTableRow">
+                                  <tr id="myTableRow<?php echo $key ?>">
 
                                     <td>
-                                      <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "with_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="with_transfer" name="transfer_with_or_without[]" value="with_transfer" onclick="get_resturant_name('with_transfer','');" /> With Transfer<br />
-                                      <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "without_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="without_transfer" name="transfer_with_or_without[]" value="without_transfer" onclick="get_resturant_name('without_transfer','');" /> Without Transfer
+                                      <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "with_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="with_transfer<?php echo $key ?>" name="transfer_with_or_without<?php echo $key ?>[]" value="with_transfer" onclick="get_resturant_name('with_transfer<?php echo $key ?>','');" autocompleted /> With Transfer<br />
+                                      <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "without_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="without_transfer<?php echo $key ?>" name="transfer_with_or_without<?php echo $key ?>[]" value="without_transfer" onclick="get_resturant_name('without_transfer<?php echo $key ?>','');" autocompleted/> Without Transfer
                                     </td>
 
-                                    <td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="buildCheckIn[]" id="buildCheckIn"></td>
+                                    <td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="buildCheckIn[]" id="buildCheckIn<?php echo $key ?>"></td>
 
 
                                     <td>
                                       <div>
-                                        <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type" name="res_type[]" onchange="get_resturant_name('res_type','');">
+                                        <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type<?php echo $key ?>" name="res_type[]" onchange="get_resturant_name('res_type<?php echo $key ?>','');">
                                         <option <?php echo explode(",",$meal_query[0]->resturant_type)[$key] == "Standard" ? "selected" : "" ?> value="Standard">Standard</option>
                                         <option <?php echo explode(",",$meal_query[0]->resturant_type)[$key] == "Premium" ? "selected" : "" ?> value="Premium">Premium</option>
                                         </select>
@@ -133,13 +133,13 @@
                                       </div>
                                     </td>
                                     <td>
-                                      <select data-mdl-for="sample2" class="form-control res_name" value="" tabIndex="-1" name="res_name[]" id="res_name">
+                                      <select data-mdl-for="sample2" class="form-control res_name" value="" tabIndex="-1" name="res_name[]" id="res_name<?php echo $key ?>">
                                       <option value="<?php echo explode(",",$meal_query[0]->resturant_name)[$key]?>" ><?php echo explode(",",$meal_query[0]->resturant_name)[$key]?></option>
                                       </select>
                                       <!-- <input class="form-control " type="text" value="" name="res_name[]" id="res_name"></td> -->
                                     <td>
                                       <div>
-                                        <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal" name="Meal[]">
+                                        <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal<?php echo $key ?>" name="Meal[]">
                                         <option <?php echo explode(",",$meal_query[0]->meal)[$key] == "Dinner" ? "selected" : "" ?>  value="Dinner">Dinner</option>
                                         <option <?php echo explode(",",$meal_query[0]->meal)[$key] == "Lunch" ? "selected" : "" ?> value="Lunch">Lunch</option>
                                         </select>
@@ -147,20 +147,20 @@
                                     </td>
                                     <td>
                                       <div>
-                                        <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal" name="Meal_Type[]">
+                                        <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal<?php echo $key ?>" name="Meal_Type[]">
                                         <option <?php echo explode(",",$meal_query[0]->meal_type)[$key] == "Veg" ? "selected" : "" ?> value="Veg">Veg</option>
                                         <option <?php echo explode(",",$meal_query[0]->meal_type)[$key] == "Non-Veg" ? "selected" : "" ?> value="Non-Veg">Non-Veg</option>
                                         <option <?php echo explode(",",$meal_query[0]->meal_type)[$key] == "Jain" ? "selected" : "" ?> value="Jain">Jain</option>
                                         </select>
                                       </div>
                                     </td>
-                                    <td><input type="number" min="1" id="no_of_meals" value="<?php echo explode(",",$meal_query[0]->no_of_meals)[$key]?>" class="form-control  no_of_meals" name="no_of_meals[]">
+                                    <td><input type="number" min="1" id="no_of_meals<?php echo $key ?>" value="<?php echo explode(",",$meal_query[0]->no_of_meals)[$key]?>" class="form-control  no_of_meals" name="no_of_meals[]">
 
 
 
-                                    <td><input type="text" disabled value="<?php echo $view->Packagetravelers; ?>" placeholder="0" id="adult_meal_cal" class="form-control check-adult meal_adult" name="adult[]">
+                                    <td><input type="text" disabled value="<?php echo $view->Packagetravelers; ?>" placeholder="0" id="adult_meal_cal<?php echo $key ?>" class="form-control check-adult meal_adult" name="adult[]">
                                     </td>
-                                    <td><input type="text" disabled value="<?php echo $buildpackage->child; ?>" placeholder="0" id="child_meal_cal" class="form-control check-child meal_child" name="child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>
+                                    <td><input type="text" disabled value="<?php echo $buildpackage->child; ?>" placeholder="0" id="child_meal_cal<?php echo $key ?>" class="form-control check-child meal_child" name="child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>
                                     </td>
 
                                     <td>
@@ -178,8 +178,8 @@
                                 <div class="" id="mealTransferMain">
                                   <div class="">
                                     <label for="" class="transport-lable"><b>Transport Type</b>:</label>
-                                    <input type="checkbox" name="mealTransTypeInt" id="mealTransTypeInt" class="mr-3 ml-2 " value="Internal Transfer"><span class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
-                                    <input type="checkbox" name="mealTransTypeRet" id="mealTransTypeRet" checked class="mr-3 ml-2 " value="Point to Point Transfer"><span class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
+                                    <input type="checkbox" name="mealTransTypeInt" id="mealTransTypeInt" <?php echo !empty($internal_query) ? "checked" : "" ?> class="mr-3 ml-2 " value="Internal Transfer"><span class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
+                                    <input type="checkbox" name="mealTransTypeRet" id="mealTransTypeRet" <?php echo !empty($return_query) ? "checked" : "" ?> class="mr-3 ml-2 " value="Point to Point Transfer"><span class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
                                   </div>
                                   <div>
                                     <table class="table">
@@ -219,7 +219,7 @@
 
                                         <?php if (!empty($return_query)) : ?>
                                           <?php foreach (explode(",", $return_query[0]->transfer_date) as $key => $value) : ?>
-                                            <tr id="mealReturnTransfer">
+                                            <tr id="mealReturnTransfer<?php echo $key  ?>">
                                               <th>Return Transfer</th>
                                               <td><input class="form-control" id="pax_return_meal" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="pax_return_meal[]" disabled></td>
                                               <td><input class="form-control return_transfer_date" id="return_meal_date" type="date" value="<?php echo $view->specificDate; ?>" name="return_meal_date[]"></td>
@@ -1195,29 +1195,29 @@ function mealsTransferTypeChange(row) {
   var pax_infants1 = <?php echo $buildpackage->infant; ?>;
   var total_pax1 = pax_adult1 + pax_child1 + 0;
 
-  $.ajax({
-    type: "POST",
-    dataType: "json",
-    url: '<?php echo site_url(); ?>/query/fetchPickup1',
-    data: {
-      'pax': total_pax1
-    },
-    success: function(response) {
-      $("#pickup_return_meal").html('<option value="">Pickup</option>');
-      console.log(response.data.length);
-      if (response.data.length > 0) {
-        var options = ""
-        for (var i = 0; i < response.data.length; i++) {
-          console.log(response.data[i].start_city);
-          options += '<option value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
-        }
-      } else {
-        var options = "<option value=''>No Data Found</option>"
-      }
-      $("#pickup_return_meal").append(options);
+  // $.ajax({
+  //   type: "POST",
+  //   dataType: "json",
+  //   url: '<?php echo site_url(); ?>/query/fetchPickup1',
+  //   data: {
+  //     'pax': total_pax1
+  //   },
+  //   success: function(response) {
+  //     $("#pickup_return_meal").html('<option value="">Pickup</option>');
+  //     console.log(response.data.length);
+  //     if (response.data.length > 0) {
+  //       var options = ""
+  //       for (var i = 0; i < response.data.length; i++) {
+  //         console.log(response.data[i].start_city);
+  //         options += '<option value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
+  //       }
+  //     } else {
+  //       var options = "<option value=''>No Data Found</option>"
+  //     }
+  //     $("#pickup_return_meal").append(options);
 
-    }
-  });
+  //   }
+  // });
 
   $('#pickup_return_meal').on('change', function() {
     $.ajax({
@@ -1252,7 +1252,6 @@ function mealsTransferTypeChange(row) {
         'person': total_pax1
       },
       success: function(response) {
-        console.log("🚩 ~ file: build_package.php ~ line 2857 ~ $ ~ response", response)
         $("#route_name_return_meal").val(response.route_name);
         // $("#price_internal").val(response.data);
         // var total_price = response.data * pax_internal;
@@ -1649,6 +1648,7 @@ function mealsTransferTypeChange(row) {
     var pickup_return_meal = [];
     $(".pickup_return_meal").each(function() {
       var val = $(this).val();
+      console.log("🚀 ~ file: build_meals_edit.php ~ line 1652 ~ $ ~ val", val)
       if (val != '') {
         pickup_return_meal.push($.trim(val));
       }

@@ -249,8 +249,7 @@
         </tbody>
        </table>
        
-
-       <?php if(!empty($meals)) : ?>
+       <?php if(!empty($meals) && !empty($meals->resturant_name)) : ?>
                           <div class="card-head card-head-new mt-5">
                             <p style="margin-top:20px"><i class="fa-solid fa-bowl-rice"></i> Meal </p>
                           </div>
@@ -2075,11 +2074,108 @@ function excursionPVTcalculations1(){
         })
 
       }
-      
+      function cardClick() {
+        var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
+                        var total_pax_TKT_adult = $("#total_pax_TKT_adult").val();
+                          
+                        var total_pax_sic_adult = $("#total_pax_sic_adult").val();
+                        var total_pax_meals_adult = $("#total_pax_meals_adult").val();
+                        console.log("🚩 ~ file: build_excursion_edit.php ~ line 391 ~ $ ~ total_pax_meals_adult", total_pax_meals_adult)
+                        
+                        var sub_total_adult =parseInt(total_pax_pvt_adult) +  parseInt(total_pax_TKT_adult) + 
+                          parseInt(total_pax_sic_adult)  + parseInt(total_pax_meals_adult);
+                       
+
+                        var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
+                        var total_pax_sic_hild = $("#total_pax_sic_hild").val();
+                        var total_pax_TKT_child = $("#total_pax_TKT_child").val();
+                      
+
+                        var sub_total_child =  parseInt(total_pax_sic_hild)+ parseInt(total_pax_TKT_child)+ 
+                          parseInt(total_pax_pvt_hild) ;
+                      
+                        var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
+                        var total_pax_sic_infant = $("#total_pax_sic_infant").val();
+                        var total_pax_TKT_infant = $("#total_pax_TKT_infant").val();
+
+                        var sub_total_infant = parseInt(total_pax_pvt_infant)+ parseInt(total_pax_TKT_infant)+ 
+                          parseInt(total_pax_sic_infant);
+                       
+                          
+
+                          
+                        
+                          
+                          // $("#subtotal_adults").html( sub_total_adult );                      
+                          // $("#subtotal_childs").html( sub_total_child );                               
+                          // $("#subtotal_infants").html( sub_total_infant ); 
+                          let c_type = document.getElementById('currencyOption').value;
+                          var usd_aed = <?php echo $usd_to_aed->usd_to_aed;?>;
+
+                          $("#subtotal_adults").html( c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2)  : sub_total_adult );                      
+                          $("#subtotal_childs").html( c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child );                               
+                          $("#subtotal_infants").html( c_type == 'USD' ? (sub_total_infant/ usd_aed).toFixed(2)  : sub_total_infant); 
+
+                          var PackageMarkup = $("#PackageMarkup").val();
+                          var Mark_up =$("#Mark_up").val();
+
+                          var total_adult =0;
+                          var total_child = 0;
+                          var total_infant = 0;
+                          if(Mark_up == "precentage"){
+
+                             total_adult = (parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100));
+                             total_child = (parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
+                             total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
+
+                          }
+                          if(Mark_up == "values"){
+
+                            total_adult = (parseInt(sub_total_adult) + parseInt(PackageMarkup));
+                            total_child = (parseInt(sub_total_child) + parseInt(PackageMarkup));
+                            total_infant = (parseInt(sub_total_infant) + parseInt(PackageMarkup));
+
+                            
+                          }
+                        
+                          // $("#totalprice_adult").html( total_adult );
+                          // $("#totalprice_childs").html( total_child );
+                          // $("#totalprice_infants").html( total_infant );
+
+                          $("#totalprice_adult").html(  c_type == 'USD' ? ( total_adult / usd_aed).toFixed(2)  : total_adult  );
+                          $("#totalprice_childs").html(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
+                          $("#totalprice_infants").html(  c_type == 'USD' ? ( total_infant / usd_aed).toFixed(2)  : total_infant  );
+
+
+                          // var per_pax_adult = (parseInt(total_adult) / 2);
+                          // var per_pax_child = (parseInt(total_child) / 2);
+                          // var per_pax_infant = (parseInt(total_infant) / 2);
+
+                          var pax_adult_count = <?php  echo $buildpackage->adult; ?>;
+                          var pax_child_count = <?php  echo $buildpackage->child; ?>;
+                          var pax_infant_count = <?php echo $buildpackage->infant;?>;
+                          
+                          var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / 2 : parseInt(total_adult));
+                          var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
+                          var per_pax_infant = (pax_infant_count > 1 ? parseInt(total_infant) / 2 : parseInt(total_infant));
+
+                          $("#perpax_adult").html( c_type == 'USD' ?  ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
+                          $("#perpax_childs").html(  c_type == 'USD' ?  ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child   );
+                          $("#perpax_infants").html(  c_type == 'USD' ?    ( per_pax_infant / usd_aed).toFixed(2)  : per_pax_infant  );
+
+                          $("#perpax_adult_input").val( c_type == 'USD' ? ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
+                          $("#perpax_childs_input").val( c_type == 'USD' ?   ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child  );
+                          $("#perpax_infants_input").val( c_type == 'USD' ?   ( per_pax_infant / usd_aed).toFixed(2)  : per_pax_infant  );
+
+                          var totalprice_excursion = total_adult + total_child + total_infant;
+                          $("#totalprice_excursion").val(c_type == 'USD' ?  ( totalprice_excursion / usd_aed).toFixed(2) : totalprice_excursion  );
+
+      }
       excursionPVTcalculations1();
       excursionSICcalculations1();
       excursionTKTcalculations1();
-      excursionMeal(1)
+      excursionMeal(1);
+      cardClick();
 	CKEDITOR.replace('buildPackageInclusions');
 	CKEDITOR.replace('buildPackageExclusions');
 	CKEDITOR.replace('buildPackageConditions');

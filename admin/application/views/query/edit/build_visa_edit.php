@@ -918,7 +918,8 @@ function getvisaprice1(){
               $("#total_pax_visa_price_adult").val(response.per_pax_adult_amt);
               $("#total_pax_visa_price_child").val(response.per_pax_child_amt);
               $("#total_pax_visa_price_infant").val(response.per_pax_infant_amt);
-
+              $(".card-box").click();
+              document.querySelector(".card-box").click()
 
           }
         });
@@ -950,7 +951,8 @@ $.ajax({
     $("#total_pax_otb_price_adult").val(response.per_pax_adult_amt);
     $("#total_pax_otb_price_child").val(response.per_pax_child_amt);
     $("#total_pax_otb_price_infant").val(response.per_pax_infant_amt);
-
+    $(".card-box").click();
+    document.querySelector(".card-box").click()
   }
 });
 
@@ -1840,7 +1842,16 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script>
   getvisaprice1();
+
+  let otb_data = <?php echo json_encode($otb) ; ?>;
+  
+  if(otb_data != null){
   getOTBprice1();
+    $(".card-box").click();
+  }
+
+  $(".card-box").click();
+
 	CKEDITOR.replace('buildPackageInclusions');
 	CKEDITOR.replace('buildPackageExclusions');
 	CKEDITOR.replace('buildPackageConditions');

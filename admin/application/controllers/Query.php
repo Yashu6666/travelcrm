@@ -33,24 +33,24 @@ class Query extends CI_Controller
 			$data['details'] = $data_en;
 			
 			if ($data['details']->type == 'package'){
-				// $this->load->view('query/email_templates/package/package_mail', $data);return;
+				$this->load->view('query/email_templates/package/package_mail', $data);return;
 				$body = $this->load->view('query/email_templates/package/package_mail', $data, TRUE);
 				echo "Email Sent package";
 			}
 			elseif ($data['details']->type == 'transfer'){
-				// $this->load->view('query/email_templates/proposal_transfer', $data);return;
+				$this->load->view('query/email_templates/proposal_transfer', $data);return;
 				$body = $this->load->view('query/email_templates/proposal_transfer', $data, TRUE);
 			}elseif($data['details']->type == 'hotel'){
-				// $body = $this->load->view('query/email_templates/temp_hotel', $data);return;
+				$body = $this->load->view('query/email_templates/temp_hotel', $data);return;
 				$body = $this->load->view('query/email_templates/temp_hotel', $data, TRUE);
 			}elseif($data['details']->type == 'visa'){
-				// $body = $this->load->view('query/email_templates/temp_visa', $data);return;
+				$body = $this->load->view('query/email_templates/temp_visa', $data);return;
 				$body = $this->load->view('query/email_templates/temp_visa', $data, TRUE);
 			}elseif($data['details']->type == 'excursions'){
-				// $body = $this->load->view('query/email_templates/temp_excursion', $data);return;
+				$body = $this->load->view('query/email_templates/temp_excursion', $data);return;
 				$body = $this->load->view('query/email_templates/temp_excursion', $data, TRUE);
 			}elseif($data['details']->type == 'meals'){
-				// $body = $this->load->view('query/email_templates/temp_meal', $data);return;
+				$body = $this->load->view('query/email_templates/temp_meal', $data);return;
 				$body = $this->load->view('query/email_templates/temp_meal', $data, TRUE);
 			}
 			else {
@@ -707,6 +707,7 @@ class Query extends CI_Controller
 		$data['transfer_route1'] = $this->db->query("SELECT * FROM transfer_route where transport_type='round' AND cost_type='Normal' group by start_city,dest_city")->result();
 		// $data['hours_based'] = $this->db->query("SELECT * FROM transfer_route where  cost_type='HourBased'")->result();
 		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
+		$data['otb'] = $this->db->where('query_id', $q_id)->where('visa_category','OTB')->get('query_visa')->row();
 
 		// $data['excursion']= $this->db->get('excursion')->result();
 		$data['excursion_sic'] = $this->db->query("SELECT * FROM excursion WHERE type='SIC' ")->result();
@@ -1517,6 +1518,7 @@ class Query extends CI_Controller
 	{
 		// $rows_count = $this->input->post('total_rows');
 		$tableData = $this->input->post('data');
+		// echo "<pre>";print_r($tableData);
 		$rows_count = count($tableData[0]['resturants']);
 		// print_r(count($tableData[0]['resturants']));return;
 		$datas =  array();
@@ -2174,10 +2176,10 @@ class Query extends CI_Controller
 		];
 
 
-		$query = $this->db->where('query_id', $query_id)->where('visa_category', $visa_category_drop_down)->get('query_visa');
+		$query = $this->db->where('query_id', $query_id)->where('visa_category !=', "OTB")->get('query_visa');
 		if ($query->num_rows() > 0) {
 			$this->db->where('query_id', $query_id);
-			$this->db->where('visa_category', $visa_category_drop_down);
+			$this->db->where('visa_category !=', "OTB");
 			$this->db->update('query_visa',$visa_data);
 		} else {
 			$this->db->insert('query_visa', $visa_data);

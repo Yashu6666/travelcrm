@@ -489,7 +489,6 @@
         </div>
 
              </div>
-
              <div>
                           <div class="card-head card-head-new m">
                             <p style="margin-top:20px"><i class="fa-brands fa-cc-visa"></i> OTB
@@ -531,6 +530,7 @@
                             </div>
                           </div>
                         </div>
+
              <div class="card-head card-head-new">
              <p style="margin-top:20px"><i class="fa-solid fa-place-of-worship"></i> Excursion
                 <input type="radio" id="excursion_status" name="excursion_status" value="Yes" checked><label for="html">Yes</label>
@@ -798,16 +798,16 @@
         <tr id="myTableRow">
 
           <td>
-            <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "with_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="with_transfer" name="transfer_with_or_without[]" value="with_transfer" onclick="get_resturant_name('with_transfer','');" /> With Transfer<br />
-            <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "without_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="without_transfer" name="transfer_with_or_without[]" value="without_transfer" onclick="get_resturant_name('without_transfer','');" /> Without Transfer
+            <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "with_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="with_transfer<?php echo $key ?>" name="transfer_with_or_without<?php echo $key ?>[]" value="with_transfer" onclick="get_resturant_name('with_transfer<?php echo $key ?>','');" /> With Transfer<br />
+            <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "without_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="without_transfer<?php echo $key ?>" name="transfer_with_or_without<?php echo $key ?>[]" value="without_transfer" onclick="get_resturant_name('without_transfer<?php echo $key ?>','');" /> Without Transfer
           </td>
 
-          <td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="buildCheckIn[]" id="buildCheckIn"></td>
+          <td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="buildCheckIn<?php echo $key ?>[]" id="buildCheckIn<?php echo $key ?>"></td>
 
 
           <td>
             <div>
-              <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type" name="res_type[]" onchange="get_resturant_name('res_type','');">
+              <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type<?php echo $key ?>" name="res_type<?php echo $key ?>[]" onchange="get_resturant_name('res_type<?php echo $key ?>','');">
               <option <?php echo explode(",",$meal_query[0]->resturant_type)[$key] == "Standard" ? "selected" : "" ?> value="Standard">Standard</option>
               <option <?php echo explode(",",$meal_query[0]->resturant_type)[$key] == "Premium" ? "selected" : "" ?> value="Premium">Premium</option>
               </select>
@@ -815,13 +815,13 @@
             </div>
           </td>
           <td>
-            <select data-mdl-for="sample2" class="form-control res_name" value="" tabIndex="-1" name="res_name[]" id="res_name">
+            <select data-mdl-for="sample2" class="form-control res_name" value="" tabIndex="-1" name="res_name<?php echo $key ?>[]" id="res_name<?php echo $key ?>">
             <option value="<?php echo explode(",",$meal_query[0]->resturant_name)[$key]?>" ><?php echo explode(",",$meal_query[0]->resturant_name)[$key]?></option>
             </select>
             <!-- <input class="form-control " type="text" value="" name="res_name[]" id="res_name"></td> -->
           <td>
             <div>
-              <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal" name="Meal[]">
+              <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal<?php echo $key ?>" name="Meal[]">
               <option <?php echo explode(",",$meal_query[0]->meal)[$key] == "Dinner" ? "selected" : "" ?>  value="Dinner">Dinner</option>
               <option <?php echo explode(",",$meal_query[0]->meal)[$key] == "Lunch" ? "selected" : "" ?> value="Lunch">Lunch</option>
               </select>
@@ -829,20 +829,20 @@
           </td>
           <td>
             <div>
-              <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal" name="Meal_Type[]">
+              <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal<?php echo $key ?>" name="Meal_Type[]">
               <option <?php echo explode(",",$meal_query[0]->meal_type)[$key] == "Veg" ? "selected" : "" ?> value="Veg">Veg</option>
               <option <?php echo explode(",",$meal_query[0]->meal_type)[$key] == "Non-Veg" ? "selected" : "" ?> value="Non-Veg">Non-Veg</option>
               <option <?php echo explode(",",$meal_query[0]->meal_type)[$key] == "Jain" ? "selected" : "" ?> value="Jain">Jain</option>
               </select>
             </div>
           </td>
-          <td><input type="number" min="1" id="no_of_meals" value="<?php echo explode(",",$meal_query[0]->no_of_meals)[$key]?>" class="form-control  no_of_meals" name="no_of_meals[]">
+          <td><input type="number" min="1" id="no_of_meals<?php echo $key ?>" value="<?php echo explode(",",$meal_query[0]->no_of_meals)[$key]?>" class="form-control  no_of_meals" name="no_of_meals[]">
 
 
 
-          <td><input type="text" value="<?php echo $view->Packagetravelers; ?>" placeholder="0" id="adult_meal_cal" class="form-control check-adult meal_adult" name="adult[]">
+          <td><input type="text" value="<?php echo $view->Packagetravelers; ?>" placeholder="0" id="adult_meal_cal<?php echo $key ?>" class="form-control check-adult meal_adult" name="adult[]">
           </td>
-          <td><input type="text" value="<?php echo $buildpackage->child; ?>" placeholder="0" id="child_meal_cal" class="form-control check-child meal_child" name="child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>
+          <td><input type="text" value="<?php echo $buildpackage->child; ?>" placeholder="0" id="child_meal_cal<?php echo $key ?>" class="form-control check-child meal_child" name="child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>
           </td>
 
           <td>
@@ -860,8 +860,8 @@
       <div class="" id="mealTransferMain">
         <div class="">
           <label for="" class="transport-lable"><b>Transport Type</b>:</label>
-          <input type="checkbox" name="mealTransTypeInt" id="mealTransTypeInt" class="mr-3 ml-2 " value="Internal Transfer"><span class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
-          <input type="checkbox" name="mealTransTypeRet" id="mealTransTypeRet" checked class="mr-3 ml-2 " value="Point to Point Transfer"><span class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
+          <input type="checkbox" name="mealTransTypeInt" id="mealTransTypeInt" <?php echo !empty($internal_query1) ? "checked" : "" ?> class="mr-3 ml-2 " value="Internal Transfer"><span class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
+          <input type="checkbox" name="mealTransTypeRet" id="mealTransTypeRet" <?php echo !empty($return_query1) ? "checked" : "" ?> checked class="mr-3 ml-2 " value="Point to Point Transfer"><span class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
         </div>
         <div>
           <table class="table">
@@ -1158,17 +1158,17 @@
                             }];
                            
 
-                            $.ajax({
-                            type:"POST",
-                            dataType: "json",
-                            url:'<?php echo site_url();?>/Query/CreateProposalMealsSave',
-                            data : {data : data, total_rows : total_rows,QueryId:QueryId,buildPackageInclusions:buildPackageInclusions,
-                                  buildPackageExclusions:buildPackageExclusions,buildPackageConditions:buildPackageConditions,buildPackageCancellations:buildPackageCancellations,buildPackageRefund:buildPackageRefund},
-                            success:function(response){
-                                console.log(response);
-                                // $("#proposal-form").submit();
-                            }
-                          });
+                          //   $.ajax({
+                          //   type:"POST",
+                          //   dataType: "json",
+                          //   url:'<?php echo site_url();?>/Query/CreateProposalMealsSave',
+                          //   data : {data : data, total_rows : total_rows,QueryId:QueryId,buildPackageInclusions:buildPackageInclusions,
+                          //         buildPackageExclusions:buildPackageExclusions,buildPackageConditions:buildPackageConditions,buildPackageCancellations:buildPackageCancellations,buildPackageRefund:buildPackageRefund},
+                          //   success:function(response){
+                          //       console.log(response);
+                          //       // $("#proposal-form").submit();
+                          //   }
+                          // });
 
                              
                               // sessionStorage.setItem("href",location.href); 
@@ -2229,7 +2229,7 @@ function get_resturant_name(id,row){
     </script>
 
 <script>
-     function getvisaprice(){
+     function getvisaprice(auto=0){
       var visa_category_drop_down =  $("#visa_category_drop_down").val();
       var entry_type = $("#entry_type").val();
       var pax_adult = <?php  echo $view->Packagetravelers; ?>;
@@ -2250,15 +2250,17 @@ function get_resturant_name(id,row){
               $("#total_pax_visa_price_child").val(response.per_pax_child_amt);
               $("#total_pax_visa_price_infant").val(response.per_pax_infant_amt);
 
-             
+             if(auto != 1){
               toastr.success("Visa Saved Successfully");
-
+            }else {
+                    cardClick();
+                  }
           }
         });
 
      }
 
-     function getOTBprice() {
+     function getOTBprice(auto=0) {
 
 var category = "OTB";
 var pax_adult = $("#otb_adult").val();
@@ -2284,9 +2286,11 @@ $.ajax({
     $("#total_pax_otb_price_adult").val(response.per_pax_adult_amt);
     $("#total_pax_otb_price_child").val(response.per_pax_child_amt);
     $("#total_pax_otb_price_infant").val(response.per_pax_infant_amt);
-
-    toastr.success("OTB Saved Successfully");
-
+    if(auto != 1){
+      toastr.success("OTB Saved Successfully");
+    }else {
+      cardClick();
+    }
   }
 });
 
@@ -2300,116 +2304,193 @@ $.ajax({
      
 
       <script>
-         function mealcalculation(){
-                        var total_rows = $('#faqs tbody#addrowss tr').length;
-                        var QueryId = $('#QueryId').val();
+          function mealcalculation(auto=0) {
+    var total_rows = $('#faqs tbody#addrowss tr').length;
+    var QueryId = $('#QueryId').val();
 
-                        var resturants_name = [];
-                          $(".res_name").each(function() {
-                            var resturant_name = $(this).val();
-                            resturants_name.push($.trim(resturant_name));
+    var resturants_name = [];
+    $(".res_name").each(function() {
+      var resturant_name = $(this).val();
+      resturants_name.push($.trim(resturant_name));
 
-                          }); 
+    });
 
-                          var resturants_transfer = [];
-                          $("input[class='transfer_with_or_without']:checked").each(function() {
-                            var resturant_type = $(this).val();
-                            resturants_transfer.push($.trim(resturant_type));
+    var resturants_transfer = [];
+    $("input[class='transfer_with_or_without']:checked").each(function() {
+      var resturant_type = $(this).val();
+      resturants_transfer.push($.trim(resturant_type));
+    });
 
-                          });
+    var resturants = [];
+    $(".rest_type").each(function() {
+      var resturant = $(this).val();
+      resturants.push($.trim(resturant));
+    });
 
-                          var resturants = [];
-                          $(".rest_type").each(function() {
-                            var resturant = $(this).val();
-                            resturants.push($.trim(resturant));
+    var meals = [];
+    $(".meal").each(function() {
+      var meal = $(this).val();
+      meals.push($.trim(meal));
 
-                          }); 
-                          
-                          var meals = [];
-                          $(".meal").each(function() {
-                            var meal = $(this).val();
-                            meals.push($.trim(meal));
-
-                          });
-                         
-                          
-                          var meal_types = [];
-                          $(".meal_type").each(function() {
-                            var meal_type = $(this).val();
-                            meal_types.push($.trim(meal_type));
-
-                          });
-
-                          var meal_adults = [];
-                          $(".meal_adult").each(function() {
-                            var meal_adult = $(this).val();
-                            if(!meal_adult) meal_adult = 0;
-                            meal_adults.push($.trim(meal_adult));
-
-                          });
-
-                          var meal_childs = [];
-                          $(".meal_child").each(function() {
-                            var meal_child = $(this).val();
-                            if(!meal_child) meal_child = 0;
-                            meal_childs.push($.trim(meal_child));
-
-                          });
-
-                          var no_of_meals = [];
-                          $(".no_of_meals").each(function() {
-                            var no_of_meal = $(this).val();
-                            if(!no_of_meal) no_of_meal = 0;
-                            no_of_meals.push($.trim(no_of_meal));
-
-                          });
-
-                          var transfer_with_or_without  = [];
-                          $(".transfer_with_or_without").each(function() {
-                            var transfer_wo = $(this).val();
-                            if(!transfer_wo) transfer_wo = 0;
-                            transfer_with_or_without.push($.trim(transfer_wo));
-                          });
-
-                          var checkIn_date  = [];
-                          $(".checkIn_date").each(function() {
-                            var checkIn = $(this).val();
-                            if(!checkIn) checkIn = 0;
-                            checkIn_date.push($.trim(checkIn));
-                          });
+    });
 
 
-                          var data= [{
-                              'resturants' : resturants,
-                              'meals' : meals,
-                              'meal_types' : meal_types,
-                              'meal_adults' : meal_adults,
-                              'meal_childs' : meal_childs,
-                              'resturants_name' : resturants_name,
-                              'resturants_transfer' : resturants_transfer,
-                              'no_of_meals' : no_of_meals,
-                              'checkIn_date' : checkIn_date,
-                            }];
-                           
+    var meal_types = [];
+    $(".meal_type").each(function() {
+      var meal_type = $(this).val();
+      meal_types.push($.trim(meal_type));
 
-                            $.ajax({
-                            type:"POST",
-                            dataType: "json",
-                            url:'<?php echo site_url();?>/Query/getMealcalculation',
-                            data:{data : data, total_rows : total_rows,'query_id':QueryId,'query_type':"package"},
-                            success:function(response){
-                            console.log(response);
-                              $("#total_pax_meal_adult").val(response.adult_prices);
-                              $("#total_pax_meal_child").val(response.child_prices);
+    });
 
-                            toastr.success("Meals Saved Successfully");
+    var meal_adults = [];
+    $(".meal_adult").each(function() {
+      var meal_adult = $(this).val();
+      if (!meal_adult) meal_adult = 0;
+      meal_adults.push($.trim(meal_adult));
+
+    });
+
+    var meal_childs = [];
+    $(".meal_child").each(function() {
+      var meal_child = $(this).val();
+      if (!meal_child) meal_child = 0;
+      meal_childs.push($.trim(meal_child));
+
+    });
+
+    var no_of_meals = [];
+    $(".no_of_meals").each(function() {
+      var no_of_meal = $(this).val();
+      if (!no_of_meal) no_of_meal = 0;
+      no_of_meals.push($.trim(no_of_meal));
+
+    });
+
+    var transfer_with_or_without = [];
+    $(".transfer_with_or_without").each(function() {
+      var transfer_wo = $(this).val();
+      if (!transfer_wo) transfer_wo = 0;
+      transfer_with_or_without.push($.trim(transfer_wo));
+    });
+
+    var checkIn_date = [];
+    $(".checkIn_date").each(function() {
+      var checkIn = $(this).val();
+      if (!checkIn) checkIn = 0;
+      checkIn_date.push($.trim(checkIn));
+    });
+
+    // -------------------------------------------------- //
+
+    var pickup_internal_meal = [];
+    $(".pickup_internal_meal").each(function() {
+      var val = $(this).val();
+      if (val != '') {
+        pickup_internal_meal.push($.trim(val));
+      }
+    });
+
+    var dropoff_internal_meal = [];
+    $(".dropoff_internal_meal").each(function() {
+      var val = $(this).val();
+      if (val != '') {
+        dropoff_internal_meal.push($.trim(val));
+      }
+    });
+
+    var route_name_internal_meal = [];
+    $(".route_name_internal_meal").each(function() {
+      var val = $(this).val();
+      if (val != '') {
+        route_name_internal_meal.push($.trim(val));
+      }
+    });
 
 
-                            }
-                          })
-                           
+    var pickup_return_meal = [];
+    $(".pickup_return_meal").each(function() {
+      var val = $(this).val();
+      if (val != '') {
+        pickup_return_meal.push($.trim(val));
+      }
+    });
 
-        }
+    var dropoff_return_meal = [];
+    $(".dropoff_return_meal").each(function() {
+      var val = $(this).val();
+      if (val != '') {
+        dropoff_return_meal.push($.trim(val));
+      }
+    });
+
+    var route_name_return_meal = [];
+    $(".route_name_return_meal").each(function() {
+      var pid = $(this).closest('tr').attr('id');
+      var styleAttribute = $('#'+pid).is(':visible');
+      if(styleAttribute == false){
+        return true;
+      }
+      var val = $(this).val();
+      if (val != '') {
+        route_name_return_meal.push($.trim(val));
+      }
+    });
+
+    var pax_adult = <?php echo $view->Packagetravelers; ?>;
+    var pax_child = <?php echo $buildpackage->child; ?>;
+    var pax_infants = <?php echo $buildpackage->infant; ?>;
+    var total_pax = pax_adult + pax_child + pax_infants;
+
+
+    var data = [{
+      'resturants': resturants,
+      'meals': meals,
+      'meal_types': meal_types,
+      'meal_adults': meal_adults,
+      'meal_childs': meal_childs,
+      'resturants_name': resturants_name,
+      'resturants_transfer': resturants_transfer,
+      'no_of_meals': no_of_meals,
+      'checkIn_date': checkIn_date,
+
+      "internal_transfer_pickup": pickup_internal_meal,
+      "internal_transfer_dropoff": dropoff_internal_meal,
+      "internal_transfer_route": route_name_internal_meal,
+
+      "return_transfer_pickup": pickup_return_meal,
+      "return_transfer_dropoff": dropoff_return_meal,
+      "return_transfer_route": route_name_return_meal,
+
+      'pax_adult': pax_adult,
+      'pax_child': pax_child,
+      'pax_infants': pax_infants,
+    }];
+
+    $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: '<?php echo site_url(); ?>/Query/getMealcalculationNew',
+      data: {
+        data: data,
+        total_rows: $('#total_rows_meal').val(),
+        'query_id': QueryId,
+        'query_type': "meals"
+      },
+      success: function(response) {
+        console.log(response);
+        $("#total_pax_meal_adult").val(response.adult_prices);
+        $("#total_pax_meal_child").val(response.child_prices);
+        if(auto != 1){
+        toastr.success("Meals Saved Successfully");
+        $('.card-box').click();
+        }else {
+            cardClick();
+          }
+      }
+    })
+
+
+  }
          
       </script>
 <input type="hidden" id="total_pax_meal_adult" name="total_pax_meal_adult" value="0" />
@@ -2441,7 +2522,7 @@ $.ajax({
       }
 
       
-      function excursionTKTcalculations(){
+      function excursionTKTcalculations(auto=0){
         
         var excursion_types_TKT =  $('select#excursion_type_TKT').val(); 
         var excursion_name_TKT = $('select#excursion_name_TKT').val();
@@ -2469,8 +2550,12 @@ $.ajax({
                 $("#total_pax_TKT_adult").val(response.total_adultprice);
                 $("#total_pax_TKT_child").val(response.total_childprice);
                 $("#total_pax_TKT_infant").val(response.total_infantprice);
+                if(auto != 1){
                 toastr.success("Excursion TKT Saved Successfully");
-          
+              }else {
+                    cardClick();
+                  }
+         
           }
         })
 
@@ -2520,7 +2605,7 @@ $.ajax({
 
       }
 
-      function excursionSICcalculations(){
+      function excursionSICcalculations(auto=0){
         
         var excursion_types_SIC =  $('select#excursion_type_SIC').val(); //$("#excursion_type_SIC").val();
         var excursion_name_SIC = $('select#excursion_name_SIC').val();
@@ -2548,16 +2633,18 @@ $.ajax({
                 $("#total_pax_sic_adult").val(response.total_adultprice);
                 $("#total_pax_sic_hild").val(response.total_childprice);
                 $("#total_pax_sic_infant").val(response.total_infantprice);
-
+              if(auto != 1){
               toastr.success("Excursion SIC Saved Successfully");
-
+            }else {
+                    cardClick();
+                  }
           
           }
         })
 
       }
 
-      function excursionPVTcalculations(){
+      function excursionPVTcalculations(auto=0){
 
        var hidden_total_pax = $('#hidden_total_pax').val();
        var excursion_type_PVT =  $("#excursion_type_PVT").val();
@@ -2587,7 +2674,12 @@ $.ajax({
                $("#total_pax_pvt_adult").val( response.total_adultprice);
                $("#total_pax_pvt_hild").val( response.total_childprice);
                $("#total_pax_pvt_infant").val( response.total_infantprice);
+               if(auto != 1){
               toastr.success("Excursion PVT Saved Successfully");
+               }else {
+                    cardClick();
+                  }
+         
             }
 
          }
@@ -2625,7 +2717,7 @@ $.ajax({
         });
   }
   
-function hotelcalculation(){
+function hotelcalculation(auto=0){
 
 
   var cities = [];
@@ -2699,17 +2791,17 @@ function hotelcalculation(){
                            var buildPackageConditions = $('#buildPackageConditions').val();
                            var buildPackageCancellations = $('#buildPackageCancellations').val();
 
-                            $.ajax({ 
-                                type: "POST",
-                                url: "<?php echo base_url()?>Query/CreateProposalHotelSave",
-                                data : {data : data, total_rows : total_rows,QueryId:QueryId,buildPackageInclusions:buildPackageInclusions,
-                                  buildPackageExclusions:buildPackageExclusions,buildPackageConditions:buildPackageConditions,buildPackageCancellations:buildPackageCancellations},
-                                cache: false,
-                                success: function(response)
-                                {
-                                  // console.log("🚩 ~ file: build_package_edit.php ~ line 2191 ~ hotelcalculation ~ response", response)
-                                }
-                            });
+                            // $.ajax({ 
+                            //     type: "POST",
+                            //     url: "<?php echo base_url()?>Query/CreateProposalHotelSave",
+                            //     data : {data : data, total_rows : total_rows,QueryId:QueryId,buildPackageInclusions:buildPackageInclusions,
+                            //       buildPackageExclusions:buildPackageExclusions,buildPackageConditions:buildPackageConditions,buildPackageCancellations:buildPackageCancellations},
+                            //     cache: false,
+                            //     success: function(response)
+                            //     {
+                            //       // console.log("🚩 ~ file: build_package_edit.php ~ line 2191 ~ hotelcalculation ~ response", response)
+                            //     }
+                            // });
 
                             
 
@@ -2887,7 +2979,12 @@ setTimeout(function(){ $('.noOfDaysAlertcls2').attr("style","display:none;") }, 
                             $('#hotel_rate_adult').val(response.total_pax_adult_rate);
                             $('#hotel_rate_child').val(response.total_pax_child_rate);
                             $('#hotel_rate_infant').val(response.total_pax_wo_rate);
-                            toastr.success("Hotel Details Saved Successfully");
+                            if(auto != 1){
+                              toastr.success("Hotel Details Saved Successfully");
+                            } else {
+                              cardClick();
+                            }
+
                           }
                       });
                     }
@@ -4349,13 +4446,13 @@ function saveTransferDefault(){
                             $("#total_price_point").val(total_price_return);
   
                           console.log("🚩 ~ file: build_transfer_edit.php ~ line 885 ~ $ ~ response", (total_price_return))
-  
+                          
+                          cardClick();
+                          
                             
                           }
                       });
   }
-
-  saveTransferDefault();
 
   
   function transfer_cal(){
@@ -4470,6 +4567,168 @@ function saveTransferDefault(){
 
   }
 
+  function cardClick() {
+                        let itrnl_total = 0;
+                        var hotel_rate_adult = $("#hotel_rate_adult").val();
+
+                        // var total_price_internal = $("#total_price_internal").val();
+                        var total_price_internal_arr = $("input[name='total_price_internal[]']")
+                        .map(function(){ 
+                          itrnl_total += parseInt($(this).val());
+                        }).get();
+                        var total_price_internal = itrnl_total;
+
+                        let price_total = 0;
+                        // var total_price_point = $("#total_price_point").val();
+                        var total_price_point_arr = $("input[name='total_price_point[]']")
+                        .map(function(){ 
+                          price_total += parseInt($(this).val());
+                        }).get();
+                        var total_price_point = price_total;
+
+                        var pax_adult_count = <?php  echo $buildpackage->adult; ?>;
+                        var pax_child_count = <?php  echo $buildpackage->child; ?>;
+                        var pax_infant_count = <?php echo $buildpackage->infant;?>;
+
+                        var pax_cnb_count_data = <?php print_r(json_encode($buildpackage->cnb_per_room)); ?>;
+                        // var pax_cnb_count = ?php echo $buildpackage->cnb_per_room; ?>;
+                        let cnb_arr = pax_cnb_count_data.split(",");
+                        var pax_cnb_count = 0;
+                        cnb_arr.forEach(x => {
+                          pax_cnb_count += parseInt(x);
+                        });
+                        
+                        var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val(); 
+                        var total_pax_meal_adult = $("#total_pax_meal_adult").val(); 
+                        var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
+                        var total_pax_sic_adult = $("#total_pax_sic_adult").val();
+                        var total_pax_TKT_adult = $("#total_pax_TKT_adult").val();
+                        var total_pax_meals_adult = $("#total_pax_meals_adult").val();
+
+                        
+                        var intrnal_transfer_avg = parseInt(total_price_internal) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
+                        var point_transfer_avg = parseInt(total_price_point) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
+                        
+                        var sub_total_adult = parseInt(hotel_rate_adult) +
+                          // parseInt(total_price_internal)+ 
+                          // parseInt(total_price_point) + 
+                          parseInt(intrnal_transfer_avg * (parseInt(pax_adult_count))) + 
+                          parseInt(point_transfer_avg * (parseInt(pax_adult_count))) + 
+
+                          parseInt(total_pax_TKT_adult) + 
+                          parseInt(total_pax_meals_adult) + 
+                          parseInt(total_pax_visa_price_adult) + 
+                          parseInt(total_pax_meal_adult) + 
+                          parseInt(total_pax_pvt_adult) + 
+                          parseInt(total_pax_sic_adult);
+
+                        var hotel_rate_child = $("#hotel_rate_child").val();
+                        var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
+                        var total_pax_sic_hild = $("#total_pax_sic_hild").val();
+                        var total_pax_meal_child = $("#total_pax_meal_child").val();
+                        var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
+                        var total_pax_TKT_child = $("#total_pax_TKT_child").val();
+                        var total_pax_meals_child = $("#total_pax_meals_child").val();
+
+                        var sub_total_child = parseInt(hotel_rate_child) +
+                          parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) + 
+                          parseInt(point_transfer_avg * (parseInt(pax_child_count))) + 
+                          parseInt(total_pax_sic_hild)+ 
+                          parseInt(total_pax_pvt_hild) + 
+                          parseInt(total_pax_meals_child) + 
+                          parseInt(total_pax_meal_child) + parseInt(total_pax_TKT_child) + 
+                          parseInt(total_pax_visa_price_child);
+                          
+                        var hotel_rate_infant = $("#hotel_rate_infant").val();
+                        var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val(); 
+                        var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
+                        var total_pax_sic_infant = $("#total_pax_sic_infant").val();
+                        var total_pax_TKT_infant = $("#total_pax_TKT_infant").val();
+
+                        var sub_total_infant = parseInt(total_pax_visa_price_infant) +
+                        // parseInt(hotel_rate_infant) +
+                        parseInt(total_pax_TKT_infant)+ 
+                        parseInt(total_pax_pvt_infant)+ 
+                        parseInt(total_pax_sic_infant);
+
+                        var sub_total_cnb = parseInt(hotel_rate_infant); 
+
+                          let c_type = document.getElementById('currencyOption').value;
+                          var usd_aed = <?php echo $usd_to_aed->usd_to_aed;?>;
+
+                          $("#subtotal_adults").html( c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2)  : sub_total_adult );                      
+                          $("#subtotal_childs").html( c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child );                               
+                          $("#subtotal_infants").html( c_type == 'USD' ? (sub_total_infant/ usd_aed).toFixed(2)  : sub_total_infant); 
+                          $("#subtotal_cnb").html(c_type == 'USD' ? (sub_total_cnb / usd_aed).toFixed(2) : sub_total_cnb)     
+                          
+                          var PackageMarkup = $("#PackageMarkup").val();
+                          var Mark_up =$("#Mark_up").val();
+
+                          var total_adult =0;
+                          var total_child = 0;
+                          var total_infant = 0;
+                          if(Mark_up == "precentage"){
+
+                             total_adult = (parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100));
+                             total_child = (parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
+                             total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
+                             total_cnb = (parseInt(sub_total_cnb) + (parseInt(sub_total_cnb) * parseInt(PackageMarkup) / 100));
+
+                          }
+                          
+                          markup_per = parseInt(PackageMarkup) / parseInt(pax_adult_count + pax_child_count + pax_infant_count);
+
+                          if(Mark_up == "values"){
+
+                            total_adult = pax_adult_count > 0 ? (parseInt(sub_total_adult) + parseInt(markup_per * pax_adult_count)) : 0 ;
+                            total_child = pax_child_count > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * pax_child_count)) : 0 ;
+                            total_infant = pax_infant_count > 0 ? (parseInt(sub_total_infant) + parseInt(markup_per * pax_infant_count)) : 0 ;
+                            total_cnb = pax_cnb_count > 0 ? (parseInt(sub_total_cnb) + parseInt(markup_per * pax_cnb_count)) : 0;
+                            
+                          }
+                        
+                          $("#totalprice_adult").html(  c_type == 'USD' ? ( total_adult / usd_aed).toFixed(2)  : total_adult  );
+                          $("#totalprice_childs").html(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
+                          $("#totalprice_infants").html(  c_type == 'USD' ? ( total_infant / usd_aed).toFixed(2)  : total_infant  );
+                          $("#totalprice_cnb").html(c_type == 'USD' ? (total_cnb / usd_aed).toFixed(2) : total_cnb);
+
+                          var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
+
+                          var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_child_count: parseInt(total_child));
+                          
+                          var per_pax_infant = (pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
+                          var per_pax_cnb = (pax_cnb_count > 1 ? (parseInt(total_cnb) / pax_cnb_count) : parseInt(total_cnb));
+                          
+                          $("#perpax_adult").html( c_type == 'USD' ?  Math.floor( per_pax_adult / usd_aed)  : Math.floor(per_pax_adult)  );
+                          $("#perpax_childs").html(  c_type == 'USD' ?  Math.floor( per_pax_child / usd_aed)  : Math.floor(per_pax_child)   );
+                          $("#perpax_infants").html(  c_type == 'USD' ?    Math.floor( per_pax_infant / usd_aed)  : Math.floor(per_pax_infant)  );
+                          $("#perpax_cnb").html(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
+
+                          $("#perpax_adult_input").val( c_type == 'USD' ? Math.floor( per_pax_adult / usd_aed)  : Math.floor(per_pax_adult)  );
+                          $("#perpax_childs_input").val( c_type == 'USD' ?   Math.floor( per_pax_child / usd_aed)  : Math.floor(per_pax_child)  );
+                          $("#perpax_infants_input").val( c_type == 'USD' ?   Math.floor( per_pax_infant / usd_aed)  : Math.floor(per_pax_infant)  );
+                          $("#perpax_cnb_input").val(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
+                          var totalprice_package = total_adult + total_child + total_infant + total_cnb;
+                                
+                          console.log("🚩 ~ file: build_package.php ~ line 1043 ~ $ ~ totalprice_package", totalprice_package)
+                          // var totalprice_package = c_type == 'USD' ?  Math.floor( totalprice_package / usd_aed)  : Math.floor(totalprice_package);
+
+                          $("#totalprice_package").val( totalprice_package );
+                          $('.card-box').click();
+  }
+  hotelcalculation(1);
+  mealcalculation(1);
+  saveTransferDefault();
+  getvisaprice(1);
+  excursionSICcalculations(1);
+  excursionPVTcalculations(1);
+  excursionTKTcalculations(1);
+  let otb_data = <?php echo json_encode($otb) ; ?>;
+  if(otb_data != null){
+    getOTBprice(1);
+    cardClick();
+  }
+ cardClick();
   CKEDITOR.replace('buildPackageInclusions');
   CKEDITOR.replace('buildPackageExclusions');
   CKEDITOR.replace('buildPackageConditions');

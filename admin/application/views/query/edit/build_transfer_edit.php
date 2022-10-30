@@ -999,21 +999,13 @@ var QueryId = $('#QueryId').val();
                         dataType: "json",
                         success: function(response)
                         {
-                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 885 ~ $ ~ response", typeof(response.internal_price))
-
                           $("#price_internal").val(response.internal_price);
                           var total_price_internal = response.internal_price * total_pax;
                           $("#total_price_internal").val(total_price_internal);
-
-                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 885 ~ $ ~ response", (total_price_internal))
-                          
                           $("#price_point").val(response.return_price);
                           var total_price_return = response.return_price * total_pax;
                           $("#total_price_point").val(total_price_return);
-
-                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 885 ~ $ ~ response", (total_price_return))
-
-                          
+                        cardClick();
                         }
                     });
 }
@@ -2255,6 +2247,125 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
 </script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script>
+  function cardClick() {
+    let itrnl_total = 0;
+                        var total_price_internal_arr = $("input[name='total_price_internal[]']")
+                        .map(function(){ 
+                          itrnl_total += parseInt($(this).val());
+                        }).get();
+                        var total_price_internal = itrnl_total;
+                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 285 ~ $ ~ total_price_internal", total_price_internal)
+
+                        let price_total = 0;
+                        var total_price_point_arr = $("input[name='total_price_point[]']")
+                        .map(function(){ 
+                          price_total += parseInt($(this).val());
+                        }).get();
+                        var total_price_point = price_total;
+                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 292 ~ $ ~ total_price_point", total_price_point)
+
+
+
+                        var pax_adult_count = <?php  echo $buildpackage->adult; ?>;
+                        var pax_child_count = <?php  echo $buildpackage->child; ?>;
+                        var pax_infant_count = <?php echo $buildpackage->infant;?>;
+                        
+                        var intrnal_transfer_avg = parseInt(total_price_internal) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
+                        var point_transfer_avg = parseInt(total_price_point) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
+                        
+                        // var hotel_rate_adult = $("#hotel_rate_adult").val();
+                        // var total_price_internal = $("#total_price_internal").val();
+                        // var total_price_point = $("#total_price_point").val();
+                        // var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val(); 
+                        // var total_pax_meal_adult = $("#total_pax_meal_adult").val(); 
+                        // var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
+                        // var total_pax_sic_adult = $("#total_pax_sic_adult").val();
+                        
+                        var sub_total_adult = 
+                          parseInt(intrnal_transfer_avg * (parseInt(pax_adult_count))) + 
+                          parseInt(point_transfer_avg * (parseInt(pax_adult_count)));
+                          // parseInt(total_price_point);
+
+                        // var hotel_rate_child = $("#hotel_rate_child").val();
+                        // var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
+                        // var total_pax_sic_hild = $("#total_pax_sic_hild").val();
+                        // var total_pax_meal_child = $("#total_pax_meal_child").val();
+                        // var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
+
+                        var sub_total_child = 
+                          parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) + 
+                          parseInt(point_transfer_avg * (parseInt(pax_child_count)));
+                        //   parseInt(total_pax_sic_hild)+ 
+                        //   parseInt(total_pax_pvt_hild) + 
+                        //   parseInt(total_pax_meal_child) + 
+                        //   parseInt(total_pax_visa_price_child);
+
+                        // var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val(); 
+                        // var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
+                        // var total_pax_sic_infant = $("#total_pax_sic_infant").val();
+
+                        // var sub_total_infant = parseInt(total_pax_visa_price_infant) +
+                        //   parseInt(total_pax_pvt_infant)+ 
+                        //   parseInt(total_pax_sic_infant);
+
+                          
+                        let c_type = document.getElementById('currencyOption').value;
+                        var usd_aed = <?php echo $usd_to_aed->usd_to_aed;?>;
+
+                          // $("#subtotal_adults").html( sub_total_adult );                      
+                          // $("#subtotal_childs").html( sub_total_child ); 
+                          $("#subtotal_adults").html( c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2)  : sub_total_adult );                      
+                          $("#subtotal_childs").html( c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child );                                 
+                          $("#subtotal_infants").html( 0 ); 
+
+                          var PackageMarkup = $("#PackageMarkup").val();
+                          var Mark_up =$("#Mark_up").val();
+
+                          var total_adult =0;
+                          var total_child = 0;
+                          var total_infant = 0;
+                          if(Mark_up == "precentage"){
+
+                             total_adult = (parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100));
+                             total_child = (parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
+                            //  total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
+
+                          }
+                          if(Mark_up == "values"){
+
+                            total_adult = (parseInt(sub_total_adult) + parseInt(PackageMarkup));
+                            total_child = (parseInt(sub_total_child) + parseInt(PackageMarkup));
+                            // total_infant = (parseInt(sub_total_infant) + parseInt(PackageMarkup));
+
+                            
+                          }
+                        
+                          // $("#totalprice_adult").html( total_adult );
+                          // $("#totalprice_childs").html( total_child );
+                          $("#totalprice_adult").html(  c_type == 'USD' ? ( total_adult / usd_aed).toFixed(2)  : total_adult  );
+                          $("#totalprice_childs").html(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
+                          $("#totalprice_infants").html( 0 );
+
+                          var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / 2 : parseInt(total_adult));
+                          var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
+                        //   var per_pax_infant = (parseInt(total_infant) / 2);
+                          
+                          // $("#perpax_adult").html(per_pax_adult);
+                          // $("#perpax_childs").html( per_pax_child );
+                          $("#perpax_adult").html( c_type == 'USD' ?  ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
+                          $("#perpax_childs").html(  c_type == 'USD' ?  ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child   );
+                          $("#perpax_infants").html( 0 );
+
+                          $("#perpax_adult_input").val(per_pax_adult);
+                          $("#perpax_childs_input").val(per_pax_child );
+                          $("#perpax_adult_input").val( c_type == 'USD' ? ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
+                          $("#perpax_childs_input").val( c_type == 'USD' ?   ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child  );
+                          $("#perpax_infants_input").val( 0 );
+
+                          $('#totalprice_transfer').val(c_type == 'USD' ?  ( total_adult / usd_aed).toFixed(2) : total_adult);
+
+                        
+  }
 saveTransferDefault();
 
 	CKEDITOR.replace('buildPackageInclusions');

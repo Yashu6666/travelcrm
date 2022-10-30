@@ -199,16 +199,16 @@
               <th rowspan="3" colspan="3">
                 <h2>Visa Rates</h2>
               </th>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_adult;?></span> Adult </td>
+              <td><span style="color: red;">AED <?php echo $details->per_pax_adult;?></span>Per Adult </td>
             </tr>
             <?php if($details->per_pax_child > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_child;?></span> Child</td>
+              <td><span style="color: red;">AED <?php echo $details->per_pax_child;?></span>Per Child</td>
             </tr>
             <?php endif ?>
             <?php if($details->per_pax_infant > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_infant;?></span> Infant</td>
+              <td><span style="color: red;">AED <?php echo $details->per_pax_infant;?></span>Per Infant</td>
             </tr>
             <?php endif ?>
           </table>
@@ -222,16 +222,16 @@
               <th rowspan="3" colspan="3">
                 <h2>OTB Rates</h2>
               </th>
-              <td><span style="color: red;">AED <?php print_r($details->otb->adult_price); ?></span> Adult </td>
+              <td><span style="color: red;">AED <?php print_r($details->otb->adult_price); ?></span>Per Adult </td>
             </tr>
             <?php if($details->otb->child_price > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php print_r($details->otb->child_price); ?></span> Child</td>
+              <td><span style="color: red;">AED <?php print_r($details->otb->child_price); ?></span>Per Child</td>
             </tr>
             <?php endif ?>
             <?php if($details->otb->infant_price > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php print_r($details->otb->infant_price); ?></span> Infant</td>
+              <td><span style="color: red;">AED <?php print_r($details->otb->infant_price); ?></span>Per Infant</td>
             </tr>
             <?php endif ?>
           </table>
@@ -284,10 +284,10 @@
             <p>&#10146; OTB is included</p>
            <?php endif ?>
             
-            <p>&#10146; Tourism Dirhams Fees</p>
+            <!-- <p>&#10146; Tourism Dirhams Fees</p> -->
             <p>&#10146; Vat 5% Inclusive</p>
             <p>&#10146; All Applicable Taxes</p>
-            <p>&#10146; All of the above services with the hotel to hotel transfer and ticket</p>
+            <!-- <p>&#10146; All of the above services with the hotel to hotel transfer and ticket</p> -->
         </div>
         
         <div class="head7">
@@ -303,7 +303,7 @@
         </div>
         <div class="head9">
           <span
-            ><b><u>GENERAL TERMS AND CONDITIONS :</u></b></span> <br></br>
+            ><b><u>GENERAL TERMS AND CONDITIONS :</u></b></span> <br>
           <p>
             &#10146; Rooms and rates are subject
             to availability at the time of actual booking.
@@ -385,7 +385,7 @@
         <div class="head10"> </div>
           <div class="left">
             <p>
-              <u><b>Cancellation Terms: FIT</b> <br></br></u>
+              <u><b>Cancellation Terms: FIT</b> <br></u>
             </p>
             <p>&#10146; 25% cancellation within 30 days before travel.</p>
             <p>&#10146; 50% cancellation within 10 days before Travel.</p>
@@ -397,7 +397,7 @@
          <br></br>
           <div class="head11">
           <div class="right">
-            <u><b>Cancellation Terms:  Groups (MICE)</b><br></br></u>
+            <u><b>Cancellation Terms:  Groups (MICE)</b><br></u>
             
             <p>&#10146; 25% cancellation within 30 days before travel.</p>
             

@@ -211,7 +211,7 @@
             <?php endif ?>
             <?php if($details->perpax_infants > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php echo $details->perpax_infants ?></span>Per Infant</td>
+              <td><span style="color: red;">AED <?php echo $details->perpax_infants ?></span> Per Infant</td>
             </tr>
             <?php endif ?>
 

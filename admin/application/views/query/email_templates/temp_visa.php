@@ -199,16 +199,16 @@
               <th rowspan="3" colspan="3">
                 <h2>Visa Rates</h2>
               </th>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_adult;?></span>Per Adult </td>
+              <td><span style="color: red;">AED <?php echo $details->per_pax_adult;?></span> Per Adult </td>
             </tr>
             <?php if($details->per_pax_child > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_child;?></span>Per Child</td>
+              <td><span style="color: red;">AED <?php echo $details->per_pax_child;?></span> Per Child</td>
             </tr>
             <?php endif ?>
             <?php if($details->per_pax_infant > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_infant;?></span>Per Infant</td>
+              <td><span style="color: red;">AED <?php echo $details->per_pax_infant;?></span> Per Infant</td>
             </tr>
             <?php endif ?>
           </table>
@@ -222,16 +222,16 @@
               <th rowspan="3" colspan="3">
                 <h2>OTB Rates</h2>
               </th>
-              <td><span style="color: red;">AED <?php print_r($details->otb->adult_price); ?></span>Per Adult </td>
+              <td><span style="color: red;">AED <?php print_r($details->otb->adult_price); ?></span> Per Adult </td>
             </tr>
             <?php if($details->otb->child_price > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php print_r($details->otb->child_price); ?></span>Per Child</td>
+              <td><span style="color: red;">AED <?php print_r($details->otb->child_price); ?></span> Per Child</td>
             </tr>
             <?php endif ?>
             <?php if($details->otb->infant_price > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php print_r($details->otb->infant_price); ?></span>Per Infant</td>
+              <td><span style="color: red;">AED <?php print_r($details->otb->infant_price); ?></span> Per Infant</td>
             </tr>
             <?php endif ?>
           </table>

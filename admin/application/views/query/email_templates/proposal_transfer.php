@@ -199,11 +199,11 @@
               <th rowspan="3" colspan="3">
                 <h2>Transfer Rates</h2>
               </th>
-              <td><span style="color: red;">AED <?php echo $details->perpax_adult ?></span>Per Adult </td>
+              <td><span style="color: red;">AED <?php echo $details->perpax_adult ?></span> Per Adult </td>
             </tr>
             <?php if($details->perpax_childs > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php echo $details->perpax_childs ?></span>Per Child</td>
+              <td><span style="color: red;">AED <?php echo $details->perpax_childs ?></span> Per Child</td>
             </tr>
             <?php endif ?>
           </table>

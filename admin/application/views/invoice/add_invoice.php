@@ -91,9 +91,7 @@
 
 
                                                     <td>
-                                                        <select class="invoice-INR" style="width:70% !important;height:38px !important;" name="invoiceCurrency">
-                                                          <!-- <option <?php echo $currency == "AED" ? "selected" : ""?> value="AED">AED</option>
-                                                          <option <?php echo $currency  == "USD" ? "selected" : "" ?> value="USD">USD</option> -->
+                                                        <select class="invoice-INR" onchange="priceConvert()" style="width:70% !important;height:38px !important;" name="invoiceCurrency" id="invoiceCurrency">
                                                           <option  value="AED">AED</option>
                                                           <option  value="USD">USD</option>
                                                         </select>
@@ -123,7 +121,7 @@
                                                 <tr>
                                                     <td><label class="input">
                                                             <input class="input__field invoice-width" type="number"
-                                                                name="invoiceNumber" placeholder=" " id="invoiceNumber" value="<?php echo $invoicenumber ?>" disbled
+                                                                name="invoiceNumber" placeholder=" " id="invoiceNumber" value="<?php echo $invoicenumber  ?>" disbled
                                                                 autocomplete="off"  readonly=""/>
                                                             <span class="input__label">Invoice Number<span
                                                                     class="colorRed">*</span></span>
@@ -234,7 +232,7 @@
                                                         <div class="mb-3">
                                                             <input type="number" class="form-control invoiceRate" id="invoiceRate"
                                                                 name="invoiceRate[]" aria-describedby="emailHelp"
-                                                                value=<?php echo isset($price) ? ceil($price) : "0" ?> autocomplete="off">
+                                                                value=<?php echo isset($price) ? ceil($price) : 0 ?> autocomplete="off">
                                                             <b><span id="spanRate" class="colorRed"></span></b>
                                                         </div>
                                                     </td>
@@ -462,13 +460,29 @@
     <script src="<?php echo base_url();?>public/js/validate.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
     <script>
-        CKEDITOR.replace('editorNotes');
-         CKEDITOR.replace('editorTrmsCond');
+        let usd_aed = <?php echo $usd_to_aed->usd_to_aed;?>;
+        let aed_usd = <?php echo $usd_to_aed->aed_to_usd;?>;
+
+     function priceConvert() {
+        let price = $('#invoiceRate').val();
+        let currency_type = $('#invoiceCurrency').val();
+        
+        if(currency_type == 'USD') {
+          let amount =  Math.ceil(price / usd_aed);
+          $('#invoiceRate').val(amount);
+        } else {
+          let amount =  Math.ceil(price / aed_usd);
+          $('#invoiceRate').val(amount);
+        }
+
+     }
+     CKEDITOR.replace('editorNotes');
+     CKEDITOR.replace('editorTrmsCond');
     </script>
 
     <!-- <script src="js/sb-customizer.js"></script> -->
     <script>
-        console.clear()
+        // console.clear()
         initSample();
         $('.js-example-basic-multiple').select2();
     </script>

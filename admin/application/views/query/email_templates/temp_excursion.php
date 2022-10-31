@@ -200,16 +200,16 @@
               <th rowspan="3" colspan="3">
                 <h2>Sightseeing Rates</h2>
               </th>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_adult;?></span>Per Adult </td>
+              <td><span style="color: red;">AED <?php echo $details->per_pax_adult;?></span> Per Adult </td>
             </tr>
-            <?php if($details->per_pax_child > 0) : ?>
+            <?php if($details->per_pax_child < 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_child;?></span>Per Child</td>
+              <td><span style="color: red;">AED <?php echo $details->per_pax_child;?></span> Per Child</td>
             </tr>
             <?php endif ?>
-            <?php if($details->per_pax_infant > 0) : ?>
+            <?php if($details->per_pax_infant < 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_infant;?></span>Per Infant</td>
+              <td><span style="color: red;">AED <?php echo $details->per_pax_infant;?></span> Per Infant</td>
             </tr>
             <?php endif ?>
           </table>
@@ -273,7 +273,7 @@
             <?php endif ?>
 
             </p>
-            <p>&#10146; Tourism Dirhams Fees</p>
+            <!-- <p>&#10146; Tourism Dirhams Fees</p> -->
             <p>&#10146; Vat 5% Inclusive</p>
             <p>&#10146; All Applicable Taxes</p>
             <p>&#10146; All of the above services with the hotel to hotel transfer and ticket</p>

@@ -1560,11 +1560,11 @@ $(document).mouseup(function(e)
                 for(let i=1; i<=no_of_rooms; i++ ){
                 data += `
                 <div class="form-group">
-                <div class="mt-2">
-                    <label class="col-form-label text-nowrap mx-4"></label>
-                    <label class="col-form-label text-nowrap mx-5">Adult</label>
-                    <label class="col-form-label text-nowrap mx-4">Child</label>
-                    <label class="col-form-label text-nowrap mx-5">Infant</label>
+                <div class="col d-flex mt-2">
+                    <label class="border-0 mx-4 w-25"></label>
+                    <label class="form-control px-2 border-0 h6">Adult</label>
+                    <label class="form-control px-2 border-0 h6">Child</label>
+                    <label class="form-control px-2 border-0 h6">Infant</label>
                 </div>
                 <div class="col d-flex mt-2">
                     
@@ -1574,7 +1574,7 @@ $(document).mouseup(function(e)
                     <input type="number" value="0" class=" form-control mx-1 infant_count" name="infant_count[]" onchange="showRoomData(${no_of_rooms})" id="infant_count${i}" />
                 </div>
                 </div>
-                <div class="form-group row" id="child_ages_div${i}" style="display: none;"></div>
+                <div class="form-group row w-100" id="child_ages_div${i}" style="display: none;"></div>
                 `;
                 }
                 $("#no_of_room_for").empty().append(data);
@@ -1604,7 +1604,7 @@ $(document).mouseup(function(e)
                   <div class="d-flex col mx-3"> 
                             <div class="col d-flex ">
                                 <label class="col-1 col-form-label text-nowrap">child ${i}</label>
-                                <input type="text" class="form-control ml-5" placeholder="Child ${i} Age" name="child_age_count[]" id="child_age">
+                                <input type="text" class="form-control ml-5" placeholder="Age ${i} Age" name="child_age_count[]" id="child_age">
                                 <input type="radio" class="form-control" id="child_with_bed${i}" name="child_with_or_wo_count[${div_id}][${i}]" value="1" checked><label for="html">CWB</label>
                                 <input type="radio" class="form-control" id="child_with_out_bed${i}" name="child_with_or_wo_count[${div_id}][${i}]" value="0"><label for="html">CNB</label>
                             </div></div>`;

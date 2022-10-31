@@ -259,7 +259,7 @@ th {
         <table class="item_table" border="1" cellspacing="0">
           <tr>
             <th>Services</th>
-            <th>Qty</th>
+            <th>Pax</th>
             <th>Rate</th>
             <th>AMT</th>
           </tr>

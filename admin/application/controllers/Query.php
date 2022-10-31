@@ -33,24 +33,24 @@ class Query extends CI_Controller
 			$data['details'] = $data_en;
 			
 			if ($data['details']->type == 'package'){
-				$this->load->view('query/email_templates/package/package_mail', $data);return;
+				// $this->load->view('query/email_templates/package/package_mail', $data);return;
 				$body = $this->load->view('query/email_templates/package/package_mail', $data, TRUE);
 				echo "Email Sent package";
 			}
 			elseif ($data['details']->type == 'transfer'){
-				$this->load->view('query/email_templates/proposal_transfer', $data);return;
+				// $this->load->view('query/email_templates/proposal_transfer', $data);return;
 				$body = $this->load->view('query/email_templates/proposal_transfer', $data, TRUE);
 			}elseif($data['details']->type == 'hotel'){
-				$body = $this->load->view('query/email_templates/temp_hotel', $data);return;
+				// $body = $this->load->view('query/email_templates/temp_hotel', $data);return;
 				$body = $this->load->view('query/email_templates/temp_hotel', $data, TRUE);
 			}elseif($data['details']->type == 'visa'){
-				$body = $this->load->view('query/email_templates/temp_visa', $data);return;
+				// $body = $this->load->view('query/email_templates/temp_visa', $data);return;
 				$body = $this->load->view('query/email_templates/temp_visa', $data, TRUE);
 			}elseif($data['details']->type == 'excursions'){
-				$body = $this->load->view('query/email_templates/temp_excursion', $data);return;
+				// $body = $this->load->view('query/email_templates/temp_excursion', $data);return;
 				$body = $this->load->view('query/email_templates/temp_excursion', $data, TRUE);
 			}elseif($data['details']->type == 'meals'){
-				$body = $this->load->view('query/email_templates/temp_meal', $data);return;
+				// $body = $this->load->view('query/email_templates/temp_meal', $data);return;
 				$body = $this->load->view('query/email_templates/temp_meal', $data, TRUE);
 			}
 			else {

@@ -73,7 +73,7 @@ $this->session->unset_userdata ( 'success' );
 												<tr><th class="center">Sl No.</th>
 													<th class="center"> Invoice Date </th>
 													<th class="center"> Invoice No </th>
-													<th class="center"> Cusotmer/Agency Name </th>
+													<th class="center"> Agency Name </th>
 													<th class="center"> Invoice value </th>
 													<th class="center">VAT</th>
 													<th class="center"> Received </th>
@@ -93,7 +93,7 @@ $this->session->unset_userdata ( 'success' );
 													<td><?php echo $i+1;?></td>
 													<td><?php echo $listInvoice[$i]->invoiceDate;?></td>
 													<td><?php echo $listInvoice[$i]->invoiceNumber;?></td>
-													<td><?php echo $listInvoice[$i]->billTo;?></td>
+													<td><?php echo $company_names[$i];?></td>
 													<td><?php echo $listInvoice[$i]->finalTotalInvoice;?></td>
 													<td><?php echo $listInvoice[$i]->finalVAT;?></td>
 													<td><?php echo $listInvoice[$i]->finalAdvance;?></td>

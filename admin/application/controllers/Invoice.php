@@ -15,7 +15,27 @@ class Invoice extends CI_Controller
 	public function view_invoice()
 	{
 		$data['listInvoice'] = $this->db->order_by('id', 'desc')->get('invoice')->result();
-		// echo"<pre>";print_r($data['listInvoice']);exit;
+
+		$company_name = [];
+
+		foreach ($data['listInvoice'] as $key => $value) {
+			if(!empty($value->query_id)) {
+				
+				$company = $this->db->where('query_id', $value->query_id)->get('b2bcustomerquery')->row();
+
+				if(!empty($company)){
+					array_push($company_name,$company->b2bcompanyName);
+				} else {
+					array_push($company_name,"N/A");
+				}
+
+			} else {
+				array_push($company_name,"N/A");
+			}
+		}
+
+		$data['company_names'] = $company_name;
+
 		$this->load->view('invoice/view_invoice', $data);
 	}
 
@@ -32,13 +52,17 @@ class Invoice extends CI_Controller
 		$data['details'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
 		$data['presentdate'] = date('Y-m-d');
 		$data['duedate'] = date('Y-m-d', strtotime(' + 15 days'));
-		$listInvoice = $this->db->query('SELECT * FROM invoice ORDER by id limit 1')->result();
-		// echo '<pre>';print_r($query_id);exit;
-		if (isset($listInvoice[0]->invoiceNumber)) {
-			$data['invoicenumber'] = $listInvoice[0]->invoiceNumber + 1;
+		// $listInvoice = $this->db->query('SELECT * FROM invoice ORDER by id limit 1')->result();
+		$listInvoice = $this->db->order_by('id',"desc")->limit(1)->get('invoice')->row();
+
+		if (isset($listInvoice->invoiceNumber)) {
+			$invoicenumber = $listInvoice->invoiceNumber + 1;
 		} else {
-			$data['invoicenumber'] = 29042000;
+			$invoicenumber = 29042000;
 		}
+		
+		$data['invoicenumber'] = $invoicenumber;
+		$data['usd_to_aed'] = $this->db->get_where('currency_data', array('id' => 1))->row();
 
 		$query_type = $this->db->where('queryId', $query_id)->get('querypackage')->row();
 		$data['desc'] = $query_type->type;

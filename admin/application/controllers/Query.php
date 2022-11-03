@@ -750,7 +750,6 @@ class Query extends CI_Controller
 
 	public function get_hotels()
 	{
-
 		$city = $this->input->post('city');
 		$category = $this->input->post('category');
 		//echo json_encode($city);
@@ -760,6 +759,49 @@ class Query extends CI_Controller
 		$this->db->where('hotelstars', $category);
 		$hotels = $this->db->get()->result();
 		echo json_encode($hotels);
+	}
+
+	public function get_hotels_by_availability()
+	{
+
+		$city = $this->input->post('city');
+		$date = $this->input->post('date');
+		$nights = $this->input->post('nights');
+		$category = $this->input->post('category');
+
+		$date_ci = strtotime($date);
+		$date_co = strtotime("+".($nights - 1)." day", $date_ci);
+		$date_co_new = date('Y-m-d', $date_co);
+
+		$hotel_id = $this->input->post('hotel_id');
+		
+		$this->db->select("*");
+		$this->db->from('rooms');
+		$this->db->where('hotelname', $hotel_id);
+		// $this->db->where('from_date >=', $date);
+		// $this->db->where('to_date <=', (string)$date_co_new);
+		$query = $this->db->get()->result();
+		
+		$from_room_types = [];
+		foreach($query as $key => $val){
+
+			if($val->from_date <= $date){
+				array_push($from_room_types,$val);
+			} 
+		}
+		// echo json_encode($from_room_types);
+
+		$room_types = [];
+		foreach($from_room_types as $key => $val){
+
+			if($val->to_date >= $date_co_new){
+				array_push($room_types,$val->roomtype);
+			} 
+			// else {
+			// 	echo "false";
+			// }
+		}
+		echo json_encode($room_types);
 	}
 
 	// public function getHotelCalculation(){
@@ -874,15 +916,29 @@ class Query extends CI_Controller
 		$QueryId = $this->input->post('query_id');
 		$buildpackage = $this->db->where('queryId', $QueryId)->get('querypackage')->row();
 		$with_or_wo_bed = explode(",",$buildpackage->child_with_or_wo_bed);
+		$no_adults_room = explode(",",$buildpackage->adult_per_room);
 		$no_childs_room = explode(",",$buildpackage->child_per_room);
 		$cwb_room = explode(",",$buildpackage->cwb_per_room);
 		$cnb_room = explode(",",$buildpackage->cnb_per_room);
 
+		$no_childs_room_new = [];
+		$cwb_room_new = [];
+		$cnb_room_new = [];
+
 		$tableData = $this->input->post('data');
 		$rows_count = count($tableData[0]['group_type']);
-		// print_r($no_childs_room);
+		$rows_count_new = $rows_count / count($no_childs_room);
+
+		for($i=1;$i<=$rows_count_new;$i++){
+			foreach($no_childs_room as $key => $val){
+				array_push($no_childs_room_new,$val);
+				array_push($cwb_room_new,isset($cwb_room[$key]) ? $cwb_room[$key] : 0);
+				array_push($cnb_room_new,isset($cnb_room[$key]) ? $cnb_room[$key] : 0);
+			}
+		}
+
 		// print_r("===========");
-		// print_r($with_or_wo_bed);
+		// print_r($no_childs_room_new);
 		// print_r("===========");
 		// print_r($cwb_room);exit;
 		$datas =  array();
@@ -895,9 +951,9 @@ class Query extends CI_Controller
 			$datas[$x]['extra_with_adult'] = $tableData[0]['extra_with_adult'][$x];
 			$datas[$x]['extra_with_child'] = $tableData[0]['extra_with_child'][$x];
 			$datas[$x]['extra_without_bed'] = $tableData[0]['extra_without_bed'][$x];
-			$datas[$x]['no_childs_room'] = $no_childs_room[$x];
-			$datas[$x]['cwb'] = isset($cwb_room[$x]) ? $cwb_room[$x] : 0;
-			$datas[$x]['cnb'] = isset($cnb_room[$x]) ? $cnb_room[$x] : 0;
+			$datas[$x]['no_childs_room'] = $no_childs_room_new[$x];
+			$datas[$x]['cwb'] = isset($cwb_room_new[$x]) ? $cwb_room_new[$x] : 0;
+			$datas[$x]['cnb'] = isset($cnb_room_new[$x]) ? $cnb_room_new[$x] : 0;
 			
 			$datas[$x]['buildHotelCity'] = $tableData[0]['buildHotelCity'][$x];
 			$datas[$x]['buildCheckIns'] = $tableData[0]['buildCheckIns'][$x];
@@ -2279,6 +2335,7 @@ class Query extends CI_Controller
 		$data['view'] = $this->db->get()->row();
 		$user_id = $this->session->userdata()['admin_id'];
 		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+		$data['package_details'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
 
 		$this->load->library('email');
 		$config = array(

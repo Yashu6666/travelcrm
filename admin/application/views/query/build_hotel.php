@@ -88,7 +88,6 @@
       <div class="mt-5">
 
        <div>
-      
 
        <div class="card-body ">
        
@@ -98,8 +97,9 @@
             <p>Hotel</p>
            </div>
            <div class="row mt-5 mr-3 ml-3 mb-3">
-            <div>
-             <table class="table" id="addrows">
+            <div id="addrows">
+              
+             <table class="table" >
               <div class="alert alert-danger noOfDaysAlertcls" style="display:none;">
                 <strong>Exceed !</strong> You cannot add more than <b id="noOfDaysAlert"></b> days.
               </div>
@@ -129,8 +129,7 @@
 
                </tr>
               </thead>
-            
-             
+
               <tbody>
                                 <tr>
                                   <td class="text-nowrap">Room <?php echo $i?></td>
@@ -148,11 +147,15 @@
                                     </select>
                                   </td>
                                   <td>
-                                    <input class="form-control get_CheckIn" type="date" value="<?php echo $view->specificDate; ?>" name="buildCheckIns[]" id="buildCheckIn" readonly>
+                                    <input class="form-control get_CheckIn" type="date" value="<?php echo $view->specificDate; ?>" name="buildCheckIns[]" id="buildCheckIn<?php echo "_".$i?>">
                                     <input type="hidden" value="<?php echo $view->room; ?>" name="no_of_room" id="no_of_room">
+                                    <!-- <input type="hidden" value="<?php echo $package_details->adult_per_room; ?>" name="adult_per_room" id="adult_per_room">
+                                    <input type="hidden" value="<?php echo $package_details->adult_per_room; ?>" name="adult_per_room" id="adult_per_room">
+                                    <input type="hidden" value="<?php echo $package_details->adult_per_room; ?>" name="adult_per_room" id="adult_per_room"> -->
                                   </td>
                                   <td>
-                                    <select class="form-control bnights get_no_nights" id="buildNoNights" name="buildNoNight[]" required="">
+                                    <!-- <select class="form-control bnights get_no_nights" id="buildNoNights<?php echo "_".$i?>" onchange="checkRoomAvailability(<?php echo 'buildHotelCity_'.$i?>,<?php echo 'buildCheckIn_'.$i?>,<?php echo 'buildNoNights_'.$i?>,<?php echo 'buildHotelName_'.$i?>,)" name="buildNoNight[]" required=""> -->
+                                    <select class="form-control bnights get_no_nights" id="buildNoNights<?php echo "_".$i?>" onchange="get_hotel_name_new('Category','<?php echo '_'.$i ?>');" name="buildNoNight[]" required="">
                                       <option value="0">Select</option>
                                       <?php $count_days = 1;
                                       for ($count_days = 1; $count_days <= $buildpackage->night; $count_days++) {
@@ -162,17 +165,16 @@
                                   </td>
                                   <td>
                                     <div>
-                                      <select data-mdl-for="sample2" class="form-control get_category" value="" id="Category<?php echo '_'.$i ?>" tabIndex="-1" name="Category[]" onchange="get_hotel_name_new('Category','<?php echo '_'.$i ?>');">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                      </select>
+                                    <input class="form-control get_category" type="number" disabled value="<?php echo $buildpackage->hotelPrefrence ?>" name="Category[]" id="Category<?php echo "_".$i?>">
+                                      <!-- <select data-mdl-for="sample2" class="form-control get_category" value="" id="Category<?php echo '_'.$i ?>" tabIndex="-1" name="Category[]" onchange="get_hotel_name_new('Category','<?php echo '_'.$i ?>');">
+                                        <option value="0">0</option>
+                                        <option value="?php echo $buildpackage->hotelPrefrence ?>"><?php echo $buildpackage->hotelPrefrence ?></option>
+                                      </select> -->
                                     </div>
                                   </td>
                                   <td>
-                                    <select class="form-control get_buildHotelName" id="buildHotelName<?php echo '_'.$i ?>" required="" name="buildHotelName[]" onchange="get_route_name_new('buildHotelName','<?php echo '_'.$i ?>');" required>
+                                    <!-- <select class="form-control get_buildHotelName" id="buildHotelName<?php echo '_'.$i ?>" required="" name="buildHotelName[]" onchange="get_route_name_new('buildHotelName','<?php echo '_'.$i ?>');" required> -->
+                                    <select class="form-control get_buildHotelName" id="buildHotelName<?php echo '_'.$i ?>" required="" name="buildHotelName[]" onchange="checkRoomAvailability(<?php echo 'buildHotelCity_'.$i?>,<?php echo 'buildCheckIn_'.$i?>,<?php echo 'buildNoNights_'.$i?>,<?php echo 'buildHotelName_'.$i?>,<?php echo 'buildRoomType_'.$i?>,)" required>
                                     </select>
                                   </td>
                                   <td>
@@ -242,13 +244,13 @@
               <?php endfor ?>
               
              </table>
-             <div style="float:right;">
-              <button type="button" onclick="hotelcalculation()" class="new_btn px-3">Save</button></div>
-            </div>
+             
 
            </div>
           
-         
+           <div style="float:right;">
+              <button type="button" onclick="hotelcalculation()" class="new_btn px-3">Save</button></div>
+            </div>
            
               
 
@@ -919,7 +921,9 @@ function get_hotel_name(id,row){
 
   function get_hotel_name_new(id, row) {
     var city = $('#buildHotelCity' + row).val();
+    console.log("🚩 ~ file: build_hotel.php ~ line 919 ~ get_hotel_name_new ~ city", city)
     var Category = $('#Category' + row).val();
+    console.log("🚩 ~ file: build_hotel.php ~ line 921 ~ get_hotel_name_new ~ Category", Category)
     $("#buildHotelName" + row).empty();
     $.ajax({
       type: "POST",
@@ -2319,7 +2323,8 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                               allocated_days += Number($(this).val());
                             });
                           setTimeout(function(){ $('.noOfDaysAlertcls').attr("style","display:none;") }, 2000);
-                          var initaldays = parseInt($('#buildNoNights').val());
+                          // var initaldays = parseInt($('#buildNoNights').val());
+                          var initaldays = 1;
 
                           if(isNaN(initaldays) || initaldays == ""){
                             $('#buildNoNights').attr('style',"border-color:red");
@@ -2370,6 +2375,7 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                               // template += '</tr>';
                               // }
 template += `
+<table class="table">
 <tbody id="faqs-row${faqs_row}${room_no}">
 <thead>
   <tr>
@@ -2382,7 +2388,6 @@ template += `
   <th>Room Type </th>
   </tr>
 </thead>
-<tbody>
 <tr>
    <td>Room${room_no}</td>
    <td>
@@ -2398,25 +2403,23 @@ template += `
          <option value="Al Ain">Al Ain</option>
       </select>
    </td>
-   <td><input class="form-control get_CheckIn" type="date" value="${f.format("YYYY-MM-DD")}" name="buildCheckIns[]" id="buildCheckIn${faqs_row}${room_no}" readonly></td>
+   <td><input class="form-control get_CheckIn" type="date" value="${f.format("YYYY-MM-DD")}" name="buildCheckIns[]" id="buildCheckIn${faqs_row}${room_no}"></td>
    <td>
-      <select class="form-control bnights get_no_nights" id="buildNoNights${faqs_row}${room_no}"  name="buildNoNight[]" required="">
+   
+      <select class="form-control bnights get_no_nights" id="buildNoNights${faqs_row}${room_no}" onchange="get_hotel_name_new('Category',${faqs_row}${room_no});" name="buildNoNight[]" required="">
+        <option value="">Select</option>
         ${no_of_night}
       </select>
    </td>
    <td>
       <div>
-         <select data-mdl-for="sample2" class="form-control get_category" value="" tabIndex="-1" id="Category${faqs_row}${room_no}" name="Category[]" onchange="get_hotel_name(this.id,${faqs_row}${room_no});">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-         </select>
+         <input class="form-control get_category" type="number" disabled value="<?php echo $buildpackage->hotelPrefrence ?>" name="Category[]" id="Category${faqs_row}${room_no}">
       </div>
    </td>
    <td>
-      <select class="form-control get_buildHotelName" id="buildHotelName${faqs_row}${room_no}"  required="" name="buildHotelName[]"  onchange="get_route_name(this.id,${faqs_row}${room_no});" required>
+      <select class="form-control get_buildHotelName" id="buildHotelName${faqs_row}${room_no}"  required="" name="buildHotelName[]"  
+      onchange="checkRoomAvailability(buildHotelCity${faqs_row}${room_no},buildCheckIn${faqs_row}${room_no},buildNoNights${faqs_row}${room_no},buildHotelName${faqs_row}${room_no},buildRoomType${faqs_row}${room_no})"
+      required>
          <option>Select</option>
       </select>
    </td>
@@ -2473,7 +2476,10 @@ template += `
    <td><button type="button" class="btn btn-danger btn-xs cls-btn"  id="del_btn${faqs_row}${room_no}"  onClick="return  removeHotel2(this);"><i class="fa fa-trash"></i></button> </td>
 </tr>
 
-</tbody>` }
+</tbody>
+</table>
+
+` }
 
                               $("#addrows").append(template);
                               $('#allocated_days').val(parseInt($('#buildNoNights' + faqs_row + room_no).val()) + parseInt(allocated_days));
@@ -2544,8 +2550,9 @@ template += `
                      
                         removeHotel2 = function  removeHotel2(data){
                      var allocateddays = parseInt($('#allocated_days').val());   
-                     var tr = data.closest('tbody');
-                      data.closest('tbody').remove();
+                     var tr = data.closest('table');
+                      data.closest('table').remove();
+                      tr.remove();
                    if($("#faqs-row0").length == 0) {
                      $('#buildNoNights').attr('readonly', false);
                    }
@@ -2554,7 +2561,42 @@ template += `
                  }
 </script>
 
+<script>
+  function checkRoomAvailability(city,date,nights,hotel,room_type){
+    let rating = <?php echo $buildpackage->hotelPrefrence ?>;
+    // console.clear();
+    let city_val = $(city).val();
+    let date_val = $(date).val();
+    let nights_val = $(nights).val();
+    let hotel_val = $(hotel).val();
 
+    $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: '<?php echo site_url(); ?>/Query/get_hotels_by_availability',
+      data: {
+        'city': city_val,
+        'date': date_val,
+        'nights': nights_val,
+        'category': rating,
+        'hotel_id': hotel_val,
+      },
+      success: function(response) {
+        // console.clear();
+        
+    $(room_type).empty();
+        $(room_type).append($("<option>Select Room Type</option>"));
+        for (let i = 0; i < response.length; ++i) {
+          var newOption = $(room_type)
+            .append($("<option></option>")
+              .attr("value", response[i])
+              .text(response[i]));
+        }
+      }
+    })
+
+
+  }
 </script>
   
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>

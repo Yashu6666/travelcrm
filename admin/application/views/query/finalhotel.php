@@ -863,7 +863,7 @@ textarea{
         "exclusions" :  exclu,
         "conditions" :  TnC,
         "cancelation_policy" : canc_ply,
-        // "buildRoomType" : <?php// echo $proposalDetails['roomType'][0] ?>,
+        // "buildRoomType" : ?php// echo $proposalDetails['roomType'][0] ?>,
         "room_sharing_types" : <?php echo json_encode($proposalDetails['room_sharing_types']) ?> ,
         "hotelPrefrence" : "<?php echo $buildpackage->hotelPrefrence ?>",
         "build_room_types" : <?php echo json_encode($proposalDetails['build_room_types']) ?> ,

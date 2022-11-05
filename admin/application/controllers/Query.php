@@ -3105,9 +3105,8 @@ class Query extends CI_Controller
 			'perpax_infants' => $_POST['perpax_infants_input'],
 
 			'hotelName' =>  isset($_POST['buildHotelName']) ? $_POST['buildHotelName'] : [],
-
-			// 'noOfNights' => $_POST['buildNoNightss'],
-			'noOfNights' => $_POST['buildNoNight'],
+			
+			'noOfNights' => isset($_POST['buildNoNightss']) && !empty($_POST['buildNoNightss']) ? $_POST['buildNoNightss'] : $_POST['buildNoNight'],
 
 			'roomType' => $_POST['buildRoomType'],
 

@@ -394,10 +394,19 @@ class Query extends CI_Controller
 	}
 	public function delete_query($id)
 	{
-		if ($this->db->where('id', $id)->delete('b2bcustomerquery')) {
-			$this->session->set_flashdata('success', 'Data deleted Sucessfully');
+		$package = $this->db->where('id', $id)->get('querypackage')->row();
+		if(!empty($package)){
+			try{
+				$this->db->where('id', $id)->delete('querypackage');
+				$this->db->where('query_id', $package->queryId)->delete('b2bcustomerquery');
+				$this->session->set_flashdata('success', 'Data deleted Sucessfully');
 			redirect('query/view_query', 'refresh');
-		} else {
+			} catch(Exception $e){
+				$this->session->set_flashdata('error', 'Something Went Wrong');
+				redirect('query/view_query', 'refresh');
+			}
+		}
+		else {
 			$this->session->set_flashdata('error', 'Something Went Wrong');
 			redirect('query/view_query', 'refresh');
 		}
@@ -952,8 +961,8 @@ class Query extends CI_Controller
 			$datas[$x]['extra_with_child'] = $tableData[0]['extra_with_child'][$x];
 			$datas[$x]['extra_without_bed'] = $tableData[0]['extra_without_bed'][$x];
 			$datas[$x]['no_childs_room'] = $no_childs_room_new[$x];
-			$datas[$x]['cwb'] = isset($cwb_room_new[$x]) ? $cwb_room_new[$x] : 0;
-			$datas[$x]['cnb'] = isset($cnb_room_new[$x]) ? $cnb_room_new[$x] : 0;
+			$datas[$x]['cwb'] = isset($cwb_room_new[$x]) && !empty($cwb_room_new[$x])  ? $cwb_room_new[$x] : 0;
+			$datas[$x]['cnb'] = isset($cnb_room_new[$x]) && !empty($cnb_room_new[$x]) ? $cnb_room_new[$x] : 0;
 			
 			$datas[$x]['buildHotelCity'] = $tableData[0]['buildHotelCity'][$x];
 			$datas[$x]['buildCheckIns'] = $tableData[0]['buildCheckIns'][$x];
@@ -3097,7 +3106,9 @@ class Query extends CI_Controller
 
 			'hotelName' =>  isset($_POST['buildHotelName']) ? $_POST['buildHotelName'] : [],
 
-			'noOfNights' => $_POST['buildNoNightss'],
+			// 'noOfNights' => $_POST['buildNoNightss'],
+			'noOfNights' => $_POST['buildNoNight'],
+
 			'roomType' => $_POST['buildRoomType'],
 
 			'buildTravelFromdateCab' => $_POST['buildTravelFromdateCab'],

@@ -795,22 +795,22 @@ class Query extends CI_Controller
 		foreach($query as $key => $val){
 
 			if($val->from_date <= $date){
-				array_push($from_room_types,$val);
+				array_push($from_room_types,$val->roomtype);
 			} 
 		}
 		// echo json_encode($from_room_types);
 
-		$room_types = [];
-		foreach($from_room_types as $key => $val){
+		// $room_types = [];
+		// foreach($from_room_types as $key => $val){
 
-			if($val->to_date >= $date_co_new){
-				array_push($room_types,$val->roomtype);
-			} 
-			// else {
-			// 	echo "false";
-			// }
-		}
-		echo json_encode($room_types);
+		// 	if($val->to_date >= $date_co_new){
+		// 		array_push($room_types,$val->roomtype);
+		// 	} 
+		// 	// else {
+		// 	// 	echo "false";
+		// 	// }
+		// }
+		echo json_encode($from_room_types);
 	}
 
 	// public function getHotelCalculation(){
@@ -1122,6 +1122,275 @@ class Query extends CI_Controller
 			// print_r($total_per_pax_adult);
 			// print_r($total_per_pax_child);
 			// print_r($total_per_pax_wo);
+			// print_r("====================");
+
+		}
+
+		
+		// 100 * 3 = 300 * 2 =  / 3
+		$hotel_query_data = [
+			'nights' => implode(',',$tableData[0]['nights']),
+			'hotel_id' => implode(',',$tableData[0]['hotelName']),
+			'room_type' => implode(',',$tableData[0]['roomType']),
+			'group_type' => implode(',',$tableData[0]['group_type']),
+
+			'hotel_name' => implode(',',$hotel_names),
+			'category' => implode(',',$tableData[0]['Category']),
+			'checkin' => implode(',',$tableData[0]['buildCheckIns']),
+			'hotel_city' => implode(',',$tableData[0]['buildHotelCity']),
+			
+			'adult_pax' => $pax_adult,
+			'child_pax' => $pax_child,
+			'infant_pax' => $pax_infants,
+			
+			'adult_price' => $hotel_calculation_data['total_pax_adult_rate'],
+			'child_price' => $hotel_calculation_data['total_pax_child_rate'],
+			'infant_price' => 0,
+			'cnb_price' => $hotel_calculation_data['total_pax_wo_rate'],
+
+			'type' => implode(',',$tableData[0]['get_room_types']),
+			'bed_type' => implode(',',$tableData[0]['bedType']),
+			"adult_extra_bed" => implode(',',$tableData[0]['extra_with_adult']),
+			"child_extra_bed" => implode(',',$tableData[0]['extra_with_child']),
+			"infant_extra_bed" => implode(',',$tableData[0]['extra_without_bed']),
+			"sharing_type" => implode(',',$tableData[0]['sharing_types']),
+		];
+		// echo"<pre>";print_r($QueryId);print_r($hotel_query_data);exit;
+		// return;
+
+		$query_data = $this->db->where('query_id', $QueryId)->get('query_hotel');
+		if ($query_data->num_rows() > 0) {
+			$this->db->where('query_id', $QueryId);
+			$this->db->update('query_hotel',$hotel_query_data);
+		} else {
+			$hotel_query_data['query_id'] = $QueryId;
+			$this->db->insert('query_hotel',$hotel_query_data);
+		}
+
+		
+		echo json_encode($hotel_calculation_data);
+	}
+
+
+	public function getHotelCalculationNew()
+	{
+		$pax_adult = $this->input->post('pax_adult');
+		$pax_child = $this->input->post('pax_child');
+		$pax_infants = $this->input->post('pax_infants');
+
+
+		// $rows_count = $this->input->post('total_rows');
+		$QueryId = $this->input->post('query_id');
+		$buildpackage = $this->db->where('queryId', $QueryId)->get('querypackage')->row();
+		$with_or_wo_bed = explode(",",$buildpackage->child_with_or_wo_bed);
+		$no_adults_room = explode(",",$buildpackage->adult_per_room);
+		$no_childs_room = explode(",",$buildpackage->child_per_room);
+		$cwb_room = explode(",",$buildpackage->cwb_per_room);
+		$cnb_room = explode(",",$buildpackage->cnb_per_room);
+
+		$no_childs_room_new = [];
+		$cwb_room_new = [];
+		$cnb_room_new = [];
+
+		$tableData = $this->input->post('data');
+		$rows_count = count($tableData[0]['group_type']);
+		$rows_count_new = $rows_count / count($no_childs_room);
+
+		for($i=1;$i<=$rows_count_new;$i++){
+			foreach($no_childs_room as $key => $val){
+				array_push($no_childs_room_new,$val);
+				array_push($cwb_room_new,isset($cwb_room[$key]) ? $cwb_room[$key] : 0);
+				array_push($cnb_room_new,isset($cnb_room[$key]) ? $cnb_room[$key] : 0);
+			}
+		}
+
+		// print_r("===========");
+		// print_r($no_childs_room_new);
+		// print_r("===========");
+		// print_r($cwb_room);exit;
+		$datas =  array();
+		for ($x = 0; $x < $rows_count; $x++) {
+			$datas[$x]['nights'] = $tableData[0]['nights'][$x];
+			$datas[$x]['group_type'] = $tableData[0]['group_type'][$x];
+			$datas[$x]['hotel_id'] = $tableData[0]['hotelName'][$x];
+			$datas[$x]['room_type'] = $tableData[0]['roomType'][$x];
+			$datas[$x]['bed_types'] = $tableData[0]['bedType'][$x];
+			$datas[$x]['extra_with_adult'] = $tableData[0]['extra_with_adult'][$x];
+			$datas[$x]['extra_with_child'] = $tableData[0]['extra_with_child'][$x];
+			$datas[$x]['extra_without_bed'] = $tableData[0]['extra_without_bed'][$x];
+			$datas[$x]['no_childs_room'] = $no_childs_room_new[$x];
+			$datas[$x]['cwb'] = isset($cwb_room_new[$x]) && !empty($cwb_room_new[$x])  ? $cwb_room_new[$x] : 0;
+			$datas[$x]['cnb'] = isset($cnb_room_new[$x]) && !empty($cnb_room_new[$x]) ? $cnb_room_new[$x] : 0;
+			
+			$datas[$x]['buildHotelCity'] = $tableData[0]['buildHotelCity'][$x];
+			$datas[$x]['buildCheckIns'] = $tableData[0]['buildCheckIns'][$x];
+			$datas[$x]['Category'] = $tableData[0]['Category'][$x];
+			$datas[$x]['get_room_types'] = $tableData[0]['get_room_types'][$x];
+			$datas[$x]['sharing_types'] = $tableData[0]['sharing_types'][$x];
+
+			$datas[$x]['child_per_room_wo_bed'] = $tableData[0]['child_per_room_wo_bed'][$x];
+			$datas[$x]['adult_per_room'] = $tableData[0]['adult_per_room'][$x];
+			$datas[$x]['child_per_room'] = $tableData[0]['child_per_room'][$x];
+
+			
+		}
+		$no_of_nights = ($tableData[0]['nights']);
+		// print_r($datas);exit;
+
+		$hotel_names = [];
+		foreach ($tableData[0]['hotelName'] as $key => $value) {
+			$this->db->select('hotelname');
+			$this->db->where('id', $value);
+			$this->db->limit(1);
+  			$name = $this->db->get('hotel');
+			$hotel_names[] = $name->row()->hotelname;
+		}
+
+		$hotels_calculation = array();
+		$hotel_calculation_data['total_pax_adult_rate'] = 0;
+		$hotel_calculation_data['total_pax_adult_rate_double'] = 0;
+		$hotel_calculation_data['total_pax_adult_rate_triple'] = 0;
+		$hotel_calculation_data['total_pax_child_rate'] = 0;
+		$hotel_calculation_data['total_pax_wo_rate'] = 0;
+		foreach ($datas as $k => $val) {
+			$this->db->select("*");
+			$this->db->from("rooms");
+			$this->db->where('roomtype', $val['room_type']);
+			$this->db->where('hotelname', $val['hotel_id']);
+			// $query_hotel_data[] = $this->db->get()->result_array();
+			$query_hotel_data = $this->db->get()->result_array();
+			// print_r($query_hotel_data);exit;
+
+			$date_ci = strtotime($val['buildCheckIns']);
+			$hotels_calculation = [];
+			
+			for($i=0;$i<$val['nights'];$i++) {
+				$date_co = strtotime("+".($i)." day", $date_ci);
+				$date_co_new = date('Y-m-d', $date_co);
+				
+				foreach($query_hotel_data as $key2 => $val2){
+					if($val2['to_date'] >= $date_co_new){
+						array_push($hotels_calculation,$val2);
+					} 
+				}
+
+			
+
+				// // $date_ci = strtotime($val['buildCheckIns']);
+				// // $date_co = strtotime("+".($val['nights'] - 1)." day", $date_ci);
+				// // $date_co_new = date('Y-m-d', $date_co);
+				// exit;
+		
+		    $hotels_calculation_data = array();
+
+			if($val['get_room_types'] == "Room Only"){
+				$room_val_index = 0;
+			}
+			elseif($val['get_room_types'] == "BB"){
+				$room_val_index = 1;
+			}
+			elseif($val['get_room_types'] == "HB"){
+				$room_val_index = 2;
+			}
+			elseif($val['get_room_types'] == "FB"){
+				$room_val_index = 3;
+			}
+
+			if ($val['extra_with_adult']) {
+				$netrate_extra_array = explode(",", $hotels_calculation[$i]['netrate_extra']);
+				$vat_extra_array = explode(",", $hotels_calculation[$i]['vat_extra']);
+				
+				$net_rate_extra = $netrate_extra_array[$room_val_index];
+			} else {
+				$net_rate_extra = 0;
+				$vat_extra = 0;
+			}
+ 
+
+			$netrate_extra_child_array = explode(",", $hotels_calculation[$i]['netrate_extra_child']);
+			$netrate_extra_child = $netrate_extra_child_array[$room_val_index];
+			// print_r($netrate_extra_child);//exit;
+
+			$netrate_extra_wo_array = explode(",", $hotels_calculation[$i]['netrate_extra_wo']);
+			$netrate_extra_wo = $netrate_extra_wo_array[$room_val_index];
+			// print_r($netrate_extra_wo);exit;
+
+			
+
+			if ($val['bed_types'] == "Single") {
+				$net_rate_array = explode(",", $hotels_calculation[$i]['netrate']);
+				$vat_array = explode(",", $hotels_calculation[$i]['vat']);
+				$net_rate = $net_rate_array[$room_val_index];
+
+				$vat = 	$vat_array[$room_val_index];
+
+				if (!empty($val['extra_with_adult'])) {
+					$net_rate_extra_array = explode(",", $hotels_calculation[$i]['netrate_extra']);
+					$net_rate_extra = $net_rate_extra_array[$room_val_index];
+				} else {
+					$net_rate_extra = 0;
+				}
+				
+			} else if ($val['bed_types'] == "Double") {
+				$net_rate_array = explode(",", $hotels_calculation[$i]['netrate_double']);
+				
+
+				$vat_array = explode(",", $hotels_calculation[$i]['vat_double']);
+
+				$net_rate = $net_rate_array[$room_val_index];
+				$vat = 	$vat_array[$room_val_index];
+
+				if (!empty($val['extra_with_adult'])) {
+					$net_rate_extra_array = explode(",", $hotels_calculation[$i]['netrate_extra']);
+					$net_rate_extra = $net_rate_extra_array[$room_val_index];
+				} else {
+					$net_rate_extra = 0;
+				}
+				
+			} else if ($val['bed_types'] == "Triple") {
+				$net_rate_array = explode(",", $hotels_calculation[$i]['netrate_triple']);
+				$vat_array = explode(",", $hotels_calculation[$i]['vat_triple']);
+
+				$net_rate = $net_rate_array[$room_val_index];
+
+				$vat = 	$vat_array[$room_val_index];
+
+				if (!empty($val['extra_with_adult'])) {
+					$net_rate_extra_array = explode(",", $hotels_calculation[$i]['netrate_extra']);
+					$net_rate_extra = $net_rate_extra_array[$room_val_index];
+				} else {
+					$net_rate_extra = 0;
+				}
+			} else {
+				$net_rate = 0;
+				$vat = 0;
+				$net_rate_extra = 0;
+			}
+
+			$total_per_pax_adult = (int)$net_rate + (int)$vat + (int)$net_rate_extra;
+
+			$total_per_pax_child = (int)$netrate_extra_child;
+
+			$total_per_pax_wo = (int)$netrate_extra_wo;
+
+			if ($val['bed_types'] == "Single") {
+				$hotel_calculation_data['total_pax_adult_rate'] += (($total_per_pax_adult)) * ($val['adult_per_room'] / 1 ) *  1;
+			} else if ($val['bed_types'] == "Double") {
+				$hotel_calculation_data['total_pax_adult_rate_double'] += (($total_per_pax_adult)) * ($val['adult_per_room'] / 2 ) * 1;
+			} else if ($val['bed_types'] == "Triple") {
+				$hotel_calculation_data['total_pax_adult_rate_triple'] += (($total_per_pax_adult)) * ($val['adult_per_room'] / 3 ) *  1;
+			}
+
+			$hotel_calculation_data['total_pax_child_rate'] += (($total_per_pax_child * ($val['cwb'])) * $val['nights']);
+
+			$hotel_calculation_data['total_pax_wo_rate'] += (($total_per_pax_wo * ($val['cnb'])) * $val['nights']);
+
+		}
+
+			// print_r("====================");
+			// print_r($hotel_calculation_data);
+			// // print_r($total_per_pax_child);
+			// // print_r($total_per_pax_wo);
 			// print_r("====================");
 
 		}

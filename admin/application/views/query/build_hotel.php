@@ -248,7 +248,8 @@
                                     </td>
                                     <td>
                                       <input class="form-control child_per_room" type="text" readonly value="<?php echo explode(",", $package_details->child_per_room)[$i - 1]; ?>" name="child_per_room[]" id="child_per_room">
-                                      <input class="form-control child_per_room_wo_bed" type="hidden" readonly value="<?php echo $no_child_room_wo_new[$i - 1]; ?>" name="child_per_room_wo_bed[]" id="child_per_room_wo_bed">
+                                      <input class="form-control child_per_room_wo_bed" type="hidden" readonly value="<?php echo isset($no_child_room_wo_new[$i - 1]) &&
+                                      !empty($no_child_room_wo_new[$i - 1]) ? ($no_child_room_wo_new[$i - 1]) : ''; ?>" name="child_per_room_wo_bed[]" id="child_per_room_wo_bed">
                                     </td>
                                     <td colspan="2">
                                       <div class="d-flex justify-content-around">
@@ -442,6 +443,8 @@
                             $(".card-box").click(function(e) {
                               e.stopPropagation();
                               var hotel_rate_adult = $("#hotel_rate_adult").val();
+                              var hotel_rate_adult_double = $("#hotel_rate_adult_double").val();
+                              var hotel_rate_adult_triple = $("#hotel_rate_adult_triple").val();
                               // var total_price_internal = $("#total_price_internal").val();
                               // var total_price_point = $("#total_price_point").val();
                               // var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val(); 
@@ -449,7 +452,9 @@
                               // var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
                               // var total_pax_sic_adult = $("#total_pax_sic_adult").val();
 
-                              var sub_total_adult = parseInt(hotel_rate_adult)
+                              var sub_total_adult = parseInt(hotel_rate_adult);
+                              var sub_total_adult_double = parseInt(hotel_rate_adult_double);
+                              var sub_total_adult_triple = parseInt(hotel_rate_adult_triple);
                               //  +
                               //   parseInt(total_price_internal)+ 
                               //   parseInt(total_price_point) + 
@@ -491,6 +496,8 @@
                               var usd_aed = <?php echo $usd_to_aed->usd_to_aed; ?>;
 
                               $("#subtotal_adults").html(c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2) : sub_total_adult);
+                              $("#subtotal_adults_double").html(c_type == 'USD' ? (sub_total_adult_double / usd_aed).toFixed(2) : sub_total_adult_double);
+                              $("#subtotal_adults_triple").html(c_type == 'USD' ? (sub_total_adult_triple / usd_aed).toFixed(2) : sub_total_adult_triple);
                               $("#subtotal_childs").html(c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child);
                               $("#subtotal_infants").html(c_type == 'USD' ? (sub_total_infant / usd_aed).toFixed(2) : sub_total_infant);
 
@@ -500,13 +507,16 @@
 
                               var PackageMarkup = $("#PackageMarkup").val();
                               var Mark_up = $("#Mark_up").val();
-
                               var total_adult = 0;
+                              var total_adult_double = 0;
+                              var total_adult_triple = 0;
                               var total_child = 0;
                               var total_infant = 0;
                               if (Mark_up == "precentage") {
 
                                 total_adult = (parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100));
+                                total_adult_double = (parseInt(sub_total_adult_double) + (parseInt(sub_total_adult_double) * parseInt(PackageMarkup) / 100));
+                                total_adult_triple = (parseInt(sub_total_adult_triple) + (parseInt(sub_total_adult_triple) * parseInt(PackageMarkup) / 100));
                                 total_child = (parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
                                 total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
 
@@ -514,6 +524,8 @@
                               if (Mark_up == "values") {
 
                                 total_adult = (parseInt(sub_total_adult) + parseInt(PackageMarkup));
+                                total_adult_double = (parseInt(sub_total_adult_double) + parseInt(PackageMarkup));
+                                total_adult_triple = (parseInt(sub_total_adult_triple) + parseInt(PackageMarkup));
                                 total_child = (parseInt(sub_total_child) + parseInt(PackageMarkup));
                                 total_infant = (parseInt(sub_total_infant) + parseInt(PackageMarkup));
 
@@ -525,6 +537,8 @@
                               // $("#totalprice_infants").html( total_infant );
 
                               $("#totalprice_adult").html(c_type == 'USD' ? (total_adult / usd_aed).toFixed(2) : total_adult);
+                              $("#totalprice_adult_double").html(c_type == 'USD' ? (total_adult_double / usd_aed).toFixed(2) : total_adult_double);
+                              $("#totalprice_adult_triple").html(c_type == 'USD' ? (total_adult_triple / usd_aed).toFixed(2) : total_adult_triple);
                               $("#totalprice_childs").html(c_type == 'USD' ? (total_child / usd_aed).toFixed(2) : total_child);
                               $("#totalprice_infants").html(c_type == 'USD' ? (total_infant / usd_aed).toFixed(2) : total_infant);
 
@@ -556,6 +570,8 @@
                               // var per_pax_infant = (pax_infant_count > 1 ? parseInt(total_infant) / 2 : parseInt(total_infant));
 
                               var per_pax_adult = Math.ceil(pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
+                              var per_pax_adult_double = Math.ceil(pax_adult_count > 1 ? parseInt(total_adult_double) / pax_adult_count : parseInt(total_adult_double));
+                              var per_pax_adult_triple = Math.ceil(pax_adult_count > 1 ? parseInt(total_adult_triple) / pax_adult_count : parseInt(total_adult_triple));
                               var per_pax_child = Math.ceil(pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
                               var per_pax_infant = Math.ceil(pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
                               // $("#perpax_adult").html(per_pax_adult);
@@ -566,6 +582,8 @@
                               // $("#perpax_childs_input").val( per_pax_child );
                               // $("#perpax_infants_input").val( per_pax_infant );
                               $("#perpax_adult").html(c_type == 'USD' ? (per_pax_adult / usd_aed).toFixed(2) : per_pax_adult);
+                              $("#perpax_adult_double").html(c_type == 'USD' ? (per_pax_adult_double / usd_aed).toFixed(2) : per_pax_adult_double);
+                              $("#perpax_adult_triple").html(c_type == 'USD' ? (per_pax_adult_triple / usd_aed).toFixed(2) : per_pax_adult_triple);
                               $("#perpax_childs").html(c_type == 'USD' ? (per_pax_child / usd_aed).toFixed(2) : per_pax_child);
                               $("#perpax_infants").html(c_type == 'USD' ? (per_pax_infant / usd_aed).toFixed(2) : per_pax_infant);
 
@@ -669,24 +687,32 @@
                               <tr align="center">
                                 <td type="text" name="person" id="person" value=""><span></td>
                                 <td type="" name="AdultCost" id="AdultCost" value=""><span>Adult</td>
+                                <td type="" name="DoubleAdultCost" id="DoubleAdultCost" value=""><span>Double Sharing</td>
+                                <td type="" name="TripleAdultCost" id="TripleAdultCost" value=""><span>Triple Sharing</td>
                                 <td type="" name="ChildCost" id="ChildCost" value=""><span>CWB</td>
                                 <td type="" name="InfantCost" id="InfantCost" value=""><span>CNB</td>
                               </tr>
                               <tr align="center">
                                 <td><b>Sub Total</b></td>
                                 <td type="text" id="subtotal_adults" name="subtotal_adults" value=""></td>
+                                <td type="text" id="subtotal_adults_double" name="subtotal_adults_double" value=""></td>
+                                <td type="text" id="subtotal_adults_triple" name="subtotal_adults_triple" value=""></td>
                                 <td type="text" id="subtotal_childs" name="subtotal_childs" value=""></td>
                                 <td type="text" id="subtotal_infants" name="subtotal_infants" value=""></td>
                               </tr>
                               <tr align="center">
                                 <td><b>Total Price</b></td>
                                 <td type="text" name="totalprice_adult" id="totalprice_adult" value=""></td>
+                                <td type="text" name="totalprice_adult_double" id="totalprice_adult_double" value=""></td>
+                                <td type="text" name="totalprice_adult_triple" id="totalprice_adult_triple" value=""></td>
                                 <td type="text" name="totalprice_childs" id="totalprice_childs" value=""></td>
                                 <td type="text" name="totalprice_infants" id="totalprice_infants" value=""></td>
                               </tr>
                               <tr align="center">
                                 <td><b>Per PAX</b></td>
                                 <td type="text" name="perpax_adult" id="perpax_adult" value=""></td>
+                                <td type="text" name="perpax_adult_double" id="perpax_adult_double" value=""></td>
+                                <td type="text" name="perpax_adult_triple" id="perpax_adult_triple" value=""></td>
                                 <td type="text" name="perpax_childs" id="perpax_childs" value=""></td>
                                 <td type="text" name="perpax_infants" id="perpax_infants" value=""></td>
                               </tr>
@@ -1577,6 +1603,7 @@ jQuery('#addrows > tbody > tr').each(function(index, value) {
 
       $.ajax({
         type: "POST",
+        url: "<?php echo base_url()?>Query/getHotelCalculationNew",
         data: {
           data: data,
           total_rows: total_rows,
@@ -1590,6 +1617,8 @@ jQuery('#addrows > tbody > tr').each(function(index, value) {
         success: function(response) {
           // console.log(JSON.parse(response.total_pax_adult_rate));
           $('#hotel_rate_adult').val(response.total_pax_adult_rate);
+          $('#hotel_rate_adult_double').val(response.total_pax_adult_rate_double);
+          $('#hotel_rate_adult_triple').val(response.total_pax_adult_rate_triple);
           $('#hotel_rate_child').val(response.total_pax_child_rate);
           $('#hotel_rate_infant').val(response.total_pax_wo_rate);
           // $('#hotel_rate_adult').val(100);
@@ -1666,7 +1695,7 @@ jQuery('#addrows > tbody > tr').each(function(index, value) {
             $.ajax({
               type:"POST",
               dataType: "json",
-              url:'<?php echo site_url(); ?>/Query/getHotelCalculation',
+              url:'<?php echo site_url(); ?>/Query/getHotelCalculationNew',
               data:{'pax_adult':pax_adult,'pax_child':pax_child,'build_room_type':build_room_type,'no_of_nights':no_of_nights,'build_hotel_name':build_hotel_name,'build_bed_type':build_bed_type,'extra_with_adult':extra_with_adult,'extra_with_child':extra_with_child,'extra_without_bed':extra_without_bed},
               success:function(response){        
               $('#hotel_rate_adult').val(response.total_pax_adult_rate);
@@ -1682,6 +1711,8 @@ jQuery('#addrows > tbody > tr').each(function(index, value) {
       }
 </script> -->
 <input type="hidden" id="hotel_rate_adult" name="hotel_rate_adult" value="0" />
+<input type="hidden" id="hotel_rate_adult_double" name="hotel_rate_adult_double" value="0" />
+<input type="hidden" id="hotel_rate_adult_triple" name="hotel_rate_adult_triple" value="0" />
 <input type="hidden" id="hotel_rate_child" name="hotel_rate_child" value="0" />
 <input type="hidden" id="hotel_rate_infant" name="hotel_rate_infant" value="0" />
 <script>

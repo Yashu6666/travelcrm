@@ -1376,14 +1376,16 @@ class Query extends CI_Controller
 			if ($val['bed_types'] == "Single") {
 				$hotel_calculation_data['total_pax_adult_rate'] += (($total_per_pax_adult)) * ($val['adult_per_room'] / 1 ) *  1;
 			} else if ($val['bed_types'] == "Double") {
-				$hotel_calculation_data['total_pax_adult_rate_double'] += (($total_per_pax_adult)) * ($val['adult_per_room'] / 2 ) * 1;
+				$hotel_calculation_data['total_pax_adult_rate_double'] += (($total_per_pax_adult)) * ($val['adult_per_room'] > 1 ? ($val['adult_per_room'] / 2) : 1)
+				 * 1;
 			} else if ($val['bed_types'] == "Triple") {
-				$hotel_calculation_data['total_pax_adult_rate_triple'] += (($total_per_pax_adult)) * ($val['adult_per_room'] / 3 ) *  1;
+				$hotel_calculation_data['total_pax_adult_rate_triple'] += (($total_per_pax_adult)) * ($val['adult_per_room'] > 1 ? ($val['adult_per_room'] / 3) : 1)
+				 *  1;
 			}
 
-			$hotel_calculation_data['total_pax_child_rate'] += (($total_per_pax_child * ($val['cwb'])) * $val['nights']);
+			$hotel_calculation_data['total_pax_child_rate'] += (($total_per_pax_child * ($val['cwb'])) * 1);
 
-			$hotel_calculation_data['total_pax_wo_rate'] += (($total_per_pax_wo * ($val['cnb'])) * $val['nights']);
+			$hotel_calculation_data['total_pax_wo_rate'] += (($total_per_pax_wo * ($val['cnb'])) * 1);
 
 		}
 

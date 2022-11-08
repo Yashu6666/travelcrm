@@ -344,7 +344,7 @@
                         <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                             <div class="form-group dropdown-menuWidth">
                                 <label for="b2bagencyname"><b>Company Name</b> <span class="colorRed">*</span></label>
-                                <input type="text" autocomplete="off" class="form-control whbg" name="b2bcompanyName" id="company" placeholder="Company Name" value="" required>
+                                <input type="text" autocomplete="off" class="form-control typeahead" name="b2bcompanyName" id="company" placeholder="Company Name" value="" required>
 
                                 <br><span id="spanCompany" class="spanCompany"></span>
 
@@ -363,7 +363,7 @@
                         <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
                             <div class="form-group">
                                 <label for="b2bagency_emailid"><b>Email-Id</b> <span class="colorRed">*</span></label>
- 								<input name="b2bEmail" id="email" maxlength="50" class="form-control" type="text" placeholder="Email-Id" value="" autocomplete="off" required>
+ 								<input name="b2bEmail" id="b2bemail" maxlength="50" class="form-control" type="text" placeholder="Email-Id" value="" autocomplete="off" required>
                             </div>
 
                             <br> <span id="spanEmail" class="spanCompany"></span>
@@ -432,7 +432,30 @@
 
 <?php $this->load->view('footer');?>
 <script src="<?php echo base_url();?>public/js/validate.js"></script>
+<script src="   https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script> 
 
+<script>
+	$('input.typeahead').typeahead({
+        source:  function (query, process) {
+        return $.get('<?php echo base_url('query/searchCompanyName');?>', { query: query}, function (data) {
+                data = $.parseJSON(data);
+                return process(data);
+            });
+			
+        },
+		afterSelect: function (data) {
+			return $.get('<?php echo base_url('query/getCompanyDetails');?>', { name: data}, function (data) {
+                data = $.parseJSON(data);
+				$('#b2bCompanyAddress').val( data.b2bCompanyAddress);
+				$('#b2bemail').val( data.b2bEmail);
+				$('#firstName').val( data.b2bfirstName);
+				$('#lastName').val( data.b2blastName);
+				$('#phoenVal').val( data.b2bmobileNumber);
+            });
+		}
+    });
+</script>
 <script>
 	
 	function follow_up(id){

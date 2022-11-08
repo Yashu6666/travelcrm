@@ -12,6 +12,28 @@ class Query extends CI_Controller
 		$this->load->library('Image_Slug');
 		// $this->load->library('Pdf');
 	}
+
+	public function searchCompanyName()
+	{
+		$query = $this->input->get('query');
+		$this->db->like('b2bcompanyName', $query);
+		$data = $this->db->get("b2bcustomerquery")->result();
+		$names = [];
+		foreach ($data as $key => $val) {
+		  $names[] = $val->b2bcompanyName;
+		}
+		echo json_encode($names);
+	}
+
+	public function getCompanyDetails()
+	{
+		$name = $this->input->get('name');
+		$this->db->where('b2bcompanyName', $name);
+		$data = $this->db->order_by("id", "desc")->get("b2bcustomerquery")->row();
+		
+		echo json_encode($data);
+	}
+
 	public function sendMailProposalPackage()
 	{
 		try {
@@ -56,9 +78,10 @@ class Query extends CI_Controller
 			else {
 				$body = $this->load->view('query/email_templates/proposal', $data, TRUE);
 			}
-
+			
+			$email_from = $this->session->userdata('admin_email');
 			$this->email->initialize($config);
-			$this->email->from('devsum2@gmail.com');
+			$this->email->from($email_from);
 			$this->email->to($data_en->cus_email);
 			$this->email->cc($data_en->cc_email);
 			$this->email->subject($data_en->subject);
@@ -652,8 +675,9 @@ class Query extends CI_Controller
 			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
+		$email_from = $this->session->userdata('admin_email');
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from($email_from);
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -2634,8 +2658,9 @@ class Query extends CI_Controller
 			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
+		$email_from = $this->session->userdata('admin_email');
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from($email_from);
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -2682,8 +2707,9 @@ class Query extends CI_Controller
 			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
+		$email_from = $this->session->userdata('admin_email');
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from($email_from);
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -2788,8 +2814,9 @@ class Query extends CI_Controller
 			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
+		$email_from = $this->session->userdata('admin_email');
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from($email_from);
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -2895,8 +2922,9 @@ class Query extends CI_Controller
 			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
+		$email_from = $this->session->userdata('admin_email');
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from($email_from);
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);
@@ -2990,8 +3018,9 @@ class Query extends CI_Controller
 			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
+		$email_from = $this->session->userdata('admin_email');
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from($email_from);
 		$this->email->to($data['view']->b2bEmail);
 		$this->email->subject($subject);
 		$body = $this->load->view('query/email_templates/acknowledge', $data, TRUE);

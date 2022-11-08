@@ -215,8 +215,9 @@ class HotelVoucher extends CI_Controller
 			 / ' . $data['view']->specificDate . ' / ' . $data['view']->goingTo . ' / 
 			' . $data['admin_user']->firstName . ' ' . $data['admin_user']->LastName;
 
+			$email_from = $this->session->userdata('admin_email');
 			$this->email->initialize($config);
-			$this->email->from('devsum2@gmail.com');
+			$this->email->from($email_from);
 			$this->email->to($c_email);
 			$this->email->subject($subject);
 

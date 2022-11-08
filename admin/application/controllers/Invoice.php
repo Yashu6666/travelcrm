@@ -244,8 +244,9 @@ class Invoice extends CI_Controller
 		$file_name = base_url('/public/uploads/hotelVoucher/' . $pdf_name);
 		$this->email->attach($file_name);
 
+		$email_from = $this->session->userdata('admin_email');
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from($email_from);
 		$this->email->to($email);
 		// $this->email->cc('info@diamondtoursdubai.com');
 		$this->email->subject($subject);
@@ -286,8 +287,9 @@ class Invoice extends CI_Controller
 		$email = $this->input->post('email');
 		$subject = $this->input->post('subject');
 
+		$email_from = $this->session->userdata('admin_email');
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$this->email->from($email_from);
 		$this->email->to($email);
 		$this->email->subject($subject);
 		$this->email->message($this->input->post('body'));

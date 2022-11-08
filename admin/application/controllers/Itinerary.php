@@ -63,8 +63,13 @@ class Itinerary extends CI_Controller {
 
 	public function view()
 	{
+		$this->db->order_by('id', 'desc');
+		if($this->session->userdata('reg_type') != 'Super Admin'){
+			$this->db->where('created_by' , $this->session->userdata('admin_id'));
+		}
+		$data['view'] = $this->db->get('itinery_data')->result();
 
-		$this->load->view('itinerary/view');
+		$this->load->view('itinerary/view',$data);
 	}
 
 	public function sendMailItinerary()	
@@ -115,8 +120,9 @@ class Itinerary extends CI_Controller {
 			$message .= '<p>Thank you,</p>';
 			$message .= '</body></html>';
 
-			$this->email->initialize($config);	
-			$this->email->from('devsum2@gmail.com');	
+			$email_from = $this->session->userdata('admin_email');
+			$this->email->initialize($config);
+			$this->email->from($email_from);	
 			$this->email->to('sumanth@yrpitsolutions.com');	
 			$this->email->cc('');	
 			$this->email->subject('itinery');

@@ -1,4 +1,4 @@
-   <?php $this->load->view('header');?>  
+<?php $this->load->view('header');?>  
    <!-- start page container -->
    <div class="page-container">
     <!-- start sidebar menu -->
@@ -23,7 +23,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="card-box">
+                    <div class="card-box ">
                         <div class="card-head">
                             <div class="d-flex justify-content-start m-3">
                                 <a href="<?php echo site_url();?>itinerary/add"><button type="button"
@@ -48,11 +48,13 @@
                 </div>
             </center>
             <?php } ?>
-
-                            <div class="card-body row ">
-                                <table class="table table-hover">
-                                    <thead class="table-light">
+                                <div class="p-4">
+                                <div class="table-scrollable">
+										<table class="table table-hover table-checkable order-column full-width"
+											id="exampleReport2">
+                                    <thead>
                                         <tr>
+                                        <th scope="col">S.No</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Guest Name</th>
                                         <th scope="col">Start Destination</th>
@@ -62,30 +64,31 @@
                                         <th scope="col">Action</th>
                                         </tr>
                                     </thead>
-                           <!--          <tbody>
-                                        <?php foreach ($view as $key) {?>
+                                     <tbody>
+                                        <?php $i=1;foreach ($view as $key) {?>
                                            
                                         <tr>
-                                            <td><?php echo $key->company_name;?></td>
-                                            <td><?php echo $key->firstName;?> <?php echo $key->lastName;?></td>
-                                            <td><?php echo $key->designation;?></td>
-                                            <td><?php echo $key->email;?></td>
-                                            <td><?php echo $key->mobile_no;?></td>
-                                            <td><?php echo $key->city;?></td>
-                                            <td><?php echo $key->country;?></td>
-                                            <td><?php echo $key->category;?></td>
-                                            <td><?php echo $key->services;?></td>
-                                            <td><a href="<?php echo site_url();?>supplier/editSupplierDetails/<?php echo $key->id;?>" class="btn btn-primary btn-xs">
-                                                <i class="fa fa-pencil"></i>
-                                            </a> <a href="<?php echo site_url();?>supplier/deleteSupplierDetails/<?php echo $key->id;?>" onclick='return confirm("Are you sure you want to delete?")' class="btn btn-danger btn-xs">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
-                                        </td>
+                                            <td><?php echo $i++;?></td>
+                                            <td><?php echo $key->transfer;?></td>
+                                            <td><?php echo "Guest Name";?></td>
+                                            <td><?php echo $key->transfer_pickup;?></td>
+                                            <td><?php echo $key->transfer_dropoff;?></td>
+                                            <td><?php echo $key->transfer_from_date;?></td>
+                                            <td><?php echo $key->day;?></td>                                          
+                                            <td>
+                                                <a class="btn btn-tbl-edit btn-xs" href="#">
+															<i class="fa fa-edit "></i>
+												</a>
+												<a class="btn btn-tbl-delete btn-xs" href="#" onclick="return confirm('Are you sure to Delete..?')">
+															<i class="fa fa-trash-o "></i>
+												</a>
+                                            </td>
                                         </tr>
                             <?php } ?>
-                    </tbody> -->
+                    </tbody>
                 </table>
 
+            </div>
             </div>
         </div>
     </div>
@@ -100,3 +103,48 @@
 
 <?php $this->load->view('footer');?>
         <!-- end page content -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js" defer></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.print.min.js"></script>
+
+<script>
+
+$(document).ready(function() {
+  $('#exampleReport2').DataTable( {
+	  dom: 'Bfrtip',
+	  buttons: [
+			  {
+				  extend: 'pdfHtml5',
+				  text: '<i class="fa-solid fa-file-pdf fa-2x"></i>',
+				  title: 'Hotel Voucher Data',
+			  },
+			  {
+				  extend: 'excelHtml5',
+				  text: '<i class="fa-solid fa-file-excel fa-2x"></i>',
+				  title: 'Hotel Voucher Data',
+			  },
+			 
+	  ]
+  } );
+} );
+</script>
+
+<style>
+  .dataTables_filter {
+  float: left !important;
+  }
+
+  .dataTables_wrapper .dt-buttons {
+	  float: right;
+	  font-size: 2.5rem !important;
+  }
+</style>

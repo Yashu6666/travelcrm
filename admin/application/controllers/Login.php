@@ -56,6 +56,7 @@ class Login extends CI_Controller
 					$sessionAdminInfo = array(
 						'admin_id' => $res->id,
 						'admin_username' => $res->UserName,
+						'admin_email' => $res->emialId,
 						'reg_type' => $res->userType,
 						'for_stocks' => FALSE,
 						'access_stocks' => $is_superAdmin == TRUE ? TRUE : FALSE,
@@ -556,7 +557,9 @@ travel CRM";
 		$subject = 'Otp Verification';
 
 		$this->email->initialize($config);
-		$this->email->from('devsum2@gmail.com');
+		$email_from = $this->session->userdata('admin_email');
+		$this->email->initialize($config);
+		$this->email->from($email_from);
 		$this->email->to($email);
 		$this->email->subject($subject);
 		$contents = "<b>".$message."</b> <br/><br/><b>Thank you <br/>travel CRM Team</b>";

@@ -1,6 +1,8 @@
 	<?php $this->load->view('header');?>
   <link href="<?php echo base_url();?>public/css/new.css" rel="stylesheet">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="<?php echo base_url();?>public/assets/plugins/jquery/jquery.min.js"></script>
   <script src="<?php echo base_url();?>public/assets/js/add_room.js"></script>
 
   <!-- start page container -->

@@ -104,9 +104,9 @@
                                 <strong>You Should add Hotels for <b id="noOfDaysAlert"><?php echo $buildpackage->night ?></b> days.
                               </div>
                               <div style="float:right;">
-                                <?php if ($view->room > 1) : ?>
+                                <!-- ?php if ($view->room > 1) : ?> -->
                                   <a id="" class="new_btn px-3 ml-0 add-rows" onclick="addrows()">add</a>
-                                <?php endif ?>
+                                <!-- ?php endif ?> -->
                                 <!-- <button type="button" class="new_btn px-5 ml-0 add-rows"  id="addrowsbtn">Add row</button> -->
 
                               </div>
@@ -241,7 +241,7 @@
                                       </select>
                                     </td>
                                     <td>
-                                      <input class="form-control adult_per_room" type="text" readonly value="<?php echo explode(",", $package_details->adult_per_room)[$i - 1]; ?>" name="adult_per_room[]" id="adult_per_room">
+                                      <input class="form-control adult_per_room" type="text"  value="<?php echo explode(",", $package_details->adult_per_room)[$i - 1]; ?>" name="adult_per_room[]" id="adult_per_room">
                                       <select hidden class="form-control room_sharing_types" id="room_sharing_types" name="room_sharing_types[]">
                                         <option value=""></option>
                                       </select>
@@ -1575,9 +1575,9 @@ jQuery('#addrows > tbody > tr').each(function(index, value) {
     
     let total_no_of_days = <?php echo $buildpackage->night ?>;
 
-    if (noOfNights < total_no_of_days) {
-      $('.noOfDaysAlertcls2').attr("style", "display:block;");
-    } else {
+    // if (noOfNights < total_no_of_days) {
+    //   $('.noOfDaysAlertcls2').attr("style", "display:block;");
+    // } else {
       var data = [{
         'group_type': groupType,
         'nights': noOfNights,
@@ -1630,7 +1630,7 @@ jQuery('#addrows > tbody > tr').each(function(index, value) {
 
         }
       });
-    }
+    // }
 
 
   }

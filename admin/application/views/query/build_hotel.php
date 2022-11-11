@@ -181,11 +181,15 @@
                                     </td>
                                     <td>
                                       <div>
-                                        <input class="form-control get_category" type="number" disabled value="<?php echo $buildpackage->hotelPrefrence ?>" name="Category[]" id="Category<?php echo "_" . $i ?>">
-                                        <!-- <select data-mdl-for="sample2" class="form-control get_category" value="" id="Category<?php echo '_' . $i ?>" tabIndex="-1" name="Category[]" onchange="get_hotel_name_new('Category','<?php echo '_' . $i ?>');">
-                                        <option value="0">0</option>
-                                        <option value="?php echo $buildpackage->hotelPrefrence ?>"><?php echo $buildpackage->hotelPrefrence ?></option>
-                                      </select> -->
+                                        <!-- <input class="form-control get_category" type="number" disabled value="<?php echo $buildpackage->hotelPrefrence ?>" name="Category[]" id="Category<?php echo "_" . $i ?>"> -->
+                                        <select data-mdl-for="sample2" class="form-control get_category" value="" id="Category<?php echo '_' . $i ?>" tabIndex="-1" name="Category[]" onchange="get_hotel_name_new('Category','<?php echo '_' . $i ?>');">
+                                        <option <?php echo $buildpackage->hotelPrefrence == 1 ? "selected" : "" ;?>  value="1">1</option>
+                                        <option <?php echo $buildpackage->hotelPrefrence == 2 ? "selected" : "" ;?>  value="2">2</option>
+                                        <option <?php echo $buildpackage->hotelPrefrence == 3 ? "selected" : "" ;?>  value="3">3</option>
+                                        <option <?php echo $buildpackage->hotelPrefrence == 4 ? "selected" : "" ;?>  value="4">4</option>
+                                        <option <?php echo $buildpackage->hotelPrefrence == 5 ? "selected" : "" ;?>  value="5">5</option>
+                                        <!-- <option  value="?php echo $buildpackage->hotelPrefrence ?>"><?php echo $buildpackage->hotelPrefrence ?></option> -->
+                                      </select>
                                       </div>
                                     </td>
                                     <td>
@@ -247,7 +251,7 @@
                                       </select>
                                     </td>
                                     <td>
-                                      <input class="form-control child_per_room" type="text" readonly value="<?php echo explode(",", $package_details->child_per_room)[$i - 1]; ?>" name="child_per_room[]" id="child_per_room">
+                                      <input class="form-control child_per_room" type="text"  value="<?php echo explode(",", $package_details->child_per_room)[$i - 1]; ?>" name="child_per_room[]" id="child_per_room">
                                       <input class="form-control child_per_room_wo_bed" type="hidden" readonly value="<?php echo isset($no_child_room_wo_new[$i - 1]) &&
                                       !empty($no_child_room_wo_new[$i - 1]) ? ($no_child_room_wo_new[$i - 1]) : ''; ?>" name="child_per_room_wo_bed[]" id="child_per_room_wo_bed">
                                     </td>

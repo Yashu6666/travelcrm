@@ -1228,10 +1228,7 @@ class Query extends CI_Controller
 			}
 		}
 
-		// print_r("===========");
-		// print_r($no_childs_room_new);
-		// print_r("===========");
-		// print_r($cwb_room);exit;
+		
 		$datas =  array();
 		for ($x = 0; $x < $rows_count; $x++) {
 			$datas[$x]['nights'] = $tableData[0]['nights'][$x];
@@ -1283,28 +1280,71 @@ class Query extends CI_Controller
 			$this->db->where('hotelname', $val['hotel_id']);
 			// $query_hotel_data[] = $this->db->get()->result_array();
 			$query_hotel_data = $this->db->get()->result_array();
-			// print_r($query_hotel_data);exit;
-
+			
 			$date_ci = strtotime($val['buildCheckIns']);
 			$hotels_calculation = [];
 			
 			for($i=0;$i<$val['nights'];$i++) {
 				$date_co = strtotime("+".($i)." day", $date_ci);
 				$date_co_new = date('Y-m-d', $date_co);
-				
-				foreach($query_hotel_data as $key2 => $val2){
-					if($val2['to_date'] >= $date_co_new){
-						array_push($hotels_calculation,$val2);
-					} 
-				}
+				// print_r("--------{.$i.}----------\n");
+				// print_r("--------{.current date.}----------\n");
+				// print_r($date_co_new);
+				$hotel_data = $this->db->where('roomtype', $val['room_type'])->where('hotelname', $val['hotel_id'])
+				->where('from_date <=', $date_co_new)->where('to_date >=', $date_co_new)->get('rooms')->row();
 
-			
+				// print_r("------------------\n");
+				// print_r("--------{.$i.}----------\n");
+				// print_r($date_co_new);
+				// print_r("--------{.db date.}----------\n");
+				// print_r($hotel_data->from_date);
+				// print_r("--------{.$i.}----------\n");
 
-				// // $date_ci = strtotime($val['buildCheckIns']);
-				// // $date_co = strtotime("+".($val['nights'] - 1)." day", $date_ci);
-				// // $date_co_new = date('Y-m-d', $date_co);
-				// exit;
-		
+				// foreach($query_hotel_data as $key2 => $val2){
+					
+				// 	$from_dates = [];
+				// 	for($j=0;$j<count($query_hotel_data);$j++){
+				// 		array_push($from_dates,$query_hotel_data[$j]['from_date']);
+				// 	}
+				// 	$max_key = (array_keys($from_dates, max($from_dates)));
+				// // 	print_r("--------max_key----------\n");
+				// // print_r( $query_hotel_data[$max_key[0]]['from_date']);
+				// // print_r("---------max_key---------\n");
+				// 	if($val2['to_date'] >= $date_co_new && $val2['from_date'] <= $val['buildCheckIns']){
+				// 		// print_r("---------1  ['.$i.']  ---------\n");
+				// 		// print_r($val2['from_date']);
+				// 		// print_r("--------1  ['.$i.']  ----------\n");
+				// 		// print_r($date_co_new);
+				// 		// print_r("------------------\n");
+				// 		// print_r($val2['netrate_double']);
+				// 		// print_r("------------------\n");
+				// 		array_push($hotels_calculation,$val2);
+				// 	} elseif($val2['to_date'] >= $date_co_new && $query_hotel_data[$max_key[0]]['from_date'] <= $date_co_new) {
+				// 		array_push($hotels_calculation,$query_hotel_data[$max_key[0]]);
+				// 	}
+
+					
+
+
+				// 	// if($val2['to_date'] >= $date_co_new ){
+				// 	// 	$current_val = $val2['from_date'];
+				// 	// 	$next_val = next($query_hotel_data)['from_date'] ?? false;
+							
+				// 	// 		if($current_val > $next_val) {     
+				// 	// 			array_push($hotels_calculation,$val2);
+				// 	// 		} else {
+				// 	// 			array_push($hotels_calculation,next($query_hotel_data));
+				// 	// 		}
+				// 	// 	// print_r("----------2  ['.$i.']  --------\n");
+				// 	// 	// print_r($val2['from_date']);
+				// 	// 	// print_r("----------2  ['.$i.']  --------\n");
+				// 	// 	// print_r($date_co_new);
+				// 	// 	// print_r("------------------\n");
+				// 	// 	// array_push($hotels_calculation,$val2);
+				// 	// }
+
+				// }
+
 		    $hotels_calculation_data = array();
 
 			if($val['get_room_types'] == "Room Only"){
@@ -1321,8 +1361,8 @@ class Query extends CI_Controller
 			}
 
 			if ($val['extra_with_adult']) {
-				$netrate_extra_array = explode(",", $hotels_calculation[$i]['netrate_extra']);
-				$vat_extra_array = explode(",", $hotels_calculation[$i]['vat_extra']);
+				$netrate_extra_array = explode(",", $hotel_data->netrate_extra);
+				$vat_extra_array = explode(",", $hotel_data->vat_extra);
 				
 				$net_rate_extra = $netrate_extra_array[$room_val_index];
 			} else {
@@ -1331,56 +1371,56 @@ class Query extends CI_Controller
 			}
  
 
-			$netrate_extra_child_array = explode(",", $hotels_calculation[$i]['netrate_extra_child']);
+			$netrate_extra_child_array = explode(",", $hotel_data->netrate_extra_child);
 			$netrate_extra_child = $netrate_extra_child_array[$room_val_index];
 			// print_r($netrate_extra_child);//exit;
 
-			$netrate_extra_wo_array = explode(",", $hotels_calculation[$i]['netrate_extra_wo']);
+			$netrate_extra_wo_array = explode(",", $hotel_data->netrate_extra_wo);
 			$netrate_extra_wo = $netrate_extra_wo_array[$room_val_index];
 			// print_r($netrate_extra_wo);exit;
 
 			
 
 			if ($val['bed_types'] == "Single") {
-				$net_rate_array = explode(",", $hotels_calculation[$i]['netrate']);
-				$vat_array = explode(",", $hotels_calculation[$i]['vat']);
+				$net_rate_array = explode(",", $hotel_data->netrate);
+				$vat_array = explode(",", $hotel_data->vat);
 				$net_rate = $net_rate_array[$room_val_index];
 
 				$vat = 	$vat_array[$room_val_index];
 
 				if (!empty($val['extra_with_adult'])) {
-					$net_rate_extra_array = explode(",", $hotels_calculation[$i]['netrate_extra']);
+					$net_rate_extra_array = explode(",", $hotel_data->netrate_extra);
 					$net_rate_extra = $net_rate_extra_array[$room_val_index];
 				} else {
 					$net_rate_extra = 0;
 				}
 				
 			} else if ($val['bed_types'] == "Double") {
-				$net_rate_array = explode(",", $hotels_calculation[$i]['netrate_double']);
+				$net_rate_array = explode(",", $hotel_data->netrate_double);
 				
 
-				$vat_array = explode(",", $hotels_calculation[$i]['vat_double']);
+				$vat_array = explode(",", $hotel_data->vat_double);
 
-				$net_rate = $net_rate_array[$room_val_index];
-				$vat = 	$vat_array[$room_val_index];
-
+				$net_rate = (int)$net_rate_array[$room_val_index];
+				$vat = 	(int)$vat_array[$room_val_index];
+				
 				if (!empty($val['extra_with_adult'])) {
-					$net_rate_extra_array = explode(",", $hotels_calculation[$i]['netrate_extra']);
+					$net_rate_extra_array = explode(",", $hotel_data->netrate_extra);
 					$net_rate_extra = $net_rate_extra_array[$room_val_index];
 				} else {
 					$net_rate_extra = 0;
 				}
 				
 			} else if ($val['bed_types'] == "Triple") {
-				$net_rate_array = explode(",", $hotels_calculation[$i]['netrate_triple']);
-				$vat_array = explode(",", $hotels_calculation[$i]['vat_triple']);
+				$net_rate_array = explode(",", $hotel_data->netrate_triple);
+				$vat_array = explode(",", $hotel_data->vat_triple);
 
 				$net_rate = $net_rate_array[$room_val_index];
 
 				$vat = 	$vat_array[$room_val_index];
 
 				if (!empty($val['extra_with_adult'])) {
-					$net_rate_extra_array = explode(",", $hotels_calculation[$i]['netrate_extra']);
+					$net_rate_extra_array = explode(",", $hotel_data->netrate_extra);
 					$net_rate_extra = $net_rate_extra_array[$room_val_index];
 				} else {
 					$net_rate_extra = 0;

@@ -55,12 +55,12 @@
                                     <thead>
                                         <tr>
                                         <th scope="col">S.No</th>
-                                        <th scope="col">Name</th>
+                                        <th scope="col">Company Name</th>
                                         <th scope="col">Guest Name</th>
-                                        <th scope="col">Start Destination</th>
-                                        <th scope="col">End Destination</th>
-                                        <th scope="col">Travel Start Date</th>
-                                        <th scope="col">No of nights </th>
+                                        <th scope="col">Arrival Date</th>
+                                        <?php if ($this->session->userdata('reg_type') == 'Super Admin') : ?>
+                                            <th> Created By </th>
+                                        <?php endif ?>
                                         <th scope="col">Action</th>
                                         </tr>
                                     </thead>
@@ -69,19 +69,20 @@
                                            
                                         <tr>
                                             <td><?php echo $i++;?></td>
-                                            <td><?php echo $key->transfer;?></td>
-                                            <td><?php echo "Guest Name";?></td>
-                                            <td><?php echo $key->transfer_pickup;?></td>
-                                            <td><?php echo $key->transfer_dropoff;?></td>
-                                            <td><?php echo $key->transfer_from_date;?></td>
-                                            <td><?php echo $key->day;?></td>                                          
+                                            <td><?php echo isset($agent_names[$i-1]) ? $agent_names[$i-1] : "N/A" ?></td>
+                                            <td><?php echo isset($guest_names[$i-1]) ? $guest_names[$i-1] : 'N/A' ?></td>
+                                            <td><?php echo $key[0]->transfer_from_date;?></td>
+                                            <?php if ($this->session->userdata('reg_type') == 'Super Admin') : ?>
+                                                <td><?php echo isset($admin_names[$i-1]) ? $admin_names[$i-1] : 'N/A' ?></td>
+                                            <?php endif ?>                                      
                                             <td>
-                                                <a class="btn btn-tbl-edit btn-xs" href="#">
-															<i class="fa fa-edit "></i>
-												</a>
-												<a class="btn btn-tbl-delete btn-xs" href="#" onclick="return confirm('Are you sure to Delete..?')">
-															<i class="fa fa-trash-o "></i>
-												</a>
+                                            <a type="button" class="btn btn-tbl-edit btn-xs" onclick="setId('<?php echo $key[0]->query_id ?>')" data-id="" data-bs-toggle="modal" data-bs-target="#sendMail">
+												<i class="fa fa-envelope text-white"></i>
+                                            </a>
+            
+                                            <a class="btn btn-tbl-delete btn-xs" href="<?php echo site_url();?>itinerary/delete_itinerary/<?php echo $key[0]->query_id;?>"  onclick="return confirm('Are you sure to Delete..?')">
+                                                        <i class="fa fa-trash-o "></i>
+                                            </a>
                                             </td>
                                         </tr>
                             <?php } ?>
@@ -101,6 +102,26 @@
 
 </div>
 
+<div class="modal fade" id="sendMail" tabindex="-1" aria-labelledby="sendMailModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background: #d9a927;">
+        <h5 class="modal-title" id="sendMailModalLabel">Send Email</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+      </div>
+      <div class="modal-body">
+			<input class="form-control w-75" type="text" placeholder=" " id="itinerary_email" 
+				autocomplete="off" />
+            <input type="hidden" placeholder=" " id="itinerary_queryId"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button"  id="send_itinerary_mail" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php $this->load->view('footer');?>
         <!-- end page content -->
 
@@ -115,8 +136,47 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.print.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 <script>
+
+function setId(id){
+    document.getElementById("itinerary_queryId").value = id;
+    $.ajax({
+        type:"POST",
+        url:'<?php echo site_url();?>/itinerary/getEmail',
+        data:{'query_id':id},
+        dataType:"JSON",
+        success:function(response)
+        {
+            document.getElementById("itinerary_email").value = response;
+        }
+
+    });
+}
+
+const btn = document.getElementById("send_itinerary_mail");
+btn.addEventListener("click", () => {
+    let email = document.getElementById("itinerary_email").value;
+    let q_id = document.getElementById("itinerary_queryId").value;
+    
+    $.ajax({
+    type: "POST",
+    url: "<?php echo base_url('/itinerary/sendMailItinerary') ?>",
+    data: {
+        q_id: q_id, email : email
+    },
+    success: function(result) {
+        toastr.success("Email Sent Successfully");
+    },
+    error: function() {
+        toastr.error("Error while sending email");
+    },
+    });
+
+
+    })
 
 $(document).ready(function() {
   $('#exampleReport2').DataTable( {

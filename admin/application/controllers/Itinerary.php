@@ -17,6 +17,12 @@ class Itinerary extends CI_Controller {
 		$this->load->view('itinerary/add',$data);
 	}
 
+	public function getEmail()
+	{
+		$query = $this->db->query("SELECT * FROM b2bcustomerquery WHERE query_id=".$_POST['query_id'])->row();	
+		echo json_encode(isset($query->b2bEmail) ? $query->b2bEmail : '');
+	}
+
 	public function test()
 	{
 		// $q_id =  '8749';	
@@ -67,9 +73,61 @@ class Itinerary extends CI_Controller {
 		if($this->session->userdata('reg_type') != 'Super Admin'){
 			$this->db->where('created_by' , $this->session->userdata('admin_id'));
 		}
-		$data['view'] = $this->db->get('itinery_data')->result();
+		$itinery_data = $this->db->distinct()->select('query_id')->get('itinery_data')->result();
+		// $data['view'] = $this->db->distinct('query_id')->select('query_id','transfer_from_date')->get('itinery_data')->result();
+		// print_r(json_encode($itinery_data));exit;
+
+		$data['view'] = [];
+		foreach($itinery_data as $val1){
+			$data_itinerary = $this->db->where('query_id', $val1->query_id)->limit(1)->get('itinery_data')->result();
+			if(!empty($data_itinerary)){
+				array_push($data['view'],$data_itinerary);
+			}
+		}
+
+		$admin_names = [];
+		$agent_names = [];
+		$guest_names = [];
+		
+		foreach($data['view'] as $val){
+
+			$data_b2b = $this->db->where('query_id', $val[0]->query_id)->get('b2bcustomerquery')->row();
+			$data_voucher = $this->db->where('query_id', $val[0]->query_id)->get('hotel_voucher_confirmation')->row();
+
+			if(!empty($data_b2b)){
+				array_push($admin_names,$data_b2b->reportsTo);
+				array_push($agent_names,$data_b2b->b2bcompanyName);
+			} else {
+				array_push($admin_names,"N/A");
+				array_push($agent_names,"N/A");
+			}
+
+			if(!empty($data_voucher)){
+				array_push($guest_names,$data_voucher->guest_name);
+			} else {
+				array_push($guest_names,"N/A");
+			}
+
+		}
+		$data['admin_names'] = $admin_names;
+		$data['agent_names'] = $agent_names;
+		$data['guest_names'] = $guest_names;
 
 		$this->load->view('itinerary/view',$data);
+	}
+
+	public function delete_itinerary($id)
+	{
+		if($this->db->where('query_id',$id)->delete('itinery_data'))
+			{
+				$this->session->set_flashdata('success','Itinerary deleted Sucessfully');
+				redirect('itinerary/view','refresh');
+			}
+		else
+			{
+				$this->session->set_flashdata('error','Something Went Wrong');
+				redirect('itinerary/view','refresh');
+			}
 	}
 
 	public function sendMailItinerary()	
@@ -77,7 +135,14 @@ class Itinerary extends CI_Controller {
 			
 		try {	
 			$q_id = $_POST['q_id'];	
-			$query = $this->db->query("SELECT * FROM b2bcustomerquery WHERE query_id=".$q_id)->row();	
+			$query = $this->db->query("SELECT * FROM b2bcustomerquery WHERE query_id=".$q_id)->row();
+			
+			if(isset($_POST['email']) && !empty($_POST['email'])){
+				$send_to = $_POST['email'];
+			} else {
+				$send_to = $query->b2bEmail;
+			}
+
 			$itinery = $this->db->query("SELECT * FROM itinery_data WHERE query_id=".$q_id)->result();	
 			$data['query'] = $query;	
 			$data['itinery'] = $itinery;	
@@ -107,15 +172,15 @@ class Itinerary extends CI_Controller {
 			$dompdf->render();
 			$output = $dompdf->output();
 			$pdf_name = time() . ".pdf";
-			file_put_contents(FCPATH . '/public/uploads/hotelVoucher/'.$pdf_name, $output);
-			$file_name = base_url('/public/uploads/hotelVoucher/' . $pdf_name);
+			file_put_contents(FCPATH . '/public/uploads/itinerary/'.$pdf_name, $output);
+			$file_name = base_url('/public/uploads/itinerary/' . $pdf_name);
 			$this->email->attach($file_name);
 
 			$message = '
 			<!DOCTYPE html> 
 			<html lang="en">';
 			$message .= '<p>Hello ,</p>';
-			$message .= '<p> Please find Itinerary Below.</p>';
+			$message .= '<p> Please find itinerary Below.</p>';
 			$message .= '</br>';
 			$message .= '<p>Thank you,</p>';
 			$message .= '</body></html>';
@@ -123,14 +188,14 @@ class Itinerary extends CI_Controller {
 			$email_from = $this->session->userdata('admin_email');
 			$this->email->initialize($config);
 			$this->email->from($email_from);	
-			$this->email->to('sumanth@yrpitsolutions.com');	
+			$this->email->to($send_to);	
 			$this->email->cc('');	
 			$this->email->subject('itinery');
 			$this->email->message($message); 
 
 			if ($this->email->send()) {
 				$this->load->helper("file");
-				delete_files(FCPATH . '/public/uploads/hotelVoucher');
+				delete_files(FCPATH . '/public/uploads/itinerary');
 
 				echo 'Your Email has successfully been sent.';
 			} else {

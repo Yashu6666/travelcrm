@@ -102,6 +102,9 @@
 												
 													<th class="center"> Lead Stage </th>
 													<!-- <th class="center">  </th> -->
+													<?php if ($this->session->userdata('reg_type') == 'Super Admin') : ?>
+														<th class="center"> Created By </th>
+													<?php endif ?>
 													<th class="center"> Action </th>
 												</tr>
 											</thead>
@@ -151,6 +154,9 @@
 
 
 												</td>
+												<?php if ($this->session->userdata('reg_type') == 'Super Admin') : ?>
+													<td class="center"><?php echo isset($val['admin_names']) ? $val['admin_names'] : 'N/A' ?></td>
+													<?php endif ?>
 												<?php if($val['Description'] == "Meals") : ?>
 													<?php $build_type = "buildMealsEdit" ?>
 

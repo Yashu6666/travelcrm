@@ -70,7 +70,8 @@
 													<th>Transport Type</th></th>
 													<th>Display Name</th>
 													<th>Pickup</th></th>
-													<th>Drop Off</th></th>
+													<th>Drop Off</th>
+													<th>Upto Pax</th>
 												
 													<th>Action</th>
 												</tr>
@@ -91,6 +92,7 @@
 													<td><?php echo $key->route_name;?></td>
 													 <td><?php echo $key->start_city;?></td>
 													<td><?php echo $key->dest_city;?></td>
+													<td><?php echo $key->seat_capacity;?></td>
 												
 													<td>
 														<a  class="btn btn-tbl-edit btn-xs" href="<?php echo site_url();?>transfer/edit_route/<?php echo $key->id;?>"  >

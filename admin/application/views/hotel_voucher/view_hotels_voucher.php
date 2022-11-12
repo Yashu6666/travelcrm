@@ -83,6 +83,9 @@ $this->session->unset_userdata ( 'success' );
 													<th class="center"> Booking Date </th>
 												 	<th class="center"> Check In </th> 
 													<th class="center"> Check Out </th>
+													<?php if ($this->session->userdata('reg_type') == 'Super Admin') : ?>
+														<th class="center"> Created By </th>
+													<?php endif ?>
 													<th class="center"> Action </th>
 												</tr>
 											</thead>
@@ -100,6 +103,9 @@ $this->session->unset_userdata ( 'success' );
 													<td class="center"><?php echo $value->query_hotel_booking_date ?></td>
 													<td class="center"><?php echo $value->query_check_in ?></td>
 													<td class="center"><?php echo $value->query_check_out ?></td>
+													<?php if ($this->session->userdata('reg_type') == 'Super Admin') : ?>
+													<td class="center"><?php echo isset($admin_names[$key]) ? $admin_names[$key] : 'N/A' ?></td>
+													<?php endif ?>
 													<td class="center">
 														<!-- <a class="btn btn-tbl-delete btn-xs" href="<?php //echo site_url();?>hotel/delete_hotel/<?php //echo $hotels[$i]->id;?>" onclick="//return confirm('Are you sure to Delete..?')">
 															<i class="fa fa-trash-o "></i>

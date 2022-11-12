@@ -79,7 +79,9 @@ $this->session->unset_userdata ( 'success' );
 													<th class="center"> Received </th>
 													<th class="center"> Balance </th>
 													<th class="center"> Due date </th>
-													<th class="center"> Owner </th>
+													<?php if ($this->session->userdata('reg_type') == 'Super Admin') : ?>
+														<th class="center"> Created By </th>
+													<?php endif ?>
 													<th class="center"> Status </th>
 													<th class="center"> Action </th>
 												</tr>
@@ -99,7 +101,9 @@ $this->session->unset_userdata ( 'success' );
 													<td><?php echo $listInvoice[$i]->finalAdvance;?></td>
 													<td><?php echo $listInvoice[$i]->finalBalance;?></td>
 													<td><?php echo $listInvoice[$i]->invoicePayment;?></td>
-													<td><?php echo $this->session->userdata('admin_username');?></td>
+													<?php if ($this->session->userdata('reg_type') == 'Super Admin') : ?>
+														<td><?php echo $admin_names[$i]?></td>
+													<?php endif ?>
 													<?php if($listInvoice[$i]->finalBalance == 0)
 													{?>
 														<td>Completed</td>

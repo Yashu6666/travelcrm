@@ -193,21 +193,27 @@ class Query extends CI_Controller
 
 		
 		if ($type == 'Inprogress') {
-			$query = $this->db->where('lead_stage', "Inprogress")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
+			$query = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->where('lead_stage', "Inprogress")->get('querypackage')->result()
+					 : $this->db->where('lead_stage', "Inprogress")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 		} else if ($type == 'Callback') {
-			$query = $this->db->where('lead_stage', "Callback")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
+			$query = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->where('lead_stage', "Callback")->get('querypackage')->result()
+					 : $this->db->where('lead_stage', "Callback")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 		} else if ($type == 'Rejected') {
-			$query = $this->db->where('lead_stage', "Rejected")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
+			$query = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->where('lead_stage', "Rejected")->get('querypackage')->result()
+					 : $this->db->where('lead_stage', "Rejected")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 		} else if ($type == 'Confirmed') {
-			$query = $this->db->where('lead_stage', "Confirmed")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
+			$query = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->where('lead_stage', "Confirmed")->get('querypackage')->result()
+					 : $this->db->where('lead_stage', "Confirmed")->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 		} else if ($type == 'recent') {
 			// $query = $this->db->query("select * FROM b2bcustomerquery where created_at BETWEEN '" . $today_date . " 00:00:00' AND    '" . $today_date . " 11:59:59'")->result();
 			$query = $this->db->query("select * FROM querypackage as qp join b2bcustomerquery as cb  ON cb.query_id=qp.queryId where cb.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 DAY) AND NOW() group by qp.queryId ")->result();
 
 		} else if ($type == 'Overall') {
-			$query = $this->db->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
+			$query = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->get('querypackage')->result()
+					 : $this->db->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 		} else {
-			$query = $this->db->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
+			$query = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->get('querypackage')->result()
+					 : $this->db->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->result();
 		}
 		// $query=$this->db->get('b2bcustomerquery')->result();
 		// echo"<pre>";print_r($query);die();
@@ -220,18 +226,20 @@ class Query extends CI_Controller
 			$created_at = $value->created_at;
 			$id = $value->id;
 
-			$b2bQuery = $this->db->where('query_id', $query_id)->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery')->row();
+			$b2bQuery = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row()
+			: $this->db->where('query_id', $query_id)->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery')->row();
 			$name = $b2bQuery->b2bfirstName . ' ' . $b2bQuery->b2blastName;
 			$mobile = $b2bQuery->b2bmobileNumber;
 			$company_name = $b2bQuery->b2bcompanyName;
-
+			$admin_names = $b2bQuery->reportsTo;
 
 			if(!in_array($value->queryId, $result_query_id, true)){
 				
-			$package = $this->db->where('queryId', $query_id)->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->row();
+			$package = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->where('queryId', $query_id)->get('querypackage')->row()
+			: $this->db->where('queryId', $query_id)->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->row();
 
 			if (isset($package)) {
-				$res = array("id" => $id, "company_name" => $company_name, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "qp_id" => $package->id, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
+				$res = array("id" => $id, "company_name" => $company_name, "admin_names" => $admin_names, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "qp_id" => $package->id, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
 				$result[] = $res;
 			}
 			array_push($result_query_id, $value->queryId);
@@ -1219,6 +1227,21 @@ class Query extends CI_Controller
 		$tableData = $this->input->post('data');
 		$rows_count = count($tableData[0]['group_type']);
 		$rows_count_new = $rows_count / count($no_childs_room);
+
+		$single_sharing_pax = 0;
+		$double_sharing_pax = 0;
+		$triple_sharing_pax = 0;
+
+
+		foreach($tableData[0]['bedType'] as $key => $val){
+			if($val == 'Single'){ $single_sharing_pax += $tableData[0]['adult_per_room'][$key];  }
+			elseif($val == 'Double'){ $double_sharing_pax += $tableData[0]['adult_per_room'][$key]; }
+			elseif($val == 'Triple'){ $triple_sharing_pax += $tableData[0]['adult_per_room'][$key];  }
+		}
+		
+		$hotel_calculation_data['single_sharing_pax'] = $single_sharing_pax;
+		$hotel_calculation_data['double_sharing_pax'] = $double_sharing_pax;
+		$hotel_calculation_data['triple_sharing_pax'] = $triple_sharing_pax;
 
 		for($i=1;$i<=$rows_count_new;$i++){
 			foreach($no_childs_room as $key => $val){

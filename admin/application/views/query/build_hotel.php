@@ -446,6 +446,10 @@
 
                             $(".card-box").click(function(e) {
                               e.stopPropagation();
+                              var hotel_pax_adult = $("#hotel_pax_adult").val();
+                              var hotel_pax_adult_double = $("#hotel_pax_adult_double").val();
+                              var hotel_pax_adult_triple = $("#hotel_pax_adult_triple").val();
+
                               var hotel_rate_adult = $("#hotel_rate_adult").val();
                               var hotel_rate_adult_double = $("#hotel_rate_adult_double").val();
                               var hotel_rate_adult_triple = $("#hotel_rate_adult_triple").val();
@@ -573,9 +577,9 @@
                               // var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
                               // var per_pax_infant = (pax_infant_count > 1 ? parseInt(total_infant) / 2 : parseInt(total_infant));
 
-                              var per_pax_adult = Math.ceil(pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
-                              var per_pax_adult_double = Math.ceil(pax_adult_count > 1 ? parseInt(total_adult_double) / pax_adult_count : parseInt(total_adult_double));
-                              var per_pax_adult_triple = Math.ceil(pax_adult_count > 1 ? parseInt(total_adult_triple) / pax_adult_count : parseInt(total_adult_triple));
+                              var per_pax_adult = Math.ceil(hotel_pax_adult > 1 ? parseInt(total_adult) / hotel_pax_adult : parseInt(total_adult));
+                              var per_pax_adult_double = Math.ceil(hotel_pax_adult_double > 1 ? parseInt(total_adult_double) / hotel_pax_adult_double : parseInt(total_adult_double));
+                              var per_pax_adult_triple = Math.ceil(hotel_pax_adult_triple > 1 ? parseInt(total_adult_triple) / hotel_pax_adult_triple : parseInt(total_adult_triple));
                               var per_pax_child = Math.ceil(pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
                               var per_pax_infant = Math.ceil(pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
                               // $("#perpax_adult").html(per_pax_adult);
@@ -1620,6 +1624,10 @@ jQuery('#addrows > tbody > tr').each(function(index, value) {
         dataType: "json",
         success: function(response) {
           // console.log(JSON.parse(response.total_pax_adult_rate));
+          $('#hotel_pax_adult').val(response.single_sharing_pax);
+          $('#hotel_pax_adult_double').val(response.double_sharing_pax);
+          $('#hotel_pax_adult_triple').val(response.triple_sharing_pax);
+
           $('#hotel_rate_adult').val(response.total_pax_adult_rate);
           $('#hotel_rate_adult_double').val(response.total_pax_adult_rate_double);
           $('#hotel_rate_adult_triple').val(response.total_pax_adult_rate_triple);
@@ -1717,6 +1725,11 @@ jQuery('#addrows > tbody > tr').each(function(index, value) {
 <input type="hidden" id="hotel_rate_adult" name="hotel_rate_adult" value="0" />
 <input type="hidden" id="hotel_rate_adult_double" name="hotel_rate_adult_double" value="0" />
 <input type="hidden" id="hotel_rate_adult_triple" name="hotel_rate_adult_triple" value="0" />
+
+<input type="hidden" id="hotel_pax_adult" name="hotel_pax_adult" value="0" />
+<input type="hidden" id="hotel_pax_adult_double" name="hotel_pax_adult_double" value="0" />
+<input type="hidden" id="hotel_pax_adult_triple" name="hotel_pax_adult_triple" value="0" />
+
 <input type="hidden" id="hotel_rate_child" name="hotel_rate_child" value="0" />
 <input type="hidden" id="hotel_rate_infant" name="hotel_rate_infant" value="0" />
 <script>

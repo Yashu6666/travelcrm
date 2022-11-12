@@ -17,6 +17,7 @@ class Invoice extends CI_Controller
 		$data['listInvoice'] = $this->db->order_by('id', 'desc')->get('invoice')->result();
 
 		$company_name = [];
+		$admin_names = [];
 
 		foreach ($data['listInvoice'] as $key => $value) {
 			if(!empty($value->query_id)) {
@@ -25,16 +26,20 @@ class Invoice extends CI_Controller
 
 				if(!empty($company)){
 					array_push($company_name,$company->b2bcompanyName);
+					array_push($admin_names,$company->reportsTo);
 				} else {
 					array_push($company_name,"N/A");
+					array_push($admin_names,"N/A");
 				}
 
 			} else {
-				array_push($company_name,"N/A");
+					array_push($company_name,"N/A");
+					array_push($admin_names,"N/A");
 			}
 		}
 
 		$data['company_names'] = $company_name;
+		$data['admin_names'] = $admin_names;
 
 		$this->load->view('invoice/view_invoice', $data);
 	}

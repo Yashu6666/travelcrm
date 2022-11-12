@@ -90,9 +90,7 @@ $this->session->unset_userdata ( 'success' );
 													<!-- <th class="center"> Owned By </th> -->
 													<!-- <th class="center"> Supplier </th> -->
 													<th class="center"> Activity Type </th>
-													<th class="center"> Opertaing From </th>
-													<th class="center"> Opertaing To </th>
-													<th class="center"> City </th>
+													<th class="center"> Upto Pax / Adult Price </th>
 													<th class="center"> Action </th>
 												</tr>
 											</thead>
@@ -104,12 +102,18 @@ $this->session->unset_userdata ( 'success' );
 													<td class="center"><?php echo $i+1;?></td>
 													<td class="center"><?php echo $view[$i]->tourname;?></td>
 													<td class="center"><?php echo $view[$i]->type;?></td>
-													<td class="center"><?php echo $view[$i]->operating_from;?></td>
-													<td class="center"><?php echo $view[$i]->operating_to;?></td>
-												
 
-													<td class="center"><?php echo $view[$i]->tourmapaddress;?></td>
-													<td class="d-flex">
+													<td class="center">
+														<?php if($view[$i]->type == "PVT") : ?>
+															<i class="fa-solid fa-people-group"></i> <?php echo $view[$i]->pax ?>
+														<?php else : ?>
+															<i class="fa-solid fa-dollar-sign"></i> <?php echo $view[$i]->adultprice ?>
+														<?php endif?>
+													</td>
+														
+													
+													
+													<td class="center">
 														
 														<a class="btn btn-tbl-edit btn-xs" href="<?php echo site_url();?>excursion/edit_excursion/<?php echo $view[$i]->id;?>">
 															<i class="fa fa-edit "></i>

@@ -10,6 +10,20 @@ class Transfer extends CI_Controller {
 		$this->load->library('Image_Slug');
 	}
 
+	public function delete_multiple()
+	{
+		$data = $this->input->post('data');
+		try {
+			foreach($data as $id){
+				$this->db->where('id',$id)->delete('transfer_route');
+			}
+			echo json_encode('Deleted Successfully');
+			
+		} catch(Exception $e){
+			echo json_encode('error : Something Went Wrong');
+		}
+	}
+
 	public function vehicle()
 	{
 		$data['view'] = $this->db->get('vehicle')->result();

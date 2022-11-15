@@ -1260,8 +1260,8 @@ class Query extends CI_Controller
 			$datas[$x]['room_type'] = $tableData[0]['roomType'][$x];
 			$datas[$x]['bed_types'] = $tableData[0]['bedType'][$x];
 			$datas[$x]['extra_with_adult'] = $tableData[0]['extra_with_adult'][$x];
-			$datas[$x]['extra_with_child'] = $tableData[0]['extra_with_child'][$x];
-			$datas[$x]['extra_without_bed'] = $tableData[0]['extra_without_bed'][$x];
+			// $datas[$x]['extra_with_child'] = $tableData[0]['extra_with_child'][$x];
+			// $datas[$x]['extra_without_bed'] = $tableData[0]['extra_without_bed'][$x];
 			$datas[$x]['no_childs_room'] = $no_childs_room_new[$x];
 			$datas[$x]['cwb'] = isset($cwb_room_new[$x]) && !empty($cwb_room_new[$x])  ? $cwb_room_new[$x] : 0;
 			$datas[$x]['cnb'] = isset($cnb_room_new[$x]) && !empty($cnb_room_new[$x]) ? $cnb_room_new[$x] : 0;
@@ -1270,7 +1270,7 @@ class Query extends CI_Controller
 			$datas[$x]['buildCheckIns'] = $tableData[0]['buildCheckIns'][$x];
 			$datas[$x]['Category'] = $tableData[0]['Category'][$x];
 			$datas[$x]['get_room_types'] = $tableData[0]['get_room_types'][$x];
-			$datas[$x]['sharing_types'] = $tableData[0]['sharing_types'][$x];
+			// $datas[$x]['sharing_types'] = $tableData[0]['sharing_types'][$x];
 
 			$datas[$x]['child_per_room_wo_bed'] = $tableData[0]['child_per_room_wo_bed'][$x];
 			$datas[$x]['adult_per_room'] = $tableData[0]['adult_per_room'][$x];

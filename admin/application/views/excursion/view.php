@@ -50,26 +50,29 @@ $this->session->unset_userdata ( 'success' );
 										<div class="col-12">
 										<div class="d-flex justify-content-between">
 
-											<div class="btn-group">
+											<div class="btn-group flex-column">
 												<a href="<?php echo site_url();?>excursion/add_excursion" id="addRow" class="new_btn px-3">
 													Add New <i class="fa fa-plus"></i>
 												</a>
+												<a id="multiDel" onclick="delMulti()" class="new_btn px-3 mt-2">
+												Delete All <i class="fa fa-trash"></i>
+											</a>
 											</div>
 											<div class="d-flex">
 											<div class="btn-group">
-												<a href="<?php echo site_url();?>excursion/view_excursion/SIC"  id="addRow" class="new_btn ml-0">
+												<a href="<?php echo site_url();?>excursion/view_excursion/SIC"  id="addRow" class="new_btn ml-0 h-50">
 													SIC
 												</a>
 											</div>
 
 											<div class="btn-group">
-												<a href="<?php echo site_url();?>excursion/view_excursion/PVT"  id="addRow" class="new_btn ml-2">
+												<a href="<?php echo site_url();?>excursion/view_excursion/PVT"  id="addRow" class="new_btn ml-2 h-50">
 													PVT
 												</a>
 											</div>
 
 											<div class="btn-group">
-												<a href="<?php echo site_url();?>excursion/view_excursion/TKT"  id="addRow" class="new_btn ml-2">
+												<a href="<?php echo site_url();?>excursion/view_excursion/TKT"  id="addRow" class="new_btn ml-2 h-50">
 													TKT
 												</a>
 											</div>
@@ -85,7 +88,9 @@ $this->session->unset_userdata ( 'success' );
 										<table class="table table-hover table-checkable order-column full-width"
 											id="example4">
 											<thead>
-												<tr><th class="center"> SL.No </th>
+												<tr>
+													<th></th>
+													<th class="center"> SL.No </th>
 													<th class="center"> Name </th>
 													<!-- <th class="center"> Owned By </th> -->
 													<!-- <th class="center"> Supplier </th> -->
@@ -99,7 +104,7 @@ $this->session->unset_userdata ( 'success' );
 												<?php for($i=0;$i<count($view);$i++)
 												{?>
 												<tr class="odd gradeX">
-													<td class="center"><?php echo $i+1;?></td>
+													<td><input type="checkbox" class="del_checkbox" value="<?php echo $view[$i]->id;?>"></td><td class="center"><?php echo $i+1;?></td>
 													<td class="center"><?php echo $view[$i]->tourname;?></td>
 													<td class="center"><?php echo $view[$i]->type;?></td>
 
@@ -500,3 +505,34 @@ $this->session->unset_userdata ( 'success' );
 		<!-- end page container -->
 
 		<?php $this->load->view('footer');?>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+<script>
+	function delMulti(){
+		let del_ids = [];
+		$(".del_checkbox").each(function() {
+		let val = $(this).val();
+		let isChecked = $(this).is(':checked');
+		if(isChecked){
+			del_ids.push($.trim(val));
+		}
+		});
+		console.log("🚩 ~ file: view.php ~ line 514 ~ delMulti ~ del_ids", del_ids)
+
+		$.ajax({
+			type: "POST",
+			dataType: "json",
+			url: '<?php echo site_url(); ?>/excursion/delete_multiple',
+			data: {
+			'data': del_ids,
+			},
+			success: function(response) {
+				toastr.success("Deleted Successfully");
+				setTimeout(function(){
+					window.location.reload(1);
+					}, 0500);
+			}
+			})
+	}
+</script>

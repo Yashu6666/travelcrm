@@ -51,10 +51,13 @@
                                 <div class="card-body ">
 									<div class="row p-b-20">
 										<div class="col-md-6 col-sm-6 col-6">
-											<div class="btn-group">
+											<div class="btn-group flex-column">
 												<a href="<?php echo site_url();?>transfer/add_transfer_route" id="addRow" class="new_btn px-3">
 													Add New <i class="fa fa-plus"></i>
 												</a>
+												<a id="multiDel" onclick="delMulti()" class="new_btn px-3 mt-2">
+												Delete All <i class="fa fa-trash"></i>
+											</a>
 											</div>
 										</div>
 										<div class="col-md-6 col-sm-6 col-6">
@@ -66,13 +69,13 @@
 										<table class="table table-hover full-width" id="example4">
 											<thead>
 												<tr>
+													<th></th>
 													<th>S.No</th>
 													<th>Transport Type</th></th>
 													<th>Display Name</th>
 													<th>Pickup</th></th>
 													<th>Drop Off</th>
 													<th>Upto Pax</th>
-												
 													<th>Action</th>
 												</tr>
 											</thead>
@@ -87,6 +90,7 @@
 												else $transport_type = "Internal Transfer";
 												?>
 													<tr>
+													<td><input type="checkbox" class="del_checkbox" value="<?php echo $key->id;?>"></td>
 													<td><?php echo $cnt;?> </td>
 													<td><?php echo $transport_type;?></td>
 													<td><?php echo $key->route_name;?></td>
@@ -136,3 +140,33 @@
 <div style="padding: 5rem; background-color: #222c3c;">
 	<?php $this->load->view('footer'); ?>
 </div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+<script>
+	function delMulti(){
+		let del_ids = [];
+		$(".del_checkbox").each(function() {
+		let val = $(this).val();
+		let isChecked = $(this).is(':checked');
+		if(isChecked){
+			del_ids.push($.trim(val));
+		}
+		});
+
+		$.ajax({
+			type: "POST",
+			dataType: "json",
+			url: '<?php echo site_url(); ?>/transfer/delete_multiple',
+			data: {
+			'data': del_ids,
+			},
+			success: function(response) {
+				toastr.success("Deleted Successfully");
+				setTimeout(function(){
+					window.location.reload(1);
+					}, 0500);
+			}
+			})
+	}
+</script>

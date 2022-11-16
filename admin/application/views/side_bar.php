@@ -161,7 +161,7 @@
 							</li>
 							<li class="nav-item">
 								<a href="<?php echo site_url(); ?>reports/invoice_report" class="nav-link <?php echo $this->uri->segment(2) == "invoice_report" ? "text-white" : "" ?>">
-									<span class="title">Invoice Report</span>
+									<span class="title">Proforma Invoice Report</span>
 								</a>
 							</li>
 							<!-- <li class="nav-item">

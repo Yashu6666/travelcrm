@@ -51,7 +51,7 @@ $this->session->unset_userdata ( 'success' );
 										<div class="col-md-6 col-sm-6 col-6">
 											<div class="btn-group">
 												<a href="<?php echo site_url();?>hotel/add_hotel" id="addRow" class="new_btn px-3">
-													Add New <i class="fa fa-plus"></i>
+													Add New Hotel <i class="fa fa-plus"></i>
 												</a>
 											</div>
 										</div>
@@ -68,7 +68,7 @@ $this->session->unset_userdata ( 'success' );
 													<th class="center"> Category </th>
 												 <th class="center"> Property Type </th> 
 													<th class="center"> Supplier </th>
-													<th class="center"> Location </th>
+													<th class="center"> City </th>
 													<th class="center"> Action </th>
 												</tr>
 											</thead>

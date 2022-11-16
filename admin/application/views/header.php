@@ -100,18 +100,17 @@
 				<a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
 					<span></span>
 				</a>
-				<?php $a = $this->session->userdata('reg_type');
+				<!-- ?php $a = $this->session->userdata('reg_type');
 				$access_stocks = $this->session->userdata('access_stocks');
 				$stock_logged_in = $this->session->userdata('stock_logged_in');
 
-				//print_r($a);die();
 				if ($access_stocks && !isset($stock_logged_in)) {
 				?>
 					<a href="javascript:;" class="dropdown-toggle" data-toggle="modal" data-target="#exampleModal10">
 						<img alt="" class="img-circle " style="width:40px;margin-top:10px;margin-left: 40%;" src="<?php echo base_url(); ?>public/assets/img/stock.png" />
 
 					</a>
-				<?php } ?>
+				?php } ?> -->
 				<!-- end mobile menu -->
 				<!-- start header menu -->
 
@@ -161,10 +160,21 @@
 				?>
 				<div class="top-menu">
 					<ul class="nav navbar-nav pull-right">
+					<li class="dropdown dropdown-user">
+					<?php $a = $this->session->userdata('reg_type');
+						$access_stocks = $this->session->userdata('access_stocks');
+						$stock_logged_in = $this->session->userdata('stock_logged_in');
+						if ($access_stocks && !isset($stock_logged_in)) {
+						?>
+					<a href="javascript:;" class="dropdown-toggle" data-toggle="modal" data-target="#exampleModal10">
+						<img alt="" class="img-circle " style="" src="<?php echo base_url(); ?>public/assets/img/stock.png" />
+
+					</a>
+				<?php } ?></li>
 						<li class="dropdown dropdown-user">
 							<div id="ex4" style="cursor: pointer;" data-toggle="dropdown" data-hover="dropdown" ata-close-others="true">
 								<span class="p1 fa-stack fa-2x has-badge" data-count="<?php echo count($all_data); ?>">
-									<span class="material-icons">notifications</span>
+									<span class="material-icons text-danger">notifications</span>
 								</span>
 							</div>
 

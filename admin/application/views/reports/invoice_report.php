@@ -10,13 +10,13 @@
 					<div class="page-bar">
 						<div class="page-title-breadcrumb">
 							<div class=" pull-left">
-								<div class="page-title">Invoice Report</div>
+								<div class="page-title">Proforma Invoice Report</div>
 							</div>
 							<ol class="breadcrumb page-breadcrumb pull-right">
 								<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
 										href="#">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
 								</li>
-								<li class="active">Invoice Report</li>
+								<li class="active">Proforma Invoice Report</li>
 
 							</ol>
 						</div>

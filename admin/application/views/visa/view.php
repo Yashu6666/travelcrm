@@ -50,11 +50,11 @@
 											<div class="btn-group">
 												<?php if(!$is_otb) : ?>
 												<a href="<?php echo site_url();?>visa/add_otb" id="addRow" class="new_btn px-3 mr-3 ">
-													Add OTB <i class="fa fa-plus"></i>
+													Add OTB Rate <i class="fa fa-plus"></i>
 												</a>
 												<?php endif ?>
 												<a href="<?php echo site_url();?>visa/add_visa" id="addRow" class="new_btn px-3">
-													Add Visa <i class="fa fa-plus"></i>
+													Add Visa Rate <i class="fa fa-plus"></i>
 												</a>
 											</div>
 										</div>

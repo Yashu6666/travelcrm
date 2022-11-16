@@ -59,7 +59,7 @@ $this->session->unset_userdata ( 'success' );
 										<div class="col-md-6 col-sm-6 col-6">
 											<div class="btn-group">
 											<a href="<?php echo site_url();?>invoice/add_invoice" type="button"
-												class="new_btn px-3">Add New <i class="fa fa-plus"></i></a>
+												class="new_btn px-3">Add New Proforma Invoice <i class="fa fa-plus"></i></a>
 											</div>
 										</div>
 										<div class="col-md-6 col-sm-6 col-6">

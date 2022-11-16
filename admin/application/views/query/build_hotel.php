@@ -230,9 +230,9 @@
 
                                     <td>
                                       <select class="form-control get_bed_type" id="buildBedType" name="buildBedType[]" required>
-                                        <option value="Double">Double</option>
-                                        <option value="Single">Single</option>
-                                        <option value="Triple">Triple</option>
+                                        <option <?php echo explode(",", $package_details->adult_per_room)[$i - 1] == 2 ? "selected" : "" ;?> value="Double">Double</option>
+                                        <option <?php echo explode(",", $package_details->adult_per_room)[$i - 1] == 1 ? "selected" : "" ;?> value="Single">Single</option>
+                                        <option <?php echo explode(",", $package_details->adult_per_room)[$i - 1] == 3 ? "selected" : "" ;?> value="Triple">Triple</option>
                                       </select>
 
                                     </td>

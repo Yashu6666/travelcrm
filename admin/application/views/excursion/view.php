@@ -52,7 +52,7 @@ $this->session->unset_userdata ( 'success' );
 
 											<div class="btn-group flex-column">
 												<a href="<?php echo site_url();?>excursion/add_excursion" id="addRow" class="new_btn px-3">
-													Add New <i class="fa fa-plus"></i>
+													Add New Activity <i class="fa fa-plus"></i>
 												</a>
 												<a id="multiDel" onclick="delMulti()" class="new_btn px-3 mt-2">
 												Delete All <i class="fa fa-trash"></i>
@@ -90,13 +90,13 @@ $this->session->unset_userdata ( 'success' );
 											<thead>
 												<tr>
 													<th></th>
-													<th class="center"> SL.No </th>
-													<th class="center"> Name </th>
-													<!-- <th class="center"> Owned By </th> -->
-													<!-- <th class="center"> Supplier </th> -->
-													<th class="center"> Activity Type </th>
-													<th class="center"> Upto Pax / Adult Price </th>
-													<th class="center"> Action </th>
+													<th class="text-left"> SL.No </th>
+													<th class="text-left"> Name </th>
+													<!-- <th class="text-left"> Owned By </th> -->
+													<!-- <th class="text-left"> Supplier </th> -->
+													<th class="text-left"> Transfer Type </th>
+													<th class="text-left"> Upto Pax / PP Price </th>
+													<th class="text-left"> Action </th>
 												</tr>
 											</thead>
 											<tbody>
@@ -104,21 +104,21 @@ $this->session->unset_userdata ( 'success' );
 												<?php for($i=0;$i<count($view);$i++)
 												{?>
 												<tr class="odd gradeX">
-													<td><input type="checkbox" class="del_checkbox" value="<?php echo $view[$i]->id;?>"></td><td class="center"><?php echo $i+1;?></td>
-													<td class="center"><?php echo $view[$i]->tourname;?></td>
-													<td class="center"><?php echo $view[$i]->type;?></td>
+													<td><input type="checkbox" class="del_checkbox" value="<?php echo $view[$i]->id;?>"></td><td class="text-left"><?php echo $i+1;?></td>
+													<td class="text-left"><?php echo $view[$i]->tourname;?></td>
+													<td class="text-left"><?php echo $view[$i]->type;?></td>
 
-													<td class="center">
+													<td class="text-left">
 														<?php if($view[$i]->type == "PVT") : ?>
 															<i class="fa-solid fa-people-group"></i> <?php echo $view[$i]->pax ?>
 														<?php else : ?>
-															<i class="fa-solid fa-dollar-sign"></i> <?php echo $view[$i]->adultprice ?>
+															<span><b>AED</b></span> <?php echo $view[$i]->adultprice ?>
 														<?php endif?>
 													</td>
 														
 													
 													
-													<td class="center">
+													<td class="text-left">
 														
 														<a class="btn btn-tbl-edit btn-xs" href="<?php echo site_url();?>excursion/edit_excursion/<?php echo $view[$i]->id;?>">
 															<i class="fa fa-edit "></i>

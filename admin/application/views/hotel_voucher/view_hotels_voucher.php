@@ -52,7 +52,7 @@ $this->session->unset_userdata ( 'success' );
 										<div class="col-md-6 col-sm-6 col-6">
 											<div class="btn-group">
 												<a href="<?php echo site_url();?>HotelVoucher/add_hotel" id="addRow-btn" class="new_btn px-3">
-												Add New <i class="fa fa-plus"></i>
+												Create Hotel Voucher <i class="fa fa-plus"></i>
 												</a>
 											</div>
 										</div>
@@ -76,7 +76,7 @@ $this->session->unset_userdata ( 'success' );
 												</tr> -->
 												<tr><th class="center"> SL.NO</th>
 													<th class="center">Query ID </th>
-													<th class="center"> Confirmation Id </th>
+													<th class="center"> Confirmation No. </th>
 													<th class="center">Agent Name </th>
 													<th class="center">Guest Name </th>
 													<th class="center">Hotel Name </th>
@@ -100,9 +100,9 @@ $this->session->unset_userdata ( 'success' );
 													<td class="center"><?php echo $agent_names[$key] ?></td>
 													<td class="center"><?php echo $value->guest_name ?></td>
 													<td class="center"><?php echo $value->query_hotel_name ?></td>
-													<td class="center"><?php echo $value->query_hotel_booking_date ?></td>
-													<td class="center"><?php echo $value->query_check_in ?></td>
-													<td class="center"><?php echo $value->query_check_out ?></td>
+													<td class="center"><?php echo date('d M Y', strtotime($value->query_hotel_booking_date)); ?></td>
+													<td class="center"><?php echo date('d M Y', strtotime($value->query_check_in));?></td>
+													<td class="center"><?php echo date('d M Y', strtotime($value->query_check_out));?></td>
 													<?php if ($this->session->userdata('reg_type') == 'Super Admin') : ?>
 													<td class="center"><?php echo isset($admin_names[$key]) ? $admin_names[$key] : 'N/A' ?></td>
 													<?php endif ?>

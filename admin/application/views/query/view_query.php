@@ -32,7 +32,7 @@
 										<!-- <a href="#"><img src="xlsc.png" alt="noimg" srcset="" class="xlscImg"></a> -->
 									</div>
 									<div class="tools">
-										<button class="new_btn show-modal-btn4 sidebar-toggler" id="show-modal-btn1">Add New +</button>
+										<button class="new_btn show-modal-btn4 sidebar-toggler" id="show-modal-btn1">Add New Quotation +</button>
 									</div>
 
 								</div>
@@ -106,6 +106,7 @@
 														<th class="center"> Created By </th>
 													<?php endif ?>
 													<th class="center"> Action </th>
+													<th hidden>Lead Stage</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -189,6 +190,9 @@
 															<i class="fa fa-trash-o "></i>
 														</button></a>
 
+													</td>
+													<td hidden>
+														<?php echo $val['lead_stage'] ?>
 													</td>
 												</tr>
 												<?php } ?>
@@ -330,7 +334,7 @@
 
 
 
-<?php $min = 8000; $max = 9000;  
+<?php $min = 80000; $max = 90000;  
 					$number = rand($min, $max);
 					 ?>
 		<form action="<?php echo site_url();?>query/package/<?php echo $number ?>" method="post" onsubmit="return validation();">
@@ -567,14 +571,10 @@ $(document).ready(function() {
 	  dom: 'Bfrtip',
 	  buttons: [
 			  {
-				  extend: 'pdfHtml5',
-				  text: '<i class="fa-solid fa-file-pdf fa-2x"></i>',
-				  title: 'Queries Data',
-			  },
-			  {
 				  extend: 'excelHtml5',
 				  text: '<i class="fa-solid fa-file-excel fa-2x"></i>',
 				  title: 'Queries Data',
+				  exportOptions: { columns: [0,1,2,3,4,5,6,10,8] }	
 			  },
 			 
 	  ]

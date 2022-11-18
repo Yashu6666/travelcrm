@@ -665,6 +665,7 @@ class Query extends CI_Controller
 
 		$user_id = $this->session->userdata()['admin_id'];
 		$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
+		$data['package_details'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
 
 		$this->load->library('email');
 		$config = array(
@@ -1382,6 +1383,10 @@ class Query extends CI_Controller
 			elseif($val['get_room_types'] == "FB"){
 				$room_val_index = 3;
 			}
+			
+			// print_r("-----------------------------");
+			// print_r($hotel_data);
+			// print_r("-----------------------------");
 
 			if ($val['extra_with_adult']) {
 				$netrate_extra_array = explode(",", $hotel_data->netrate_extra);

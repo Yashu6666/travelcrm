@@ -261,7 +261,6 @@
                                         <p><input type="hidden" <?php echo $buildpackage->child > 0 ? 'checked' : ''; ?> id="extra_with_child" name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child"></p>
                                         <p><input type="hidden" <?php echo $buildpackage->infant > 0 ? 'checked' : ''; ?> id="extra_without_bed" name="extra_check[]" value="extra_without_bed" class="check-extra extra_without_bed"></p>
                                       </div>
-
                                     </td>
 
 
@@ -694,7 +693,7 @@
                             <table class="table table-bordered">
                               <tr align="center">
                                 <td type="text" name="person" id="person" value=""><span></td>
-                                <td type="" name="AdultCost" id="AdultCost" value=""><span>Adult</td>
+                                <td type="" name="AdultCost" id="AdultCost" value=""><span>Single Sharing</td>
                                 <td type="" name="DoubleAdultCost" id="DoubleAdultCost" value=""><span>Double Sharing</td>
                                 <td type="" name="TripleAdultCost" id="TripleAdultCost" value=""><span>Triple Sharing</td>
                                 <td type="" name="ChildCost" id="ChildCost" value=""><span>CWB</td>

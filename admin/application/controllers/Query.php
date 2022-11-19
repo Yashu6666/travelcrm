@@ -717,6 +717,7 @@ class Query extends CI_Controller
 		//echo '<pre>';print_r($q_id);exit;
 		$data["internal_query"] = $this->db->where('query_id', $q_id)->where('query_type', 'package')->where('transfer_type', 'internal')->get('query_transfer')->result();
 		$data['return_query'] = $this->db->where('query_id', $q_id)->where('query_type', 'package')->where('transfer_type', 'return')->get('query_transfer')->result();
+		$data['package_details'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
 
 		$data["internal_query1"] = $this->db->where('query_id', $q_id)->where('query_type', 'meals')->where('transfer_type', 'internal')->get('query_transfer')->result();
 		$data['return_query1'] = $this->db->where('query_id', $q_id)->where('query_type', 'meals')->where('transfer_type', 'return')->get('query_transfer')->result();
@@ -768,6 +769,7 @@ class Query extends CI_Controller
 	{
 		//echo '<pre>';print_r($q_id);exit;
 		$data["hotel_query"] = $this->db->where('query_id', $q_id)->get('query_hotel')->result();
+		$data['package_details'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
 
 		//echo '<pre>';print_r($q_id);exit;
 		$this->db->select("cb.b2bfirstName,cb.b2bcompanyName,cb.query_id,qp.specificDate,qp.goingTo,qp.Packagetravelers,qp.infant,qp.room,

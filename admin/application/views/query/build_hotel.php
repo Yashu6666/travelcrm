@@ -368,9 +368,14 @@
                               var buildPackageCancellations = $('#buildPackageCancellations').val();
                               var buildPackageRefund = $('#buildPackageRefund').val();
                               var totalprice_adult = $('#totalprice_adult').text();
+                              var totalprice_adult_double = $('#totalprice_adult_double').text();
+                              var totalprice_adult_triple = $('#totalprice_adult_triple').text();
                               var totalprice_childs = $('#totalprice_childs').text();
                               var totalprice_infants = $('#totalprice_infants').text();
 
+                              var hotel_pax_adult = $("#hotel_pax_adult").val();
+                              var hotel_pax_adult_double = $("#hotel_pax_adult_double").val();
+                              var hotel_pax_adult_triple = $("#hotel_pax_adult_triple").val();
 
 
                               $.ajax({
@@ -387,8 +392,15 @@
                                   buildPackageCancellations: buildPackageCancellations,
                                   buildPackageRefund: buildPackageRefund,
                                   totalprice_adult: totalprice_adult,
+                                  totalprice_adult_double: totalprice_adult_double,
+                                  totalprice_adult_triple: totalprice_adult_triple,
                                   totalprice_childs: totalprice_childs,
-                                  totalprice_infants: totalprice_infants
+                                  totalprice_infants: totalprice_infants,
+
+                                  hotel_pax_adult: hotel_pax_adult,
+                                  hotel_pax_adult_double: hotel_pax_adult_double,
+                                  hotel_pax_adult_triple: hotel_pax_adult_triple,
+
                                 },
                                 cache: false,
                                 success: function(response) {
@@ -502,15 +514,12 @@
                               let c_type = document.getElementById('currencyOption').value;
                               var usd_aed = <?php echo $usd_to_aed->usd_to_aed; ?>;
 
-                              $("#subtotal_adults").html(c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2) : sub_total_adult);
-                              $("#subtotal_adults_double").html(c_type == 'USD' ? (sub_total_adult_double / usd_aed).toFixed(2) : sub_total_adult_double);
-                              $("#subtotal_adults_triple").html(c_type == 'USD' ? (sub_total_adult_triple / usd_aed).toFixed(2) : sub_total_adult_triple);
-                              $("#subtotal_childs").html(c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child);
-                              $("#subtotal_infants").html(c_type == 'USD' ? (sub_total_infant / usd_aed).toFixed(2) : sub_total_infant);
+                              $("#subtotal_adults").val(c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2) : sub_total_adult);
+                              $("#subtotal_adults_double").val(c_type == 'USD' ? (sub_total_adult_double / usd_aed).toFixed(2) : sub_total_adult_double);
+                              $("#subtotal_adults_triple").val(c_type == 'USD' ? (sub_total_adult_triple / usd_aed).toFixed(2) : sub_total_adult_triple);
+                              $("#subtotal_childs").val(c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child);
+                              $("#subtotal_infants").val(c_type == 'USD' ? (sub_total_infant / usd_aed).toFixed(2) : sub_total_infant);
 
-                              // $("#subtotal_adults").html( sub_total_adult );                      
-                              // $("#subtotal_childs").html( sub_total_child );                               
-                              // $("#subtotal_infants").html( sub_total_infant ); 
 
                               var PackageMarkup = $("#PackageMarkup").val();
                               var Mark_up = $("#Mark_up").val();
@@ -538,26 +547,14 @@
 
                               }
 
+                              $("#totalprice_adult").val(c_type == 'USD' ? (total_adult / usd_aed).toFixed(2) : total_adult);
+                              $("#totalprice_adult_double").val(c_type == 'USD' ? (total_adult_double / usd_aed).toFixed(2) : total_adult_double);
+                              $("#totalprice_adult_triple").val(c_type == 'USD' ? (total_adult_triple / usd_aed).toFixed(2) : total_adult_triple);
+                              $("#totalprice_childs").val(c_type == 'USD' ? (total_child / usd_aed).toFixed(2) : total_child);
+                              $("#totalprice_infants").val(c_type == 'USD' ? (total_infant / usd_aed).toFixed(2) : total_infant);
 
-                              // $("#totalprice_adult").html( total_adult );
-                              // $("#totalprice_childs").html( total_child );
-                              // $("#totalprice_infants").html( total_infant );
-
-                              $("#totalprice_adult").html(c_type == 'USD' ? (total_adult / usd_aed).toFixed(2) : total_adult);
-                              $("#totalprice_adult_double").html(c_type == 'USD' ? (total_adult_double / usd_aed).toFixed(2) : total_adult_double);
-                              $("#totalprice_adult_triple").html(c_type == 'USD' ? (total_adult_triple / usd_aed).toFixed(2) : total_adult_triple);
-                              $("#totalprice_childs").html(c_type == 'USD' ? (total_child / usd_aed).toFixed(2) : total_child);
-                              $("#totalprice_infants").html(c_type == 'USD' ? (total_infant / usd_aed).toFixed(2) : total_infant);
-
-                              // var per_pax_adult = (parseInt(total_adult) / 2);
-                              // var per_pax_child = (parseInt(total_child) / 2);
-                              // var per_pax_infant = (parseInt(total_infant) / 2);
                               var pax_adult_count = <?php echo $buildpackage->adult; ?>;
-                              // var pax_child_count = ?php  echo $buildpackage->child; ?>;
-                              // var pax_infant_count = ?php echo $buildpackage->infant;?>;
-
                               var pax_cnb_count_data = <?php print_r(json_encode($buildpackage->cnb_per_room)); ?>;
-                              // var pax_cnb_count = ?php echo $buildpackage->cnb_per_room; ?>;
                               let cnb_arr = pax_cnb_count_data.split(",");
                               var pax_infant_count = 0;
                               cnb_arr.forEach(x => {
@@ -565,44 +562,33 @@
                               });
 
                               var pax_cwb_count_data = <?php print_r(json_encode($buildpackage->cwb_per_room)); ?>;
-                              // var pax_cwb_count = ?php echo $buildpackage->cwb_per_room; ?>;
                               let cwb_arr = pax_cwb_count_data.split(",");
                               var pax_child_count = 0;
                               cwb_arr.forEach(x => {
                                 pax_child_count += parseInt(x);
                               });
 
-                              // var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / 2 : parseInt(total_adult));
-                              // var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
-                              // var per_pax_infant = (pax_infant_count > 1 ? parseInt(total_infant) / 2 : parseInt(total_infant));
-
                               var per_pax_adult = Math.ceil(hotel_pax_adult > 1 ? parseInt(total_adult) / hotel_pax_adult : parseInt(total_adult));
                               var per_pax_adult_double = Math.ceil(hotel_pax_adult_double > 1 ? parseInt(total_adult_double) / hotel_pax_adult_double : parseInt(total_adult_double));
                               var per_pax_adult_triple = Math.ceil(hotel_pax_adult_triple > 1 ? parseInt(total_adult_triple) / hotel_pax_adult_triple : parseInt(total_adult_triple));
                               var per_pax_child = Math.ceil(pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
                               var per_pax_infant = Math.ceil(pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
-                              // $("#perpax_adult").html(per_pax_adult);
-                              // $("#perpax_childs").html( per_pax_child );
-                              // $("#perpax_infants").html( per_pax_infant );
-
-                              // $("#perpax_adult_input").val(per_pax_adult);
-                              // $("#perpax_childs_input").val( per_pax_child );
-                              // $("#perpax_infants_input").val( per_pax_infant );
-                              $("#perpax_adult").html(c_type == 'USD' ? (per_pax_adult / usd_aed).toFixed(2) : per_pax_adult);
-                              $("#perpax_adult_double").html(c_type == 'USD' ? (per_pax_adult_double / usd_aed).toFixed(2) : per_pax_adult_double);
-                              $("#perpax_adult_triple").html(c_type == 'USD' ? (per_pax_adult_triple / usd_aed).toFixed(2) : per_pax_adult_triple);
-                              $("#perpax_childs").html(c_type == 'USD' ? (per_pax_child / usd_aed).toFixed(2) : per_pax_child);
-                              $("#perpax_infants").html(c_type == 'USD' ? (per_pax_infant / usd_aed).toFixed(2) : per_pax_infant);
+                              
+                              $("#perpax_adult").val(c_type == 'USD' ? (per_pax_adult / usd_aed).toFixed(2) : per_pax_adult);
+                              $("#perpax_adult_double").val(c_type == 'USD' ? (per_pax_adult_double / usd_aed).toFixed(2) : per_pax_adult_double);
+                              $("#perpax_adult_triple").val(c_type == 'USD' ? (per_pax_adult_triple / usd_aed).toFixed(2) : per_pax_adult_triple);
+                              $("#perpax_childs").val(c_type == 'USD' ? (per_pax_child / usd_aed).toFixed(2) : per_pax_child);
+                              $("#perpax_infants").val(c_type == 'USD' ? (per_pax_infant / usd_aed).toFixed(2) : per_pax_infant);
 
                               $("#perpax_adult_input").val(c_type == 'USD' ? (per_pax_adult / usd_aed).toFixed(2) : per_pax_adult);
+                              $("#perpax_adult_input_double").val(c_type == 'USD' ? (per_pax_adult_double / usd_aed).toFixed(2) : per_pax_adult_double);
+                              $("#perpax_adult_input_triple").val(c_type == 'USD' ? (per_pax_adult_triple / usd_aed).toFixed(2) : per_pax_adult_triple);
                               $("#perpax_childs_input").val(c_type == 'USD' ? (per_pax_child / usd_aed).toFixed(2) : per_pax_child);
                               $("#perpax_infants_input").val(c_type == 'USD' ? (per_pax_infant / usd_aed).toFixed(2) : per_pax_infant);
 
-                              var total_price_hotel = total_adult + total_child + total_infant;
-                              $('#totalprice_hotel').val(c_type == 'USD' ? (total_price_hotel / usd_aed).toFixed(2) : total_price_hotel);
-
-
-                            })
+                              var total_price_hotel = total_adult + total_adult_double + total_adult_triple + total_child + total_infant;
+                                $('#totalprice_hotel').val(c_type == 'USD' ? (total_price_hotel / usd_aed).toFixed(2) : total_price_hotel);
+                              })
 
 
 
@@ -692,39 +678,41 @@
                             </br>
                             <table class="table table-bordered">
                               <tr align="center">
-                                <td type="text" name="person" id="person" value=""><span></td>
-                                <td type="" name="AdultCost" id="AdultCost" value=""><span>Single Sharing</td>
-                                <td type="" name="DoubleAdultCost" id="DoubleAdultCost" value=""><span>Double Sharing</td>
-                                <td type="" name="TripleAdultCost" id="TripleAdultCost" value=""><span>Triple Sharing</td>
-                                <td type="" name="ChildCost" id="ChildCost" value=""><span>CWB</td>
-                                <td type="" name="InfantCost" id="InfantCost" value=""><span>CNB</td>
+                                <td name="person" id="person" value=""></td>
+                                <td name="AdultCost" id="AdultCost" value="">Adult</td>
+                                <td name="DoubleAdultCost" id="DoubleAdultCost" value="">Double Sharing</td>
+                                <td name="TripleAdultCost" id="TripleAdultCost" value="">Triple Sharing</td>
+                                <td name="ChildCost" id="ChildCost" value="">CWB</td>
+                                <td name="InfantCost" id="InfantCost" value="">CNB</td>
                               </tr>
                               <tr align="center">
                                 <td><b>Sub Total</b></td>
-                                <td type="text" id="subtotal_adults" name="subtotal_adults" value=""></td>
-                                <td type="text" id="subtotal_adults_double" name="subtotal_adults_double" value=""></td>
-                                <td type="text" id="subtotal_adults_triple" name="subtotal_adults_triple" value=""></td>
-                                <td type="text" id="subtotal_childs" name="subtotal_childs" value=""></td>
-                                <td type="text" id="subtotal_infants" name="subtotal_infants" value=""></td>
+                                <td> <input type="text" readonly class="text-center" id="subtotal_adults" name="subtotal_adults" value=""></td>
+                                <td> <input type="text" readonly class="text-center" id="subtotal_adults_double" name="subtotal_adults_double" value=""></td>
+                                <td> <input type="text" readonly class="text-center" id="subtotal_adults_triple" name="subtotal_adults_triple" value=""></td>
+                                <td> <input type="text" readonly class="text-center" id="subtotal_childs" name="subtotal_childs" value=""></td>
+                                <td> <input type="text" readonly class="text-center" id="subtotal_infants" name="subtotal_infants" value=""></td>
                               </tr>
                               <tr align="center">
                                 <td><b>Total Price</b></td>
-                                <td type="text" name="totalprice_adult" id="totalprice_adult" value=""></td>
-                                <td type="text" name="totalprice_adult_double" id="totalprice_adult_double" value=""></td>
-                                <td type="text" name="totalprice_adult_triple" id="totalprice_adult_triple" value=""></td>
-                                <td type="text" name="totalprice_childs" id="totalprice_childs" value=""></td>
-                                <td type="text" name="totalprice_infants" id="totalprice_infants" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="totalprice_adult" id="totalprice_adult" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="totalprice_adult_double" id="totalprice_adult_double" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="totalprice_adult_triple" id="totalprice_adult_triple" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="totalprice_childs" id="totalprice_childs" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="totalprice_infants" id="totalprice_infants" value=""></td>
                               </tr>
                               <tr align="center">
                                 <td><b>Per PAX</b></td>
-                                <td type="text" name="perpax_adult" id="perpax_adult" value=""></td>
-                                <td type="text" name="perpax_adult_double" id="perpax_adult_double" value=""></td>
-                                <td type="text" name="perpax_adult_triple" id="perpax_adult_triple" value=""></td>
-                                <td type="text" name="perpax_childs" id="perpax_childs" value=""></td>
-                                <td type="text" name="perpax_infants" id="perpax_infants" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="perpax_adult" id="perpax_adult" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="perpax_adult_double" id="perpax_adult_double" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="perpax_adult_triple" id="perpax_adult_triple" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="perpax_childs" id="perpax_childs" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="perpax_infants" id="perpax_infants" value=""></td>
                               </tr>
                             </table>
                             <input type="hidden" id="perpax_adult_input" name="perpax_adult_input" value="" />
+                            <input type="hidden" id="perpax_adult_input_double" name="perpax_adult_input_double" value="" />
+                            <input type="hidden" id="perpax_adult_input_triple" name="perpax_adult_input_triple" value="" />
                             <input type="hidden" id="perpax_childs_input" name="perpax_childs_input" value="" />
                             <input type="hidden" id="perpax_infants_input" name="perpax_infants_input" value="" />
 
@@ -733,86 +721,22 @@
                       </div>
                       <div class="mt-5">
                         <div>
-                          <div class="card-head card-head-new ">
-                            <p>Terms :</p>
-                          </div>
-
-                          <div class="container">
-
-                            <div class="accordion" id="accordionPanelsStayOpenExample">
-                              <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                  <button class="accordion-button  width-refund" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                                    Inclusions
-                                  </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-headingOne">
-                                  <div class="accordion-body">
-                                    <div class="form-floating">
-                                      <textarea class="form-control" placeholder="Leave a comment here" id="buildPackageInclusions" name="buildPackageInclusions" style="height: 100px"></textarea>
-                                      <!-- <label for="floatingTextarea2">Comments</label> -->
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                                  <button class="accordion-button collapsed  width-refund" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                                    Exclusions
-                                  </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                                  <div class="accordion-body">
-                                    <div class="form-floating">
-                                      <textarea class="form-control" placeholder="Leave a comment here" id="buildPackageExclusions" name="buildPackageExclusions" style="height: 100px"></textarea>
-                                      <!-- <label for="floatingTextarea2">Comments</label> -->
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                                  <button class="accordion-button collapsed  width-refund" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                    Term & Condions
-                                  </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                                  <div class="accordion-body">
-                                    <div class="form-floating">
-                                      <textarea class="form-control" placeholder="Leave a comment here" id="buildPackageConditions" name="buildPackageConditions" style="height: 100px">
-    v  Rooms and rates are subject to availability at the time of actual booking.
-  </textarea>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="accordion mt-3" id="accordionExample">
-                                <div class="accordion-item">
-                                  <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button  width-refund" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                      Cancellations Policy
-                                    </button>
-                                  </h2>
-                                  <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                      <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Leave a comment here" id="buildPackageCancellations" name="buildPackageCancellations" style="height: 100px">
-        Cancellation Terms: FIT
-  </textarea>
-                                        <!-- <label for="floatingTextarea2">Comments</label> -->
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
                           <input type="hidden" id="QueryId" name="QueryId" value="<?php echo $view->query_id; ?>">
                           <div class="last-btn mt-4 mb-4">
                             <button id="view-proposal-btn" type="button" class="new_btn px-5 mr-4">View Proposal</button>
                           </div>
                         </div>
                       </div>
+                      <input type="hidden" id="hotel_rate_adult" name="hotel_rate_adult" value="0" />
+                      <input type="hidden" id="hotel_rate_adult_double" name="hotel_rate_adult_double" value="0" />
+                      <input type="hidden" id="hotel_rate_adult_triple" name="hotel_rate_adult_triple" value="0" />
+
+                      <input type="hidden" id="hotel_pax_adult" name="hotel_pax_adult" value="0" />
+                      <input type="hidden" id="hotel_pax_adult_double" name="hotel_pax_adult_double" value="0" />
+                      <input type="hidden" id="hotel_pax_adult_triple" name="hotel_pax_adult_triple" value="0" />
+
+                      <input type="hidden" id="hotel_rate_child" name="hotel_rate_child" value="0" />
+                      <input type="hidden" id="hotel_rate_infant" name="hotel_rate_infant" value="0" />
       </form>
     </div>
   </div>
@@ -1344,17 +1268,6 @@
   }
   // $('#hotel_name_backup').val( hotel_name_backup);
 </script>
-
-<input type="hidden" id="hotel_rate_adult" name="hotel_rate_adult" value="0" />
-<input type="hidden" id="hotel_rate_adult_double" name="hotel_rate_adult_double" value="0" />
-<input type="hidden" id="hotel_rate_adult_triple" name="hotel_rate_adult_triple" value="0" />
-
-<input type="hidden" id="hotel_pax_adult" name="hotel_pax_adult" value="0" />
-<input type="hidden" id="hotel_pax_adult_double" name="hotel_pax_adult_double" value="0" />
-<input type="hidden" id="hotel_pax_adult_triple" name="hotel_pax_adult_triple" value="0" />
-
-<input type="hidden" id="hotel_rate_child" name="hotel_rate_child" value="0" />
-<input type="hidden" id="hotel_rate_infant" name="hotel_rate_infant" value="0" />
 <script>
   function fetchexcursion() {
     // alert("work");

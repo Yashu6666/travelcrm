@@ -263,12 +263,11 @@
 
         <img class="w-25" src="<?php echo base_url();?>public/image/logo.png"/>
             <p>
-                <b>Name: </b><?php echo $b2bcustomerquery->b2bfirstName ?> <?php echo $b2bcustomerquery->b2blastName ?> <br>
+                <b>Name: </b><?php echo $b2bcustomerquery->b2bcompanyName ?> <br>
                 <b>Mobile Number:</b> <?php echo $b2bcustomerquery->b2bmobileNumber ?> <br>
                 <b>Query ID :</b><?php echo $buildpackage->queryId ?>
             </p>
         </div>
-
         <hr>
         <div class="d-flex justify-content-between">
             <p><?php echo $buildpackage->goingTo ?> <br>
@@ -277,25 +276,13 @@
                 Currency :<?php echo $proposalDetails['currencyOption'] ?><br />
 
             </p>
-
-            <!-- <p>
-                <b>Adult  : </b> <?php // echo $proposalDetails['perpax_adult'] 
-                                    ?> <br/>
-                <b>Child   : </b> <?php // echo $proposalDetails['perpax_childs'] 
-                                    ?><br/>
-                <b>Infant : </b> <?php // echo $proposalDetails['perpax_infants'] 
-                                    ?><br/>
-                
-          <br>
-               
-            </p> -->
         </div>
         <hr>
 
-        <div class="bg-primary d-flex justify-content-center">
-            <h3 class="text-light p-2">Query ID:<?php echo $buildpackage->queryId ?> <?php //echo $proposalDetails['currencyOption'] 
-                                                                                        ?> <?php // echo $proposalDetails['total_package_cost'] 
-                                                                                            ?>
+        <div class="bg-primary d-flex justify-content-around">
+            <h3 class="text-light p-2">Check In: <?php echo (new DateTime($buildpackage->specificDate))->format('d-M-Y') ?> 
+            <h3 class="text-light p-2">No of Nights: <?php echo $buildpackage->night ?> 
+            <h3 class="text-light p-2">Check Out: <?php echo (new DateTime($buildpackage->noDaysFrom))->format('d-M-Y') ?> 
             </h3>
         </div>
     </div>
@@ -304,46 +291,25 @@
 
 
     <div class="container mt-5 section">
-    <?php if(isset($proposalDetails['hotelName'])) : ?>
-    <?php foreach($proposalDetails['hotelName'] as $key => $val) : ?>
-        <div class=" second">
-            <div class=" bg-primary ">
-                <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-hotel"></i> Hotel</h3>
-                <div class="head">
-                    <h5 class="text-light" style="padding: 7px;"><?php print_r($proposalDetails['hotels'][$key]->hotelname) ?> - No of Nights <?php echo $proposalDetails['noOfNights'][$key] ?> </h5>
+        <?php if (isset($proposalDetails['hotelName'])) : ?>
+            <div class=" second">
+                <div class="bg-primary ">
+                    <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-hotel"></i> Hotel</h3>
                 </div>
-            </div>
-            <div>
-                
-                <h5> <b>Hotel Name : </b> <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></h5>
-                <b>Room Type : </b> <?php echo $proposalDetails['roomType'][$key] ?>
-            </div>
-        </div>
-    <?php endforeach ?>
-    <?php endif ?>
-        <!-- <div class=" second">
-            <div class=" bg-primary ">
-                <h3 class="text-light" style="padding: 7px;">Hotel</h3>
-                <div class="head">
-                    <h5 class="text-light" style="padding: 7px;"><?php echo $proposalDetails['hotelName'][0] ?> - No of Nights <?php echo $proposalDetails['noOfNights'][0] ?> </h5>
-                </div>
-            </div>
-            <div>
-                <img src="?php echo base_url(); ?>public/image/4.jpg" alt="">
-                <h5><b>Hotel Name : </b> ?php echo $proposalDetails['hotelName'][0] ?></h5>
-                <b>Room Type : </b> ?php echo $proposalDetails['roomType'][0] ?>
-            </div>
+                <?php foreach ($proposalDetails['hotelName'] as $key => $val) : ?>
 
-            <div class="head">
-                <h5 class="text-light" style="padding: 7px;">Dubai 10.05.2022 - 15.05.2022</h5>
+                    <div class="head">
+                        <h5 class="text-light" style="padding: 7px;"><?php print_r($proposalDetails['hotels'][$key]->hotelname) ?> - No of Nights <?php echo $proposalDetails['noOfNights'][$key] ?> </h5>
+                    </div>
+                    <div>
+                        <h5 class="text-capitalize"><b>Hotel Name : </b> <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></h5>
+                        <b>Room Type : </b> <?php echo $proposalDetails['roomType'][$key] ?>
+                    </div>
+                <?php endforeach ?>
             </div>
-            <div>
-                <img src="<?php echo base_url(); ?>public/image/2.jpg" alt="">
-                <h5>Hotel Name</h5>
-            </div> 
-        </div> -->
+        <?php endif ?>
+        <br/>
 
-        <br /><br />
         <?php if(isset($proposalDetails['excursion_name_SIC']) || isset($proposalDetails['excursion_name_PVT']) || isset($proposalDetails['excursion_name_TKT'])  ) : ?>
         <div class=" second">
             <div class=" bg-primary ">
@@ -357,7 +323,6 @@
                 </div>
 
             <?php foreach($proposalDetails['excursion_name_SIC'] as $keys => $vals) : ?>
-                <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
             <ul><li>
                 <h5><?php echo $vals ?></h5>
             </li></ul>
@@ -373,7 +338,6 @@
                     <h5 class="text-light" style="padding: 7px;"> PVT</h5>
                 </div>
             <?php foreach($proposalDetails['excursion_name_PVT'] as $keyss => $valss) : ?>
-                <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
             <ul><li>
                 <h5><?php echo $valss ?></h5>
                 </li></ul>
@@ -388,7 +352,6 @@
                     <h5 class="text-light" style="padding: 7px;"> TKT </h5>
                 </div>
             <?php foreach($proposalDetails['excursion_name_TKT'] as $keys => $vals) : ?>
-                <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
             <ul><li>
                 <h5><?php echo $vals ?></h5><br/>
             </li></ul>
@@ -412,7 +375,6 @@
                         <th> Drop Off </th>
                     </thead>
 
-
                     <?php foreach($proposalDetails['in_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
 
@@ -435,28 +397,23 @@
 
                     <?php foreach($proposalDetails['pp_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
-                    <!-- ?php if($proposalDetails['pp_transfer_pickup'] != 'Pickup') : ?> -->
                     <tbody>
                         <tr align="center">
                         <?php
                                 $date = new DateTime($proposalDetails['pp_transfer_date'][$key]);
                                 $date_pp = $date->format('d-M-Y');
                                 ?>
-                            <!-- <td><b>Per PAX</b></td> -->
                             <td>Point to Point Transfer</td>
                             <td> <?php echo $date_pp ?></td>
                             <td> <?php echo $proposalDetails['pp_transfer_pickup'][$key] ?></td>
                             <td> <?php echo $proposalDetails['pp_transfer_dropoff'][$key] ?></td>
-
                         </tr>
                     </tbody>
                     <?php endif ?>
                     <?php endforeach ?>
-
                 </table>
             </div>
         </div>
-
         <br /><br />
         <div class=" second">
             <div class=" bg-primary ">
@@ -464,81 +421,110 @@
             </div>
             <div>
                 <table class="table table-bordered">
-                    <thead style="background: #dbd5d5;">
-                        <th> Adult</th>
-                        <th> Child</th>
-                        <th> Infant</th>
-                    </thead>
-                    <tbody>
-                        <tr align="center">
-                            <td> <?php echo $proposalDetails['perpax_adult'] ?></td>
-                            <td><?php echo $proposalDetails['perpax_childs'] ?></td>
-                            <td><?php echo $proposalDetails['perpax_infants'] ?></td>
+                    <tr align="center">
+                                  <td></td>
+                                  <td>Adult</td>
+                                  <td>Single Sharing</td>
+                                  <td>Double Sharing</td>
+                                  <td>Triple Sharing</td>
+                                  <td>CWB</td>
+                                  <td>CNB</td>
+                                  <td>Infant</td>
+                                </tr>
 
-                        </tr>
-                    </tbody>
+                                <tr align="center">
+                                  <td><b>Sub Total</b></td>
+                                  <td><?php echo $proposalDetails['subtotal_adults'] ?></td>
+                                  <td><?php echo $proposalDetails['subtotal_adults_single'] ?></td>
+                                  <td><?php echo $proposalDetails['subtotal_adults_double'] ?></td>
+                                  <td><?php echo $proposalDetails['subtotal_adults_triple'] ?></td>
+                                  <td><?php echo $proposalDetails['subtotal_childs'] ?></td>
+                                  <td><?php echo $proposalDetails['subtotal_cnb'] ?></td>
+                                  <td><?php echo $proposalDetails['subtotal_infants'] ?></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Total Price</b></td>
+                                  <td><?php echo $proposalDetails['totalprice_adult'] ?></td>
+                                  <td><?php echo $proposalDetails['totalprice_adult_single'] ?></td>
+                                  <td><?php echo $proposalDetails['totalprice_adult_double'] ?></td>
+                                  <td><?php echo $proposalDetails['totalprice_adult_triple'] ?></td>
+                                  <td><?php echo $proposalDetails['totalprice_childs'] ?></td>
+                                  <td><?php echo $proposalDetails['totalprice_cnb'] ?></td>
+                                  <td><?php echo $proposalDetails['totalprice_infants'] ?></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Per PAX</b></td>
+                                  <td><?php echo $proposalDetails['perpax_adult'] ?></td>
+                                  <td><?php echo $proposalDetails['perpax_adult_single'] ?></td>
+                                  <td><?php echo $proposalDetails['perpax_adult_double'] ?></td>
+                                  <td><?php echo $proposalDetails['perpax_adult_triple'] ?></td>
+                                  <td><?php echo $proposalDetails['perpax_childs'] ?></td>
+                                  <td><?php echo $proposalDetails['perpax_cnb'] ?></td>
+                                  <td><?php echo $proposalDetails['perpax_infants'] ?></td>
+                                </tr>
+
                 </table>
             </div>
         </div>
         <br /><br />
-        <div class=" second">
-            <div class="accordion accordion-flush mt-5">
+        <div class="second mb-5 ck_data">
+            <div class="accordion accordion-flush mt-2">
                 <div class="accordion-item border">
                     <h2 class="accordion-header" id="flush-headingOne">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            Inclusions
+                        Above Rate Inclusive of
                         </button>
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <div id="editor1">
-                        <p>&#10146; <?php echo $buildpackage->night ?> Nights stay at the mentioned hotel</p>
+                        <li><?php echo $buildpackage->night ?> Nights stay at the mentioned hotel</li>
                         <?php if($proposalDetails['build_room_types'][0] == 'BB') : ?>
-                            <p>&#10146; <?php echo $buildpackage->night ?> Breakfast Buffet Breakfast in the Hotel</p>
+                            <li><?php echo $buildpackage->night ?> Breakfast Buffet Breakfast in the Hotel</li>
                         <?php endif ?>
 
                     <?php foreach($proposalDetails['in_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
-                        <p>&#10146; <?php echo $proposalDetails['internal_route'][$key] ?></p>
+                        <li><?php echo $proposalDetails['internal_route'][$key] ?></li>
                     <?php endif ?>
                     <?php endforeach ?>
 
                     <?php foreach($proposalDetails['pp_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
-                        <p>&#10146; <?php echo $proposalDetails['return_route'][$key] ?></p>
+                        <li><?php echo $proposalDetails['return_route'][$key] ?></li>
                     
                         <?php endif ?>
                     <?php endforeach ?>
 
                     <?php if(isset($proposalDetails['excursion_name_SIC'])) : ?>
                     <?php foreach($proposalDetails['excursion_name_SIC'] as $key => $val) : ?>
-                        <p>&#10146; <?php echo $val ?> </p>
+                        <li><?php echo $val ?> </li>
                     <?php endforeach ?>
                     <?php endif ?>
                 
                     <?php if(isset($proposalDetails['excursion_name_PVT'])) : ?>
                     <?php foreach($proposalDetails['excursion_name_PVT'] as $key => $val) : ?>
-                        <p>&#10146; <?php echo $val ?></p>
+                        <li><?php echo $val ?></li>
                     <?php endforeach ?>
                     <?php endif ?>
 
                     <?php if($proposalDetails['res_name'][0] != 'select') : ?>
                         <?php foreach($proposalDetails['res_name'] as $key => $val) : ?>
-                            <p>&#10146; <?php echo $proposalDetails['no_of_meals'][$key]." ".$proposalDetails['Meal'][$key]." Meal Coupons (".$proposalDetails['res_type'][$key]." ".$proposalDetails['res_name'][$key].") ".
+                            <li><?php echo $proposalDetails['no_of_meals'][$key]." ".$proposalDetails['Meal'][$key]." Meal Coupons (".$proposalDetails['res_type'][$key]." ".$proposalDetails['res_name'][$key].") ".
                             ($proposalDetails['transfer_with_or_without'][$key] == 'without_transfer' ? 'Without Transfer' : 'With Transfer'); ?> 
-                            </p>
+                            </li>
                         <?php endforeach ?>
                     <?php endif ?>
 
                     <?php if(!empty($proposalDetails['visa_category_drop_down'])) : ?>
-                        <p>&#10146; UAE Normal Single Entry Tourist Visa With Covid-19 Inbound Insurance (Subject To Immigration Approval)</p>
+                        <li>UAE Normal Single Entry Tourist Visa With Covid-19 Inbound Insurance (Subject To Immigration Approval)</li>
                     <?php endif ?>
-                    <p>&#10146; Tourism Dirhams Fees</p>
-                    <p>&#10146; Vat 5% Inclusive</p>
-                    <p>&#10146; All Applicable Taxes</p>
-                    <p>&#10146; All of the above services with the hotel to hotel transfer and ticket</p>
+                    <li>Tourism Dirhams Fees</li>
+                    <li>Vat 5% Inclusive</li>
+                    <li>All Applicable Taxes</li>
+                    <li>All of the above services with the hotel to hotel transfer and ticket</li>
                     <?php if(isset($proposalDetails['excursion_name_SIC'])) : ?>
-                        <p>&#10146; All Tours & Transfers on sharing Basis except airport transfer</p>
+                        <li>All Tours & Transfers on sharing Basis except airport transfer</li>
                     <?php endif ?>
 
                             </div>
@@ -548,102 +534,129 @@
                 </div>
                 <div class="accordion-item mt-3 border">
                     <h2 class="accordion-header" id="flush-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                            Exclusion
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        General Terms and Conditions
                         </button>
                     </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                         <div class="accordion-body">
-                            <div id="editor2"><?php echo  $proposalDetails['buildPackageExclusions']  ?></div>
+                            <div id="editor7">
+                            <li>
+                                Rooms and rates are subject
+                                to availability at the time of actual booking.
+                            </li>
+                            <li>
+                                Standard Check-In: 1500 hrs.
+                                & Checkout: 1200 hrs.
+                            </li>
+                            <li>
+                                Early Check-In and Late
+                                Check-Out is subject to availability unless booked and confirmed in
+                                advance
+                            </li>
+                            <li>
+                                Normal timing for airport
+                                pick-up & drop transfer is 6.00 am to 10.00 pm and extra charges
+                                will be applicable except this timings and subject to available of
+                                vehicles
+                            </li>
+                            <li>
+                                Any change in the number of
+                                passengers will lead to a revision of the quote.
+                            </li>
+                            <li>
+                                Vehicle used in the above
+                                quote is based on all guests arriving/ departing together in the
+                                same flight. In case additional transfers are required, same will be
+                                arranged at an additional cost.
+                            </li>
+                            <li>
+                                Above quotes based on normal
+                                ticket prices, rate will be subject to change if we receive any
+                                revise rate at later stage
+                            </li>
+                            <li>
+                                
+                                Itinerary might get changed according to the availability of
+                                tours & services and it will be informed and updated to the guest
+                                once they reach Dubai
+                            </li>
+                            <li>
+                                OK TO BOARD Message update as
+                                per airline’s policy
+                            </li>
+                            <li>
+                                Visa processing may take
+                                anywhere between 3 – 5 working days to get approved
+                            </li>
+                            <li>
+                                Issuance of visa will be
+                                subject to approval from immigration however once visa is applied
+                                charges will be applicable and NO refund will be granted.
+                            </li>
+                            <li>
+                                In case of overstay – Travel
+                                agent will be held accountable to settle the fine imposed by
+                                immigration which is AED 100.00 Per day (Subject to revision from
+                                immigration).
+                            </li>
+                            <li>
+                                We need pre-payment for Dubai
+                                Visa and Insurance and it’s nonrefundable.
+                            </li>
+                            <li>
+                                If Excursion tickets are not
+                                book then Cancellation policy for the ground services will 4 days
+                                prior to arrival is free of charge.
+                            </li>
+                            <li>
+                                Payment to be made in AED as per the rate of exchange applicable
+                                on the day of final payment.
+                            </li>
+                            <li>
+                                Bank Charges AED 80/- will be
+                                Charged Mandatory on the total invoice.
+                            </li>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- <div class="accordion-item  mt-3 border">
-                    <h2 class="accordion-header" id="flush-headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                            Refund Policy
-                        </button>
-                    </h2>
-                    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <div id="editor3"><?php //echo $proposalDetails['buildPackageRefund']  ?></div>
-                        </div>
-                    </div>
-                </div> -->
-            </div>
-
-            <!-- <div class="accordion" id="accordionExample">
-            <div class="accordion-item  mt-3">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Payment Terms
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                    data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <div id="editor4"><?php /// echo // $proposalDetails['refund']  
-                                            ?></div>
-                    </div>
+                    
                 </div>
             </div>
-            <div class="accordion-item  mt-3 border">
-                <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Travel Basics
-                    </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                    data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <div id="editor5"><?php //echo // $proposalDetails['general_info']  
-                                            ?></div>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item  mt-3 border">
-                <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Why Use Demo Agency?
-                    </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                    data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <div id="editor6"><?php //echo // $proposalDetails['whyuseus']  
-                                            ?></div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
 
             <div class="accordion" id="accordionPanelsStayOpenExample">
 
                 <div class="accordion-item  mt-3">
                     <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                            Term & Conditions
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        Cancellation Terms: FIT
                         </button>
                     </h2>
-                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                            <div id="editor7"><?php echo  $proposalDetails['buildPackageConditions']  ?></div>
+                            <div id="editor2">
+                            <li>25% cancellation within 30 days before travel.</li>
+                            <li>50% cancellation within 10 days before Travel.</li>
+                            <li>75% cancellation within 07 days before Travel.</li>
+                            <li>Any cancellation within 04 days will lead to 100% cancellation charge. </li>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="accordion-item  mt-3 border">
                     <h2 class="accordion-header" id="panelsStayOpen-headingThree">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                            Cancellation Policy
+                        Cancellation Terms:  Groups (MICE)
                         </button>
                     </h2>
                     <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                         <div class="accordion-body">
-                            <div id="editor8"><?php echo  $proposalDetails['buildPackageCancellations']  ?></div>
+                            <div id="editor8">
+                            <li>25% cancellation within 30 days before travel.</li>
+                            <li>50% cancellation within 15 days before Travel.</li>
+                            <li>100% cancellation within 07 days before Travel.</li>
+                            <li>Any cancellation within 04 days will lead to 100% cancellation charge.</li>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -655,92 +668,11 @@
 
     </div>
 
-
-
-    <!-- <div class=" second mt-4"> -->
-    <!-- <div class=" bg-primary">
-                <h3 class="text-light" style="padding: 7px;">Excursion</h3>
-                <div class="head">
-                    <h5 class="text-light" style="padding: 7px;">Dubai 10.05.2022 - 15.05.2022</h5>
-                </div>
-            </div>
-            <div>
-                <img src="<?php echo base_url(); ?>public/image/2.jpg" alt="">
-                <h5>Hotel Name</h5>
-                <p class="p-3">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis enim est accusamus
-                    deserunt quia
-                    cupiditate officiis eveniet sequi consequuntur vel voluptate voluptatibus, quaerat natus nihil,
-                    harum soluta qui, fugiat iusto?</p>
-            </div>
-            <div class="head">
-                <h5 class="text-light" style="padding: 7px;">Dubai 10.05.2022 - 15.05.2022</h5>
-            </div>
-            <div>
-                <img src="<?php echo base_url(); ?>public/image/2.jpg" alt="">
-                <h5>Hotel Name</h5>
-                <p class="p-3">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis enim est accusamus
-                    deserunt quia
-                    cupiditate officiis eveniet sequi consequuntur vel voluptate voluptatibus, quaerat natus nihil,
-                    harum soluta qui, fugiat iusto?</p>
-            </div> -->
-    <!-- <br><br>
-            <br><br>
-            <br><br>
-        </div> -->
-    <br><br>
-    <br><br>
-    <br><br>
-    <!-- <div class="sidebar">
-            <div class="">
-                <div class="">
-                    
-                    <hr>
-                    <div class="bg-secondary  text-white" >
-                        <p class="p-2" style="display: grid; place-items: center;">Message chat with agent</p>
-                    </div>
-
-                    <p>Agent : XYZ(1234567890)</p>
-
-                    <div class="mb-3">
-                        <label for="" class="form-label"><b>Inroduce Your Self*</b></label><br>
-                        <div>
-                            <label class="input">
-                                <input class="input__field " style="width: 170%;" type="email" placeholder=" "
-                                    autocomplete="off" />
-                                <span class="input__label">Name </span></span>
-                            </label>
-                        </div>
-                        <div class="mt-3">
-                            <label class="input">
-                                <input class="input__field " style="width: 170%;" type="email" placeholder=" "
-                                    autocomplete="off" />
-                                <span class="input__label">Email </span></span>
-                            </label>
-                        </div>
-                        <label for="" class="mt-2 mb-2">Message To agent</label>
-                        <div class="form-floating">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
-                                style="height: 100px;"></textarea>
-                        </div>
-                    </div>
-
-
-                    <div class="d-flex justify-content-center">
-                        <button type="button" class="btn btn-primary  ">Send Message</button>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-    <!-- Modal -->
-    <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Share
-            </button> -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Send Proposal To Customer</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Send Proposal To Travel Agent</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -760,7 +692,7 @@
                                 <td><?php echo $buildpackage->goingTo ?>, <?php echo $buildpackage->goingFrom ?></td>
                                 <td><?php echo $buildpackage->night ?></td>
                                 <td><?php echo $buildpackage->adult ?> Adult,<?php echo $buildpackage->child ?> Child,<?php echo $buildpackage->infant ?> Infant</td>
-                                <td><?php echo $buildpackage->specificDate ?></td>
+                                <td><?php echo (new DateTime($buildpackage->specificDate))->format('d-M-Y') ?></td>
                             </tr>
 
                         </tbody>
@@ -779,8 +711,8 @@
                         </div>
                         <div class="col">
                             <label class="input">
-                                <input class="input__field width-input" type="text" placeholder=" " id="cc_email" value="" autocomplete="off" />
-                                <span class="input__label">CC</span></span>
+                                <input class="input__field  width-input" id="cus_email" value="<?php echo $b2bcustomerquery->b2bEmail ?>" type="email" placeholder=" " autocomplete="off" />
+                                <span class="input__label">Email </span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>
                         </div>
@@ -790,8 +722,8 @@
                     <div class="row mt-3">
                         <div class="col">
                             <label class="input">
-                                <input class="input__field " id="cus_email" value="<?php echo $b2bcustomerquery->b2bEmail ?>" type="email" placeholder=" " autocomplete="off" />
-                                <span class="input__label">Email </span></span>
+                                <input class="input__field" type="text" placeholder=" " id="cc_email" value="" autocomplete="off" />
+                                <span class="input__label">CC</span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>
                         </div>
@@ -836,22 +768,8 @@
                                 <div class="mt-2"> <b>Check In/Out</b> : <?php echo $check_in ?>/<?php echo $check_out ?></div>
                                 <div class="mt-2"> <b>Destinations</b> : <?php echo $buildpackage->goingTo ?>, <?php echo $buildpackage->goingFrom ?></div>
                             </div>
-                            <!-- <div class="col">
-                                <div class="form-floating">
-                                    <textarea class="form-control" style="height: 100px;"
-                                        placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                    <label for="floatingTextarea">Message</label>
-                                </div>
-                            </div> -->
-                           
                         </div>
-
-
-
                     </div>
-
-
-
                 </div>
 
                 <div id="hid_div"></div>
@@ -866,32 +784,16 @@
                     <div>
 
                     </div>
-                    <!-- <div>
-                        <input type="checkbox">
-                        <label>Mail</label>
-                    </div> -->
                     <div>
                         <button type="button" class=" new_btn" data-bs-dismiss="modal" data-bs-dismiss="modal" style="border: none;">Close</button>
-                        <button type="button" id="modal-submit" class="new_btn px-3" style="border: none;">Submit</button>
+                        <button type="button" id="modal-submit" class="new_btn px-3" style="border: none;">Send</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
-
-
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-
-
-
-
-
-
     <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script>
@@ -902,6 +804,8 @@
         var exclu = ""; 
         var TnC = ""; 
         var canc_ply = ""; 
+        var FIT = ""; 
+        var MICE = ""; 
 
         ClassicEditor
             .create(document.querySelector('#editor1'))
@@ -921,10 +825,9 @@
         ClassicEditor
             .create(document.querySelector('#editor2'))
             .then(editor => {
-                exclu = editor.getData();
+                FIT = editor.getData();
                 editor.model.document.on('change:data', () => {
-                    exclu = editor.getData();
-                // $('<input>').attr({type: 'hidden',id: 'Incl',name: 'Incl',value: editor}).appendTo('#hid_div');
+                    FIT = editor.getData();
                 });
             })
             .catch(error => {
@@ -968,7 +871,6 @@
                 TnC = editor.getData();
                 editor.model.document.on('change:data', () => {
                 TnC = editor.getData();
-                // $('<input>').attr({type: 'hidden',id: 'tNc',name: 'tNc',value: editor}).appendTo('#hid_div1');
                 });
             })
             .catch(error => {
@@ -977,11 +879,9 @@
         ClassicEditor
             .create(document.querySelector('#editor8'))
             .then(editor => {
-                canc_ply = editor.getData();
+                MICE = editor.getData();
                 editor.model.document.on('change:data', () => {
-                canc_ply = editor.getData();
-                // $('<input>').attr({type: 'hidden',id: 'canc_ply',name: 'canc_ply',value: editor8}).appendTo('#hid_div2');
-                // console.log("e.value",);
+                MICE = editor.getData();
                 });
             })
             .catch(error => {
@@ -989,6 +889,9 @@
             });
     </script>
 
+<style>
+
+</style>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -1020,9 +923,13 @@
         "subject"  : document.getElementById("pro_sub").value,
         "cc_email"  : document.getElementById("cc_email").value,
         "cus_email"  : document.getElementById("cus_email").value,
+
         "inclusions" :  inclu,
-        "exclusions" :  exclu,
+        // "exclusions" :  exclu,
         "conditions" :  TnC,
+        "FIT" :  FIT,
+        "MICE" :  MICE,
+
         "cancelation_policy" : canc_ply,
         "type" : 'package',
         "res_name" : res_name,

@@ -3443,13 +3443,13 @@ class Query extends CI_Controller
 		// echo"<pre>";print_r($_POST);exit;
 		// return;
 		$data = array();
-
 		$hotels = [];
 		if(isset($_POST['buildHotelName'])){
 		foreach ($_POST['buildHotelName'] as $key => $value) {
 			$hotels[] = $this->db->get_where('hotel', array('id' => $value))->row();
+			}
 		}
-	}
+
 		$data['proposalDetails'] = array(
 
 			'query_id' => $_POST['QueryId'],
@@ -3464,15 +3464,41 @@ class Query extends CI_Controller
 			'excursion_name_PVT' => isset($_POST['excursion_name_PVT']) ? $_POST['excursion_name_PVT'] : NULL,
 			'excursion_name_TKT' => isset($_POST['excursion_name_TKT']) ? $_POST['excursion_name_TKT'] : NULL,
 
-			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
-			'buildPackageExclusions' => $_POST['buildPackageExclusions'],
-			'buildPackageConditions' => $_POST['buildPackageConditions'],
-			'buildPackageCancellations' => $_POST['buildPackageCancellations'],
+			'buildPackageInclusions' => isset($_POST['buildPackageInclusions']) ? $_POST['buildPackageInclusions'] : NULL,
+			'buildPackageExclusions' => isset($_POST['buildPackageExclusions']) ? $_POST['buildPackageExclusions'] : NULL,
+			'buildPackageConditions' => isset($_POST['buildPackageConditions']) ? $_POST['buildPackageConditions'] : NULL,
+			'buildPackageCancellations' => isset($_POST['buildPackageCancellations']) ? $_POST['buildPackageCancellations'] : NULL,
 			// 'buildPackageRefund' => $_POST['buildPackageRefund'],
 
-			'perpax_adult' =>  $_POST['perpax_adult_input'],
-			'perpax_childs' =>  $_POST['perpax_childs_input'],
-			'perpax_infants' => $_POST['perpax_infants_input'],
+			'perpax_adult' =>  $_POST['perpax_adult'],
+			'perpax_adult_single' =>  $_POST['perpax_adult_single'],
+			'perpax_adult_double' =>  $_POST['perpax_adult_double'],
+			'perpax_adult_triple' =>  $_POST['perpax_adult_triple'],
+			'perpax_childs' =>  $_POST['perpax_childs'],
+			'perpax_infants' => $_POST['perpax_infants'],
+			'perpax_cnb' => $_POST['perpax_cnb'],
+			
+			'totalprice_adult' => $_POST['totalprice_adult'],
+			'totalprice_adult_single' => $_POST['totalprice_adult_single'],
+			'totalprice_adult_double' => $_POST['totalprice_adult_double'],
+			'totalprice_adult_triple' => $_POST['totalprice_adult_triple'],
+			'totalprice_adult_triple' => $_POST['totalprice_adult_triple'],
+			'totalprice_childs' => $_POST['totalprice_childs'],
+			'totalprice_cnb' => $_POST['totalprice_cnb'],
+			'totalprice_infants' => $_POST['totalprice_infants'],
+
+			'subtotal_adults' => $_POST['subtotal_adults'],
+			'subtotal_adults_single' => $_POST['subtotal_adults_single'],
+			'subtotal_adults_double' => $_POST['subtotal_adults_double'],
+			'subtotal_adults_triple' => $_POST['subtotal_adults_triple'],
+			'subtotal_childs' => $_POST['subtotal_childs'],
+			'subtotal_cnb' => $_POST['subtotal_cnb'],
+			'subtotal_infants' => $_POST['subtotal_infants'],
+
+			'hotel_pax_adult' => $_POST['hotel_pax_adult'],
+			'hotel_pax_adult_single' => $_POST['hotel_pax_adult_single'],
+			'hotel_pax_adult_double' => $_POST['hotel_pax_adult_double'],
+			'hotel_pax_adult_triple' => $_POST['hotel_pax_adult_triple'],
 
 			'hotelName' =>  isset($_POST['buildHotelName']) ? $_POST['buildHotelName'] : [],
 			
@@ -3797,7 +3823,15 @@ class Query extends CI_Controller
 		$totalprice_adult = $this->input->post('totalprice_adult');
 		$totalprice_childs = $this->input->post('totalprice_childs');
 		$totalprice_infants = $this->input->post('totalprice_infants');
-		$total_pricing = (int)$totalprice_adult + (int)$totalprice_childs + (int)$totalprice_infants;
+
+		$totalprice_adult_double = $this->input->post('totalprice_adult_double');
+		$totalprice_adult_triple = $this->input->post('totalprice_adult_triple');
+
+		$hotel_pax_adult = $this->input->post('hotel_pax_adult');
+		$hotel_pax_adult_double = $this->input->post('hotel_pax_adult_double');
+		$hotel_pax_adult_triple = $this->input->post('hotel_pax_adult_triple');
+
+		$total_pricing = (int)$totalprice_adult + (int)$totalprice_adult_double + (int)$totalprice_adult_triple + (int)$totalprice_childs + (int)$totalprice_infants;
 		$created_by = $this->session->userdata('admin_id');
 		$tableData = $this->input->post('data');
 		$datas =  array();
@@ -3834,18 +3868,52 @@ class Query extends CI_Controller
 	}
 	public function CreateProposalHotel()
 	{
-
+		// print_r($this->input->post());
+		// exit;return;
 		$hotels = [];
 		if(isset($_POST['buildHotelName'])){
 		foreach ($_POST['buildHotelName'] as $key => $value) {
 			$hotels[] = $this->db->get_where('hotel', array('id' => $value))->row();
 		}
 	}
-		
+
 		$data['proposalDetails'] = array(
 			'perpax_adult' =>  $_POST['perpax_adult_input'],
 			'perpax_childs' =>  $_POST['perpax_childs_input'],
 			'perpax_infants' => $_POST['perpax_infants_input'],
+
+			'perpax_double' => $_POST['perpax_adult_input_double'],
+			'perpax_triple' => $_POST['perpax_adult_input_triple'],
+			'admin_name' => $this->session->userdata('admin_username'),
+
+			// 'totalprice_adult' => $_POST['totalprice_adult'],
+			// 'totalprice_adult_double' => $_POST['totalprice_adult_double'],
+			// 'totalprice_adult_triple' => $_POST['totalprice_adult_triple'],
+			// 'totalprice_childs' => $_POST['totalprice_childs'],
+			// 'totalprice_infants' => $_POST['totalprice_infants'],
+
+			'buildPackageInclusions' => isset($_POST['buildPackageInclusions']) ? $_POST['buildPackageInclusions'] : NULL,
+			'buildPackageExclusions' => isset($_POST['buildPackageExclusions']) ? $_POST['buildPackageExclusions'] : NULL,
+			'buildPackageConditions' => isset($_POST['buildPackageConditions']) ? $_POST['buildPackageConditions'] : NULL,
+			'buildPackageCancellations' => isset($_POST['buildPackageCancellations']) ? $_POST['buildPackageCancellations'] : NULL,
+			// 'buildPackageRefund' => $_POST['buildPackageRefund'],
+
+			'totalprice_adult' => $_POST['totalprice_adult'],
+			'totalprice_adult_double' => $_POST['totalprice_adult_double'],
+			'totalprice_adult_triple' => $_POST['totalprice_adult_triple'],
+			'totalprice_childs' => $_POST['totalprice_childs'],
+			'totalprice_infants' => $_POST['totalprice_infants'],
+
+			'subtotal_adults' => $_POST['subtotal_adults'],
+			'subtotal_adults_double' => $_POST['subtotal_adults_double'],
+			'subtotal_adults_triple' => $_POST['subtotal_adults_triple'],
+			'subtotal_childs' => $_POST['subtotal_childs'],
+			'subtotal_infants' => $_POST['subtotal_infants'],
+
+			'hotel_pax_adult' => $_POST['hotel_pax_adult'],
+			'hotel_pax_adult_double' => $_POST['hotel_pax_adult_double'],
+			'hotel_pax_adult_triple' => $_POST['hotel_pax_adult_triple'],
+
 			'hotel_city' => $_POST['buildHotelCity'],
 			'nights' => $_POST['buildNoNight'],
 			'hotels' => $hotels,
@@ -3853,11 +3921,7 @@ class Query extends CI_Controller
 			'hotel_name' => $_POST['buildHotelName'],
 			'room_type' => $_POST['buildRoomType'],
 			'pricing_info_curreny' => $_POST['currencyOption'],
-			'cancelation_policy' => $_POST['buildPackageCancellations'],
-			'inclusions' => $_POST['buildPackageInclusions'],
-			'exclusions' => $_POST['buildPackageExclusions'],
 			'query_id' => $_POST['QueryId'],
-			'buildPackageConditions' => $_POST['buildPackageConditions'],
 			'loggedInUser' => $this->session->userdata('admin_username'),
 			'room_sharing_types' => $_POST['room_sharing_types'],
 			'build_room_types' => $_POST['build_room_types'],

@@ -177,6 +177,12 @@
             color: black !important;
           }
     </style>
+
+<style>
+      .ck_data ul { list-style: none;}
+      .ck_data li:before { content: '➢ '; margin: 8px 0 0 -12px;  }
+    </style>
+    
   </head>
 
   <body>
@@ -275,137 +281,40 @@
           </table>
         </div>
 
-        <div class="head5">
+        <div class="head5 ck_data">
           <br />
           <br />
           <b><u>Above Rate Inclusive of:</u></b>
-          <p>&#10146; Dubai Single Entry Tourist Visa with Covid-19 Inbound Insurance</p>
-          <?php if(isset($details->otb) && !empty($details->otb)) : ?>
-            <p>&#10146; OTB is included</p>
-           <?php endif ?>
-            
-            <!-- <p>&#10146; Tourism Dirhams Fees</p> -->
-            <p>&#10146; Vat 5% Inclusive</p>
-            <p>&#10146; All Applicable Taxes</p>
-            <!-- <p>&#10146; All of the above services with the hotel to hotel transfer and ticket</p> -->
+          <p><?php echo $details->inclusions ?></p>
         </div>
-        
         <div class="head7">
           Kindly note that the above rates are only a quote, no rooms or
           services are booked or blocked and will be subject to availability at
           the time of booking.
         </div>
-        <div class="head8">
+        <div class="head8 ck_data">
           <b
             >Thanks & Regards<br />
-            <?php echo $this->session->userdata('admin_username'); ?>
+            <?php echo $details->admin_name ?>
           </b>
         </div>
-        <div class="head9">
+        <div class="head9 ck_data">
           <span
             ><b><u>GENERAL TERMS AND CONDITIONS :</u></b></span> <br>
-          <p>
-            &#10146; Rooms and rates are subject
-            to availability at the time of actual booking.
-          </p>
-          <p>
-            &#10146; Standard Check-In: 1500 hrs.
-            & Checkout: 1200 hrs.
-          </p>
-          <p>
-            &#10146; Early Check-In and Late
-            Check-Out is subject to availability unless booked and confirmed in
-            advance
-          </p>
-          <p>
-            &#10146; Normal timing for airport
-            pick-up & drop transfer is 6.00 am to 10.00 pm and extra charges
-            will be applicable except this timings and subject to available of
-            vehicles
-          </p>
-          <p>
-            &#10146; Any change in the number of
-            passengers will lead to a revision of the quote.
-          </p>
-          <p>
-            &#10146; Vehicle used in the above
-            quote is based on all guests arriving/ departing together in the
-            same flight. In case additional transfers are required, same will be
-            arranged at an additional cost.
-          </p>
-          <p>
-            &#10146; Above quotes based on normal
-            ticket prices, rate will be subject to change if we receive any
-            revise rate at later stage
-          </p>
-          <p>
-            &#10146;
-              Itinerary might get changed according to the availability of
-              tours & services and it will be informed and updated to the guest
-              once they reach Dubai
-          </p>
-          <p>
-            &#10146; OK TO BOARD Message update as
-            per airline’s policy
-          </p>
-          <p>
-            &#10146; Visa processing may take
-            anywhere between 3 – 5 working days to get approved
-          </p>
-          <p>
-            &#10146; Issuance of visa will be
-            subject to approval from immigration however once visa is applied
-            charges will be applicable and NO refund will be granted.
-          </p>
-          <p>
-            &#10146; In case of overstay – Travel
-            agent will be held accountable to settle the fine imposed by
-            immigration which is AED 100.00 Per day (Subject to revision from
-            immigration).
-          </p>
-          <p>
-            &#10146; We need pre-payment for Dubai
-            Visa and Insurance and it’s nonrefundable.
-          </p>
-          <p>
-            &#10146; If Excursion tickets are not
-            book then Cancellation policy for the ground services will 4 days
-            prior to arrival is free of charge.
-          </p>
-          <p>
-            &#10146;
-              Payment to be made in AED as per the rate of exchange applicable
-              on the day of final payment.
-          </p>
-          <p>
-            &#10146; Bank Charges AED 80/- will be
-            Charged Mandatory on the total invoice.
-          </p>
+            <p><?php echo $details->conditions ?></p>
         </div>
         <div class="head10"> </div>
-          <div class="left">
+          <div class="left ck_data">
             <p>
               <u><b>Cancellation Terms: FIT</b> <br></u>
             </p>
-            <p>&#10146; 25% cancellation within 30 days before travel.</p>
-            <p>&#10146; 50% cancellation within 10 days before Travel.</p>
-            <p>&#10146; 75% cancellation within 07 days before Travel.</p>
-            <p>
-            &#10146; Any cancellation within 04 days will lead to 100% cancellation
-              charge. </p>
+            <p><?php echo $details->FIT ?></p>
           </div>
          <br></br>
           <div class="head11">
-          <div class="right">
+          <div class="right ck_data">
             <u><b>Cancellation Terms:  Groups (MICE)</b><br></u>
-            
-            <p>&#10146; 25% cancellation within 30 days before travel.</p>
-            
-            <p>&#10146; 50% cancellation within 15 days before Travel.</p>
-            
-            <p>&#10146; 100% cancellation within 07 days before Travel.</p>
-            
-            <p>&#10146; Any cancellation within 04 days will lead to 100% cancellation charge.</p>
+            <p><?php echo $details->MICE ?></p>
           </div>
         </div>
       </div>

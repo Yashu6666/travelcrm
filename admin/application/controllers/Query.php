@@ -260,141 +260,6 @@ class Query extends CI_Controller
 		$this->load->view('query/view_query', $data);
 	}
 
-	// public function view_query($type = '')
-	// {
-
-	// 	error_reporting(0);
-
-	// 	// $query = $this->db->select("count(*) as overall")
-	// 	// ->from("b2bcustomerquery cb")
-	// 	// ->join('querypackage qp','cb.query_id=qp.queryId')->get()->result();
-	// 	// echo"<pre>";print_r($query);exit;
-	// 	// exit;
-	// 	$inprogress = $this->db->where('cb.lead_stage', "Inprogress")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
-
-
-	// 	if (isset($inprogress)) {
-	// 		$data['inprogress'] = count($inprogress);
-	// 	} else {
-	// 		$data['inprogress'] = 0;
-	// 	}
-		
-	// 	// $today_date = date("Y-m-d");
-	// 	$date = new DateTime("now");
-
-	// 	$curr_date = $date->format('Y-m-d ');
-	// 	//print_r("select * FROM b2bcustomerquery where created_at BETWEEN '".$today_date." 00:00:00' AND    '".$today_date." 11:59:59'");die();
-	// 	// $recent = $this->db->query("select * FROM b2bcustomerquery where created_at BETWEEN '" . $today_date . " 00:00:00' AND    '" . $today_date . " 11:59:59'")->result();
-	// 	$recent = $this->db->query("select cb.* FROM b2bcustomerquery as cb join querypackage as qp ON cb.query_id=qp.queryId where DATE(cb.created_at) = '" . $curr_date . "' ")->result();
-
-	// 	if (isset($recent)) {
-	// 		$data['recent'] = count($recent);
-	// 	} else {
-	// 		$data['recent'] = 0;
-	// 	}
-		
-	// 	$confirmed = $this->db->where('cb.lead_stage', "Confirmed")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
-	// 	if (isset($confirmed)) {
-	// 		$data['confirmed'] = count($confirmed);
-	// 	} else {
-	// 		$data['confirmed'] = 0;
-	// 	}
-
-	// 	$rejected = $this->db->where('cb.lead_stage', "Rejected")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
-	// 	if (isset($rejected)) {
-	// 		$data['rejected'] = count($rejected);
-	// 	} else {
-	// 		$data['rejected'] = 0;
-	// 	}
-	// 	// echo"<pre>";print_r($rejected);exit;
-
-	// 	$callback = $this->db->where('cb.lead_stage', "Callback")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
-	// 	if (isset($callback)) {
-	// 		$data['callback'] = count($callback);
-	// 	} else {
-	// 		$data['callback'] = 0;
-	// 	}
-
-	// 	$overall = $this->db->query("SELECT * FROM b2bcustomerquery as cb  join querypackage as qp ON cb.query_id=qp.queryId")->result();
-	// 	if (isset($overall)) {
-	// 		$data['overall'] = count($overall);
-	// 	} else {
-	// 		$data['overall'] = 0;
-	// 	}
-
-	// 	// echo '<pre>';print_r($type);exit;
-	// 	if ($type == 'Inprogress') {
-	// 		$query = $this->db->where('cb.lead_stage', "Inprogress")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
-	// 	} else if ($type == 'Callback') {
-	// 		$query = $this->db->where('cb.lead_stage', "Callback")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
-	// 	} else if ($type == 'Rejected') {
-	// 		$query = $this->db->where('cb.lead_stage', "Rejected")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
-	// 	} else if ($type == 'Confirmed') {
-	// 		$query = $this->db->where('cb.lead_stage', "Confirmed")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
-	// 	} else if ($type == 'recent') {
-	// 		$query = $this->db->query("select cb.* FROM b2bcustomerquery as cb join querypackage as qp ON cb.query_id=qp.queryId where DATE(cb.created_at) = '" . $curr_date . "' ")->result();
-	// 	} else if ($type == 'Overall') {
-	// 		$query = $this->db->query("SELECT cb.* FROM b2bcustomerquery as cb join querypackage as qp ON cb.query_id=qp.queryId")->result();
-	// 	} else {
-	// 		$query = $this->db->where('cb.lead_stage', "Inprogress")->join('querypackage qp','cb.query_id=qp.queryId')->get('b2bcustomerquery cb')->result();
-	// 	}
-
-		
-	// 	// $query=$this->db->get('b2bcustomerquery')->result();
-	// 	// echo"<pre>";print_r($query);exit();
-		
-	// 	$result = array();
-	// 	foreach ($query as $value) {
-	// 		$query_id = $value->query_id;
-	// 		$name = $value->b2bfirstName . ' ' . $value->b2blastName;
-	// 		$mobile = $value->b2bmobileNumber;
-	// 		$lead_stage = $value->lead_stage;
-
-	// 		$Package = $value->Package;
-	// 		$Transfer = $value->Transfer;
-	// 		$Hotel = $value->Hotel;
-	// 		$Excursion = $value->Excursion;
-	// 		$Visa = $value->Visa;
-	// 		$Meals = $value->Meals;
-
-	// 		$created_at = $value->created_at;
-	// 		$id = $value->id;
-
-	// 		$package = $this->db->where('queryId', $query_id)->get('querypackage')->row();
-	// 		// $package = $this->db->query("SELECT * FROM querypackage as qp  join b2bcustomerquery as cb ON qp.queryId=cb.query_id")->result();
-			
-
-	// 		if (isset($package)) {
-	// 			$res = array("id" => $id, 
-	// 						"created_at" => $created_at,
-	// 						"query_id" => $query_id,
-	// 			 			"name" => $name,
-	// 			 			"mobile" => $mobile, 
-	// 						"Description" => $package->type,
-	// 			  			"traveldate" => $package->specificDate,
-	// 						"nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child,
-	// 						"goingTo" => $package->goingTo,
-	// 						// "lead_stage" => $lead_stage
-	// 					);
-	// 			$res['lead_stage'] = "";
-	// 			if($package->type == "Package") $res['lead_stage'] = $Package;
-	// 			if($package->type == "Transfer") $res['lead_stage'] = $Transfer;
-	// 			if($package->type == "Hotel") $res['lead_stage'] = $Hotel;
-	// 			if($package->type == "Excursion") $res['lead_stage'] = $Excursion;
-	// 			if($package->type == "Visa") $res['lead_stage'] = $Visa;
-	// 			if($package->type == "Meals") $res['lead_stage'] = $Meals;
-	// 			$result[] = $res;
-	// 		}
-			
-	// 	}
-	// 	echo '<pre>';print_r($result);
-	// 	exit;
-		
-	// 	$data['result'] = $result;
-	// 	$data['users'] = $this->db->query("SELECT * FROM users where userType!='Super Admin'")->result();
-	// 	$this->load->view('query/view_query', $data);
-	// }
-
 	public function package($query_id = '')
 	{
 		//echo '<pre>';print_r($_POST);exit;
@@ -3164,11 +3029,15 @@ class Query extends CI_Controller
 			'perpax_childs' =>  $_POST['perpax_childs_input'],
 			'perpax_infants' => $_POST['perpax_infants_input'],
 
+			'totalprice_adult' => $_POST['totalprice_adult'],
+			'totalprice_childs' => $_POST['totalprice_childs'],
+			'totalprice_infants' => $_POST['totalprice_infants'],
 
-			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
-			'buildPackageExclusions' => $_POST['buildPackageExclusions'],
-			'buildPackageConditions' => $_POST['buildPackageConditions'],
-			'buildPackageCancellations' => $_POST['buildPackageCancellations'],
+			'subtotal_adults' => $_POST['subtotal_adults'],
+			'subtotal_childs' => $_POST['subtotal_childs'],
+			'subtotal_infants' => $_POST['subtotal_infants'],
+			'admin_name' => $this->session->userdata('admin_username'),
+
 			'buildTravelFromdateCab' => isset($_POST['buildTravelFromdateCab']) ? $_POST['buildTravelFromdateCab'] : '',
 
 			'pickupinternal' => isset($_POST['buildTravelToDateCab']) ? $_POST['buildTravelToDateCab'] : '',
@@ -3219,76 +3088,25 @@ class Query extends CI_Controller
 
 	public function CreateProposalVisa()
 	{
-		// echo '<pre>';print_r($_POST);exit;
-
-		//   $data['buildpackage']= $this->db->where('queryId',$_POST['QueryId'])->get('querypackage')->row();
-		//   $first_date = new DateTime($data['buildpackage']->noDaysFrom);
-		//     $second_date = new DateTime( $data['buildpackage']->specificDate);
-		// 	$difference = $first_date->diff($second_date);
-		// 	$data['proposalDetails'] = array('QueryId' => $_POST['QueryId'],
-		//     'iternary' => $_POST['iternary'],
-		//     'excusions' => $_POST['excusions'],
-		//     'currency' => $_POST['currency'],
-		//     'total' => $_POST['total'],
-		//     'markup' =>$_POST['markup'], 
-		//     'vat' => $_POST['vat'],
-		//     'total_price' => $_POST['total_price'],
-		//     'advance_amount' => $_POST['advance_amount'],
-		//     'inclusions' => $_POST['inclusions'],
-		//     'exclusions' => $_POST['exclusions'],
-		//     'booking_terms' => $_POST['booking_terms'],
-		// 	'difference'=>$difference->days,
-		// 	'booked_by'=>$this->session->userdata('admin_username')
-
-		//   );
-
 		$data['proposalDetails'] = array(
 			'query_id' => $_POST['QueryId'],
 			'perpax_adult' =>  $_POST['perpax_adult_input'],
 			'perpax_childs' =>  $_POST['perpax_childs_input'],
 			'perpax_infants' => $_POST['perpax_infants_input'],
 
-			// 'hotelName' => $_POST['buildHotelName'],
+			'totalprice_adult' => $_POST['totalprice_adult'],
+			'totalprice_childs' => $_POST['totalprice_childs'],
+			'totalprice_infants' => $_POST['totalprice_infants'],
 
-
-			// 'noOfNights' => $_POST['buildNoNights'],
-			// 'roomType' => $_POST['buildRoomType'],
-
-			// 'excursion_name_SIC' => $_POST['excursion'][0],
-			// 'excursion_name_PVT' => $_POST['excursion'][1],
-			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
-			'buildPackageExclusions' => $_POST['buildPackageExclusions'],
-			'buildPackageConditions' => $_POST['buildPackageConditions'],
-			'buildPackageCancellations' => $_POST['buildPackageCancellations'],
-			'buildPackageRefund' => $_POST['buildPackageRefund'],
-			// 'buildTravelFromdateCab' => $_POST['buildTravelFromdateCab'],
-
-			// 'pickupinternal' => $_POST['buildTravelToDateCab'],
-			// 'dropoffinternal' => $_POST['buildTravelFromdateSIC'],	
-
-			// 'pickuppoint' => $_POST['buildTravelToDateSIC'],
-			// // 'dropoffpoint' => $_POST['buildTravelToCityCab'],
+			'subtotal_adults' => $_POST['subtotal_adults'],
+			'subtotal_childs' => $_POST['subtotal_childs'],
+			'subtotal_infants' => $_POST['subtotal_infants'],
+			'admin_name' => $this->session->userdata('admin_username'),
 			'currencyOption' => $_POST['currencyOption'],
-			// 'dropoffpointIn' => $_POST['buildTravelToCityCabIn'],
-
-			// 'in_transfer' => $_POST['buildTravelFromCityCab'],
-			// 'in_transfer_date'=> $_POST['buildTravelFromdateCab'],
-			// 'in_transfer_pickup'=> $_POST['buildTravelToDateCab'],
-			// 'in_transfer_dropoff'=> $_POST['buildTravelToCityCabDrop'],
-
-			// 'pp_transfer'=> $_POST['buildTravelFromCitySIC'],
-			// 'pp_transfer_date'=> $_POST['buildTravelFromdatePVT'],
-			// 'pp_transfer_pickup'=> $_POST['buildTravelToDateSIC'],
-			// 'pp_transfer_dropoff'=> $_POST['buildTravelToCitySIC']
-
 			'visa_category_drop_down' => $_POST['visa_category_drop_down'],
 			'entry_type' => $_POST['entry_type'],
 			'visa_validity' => $_POST['visa_validity'],
-
 			'loggedInUser' => $this->session->userdata('admin_username')
-
-
-
 		);
 		$data['query_package_data'] = $this->db->where('queryId', $_POST['QueryId'])->get('querypackage')->row();
 		$data['visa_data'] = $this->db->where('query_id', $_POST['QueryId'])->where('visa_category !=', 'OTB')->get('query_visa')->row();
@@ -3318,7 +3136,6 @@ class Query extends CI_Controller
 		$updatedata = array('status' => "Sent");
 		$this->db->where('query_id', $_POST['QueryId'])->update('b2bcustomerquery', $updatedata);
 
-		//   $this->db->insert('visa_report',$data['proposalDetails']);
 		$data['b2bcustomerquery'] = $this->db->where('query_id', $_POST['QueryId'])->get('b2bcustomerquery')->row();
 
 		$this->load->view('query/finalvisa', $data);
@@ -3379,19 +3196,21 @@ class Query extends CI_Controller
 			'perpax_adult' =>  $_POST['perpax_adult_input'],
 			'perpax_childs' =>  $_POST['perpax_childs_input'],
 			'perpax_infants' => $_POST['perpax_infants_input'],
-			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
-			'buildPackageExclusions' => $_POST['buildPackageExclusions'],
-			'buildPackageConditions' => $_POST['buildPackageConditions'],
-			'buildPackageCancellations' => $_POST['buildPackageCancellations'],
-			// 'buildPackageRefund' => $_POST['buildPackageRefund'],
+
+			'totalprice_adult' => $_POST['totalprice_adult'],
+			'totalprice_childs' => $_POST['totalprice_childs'],
+			'totalprice_infants' => $_POST['totalprice_infants'],
+
+			'subtotal_adults' => $_POST['subtotal_adults'],
+			'subtotal_childs' => $_POST['subtotal_childs'],
+			'subtotal_infants' => $_POST['subtotal_infants'],
+			'admin_name' => $this->session->userdata('admin_username'),
 
 			'currencyOption' => $_POST['currencyOption'],
-
 			'res_type' => $_POST['res_type'],
 			'res_name' => $_POST['res_name'],
 			'Meal' => $_POST['Meal'],
 			'Meal_Type' => $_POST['Meal_Type'],
-
 			'loggedInUser' => $this->session->userdata('admin_username')
 
 		);
@@ -3748,19 +3567,20 @@ class Query extends CI_Controller
 			'perpax_childs' =>  $_POST['perpax_childs_input'],
 			'perpax_infants' => $_POST['perpax_infants_input'],
 
+			'totalprice_adult' => $_POST['totalprice_adult'],
+			'totalprice_childs' => $_POST['totalprice_childs'],
+			'totalprice_infants' => $_POST['totalprice_infants'],
 
-			// 'excursion_name_SIC' => $_POST['excursion'][0],
-			// 'excursion_name_PVT' => $_POST['excursion'][1],
+			'subtotal_adults' => $_POST['subtotal_adults'],
+			'subtotal_childs' => $_POST['subtotal_childs'],
+			'subtotal_infants' => $_POST['subtotal_infants'],
+			'admin_name' => $this->session->userdata('admin_username'),
+
 			'excursion_name_SIC' => $_POST['excursion_name_SIC'],
 			'excursion_name_PVT' => $_POST['excursion_name_PVT'],
 			'excursion_name_TKT' => $_POST['excursion_name_TKT'],
 			'ex_hotel_pickup' => $_POST['ex_hotel_pickup'],
 
-			'buildPackageInclusions' => $_POST['buildPackageInclusions'],
-			'buildPackageExclusions' => $_POST['buildPackageExclusions'],
-			'buildPackageConditions' => $_POST['buildPackageConditions'],
-			'buildPackageCancellations' => $_POST['buildPackageCancellations'],
-			
 			'currencyOption' => $_POST['currencyOption'],
 			'loggedInUser' => $this->session->userdata('admin_username')
 

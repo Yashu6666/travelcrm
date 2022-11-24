@@ -59,10 +59,6 @@
             resize: none;
         }
 
-        /* .section{
-    height: 500vh;
-} */
-
         @import url("https://rsms.me/inter/inter.css");
 
         :root {
@@ -81,7 +77,6 @@
 
         .input {
             position: relative;
-            /* padding: calc(var(--size-bezel) * 3); */
         }
 
         .input__label {
@@ -504,6 +499,12 @@
                 
                     <?php if(isset($proposalDetails['excursion_name_PVT'])) : ?>
                     <?php foreach($proposalDetails['excursion_name_PVT'] as $key => $val) : ?>
+                        <li><?php echo $val ?></li>
+                    <?php endforeach ?>
+                    <?php endif ?>
+
+                    <?php if(isset($proposalDetails['excursion_name_TKT'])) : ?>
+                    <?php foreach($proposalDetails['excursion_name_TKT'] as $key => $val) : ?>
                         <li><?php echo $val ?></li>
                     <?php endforeach ?>
                     <?php endif ?>

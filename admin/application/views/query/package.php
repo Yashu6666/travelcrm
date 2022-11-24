@@ -266,7 +266,7 @@
                                             <label><input type="radio" name="colorRadio1" value="Package" checked=""><img src="<?php echo base_url(); ?>public/image/package.png" style="width: 35px;" /> Package</label>
                                             <label><input type="radio" name="colorRadio1" value="Hotel"><img src="<?php echo base_url(); ?>public/image/hotel.png" style="width: 35px;" /> Hotel</label>
                                             <label><input type="radio" name="colorRadio1" value="Transfer"><img src="<?php echo base_url(); ?>public/image/transfer.png" style="width: 35px;" /> Transfer</label>
-                                            <label><input type="radio" name="colorRadio1" value="Excursion"><img src="<?php echo base_url(); ?>public/image/excursions.png" style="width: 35px;" /> Excursion</label>
+                                            <label><input type="radio" name="colorRadio1" value="Excursion"><img src="<?php echo base_url(); ?>public/image/excursions.png" style="width: 35px;" /> Activity</label>
                                             <label><input type="radio" name="colorRadio1" value="Visa"> <img src="<?php echo base_url(); ?>public/image/visa.png" style="width: 35px;" /> Visa</label>
                                             <label><input type="radio" name="colorRadio1" value="Meals"><img src="<?php echo base_url(); ?>public/image/meals.png" style="width: 35px;" /> Meals</label>
 

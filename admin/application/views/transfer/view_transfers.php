@@ -55,7 +55,7 @@
 												<a href="<?php echo site_url();?>transfer/add_transfer_route" id="addRow" class="new_btn px-3">
 													Add New <i class="fa fa-plus"></i>
 												</a>
-												<a id="multiDel" onclick="delMulti()" class="new_btn px-3 mt-2">
+												<a id="multiDel" class="new_btn px-3 mt-2">
 												Delete All <i class="fa fa-trash"></i>
 											</a>
 											</div>
@@ -66,10 +66,10 @@
 									</div>
 								<div class="card-body ">
 									<div class="table-responsive">
-										<table class="table table-hover full-width" id="example4">
+										<table class="table table-hover full-width" id="transferView">
 											<thead>
 												<tr>
-													<th></th>
+													<th class="text-center" onclick="select_all()"><input onclick="select_all()" type="checkbox" id="selectAll"></th>
 													<th>S.No</th>
 													<th>Transport Type</th></th>
 													<th>Display Name</th>
@@ -90,7 +90,7 @@
 												else $transport_type = "Internal Transfer";
 												?>
 													<tr>
-													<td><input type="checkbox" class="del_checkbox" value="<?php echo $key->id;?>"></td>
+													<td id="$i"><input type="hidden" value="<?php echo $key->id; ?>"></td>
 													<td><?php echo $cnt;?> </td>
 													<td><?php echo $transport_type;?></td>
 													<td><?php echo $key->route_name;?></td>
@@ -143,30 +143,81 @@
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
+<link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css" rel="stylesheet" />
 <script>
-	function delMulti(){
-		let del_ids = [];
-		$(".del_checkbox").each(function() {
-		let val = $(this).val();
-		let isChecked = $(this).is(':checked');
-		if(isChecked){
-			del_ids.push($.trim(val));
-		}
+	$(document).ready(function() {
+		let example = $('#transferView').DataTable({
+			columnDefs: [{
+				orderable: false,
+				className: 'select-checkbox',
+				targets: 0
+			}],
+			select: {
+				style: 'os',
+				selector: 'td:first-child'
+			},
+			order: [
+				[1, 'asc']
+			]
+		});
+		example.on("click", "th.select-checkbox", function() {
+			if ($("th.select-checkbox").hasClass("selected")) {
+				example.rows().deselect();
+				$("th.select-checkbox").removeClass("selected");
+			} else {
+				example.rows().select();
+				$("th.select-checkbox").addClass("selected");
+			}
+		}).on("select deselect", function() {
+			("Some selection or deselection going on")
+			if (example.rows({
+					selected: true
+				}).count() !== example.rows().count()) {
+				$("th.select-checkbox").removeClass("selected");
+			} else {
+				$("th.select-checkbox").addClass("selected");
+			}
 		});
 
-		$.ajax({
-			type: "POST",
-			dataType: "json",
-			url: '<?php echo site_url(); ?>/transfer/delete_multiple',
-			data: {
-			'data': del_ids,
-			},
-			success: function(response) {
-				toastr.success("Deleted Successfully");
-				setTimeout(function(){
-					window.location.reload(1);
+		$("#multiDel").click(function() {
+			let selected_rows = example.rows({
+				selected: true
+			}).data();
+
+			let del_ids = [];
+			selected_rows.each(function(value) {
+				del_ids.push($(value[0]).val());
+			});
+
+			$.ajax({
+				type: "POST",
+				dataType: "json",
+				url: '<?php echo site_url(); ?>/transfer/delete_multiple',
+				data: {
+					'data': del_ids,
+				},
+				success: function(response) {
+					toastr.success("Deleted Successfully");
+					setTimeout(function() {
+						window.location.reload(1);
 					}, 0500);
-			}
+				}
 			})
+		});
+	});
+</script>
+
+<script>
+	function select_all() {
+		if ($("#selectAll").is(':checked')) {
+			$('#selectAll').prop('checked', false);
+		} else {
+			$('#selectAll').prop('checked', true);
+		}
 	}
 </script>

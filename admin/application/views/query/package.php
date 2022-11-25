@@ -467,7 +467,7 @@
 
                                                 ?>
 
-                                                <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Save</button>
+                                                <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Submit</button>
                                             </div>
                                         </form>
 
@@ -603,7 +603,7 @@
 
                                                 ?>
 
-                                                <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Save</button>
+                                                <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -730,7 +730,7 @@
 
                                                 ?>
 
-                                                <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Save</button>
+                                                <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -867,7 +867,7 @@
 
                                                 ?>
 
-                                                <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Save</button>
+                                                <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Submit</button>
                                             </div>
                                         </form>
 
@@ -991,7 +991,7 @@
 
                                                 ?>
 
-                                                <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Save</button>
+                                                <button type="submit" onclick="checkBoxRequired()" class="new_btn px-5 mr-4 ml-5">Submit</button>
                                             </div>
                                         </form>
 

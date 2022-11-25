@@ -145,7 +145,9 @@ class Login extends CI_Controller
 
 		$data['year_total'] = $year_total;
 		$data['year_remaining'] = $year_remaining;
-		$confirmed = $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result();
+
+		$confirmed = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result() :
+					 $this->db->where('lead_stage', "Confirmed")->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery')->result();
 		$result = array();
 		foreach ($confirmed as $value) {
 			$query_id = $value->query_id;
@@ -211,7 +213,9 @@ class Login extends CI_Controller
 		}
 		$data['todo'] = $todo_data_arr;
 
-		$total_sales = $this->db->select("DATE_FORMAT(invoiceDate,'%b') AS data_month,SUM(finalTotalInvoice) AS total")->where("YEAR (invoiceDate) = YEAR(CURDATE())")->group_by("MONTH (invoiceDate) , YEAR (invoiceDate)","DESC")->get('invoice')->result();
+		$total_sales = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->select("DATE_FORMAT(invoiceDate,'%b') AS data_month,SUM(finalTotalInvoice) AS total")->where("YEAR (invoiceDate) = YEAR(CURDATE())")->group_by("MONTH (invoiceDate) , YEAR (invoiceDate)","DESC")->get('invoice')->result() :
+					   $this->db->select("DATE_FORMAT(invoiceDate,'%b') AS data_month,SUM(finalTotalInvoice) AS total")->where('created_by', $this->session->userdata('admin_id'))->where("YEAR (invoiceDate) = YEAR(CURDATE())")->group_by("MONTH (invoiceDate) , YEAR (invoiceDate)","DESC")->get('invoice')->result();
+
 		$data['all_total']=0;
 		$data['total']=array();
 		foreach($total_sales as $value){
@@ -241,7 +245,8 @@ class Login extends CI_Controller
 			
 		}
 
-		$query_data = $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result();
+		$query_data = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result() :
+					  $this->db->where('lead_stage', "Confirmed")->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery')->result();
 		// $data['upcoming_arrivals'] = $upcoming_arrivals;
 
 		$result = array();
@@ -265,10 +270,18 @@ class Login extends CI_Controller
 		$data['upcoming_arrivals'] = $result;
 
 
-		$all_query = $this->db->distinct()->select('query_id')->get('b2bcustomerquery');
-		$confirmed_query = $this->db->distinct()->select('query_id')->where('lead_stage','Confirmed')->get('b2bcustomerquery');
-		$inprogress_query = $this->db->distinct()->select('query_id')->where('lead_stage','Inprogress')->get('b2bcustomerquery');
-		$rejected_query = $this->db->distinct()->select('query_id')->where('lead_stage','Rejected')->get('b2bcustomerquery');
+		$all_query = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->distinct()->select('query_id')->get('b2bcustomerquery') : 
+					 $this->db->distinct()->select('query_id')->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery');
+					 
+		$confirmed_query = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->distinct()->select('query_id')->where('lead_stage','Confirmed')->get('b2bcustomerquery') : 
+					 $this->db->distinct()->select('query_id')->where('lead_stage','Confirmed')->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery');
+					 
+		$inprogress_query = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->distinct()->select('query_id')->where('lead_stage','Inprogress')->get('b2bcustomerquery') : 
+					 $this->db->distinct()->select('query_id')->where('lead_stage','Inprogress')->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery');
+					 
+		$rejected_query = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->distinct()->select('query_id')->where('lead_stage','Rejected')->get('b2bcustomerquery') : 
+					 $this->db->distinct()->select('query_id')->where('lead_stage','Rejected')->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery');
+					 
 		$data['query_count'] = json_encode([count($confirmed_query->result()),count($inprogress_query->result()),count($rejected_query->result()),]);
 		
 // echo"<pre>";print_r($data['staffs_name'] );	exit;

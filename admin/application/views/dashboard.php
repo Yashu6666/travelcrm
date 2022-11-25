@@ -116,7 +116,8 @@
 					</div>
 				</div>
 			</div>
-
+			<?php $user_type = $this->session->userdata('reg_type');
+				if ($user_type == 'Super Admin') : ?>
 			<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-12">
 					<div class="card card-box">
@@ -139,6 +140,7 @@
 					</div>
 				</div>
 				</div>
+				<?php endif ?>
 
 <!-- 
 			<div class="row">

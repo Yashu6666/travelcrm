@@ -1,538 +1,213 @@
-<?php $this->load->view('header');?>
+<?php $this->load->view('header'); ?>
 
 <!-- start page container -->
-		<div class="page-container">
-			<!-- start sidebar menu -->
-				<?php $this->load->view('side_bar');?>
-			<!-- end sidebar menu -->
-			<!-- start page content -->
-			<div class="page-content-wrapper">
-				<div class="page-content">
-					<div class="page-bar">
-						<div class="page-title-breadcrumb">
-							<div class=" pull-left">
-								<div class="page-title">Activity</div>
-							</div>
-							<ol class="breadcrumb page-breadcrumb pull-right">
-								<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
-										href="#">Inventory</a>&nbsp;<i class="fa fa-angle-right"></i>
-								</li>
-								<li class="active">Activity</li>
-
-							</ol>
-						</div>
+<div class="page-container">
+	<!-- start sidebar menu -->
+	<?php $this->load->view('side_bar'); ?>
+	<!-- end sidebar menu -->
+	<!-- start page content -->
+	<div class="page-content-wrapper">
+		<div class="page-content">
+			<div class="page-bar">
+				<div class="page-title-breadcrumb">
+					<div class=" pull-left">
+						<div class="page-title">Activity</div>
 					</div>
-					<?php  if($this->session->flashdata('error'))
-{?><center>
-<div class="alert alert-danger" style="font-size: 12px;">
-<?php echo $this->session->flashdata('error')?>
-</div>
-</center>
+					<ol class="breadcrumb page-breadcrumb pull-right">
+						<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="#">Inventory</a>&nbsp;<i class="fa fa-angle-right"></i>
+						</li>
+						<li class="active">Activity</li>
 
-<?php } ?>
-            <?php  if($this->session->flashdata('success'))
-{?><center>
-<div class="alert alert-success" style="font-size: 12px;">
-<?php echo $this->session->flashdata('success');
-$this->session->unset_userdata ( 'success' );
-?>
-</div>
-</center>
-<?php } ?>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card card-box">
-								<div class="card-head">
-									<header>Activity</header>
-											</div>
-								<div class="card-body ">
-									<div class="row p-b-20">
-										<div class="col-12">
-										<div class="d-flex justify-content-between">
+					</ol>
+				</div>
+			</div>
+			<?php if ($this->session->flashdata('error')) { ?><center>
+					<div class="alert alert-danger" style="font-size: 12px;">
+						<?php echo $this->session->flashdata('error') ?>
+					</div>
+				</center>
 
-											<div class="btn-group flex-column">
-												<a href="<?php echo site_url();?>excursion/add_excursion" id="addRow" class="new_btn px-3">
-													Add New Activity <i class="fa fa-plus"></i>
-												</a>
-												<a id="multiDel" onclick="delMulti()" class="new_btn px-3 mt-2">
+			<?php } ?>
+			<?php if ($this->session->flashdata('success')) { ?><center>
+					<div class="alert alert-success" style="font-size: 12px;">
+						<?php echo $this->session->flashdata('success');
+						$this->session->unset_userdata('success');
+						?>
+					</div>
+				</center>
+			<?php } ?>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card card-box">
+						<div class="card-head">
+							<header>Activity</header>
+						</div>
+						<div class="card-body ">
+							<div class="row p-b-20">
+								<div class="col-12">
+									<div class="d-flex justify-content-between">
+
+										<div class="btn-group flex-column">
+											<a href="<?php echo site_url(); ?>excursion/add_excursion" id="addRow" class="new_btn px-3">
+												Add New Activity <i class="fa fa-plus"></i>
+											</a>
+											<a id="multiDel" class="new_btn px-3 mt-2">
 												Delete All <i class="fa fa-trash"></i>
 											</a>
-											</div>
-											<div class="d-flex">
+										</div>
+										<div class="d-flex">
 											<div class="btn-group">
-												<a href="<?php echo site_url();?>excursion/view_excursion/SIC"  id="addRow" class="new_btn ml-0 h-50">
+												<a href="<?php echo site_url(); ?>excursion/view_excursion/SIC" id="addRow" class="new_btn ml-0 h-50">
 													SIC
 												</a>
 											</div>
 
 											<div class="btn-group">
-												<a href="<?php echo site_url();?>excursion/view_excursion/PVT"  id="addRow" class="new_btn ml-2 h-50">
+												<a href="<?php echo site_url(); ?>excursion/view_excursion/PVT" id="addRow" class="new_btn ml-2 h-50">
 													PVT
 												</a>
 											</div>
 
 											<div class="btn-group">
-												<a href="<?php echo site_url();?>excursion/view_excursion/TKT"  id="addRow" class="new_btn ml-2 h-50">
+												<a href="<?php echo site_url(); ?>excursion/view_excursion/TKT" id="addRow" class="new_btn ml-2 h-50">
 													TKT
 												</a>
 											</div>
-											</div>
-											</div>
-
-										</div>
-										<div class="col-md-6 col-sm-6 col-6">
-											
 										</div>
 									</div>
-									<div class="table-scrollable">
-										<table class="table table-hover table-checkable order-column full-width"
-											id="example4">
-											<thead>
-												<tr>
-													<th></th>
-													<th class="text-left"> SL.No </th>
-													<th class="text-left"> Name </th>
-													<!-- <th class="text-left"> Owned By </th> -->
-													<!-- <th class="text-left"> Supplier </th> -->
-													<th class="text-left"> Transfer Type </th>
-													<th class="text-left"> Upto Pax / PP Price </th>
-													<th class="text-left"> Action </th>
-												</tr>
-											</thead>
-											<tbody>
 
-												<?php for($i=0;$i<count($view);$i++)
-												{?>
-												<tr class="odd gradeX">
-													<td><input type="checkbox" class="del_checkbox" value="<?php echo $view[$i]->id;?>"></td><td class="text-left"><?php echo $i+1;?></td>
-													<td class="text-left"><?php echo $view[$i]->tourname;?></td>
-													<td class="text-left"><?php echo $view[$i]->type;?></td>
-
-													<td class="text-left">
-														<?php if($view[$i]->type == "PVT") : ?>
-															<i class="fa-solid fa-people-group"></i> <?php echo $view[$i]->pax ?>
-														<?php else : ?>
-															<span><b>AED</b></span> <?php echo $view[$i]->adultprice ?>
-														<?php endif?>
-													</td>
-														
-													
-													
-													<td class="text-left">
-														
-														<a class="btn btn-tbl-edit btn-xs" href="<?php echo site_url();?>excursion/edit_excursion/<?php echo $view[$i]->id;?>">
-															<i class="fa fa-edit "></i>
-														</a>
-														<a class="btn btn-tbl-delete btn-xs" href="<?php echo site_url();?>excursion/delete_excursion/<?php echo $view[$i]->id;?>" onclick="return confirm('Are you sure to Delete..?')">
-															<i class="fa fa-trash-o "></i>
-														</a>
-													</td>
-												</tr>
-												<?php }?>
-											</tbody>
-										</table>
-									</div>
 								</div>
+								<div class="col-md-6 col-sm-6 col-6">
+
+								</div>
+							</div>
+							<div class="table-scrollable">
+								<table id="activityView" class="display" style="width:100%">
+									<thead>
+										<tr>
+											<th class="text-center" onclick="select_all()"><input onclick="select_all()" type="checkbox" id="selectAll"></th>
+											<th class="text-left"> SL.No </th>
+											<th class="text-left"> Name </th>
+											<th class="text-left"> Transfer Type </th>
+											<th class="text-left"> Upto Pax / PP Price </th>
+											<th class="text-left"> Action </th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php for ($i = 0; $i < count($view); $i++) { ?>
+											<tr class="odd gradeX">
+												<td id="$i"><input type="hidden" value="<?php echo $view[$i]->id; ?>"></td>
+												<td class="text-left"><?php echo $i + 1; ?></td>
+												<td class="text-left"><?php echo $view[$i]->tourname; ?></td>
+												<td class="text-left"><?php echo $view[$i]->type; ?></td>
+												<td class="text-left">
+													<?php if ($view[$i]->type == "PVT") : ?>
+														<i class="fa-solid fa-people-group"></i> <?php echo $view[$i]->pax ?>
+													<?php else : ?>
+														<span><b>AED</b></span> <?php echo $view[$i]->adultprice ?>
+													<?php endif ?>
+												</td>
+												<td class="text-left">
+													<a class="btn btn-tbl-edit btn-xs" href="<?php echo site_url(); ?>excursion/edit_excursion/<?php echo $view[$i]->id; ?>">
+														<i class="fa fa-edit "></i>
+													</a>
+													<a class="btn btn-tbl-delete btn-xs" href="<?php echo site_url(); ?>excursion/delete_excursion/<?php echo $view[$i]->id; ?>" onclick="return confirm('Are you sure to Delete..?')">
+														<i class="fa fa-trash-o "></i>
+													</a>
+												</td>
+											</tr>
+										<?php } ?>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- end page content -->
-			<!-- start chat sidebar -->
-			<div class="chat-sidebar-container" data-close-on-body-click="false">
-				<div class="chat-sidebar">
-					<ul class="nav nav-tabs">
-						<li class="nav-item">
-							<a href="#quick_sidebar_tab_1" class="nav-link active tab-icon" data-toggle="tab">Theme
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="#quick_sidebar_tab_2" class="nav-link tab-icon" data-toggle="tab"> Chat
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="#quick_sidebar_tab_3" class="nav-link tab-icon" data-toggle="tab"> Settings
-							</a>
-						</li>
-					</ul>
-					<div class="tab-content">
-						<div class="tab-pane chat-sidebar-settings in show active animated shake" role="tabpanel"
-							id="quick_sidebar_tab_1">
-							<div class="slimscroll-style">
-								<div class="theme-light-dark">
-									<h6>Sidebar Theme</h6>
-									<button type="button" data-theme="white"
-										class="btn lightColor btn-outline btn-circle m-b-10 theme-button">Light
-										Sidebar</button>
-									<button type="button" data-theme="dark"
-										class="btn dark btn-outline btn-circle m-b-10 theme-button">Dark
-										Sidebar</button>
-								</div>
-								<div class="theme-light-dark">
-									<h6>Sidebar Color</h6>
-									<ul class="list-unstyled">
-										<li class="complete">
-											<div class="theme-color sidebar-theme">
-												<a href="#" data-theme="white"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="dark"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="blue"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="indigo"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="cyan"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="green"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="red"><span class="head"></span><span
-														class="cont"></span></a>
-											</div>
-										</li>
-									</ul>
-									<h6>Header Brand color</h6>
-									<ul class="list-unstyled">
-										<li class="theme-option">
-											<div class="theme-color logo-theme">
-												<a href="#" data-theme="logo-white"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="logo-dark"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="logo-blue"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="logo-indigo"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="logo-cyan"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="logo-green"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="logo-red"><span class="head"></span><span
-														class="cont"></span></a>
-											</div>
-										</li>
-									</ul>
-									<h6>Header color</h6>
-									<ul class="list-unstyled">
-										<li class="theme-option">
-											<div class="theme-color header-theme">
-												<a href="#" data-theme="header-white"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="header-dark"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="header-blue"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="header-indigo"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="header-cyan"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="header-green"><span class="head"></span><span
-														class="cont"></span></a>
-												<a href="#" data-theme="header-red"><span class="head"></span><span
-														class="cont"></span></a>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<!-- Start Doctor Chat -->
-						<div class="tab-pane chat-sidebar-chat animated slideInRight" id="quick_sidebar_tab_2">
-							<div class="chat-sidebar-list">
-								<div class="chat-sidebar-chat-users slimscroll-style" data-rail-color="#ddd"
-									data-wrapper-class="chat-sidebar-list">
-									<div class="chat-header">
-										<h5 class="list-heading">Online</h5>
-									</div>
-									<ul class="media-list list-items">
-										<li class="media"><img class="media-object" src="assets/img/user/user3.jpg"
-												width="35" height="35" alt="...">
-											<i class="online dot"></i>
-											<div class="media-body">
-												<h5 class="media-heading">John Deo</h5>
-												<div class="media-heading-sub">Spine Surgeon</div>
-											</div>
-										</li>
-										<li class="media">
-											<div class="media-status">
-												<span class="badge badge-success">5</span>
-											</div> <img class="media-object" src="assets/img/user/user1.jpg" width="35"
-												height="35" alt="...">
-											<i class="busy dot"></i>
-											<div class="media-body">
-												<h5 class="media-heading">Rajesh</h5>
-												<div class="media-heading-sub">Director</div>
-											</div>
-										</li>
-										<li class="media"><img class="media-object" src="assets/img/user/user5.jpg"
-												width="35" height="35" alt="...">
-											<i class="away dot"></i>
-											<div class="media-body">
-												<h5 class="media-heading">Jacob Ryan</h5>
-												<div class="media-heading-sub">Ortho Surgeon</div>
-											</div>
-										</li>
-										<li class="media">
-											<div class="media-status">
-												<span class="badge badge-danger">8</span>
-											</div> <img class="media-object" src="assets/img/user/user4.jpg" width="35"
-												height="35" alt="...">
-											<i class="online dot"></i>
-											<div class="media-body">
-												<h5 class="media-heading">Kehn Anderson</h5>
-												<div class="media-heading-sub">CEO</div>
-											</div>
-										</li>
-										<li class="media"><img class="media-object" src="assets/img/user/user2.jpg"
-												width="35" height="35" alt="...">
-											<i class="busy dot"></i>
-											<div class="media-body">
-												<h5 class="media-heading">Sarah Smith</h5>
-												<div class="media-heading-sub">Anaesthetics</div>
-											</div>
-										</li>
-										<li class="media"><img class="media-object" src="assets/img/user/user7.jpg"
-												width="35" height="35" alt="...">
-											<i class="online dot"></i>
-											<div class="media-body">
-												<h5 class="media-heading">Vlad Cardella</h5>
-												<div class="media-heading-sub">Cardiologist</div>
-											</div>
-										</li>
-									</ul>
-									<div class="chat-header">
-										<h5 class="list-heading">Offline</h5>
-									</div>
-									<ul class="media-list list-items">
-										<li class="media">
-											<div class="media-status">
-												<span class="badge badge-warning">4</span>
-											</div> <img class="media-object" src="assets/img/user/user6.jpg" width="35"
-												height="35" alt="...">
-											<i class="offline dot"></i>
-											<div class="media-body">
-												<h5 class="media-heading">Jennifer Maklen</h5>
-												<div class="media-heading-sub">Nurse</div>
-												<div class="media-heading-small">Last seen 01:20 AM</div>
-											</div>
-										</li>
-										<li class="media"><img class="media-object" src="assets/img/user/user8.jpg"
-												width="35" height="35" alt="...">
-											<i class="offline dot"></i>
-											<div class="media-body">
-												<h5 class="media-heading">Lina Smith</h5>
-												<div class="media-heading-sub">Ortho Surgeon</div>
-												<div class="media-heading-small">Last seen 11:14 PM</div>
-											</div>
-										</li>
-										<li class="media">
-											<div class="media-status">
-												<span class="badge badge-success">9</span>
-											</div> <img class="media-object" src="assets/img/user/user9.jpg" width="35"
-												height="35" alt="...">
-											<i class="offline dot"></i>
-											<div class="media-body">
-												<h5 class="media-heading">Jeff Adam</h5>
-												<div class="media-heading-sub">Compounder</div>
-												<div class="media-heading-small">Last seen 3:31 PM</div>
-											</div>
-										</li>
-										<li class="media"><img class="media-object" src="assets/img/user/user10.jpg"
-												width="35" height="35" alt="...">
-											<i class="offline dot"></i>
-											<div class="media-body">
-												<h5 class="media-heading">Anjelina Cardella</h5>
-												<div class="media-heading-sub">Physiotherapist</div>
-												<div class="media-heading-small">Last seen 7:45 PM</div>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<!-- End Doctor Chat -->
-						<!-- Start Setting Panel -->
-						<div class="tab-pane chat-sidebar-settings animated slideInUp" id="quick_sidebar_tab_3">
-							<div class="chat-sidebar-settings-list slimscroll-style">
-								<div class="chat-header">
-									<h5 class="list-heading">Layout Settings</h5>
-								</div>
-								<div class="chatpane inner-content ">
-									<div class="settings-list">
-										<div class="setting-item">
-											<div class="setting-text">Sidebar Position</div>
-											<div class="setting-set">
-												<select
-													class="sidebar-pos-option form-control input-inline input-sm input-small ">
-													<option value="left" selected="selected">Left</option>
-													<option value="right">Right</option>
-												</select>
-											</div>
-										</div>
-										<div class="setting-item">
-											<div class="setting-text">Header</div>
-											<div class="setting-set">
-												<select
-													class="page-header-option form-control input-inline input-sm input-small ">
-													<option value="fixed" selected="selected">Fixed</option>
-													<option value="default">Default</option>
-												</select>
-											</div>
-										</div>
-										<div class="setting-item">
-											<div class="setting-text">Sidebar Menu </div>
-											<div class="setting-set">
-												<select
-													class="sidebar-menu-option form-control input-inline input-sm input-small ">
-													<option value="accordion" selected="selected">Accordion</option>
-													<option value="hover">Hover</option>
-												</select>
-											</div>
-										</div>
-										<div class="setting-item">
-											<div class="setting-text">Footer</div>
-											<div class="setting-set">
-												<select
-													class="page-footer-option form-control input-inline input-sm input-small ">
-													<option value="fixed">Fixed</option>
-													<option value="default" selected="selected">Default</option>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div class="chat-header">
-										<h5 class="list-heading">Account Settings</h5>
-									</div>
-									<div class="settings-list">
-										<div class="setting-item">
-											<div class="setting-text">Notifications</div>
-											<div class="setting-set">
-												<div class="switch">
-													<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
-														for="switch-1">
-														<input type="checkbox" id="switch-1" class="mdl-switch__input"
-															checked>
-													</label>
-												</div>
-											</div>
-										</div>
-										<div class="setting-item">
-											<div class="setting-text">Show Online</div>
-											<div class="setting-set">
-												<div class="switch">
-													<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
-														for="switch-7">
-														<input type="checkbox" id="switch-7" class="mdl-switch__input"
-															checked>
-													</label>
-												</div>
-											</div>
-										</div>
-										<div class="setting-item">
-											<div class="setting-text">Status</div>
-											<div class="setting-set">
-												<div class="switch">
-													<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
-														for="switch-2">
-														<input type="checkbox" id="switch-2" class="mdl-switch__input"
-															checked>
-													</label>
-												</div>
-											</div>
-										</div>
-										<div class="setting-item">
-											<div class="setting-text">2 Steps Verification</div>
-											<div class="setting-set">
-												<div class="switch">
-													<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
-														for="switch-3">
-														<input type="checkbox" id="switch-3" class="mdl-switch__input"
-															checked>
-													</label>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="chat-header">
-										<h5 class="list-heading">General Settings</h5>
-									</div>
-									<div class="settings-list">
-										<div class="setting-item">
-											<div class="setting-text">Location</div>
-											<div class="setting-set">
-												<div class="switch">
-													<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
-														for="switch-4">
-														<input type="checkbox" id="switch-4" class="mdl-switch__input"
-															checked>
-													</label>
-												</div>
-											</div>
-										</div>
-										<div class="setting-item">
-											<div class="setting-text">Save Histry</div>
-											<div class="setting-set">
-												<div class="switch">
-													<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
-														for="switch-5">
-														<input type="checkbox" id="switch-5" class="mdl-switch__input"
-															checked>
-													</label>
-												</div>
-											</div>
-										</div>
-										<div class="setting-item">
-											<div class="setting-text">Auto Updates</div>
-											<div class="setting-set">
-												<div class="switch">
-													<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
-														for="switch-6">
-														<input type="checkbox" id="switch-6" class="mdl-switch__input"
-															checked>
-													</label>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- end chat sidebar -->
 		</div>
-		<!-- end page container -->
+	</div>
+</div>
+<!-- end page container -->
 
-		<?php $this->load->view('footer');?>
+<?php $this->load->view('footer'); ?>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-<script>
-	function delMulti(){
-		let del_ids = [];
-		$(".del_checkbox").each(function() {
-		let val = $(this).val();
-		let isChecked = $(this).is(':checked');
-		if(isChecked){
-			del_ids.push($.trim(val));
-		}
-		});
-		console.log("🚩 ~ file: view.php ~ line 514 ~ delMulti ~ del_ids", del_ids)
 
-		$.ajax({
-			type: "POST",
-			dataType: "json",
-			url: '<?php echo site_url(); ?>/excursion/delete_multiple',
-			data: {
-			'data': del_ids,
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
+<link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css" rel="stylesheet" />
+<script>
+	$(document).ready(function() {
+		let example = $('#activityView').DataTable({
+			columnDefs: [{
+				orderable: false,
+				className: 'select-checkbox',
+				targets: 0
+			}],
+			select: {
+				style: 'os',
+				selector: 'td:first-child'
 			},
-			success: function(response) {
-				toastr.success("Deleted Successfully");
-				setTimeout(function(){
-					window.location.reload(1);
-					}, 0500);
+			order: [
+				[1, 'asc']
+			]
+		});
+		example.on("click", "th.select-checkbox", function() {
+			if ($("th.select-checkbox").hasClass("selected")) {
+				example.rows().deselect();
+				$("th.select-checkbox").removeClass("selected");
+			} else {
+				example.rows().select();
+				$("th.select-checkbox").addClass("selected");
 			}
+		}).on("select deselect", function() {
+			("Some selection or deselection going on")
+			if (example.rows({
+					selected: true
+				}).count() !== example.rows().count()) {
+				$("th.select-checkbox").removeClass("selected");
+			} else {
+				$("th.select-checkbox").addClass("selected");
+			}
+		});
+
+		$("#multiDel").click(function() {
+			let selected_rows = example.rows({
+				selected: true
+			}).data();
+
+			let del_ids = [];
+			selected_rows.each(function(value) {
+				del_ids.push($(value[0]).val());
+			});
+
+			$.ajax({
+				type: "POST",
+				dataType: "json",
+				url: '<?php echo site_url(); ?>/excursion/delete_multiple',
+				data: {
+					'data': del_ids,
+				},
+				success: function(response) {
+					toastr.success("Deleted Successfully");
+					setTimeout(function() {
+						window.location.reload(1);
+					}, 0500);
+				}
 			})
+		});
+	});
+</script>
+
+<script>
+	function select_all() {
+		if ($("#selectAll").is(':checked')) {
+			$('#selectAll').prop('checked', false);
+		} else {
+			$('#selectAll').prop('checked', true);
+		}
 	}
 </script>

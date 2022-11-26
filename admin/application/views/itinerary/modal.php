@@ -471,7 +471,7 @@
                                     <option value="">Select Transfer</option>
                                     
                                     <?php foreach($transfer_types as $value) : ?>
-                                        <option value=<?php echo $value ?>><?php echo $value == "oneway" ? "Internal Transfer" : "Point to Point Transfer" ?></option>
+                                        <option value=<?php echo $value ?>><?php echo $value == "oneway" ? "Internal City/Hotel Transfer" : "Airport Return Transfer" ?></option>
                                     <?php endforeach ?>
                                 </select>
                         </section>

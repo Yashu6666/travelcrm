@@ -263,7 +263,7 @@
             <img class="w-25" src="<?php echo base_url(); ?>public/image/logo.png" />
             <p>
                 <b>Agency Name: </b><?php echo $b2bcustomerquery->b2bcompanyName ?> <br>
-                <b>Mobile Number:</b> <?php echo $b2bcustomerquery->b2bmobileNumber ?> <br>
+                <b>Email:</b> <?php echo $b2bcustomerquery->b2bEmail ?> <br>
                 <b>Query ID :</b><?php echo $buildpackage->queryId ?>
             </p>
         </div>
@@ -563,25 +563,14 @@
                     <div class="row mt-3">
                         <div class="col">
                             <label class="input">
-                                <input class="input__field" type="text" placeholder=" " id="cc_email" value="" autocomplete="off" />
+                                <input class="input__field  width-input" type="text" placeholder=" " id="cc_email" value="" autocomplete="off" />
                                 <span class="input__label">CC</span></span>
                             </label>
                         </div>
+                        
                         <div class="col">
                             <label class="input">
-                                <input class="input__field " value="<?php echo $b2bcustomerquery->b2bfirstName ?>" type="text" placeholder=" " autocomplete="off" />
-                                <span class="input__label">First Name</span></span>
-                            </label>
-                        </div>
-                        <div class="col">
-                            <label class="input">
-                                <input class="input__field " value="<?php echo $b2bcustomerquery->b2blastName ?>" type="text" placeholder=" " autocomplete="off" />
-                                <span class="input__label">Last Name</span></span>
-                            </label>
-                        </div>
-                        <div class="col">
-                            <label class="input">
-                                <input class="input__field " value="<?php echo $b2bcustomerquery->b2bmobileNumber ?>" type="number" placeholder=" " autocomplete="off" />
+                                <input class="input__field  width-input " value="<?php echo $b2bcustomerquery->b2bmobileNumber ?>" type="text" placeholder=" " autocomplete="off" />
                                 <span class="input__label">Mobile</span></span>
                             </label>
                         </div>

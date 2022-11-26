@@ -173,8 +173,10 @@
         return $rettxt;
     }
     ?>
-
     <div class="container mb-2 d-flex justify-content-end d-grid gap-3">
+    <a class="new_btn text-decoration-none" style="text-decoration: none;" href="<?php echo site_url(); ?>invoice/view_invoice">
+      Back to Invoice
+    </a>
         <button type="button" class="new_btn" onclick=" return generateToPdf();">Download</button>
     </div>
 
@@ -215,16 +217,16 @@
                         <td><?php echo $checkout ?></td>
                     </tr>
                     <tr>
-                        <th>CUSTOMER/AGENT NAME :</th>
+                        <th>AGENT NAME :</th>
                         <td><?php echo $b2b->b2bcompanyName ?></td>
                         <th>No. OF NIGHTS :</th>
                         <td><?php echo $query_package->night ?></td>
                     </tr>
                     <tr>
-                        <th>CUSTOMER/AGENT ADDRESS :</th>
-                        <td><?php echo isset($b2b->b2bCompanyAddress) ? $b2b->b2bCompanyAddress : "" ?></td>
+                        <th>CUSTOMER NAME :</th>
+                        <td><?php echo isset($query_hotel_voucher[0]->guest_name) ? $query_hotel_voucher[0]->guest_name : "" ?></td>
                         <th>No. OF ROOMS:</th>
-                        <td><?php echo $query_package->room ?></td>
+                        <td><?php echo isset($query_package->room) ? $query_package->room : "N/A" ?></td>
                     </tr>
 
                     <?php foreach($hotel_details as $key => $val) : ?>
@@ -233,8 +235,8 @@
                         <th>HOTEL CONFIRMATION NUMBER <?php echo $key + 1 ?> :</th>
                         <td><?php echo $query_hotel_voucher[$key]->confirmation_id ?></td>
                         <th>HOTEL NAME <?php echo $key + 1 ?> :</th>
-                        <td> <?php echo $val->hotelname; ?> 
-                            <?php echo str_repeat("⭐", $val->hotelstars); ?>
+                        <td> <?php echo isset($val->hotelname) ? $val->hotelname : "N/A"; ?> 
+                            <?php echo isset($val->hotelname) ? str_repeat("⭐", $val->hotelstars) : "N/A"; ?>
                         </td>
                     </tr>
                     <?php endforeach ?>
@@ -250,7 +252,7 @@
                 <table class="item_table" border="1" cellspacing="0">
                     <tr>
                         <th>Services</th>
-                        <th>Qty</th>
+                        <th>Pax</th>
                         <th>Rate</th>
                         <th>AMT</th>
                     </tr>
@@ -327,7 +329,7 @@
                     <td colspan="2"></td>
                 </tr>
                 <tr>
-                    <td colspan="2">FOR DIAMOND TOURS L.L.C <br>50-B STREET COSMOS LANE, OPPOSITE COSMOS STORE,MEENA BAZAR P.O.BOX:-241685,DUBAI,UAE
+                    <td colspan="2">FOR DIAMOND TOURS L.L.C <br>707 BMI Building, Khalid Bin Al Waleed Road, P.O.Box 241685, Bur Dubai, Dubai-United Arab Emirates
                         <br>Tel: <b>+971 4 355 9218</b>
                     </td>
                 </tr>

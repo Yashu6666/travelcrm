@@ -258,7 +258,7 @@
             <img class="w-25" src="<?php echo base_url(); ?>public/image/logo.png" />
             <p>
                 <b>Name: </b><?php echo $b2bcustomerquery->b2bfirstName ?> <?php echo $b2bcustomerquery->b2blastName ?> <br>
-                <b>Mobile Number:</b> <?php echo $b2bcustomerquery->b2bmobileNumber ?> <br>
+                <b>Email:</b> <?php echo $b2bcustomerquery->b2bEmail ?> <br>
                 <b>Query ID :</b><?php echo $buildpackage->queryId ?>
             </p>
         </div>
@@ -363,7 +363,7 @@
             </div>
             <div>
                 <table class="table table-bordered">
-                    <thead style="background: #dbd5d5;">
+                    <thead align="center" style="background: #dbd5d5;">
                         <th> Transport type</th>
                         <th> Date</th>
                         <th> Pick Up</th>
@@ -375,7 +375,7 @@
                             <tbody>
                                 <tr align="center">
                                     <!-- <td><b>Per PAX</b></td> -->
-                                    <td>Internal Transfer</td>
+                                    <td>Internal City/Hotel Transfer</td>
                                     <td> <?php echo explode(",",$internal_query[0]->transfer_date)[$key] ?></td>
                                     <td> <?php echo explode(",",$internal_query[0]->pickup)[$key] ?></td>
                                     <td> <?php echo explode(",",$internal_query[0]->dropoff)[$key] ?></td>
@@ -389,7 +389,7 @@
                             <tbody>
                                 <tr align="center">
                                     <!-- <td><b>Per PAX</b></td> -->
-                                    <td>Point to Point Transfer</td>
+                                    <td>Airport Return Transfer</td>
                                     <td> <?php echo explode(",",$return_query[0]->transfer_date)[$key] ?></td>
                                     <td> <?php echo explode(",",$return_query[0]->pickup)[$key] ?></td>
                                     <td> <?php echo explode(",",$return_query[0]->dropoff)[$key] ?></td>
@@ -413,7 +413,7 @@
             </div>
             <div>
             <table class="table table-bordered">
-                <thead style="background: #dbd5d5;">
+                <thead align="center" style="background: #dbd5d5;">
                     <th> Visa Category</th>
                     <th> Entry Type</th>
                     <th> Validity</th>
@@ -454,7 +454,7 @@
     </div>
     <div>
         <table class="table table-bordered">
-            <thead style="background: #dbd5d5;">
+            <thead align="center" style="background: #dbd5d5;">
                     <th> Resturant Name</th>
                     <th> Meal</th>
                     <th> Meal Type</th>
@@ -482,7 +482,7 @@
             </div>
             <div>
                 <table class="table table-bordered">
-                    <thead style="background: #dbd5d5;">
+                    <thead align="center" style="background: #dbd5d5;">
                         <th> Adult</th>
                         <th> Child</th>
                         <th> Infant</th>
@@ -672,23 +672,10 @@
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>
                         </div>
+                        
                         <div class="col">
                             <label class="input">
-                                <input class="input__field " value="<?php echo $b2bcustomerquery->b2bfirstName ?>" type="text" placeholder=" " autocomplete="off" />
-                                <span class="input__label">First Name</span></span>
-                                <!-- <span id="spanFname" class="spanCompany"></span> -->
-                            </label>
-                        </div>
-                        <div class="col">
-                            <label class="input">
-                                <input class="input__field " value="<?php echo $b2bcustomerquery->b2blastName ?>" type="text" placeholder=" " autocomplete="off" />
-                                <span class="input__label">Last Name</span></span>
-                                <!-- <span id="spanFname" class="spanCompany"></span> -->
-                            </label>
-                        </div>
-                        <div class="col">
-                            <label class="input">
-                                <input class="input__field " value="<?php echo $b2bcustomerquery->b2bmobileNumber ?>" type="number" placeholder=" " autocomplete="off" />
+                                <input class="input__field  width-input " value="<?php echo $b2bcustomerquery->b2bmobileNumber ?>" type="text" placeholder=" " autocomplete="off" />
                                 <span class="input__label">Mobile</span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>

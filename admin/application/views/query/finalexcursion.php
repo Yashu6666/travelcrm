@@ -614,7 +614,7 @@
                     <div class="row mt-3">
                         <div class="col">
                             <label class="input">
-                                <input class="input__field" type="text" placeholder=" " id="cc_email" value="" autocomplete="off" />
+                                <input class="input__field  width-input" type="text" placeholder=" " id="cc_email" value="" autocomplete="off" />
                                 <span class="input__label">CC</span></span>
                             </label>
                         </div>

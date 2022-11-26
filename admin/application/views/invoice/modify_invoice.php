@@ -12,15 +12,15 @@
                     <div class="page-bar">
                         <div class="page-title-breadcrumb">
                             <div class=" pull-left">
-                                <div class="page-title">Edit Invoice</div>
+                                <div class="page-title">Edit Proforma Invoice</div>
                             </div>
                             <ol class="breadcrumb page-breadcrumb pull-right">
                                 <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
                                         href="#">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
-                                    </i>&nbsp;<a class="parent-item" href="<?php echo base_url(); ?>invoice/view_invoice">Invoice</a>&nbsp;<i
+                                    </i>&nbsp;<a class="parent-item" href="<?php echo base_url(); ?>invoice/view_invoice">Proforma Invoice</a>&nbsp;<i
                                         class="fa fa-angle-right"></i>
                                 </li>
-                                <li class="active">Edit Invoice</li>
+                                <li class="active">Edit Proforma Invoice</li>
                             </ol>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                                                     <td>
                                                         <label class="input">
                                                             <input class="input__field invoice-width" type="text"
-                                                                name="clientName" placeholder=" "  id="clientName" value="<?php echo $edit_invoice->billTo; ?>" required="" autocomplete="off"/>
+                                                                name="invoiceAgencyName" placeholder=" "  id="invoiceAgencyName" value="<?php echo $edit_invoice->billTo; ?>" required="" autocomplete="off"/>
                                                             <span class="input__label">Agency Name<span
                                                                     class="colorRed">*</span></span>
                                                            
@@ -130,8 +130,8 @@
 
                                                     <td><label class="input">
                                                             <input class="input__field invoice-second" type="text"
-                                                                name="invoiceAgencyName" placeholder=" " id="" value="<?php echo isset($details->b2bmobileNumber)?$details->b2bcompanyName:"" ?>" autocomplete="off" />
-                                                            <span class="input__label">Agency Name</span>
+                                                                name="clientName" placeholder=" " id="clientName" value="<?php echo $edit_invoice->clientName ?>" autocomplete="off" />
+                                                            <span class="input__label">Guest Name</span>
 
                                                         </label>
 

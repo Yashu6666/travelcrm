@@ -48,6 +48,7 @@ class Invoice extends CI_Controller
 	{
 		$data['edit_invoice'] = $this->db->where('id', $id)->get('invoice')->row();
 		$data['details'] = $this->db->where('query_id', $data['edit_invoice']->query_id)->get('b2bcustomerquery')->row();
+		$data['data_voucher'] = $this->db->where('query_id', $data['edit_invoice']->query_id)->get('hotel_voucher_confirmation')->row();
 
 		$this->load->view('invoice/modify_invoice', $data);
 	}
@@ -57,6 +58,7 @@ class Invoice extends CI_Controller
 		$data['details'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
 		$data['presentdate'] = date('Y-m-d');
 		$data['duedate'] = date('Y-m-d', strtotime(' + 15 days'));
+		$data['data_voucher'] = $this->db->where('query_id', $query_id)->get('hotel_voucher_confirmation')->row();
 		// $listInvoice = $this->db->query('SELECT * FROM invoice ORDER by id limit 1')->result();
 		$listInvoice = $this->db->order_by('id',"desc")->limit(1)->get('invoice')->row();
 

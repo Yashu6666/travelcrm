@@ -19,13 +19,13 @@
 					<div class="page-bar">
 						<div class="page-title-breadcrumb">
 							<div class=" pull-left">
-								<div class="page-title">Invoice</div>
+								<div class="page-title">Proforma Invoice</div>
 							</div>
 							<ol class="breadcrumb page-breadcrumb pull-right">
 								<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
 										href="#">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
 								</li>
-								<li class="active">Invoice</li>
+								<li class="active">Proforma Invoice</li>
 
 							</ol>
 						</div>
@@ -51,7 +51,7 @@ $this->session->unset_userdata ( 'success' );
 						<div class="col-md-12">
 							<div class="card card-box">
 								<div class="card-head">
-									<header>Invoice</header>
+									<header>Proforma Invoice</header>
 									
 								</div>
 								<div class="card-body ">

@@ -210,9 +210,9 @@
               <label for="" class="transport-lable"><b>Transport Type</b>
               :</label>
               <input type="checkbox" name="TransType" id="TrasportTypeCab" class="mr-3 ml-2 " value="Internal Transfer"><span
-              class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
+              class="transport-lable-ckeck">Internal City/Hotel Transfer</span><span class="checkmark"></span>
               <input type="checkbox" name="TransType" id="TrasportTypeSic" class="mr-3 ml-2 " value="Point to Point Transfer"><span
-              class="transport-lable-ckeck">Point to Point Transfer</span><span class="checkmark"></span>
+              class="transport-lable-ckeck">Airport Return Transfer</span><span class="checkmark"></span>
               <!-- <input type="checkbox" name="TransType" id="TrasportTypeBus" class="mr-3 ml-2 " value="Hourly"><span
               class="transport-lable-ckeck">Hourly</span><span class="checkmark"></span> -->
               <!-- <input type="checkbox" name="TransType" id="TrasportTypeTrain" class="mr-3 ml-2 " value="train"><span
@@ -238,7 +238,7 @@
               </thead>
               <tbody>
                <tr id="PvtCab" style="display: none;">
-                <th>Internal Transfer</th>
+                <th>Internal City/Hotel Transfer</th>
                
                 <td><input class="form-control" type="number" id="pax_internal" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCityCab" disabled></td>
                
@@ -271,7 +271,7 @@
 
 
                 <tr id="Sic" style="display: none;">
-                <th>Point to Point Transfer</th>
+                <th>Airport Return Transfer</th>
               <td><input class="form-control" id="pax_point" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC" disabled></td>
               <td><input class="form-control" id="buildTravelFromdatePVT" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdatePVT"></td>
                

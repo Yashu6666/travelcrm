@@ -19,11 +19,10 @@
        <div class="page-title">Queries</div>
       </div>
       <ol class="breadcrumb page-breadcrumb pull-right">
-       <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="#">Home</a>&nbsp;<i
-        class="fa fa-angle-right"></i>
-       &nbsp;<a class="parent-item" href="#">Queries</a>
+       <li><i class="fa-solid fa-gauge"></i>&nbsp;<a class="parent-item" href="<?php echo site_url(); ?>login/dashboard">Dashboard</a>&nbsp;<i class="fa fa-angle-right"></i>
+              &nbsp;<a class="parent-item" href="<?php echo site_url(); ?>query/view_query/Overall">Queries</a>
 
-      </li>
+            </li>
 
      </ol>
     </div>
@@ -307,9 +306,9 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
               <label for="" class="transport-lable"><b>Transport Type</b>
               :</label>
               <input type="checkbox" <?php echo count($internal_query) > 0 ? 'checked' : "" ?> name="TransType" id="TrasportTypeCab" class="mr-3 ml-2 " value="Internal Transfer"><span
-              class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
+              class="transport-lable-ckeck">Internal City/Hotel Transfer</span><span class="checkmark"></span>
               <input type="checkbox" <?php echo count($return_query) > 0 ? 'checked' : "" ?> name="TransType" id="TrasportTypeSic" class="mr-3 ml-2 " value="Point to Point Transfer"><span
-              class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
+              class="transport-lable-ckeck">Airport Return Transfer</span><span class="checkmark"></span>
              </div>
 
             <div>
@@ -333,7 +332,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
 
                <?php foreach(explode(",",$internal_query[0]->transfer_date) as $key => $value) : ?> 
                <tr id="PvtCab1<?php echo $key ?>" >
-                <th>Internal Transfer</th>
+                <th>Internal City/Hotel Transfer</th>
                
                 <td><input class="form-control" type="number" id="pax_internal" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCityCab[]" disabled></td>
                 <td><input class="form-control internal_transfer_date" type="date" value="<?php echo (explode(",",$internal_query[0]->transfer_date)[$key]);?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
@@ -370,7 +369,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
               <?php if(!empty($return_query)) : ?>
                 <?php foreach(explode(",",$return_query[0]->pickup) as $key => $value) : ?> 
                 <tr id="Sic1<?php echo $key ?>">
-                <th>Return Transfer</th>
+                <th>Airport Return Transfer</th>
               <td><input class="form-control" id="pax_point" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC[]" disabled></td>
               <td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT" type="date" value="<?php echo (explode(",",$return_query[0]->transfer_date)[$key]);?>" name="buildTravelFromdatePVT[]"></td>
                
@@ -901,8 +900,8 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
       <div class="" id="mealTransferMain">
         <div class="">
           <label for="" class="transport-lable"><b>Transport Type</b>:</label>
-          <input type="checkbox" name="mealTransTypeInt" id="mealTransTypeInt" <?php echo !empty($internal_query1) ? "checked" : "" ?> class="mr-3 ml-2 " value="Internal Transfer"><span class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
-          <input type="checkbox" name="mealTransTypeRet" id="mealTransTypeRet" <?php echo !empty($return_query1) ? "checked" : "" ?> checked class="mr-3 ml-2 " value="Point to Point Transfer"><span class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
+          <input type="checkbox" name="mealTransTypeInt" id="mealTransTypeInt" <?php echo !empty($internal_query1) ? "checked" : "" ?> class="mr-3 ml-2 " value="Internal Transfer"><span class="transport-lable-ckeck">Internal City/Hotel Transfer</span><span class="checkmark"></span>
+          <input type="checkbox" name="mealTransTypeRet" id="mealTransTypeRet" <?php echo !empty($return_query1) ? "checked" : "" ?> checked class="mr-3 ml-2 " value="Point to Point Transfer"><span class="transport-lable-ckeck">Airport Return Transfer</span><span class="checkmark"></span>
         </div>
         <div>
           <table class="table">
@@ -920,7 +919,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
               <?php if (!empty($internal_query1)) : ?>
                 <?php foreach (explode(",", $internal_query1[0]->transfer_date) as $key => $value) : ?>
                   <tr id="mealInternalTransfer">
-                    <th>Internal Transfer</th>
+                    <th>Internal City/Hotel Transfer</th>
                     <td><input class="form-control" type="number" id="pax_internal_meal" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="buildTravelFromCityCab[]" disabled></td>
                     <td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate; ?>" id="internal_meal_date" name="internal_meal_date[]"></td>
                     <td>
@@ -943,7 +942,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
               <?php if (!empty($return_query1)) : ?>
                 <?php foreach (explode(",", $return_query1[0]->transfer_date) as $key => $value) : ?>
                   <tr id="mealReturnTransfer">
-                    <th>Return Transfer</th>
+                    <th>Airport Return Transfer</th>
                     <td><input class="form-control" id="pax_return_meal" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="pax_return_meal[]" disabled></td>
                     <td><input class="form-control return_transfer_date" id="return_meal_date" type="date" value="<?php echo $view->specificDate; ?>" name="return_meal_date[]"></td>
                     <td>
@@ -1650,8 +1649,8 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                                 <div class="row mt-4 mr-3 ml-3 mb-3" id="mealTransferMain${faqs_row2}" style="display: none;">
                                   <div class="col">
                                     <label for="" class="transport-lable"><b>Transport Type</b>:</label>
-                                    <input type="checkbox" name="mealTransTypeInt" id="mealTransTypeInt${faqs_row2}" onchange="mealsInterTransferShowHide(${faqs_row2})" class="mr-3 ml-2 " value="Internal Transfer"><span class="transport-lable-ckeck">Internal Transfer</span><span class="checkmark"></span>
-                                    <input type="checkbox" name="mealTransTypeRet" id="mealTransTypeRet${faqs_row2}" onchange="mealsReturnTransferShowHide(${faqs_row2})" checked class="mr-3 ml-2 " value="Point to Point Transfer"><span class="transport-lable-ckeck">Return Transfer</span><span class="checkmark"></span>
+                                    <input type="checkbox" name="mealTransTypeInt" id="mealTransTypeInt${faqs_row2}" onchange="mealsInterTransferShowHide(${faqs_row2})" class="mr-3 ml-2 " value="Internal Transfer"><span class="transport-lable-ckeck">Internal City/Hotel Transfer</span><span class="checkmark"></span>
+                                    <input type="checkbox" name="mealTransTypeRet" id="mealTransTypeRet${faqs_row2}" onchange="mealsReturnTransferShowHide(${faqs_row2})" checked class="mr-3 ml-2 " value="Point to Point Transfer"><span class="transport-lable-ckeck">Airport Return Transfer</span><span class="checkmark"></span>
                                   </div>
                                   <div>
                                     <table class="table">
@@ -1667,7 +1666,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                                       </thead>
                                       <tbody id="transfer_body${faqs_row2}">
                                         <tr id="mealInternalTransfer${faqs_row2}" style="display: none;">
-                                          <th>Internal Transfer</th>
+                                          <th>Internal City/Hotel Transfer</th>
                                           <td><input class="form-control" type="number" id="pax_internal_meal${faqs_row2}" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="buildTravelFromCityCab[]" disabled></td>
                                           <td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate; ?>" id="internal_meal_date${faqs_row2}" name="internal_meal_date[]"></td>
                                           <td>
@@ -1686,7 +1685,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                                         </tr>
 
                                         <tr id="mealReturnTransfer${faqs_row2}">
-                                          <th>Return Transfer</th>
+                                          <th>Airport Return Transfer</th>
                                           <td><input class="form-control" id="pax_return_meal${faqs_row2}" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="pax_return_meal[]" disabled></td>
                                           <td><input class="form-control return_transfer_date" id="return_meal_date${faqs_row2}" type="date" value="<?php echo $view->specificDate; ?>" name="return_meal_date[]"></td>
                                           <td>
@@ -1719,7 +1718,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                         function transRow(){
                           var cnt = $('#rows_count').val();
                           $('#rows_count').val(parseInt(cnt) + parseInt(1));
-                          var adds=' <tr  id="PvtCab'+trans_rows + '"> <th>Internal Transfer</th>';
+                          var adds=' <tr  id="PvtCab'+trans_rows + '"> <th>Internal City/Hotel Transfer</th>';
                           adds += '<td><input class="form-control" type="number" id="pax_internal'+trans_rows + '" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCityCab[]" disabled></td>';
                           adds += '<td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate;?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>';
                           adds += `<td>
@@ -1760,7 +1759,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                         function transReturnRow(){
                           var cnt = $('#rows_count').val();
                           $('#rows_count').val(parseInt(cnt) + parseInt(1));
-                          var adds=' <tr  id="Sic'+trans_retrun_rows + '"> <th>Return Transfer</th>';
+                          var adds=' <tr  id="Sic'+trans_retrun_rows + '"> <th>Airport Return Transfer</th>';
 
                           adds += '<td><input class="form-control" id="pax_point'+trans_retrun_rows + '" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC[]" disabled></td>';
                           adds += '<td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT'+trans_retrun_rows + '" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdatePVT[]"></td>';

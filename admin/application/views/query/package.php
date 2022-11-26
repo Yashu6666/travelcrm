@@ -194,7 +194,7 @@
                 <div class="page-bar">
                     <div class="page-title-breadcrumb">
                         <div class=" pull-left">
-                            <div class="page-title">Package</div>
+                            <div class="page-title">Build Package</div>
                         </div>
                         <ol class="breadcrumb page-breadcrumb pull-right">
                             <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="dashboard.html">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
@@ -208,7 +208,7 @@
 
                 <div class="row center">
                     <div class="col-md-12">
-                        <div class="card card-box p-2">
+                        <!-- <div class="card card-box p-2">
                             <div class="d-flex justify-content-center p-5 align-item-center">
                                 <div class="bg-red mt-4 center w-50">
                                     <p><b> Company Name</b> : <?php echo $b2bDetails->b2bcompanyName ?> <br><br>
@@ -235,7 +235,7 @@
 
                             </div>
 
-                        </div>
+                        </div> -->
                         <div class="card card-box">
                             <div class="card-head card-head-new">
                                 <p>New Query</p>
@@ -376,7 +376,7 @@
                                                         <option value="">Select Rating</option>
                                                         <option value="1">⭐ 1</option>
                                                         <option value="2">⭐⭐ 2</option>
-                                                        <option value="3">⭐⭐⭐ 3</option>
+                                                        <option selected value="3">⭐⭐⭐ 3</option>
                                                         <option value="4">⭐⭐⭐⭐ 4</option>
                                                         <option value="5">⭐⭐⭐⭐⭐ 5</option>
                                                     </select>
@@ -401,7 +401,7 @@
                                                         <div class="form-group row">
                                                             <div class="col d-flex mt-2">
                                                                 <label class="col-form-label text-nowrap mx-2">No. of Room</label>
-                                                                <input type="number" name="rooms" id="no_of_rooms" required class=" form-control" />
+                                                                <input type="number" name="rooms" id="no_of_rooms"  value="1" required class=" form-control" />
                                                             </div>
                                                         </div>
 
@@ -547,19 +547,19 @@
 
                                                 <div class="col">
                                                     <label for="">No. Adult</label><br>
-                                                    <input class="package_inputs" type="number" placeholder="" name="adult" required autocomplete="off" />
+                                                    <input class="package_inputs" type="number" value="2" placeholder="" name="adult" required autocomplete="off" />
                                                 </div>
 
                                                 <div class="col">
                                                     <label for="">No. Child</label><br>
-                                                    <input class="package_inputs" type="number" placeholder="" name="child" id="child22" required autocomplete="off" />
+                                                    <input class="package_inputs" type="number" value="0" placeholder="" name="child" id="child22" required autocomplete="off" />
                                                 </div>
 
                                                 <input id="child_age22" name="child_age" class="Travelers-select-package-values" type="hidden" value="0" />
 
                                                 <div class="col">
                                                     <label for="">No. Infant</label><br>
-                                                    <input class="package_inputs" type="number" placeholder="" name="infant" required autocomplete="off" />
+                                                    <input class="package_inputs" type="number" value="0" placeholder="" name="infant" required autocomplete="off" />
                                                 </div>
 
 
@@ -682,7 +682,7 @@
 
                                                 <div class="col">
                                                     <label for="">No. Child</label><br>
-                                                    <input class="package_inputs" type="number" placeholder="" name="child" id="child11" required autocomplete="off" />
+                                                    <input class="package_inputs" type="number" placeholder="" value="0" name="child" id="child11" required autocomplete="off" />
                                                 </div>
 
                                                 <input id="child_age" name="child_age" class="Travelers-select-package-values" type="hidden" value="0" />
@@ -1269,7 +1269,7 @@
                                                         <option value="">Select Rating</option>
                                                         <option value="1">⭐ 1</option>
                                                         <option value="2">⭐⭐ 2</option>
-                                                        <option value="3">⭐⭐⭐ 3</option>
+                                                        <option selected value="3">⭐⭐⭐ 3</option>
                                                         <option value="4">⭐⭐⭐⭐ 4</option>
                                                         <option value="5">⭐⭐⭐⭐⭐ 5</option>
                                                     </select>
@@ -1294,7 +1294,7 @@
                                                         <div class="form-group row">
                                                             <div class="col d-flex mt-2">
                                                                 <label class="col-form-label text-nowrap mx-2">No. of Room</label>
-                                                                <input type="number" name="rooms" id="no_of_rooms${'faqs_row'+faqs_row}" required class=" form-control" />
+                                                                <input type="number" name="rooms" id="no_of_rooms${'faqs_row'+faqs_row}" value="1" required class=" form-control" />
                                                             </div>
                                                         </div>
 
@@ -1336,7 +1336,7 @@
                                                         <option value="">Select Rating</option>
                                                         <option value="1">⭐ 1</option>
                                                         <option value="2">⭐⭐ 2</option>
-                                                        <option value="3">⭐⭐⭐ 3</option>
+                                                        <option selected value="3">⭐⭐⭐ 3</option>
                                                         <option value="4">⭐⭐⭐⭐ 4</option>
                                                         <option value="5">⭐⭐⭐⭐⭐ 5</option>
                                                     </select>
@@ -1449,7 +1449,7 @@
                             document.getElementById("room_txt_data").value = `${no_room} Room (${adult_pax_count} Adults, ${child_pax_count} Children , ${infant_pax_count} Infant)`;
 
                         }
-
+                        
                         function calPaxTotalCount() {
                             var adult_pax_count = 0;
                             $(".adult_count").each(function() {
@@ -1489,23 +1489,23 @@
                                 let ad_val;
                                 for (let i = 1; i <= no_of_rooms; i++) {
                                     data += `
-                <div class="form-group">
-                <div class="col d-flex mt-2">
-                    <label class="border-0 mx-4 w-25"></label>
-                    <label class="form-control px-2 border-0 h6">Adult</label>
-                    <label class="form-control px-2 border-0 h6">Child</label>
-                    <label class="form-control px-2 border-0 h6">Infant</label>
-                </div>
-                <div class="col d-flex mt-2">
-                    
-                <label class="col-form-label text-nowrap mx-2">Room ${i}</label>
-                    <input type="number" max=3 min=0 value="0" class=" form-control mx-2 adult_count" onchange="showRoomData(${no_of_rooms})" name="adult_count[]" id="adult_count${i}" />
-                    <input type="number" max=3 min=0 value="0" class=" form-control mx-1 child_count" name="child_count[]" onchange="childAgeDiv(child_ages_div${i},child_count${i})" id="child_count${i}" />
-                    <input type="number" max=3 min=0 value="0" class=" form-control mx-1 infant_count" name="infant_count[]" onchange="showRoomData(${no_of_rooms})" id="infant_count${i}" />
-                </div>
-                </div>
-                <div class="form-group row w-100" id="child_ages_div${i}" style="display: none;"></div>
-                `;
+                                        <div class="form-group">
+                                        <div class="col d-flex mt-2">
+                                            <label class="border-0 mx-4 w-25"></label>
+                                            <label class="form-control px-2 border-0 h6">Adult</label>
+                                            <label class="form-control px-2 border-0 h6">Child</label>
+                                            <label class="form-control px-2 border-0 h6">Infant</label>
+                                        </div>
+                                        <div class="col d-flex mt-2">
+                                            
+                                        <label class="col-form-label text-nowrap mx-2">Room ${i}</label>
+                                            <input type="number" max=3 min=0 value="2" class=" form-control mx-2 adult_count" onchange="showRoomData(${no_of_rooms})" value="2" name="adult_count[]" id="adult_count${i}" />
+                                            <input type="number" max=3 min=0 value="0" class=" form-control mx-1 child_count" name="child_count[]" onchange="childAgeDiv(child_ages_div${i},child_count${i})" id="child_count${i}" />
+                                            <input type="number" max=3 min=0 value="0" class=" form-control mx-1 infant_count" name="infant_count[]" onchange="showRoomData(${no_of_rooms})" id="infant_count${i}" />
+                                        </div>
+                                        </div>
+                                        <div class="form-group row w-100" id="child_ages_div${i}" style="display: none;"></div>
+                                        `;
                                 }
                                 $("#no_of_room_for").empty().append(data);
 
@@ -1515,6 +1515,43 @@
 
                         });
 
+                        function addRoomDefualt(){
+                            var no_of_rooms = $("#no_of_rooms").val();
+
+                            if (no_of_rooms > 0) {
+                                $("#no_of_room_for").attr('style', 'display:flex');
+
+
+                                let data = '';
+                                let ad_val;
+                                for (let i = 1; i <= no_of_rooms; i++) {
+                                    data += `
+                                        <div class="form-group">
+                                        <div class="col d-flex mt-2">
+                                            <label class="border-0 mx-4 w-25"></label>
+                                            <label class="form-control px-2 border-0 h6">Adult</label>
+                                            <label class="form-control px-2 border-0 h6">Child</label>
+                                            <label class="form-control px-2 border-0 h6">Infant</label>
+                                        </div>
+                                        <div class="col d-flex mt-2">
+                                            
+                                        <label class="col-form-label text-nowrap mx-2">Room ${i}</label>
+                                            <input type="number" max=3 min=0 value="2" class=" form-control mx-2 adult_count" onchange="showRoomData(${no_of_rooms})" name="adult_count[]" id="adult_count${i}" />
+                                            <input type="number" max=3 min=0 value="0" class=" form-control mx-1 child_count" name="child_count[]" onchange="childAgeDiv(child_ages_div${i},child_count${i})" id="child_count${i}" />
+                                            <input type="number" max=3 min=0 value="0" class=" form-control mx-1 infant_count" name="infant_count[]" onchange="showRoomData(${no_of_rooms})" id="infant_count${i}" />
+                                        </div>
+                                        </div>
+                                        <div class="form-group row w-100" id="child_ages_div${i}" style="display: none;"></div>
+                                        `;
+                                }
+                                $("#no_of_room_for").empty().append(data);
+
+                            } else {
+                                $("#no_of_room_for").attr('style', 'display:none');
+                            }
+                        }
+                        addRoomDefualt();
+                        showRoomData(1);
 
                         function childAgeDiv(childDiv, childNo) {
                             let div_id = $(childDiv).attr('id').replace('child_ages_div', '');

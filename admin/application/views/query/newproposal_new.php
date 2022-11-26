@@ -259,7 +259,7 @@
         <img class="w-25" src="<?php echo base_url();?>public/image/logo.png"/>
             <p>
                 <b>Name: </b><?php echo $b2bcustomerquery->b2bcompanyName ?> <br>
-                <b>Mobile Number:</b> <?php echo $b2bcustomerquery->b2bmobileNumber ?> <br>
+                <b>Email:</b> <?php echo $b2bcustomerquery->b2bEmail ?> <br>
                 <b>Query ID :</b><?php echo $buildpackage->queryId ?>
             </p>
         </div>
@@ -363,7 +363,7 @@
             </div>
             <div>
                 <table class="table table-bordered">
-                    <thead style="background: #dbd5d5;">
+                    <thead align="center" style="background: #dbd5d5;">
                         <th> Transport type</th>
                         <th> Date</th>
                         <th> Pick Up</th>
@@ -380,7 +380,7 @@
                             $date_trans = $date->format('d-M-Y');
                             ?>
                             <!-- <td><b>Per PAX</b></td> -->
-                            <td>Internal Transfer</td>
+                            <td>Internal City/Hotel Transfer</td>
                             <td> <?php echo $date_trans ?></td>
                             <td> <?php echo $proposalDetails['in_transfer_pickup'][$key] ?></td>
                             <td> <?php echo $proposalDetails['in_transfer_dropoff'][$key] ?></td>
@@ -398,7 +398,7 @@
                                 $date = new DateTime($proposalDetails['pp_transfer_date'][$key]);
                                 $date_pp = $date->format('d-M-Y');
                                 ?>
-                            <td>Point to Point Transfer</td>
+                            <td>Airport Return Transfer</td>
                             <td> <?php echo $date_pp ?></td>
                             <td> <?php echo $proposalDetails['pp_transfer_pickup'][$key] ?></td>
                             <td> <?php echo $proposalDetails['pp_transfer_dropoff'][$key] ?></td>
@@ -723,28 +723,15 @@
                     <div class="row mt-3">
                         <div class="col">
                             <label class="input">
-                                <input class="input__field" type="text" placeholder=" " id="cc_email" value="" autocomplete="off" />
+                                <input class="input__field  width-input" type="text" placeholder=" " id="cc_email" value="" autocomplete="off" />
                                 <span class="input__label">CC</span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>
                         </div>
+                        
                         <div class="col">
                             <label class="input">
-                                <input class="input__field " value="<?php echo $b2bcustomerquery->b2bfirstName ?>" type="text" placeholder=" " autocomplete="off" />
-                                <span class="input__label">First Name</span></span>
-                                <!-- <span id="spanFname" class="spanCompany"></span> -->
-                            </label>
-                        </div>
-                        <div class="col">
-                            <label class="input">
-                                <input class="input__field " value="<?php echo $b2bcustomerquery->b2blastName ?>" type="text" placeholder=" " autocomplete="off" />
-                                <span class="input__label">Last Name</span></span>
-                                <!-- <span id="spanFname" class="spanCompany"></span> -->
-                            </label>
-                        </div>
-                        <div class="col">
-                            <label class="input">
-                                <input class="input__field " value="<?php echo $b2bcustomerquery->b2bmobileNumber ?>" type="number" placeholder=" " autocomplete="off" />
+                                <input class="input__field  width-input " value="<?php echo $b2bcustomerquery->b2bmobileNumber ?>" type="text" placeholder=" " autocomplete="off" />
                                 <span class="input__label">Mobile</span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>

@@ -1,13 +1,20 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+// start by dharmanshu for pdf changes regarding ticket
+// echo $_SERVER['DOCUMENT_ROOT'].'travelcrm/admin/application/libraries/fpdf/fpdf.php'; die;
+require_once($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/application/libraries/fpdf/fpdf.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/application/libraries/fpdi/src/autoload.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/application/third_party/fpdf_merge.php');
+use \setasign\Fpdi\Fpdi;
+// end by dharmanshu for pdf changes regarding ticket
+
 class stocks extends CI_Controller
 {
 
 	public function __construct()
 	{
 		parent::__construct();
-
 		$this->load->library('Image_Slug');
 	}
 
@@ -15,13 +22,22 @@ class stocks extends CI_Controller
 
 	public function view_stock()
 	{
-		$data['view'] = $this->db->get('stocks')->result();
+		$this->db->from('stocks');
+		$this->db->order_by("id", "desc");
+		$query = $this->db->get(); 
+		$data['view'] =  $query->result();
+		// $data['view'] = $this->db->get('stocks')->order_by('id','desc')->result();
 		$this->load->view('stocks/view', $data);
 	}
 
 	public function sell_stock()
 	{
-		$data['view'] = $this->db->get_where('sold_stocks', ['sold_by' => $this->session->userdata('admin_username')])->result();
+		$this->db->from('sold_stocks');
+		$this->db->where(['sold_by' => $this->session->userdata('admin_username')]);
+		$this->db->order_by("id", "desc");
+		$query = $this->db->get(); 
+		$data['view'] = $query->result();
+		// $data['view'] = $this->db->get_where('sold_stocks', ['sold_by' => $this->session->userdata('admin_username')])->result();
 		$this->load->view('stocks/sell', $data);
 	}
 
@@ -211,15 +227,29 @@ class stocks extends CI_Controller
 	public function sellStocks()
 	{
 		$ticket_name = $this->input->post('ticket_name');
+		//by dharmanshu
+		$merge = new FPDF_Merge(); //by dharmanshu
+		$uploaded_files_adult = '';
+		$uploaded_files_child = '';
+		// end
 		// $no_of_stocks = $this->input->post('no_of_tickets');
 		$no_of_tickets_adults = !empty($this->input->post('no_of_tickets_adults')) ? $this->input->post('no_of_tickets_adults') : '0';
 		$no_of_tickets_childs = !empty($this->input->post('no_of_tickets_childs')) ? $this->input->post('no_of_tickets_childs') : '0';
 		$pax_type = $this->input->post('pax_type_select');
+		//by dharmanshu
+		if($pax_type == 'Adult'){
+			$no_of_tickets_childs = 0;
+		}
+		if($pax_type == 'Child'){
+			$no_of_tickets_adults = 0;
+		}
+		//end
 		$query = $this->db->get_where('stocks', ['ticket_name' => $ticket_name])->result();
 		if (count($query) > 0) {
 			$id = $query[0]->id;
 			// $remaining_stocks = $query[0]->remaining_ticket;			
-			$adult_stocks = $query[0]->adult_ticket;
+			$adult_stocks = $query[0]->adult_ticket;	
+			$no_ticket = $query[0]->no_ticket;
 			$child_stocks = $query[0]->child_ticket;
 			$ticket_type_adult = $query[0]->ticket_type_adult;
 			$ticket_type_child = $query[0]->ticket_type_child;
@@ -247,12 +277,143 @@ class stocks extends CI_Controller
 				$this->session->set_flashdata('error', 'Entered No. of Child Stocks greater than Remaining Stock(s) (' . $remaining_stocks_child . ')');
 				redirect('stocks/sell_stock', 'refresh');
 			} else {
-				// $remaining_stocks_after_sell = $remaining_stocks - $no_of_stocks;
-				// $this->db->where('id', $id)->update('stocks', ["remaining_ticket" => $remaining_stocks_after_sell]);
-				$remaining_stocks_adult_after_sell = $remaining_stocks_adult - $no_of_tickets_adults;
-				$remaining_stocks_child_after_sell = $remaining_stocks_child - $no_of_tickets_childs;
-				$this->db->where('id', $id)->update('stocks', ["remaining_ticket_adult" => $remaining_stocks_adult_after_sell, "remaining_ticket_child" => $remaining_stocks_child_after_sell]);
-			
+				$file = explode('/',$query[0]->uploaded_files);
+				$file = end($file);
+				$pdf_path = $_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.$file;
+				$remaining_stocks_adult_after_sell = ($remaining_stocks_adult - $no_of_tickets_adults) > 0 ? $remaining_stocks_adult - $no_of_tickets_adults : 0;
+				$remaining_stocks_child_after_sell = ($remaining_stocks_child - $no_of_tickets_childs) > 0 ? $remaining_stocks_child - $no_of_tickets_childs : 0;
+				
+				if($pax_type == 'Adult'){
+					$sold_stocks = $this->db->get_where('sold_stocks',['stock_id'=>$id,'no_of_tickets_adults !='=>0])->result();
+					// echo $this->db->last_query();
+					if(!count($sold_stocks) > 0){
+						
+						$file_name = $this->split_pdf($pdf_path,false,1,$no_of_tickets_adults);
+						if(!empty($file_name)){
+							foreach($file_name as $k=>$v){
+								$file = explode('/',$v);
+								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+							}
+						}
+						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$uploaded_files_adult = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
+					}
+					if(count($sold_stocks) > 0){
+						$sold_stocks = $this->db->select('sum(no_of_tickets_adults) as sum_adult')->from('sold_stocks')->where(['stock_id'=>$id,'no_of_tickets_adults !='=>0])->get()->row();
+						$count = $sold_stocks->sum_adult+1;
+						$no_of_tickets_adults_count= $no_of_tickets_adults+$sold_stocks->sum_adult;
+						$file_name = $this->split_pdf($pdf_path,false,$count,$no_of_tickets_adults_count);
+						if(!empty($file_name)){
+							foreach($file_name as $k=>$v){
+								$file = explode('/',$v);
+								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+							}
+						}
+						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$uploaded_files_adult = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
+					}
+					$this->db->where('id', $id)->update('stocks', ["remaining_ticket_adult" => $remaining_stocks_adult_after_sell, "remaining_ticket_child" => $remaining_stocks_child_after_sell]);
+				}
+				if($pax_type == 'Child'){
+					$sold_stocks = $this->db->get_where('sold_stocks',['stock_id'=>$id,'no_of_tickets_childs !='=>0])->result();
+					// echo $this->db->last_query();
+					if(!count($sold_stocks) > 0){
+						
+						$file_name = $this->split_pdf($pdf_path,false,1,$no_of_tickets_childs);
+						if(!empty($file_name)){
+							foreach($file_name as $k=>$v){
+								$file = explode('/',$v);
+								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+							}
+						}
+						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$uploaded_files_child = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
+					}
+					if(count($sold_stocks) > 0){
+						$sold_stocks = 
+						$this->db->select('sum(no_of_tickets_childs) as sum_adult')->from('sold_stocks')->where(['stock_id'=>$id,'no_of_tickets_childs !='=>0])->get()->row();
+						$count = $sold_stocks->sum_adult+1;
+						$no_of_tickets_childs_count= $no_of_tickets_childs+$sold_stocks->sum_adult;
+						$file_name = $this->split_pdf($pdf_path,false,$count,$no_of_tickets_childs_count);
+						if(!empty($file_name)){
+							foreach($file_name as $k=>$v){
+								$file = explode('/',$v);
+								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+							}
+						}
+						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$uploaded_files_child = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
+					}
+					$this->db->where('id', $id)->update('stocks', ["remaining_ticket_adult" => $remaining_stocks_adult_after_sell, "remaining_ticket_child" => $remaining_stocks_child_after_sell]);
+				}
+				
+				if($pax_type == 'Both'){
+					//for child
+					$sold_stocks = $this->db->get_where('sold_stocks',['stock_id'=>$id,'no_of_tickets_childs !='=>0])->result();
+					// echo $this->db->last_query();
+					if(!count($sold_stocks) > 0){
+						
+						$file_name = $this->split_pdf($pdf_path,false,1,$no_of_tickets_childs);
+						if(!empty($file_name)){
+							foreach($file_name as $k=>$v){
+								$file = explode('/',$v);
+								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+							}
+						}
+						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$uploaded_files_child = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
+					}
+					if(count($sold_stocks) > 0){
+						$sold_stocks = 
+						$this->db->select('sum(no_of_tickets_childs) as sum_adult')->from('sold_stocks')->where(['stock_id'=>$id,'no_of_tickets_childs !='=>0])->get()->row();
+						$count = $sold_stocks->sum_adult+1;
+						$no_of_tickets_childs_count= $no_of_tickets_childs+$sold_stocks->sum_adult;
+						$file_name = $this->split_pdf($pdf_path,false,$count,$no_of_tickets_childs_count);
+						if(!empty($file_name)){
+							foreach($file_name as $k=>$v){
+								$file = explode('/',$v);
+								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+							}
+						}
+						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$uploaded_files_child = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
+					}
+					$this->db->where('id', $id)->update('stocks', ["remaining_ticket_adult" => $remaining_stocks_adult_after_sell, "remaining_ticket_child" => $remaining_stocks_child_after_sell]);
+
+					//for adult
+					$sold_stocks = $this->db->get_where('sold_stocks',['stock_id'=>$id,'no_of_tickets_adults !='=>0])->result();
+					// echo $this->db->last_query();
+					if(!count($sold_stocks) > 0){
+						
+						$file_name = $this->split_pdf($pdf_path,false,1,$no_of_tickets_adults);
+						if(!empty($file_name)){
+							foreach($file_name as $k=>$v){
+								$file = explode('/',$v);
+								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+							}
+						}
+						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$uploaded_files_adult = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
+					}
+					if(count($sold_stocks) > 0){
+						$sold_stocks = $this->db->select('sum(no_of_tickets_adults) as sum_adult')->from('sold_stocks')->where(['stock_id'=>$id,'no_of_tickets_adults !='=>0])->get()->row();
+						$count = $sold_stocks->sum_adult+1;
+						$no_of_tickets_adults_count= $no_of_tickets_adults+$sold_stocks->sum_adult;
+						$file_name = $this->split_pdf($pdf_path,false,$count,$no_of_tickets_adults_count);
+						if(!empty($file_name)){
+							foreach($file_name as $k=>$v){
+								$file = explode('/',$v);
+								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+							}
+						}
+						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$uploaded_files_adult = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
+					}
+					$this->db->where('id', $id)->update('stocks', ["remaining_ticket_adult" => $remaining_stocks_adult_after_sell, "remaining_ticket_child" => $remaining_stocks_child_after_sell]);
+				}
+				
+				// echo $remaining_stocks_child_after_sell;
+				// die;
 			
 			// if ($remaining_stocks == 0) {
 			// 	$this->session->set_flashdata('error', 'No Tickets left for this Stock');
@@ -270,11 +431,13 @@ class stocks extends CI_Controller
 					'guest_name' => $this->input->post('l_name'),
 					'ticket_name' => $ticket_name,
 					// 'no_of_tickets' => $this->input->post('no_of_tickets'),
-					'no_of_tickets_adults' => $no_of_tickets_adults,
-					'no_of_tickets_childs' => $no_of_tickets_childs,
+					'no_of_tickets_adults' => ($no_of_tickets_adults) > 0 ? $no_of_tickets_adults : 0,
+					'no_of_tickets_childs' => ($no_of_tickets_childs) > 0 ? $no_of_tickets_childs : 0,
 					'sold_date' => date('d-m-Y'),
 					'sold_by' => $this->session->userdata('admin_username'),
-					'booking_date' => $this->input->post('b_date')
+					'booking_date' => $this->input->post('b_date'),
+					'uploaded_files_adult' => $uploaded_files_adult,
+					'uploaded_files_child' => $uploaded_files_child
 				];
 				$this->db->insert('sold_stocks', $data);
 
@@ -329,4 +492,44 @@ class stocks extends CI_Controller
 			redirect('stocks/edit_stock/' . $id, 'refresh');
 		}
 	}
+	//start by dharmanshu for pdf changes regarding ticket
+	function split_pdf($filename, $end_directory = false,$start = 1,$end= 2)
+	{
+		$new_file = [];
+		// $end_directory = $end_directory ? $end_directory;
+		$new_path = preg_replace('/[\/]+/', '/', $end_directory.substr($filename, 0, strrpos($filename, '/')));
+		// $new_path = preg_replace('/[\/]+/', '/', $end_directory.'/'.substr($filename, 0, strrpos($filename, '/')));
+		$new_path = $_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/split/';
+		if (!is_dir($new_path))
+		{
+			// echo $end_directory.'=='; die;
+			// Will make directories under end directory that don't exist
+			// Provided that end directory exists and has the right permissions
+			mkdir($new_path, 0777, true);
+
+		}
+		$pdf = new FPDI();
+		$pagecount = $pdf->setSourceFile($filename); // How many pages?
+		
+		// Split each page into a new PDF
+		// echo $start,'===',$end; die;
+		for ($i = $start; $i <= $end; $i++) {
+			$new_pdf = new FPDI();
+			$new_pdf->AddPage();
+			$new_pdf->setSourceFile($filename);
+			$new_pdf->useTemplate($new_pdf->importPage($i));	
+			$time = strtotime(date('Y-m-d h:i:s'))+$i;
+			try {
+				$new_filename = $end_directory.str_replace('.pdf', '', $filename).'_'.$time.".pdf";
+				$new_pdf->Output($new_filename, "F");
+				$new_file [] = $new_filename;
+				// echo "Page ".$i." split into ".$new_filename."<br />\n";
+				// return $new_filename;
+			} catch (Exception $e) {
+				// echo 'Caught exception: ',  $e->getMessage(), "\n";
+			}
+		}
+		return $new_file;
+	}
+	//end by dharmanshu for pdf changes regarding ticket
 }

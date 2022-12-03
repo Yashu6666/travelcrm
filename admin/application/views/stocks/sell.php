@@ -56,13 +56,38 @@
                                         <th scope="col">No.of tickets</th>
                                         <th scope="col">Sold Date</th>
                                         <th scope="col">Sold By</th>
+                                        <th scope="col">Download Ticket Adult</th>
+                                        <th scope="col">Download Ticket Child</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
+                                    // echo '<pre>';
+                                    // print_r($view);
+                                    // die;
                                     $i = 0;
                                     foreach ($view as $key) {
+                                        $html_adult = '';
+                                        $html_child = '';
+                                        if(!empty($key->uploaded_files_adult)){
+                                            $uploaded_files_adult = explode(',',$key->uploaded_files_adult);
+                                            if(!empty($uploaded_files_adult)){
+                                                foreach ($uploaded_files_adult as $k => $v) {
+                                                    $url = base_url('public/uploads/stocks/').$v;
+                                                    $html_adult .= '<a href="'.$url.'" title="'.$v.'" download><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;';
+                                                }
+                                            }
+                                        }
+                                        if(!empty($key->uploaded_files_child)){
+                                            $uploaded_files_child = explode(',',$key->uploaded_files_child);
+                                            if(!empty($uploaded_files_child)){
+                                                foreach ($uploaded_files_child as $k => $v) {
+                                                    $url = base_url('public/uploads/stocks/').$v;
+                                                    $html_child .= '<a href="'.$url.'" title="'.$v.'" download><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;';
+                                                }
+                                            }
+                                        }
                                         $i = $i + 1;
                                     ?>
 
@@ -73,8 +98,10 @@
                                             <!-- <td><?php //echo $key->company_first_name.' '.$key->company_last_name; ?></td> -->
                                             <td><?php echo $key->ticket_name; ?></td>
                                             <td><?php echo $key->no_of_tickets_adults + $key->no_of_tickets_childs; ?></td>
-                                            <td><?php echo $key->sold_date; ?></td>
+                                            <td><?php echo date('d-m-y',strtotime($key->sold_date)); ?></td>
                                             <td><?php echo $key->sold_by; ?></td>
+                                            <td><?=$html_adult?></td>
+                                            <td><?=$html_child?></td>
                                             <td><a href="<?php echo site_url(); ?>stocks/delete_stock2/<?php echo $key->id; ?>" class="btn btn-danger btn-xs">
                                                     <i class="fa fa-trash"></i>
                                                 </a>

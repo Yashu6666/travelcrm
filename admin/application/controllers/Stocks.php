@@ -3,9 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 // start by dharmanshu for pdf changes regarding ticket
 // echo $_SERVER['DOCUMENT_ROOT'].'travelcrm/admin/application/libraries/fpdf/fpdf.php'; die;
-require_once($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/application/libraries/fpdf/fpdf.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/application/libraries/fpdi/src/autoload.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/application/third_party/fpdf_merge.php');
+require_once(APPPATH.'libraries/fpdf/fpdf.php');
+require_once(APPPATH.'libraries/fpdi/src/autoload.php');
+require_once(APPPATH.'third_party/fpdf_merge.php');
 use \setasign\Fpdi\Fpdi;
 // end by dharmanshu for pdf changes regarding ticket
 
@@ -279,7 +279,7 @@ class stocks extends CI_Controller
 			} else {
 				$file = explode('/',$query[0]->uploaded_files);
 				$file = end($file);
-				$pdf_path = $_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.$file;
+				$pdf_path = FCPATH.'public/uploads/stocks/'.$file;
 				$remaining_stocks_adult_after_sell = ($remaining_stocks_adult - $no_of_tickets_adults) > 0 ? $remaining_stocks_adult - $no_of_tickets_adults : 0;
 				$remaining_stocks_child_after_sell = ($remaining_stocks_child - $no_of_tickets_childs) > 0 ? $remaining_stocks_child - $no_of_tickets_childs : 0;
 				
@@ -292,10 +292,11 @@ class stocks extends CI_Controller
 						if(!empty($file_name)){
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
-								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_adult = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					if(count($sold_stocks) > 0){
@@ -306,10 +307,11 @@ class stocks extends CI_Controller
 						if(!empty($file_name)){
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
-								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_adult = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					$this->db->where('id', $id)->update('stocks', ["remaining_ticket_adult" => $remaining_stocks_adult_after_sell, "remaining_ticket_child" => $remaining_stocks_child_after_sell]);
@@ -323,10 +325,11 @@ class stocks extends CI_Controller
 						if(!empty($file_name)){
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
-								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_child = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					if(count($sold_stocks) > 0){
@@ -338,10 +341,11 @@ class stocks extends CI_Controller
 						if(!empty($file_name)){
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
-								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_child = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					$this->db->where('id', $id)->update('stocks', ["remaining_ticket_adult" => $remaining_stocks_adult_after_sell, "remaining_ticket_child" => $remaining_stocks_child_after_sell]);
@@ -357,10 +361,11 @@ class stocks extends CI_Controller
 						if(!empty($file_name)){
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
-								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_child = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					if(count($sold_stocks) > 0){
@@ -372,10 +377,11 @@ class stocks extends CI_Controller
 						if(!empty($file_name)){
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
-								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_child = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					$this->db->where('id', $id)->update('stocks', ["remaining_ticket_adult" => $remaining_stocks_adult_after_sell, "remaining_ticket_child" => $remaining_stocks_child_after_sell]);
@@ -389,10 +395,11 @@ class stocks extends CI_Controller
 						if(!empty($file_name)){
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
-								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_adult = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					if(count($sold_stocks) > 0){
@@ -403,10 +410,11 @@ class stocks extends CI_Controller
 						if(!empty($file_name)){
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
-								$merge->add($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.end($file));
+								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output($_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_adult = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					$this->db->where('id', $id)->update('stocks', ["remaining_ticket_adult" => $remaining_stocks_adult_after_sell, "remaining_ticket_child" => $remaining_stocks_child_after_sell]);
@@ -415,15 +423,15 @@ class stocks extends CI_Controller
 				// echo $remaining_stocks_child_after_sell;
 				// die;
 			
-			// if ($remaining_stocks == 0) {
-			// 	$this->session->set_flashdata('error', 'No Tickets left for this Stock');
-			// 	redirect('stocks/sell_stock', 'refresh');
-			// } elseif ($no_of_stocks > $remaining_stocks) {
-			// 	$this->session->set_flashdata('error', 'Entered No. of Stocks greater than Remaining Stock(s) (' . $remaining_stocks . ')');
-			// 	redirect('stocks/sell_stock', 'refresh');
-			// } else {
-			// 	$remaining_stocks_after_sell = $remaining_stocks - $no_of_stocks;
-			// 	$this->db->where('id', $id)->update('stocks', ["remaining_ticket" => $remaining_stocks_after_sell]);
+				// if ($remaining_stocks == 0) {
+				// 	$this->session->set_flashdata('error', 'No Tickets left for this Stock');
+				// 	redirect('stocks/sell_stock', 'refresh');
+				// } elseif ($no_of_stocks > $remaining_stocks) {
+				// 	$this->session->set_flashdata('error', 'Entered No. of Stocks greater than Remaining Stock(s) (' . $remaining_stocks . ')');
+				// 	redirect('stocks/sell_stock', 'refresh');
+				// } else {
+				// 	$remaining_stocks_after_sell = $remaining_stocks - $no_of_stocks;
+				// 	$this->db->where('id', $id)->update('stocks', ["remaining_ticket" => $remaining_stocks_after_sell]);
 
 				$data = [
 					'stock_id' => $id,
@@ -499,7 +507,8 @@ class stocks extends CI_Controller
 		// $end_directory = $end_directory ? $end_directory;
 		$new_path = preg_replace('/[\/]+/', '/', $end_directory.substr($filename, 0, strrpos($filename, '/')));
 		// $new_path = preg_replace('/[\/]+/', '/', $end_directory.'/'.substr($filename, 0, strrpos($filename, '/')));
-		$new_path = $_SERVER['DOCUMENT_ROOT'].'/travelcrm/admin/public/uploads/split/';
+		$new_path = FCPATH.'public/uploads/split/';
+		
 		if (!is_dir($new_path))
 		{
 			// echo $end_directory.'=='; die;

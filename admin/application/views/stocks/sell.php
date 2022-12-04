@@ -74,7 +74,7 @@
                                             $uploaded_files_adult = explode(',',$key->uploaded_files_adult);
                                             if(!empty($uploaded_files_adult)){
                                                 foreach ($uploaded_files_adult as $k => $v) {
-                                                    $url = base_url('public/uploads/stocks/').$v;
+                                                    $url = base_url('public/uploads/soldstocks/').$v;
                                                     $html_adult .= '<a href="'.$url.'" title="'.$v.'" download><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;';
                                                 }
                                             }
@@ -83,7 +83,7 @@
                                             $uploaded_files_child = explode(',',$key->uploaded_files_child);
                                             if(!empty($uploaded_files_child)){
                                                 foreach ($uploaded_files_child as $k => $v) {
-                                                    $url = base_url('public/uploads/stocks/').$v;
+                                                    $url = base_url('public/uploads/soldstocks/').$v;
                                                     $html_child .= '<a href="'.$url.'" title="'.$v.'" download><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;';
                                                 }
                                             }

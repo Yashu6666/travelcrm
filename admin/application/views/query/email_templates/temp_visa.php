@@ -223,7 +223,7 @@
 
           <?php if(isset($details->otb) && !empty($details->otb)) : ?>
 
-          <table class="items" border="1" cellspacing="0">
+          <table style="text-align:center" class="items" border="1" cellspacing="0">
             <tr>
               <th rowspan="3" colspan="3">
                 <h2>OTB Rates</h2>
@@ -264,15 +264,15 @@
             </tr>
             <tr>
               <th rowspan="2">No. of Pax.</th>
-              <th>Adults</th>
-              <th>Child</th>
-              <th>Infant</th>
+              <th style="text-align:center">Adults</th>
+              <th style="text-align:center">Child</th>
+              <th style="text-align:center">Infant</th>
             </tr>
 
             <tr>
-              <td><?php echo $details->pax_adult ?></td>
-              <td><?php echo $details->pax_child ?></td>
-              <td><?php echo $details->pax_infant ?></td>
+              <td style="text-align:center"><?php echo $details->pax_adult ?></td>
+              <td style="text-align:center"><?php echo $details->pax_child ?></td>
+              <td style="text-align:center"><?php echo $details->pax_infant ?></td>
             </tr>
             <tr>
                 <th>Purpose of Travel</th>

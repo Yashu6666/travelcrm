@@ -676,7 +676,7 @@
                             </table>
                             <div></div>
                             </br>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" style="font-size:16px;">
                               <tr align="center">
                                 <td name="person" id="person" value=""></td>
                                 <td name="AdultCost" id="AdultCost" value="">Adult</td>

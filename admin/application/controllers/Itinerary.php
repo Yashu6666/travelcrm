@@ -25,22 +25,8 @@ class Itinerary extends CI_Controller {
 
 	public function test()
 	{
-		// $q_id =  '8749';	
-		// $query_package = $this->db->where('queryId',$q_id)->get('querypackage')->row();	
-		// $query = $this->db->query("SELECT * FROM b2bcustomerquery WHERE query_id=".$q_id)->row();	
-		// $itinery = $this->db->query("SELECT * FROM itinery_data WHERE query_id=".$q_id)->result();	
-		// $data['query'] = $query;
-		// $data['itinery'] = $itinery;
-		// $data['query_hotel_voucher'] = $this->db->where('query_id', $q_id)->get('hotel_voucher_confirmation')->result();
-		// $data['query_package'] = $query_package;	
-
-		// $this->load->view('itinerary/templates/itinery_mail',$data);
-		// // print_r($data['query_hotel_voucher']);
-		// return;
 		try
     {
-		
-		// $this->load->view('itinerary/templates/itinery_mail');
 		$q_id =  '8749';	
 		$query = $this->db->query("SELECT * FROM b2bcustomerquery WHERE query_id=".$q_id)->row();	
 		$itinery = $this->db->query("SELECT * FROM itinery_data WHERE query_id=".$q_id)->result();	
@@ -115,6 +101,26 @@ class Itinerary extends CI_Controller {
 
 		$this->load->view('itinerary/view',$data);
 	}
+
+	public function view_itinerary($id){
+		try {	
+			$q_id = $id;	
+			$query = $this->db->query("SELECT * FROM b2bcustomerquery WHERE query_id=".$q_id)->row();
+			$itinery = $this->db->query("SELECT * FROM itinery_data WHERE query_id=".$q_id)->result();	
+			$data['query'] = $query;	
+			$data['itinery'] = $itinery;	
+			$data['query_hotel_voucher'] = $this->db->where('query_id', $q_id)->get('hotel_voucher_confirmation')->result();
+			$query_package = $this->db->where('queryId',$q_id)->get('querypackage')->row();	
+			$data['query_package'] = $query_package;	
+			$data['hotel_details'] = [];	
+			
+			$this->load->view('itinerary/view_itinerary',$data);
+
+		} catch (\Exception $e) {	
+			$this->session->set_flashdata('error', 'Something Went Wrong');	
+		}	
+	}
+
 
 	public function delete_itinerary($id)
 	{

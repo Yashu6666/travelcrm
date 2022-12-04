@@ -563,7 +563,7 @@
                    </table>
                <div></div>
               </br>
-               <table class="table table-bordered">
+               <table class="table table-bordered" style="font-size:16px;">
                <tr align="center">
                    <td type="" name="person" id="person" value=""><span></td>
                    <td type="" name="AdultCost" id="AdultCost" value=""><span>Adult</td>

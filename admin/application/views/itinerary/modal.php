@@ -733,17 +733,17 @@
                             <section id="" class="col-md-12 mt-4">
                                 <label>Excursion Name</label>
                                 <!-- <select required multiple="" id="excursion_name"  name="excursion[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" > -->
-                                <!-- <select id="excursion_name"  required  name="excursion"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                        <?php foreach($excursion_data as $value){ ?>
-                                            <option value="<?php echo $value ?>"><?php echo $value ?></option>
-                                        <?php } ?>
-                                </select> -->
-
-                                <select  required   name="excursion[]" id='excursion_name' multiple class="js-example-basic-multiple2 w-100 bg-white form-control form-control-lg">
+                                <select id="excursion_name"  required  name="excursion"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                         <?php foreach($excursion_data as $value){ ?>
                                             <option value="<?php echo $value ?>"><?php echo $value ?></option>
                                         <?php } ?>
                                 </select>
+
+                                <!-- <select  required   name="excursion[]" id='excursion_name' multiple class="js-example-basic-multiple2 w-100 bg-white form-control form-control-lg">
+                                        <?php foreach($excursion_data as $value){ ?>
+                                            <option value="<?php echo $value ?>"><?php echo $value ?></option>
+                                        <?php } ?>
+                                </select> -->
                                 
                             </section>
                         

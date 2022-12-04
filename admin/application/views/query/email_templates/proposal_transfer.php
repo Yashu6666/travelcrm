@@ -216,7 +216,7 @@
           <br />
           <br />
 
-          <table class="items" border="1" cellspacing="0">
+          <table style="text-align:center" class="items" border="1" cellspacing="0">
             <tr>
               <th>Service Date</th>
               <td colspan="3"><?php echo $details->checkin ?></td>
@@ -224,13 +224,13 @@
 
             <tr>
               <th rowspan="2">No. of Pax.</th>
-              <th>Adults</th>
-              <th>Child</th>
+              <th style="text-align:center">Adults</th>
+              <th style="text-align:center">Child</th>
             </tr>
 
             <tr>
-              <td><?php echo $details->pax_adult ?></td>
-              <td><?php echo $details->pax_child ?></td>
+              <td style="text-align:center"><?php echo $details->pax_adult ?></td>
+              <td style="text-align:center"><?php echo $details->pax_child ?></td>
             </tr>
           </table>
         </div>

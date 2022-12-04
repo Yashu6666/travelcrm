@@ -41,9 +41,12 @@ class HotelVoucher extends CI_Controller
 		$data['hotel_details'] = [];
 		foreach($hotel_ids as $id){
 			$data_hotel = $this->db->where('id', $id)->get('hotel')->row();
-			array_push($data['hotel_details'],$data_hotel);
+			if (!in_array($data_hotel, $data['hotel_details'])) {
+				array_push($data['hotel_details'],$data_hotel);
+			} 
 		}
-		
+		// print_r($data['hotel_details']);
+		// return;
 		$board_data = $this->db->where('query_id', $query_id)->get('query_hotel')->row();
 		$data['board'] = explode(',',$board_data->type);
 

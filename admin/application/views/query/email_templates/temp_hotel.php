@@ -230,7 +230,7 @@
           <br />
           <br />
 
-          <table class="items" border="1" cellspacing="0">
+          <table style="text-align:center" class="items" border="1" cellspacing="0">
             <tr>
             <th>Hotal Name</th>
             <td colspan="3"> <?php foreach ($details->hotels as $key => $val) : ?>
@@ -253,15 +253,15 @@
             
             <tr>
               <th rowspan="2">No. of Pax.</th>
-              <th>Adults</th>
-              <th>Child</th>
-              <th>Infant</th>
+              <th style="text-align:center">Adults</th>
+              <th style="text-align:center">Child</th>
+              <th style="text-align:center">Infant</th>
             </tr>
 
             <tr>
-              <td><?php echo $details->pax_adult ?></td>
-              <td><?php echo $details->pax_child ?></td>
-              <td><?php echo $details->pax_infant ?></td>
+              <td style="text-align:center"><?php echo $details->pax_adult ?></td>
+              <td style="text-align:center"><?php echo $details->pax_child ?></td>
+              <td style="text-align:center"><?php echo $details->pax_infant ?></td>
             </tr>
           </table>
         </div>

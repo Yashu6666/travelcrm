@@ -1843,7 +1843,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                    </table>
                <div></div>
               </br>
-              <table class="table table-bordered">
+              <table class="table table-bordered" style="font-size:16px;">
                 <tr align="center">
                   <td type="" name="person" id="person" value="0"><span></td>
                   <td type="" name="AdultCost" id="AdultCost" value="0"><span>Adult</td>

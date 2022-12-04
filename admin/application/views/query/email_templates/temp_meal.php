@@ -311,7 +311,7 @@
                 
                 ?>
 
-                <table class="items" border="1" cellspacing="0">
+                <table style="text-align:center" class="items" border="1" cellspacing="0">
                     <tr>
                         <th>Date</th>
                         <td colspan="3"><?php echo $details->date; ?></td>
@@ -342,12 +342,12 @@
                     </tr>
                     <tr>
                         <th rowspan="2">No. of Pax.</th>
-                        <th>Adults</th>
-                        <th colspan="2">Child</th>
+                        <th style="text-align:center">Adults</th>
+                        <th style="text-align:center" colspan="2">Child</th>
                     </tr>
                     <tr>
-                        <td><?php echo $details->pax_adult ?></td>
-                        <td colspan="2"><?php echo $details->pax_child ?></td>
+                        <td style="text-align:center"><?php echo $details->pax_adult ?></td>
+                        <td style="text-align:center"colspan="2"><?php echo $details->pax_child ?></td>
                     </tr>
                 </table>
         </div>

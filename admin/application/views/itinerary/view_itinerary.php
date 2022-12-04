@@ -185,22 +185,39 @@
         .txt_left {
             text-align: left;
         }
+
+        .flex{
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+        }
+        .new_btn {
+            color: white !important;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 2px;
+            background: #595d60;
+            text-align: center;
+            padding: 10px;
+        }
     </style>
 </head>
 
 <body>
     <div class="card">
         <div class="txt_center">
+        
+    </div>
+
+    <div class="flex">
+        <img src="<?php echo base_url();?>public/image/proposalLogo.png" style="width: 162px !important;" alt="" />
         <h3 class="txt_center">ITINERARY DETAILS</h3>
-        <img src="<?php echo base_url();?>public/image/proposalLogo.png" style="width: 162px !important;display: block;margin-left: auto;margin-right: auto;margin-top: 20px;" alt="" />
-        </div>
-        <div class="card1">
-            <p>Dear Sir/Ma'am</p>
-            <p>Greetings From Diamond Tours LLC!!!</p>
-            <p>Please find the below itinerary during your stay in U.A.E</p>
-        </div>
-
-
+    <div class="container mb-2 d-flex justify-content-end d-grid gap-3">
+        <a class="new_btn text-decoration-none" style="text-decoration: none;" href="<?php echo site_url(); ?>itinerary/view">
+        Back to Itinerary
+        </a>
+    </div>
+    </div>    
         <table border="1" class="table mt_2">
             <tr>
             <?php $date = new DateTime($itinery[0]->created_at);
@@ -229,7 +246,7 @@
 
         </table>
         <?php foreach(($itinery) as $key => $val) : ?>
-        <?php if(isset($query_hotel_voucher[$key])) :?>
+            <?php if(isset($query_hotel_voucher[$key])) :?>
         <table border="1" class="table mt_2">
             <tbody>
             <tr class="bg_r txt_center">

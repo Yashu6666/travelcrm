@@ -5,29 +5,29 @@
 <style>
 	.new_bg_header {
     background: #d9a927 !important;
-}
+	}
 
-.new_btn {
-    color: white !important;
-    font-size: 1rem;
-    font-weight: 500;
-    border-radius: 2px;
-    /* border: 1px solid #102158; */
-    background: #595d60;
-    text-align: center;
-    padding: 6px;
-}
+	.new_btn {
+		color: white !important;
+		font-size: 1rem;
+		font-weight: 500;
+		border-radius: 2px;
+		/* border: 1px solid #102158; */
+		background: #595d60;
+		text-align: center;
+		padding: 6px;
+	}
 
-.new_btn:hover {
-    color: white !important;
-    font-size: 1rem;
-    font-weight: 500;
-    border-radius: 2px;
-    /* border: 1px solid #102158; */
-    background: #d9a927;
-    text-align: center;
-    padding: 6px;
-}
+	.new_btn:hover {
+		color: white !important;
+		font-size: 1rem;
+		font-weight: 500;
+		border-radius: 2px;
+		/* border: 1px solid #102158; */
+		background: #d9a927;
+		text-align: center;
+		padding: 6px;
+	}
 
 
 </style>
@@ -117,6 +117,7 @@
 
 
 											<?php foreach (explode(',',$hotel[0]->nights) as $key => $value) : ?>
+												<?php if(isset($hotel_details[$key]->hotelstars)) : ?>	
 
 												<div class="mt-3 row d-flex align-items-baseline ">
 													<div class="bg-dark col-xl-12">
@@ -201,6 +202,7 @@
 														</table>
 													</div>
 												</div>
+											<?php endif ?>
 											<?php endforeach; ?>
 											<!-- endforech -->
 											<div class="mt-3 row d-flex align-items-baseline new_bg_header">

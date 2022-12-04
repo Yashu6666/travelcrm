@@ -644,7 +644,6 @@
                               <tr>
                                 <td><b>Currency</b></td>
                                 <td><select class="form-control" id="currencyOption" name="currencyOption">
-
                                     <option value="AED">AED</option>
                                     <option value="USD">USD</option>
                                   </select></td>
@@ -666,7 +665,7 @@
                             </table>
                             <div></div>
                             </br>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" style="font-size:16px;">
                               <tr align="center">
                                 <td type="" name="person" id="person" value=""></td>
                                 <td type="" name="AdultCost" id="AdultCost" value="">Adult</td>

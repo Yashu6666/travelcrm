@@ -497,22 +497,22 @@ $this
                   <section id="aligned" class="col-md-12 mt-4">
                     <label><i class="fa-solid fa-plane-arrival"></i> Flight Arrival</label>
                   <div class="form-row">
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label>Flight No</label>
                     <input id="arrival_flight" class="form-control arrival_flight" type="text" placeholder="Flight No" name="arrival_flight[]">
                   </div>
 
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label>ETA</label>
                     <input id="arrival_time" class="form-control arrival_time" type="time" name="arrival_time[]">
                   </div>
                   
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label>Arrival Date</label>
                     <input id="arrival_date" class="form-control arrival_date" value="<?php echo $package->specificDate ?>" type="date" placeholder="Arrival Date" name="arrival_date[]">
                   </div>
 
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-6">
                     <label>Transfer Type</label>
                     <select id="arrival_transfer_type" class="form-control arrival_transfer_type" name="arrival_transfer_type[]">
                       <option value="PVT">PVT</option>
@@ -520,7 +520,7 @@ $this
                     </select>
                   </div>
 
-                  <div class="form-group col-md-3">
+                  <!-- <div class="form-group col-md-3">
                     <label>Arrival From</label>
                     <select id="arrival_from" class="form-control arrival_from" placeholder="Arrival From" name="arrival_from[]">
                         <option value="">Select</option>
@@ -763,9 +763,13 @@ $this
                         <option value="Serbia">Serbia</option>
                         <option value="Zambia">Zambia</option>
                         <option value="Zimbabwe">Zimbabwe</option>
-                      </select>
-                  </div>
-                  <div class="form-group col-md-3">
+                    </select>
+                  </div> -->
+
+                  <input id="arrival_from" type="hidden" value="" name="arrival_from[]">
+                  <input id="arrival_airport" type="hidden" value="" name="arrival_airport[]">
+
+                  <!-- <div class="form-group col-md-3">
                     <label>Airport</label>
                     <select id="arrival_airport" class="form-control arrival_airport" placeholder="Airport" name="arrival_airport[]">
                       <option value="">Select</option>
@@ -779,8 +783,9 @@ $this
                       <option value="Ras Al Khaimah Airport">Ras Al Khaimah Airport</option>
                       <option value="Sharjah International Airport">Sharjah International Airport</option>
                     </select>
-                  </div>
-                  <div class="form-group col-md-3">
+                  </div> -->
+
+                  <div class="form-group col-md-6">
                     <label>Drop off Hotel</label>
                     <input id="arrival_drop" class="form-control arrival_drop" value="<?php echo $hotel_name[array_key_first($hotel_name)] ?>" type="text" placeholder="Drop off Hotel" name="arrival_drop[]">
                   </div>
@@ -790,21 +795,21 @@ $this
                   <section id="aligned" class="col-md-12 mt-4">
                   <label><i class="fa-solid fa-plane-departure"></i> Return Flight</label>
                   <div class="form-row">
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label>Flight No</label>
                     <input id="return_flight" class="form-control return_flight" type="text" placeholder="Flight No" name="return_flight[]">
                   </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label>ETA</label>
                     <input id="return_time" class="form-control return_time" type="time" name="return_time[]">
                   </div>
 
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label>Departure Date</label>
                     <input id="return_date" class="form-control return_date" value="<?php echo $package->noDaysFrom ?>" type="date" placeholder="return Date" name="return_date[]">
                   </div>
 
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-6">
                     <label>Transfer Type</label>
                     <select id="return_transfer_type" class="form-control return_transfer_type" name="return_transfer_type[]">
                       <option value="PVT">PVT</option>
@@ -813,7 +818,7 @@ $this
                   </div>
 
 
-                  <div class="form-group col-md-3">
+                  <!-- <div class="form-group col-md-3">
                     <label>Departure To</label>
                     <select id="return_departure" class="form-control return_departure" type="text" placeholder="Departure To" name="return_departure[]">
                         <option value="">Select</option>
@@ -1059,6 +1064,7 @@ $this
                       </select>
                   
                   </div>
+
                   <div class="form-group col-md-3">
                     <label>Airport</label>
                     <select id="return_airport" class="form-control return_airport"  placeholder="Airport" name="return_airport[]">
@@ -1073,8 +1079,12 @@ $this
                       <option value="Ras Al Khaimah Airport">Ras Al Khaimah Airport</option>
                       <option value="Sharjah International Airport">Sharjah International Airport</option>
                     </select>
-                  </div>
-                  <div class="form-group col-md-3">
+                  </div> -->
+
+                  <input id="return_departure" type="hidden" value="" name="return_departure[]">
+                  <input id="return_airport" type="hidden" value="" name="return_airport[]">
+
+                  <div class="form-group col-md-6">
                     <label>Pickup Hotel</label>
                     <input id="return_pickup" class="form-control return_pickup" type="text" value="<?php echo $hotel_name[array_key_last($hotel_name)] ?>" placeholder="pickup Hotel" name="return_pickup[]">
                   </div>
@@ -1360,8 +1370,8 @@ $this
                                               <table class="table tablestyle hotelresult_256346" id="excursion_result_256346_2261<?php echo $i ?>">
                                                 <thead>
                                                   <tr class="alert alert-graylight">
-                                                    <!-- <th class="small smallbold">Selected</th> -->
-                                                    <th class="small smallbold">Excursion Type</th>
+                                                    <!-- <th class="small smallbold">Selected</th> -->  
+                                                    <th class="small smallbold">Transfer Type</th>
                                                     <th class="small smallbold">Excursion Name</th>
                                                     <th class="small smallbold">Adult</th>
                                                     <th class="small smallbold">Child</th>
@@ -1612,7 +1622,7 @@ $this
         dataType: 'JSON',
         success: function(data) {
           console.log(JSON.parse(data));
-          toastr.success("Email Sent Successfully");
+          // toastr.success("Email Sent Successfully");
         }
       });
 
@@ -2109,32 +2119,26 @@ $this
     });
 
 
-    $('#excursion_type').on('change', function() {
-      //  function fetchexcursion(){
-      $('#excursion_name').empty();
-      var excursion_type = $("#excursion_type").val();
-
-      $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: '<?php echo site_url(); ?>/itinerary/get_excursion',
-        data: {
-          'excursion_type': excursion_type
-        },
-        success: function(response) {
-          console.log(response.data);
-          var options = ""
-          for (var i = 0; i < response.data.length; i++) {
-            options += '<option value="' + response.data[i].tourname + '">' + response.data[i].tourname + '</option>';
-
-          }
-
-          $("#excursion_name").append(options);
-
-        }
-      })
-
-    });
+    // $('#excursion_type').on('change', function() {
+    //   $('#excursion_name').empty();
+    //   var excursion_type = $("#excursion_type").val();
+    //   $.ajax({
+    //     type: "POST",
+    //     dataType: "json",
+    //     url: '<?php echo site_url(); ?>/itinerary/get_excursion',
+    //     data: {
+    //       'excursion_type': excursion_type
+    //     },
+    //     success: function(response) {
+    //       console.log(response.data);
+    //       var options = ""
+    //       for (var i = 0; i < response.data.length; i++) {
+    //         options += '<option value="' + response.data[i].tourname + '">' + response.data[i].tourname + '</option>';
+    //       }
+    //       $("#excursion_name").append(options);
+    //     }
+    //   })
+    // });
 
 
     // $(document).on('click','#searchHotelButton', function() {

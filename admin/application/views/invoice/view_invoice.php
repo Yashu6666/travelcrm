@@ -66,9 +66,9 @@ $this->session->unset_userdata ( 'success' );
                                             id="exampleReport2">
                                             <thead>
                                                 <tr><th class="center">Sl No.</th>
-                                                    <th class="center"> Invoice Date </th>
-                                                    <th class="center"> Invoice No </th>
-                                                    <th class="center"> Agency Name </th>
+                                                    <th class="center"> Proforma Invoice Date </th>
+                                                    <th class="center"> Proforma Invoice No </th>
+                                                    <th class="center"> Travel Agency Name </th>
                                                     <th class="center"> Invoice value </th>
                                                     <th class="center">VAT</th>
                                                     <th class="center"> Received </th>
@@ -94,7 +94,7 @@ $this->session->unset_userdata ( 'success' );
                                                     <td><?php echo $listInvoice[$i]->finalTotalInvoice;?></td>
                                                     <td><?php echo $listInvoice[$i]->finalVAT;?></td>
                                                     <td><?php echo $listInvoice[$i]->finalAdvance;?></td>
-                                                    <td><?php echo $listInvoice[$i]->finalBalance;?></td>
+                                                    <td class="text-danger"><?php echo $listInvoice[$i]->finalBalance;?></td>
                                                     <td><?php echo $listInvoice[$i]->invoicePayment;?></td>
                                                     <?php if ($this->session->userdata('reg_type') == 'Super Admin') : ?>
                                                         <td><?php echo $admin_names[$i]?></td>
@@ -160,8 +160,8 @@ $this->session->unset_userdata ( 'success' );
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog ">
-                    <div class="modal-content">
-                        <div class="modal-header">
+                    <div class="modal-content" style="width: 600px;">
+                        <div class="modal-header" style="height: 70px;">
                             <h5 class="modal-title" id="exampleModalLabel">Add a Payment AED <span id="balanceAmt"></span> Outstanding</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                         </div>
@@ -170,84 +170,64 @@ $this->session->unset_userdata ( 'success' );
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col">
-                                    <!-- <label class="input">
-                                        <input class="input__field invoice-width" type="text" placeholder=" " autocomplete="off"  name="payAmount" required="" />
-                                        <span class="input__label">Amount</span><span
-                                            class="colorRed">*</span></span>
-                                    </label> -->
-                                    <label class="input">
-                                                            <input class="input__field invoice-width" type="text"
-                                                                name="payAmount" placeholder=" "  value="" required="" autocomplete="off"/>
-                                                            <span class="input__label">Amount<span
-                                                                    class="colorRed">*</span></span>
-                                                        </label>
+                                    <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="">Amount</span>
+                                    </div>
+                                    <input type="text" name="payAmount" required class="form-control">
+                                    </div>
                                 </div>
                                 <div class="col">
-                                    <label for="">Payment Type</label>
-                                    <select name="payType" class="payment-type">
-                                        <!-- <option value="Net Banking">Net Banking</option>
-                                        <option value="Credit Card">Credit Card</option>
-                                        <option value="Debit Card">Debit Card</option>
-                                        <option value="Bank Transfer">Bank Transfer</option>
-                                        <option value="Cash">Cash</option>
-                                        <option value="Cheque">Cheque</option> -->
-                                        <option value="Remittance">Remittance</option>
-                                        <option value="By Angadia">By Angadia</option>
-                                        <option value="On Arrival AED">On Arrival AED</option>
-                                        <option value="On Arrival USD">On Arrival USD</option>
-                                    </select>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="">Payment Date</span>
+                                    </div>
+                                    <input type="date" name="payDate" required class="form-control">
+                                    </div>
+                                    
                                 </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col">
-                                    <label class="input">
-                                        <input class="input__field " type="date" placeholder=" " autocomplete="off"  name="payDate" />
-                                        <span class="input__label">Payment Date</span></span>
-                                    </label>
+                                    
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="inputGroupSelect01">Payment Type</label>
+                                        </div>
+                                        <select class="custom-select" id="inputGroupSelect01" name="payType">
+                                                <option value="Remittance">Remittance</option>
+                                                <option value="By Angadia">By Angadia</option>
+                                                <option value="On Arrival AED">On Arrival AED</option>
+                                                <option value="On Arrival USD">On Arrival USD</option>
+                                            </select>
+                                        </div>
                                 </div>
+                            </div>
+                            <div class="row mt-3">
                                 <div class="col">
-                                    <label class="input">
-                                        <input class="input__field" type="text" placeholder=" " id="vDateOf"
-                                            autocomplete="off"  name="payNotes"/>
-                                        <span class="input__label">Payment Notes(optional)</span>
-                                    </label>
+                               
+
+                                        <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="">Payment Notes(optional)</span>
+                                    </div>
+                                    <input type="text" name="payNotes" id="vDateOf" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Make Payment</button>
+                            <button type="submit" class="btn btn-primary">Add Payment</button>
                         </div>
+                        
                     </div>
                     </form>
                 </div>
             </div>
             </div>
-    <!-- modal 3 -->
-            <!-- <div id="overlay9" style="display:none;">
-                <div id="modal9" >
-                    <div class="modal_head_bg9 modal-head9">
-                        <h3 class="  pl-4 pt-3">Send Invoice Email</h3>
-                    </div>
-                    <button class="close_btn9 close_modal_btn9">X</button>
-                    <div class="modal-body">
-                        <div class="row m-5 ">
-                            <div>
-                                <label class="input">
-                                    <input class="input__field invoice-email" type="text" placeholder=" " id="invoiceEmailId"
-                                        autocomplete="off" />
-                                    <span class="input__label">Email</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end  ">
-                            <button  onclick="closemail()" type="button" class="btn btn-secondary">Close</button>
-                            <button type="button" class="btn btn-primary ">Send</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+
         <div class="modal fade" id="sendMail" tabindex="-1" aria-labelledby="sendMailModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

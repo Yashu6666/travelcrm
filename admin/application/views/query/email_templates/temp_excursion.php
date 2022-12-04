@@ -202,16 +202,16 @@
           <table class="items" border="1" cellspacing="0">
             <tr>
               <th rowspan="3" colspan="3">
-                <h2>Sightseeing Rates</h2>
+                <h2>Excursion Rates</h2>
               </th>
               <td><span style="color: red;">AED <?php echo $details->per_pax_adult;?></span> Per Adult </td>
             </tr>
-            <?php if($details->per_pax_child < 0) : ?>
+            <?php if($details->per_pax_child > 0) : ?>
             <tr>
               <td><span style="color: red;">AED <?php echo $details->per_pax_child;?></span> Per Child</td>
             </tr>
             <?php endif ?>
-            <?php if($details->per_pax_infant < 0) : ?>
+            <?php if($details->per_pax_infant > 0) : ?>
             <tr>
               <td><span style="color: red;">AED <?php echo $details->per_pax_infant;?></span> Per Infant</td>
             </tr>
@@ -220,7 +220,7 @@
           <br />
           <br />
 
-          <table class="items" border="1" cellspacing="0">
+          <table style="text-align:center" class="items" border="1" cellspacing="0">
             <tr>
             <th>Tour Date</th>
             <td colspan="3"><?php echo $details->checkin; ?></td>
@@ -239,15 +239,15 @@
             </tr>
             <tr>
               <th rowspan="2">No. of Pax.</th>
-              <th>Adults</th>
-              <th>Child</th>
-              <th>Infant</th>
+              <th style="text-align:center">Adults</th>
+              <th style="text-align:center">Child</th>
+              <th style="text-align:center">Infant</th>
             </tr>
 
             <tr>
-              <td><?php echo $details->pax_adult ?></td>
-              <td><?php echo $details->pax_child ?></td>
-              <td><?php echo $details->pax_infant ?></td>
+              <td style="text-align:center"><?php echo $details->pax_adult ?></td>
+              <td style="text-align:center"><?php echo $details->pax_child ?></td>
+              <td style="text-align:center"><?php echo $details->pax_infant ?></td>
             </tr>
           </table>
         </div>

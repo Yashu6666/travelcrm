@@ -202,16 +202,16 @@
               <th rowspan="5">
                 <h2>Package Rates</h2>
               </th>
-              <td><span style="color: red;">AED <?php echo $details->perpax_adult ?></span>Per Adult <?php echo $details->room_sharing_types[0] != "" ? ($details->room_sharing_types[0] == "triple_sharing" ? "Per Person on Triple Sharing Basis" : "Per Person on Double Sharing Basis") : "" ?> </td>
+              <td><span style="color: red;">AED <?php echo $details->perpax_adult ?></span> Per Adult <?php echo $details->room_sharing_types[0] != "" ? ($details->room_sharing_types[0] == "triple_sharing" ? "Per Person on Triple Sharing Basis" : "Per Person on Double Sharing Basis") : "" ?> </td>
             </tr>
             <?php if($details->perpax_childs > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php echo $details->perpax_childs ?></span>Per Child With Bed</td>
+              <td><span style="color: red;">AED <?php echo $details->perpax_childs ?></span> Per Child With Bed</td>
             </tr>
             <?php endif ?>
             <?php if(isset($details->perpax_cnb) && $details->perpax_cnb > 0 ) : ?>
             <tr>
-            <td><span style="color: red;">AED <?php echo $details->perpax_cnb ?></span>Per Child With Not Bed</td>
+            <td><span style="color: red;">AED <?php echo $details->perpax_cnb ?></span> Per Child With Not Bed</td>
             </tr>
             <?php endif ?>
             <?php if($details->perpax_infants > 0) : ?>
@@ -256,15 +256,15 @@
 
             <tr>
               <th rowspan="2">No. of Pax.</th>
-              <th>Adults</th>
-              <th>Child</th>
-              <th>Infant</th>
+              <th style="text-align:center">Adults</th>
+              <th style="text-align:center">Child</th>
+              <th style="text-align:center">Infant</th>
             </tr>
 
             <tr>
-              <td><?php echo $details->pax_adult ?></td>
-              <td><?php echo $details->pax_child ?></td>
-              <td><?php echo $details->pax_infant ?></td>
+              <td style="text-align:center"><?php echo $details->pax_adult ?></td>
+              <td style="text-align:center"><?php echo $details->pax_child ?></td>
+              <td style="text-align:center"><?php echo $details->pax_infant ?></td>
             </tr>
 
             <tr>

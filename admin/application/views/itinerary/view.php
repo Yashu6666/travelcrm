@@ -71,11 +71,15 @@
                                             <td><?php echo $i++;?></td>
                                             <td><?php echo isset($agent_names[$i-1]) ? $agent_names[$i-1] : "N/A" ?></td>
                                             <td><?php echo isset($guest_names[$i-1]) ? $guest_names[$i-1] : 'N/A' ?></td>
-                                            <td><?php echo $key[0]->transfer_from_date;?></td>
+                                            <td><?php echo (new DateTime($key[0]->transfer_from_date))->format('d-M-Y') ?></td>
                                             <?php if ($this->session->userdata('reg_type') == 'Super Admin') : ?>
                                                 <td><?php echo isset($admin_names[$i-1]) ? $admin_names[$i-1] : 'N/A' ?></td>
                                             <?php endif ?>                                      
                                             <td>
+                                            <a type="button" class="btn btn-tbl-edit btn-xs" href="<?php echo site_url('itinerary/view_itinerary/'.$key[0]->query_id); ?>">
+												<i class="fa fa-eye text-white"></i>
+                                            </a>
+
                                             <a type="button" class="btn btn-tbl-edit btn-xs" onclick="setId('<?php echo $key[0]->query_id ?>')" data-id="" data-bs-toggle="modal" data-bs-target="#sendMail">
 												<i class="fa fa-envelope text-white"></i>
                                             </a>

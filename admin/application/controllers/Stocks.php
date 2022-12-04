@@ -293,9 +293,10 @@ class stocks extends CI_Controller
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
 								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output(FCPATH.'public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_adult = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					if(count($sold_stocks) > 0){
@@ -307,9 +308,10 @@ class stocks extends CI_Controller
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
 								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output(FCPATH.'public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_adult = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					$this->db->where('id', $id)->update('stocks', ["remaining_ticket_adult" => $remaining_stocks_adult_after_sell, "remaining_ticket_child" => $remaining_stocks_child_after_sell]);
@@ -324,9 +326,10 @@ class stocks extends CI_Controller
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
 								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output(FCPATH.'public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_child = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					if(count($sold_stocks) > 0){
@@ -339,9 +342,10 @@ class stocks extends CI_Controller
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
 								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output(FCPATH.'public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_child = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					$this->db->where('id', $id)->update('stocks', ["remaining_ticket_adult" => $remaining_stocks_adult_after_sell, "remaining_ticket_child" => $remaining_stocks_child_after_sell]);
@@ -358,9 +362,10 @@ class stocks extends CI_Controller
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
 								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output(FCPATH.'public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_child = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					if(count($sold_stocks) > 0){
@@ -373,9 +378,10 @@ class stocks extends CI_Controller
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
 								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output(FCPATH.'public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_child = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					$this->db->where('id', $id)->update('stocks', ["remaining_ticket_adult" => $remaining_stocks_adult_after_sell, "remaining_ticket_child" => $remaining_stocks_child_after_sell]);
@@ -390,9 +396,10 @@ class stocks extends CI_Controller
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
 								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output(FCPATH.'public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_adult = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					if(count($sold_stocks) > 0){
@@ -404,9 +411,10 @@ class stocks extends CI_Controller
 							foreach($file_name as $k=>$v){
 								$file = explode('/',$v);
 								$merge->add(FCPATH.'public/uploads/stocks/'.end($file));
+								unlink(FCPATH.'public/uploads/stocks/'.end($file));
 							}
 						}
-						$merge->output(FCPATH.'public/uploads/stocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
+						$merge->output(FCPATH.'public/uploads/soldstocks/'.strtotime(date('Y-m-d h:i:s')).'.pdf');
 						$uploaded_files_adult = ''.strtotime(date('Y-m-d h:i:s')).'.pdf';
 					}
 					$this->db->where('id', $id)->update('stocks', ["remaining_ticket_adult" => $remaining_stocks_adult_after_sell, "remaining_ticket_child" => $remaining_stocks_child_after_sell]);
@@ -415,15 +423,15 @@ class stocks extends CI_Controller
 				// echo $remaining_stocks_child_after_sell;
 				// die;
 			
-			// if ($remaining_stocks == 0) {
-			// 	$this->session->set_flashdata('error', 'No Tickets left for this Stock');
-			// 	redirect('stocks/sell_stock', 'refresh');
-			// } elseif ($no_of_stocks > $remaining_stocks) {
-			// 	$this->session->set_flashdata('error', 'Entered No. of Stocks greater than Remaining Stock(s) (' . $remaining_stocks . ')');
-			// 	redirect('stocks/sell_stock', 'refresh');
-			// } else {
-			// 	$remaining_stocks_after_sell = $remaining_stocks - $no_of_stocks;
-			// 	$this->db->where('id', $id)->update('stocks', ["remaining_ticket" => $remaining_stocks_after_sell]);
+				// if ($remaining_stocks == 0) {
+				// 	$this->session->set_flashdata('error', 'No Tickets left for this Stock');
+				// 	redirect('stocks/sell_stock', 'refresh');
+				// } elseif ($no_of_stocks > $remaining_stocks) {
+				// 	$this->session->set_flashdata('error', 'Entered No. of Stocks greater than Remaining Stock(s) (' . $remaining_stocks . ')');
+				// 	redirect('stocks/sell_stock', 'refresh');
+				// } else {
+				// 	$remaining_stocks_after_sell = $remaining_stocks - $no_of_stocks;
+				// 	$this->db->where('id', $id)->update('stocks', ["remaining_ticket" => $remaining_stocks_after_sell]);
 
 				$data = [
 					'stock_id' => $id,

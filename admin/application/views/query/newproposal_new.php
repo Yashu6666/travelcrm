@@ -255,7 +255,6 @@
         </div>
         <br />
         <div class="d-flex justify-content-between" style="margin-top: 3%;">
-
         <img class="w-25" src="<?php echo base_url();?>public/image/logo.png"/>
             <p>
                 <b>Name: </b><?php echo $b2bcustomerquery->b2bcompanyName ?> <br>

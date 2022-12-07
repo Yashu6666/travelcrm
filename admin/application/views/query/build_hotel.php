@@ -1054,26 +1054,7 @@
     var pax_infants = <?php echo $buildpackage->infant; ?>;
     var total_pax = pax_adult + pax_child + pax_infants;
     var QueryId = $('#QueryId').val();
-    // var with_adult ='';
-    // var with_child ='';
-    // var without_bed ='';
-    // if ($('#extra_with_adult').is(":checked"))
-    // {
-    //   with_adult = $('#extra_with_adult').val();
-    // }
-    // if ($('#extra_with_child').is(":checked"))
-    // {
-    //   with_child = $('#extra_with_child').val();
-    // }
-    // if ($('#extra_without_bed').is(":checked"))
-    // {
-    //   without_bed = $('#extra_without_bed').val();
-    // }
 
-    // // console.log(extra_with_adult);
-    // var extra_with_adult = with_adult;
-    // var extra_with_child = with_child;
-    // var extra_without_bed = without_bed;
     setTimeout(function() {
       $('.noOfDaysAlertcls2').attr("style", "display:none;")
     }, 2000);

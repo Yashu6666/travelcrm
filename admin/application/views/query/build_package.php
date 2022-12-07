@@ -1094,7 +1094,6 @@
                           })
 
                           $(".card-box").click(function(e) {
-                            console.log("🚩 ~ file: build_package.php:1244 ~ $ ~ e", e)
                             e.stopPropagation();
 
                             let itrnl_total = 0;
@@ -3415,6 +3414,16 @@
   })
   $("#hotel_status1").on("change", function() {
     $("#hoteldisplay").hide();
+    $('#hotel_rate_adult_single').val(0);
+    $('#hotel_pax_adult_double').val(0);
+    $('#hotel_pax_adult_triple').val(0);
+    $('#hotel_rate_adult_single').val(0);
+    $('#hotel_rate_adult_double').val(0);
+    $('#hotel_rate_adult_triple').val(0);
+    $('#hotel_rate_child').val(0);
+    $('#hotel_rate_infant').val(0);
+    $('.card-box').click();
+    delete_query_data('query_hotel');
   })
 
   $("#trans_status").on("change", function() {
@@ -3423,6 +3432,10 @@
   })
   $("#trans_status1").on("change", function() {
     $("#transdisplay").hide();
+    $("input[name='total_price_point[]']").map(function() { $(this).val(0); });
+    $("input[name='total_price_internal[]']").map(function() { $(this).val(0); });
+    $('.card-box').click();
+    delete_query_data('query_transfer');
   })
 
   $("#excursion_status").on("change", function() {
@@ -3439,16 +3452,24 @@
 
   $("#meals_status1").on("change", function() {
     $("#mealsdisplay").hide();
+    $("#total_pax_meal_adult").val(0);
+    $("#total_pax_meal_child").val(0);
+    $('.card-box').click();
+    delete_query_data('query_meal');
   })
 
   $("#visa_status").on("change", function() {
-    // alert(this.value);
     $("#visadisplay").show();
     $("#visa_category_drop_down").val('30_days_tourist');
 
   })
   $("#visa_status1").on("change", function() {
     $("#visadisplay").hide();
+    $("#total_pax_visa_price_adult").val(0);
+    $("#total_pax_visa_price_child").val(0);
+    $("#total_pax_visa_price_infant").val(0);
+    $('.card-box').click();
+    delete_query_data('query_visa');
   })
 
   $("#otb_status").on("change", function() {
@@ -3456,15 +3477,48 @@
   })
   $("#otb_status1").on("change", function() {
     $("#otbdisplay").hide();
+    $("#total_pax_otb_price_adult").val(0);
+    $("#total_pax_otb_price_child").val(0);
+    $("#total_pax_otb_price_infant").val(0);
+    $('.card-box').click();
+    delete_query_data('query_visa');
   })
 
   $("#excursion_status").on("change", function() {
-    // alert(this.value);
     $("#excursiondisplay").show();
   })
   $("#excursion_status1").on("change", function() {
     $("#excursiondisplay").hide();
+    $("#total_pax_sic_adult").val(0);
+    $("#total_pax_sic_hild").val(0);
+    $("#total_pax_sic_infant").val(0);
+
+    $("#total_pax_TKT_adult").val(0);
+    $("#total_pax_TKT_child").val(0);
+    $("#total_pax_TKT_infant").val(0);
+
+    $("#total_pax_pvt_adult").val(0);
+    $("#total_pax_pvt_hild").val(0);
+    $("#total_pax_pvt_infant").val(0);
+    $('.card-box').click();
+    delete_query_data('query_excursion');
   })
+
+  function delete_query_data(type){
+    query_id = <?php echo $view->query_id; ?>;
+    $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: '<?php echo site_url(); ?>/query/delete_query_data',
+      data: {
+        'query_id': query_id,
+        'query_type': type,
+      },
+      success: function(response) {
+        console.log("🚩 ~ file: build_package.php:3516 ~ delete_query_data ~ response", response)
+      }
+    });
+  }
 
   $('#pickupinternal').on('change', function() {
     // alert(this.value);

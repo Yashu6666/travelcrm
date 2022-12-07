@@ -34,6 +34,38 @@ class Query extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function delete_query_data(){
+		$query_id = $this->input->post('query_id');
+		$query_type = $this->input->post('query_type');
+
+		if($query_type == 'query_transfer'){
+			$transfer_query = $this->db->where('query_id', $query_id)->get('query_transfer')->result();
+			if(count($transfer_query) > 0){ $this->db->where('query_id', $query_id)->delete('query_transfer'); }
+		}
+
+		if($query_type == 'query_excursion'){
+			$excursion_query = $this->db->where('query_id', $query_id)->get('query_excursion')->result();
+			if(count($excursion_query) > 0){ $this->db->where('query_id', $query_id)->delete('query_excursion'); }
+		}
+
+		if($query_type == 'query_hotel'){
+			$hotel_query = $this->db->where('query_id', $query_id)->get('query_hotel')->result();
+			if(count($hotel_query) > 0){ $this->db->where('query_id', $query_id)->delete('query_hotel'); }
+		}
+
+		if($query_type == 'query_meal'){
+			$meal_query = $this->db->where('query_id', $query_id)->get('query_meal')->result();
+			if(count($meal_query) > 0){ $this->db->where('query_id', $query_id)->delete('query_meal'); }
+		}
+
+		if($query_type == 'query_visa'){
+			$visa_query = $this->db->where('query_id', $query_id)->get('query_visa')->result();
+			if(count($visa_query) > 0){ $this->db->where('query_id', $query_id)->delete('query_visa'); }
+		}
+
+		echo json_encode(["msg"=>"deleted successfully"]);
+	}
+
 	public function sendMailProposalPackage()
 	{
 		try {
@@ -713,107 +745,7 @@ class Query extends CI_Controller
 		echo json_encode($from_room_types);
 	}
 
-	// public function getHotelCalculation(){
-	// 	$pax_adult = $this->input->post('pax_adult');
-	// 	$pax_child = $this->input->post('pax_child');
-	// 	$build_room_type = $this->input->post('build_room_type');
-	// 	$no_of_nights = $this->input->post('no_of_nights');
-	// 	$build_hotel_name = $this->input->post('build_hotel_name');
-	// 	$build_bed_type = $this->input->post('build_bed_type');
-
-	// 	$extra_with_adult = $this->input->post('extra_with_adult');
-	//     $extra_with_child =$this->input->post('extra_with_child');
-	//     $extra_without_bed =$this->input->post('extra_without_bed');
-
-	// 	// echo"<pre>";print_r($_POST);
-
-	// 	$this->db->select("*");
-	// 	$this->db->from("rooms");
-	// 	$this->db->where('roomtype',$build_room_type);
-	// 	$this->db->where('hotelname',$build_hotel_name);
-	// 	$hotels_calculation = $this->db->get()->result_array();
-
-	// 	$hotels_calculation_data =array();
-	// 	if($extra_with_adult){
-	// 		$netrate_extra_array = explode (",", $hotels_calculation[0]['netrate_extra']);
-	// 		$vat_extra_array = explode (",", $hotels_calculation[0]['vat_extra']);
-
-	// 		$net_rate_extra= $netrate_extra_array[0];	
-	// 		$vat_extra = $vat_extra_array[0];
-	// 	}else{
-	// 		$net_rate_extra= 0;$vat_extra = 0;
-	// 	}
-	// 	if($extra_with_child){
-	// 		$netrate_extra_child_array = explode (",", $hotels_calculation[0]['netrate_extra_child']);
-	// 		$vat_extra_child_array = explode (",", $hotels_calculation[0]['vat_extra_child']);
-
-	// 		$netrate_extra_child= $netrate_extra_child_array[0];	
-	// 		$vat_extra_child = $vat_extra_child_array[0];
-
-	// 	}else{
-	// 		$netrate_extra_child=0; $vat_extra_child = 0;
-	// 	}
-	// 	if($extra_without_bed){
-	// 		$netrate_extra_wo_array = explode (",", $hotels_calculation[0]['netrate_extra_wo']);
-	// 		$vat_extra_wo_array = explode (",", $hotels_calculation[0]['vat_extra_wo']);
-
-	// 		$netrate_extra_wo= $netrate_extra_wo_array[0];	
-	// 		$vat_extra_wo = $vat_extra_wo_array[0];
-
-	// 	}else{
-	// 		$netrate_extra_wo= 0;$vat_extra_wo = 0;
-	// 	}
-
-
-
-
-	// 	if($build_bed_type == "Single" ){
-	// 		// $net_rate_array = explode (",", $hotels_calculation[0]['netrate']);
-	// 		// $vat_array = explode (",", $hotels_calculation[0]['vat']); 
-	// 		// $net_rate= $net_rate_array[0];	
-	// 		// $vat = 	$vat_array[0];
-	// 		// $per_pax_adult = $net_rate + $vat;
-	// 		// $total_pax_adult_rate = ($pax_adult * ($net_rate + $vat)) * $no_of_nights;
-
-	// 		$net_rate_array = explode (",", $hotels_calculation[0]['netrate']);
-	// 		$vat_array = explode (",", $hotels_calculation[0]['vat']);
-	// 		// $net_rate_extra = explode (",", $hotels_calculation[0]['netrate']);
-	// 		// $vat_extra = explode (",", $hotels_calculation[0]['netrate']);
-
-	// 		$net_rate= $net_rate_array[0];	
-	// 		$vat = 	$vat_array[0];
-
-
-
-	// 	}else if($build_bed_type == "Double"){
-	// 		$net_rate_array = explode (",", $hotels_calculation[0]['netrate_double']);
-	// 		$vat_array = explode (",", $hotels_calculation[0]['vat_double']); 
-	// 		$net_rate= $net_rate_array[0];	
-	// 		$vat = 	$vat_array[0];
-	// 		// $per_pax_adult = $net_rate + $vat;
-	// 		// $total_pax_adult_rate = ($pax_adult * ($net_rate + $vat)) * $no_of_nights;
-	// 		// $hotels_calculation_data['netrate_double'] = $hotels_calculation[0]['netrate_double'];
-	// 	}else{
-	// 		$net_rate= 0;$vat =0;	
-	// 	}
-
-	// 	$total_per_pax_adult = $net_rate + $vat + $net_rate_extra + $vat_extra ;
-
-	// 	$total_per_pax_child = $netrate_extra_child + $vat_extra_child + $netrate_extra_wo + $vat_extra_wo;
-
-	// 	$hotel_calculation_data['total_pax_adult_rate'] = ($pax_adult * ($total_per_pax_adult)) * $no_of_nights;
-
-	// 	$hotel_calculation_data['total_pax_child_rate'] = ($pax_child * ($total_per_pax_child)) * $no_of_nights;
-
-	// 	// $hotel_calculation_data['total_pax_adult_rate'] = ($pax_adult * ($per_pax_adult)) * $no_of_nights;
-
-
-
-	// 	echo json_encode($hotel_calculation_data);
-
-
-	// }
-
+	
 	public function getHotelCalculation()
 	{
 		$pax_adult = $this->input->post('pax_adult');
@@ -920,31 +852,6 @@ class Query extends CI_Controller
 			}
  
 
-			// if ($val['extra_with_child']) {
-
-			// 	if (!empty($val['extra_with_child'])) {
-			// 		$netrate_extra_child_array = explode(",", $hotels_calculation[$k][0]['netrate_extra_child']);
-			// 		$netrate_extra_child = $netrate_extra_child_array[$room_val_index];
-			// 	}  else {
-			// 		$netrate_extra_child = 0;
-			// 	}
-
-			// } else {
-			// 	$netrate_extra_child = 0;
-			// }
-
-			// if ($val['extra_without_bed']) {
-
-			// 	if (!empty($val['extra_without_bed'])) {
-			// 		$netrate_extra_wo_array = explode(",", $hotels_calculation[$k][0]['netrate_extra_wo']);
-			// 		$netrate_extra_wo = $netrate_extra_wo_array[$room_val_index];
-			// 	}  else {
-			// 		$netrate_extra_wo = 0;
-			// 	}
-			// } else {
-			// 	$netrate_extra_wo = 0;
-			// 	$vat_extra_wo = 0;
-			// }
 
 			$netrate_extra_child_array = explode(",", $hotels_calculation[$k][0]['netrate_extra_child']);
 			$netrate_extra_child = $netrate_extra_child_array[$room_val_index];
@@ -2033,6 +1940,7 @@ class Query extends CI_Controller
 		$query_id = $this->input->post('query_id');
 		$query_type = $this->input->post('query_type');
 
+		$query_data = $this->db->select('child_age_per_room')->where('queryId', $query_id)->get('querypackage')->row();
 		$excursion=array();
 		$excursion_sic_data =array();
 		$total_adultprice =0; $total_childprice= 0;$total_infantprice= 0;
@@ -2044,12 +1952,19 @@ class Query extends CI_Controller
 					$excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_SIC[$k]."' AND type='".$excursion_types_SIC."' AND pax >=$total_pax  LIMIT 1")->row();
 					if(empty($excursion)){
 						$excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_SIC[$k]."' AND type='".$excursion_types_SIC."' AND pax <=$total_pax  LIMIT 1")->row();
+						$child_age_sic = !empty($excursion->child_age) ? $excursion->child_age : 0;
 					}
 					if($excursion_adults_SIC) {
 						$total_adultprice += (int)$excursion->adultprice * (int)$excursion_adults_SIC;
 					}
 					if($excursion_childs_SIC) {
-						$total_childprice += (int)$excursion->childprice * (int)$excursion_childs_SIC;
+						$child_age_sic_count = 0;
+						for($child_ages = 0 ; $child_ages < (int)$excursion_childs_SIC ;$child_ages++){
+							if(explode(',',$query_data->child_age_per_room)[$child_ages] >= $child_age_sic){
+								$child_age_sic_count += 1;
+							}
+						}
+						$total_childprice += (int)$excursion->childprice * (int)$child_age_sic_count;
 					}
 					if($excursion_infants_SIC) {
 						$total_infantprice += (int)$excursion->infantprice * (int)$excursion_infants_SIC;
@@ -2122,6 +2037,7 @@ class Query extends CI_Controller
 		$query_id = $this->input->post('query_id');
 		$query_type = $this->input->post('query_type');
 
+		$query_data = $this->db->select('child_age_per_room')->where('queryId', $query_id)->get('querypackage')->row();
 		$excursion=array();
 		$excursion_TKT_data =array();
 		$total_adultprice =0; $total_childprice= 0;$total_infantprice= 0;
@@ -2134,11 +2050,19 @@ class Query extends CI_Controller
 					if(empty($excursion)){
 						$excursion =$this->db->query("SELECT * FROM `excursion` WHERE tourname='".$excursion_name_TKT[$k]."' AND type='".$excursion_types_TKT."' AND pax <=$total_pax  LIMIT 1")->row();
 					}
+					$child_age_tkt = !empty($excursion->child_age) ? $excursion->child_age : 0;
+
 					if($excursion_adults_TKT) {
 						$total_adultprice += (int)$excursion->adultprice * (int)$excursion_adults_TKT;
 					}
 					if($excursion_childs_TKT) {
-						$total_childprice += (int)$excursion->childprice * (int)$excursion_childs_TKT;
+					$child_age_tkt_count = 0;
+					for($child_ages = 0 ; $child_ages < (int)$excursion_childs_TKT ;$child_ages++){
+							if(explode(',',$query_data->child_age_per_room)[$child_ages] >= $child_age_tkt){
+								$child_age_tkt_count += 1;
+							}
+						}
+						$total_childprice += (int)$excursion->childprice * (int)$child_age_tkt_count;
 					}
 					if($excursion_infants_TKT) {
 						$total_infantprice += (int)$excursion->infantprice * (int)$excursion_infants_TKT;
@@ -2271,8 +2195,8 @@ class Query extends CI_Controller
 		if(!empty($excursion_name_PVT)) {
 		
 		$total_pax = $excursion_adult_PVT+$excursion_child_PVT;
-		
 
+		$query_data = $this->db->select('child_age_per_room')->where('queryId', $query_id)->get('querypackage')->row();
 		$excursion=array();
 		$excursion_pvt_data =array();
 
@@ -2287,6 +2211,8 @@ class Query extends CI_Controller
 					$excursion =$this->db->where('tourname',$excursion_name_PVT[$k])->where('type',$excursion_type_PVT)->where('pax <=',$total_pax)->get('excursion')->row();
 				}
 
+				$child_age_pvt = !empty($excursion->child_age) ? $excursion->child_age : 0;
+
 				if($excursion->pax < $total_pax){
 					echo json_encode(["status"=>0,"pax"=>$excursion->pax]);
 					return;
@@ -2298,7 +2224,13 @@ class Query extends CI_Controller
 					// $total_adultprice += ( (int)$excursion->adultprice) * (int)$excursion_adult_PVT ; //$excursion->adultprice * $excursion_adult_PVT;
 				}
 				if($excursion_child_PVT) {
-					$total_childprice += (ceil((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->childprice) * (int)$excursion_child_PVT  ; // $excursion->childprice * $excursion_child_PVT;
+					$child_age_pvt_count = 0;
+						for($child_ages = 0 ; $child_ages < (int)$excursion_child_PVT ;$child_ages++){
+							if(explode(',',$query_data->child_age_per_room)[$child_ages] >= $child_age_pvt){
+								$child_age_pvt_count += 1;
+							}
+						}
+					$total_childprice += (ceil((int)$excursion->vehicle_price / (int)$total_pax) + (int)$excursion->childprice) * (int)$child_age_pvt_count  ; // $excursion->childprice * $excursion_child_PVT;
 					// $total_childprice += ( (int)$excursion->childprice) * (int)$excursion_child_PVT  ; // $excursion->childprice * $excursion_child_PVT;
 				}
 				if($excursion_infant_PVT) {
@@ -3021,6 +2953,8 @@ class Query extends CI_Controller
 
 	public function CreateProposalTransfer()
 	{
+		// echo"<pre>";print_r($_POST);exit;
+		// return;
 		
 		$data['proposalDetails'] = array(
 
@@ -3327,37 +3261,37 @@ class Query extends CI_Controller
 
 			'buildTravelFromdateCab' => isset($_POST['buildTravelFromdateCab']) ? $_POST['buildTravelFromdateCab'] : [],
 
-			'pickupinternal' => $_POST['buildTravelToDateCab'],
+			'pickupinternal' => isset($_POST['buildTravelToDateCab']) ? $_POST['buildTravelToDateCab'] : "",
 			// 'dropoffinternal' => $_POST['buildTravelFromdateSIC'],
 
-			'pickuppoint' => $_POST['buildTravelToDateSIC'],
+			'pickuppoint' => isset($_POST['buildTravelToDateSIC']) ? $_POST['buildTravelToDateSIC'] : "",
 			// 'dropoffpoint' => $_POST['buildTravelToCityCab'],
-			'currencyOption' => $_POST['currencyOption'],
+			'currencyOption' => isset($_POST['currencyOption']) ? $_POST['currencyOption'] : "",
 			// 'dropoffpointIn' => $_POST['buildTravelToCityCabIn'],
 
 			// 'in_transfer' => $_POST['buildTravelFromCityCab'],
-			'in_transfer_date' => $_POST['buildTravelFromdateCab'],
-			'in_transfer_pickup' => $_POST['buildTravelToDateCab'],
-			'in_transfer_dropoff' => $_POST['buildTravelToCityCabDrop'],
+			'in_transfer_date' => isset($_POST['buildTravelFromdateCab']) ? $_POST['buildTravelFromdateCab'] : "",
+			'in_transfer_pickup' => isset($_POST['buildTravelToDateCab']) ? $_POST['buildTravelToDateCab'] : "",
+			'in_transfer_dropoff' => isset($_POST['buildTravelToCityCabDrop']) ? $_POST['buildTravelToCityCabDrop'] : "",
 
 			// 'pp_transfer'=> $_POST['buildTravelFromCitySIC'],
 			'pp_transfer_date' => isset($_POST['buildTravelFromdatePVT']) ? $_POST['buildTravelFromdatePVT'] : [],
 			'pp_transfer_pickup' => isset($_POST['buildTravelToDateSIC']) ? $_POST['buildTravelToDateSIC'] : [],
 			'pp_transfer_dropoff' => isset($_POST['buildTravelToCitySIC']) ? $_POST['buildTravelToCitySIC'] : [],
-			'res_type' => $_POST['res_type'],
+			'res_type' => isset($_POST['res_type']) ? $_POST['res_type'] : "",
 			'res_name' => isset($_POST['res_name']) ? $_POST['res_name'] : [],
-			'Meal' => $_POST['Meal'],
-			'Meal_Type' => $_POST['Meal_Type'],
-			'no_of_meals' => $_POST['no_of_meals'],
-			'transfer_with_or_without' => $_POST['transfer_with_or_without'],
+			'Meal' => isset($_POST['Meal']) ? $_POST['Meal'] : "",
+			'Meal_Type' => isset($_POST['Meal_Type']) ? $_POST['Meal_Type'] : "",
+			'no_of_meals' => isset($_POST['no_of_meals']) ? $_POST['no_of_meals'] : "",
+			'transfer_with_or_without' => isset($_POST['transfer_with_or_without']) ? $_POST['transfer_with_or_without'] : "",
 
-			'visa_category_drop_down' => $_POST['visa_category_drop_down'],
-			'entry_type' => $_POST['entry_type'],
-			'visa_validity' => $_POST['visa_validity'],
-			'internal_route' => $_POST['buildTravelTypeCab'],
-			'return_route' => $_POST['buildTravelTypeSIC'],
+			'visa_category_drop_down' => isset($_POST['visa_category_drop_down']) ? $_POST['visa_category_drop_down'] : "",
+			'entry_type' => isset($_POST['entry_type']) ? $_POST['entry_type'] : "",
+			'visa_validity' => isset($_POST['visa_validity']) ? $_POST['visa_validity'] : "",
+			'internal_route' => isset($_POST['buildTravelTypeCab']) ? $_POST['buildTravelTypeCab'] : "",
+			'return_route' => isset($_POST['buildTravelTypeSIC']) ? $_POST['buildTravelTypeSIC'] : "",
 			'buildRoomType' => isset($_POST['buildRoomType']) ? $_POST['buildRoomType'] : [],
-			'room_sharing_types' => $_POST['room_sharing_types'],
+			'room_sharing_types' => isset($_POST['room_sharing_types']) ? $_POST['room_sharing_types'] : "",
 			'admin_name' => $this->session->userdata('admin_username'),
 		);
 
@@ -3698,12 +3632,12 @@ class Query extends CI_Controller
 	}
 
 		$data['proposalDetails'] = array(
-			'perpax_adult' =>  $_POST['perpax_adult_input'],
-			'perpax_childs' =>  $_POST['perpax_childs_input'],
-			'perpax_infants' => $_POST['perpax_infants_input'],
+			'perpax_adult' =>  $_POST['perpax_adult'],
+			'perpax_childs' =>  $_POST['perpax_childs'],
+			'perpax_infants' => $_POST['perpax_infants'],
 
-			'perpax_double' => $_POST['perpax_adult_input_double'],
-			'perpax_triple' => $_POST['perpax_adult_input_triple'],
+			'perpax_double' => $_POST['perpax_adult_double'],
+			'perpax_triple' => $_POST['perpax_adult_triple'],
 			'admin_name' => $this->session->userdata('admin_username'),
 
 			// 'totalprice_adult' => $_POST['totalprice_adult'],

@@ -257,13 +257,13 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                     </select>
                   </td> 
                   <td>
-                    <input class="form-control adult_per_room" type="text"  value="<?php echo $adult_pax_multi_rooms[$key]; ?>" name="adult_per_room[]" id="adult_per_room">
+                    <input class="form-control adult_per_room" type="text"  value="<?php echo explode(",", $package_details->adult_per_room)[$i - 1]; ?>" name="adult_per_room[]" id="adult_per_room">
                     <select hidden class="form-control room_sharing_types" id="room_sharing_types" name="room_sharing_types[]">
                       <option value=""></option>
                     </select>
                   </td>
                   <td>
-                    <input class="form-control child_per_room" type="text"  value="<?php echo $child_pax_multi_rooms[$key]; ?>" name="child_per_room[]" id="child_per_room">
+                    <input class="form-control child_per_room" type="text"  value="<?php echo explode(",", $package_details->child_per_room)[$i - 1]; ?>" name="child_per_room[]" id="child_per_room">
                     <input class="form-control child_per_room_wo_bed" type="hidden" readonly value="<?php echo isset($no_child_room_wo_new[$key]) &&
                     !empty($no_child_room_wo_new[$key]) ? ($no_child_room_wo_new[$key]) : 0; ?>" name="child_per_room_wo_bed[]" id="child_per_room_wo_bed">
                   </td>
@@ -428,33 +428,6 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
             <br>
               <div class="row mt-4 mr-3 ml-3 mb-3 "  id="visadisplay">
                <div>
-                <!-- <table class="table table-borderless">
-                 <thead>
-                  <tr>
-                   <th>Visa Category</th>
-                   <th>Entry Type</th>
-                   <th>Validity</th>
-                   <th>Total Gst</th>
-                   <th>Final Price</th>
-
-                  </tr>
-                 </thead>
-                 <tbody>
-                  <tr>
-                   <td><input type="text" class="form-control" name="visaPerAdultCost"></td>
-                   <td><input type="text" class="form-control" name="visaTotalCost"></td>
-                   <td><input type="text" class="form-control" name="visaTotalMarkup"></td>
-                   <td><input type="text" class="form-control" name="visaTotalGST"></td>
-                   <td><input type="text" class="form-control" name="visaFinalPrice"></td>
-
-
-
-
-                  </tr>
-
-                 </tbody>
-                </table> -->
-
                 <table id="faqs" class="table table-borderless">
             <thead>
              <tr>
@@ -498,8 +471,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
 
              </div>
             </td>
-            <!-- <td><input type="text" placeholder="" class="form-control" name="process_time">
-            </td> -->
+           
            <td>
              <div>
               <select data-mdl-for="sample2" class="form-control"
@@ -614,9 +586,6 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
               <td>
                <div>
                 <select required multiple="" id="excursion_name_SIC"  name="excursion_name_SIC[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" >
-                <!-- <select id="excursion_name" data-mdl-for="sample2" class="form-control"
-                value=""  tabIndex="-1" name="excursion"> -->
-                <!-- <option>Select Excursion</option> -->
                 <?php $sic_arr = explode(",",$sic_query[0]->excursion_name) ;?>
 
                 <?php foreach($excursion_sic as $value){ ?>
@@ -1294,7 +1263,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                                 });
 
                                 var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val();
-                                var total_pax_otb_price_adult = $("#total_pax_otb_price_adult").val();
+                                var total_pax_otb_price_adult = $("#total_pax_otb_price_adult").val() == null ? 0 : $("#total_pax_otb_price_adult").val();
                                 var total_pax_meal_adult = $("#total_pax_meal_adult").val();
                                 var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
                                 var total_pax_sic_adult = $("#total_pax_sic_adult").val();
@@ -1328,7 +1297,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                                 var total_pax_sic_hild = $("#total_pax_sic_hild").val();
                                 var total_pax_meal_child = $("#total_pax_meal_child").val();
                                 var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
-                                var total_pax_otb_price_child = $("#total_pax_otb_price_child").val();
+                                var total_pax_otb_price_child = $("#total_pax_otb_price_child").val() == null ? 0 : $("#total_pax_otb_price_child").val();
                                 var total_pax_TKT_child = $("#total_pax_TKT_child").val();
                                 var total_pax_meals_child = $("#total_pax_meals_child").val();
 
@@ -1344,7 +1313,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
 
                                 var hotel_rate_infant = $("#hotel_rate_infant").val();
                                 var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val();
-                                var total_pax_otb_price_infant = $("#total_pax_otb_price_infant").val();
+                                var total_pax_otb_price_infant = $("#total_pax_otb_price_infant").val() == null ? 0 : $("#total_pax_otb_price_infant").val();
                                 var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
                                 var total_pax_sic_infant = $("#total_pax_sic_infant").val();
                                 var total_pax_TKT_infant = $("#total_pax_TKT_infant").val();
@@ -1360,14 +1329,14 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                                 let c_type = document.getElementById('currencyOption').value;
                                 var usd_aed = <?php echo $usd_to_aed->usd_to_aed; ?>;
 
-                                $("#subtotal_adults_single").html(c_type == 'USD' ? (sub_total_adult_single / usd_aed).toFixed(2) : sub_total_adult_single);
-                                $("#subtotal_adults_double").html(c_type == 'USD' ? (sub_total_adult_double / usd_aed).toFixed(2) : sub_total_adult_double);
-                                $("#subtotal_adults_triple").html(c_type == 'USD' ? (sub_total_adult_triple / usd_aed).toFixed(2) : sub_total_adult_triple);
+                                $("#subtotal_adults_single").val(c_type == 'USD' ? (sub_total_adult_single / usd_aed).toFixed(2) : sub_total_adult_single);
+                                $("#subtotal_adults_double").val(c_type == 'USD' ? (sub_total_adult_double / usd_aed).toFixed(2) : sub_total_adult_double);
+                                $("#subtotal_adults_triple").val(c_type == 'USD' ? (sub_total_adult_triple / usd_aed).toFixed(2) : sub_total_adult_triple);
 
-                                $("#subtotal_adults").html(c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2) : sub_total_adult);
-                                $("#subtotal_childs").html(c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child);
-                                $("#subtotal_infants").html(c_type == 'USD' ? (sub_total_infant / usd_aed).toFixed(2) : sub_total_infant);
-                                $("#subtotal_cnb").html(c_type == 'USD' ? (sub_total_cnb / usd_aed).toFixed(2) : sub_total_cnb);
+                                $("#subtotal_adults").val(c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2) : sub_total_adult);
+                                $("#subtotal_childs").val(c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child);
+                                $("#subtotal_infants").val(c_type == 'USD' ? (sub_total_infant / usd_aed).toFixed(2) : sub_total_infant);
+                                $("#subtotal_cnb").val(c_type == 'USD' ? (sub_total_cnb / usd_aed).toFixed(2) : sub_total_cnb);
 
                                 var PackageMarkup = $("#PackageMarkup").val();
                                 var Mark_up = $("#Mark_up").val();
@@ -1407,14 +1376,14 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
 
                                 }
 
-                                $("#totalprice_adult_single").html(c_type == 'USD' ? (total_adult_single / usd_aed).toFixed(2) : total_adult_single);
-                                $("#totalprice_adult_double").html(c_type == 'USD' ? (total_adult_double / usd_aed).toFixed(2) : total_adult_double);
-                                $("#totalprice_adult_triple").html(c_type == 'USD' ? (total_adult_triple / usd_aed).toFixed(2) : total_adult_triple);
+                                $("#totalprice_adult_single").val(c_type == 'USD' ? (total_adult_single / usd_aed).toFixed(2) : total_adult_single);
+                                $("#totalprice_adult_double").val(c_type == 'USD' ? (total_adult_double / usd_aed).toFixed(2) : total_adult_double);
+                                $("#totalprice_adult_triple").val(c_type == 'USD' ? (total_adult_triple / usd_aed).toFixed(2) : total_adult_triple);
 
-                                $("#totalprice_adult").html(c_type == 'USD' ? (total_adult / usd_aed).toFixed(2) : total_adult);
-                                $("#totalprice_childs").html(c_type == 'USD' ? (total_child / usd_aed).toFixed(2) : total_child);
-                                $("#totalprice_infants").html(c_type == 'USD' ? (total_infant / usd_aed).toFixed(2) : total_infant);
-                                $("#totalprice_cnb").html(c_type == 'USD' ? (total_cnb / usd_aed).toFixed(2) : total_cnb);
+                                $("#totalprice_adult").val(c_type == 'USD' ? (total_adult / usd_aed).toFixed(2) : total_adult);
+                                $("#totalprice_childs").val(c_type == 'USD' ? (total_child / usd_aed).toFixed(2) : total_child);
+                                $("#totalprice_infants").val(c_type == 'USD' ? (total_infant / usd_aed).toFixed(2) : total_infant);
+                                $("#totalprice_cnb").val(c_type == 'USD' ? (total_cnb / usd_aed).toFixed(2) : total_cnb);
 
                                 var per_pax_adult_single = Math.ceil(hotel_pax_adult_single > 1 ? parseInt(total_adult_single) / hotel_pax_adult_single : parseInt(total_adult_single));
                                 var per_pax_adult_double = Math.ceil(hotel_pax_adult_double > 1 ? parseInt(total_adult_double) / hotel_pax_adult_double : parseInt(total_adult_double));
@@ -1428,14 +1397,14 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
 
                                 var per_pax_cnb = (pax_cnb_count > 1 ? (parseInt(total_cnb) / pax_cnb_count) : parseInt(total_cnb));
 
-                                $("#perpax_adult_single").html(c_type == 'USD' ? (per_pax_adult_single / usd_aed).toFixed(2) : per_pax_adult_single);
-                                $("#perpax_adult_double").html(c_type == 'USD' ? (per_pax_adult_double / usd_aed).toFixed(2) : per_pax_adult_double);
-                                $("#perpax_adult_triple").html(c_type == 'USD' ? (per_pax_adult_triple / usd_aed).toFixed(2) : per_pax_adult_triple);
+                                $("#perpax_adult_single").val(c_type == 'USD' ? (per_pax_adult_single / usd_aed).toFixed(2) : per_pax_adult_single);
+                                $("#perpax_adult_double").val(c_type == 'USD' ? (per_pax_adult_double / usd_aed).toFixed(2) : per_pax_adult_double);
+                                $("#perpax_adult_triple").val(c_type == 'USD' ? (per_pax_adult_triple / usd_aed).toFixed(2) : per_pax_adult_triple);
 
-                                $("#perpax_adult").html(c_type == 'USD' ? Math.floor(per_pax_adult / usd_aed) : Math.floor(per_pax_adult));
-                                $("#perpax_childs").html(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
-                                $("#perpax_infants").html(c_type == 'USD' ? Math.floor(per_pax_infant / usd_aed) : Math.floor(per_pax_infant));
-                                $("#perpax_cnb").html(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
+                                $("#perpax_adult").val(c_type == 'USD' ? Math.floor(per_pax_adult / usd_aed) : Math.floor(per_pax_adult));
+                                $("#perpax_childs").val(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
+                                $("#perpax_infants").val(c_type == 'USD' ? Math.floor(per_pax_infant / usd_aed) : Math.floor(per_pax_infant));
+                                $("#perpax_cnb").val(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
 
                                 $("#perpax_adult_input").val(c_type == 'USD' ? Math.floor(per_pax_adult / usd_aed) : Math.floor(per_pax_adult));
                                 $("#perpax_childs_input").val(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
@@ -1854,39 +1823,35 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                   <td type="" name="ChildCost" id="ChildCost" value="0"><span>CNB</td>
                   <td type="" name="InfantCost" id="InfantCost" value="0"><span>Infant</td>
                 </tr>
-
                 <tr align="center">
                   <td><b>Sub Total</b></td>
-                  <td type="" id="subtotal_adults" name="subtotal_adults"></td>
-
-                  <td type="text" id="subtotal_adults_single" name="subtotal_adults_single" value="0"></td>
-                  <td type="text" id="subtotal_adults_double" name="subtotal_adults_double" value="0"></td>
-                  <td type="text" id="subtotal_adults_triple" name="subtotal_adults_triple" value="0"></td>
-                  <td type="" id="subtotal_childs" name="subtotal_childs"></td>
-                  <td type="" id="subtotal_cnb" name="subtotal_cnb"></td>
-                  <td type="" id="subtotal_infants" name="subtotal_infants"></td>
+                  <td> <input type="text" class="text-center" id="subtotal_adults" name="subtotal_adults" value="0"></td>
+                  <td> <input type="text" class="text-center" id="subtotal_adults_single" name="subtotal_adults_single" value="0"></td>
+                  <td> <input type="text" class="text-center" id="subtotal_adults_double" name="subtotal_adults_double" value="0"></td>
+                  <td> <input type="text" class="text-center" id="subtotal_adults_triple" name="subtotal_adults_triple" value="0"></td>
+                  <td> <input type="text" class="text-center" id="subtotal_childs" name="subtotal_childs" value="0"></td>
+                  <td> <input type="text" class="text-center" id="subtotal_cnb" name="subtotal_cnb" value="0"></td>
+                  <td> <input type="text" class="text-center" id="subtotal_infants" name="subtotal_infants" value="0"></td>
                 </tr>
                 <tr align="center">
                   <td><b>Total Price</b></td>
-                  <td type="" name="totalprice_adult" id="totalprice_adult" value="0"></td>
-
-                  <td type="text" name="totalprice_adult_single" id="totalprice_adult_single" value="0"></td>
-                  <td type="text" name="totalprice_adult_double" id="totalprice_adult_double" value="0"></td>
-                  <td type="text" name="totalprice_adult_triple" id="totalprice_adult_triple" value="0"></td>
-                  <td type="" name="totalprice_childs" id="totalprice_childs" value="0"></td>
-                  <td type="" name="totalprice_cnb" id="totalprice_cnb" value="0"></td>
-                  <td type="" name="totalprice_infants" id="totalprice_infants" value="0"></td>
+                  <td> <input type="text" class="text-center" name="totalprice_adult" id="totalprice_adult" value="0"></td>
+                  <td> <input type="text" class="text-center" name="totalprice_adult_single" id="totalprice_adult_single" value="0"></td>
+                  <td> <input type="text" class="text-center" name="totalprice_adult_double" id="totalprice_adult_double" value="0"></td>
+                  <td> <input type="text" class="text-center" name="totalprice_adult_triple" id="totalprice_adult_triple" value="0"></td>
+                  <td> <input type="text" class="text-center" name="totalprice_childs" id="totalprice_childs" value="0"></td>
+                  <td> <input type="text" class="text-center" name="totalprice_cnb" id="totalprice_cnb" value="0"></td>
+                  <td> <input type="text" class="text-center" name="totalprice_infants" id="totalprice_infants" value="0"></td>
                 </tr>
                 <tr align="center">
                   <td><b>Per PAX</b></td>
-                  <td type="" name="perpax_adult" id="perpax_adult" value="0"></td>
-
-                  <td type="text" name="perpax_adult_single" id="perpax_adult_single" value="0"></td>
-                  <td type="text" name="perpax_adult_double" id="perpax_adult_double" value="0"></td>
-                  <td type="text" name="perpax_adult_triple" id="perpax_adult_triple" value="0"></td>
-                  <td type="" name="perpax_childs" id="perpax_childs" value="0"></td>
-                  <td type="" name="perpax_cnb" id="perpax_cnb" value="0"></td>
-                  <td type="" name="perpax_infants" id="perpax_infants" value="0"></td>
+                  <td> <input type="text" class="text-center" name="perpax_adult" id="perpax_adult" value="0"></td>
+                  <td> <input type="text" class="text-center" name="perpax_adult_single" id="perpax_adult_single" value="0"></td>
+                  <td> <input type="text" class="text-center" name="perpax_adult_double" id="perpax_adult_double" value="0"></td>
+                  <td> <input type="text" class="text-center" name="perpax_adult_triple" id="perpax_adult_triple" value="0"></td>
+                  <td> <input type="text" class="text-center" name="perpax_childs" id="perpax_childs" value="0"></td>
+                  <td> <input type="text" class="text-center" name="perpax_cnb" id="perpax_cnb" value="0"></td>
+                  <td> <input type="text" class="text-center" name="perpax_infants" id="perpax_infants" value="0"></td>
                 </tr>
               </table>
                               <input type="hidden" id="perpax_adult_input" name="perpax_adult_input" value="" />
@@ -1900,167 +1865,6 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
              </div>
              <div class="mt-5">
               <div>
-               <div class="card-head card-head-new ">
-                <p>Terms  :</p>
-               </div>
-
-    <div class="container">
-
-     <div class="accordion" id="accordionPanelsStayOpenExample">
-      <div class="accordion-item">
-       <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-        <button class="accordion-button  width-refund" type="button"
-        data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne"
-        aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-        Inclusions
-       </button>
-      </h2>
-      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse"
-      aria-labelledby="panelsStayOpen-headingOne">
-      <div class="accordion-body">
-       <div class="form-floating">
-        <textarea class="form-control" placeholder="Leave a comment here"
-        id="buildPackageInclusions" name="buildPackageInclusions" style="height: 100px"></textarea>
-        <!-- <label for="floatingTextarea2">Comments</label> -->
-       </div>
-      </div>
-     </div>
-    </div>
-    <div class="accordion-item">
-     <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-      <button class="accordion-button collapsed  width-refund" type="button"
-      data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo"
-      aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-      Exclusions
-     </button>
-    </h2>
-    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
-    aria-labelledby="panelsStayOpen-headingTwo">
-    <div class="accordion-body">
-     <div class="form-floating">
-      <textarea class="form-control" placeholder="Leave a comment here"
-      id="buildPackageExclusions" name="buildPackageExclusions" style="height: 100px"></textarea>
-      <!-- <label for="floatingTextarea2">Comments</label> -->
-     </div>
-    </div>
-   </div>
-  </div>
-  <div class="accordion-item">
-   <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-    <button class="accordion-button collapsed  width-refund" type="button"
-    data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree"
-    aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-    Term & Condions
-   </button>
-  </h2>
-  <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
-  aria-labelledby="panelsStayOpen-headingThree">
-  <div class="accordion-body">
-   <div class="form-floating">
-    <textarea class="form-control" placeholder="Leave a comment here"
-    id="buildPackageConditions" name="buildPackageConditions" style="height: 100px">
-    v  Rooms and rates are subject to availability at the time of actual booking.
-
-    v  Standard Check-In: 1500 hrs. & Checkout: 1200 hrs.
-
-    v  Early Check-In and Late Check-Out is subject to availability unless booked and confirmed in advance
-
-    v  Normal timing for airport pick-up & drop transfer is 6.00 am to 10.00 pm and extra charges will be applicable except this timings and subject to available of vehicles
-
-    v  Any change in the number of passengers will lead to a revision of the quote.
-
-    v  Vehicle used in the above quote is based on all guests arriving/ departing together in the same flight. In case additional transfers are required, same will be arranged at an additional cost.
-
-    v  Above quotes based on normal ticket prices, rate will be subject to change if we receive any revise rate at later stage
-
-    v  Itinerary might get changed according to the availability of tours & services and it will be informed and updated to the guest once they reach Dubai
-
-    v  OK TO BOARD Message update as per airline’s policy
-
-    v  Visa processing may take anywhere between 3 – 5 working days to get approved
-
-    v  Issuance of visa will be subject to approval from immigration however once visa is applied charges will be applicable and NO refund will be granted.
-
-    v  In case of overstay – Travel agent will be held accountable to settle the fine imposed by immigration which is AED 100.00 Per day (Subject to revision from immigration).
-
-    v  We need pre-payment for Dubai Visa and Insurance and it’s nonrefundable.
-
-    v  if Excursion tickets are not book then Cancellation policy for the ground services will 4 days prior to arrival is free of charge.
-
-    v  Payment to be made in AED as per the rate of exchange applicable on the day of final payment.
-
-    v  Bank Charges AED 80/- will be Charged Mandatory on the total invoice.
-  </textarea>
-    <!-- <label for="floatingTextarea2">Comments</label> -->
-   </div>
-  </div>
- </div>
-</div>
-<div class="accordion mt-3" id="accordionExample">
- <div class="accordion-item">
-  <h2 class="accordion-header" id="headingOne">
-   <button class="accordion-button  width-refund" type="button"
-   data-bs-toggle="collapse" data-bs-target="#collapseOne"
-   aria-expanded="true" aria-controls="collapseOne">
-   Cancellations Policy
-  </button>
- </h2>
- <div id="collapseOne" class="accordion-collapse collapse"
- aria-labelledby="headingOne" data-bs-parent="#accordionExample">
- <div class="accordion-body">
-  <div class="form-floating">
-   <textarea class="form-control" placeholder="Leave a comment here"
-   id="buildPackageCancellations" name="buildPackageCancellations" style="height: 100px">
-        Cancellation Terms: FIT
-        Cancellation Terms:  Groups (MICE)
-
-        25% cancellation within 30 days before travel.
-        25% cancellation within 30 days before travel.
-
-        50% cancellation within 10 days before Travel. 
-        50% cancellation within 15 days before Travel.
-
-        75% cancellation within 07 days before Travel.  
-        100% cancellation within 07 days before Travel.
-        
-        Any cancellation within 04 days will lead to 100% cancellation charge. 
-        Any cancellation within 04 days will lead to 100% cancellation charge.
-  </textarea>
-   <!-- <label for="floatingTextarea2">Comments</label> -->
-  </div>
- </div>
-</div>
-</div>
-<!-- <div class="accordion-item ">
- <h2 class="accordion-header" id="flush-headingTwo">
-  <button class="accordion-button collapsed  width-refund" type="button"
-  data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
-  aria-expanded="false" aria-controls="flush-collapseTwo">
-  Refund Policy
- </button>
-</h2>
-<div id="flush-collapseTwo" class="accordion-collapse collapse"
-aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-<div class="accordion-body">
- <div class="form-floating">
-  <textarea class="form-control" placeholder="Leave a comment here"
-  id="buildPackageRefund" name="buildPackageRefund" style="height: 100px"></textarea>
-  <label for="floatingTextarea2">Comments</label>
- </div>
-</div>
-</div>
-</div> -->
-</div>
-</div>
-</div>
-
-
-
-
-
-
-
-
 <input  type="hidden" id="QueryId" name="QueryId" value="<?php echo $view->query_id;?>">
 <div class="last-btn mt-4 mb-4">
 
@@ -2068,25 +1872,13 @@ aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
  <!-- <a id="view-proposal" type="button" class="contact-next-btn mr-4" href="<?php echo base_url();?>/proposal.html">View Proposal</a>  -->
 
 </div>
-
-
-
-
-
-
-
 </div>
 </div>
-
-
 </form>
 </div>
 </div>
 </div>
 </div>
-
-
-
 
 </div>
 </div>
@@ -2959,7 +2751,7 @@ let total_no_of_days = <?php echo $buildpackage->night ?>;
     dataType: "json",
     success: function(response) {
       // console.log(JSON.parse(response.total_pax_adult_rate));
-      $('#hotel_rate_adult_single').val(response.single_sharing_pax);
+      $('#hotel_pax_adult_single').val(response.single_sharing_pax);
       $('#hotel_pax_adult_double').val(response.double_sharing_pax);
       $('#hotel_pax_adult_triple').val(response.triple_sharing_pax);
 
@@ -4534,154 +4326,200 @@ function saveTransferDefault(){
   }
 
   function cardClick() {
-                        let itrnl_total = 0;
-                        var hotel_rate_adult = $("#hotel_rate_adult").val();
+    let itrnl_total = 0;
+    var hotel_rate_adult = $("#hotel_rate_adult").val();
 
-                        // var total_price_internal = $("#total_price_internal").val();
-                        var total_price_internal_arr = $("input[name='total_price_internal[]']")
-                        .map(function(){ 
-                          itrnl_total += parseInt($(this).val());
-                        }).get();
-                        var total_price_internal = itrnl_total;
+    var hotel_pax_adult_single = $("#hotel_pax_adult_single").val();
+    var hotel_pax_adult_double = $("#hotel_pax_adult_double").val();
+    var hotel_pax_adult_triple = $("#hotel_pax_adult_triple").val();
 
-                        let price_total = 0;
-                        // var total_price_point = $("#total_price_point").val();
-                        var total_price_point_arr = $("input[name='total_price_point[]']")
-                        .map(function(){ 
-                          price_total += parseInt($(this).val());
-                        }).get();
-                        var total_price_point = price_total;
+    var hotel_rate_adult_single = $("#hotel_rate_adult_single").val();
+    console.log("🚩 ~ file: build_package_edit.php:4368 ~ cardClick ~ hotel_rate_adult_single", hotel_rate_adult_single)
+    var hotel_rate_adult_double = $("#hotel_rate_adult_double").val();
+    console.log("🚩 ~ file: build_package_edit.php:4370 ~ cardClick ~ hotel_rate_adult_double", hotel_rate_adult_double)
+    var hotel_rate_adult_triple = $("#hotel_rate_adult_triple").val();
+    console.log("🚩 ~ file: build_package_edit.php:4372 ~ cardClick ~ hotel_rate_adult_triple", hotel_rate_adult_triple)
 
-                        var pax_adult_count = <?php  echo $buildpackage->adult; ?>;
-                        var pax_child_count = <?php  echo $buildpackage->child; ?>;
-                        var pax_infant_count = <?php echo $buildpackage->infant;?>;
+    // var total_price_internal = $("#total_price_internal").val();
+    var total_price_internal_arr = $("input[name='total_price_internal[]']")
+      .map(function() {
+        itrnl_total += parseInt($(this).val());
+      }).get();
+    var total_price_internal = itrnl_total;
 
-                        var pax_cnb_count_data = <?php print_r(json_encode($buildpackage->cnb_per_room)); ?>;
-                        // var pax_cnb_count = ?php echo $buildpackage->cnb_per_room; ?>;
-                        let cnb_arr = pax_cnb_count_data.split(",");
-                        var pax_cnb_count = 0;
-                        cnb_arr.forEach(x => {
-                          pax_cnb_count += parseInt(x);
-                        });
-                        
-                        var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val(); 
-                        var total_pax_meal_adult = $("#total_pax_meal_adult").val(); 
-                        var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
-                        var total_pax_sic_adult = $("#total_pax_sic_adult").val();
-                        var total_pax_TKT_adult = $("#total_pax_TKT_adult").val();
-                        var total_pax_meals_adult = $("#total_pax_meals_adult").val();
+    let price_total = 0;
+    // var total_price_point = $("#total_price_point").val();
+    var total_price_point_arr = $("input[name='total_price_point[]']")
+      .map(function() {
+        price_total += parseInt($(this).val());
+      }).get();
+    var total_price_point = price_total;
 
-                        
-                        var intrnal_transfer_avg = parseInt(total_price_internal) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
-                        var point_transfer_avg = parseInt(total_price_point) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
-                        
-                        var sub_total_adult = parseInt(hotel_rate_adult) +
-                          // parseInt(total_price_internal)+ 
-                          // parseInt(total_price_point) + 
-                          parseInt(intrnal_transfer_avg * (parseInt(pax_adult_count))) + 
-                          parseInt(point_transfer_avg * (parseInt(pax_adult_count))) + 
+    var pax_adult_count = <?php echo $buildpackage->adult; ?>;
+    var pax_child_count = <?php echo $buildpackage->child; ?>;
+    var pax_infant_count = <?php echo $buildpackage->infant; ?>;
 
-                          parseInt(total_pax_TKT_adult) + 
-                          parseInt(total_pax_meals_adult) + 
-                          parseInt(total_pax_visa_price_adult) + 
-                          parseInt(total_pax_meal_adult) + 
-                          parseInt(total_pax_pvt_adult) + 
-                          parseInt(total_pax_sic_adult);
+    var pax_cnb_count_data = <?php print_r(json_encode($buildpackage->cnb_per_room)); ?>;
+    // var pax_cnb_count = ?php echo $buildpackage->cnb_per_room; ?>;
+    let cnb_arr = pax_cnb_count_data.split(",");
+    var pax_cnb_count = 0;
+    cnb_arr.forEach(x => {
+      pax_cnb_count += parseInt(x);
+    });
 
-                        var hotel_rate_child = $("#hotel_rate_child").val();
-                        var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
-                        var total_pax_sic_hild = $("#total_pax_sic_hild").val();
-                        var total_pax_meal_child = $("#total_pax_meal_child").val();
-                        var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
-                        var total_pax_TKT_child = $("#total_pax_TKT_child").val();
-                        var total_pax_meals_child = $("#total_pax_meals_child").val();
+    var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val();
+    var total_pax_otb_price_adult = $("#total_pax_otb_price_adult").val() == null ? 0 : $("#total_pax_otb_price_adult").val();
+    var total_pax_meal_adult = $("#total_pax_meal_adult").val();
+    var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
+    var total_pax_sic_adult = $("#total_pax_sic_adult").val();
+    var total_pax_TKT_adult = $("#total_pax_TKT_adult").val();
+    var total_pax_meals_adult = $("#total_pax_meals_adult").val();
 
-                        var sub_total_child = parseInt(hotel_rate_child) +
-                          parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) + 
-                          parseInt(point_transfer_avg * (parseInt(pax_child_count))) + 
-                          parseInt(total_pax_sic_hild)+ 
-                          parseInt(total_pax_pvt_hild) + 
-                          parseInt(total_pax_meals_child) + 
-                          parseInt(total_pax_meal_child) + parseInt(total_pax_TKT_child) + 
-                          parseInt(total_pax_visa_price_child);
-                          
-                        var hotel_rate_infant = $("#hotel_rate_infant").val();
-                        var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val(); 
-                        var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
-                        var total_pax_sic_infant = $("#total_pax_sic_infant").val();
-                        var total_pax_TKT_infant = $("#total_pax_TKT_infant").val();
 
-                        var sub_total_infant = parseInt(total_pax_visa_price_infant) +
-                        // parseInt(hotel_rate_infant) +
-                        parseInt(total_pax_TKT_infant)+ 
-                        parseInt(total_pax_pvt_infant)+ 
-                        parseInt(total_pax_sic_infant);
+    var intrnal_transfer_avg = parseInt(total_price_internal) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
+    var point_transfer_avg = parseInt(total_price_point) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
 
-                        var sub_total_cnb = parseInt(hotel_rate_infant); 
+    var sub_total_adult_single = parseInt(hotel_rate_adult_single);
+    var sub_total_adult_double = parseInt(hotel_rate_adult_double);
+    var sub_total_adult_triple = parseInt(hotel_rate_adult_triple);
 
-                          let c_type = document.getElementById('currencyOption').value;
-                          var usd_aed = <?php echo $usd_to_aed->usd_to_aed;?>;
 
-                          $("#subtotal_adults").html( c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2)  : sub_total_adult );                      
-                          $("#subtotal_childs").html( c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child );                               
-                          $("#subtotal_infants").html( c_type == 'USD' ? (sub_total_infant/ usd_aed).toFixed(2)  : sub_total_infant); 
-                          $("#subtotal_cnb").html(c_type == 'USD' ? (sub_total_cnb / usd_aed).toFixed(2) : sub_total_cnb)     
-                          
-                          var PackageMarkup = $("#PackageMarkup").val();
-                          var Mark_up =$("#Mark_up").val();
+    var sub_total_adult = parseInt(hotel_rate_adult) +
+      parseInt(intrnal_transfer_avg * (parseInt(pax_adult_count))) +
+      parseInt(point_transfer_avg * (parseInt(pax_adult_count))) +
+      parseInt(total_pax_TKT_adult) +
+      parseInt(total_pax_visa_price_adult) +
+      parseInt(total_pax_otb_price_adult) +
+      parseInt(total_pax_meal_adult) +
+      parseInt(total_pax_pvt_adult) +
+      parseInt(total_pax_meals_adult) +
+      parseInt(total_pax_sic_adult);
 
-                          var total_adult =0;
-                          var total_child = 0;
-                          var total_infant = 0;
-                          if(Mark_up == "precentage"){
+      console.log("🚩 ~ file: build_package_edit.php:4415 ~ cardClick ~ sub_total_adult", sub_total_adult)
 
-                             total_adult = (parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100));
-                             total_child = (parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
-                             total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
-                             total_cnb = (parseInt(sub_total_cnb) + (parseInt(sub_total_cnb) * parseInt(PackageMarkup) / 100));
+    var hotel_rate_child = $("#hotel_rate_child").val();
+    var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
+    var total_pax_sic_hild = $("#total_pax_sic_hild").val();
+    var total_pax_meal_child = $("#total_pax_meal_child").val();
+    var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
+    var total_pax_otb_price_child = $("#total_pax_otb_price_child").val() == null ? 0 : $("#total_pax_otb_price_child").val();
+    var total_pax_TKT_child = $("#total_pax_TKT_child").val();
+    var total_pax_meals_child = $("#total_pax_meals_child").val();
 
-                          }
-                          
-                          markup_per = parseInt(PackageMarkup) / parseInt(pax_adult_count + pax_child_count + pax_infant_count);
+    var sub_total_child = parseInt(hotel_rate_child) +
+      parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) +
+      parseInt(point_transfer_avg * (parseInt(pax_child_count))) +
+      parseInt(total_pax_sic_hild) +
+      parseInt(total_pax_pvt_hild) +
+      parseInt(total_pax_meal_child) + parseInt(total_pax_TKT_child) +
+      parseInt(total_pax_otb_price_child) +
+      parseInt(total_pax_meals_child) +
+      parseInt(total_pax_visa_price_child);
 
-                          if(Mark_up == "values"){
+    var hotel_rate_infant = $("#hotel_rate_infant").val();
+    var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val();
+    var total_pax_otb_price_infant = $("#total_pax_otb_price_infant").val() == null ? 0 : $("#total_pax_otb_price_infant").val();
+    var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
+    var total_pax_sic_infant = $("#total_pax_sic_infant").val();
+    var total_pax_TKT_infant = $("#total_pax_TKT_infant").val();
 
-                            total_adult = pax_adult_count > 0 ? (parseInt(sub_total_adult) + parseInt(markup_per * pax_adult_count)) : 0 ;
-                            total_child = pax_child_count > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * pax_child_count)) : 0 ;
-                            total_infant = pax_infant_count > 0 ? (parseInt(sub_total_infant) + parseInt(markup_per * pax_infant_count)) : 0 ;
-                            total_cnb = pax_cnb_count > 0 ? (parseInt(sub_total_cnb) + parseInt(markup_per * pax_cnb_count)) : 0;
-                            
-                          }
-                        
-                          $("#totalprice_adult").html(  c_type == 'USD' ? ( total_adult / usd_aed).toFixed(2)  : total_adult  );
-                          $("#totalprice_childs").html(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
-                          $("#totalprice_infants").html(  c_type == 'USD' ? ( total_infant / usd_aed).toFixed(2)  : total_infant  );
-                          $("#totalprice_cnb").html(c_type == 'USD' ? (total_cnb / usd_aed).toFixed(2) : total_cnb);
+    var sub_total_infant = parseInt(total_pax_visa_price_infant) + parseInt(total_pax_otb_price_infant) +
+      // parseInt(hotel_rate_infant) +
+      parseInt(total_pax_TKT_infant) +
+      parseInt(total_pax_pvt_infant) +
+      parseInt(total_pax_sic_infant);
 
-                          var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
+    var sub_total_cnb = parseInt(hotel_rate_infant); 
 
-                          var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_child_count: parseInt(total_child));
-                          
-                          var per_pax_infant = (pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
-                          var per_pax_cnb = (pax_cnb_count > 1 ? (parseInt(total_cnb) / pax_cnb_count) : parseInt(total_cnb));
-                          
-                          $("#perpax_adult").html( c_type == 'USD' ?  Math.floor( per_pax_adult / usd_aed)  : Math.floor(per_pax_adult)  );
-                          $("#perpax_childs").html(  c_type == 'USD' ?  Math.floor( per_pax_child / usd_aed)  : Math.floor(per_pax_child)   );
-                          $("#perpax_infants").html(  c_type == 'USD' ?    Math.floor( per_pax_infant / usd_aed)  : Math.floor(per_pax_infant)  );
-                          $("#perpax_cnb").html(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
+    let c_type = document.getElementById('currencyOption').value;
+    var usd_aed = <?php echo $usd_to_aed->usd_to_aed; ?>;
 
-                          $("#perpax_adult_input").val( c_type == 'USD' ? Math.floor( per_pax_adult / usd_aed)  : Math.floor(per_pax_adult)  );
-                          $("#perpax_childs_input").val( c_type == 'USD' ?   Math.floor( per_pax_child / usd_aed)  : Math.floor(per_pax_child)  );
-                          $("#perpax_infants_input").val( c_type == 'USD' ?   Math.floor( per_pax_infant / usd_aed)  : Math.floor(per_pax_infant)  );
-                          $("#perpax_cnb_input").val(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
-                          var totalprice_package = total_adult + total_child + total_infant + total_cnb;
-                                
-                          console.log("🚩 ~ file: build_package.php ~ line 1043 ~ $ ~ totalprice_package", totalprice_package)
-                          // var totalprice_package = c_type == 'USD' ?  Math.floor( totalprice_package / usd_aed)  : Math.floor(totalprice_package);
+    $("#subtotal_adults_single").val(c_type == 'USD' ? (sub_total_adult_single / usd_aed).toFixed(2) : sub_total_adult_single);
+    $("#subtotal_adults_double").val(c_type == 'USD' ? (sub_total_adult_double / usd_aed).toFixed(2) : sub_total_adult_double);
+    $("#subtotal_adults_triple").val(c_type == 'USD' ? (sub_total_adult_triple / usd_aed).toFixed(2) : sub_total_adult_triple);
 
-                          $("#totalprice_package").val( totalprice_package );
-                          $('.card-box').click();
+    $("#subtotal_adults").val(c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2) : sub_total_adult);
+    $("#subtotal_childs").val(c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child);
+    $("#subtotal_infants").val(c_type == 'USD' ? (sub_total_infant / usd_aed).toFixed(2) : sub_total_infant);
+    $("#subtotal_cnb").val(c_type == 'USD' ? (sub_total_cnb / usd_aed).toFixed(2) : sub_total_cnb);
+
+    var PackageMarkup = $("#PackageMarkup").val();
+    var Mark_up = $("#Mark_up").val();
+
+    var total_adult_single = 0;
+    var total_adult_double = 0;
+    var total_adult_triple = 0;
+
+    var total_adult = 0;
+    var total_child = 0;
+    var total_infant = 0;
+    if (Mark_up == "precentage") {
+
+    total_adult_single = (parseInt(sub_total_adult_single) + (parseInt(sub_total_adult_single) * parseInt(PackageMarkup) / 100));
+    total_adult_double = (parseInt(sub_total_adult_double) + (parseInt(sub_total_adult_double) * parseInt(PackageMarkup) / 100));
+    total_adult_triple = (parseInt(sub_total_adult_triple) + (parseInt(sub_total_adult_triple) * parseInt(PackageMarkup) / 100));
+
+      total_adult = (parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100));
+      total_child = (parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
+      total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
+      total_cnb = (parseInt(sub_total_cnb) + (parseInt(sub_total_cnb) * parseInt(PackageMarkup) / 100));
+
+    }
+
+    markup_per = parseInt(PackageMarkup) / parseInt(pax_adult_count + pax_child_count + pax_infant_count);
+
+    if (Mark_up == "values") {
+
+    total_adult_single = (parseInt(sub_total_adult_single) + parseInt(PackageMarkup));
+    total_adult_double = (parseInt(sub_total_adult_double) + parseInt(PackageMarkup));
+    total_adult_triple = (parseInt(sub_total_adult_triple) + parseInt(PackageMarkup));
+
+      total_adult = pax_adult_count > 0 ? (parseInt(sub_total_adult) + parseInt(markup_per * pax_adult_count)) : 0;
+      total_child = pax_child_count > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * pax_child_count)) : 0;
+      total_infant = pax_infant_count > 0 ? (parseInt(sub_total_infant) + parseInt(markup_per * pax_infant_count)) : 0;
+      total_cnb = pax_cnb_count > 0 ? (parseInt(sub_total_cnb) + parseInt(markup_per * pax_cnb_count)) : 0;
+
+    }
+
+    $("#totalprice_adult_single").val(c_type == 'USD' ? (total_adult_single / usd_aed).toFixed(2) : total_adult_single);
+    $("#totalprice_adult_double").val(c_type == 'USD' ? (total_adult_double / usd_aed).toFixed(2) : total_adult_double);
+    $("#totalprice_adult_triple").val(c_type == 'USD' ? (total_adult_triple / usd_aed).toFixed(2) : total_adult_triple);
+
+    $("#totalprice_adult").val(c_type == 'USD' ? (total_adult / usd_aed).toFixed(2) : total_adult);
+    $("#totalprice_childs").val(c_type == 'USD' ? (total_child / usd_aed).toFixed(2) : total_child);
+    $("#totalprice_infants").val(c_type == 'USD' ? (total_infant / usd_aed).toFixed(2) : total_infant);
+    $("#totalprice_cnb").val(c_type == 'USD' ? (total_cnb / usd_aed).toFixed(2) : total_cnb);
+
+    var per_pax_adult_single = Math.ceil(hotel_pax_adult_single > 1 ? parseInt(total_adult_single) / hotel_pax_adult_single : parseInt(total_adult_single));
+    var per_pax_adult_double = Math.ceil(hotel_pax_adult_double > 1 ? parseInt(total_adult_double) / hotel_pax_adult_double : parseInt(total_adult_double));
+    var per_pax_adult_triple = Math.ceil(hotel_pax_adult_triple > 1 ? parseInt(total_adult_triple) / hotel_pax_adult_triple : parseInt(total_adult_triple));
+
+    var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
+
+    var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
+
+    var per_pax_infant = (pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
+
+    var per_pax_cnb = (pax_cnb_count > 1 ? (parseInt(total_cnb) / pax_cnb_count) : parseInt(total_cnb));
+
+    $("#perpax_adult_single").val(c_type == 'USD' ? (per_pax_adult_single / usd_aed).toFixed(2) : per_pax_adult_single);
+    $("#perpax_adult_double").val(c_type == 'USD' ? (per_pax_adult_double / usd_aed).toFixed(2) : per_pax_adult_double);
+    $("#perpax_adult_triple").val(c_type == 'USD' ? (per_pax_adult_triple / usd_aed).toFixed(2) : per_pax_adult_triple);
+
+    $("#perpax_adult").val(c_type == 'USD' ? Math.floor(per_pax_adult / usd_aed) : Math.floor(per_pax_adult));
+    $("#perpax_childs").val(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
+    $("#perpax_infants").val(c_type == 'USD' ? Math.floor(per_pax_infant / usd_aed) : Math.floor(per_pax_infant));
+    $("#perpax_cnb").val(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
+
+    $("#perpax_adult_input").val(c_type == 'USD' ? Math.floor(per_pax_adult / usd_aed) : Math.floor(per_pax_adult));
+    $("#perpax_childs_input").val(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
+    $("#perpax_infants_input").val(c_type == 'USD' ? Math.floor(per_pax_infant / usd_aed) : Math.floor(per_pax_infant));
+    $("#perpax_cnb_input").val(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
+    var totalprice_package = total_adult + total_child + total_infant + total_cnb;
+    $("#totalprice_package").val(totalprice_package);
+$('.card-box').click();
   }
+
   hotelcalculation(1);
   mealcalculation(1);
   saveTransferDefault();
@@ -4725,6 +4563,9 @@ function saveTransferDefault(){
   outline: 0;
   box-shadow: 0 0 0 .2remrgba(0,123,255,.25);
   }
+
+  input[type="text"]:disabled{background-color:white;}
+
 </style>
 
     

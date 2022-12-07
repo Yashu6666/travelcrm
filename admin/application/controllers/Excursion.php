@@ -96,6 +96,7 @@ class Excursion extends CI_Controller {
 					'adultprice' => $this->input->post('adultprice'),
 					'childprice' => $this->input->post('childprice'),
 					'infantprice' => $this->input->post('infantprice'),
+					'child_age' => $this->input->post('child_age'),
 					'tourmapaddress' => $this->input->post('tourmapaddress'),
 					'operating_from' => $this->input->post('operating_from'),
 					'operating_to' => $this->input->post('operating_to'),
@@ -128,6 +129,7 @@ class Excursion extends CI_Controller {
 				'adultprice' => $this->input->post('adultprice'),
 				'childprice' => $this->input->post('childprice'),
 				'infantprice' => $this->input->post('infantprice'),
+				'child_age' => $this->input->post('child_age'),
 				'tourmapaddress' => $this->input->post('tourmapaddress'),
 				'operating_from' => $this->input->post('operating_from'),
 				'operating_to' => $this->input->post('operating_to'),
@@ -162,6 +164,7 @@ class Excursion extends CI_Controller {
 		     'adultprice' => $this->input->post('adultprice'),
 			'childprice' => $this->input->post('childprice'),
 			'infantprice' => $this->input->post('infantprice'),
+			'child_age' => $this->input->post('child_age'),
 			'tourmapaddress' => $this->input->post('tourmapaddress'),
 			
 			'tour_time' => $this->input->post('tour_time'),

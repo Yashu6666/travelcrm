@@ -631,7 +631,7 @@
                       </div>
                     </div>
                     <div>
-                      <div class="mt-5">
+                     <div class="mt-5">
                         <div>
                           <div class="card-head card-head-new ">
                             <p>Pricing Info</p>
@@ -696,7 +696,10 @@
                             <input type="hidden" id="perpax_infants_input" name="perpax_infants_input" value="" />
 
                           </div>
-                        </div>
+                      </div>
+
+
+
                       </div>
                       <div class="mt-5">
                         <div>

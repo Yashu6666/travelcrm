@@ -795,43 +795,11 @@
             .append($("<option></option>")
               .attr("value", response[i].id)
               .text(response[i].hotelname));
-
-          // $('#buildHotelName')
-          //     .append("<option value='"+response[i].id+"' selected=selected >"+response[i].hotelname+"</option>");
-
         }
-        // response ='';
       }
 
     })
   });
-
-  // $('.get-hotel').on('change', function() {
-
-  //   alert($(this).val());
-  //     var city = $('#buildHotelCity').val();
-  //     $("#buildHotelName").empty();
-  //     $.ajax({
-  //           type:"POST",
-  //           dataType: "json",
-  //           url:'<?php echo site_url(); ?>/Query/get_hotels',
-  //           data:{'city':city},
-  //           success:function(response){
-
-  //           var i;
-  //           $('#buildHotelName').append($("<option>Select Hotel Name</option>"));
-  //             for (i = 0; i < response.length; ++i) {
-  //                 $('#buildHotelName')
-  //                     .append($("<option></option>")
-  //                                 .attr("value", response[i].id)
-  //                                 .text(response[i].hotelname));
-  //             }
-  //             // response ='';
-  //           }
-
-  //         })
-  // });
-
 
 
   $('#buildHotelName').on('change', function() {

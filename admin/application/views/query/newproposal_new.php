@@ -369,8 +369,9 @@
                         <th> Drop Off </th>
                     </thead>
 
+                    <?php if(isset($proposalDetails['in_transfer_pickup']) && !empty($proposalDetails['in_transfer_pickup'])) : ?>
                     <?php foreach($proposalDetails['in_transfer_pickup'] as $key => $val) : ?>
-                    <?php if($val != 'Pickup') : ?>
+                    <?php if($val != 'Pickup' && isset($val)) : ?>
 
                     <tbody>
                         <tr align="center">
@@ -388,7 +389,9 @@
                     </tbody>
                     <?php endif ?>
                     <?php endforeach ?>
+                    <?php endif ?>
 
+                    <?php if(isset($proposalDetails['pp_transfer_pickup']) && !empty($proposalDetails['pp_transfer_pickup'])) : ?>
                     <?php foreach($proposalDetails['pp_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
                     <tbody>
@@ -405,6 +408,8 @@
                     </tbody>
                     <?php endif ?>
                     <?php endforeach ?>
+                    <?php endif ?>
+
                 </table>
             </div>
         </div>
@@ -476,19 +481,22 @@
                         <?php if($proposalDetails['build_room_types'][0] == 'BB') : ?>
                             <li><?php echo $buildpackage->night ?> Breakfast Buffet Breakfast in the Hotel</li>
                         <?php endif ?>
-
+                    
+                    <?php if(isset($proposalDetails['in_transfer_pickup']) && !empty($proposalDetails['in_transfer_pickup']) ) : ?>
                     <?php foreach($proposalDetails['in_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
                         <li><?php echo $proposalDetails['internal_route'][$key] ?></li>
                     <?php endif ?>
                     <?php endforeach ?>
+                    <?php endif ?>
 
+                    <?php if(isset($proposalDetails['pp_transfer_pickup'])) : ?>
                     <?php foreach($proposalDetails['pp_transfer_pickup'] as $key => $val) : ?>
                     <?php if($val != 'Pickup') : ?>
                         <li><?php echo $proposalDetails['return_route'][$key] ?></li>
-                    
                         <?php endif ?>
                     <?php endforeach ?>
+                    <?php endif ?>
 
                     <?php if(isset($proposalDetails['excursion_name_SIC'])) : ?>
                     <?php foreach($proposalDetails['excursion_name_SIC'] as $key => $val) : ?>
@@ -508,12 +516,14 @@
                     <?php endforeach ?>
                     <?php endif ?>
 
+                    <?php if(isset($proposalDetails['res_name'][0])) : ?>
                     <?php if($proposalDetails['res_name'][0] != 'select') : ?>
                         <?php foreach($proposalDetails['res_name'] as $key => $val) : ?>
                             <li><?php echo $proposalDetails['no_of_meals'][$key]." ".$proposalDetails['Meal'][$key]." Meal Coupons (".$proposalDetails['res_type'][$key]." ".$proposalDetails['res_name'][$key].") ".
                             ($proposalDetails['transfer_with_or_without'][$key] == 'without_transfer' ? 'Without Transfer' : 'With Transfer'); ?> 
                             </li>
                         <?php endforeach ?>
+                    <?php endif ?>
                     <?php endif ?>
 
                     <?php if(!empty($proposalDetails['visa_category_drop_down'])) : ?>

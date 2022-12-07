@@ -203,15 +203,8 @@
               <button type="button" id="transferSave" class="new_btn px-5">Save</button>
               </div>
             </div>
-            
             </div>
-             <hr>
-
-             <br/> <br/>
              </div>
-                <!-- <div style="float:right;">
-              <button type="button" onclick="mealcalculation()" class="btn btn-success">Save</button></div>
-            </div> -->
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
         <script src="<?php echo base_url();?>public/js/validate.js"></script>
@@ -297,51 +290,19 @@
                         
                         var intrnal_transfer_avg = parseInt(total_price_internal) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
                         var point_transfer_avg = parseInt(total_price_point) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
-                        
-                        // var hotel_rate_adult = $("#hotel_rate_adult").val();
-                        // var total_price_internal = $("#total_price_internal").val();
-                        // var total_price_point = $("#total_price_point").val();
-                        // var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val(); 
-                        // var total_pax_meal_adult = $("#total_pax_meal_adult").val(); 
-                        // var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
-                        // var total_pax_sic_adult = $("#total_pax_sic_adult").val();
-                        
                         var sub_total_adult = 
                           parseInt(intrnal_transfer_avg * (parseInt(pax_adult_count))) + 
                           parseInt(point_transfer_avg * (parseInt(pax_adult_count)));
-                          // parseInt(total_price_point);
-
-                        // var hotel_rate_child = $("#hotel_rate_child").val();
-                        // var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
-                        // var total_pax_sic_hild = $("#total_pax_sic_hild").val();
-                        // var total_pax_meal_child = $("#total_pax_meal_child").val();
-                        // var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
-
                         var sub_total_child = 
                           parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) + 
                           parseInt(point_transfer_avg * (parseInt(pax_child_count)));
-                        //   parseInt(total_pax_sic_hild)+ 
-                        //   parseInt(total_pax_pvt_hild) + 
-                        //   parseInt(total_pax_meal_child) + 
-                        //   parseInt(total_pax_visa_price_child);
-
-                        // var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val(); 
-                        // var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
-                        // var total_pax_sic_infant = $("#total_pax_sic_infant").val();
-
-                        // var sub_total_infant = parseInt(total_pax_visa_price_infant) +
-                        //   parseInt(total_pax_pvt_infant)+ 
-                        //   parseInt(total_pax_sic_infant);
-
                           
                         let c_type = document.getElementById('currencyOption').value;
                         var usd_aed = <?php echo $usd_to_aed->usd_to_aed;?>;
 
-                          // $("#subtotal_adults").html( sub_total_adult );                      
-                          // $("#subtotal_childs").html( sub_total_child ); 
-                          $("#subtotal_adults").html( c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2)  : sub_total_adult );                      
-                          $("#subtotal_childs").html( c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child );                                 
-                          $("#subtotal_infants").html( 0 ); 
+                          $("#subtotal_adults").val( c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2)  : sub_total_adult );                      
+                          $("#subtotal_childs").val( c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child );                                 
+                          $("#subtotal_infants").val( 0 ); 
 
                           var PackageMarkup = $("#PackageMarkup").val();
                           var Mark_up =$("#Mark_up").val();
@@ -350,46 +311,32 @@
                           var total_child = 0;
                           var total_infant = 0;
                           if(Mark_up == "precentage"){
-
                              total_adult = (parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100));
                              total_child = (parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
-                            //  total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
-
                           }
                           if(Mark_up == "values"){
-
                             total_adult = (parseInt(sub_total_adult) + parseInt(PackageMarkup));
                             total_child = (parseInt(sub_total_child) + parseInt(PackageMarkup));
-                            // total_infant = (parseInt(sub_total_infant) + parseInt(PackageMarkup));
-
-                            
                           }
                         
-                          // $("#totalprice_adult").html( total_adult );
-                          // $("#totalprice_childs").html( total_child );
-                          $("#totalprice_adult").html(  c_type == 'USD' ? ( total_adult / usd_aed).toFixed(2)  : total_adult  );
-                          $("#totalprice_childs").html(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
-                          $("#totalprice_infants").html( 0 );
+                          $("#totalprice_adult").val(  c_type == 'USD' ? ( total_adult / usd_aed).toFixed(2)  : total_adult  );
+                          $("#totalprice_childs").val(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
+                          $("#totalprice_infants").val( 0 );
 
                           var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / 2 : parseInt(total_adult));
                           var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
-                        //   var per_pax_infant = (parseInt(total_infant) / 2);
-                          
-                          // $("#perpax_adult").html(per_pax_adult);
-                          // $("#perpax_childs").html( per_pax_child );
-                          $("#perpax_adult").html( c_type == 'USD' ?  ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
-                          $("#perpax_childs").html(  c_type == 'USD' ?  ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child   );
-                          $("#perpax_infants").html( 0 );
+
+                          $("#perpax_adult").val( c_type == 'USD' ?  ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
+                          $("#perpax_childs").val(  c_type == 'USD' ?  ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child   );
+                          $("#perpax_infants").val( 0 );
 
                           $("#perpax_adult_input").val(per_pax_adult);
                           $("#perpax_childs_input").val(per_pax_child );
                           $("#perpax_adult_input").val( c_type == 'USD' ? ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
                           $("#perpax_childs_input").val( c_type == 'USD' ?   ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child  );
                           $("#perpax_infants_input").val( 0 );
-
                           $('#totalprice_transfer').val(c_type == 'USD' ?  ( total_adult / usd_aed).toFixed(2) : total_adult);
 
-                        
                          })
 
 
@@ -404,7 +351,6 @@
                           $('.check-adult').val(new_adult);
                          }
                         
-
                         })
 
 
@@ -412,17 +358,13 @@
                          var old_child = <?php echo $buildpackage->child;?>;
                          var new_child = $('.check-child').val();
                         
-                        
                          if(new_child > old_child){
                           $('.check-child').val(old_child);
                          }else{
                           $('.check-child').val(new_child);
                          }
                         
-
                         })
-
-    
 
                         })
 
@@ -570,24 +512,24 @@
                    <td type="" name="ChildCost" id="ChildCost" value=""><span>Child</td>
                    <td type="" name="InfantCost" id="InfantCost" value=""><span>Infant</td>
                   </tr>
-                   <tr  align="center">
+                   <tr align="center">
                     <td><b>Sub Total</b></td>
-                    <td type="" id="subtotal_adults"  name="subtotal_adults"></td>
-                    <td type="" id="subtotal_childs"  name="subtotal_childs"></td>
-                    <td type="" id="subtotal_infants"  name="subtotal_infants"></td>
-                   </tr>
-                   <tr  align="center">
+                    <td> <input type="text" readonly class="text-center" id="subtotal_adults" name="subtotal_adults"></td>
+                    <td> <input type="text" readonly class="text-center" id="subtotal_childs" name="subtotal_childs"></td>
+                    <td> <input type="text" readonly class="text-center" id="subtotal_infants" name="subtotal_infants"></td>
+                  </tr>
+                  <tr align="center">
                     <td><b>Total Price</b></td>
-                    <td type="" name="totalprice_adult" id="totalprice_adult" value=""></td>
-                    <td type="" name="totalprice_childs" id="totalprice_childs" value=""></td>
-                    <td type="" name="totalprice_infants" id="totalprice_infants" value=""></td>
-                   </tr>
-                   <tr  align="center">
+                    <td> <input type="text" readonly class="text-center" name="totalprice_adult" id="totalprice_adult" value=""></td>
+                    <td> <input type="text" readonly class="text-center" name="totalprice_childs" id="totalprice_childs" value=""></td>
+                    <td> <input type="text" readonly class="text-center" name="totalprice_infants" id="totalprice_infants" value=""></td>
+                  </tr>
+                  <tr align="center">
                     <td><b>Per PAX</b></td>
-                    <td type="" name="perpax_adult" id="perpax_adult" value=""></td>
-                    <td type="" name="perpax_childs" id="perpax_childs" value=""></td>
-                    <td type="" name="perpax_infants" id="perpax_infants" value=""></td>   
-                   </tr>
+                    <td> <input type="text" readonly class="text-center" name="perpax_adult" id="perpax_adult" value=""></td>
+                    <td> <input type="text" readonly class="text-center" name="perpax_childs" id="perpax_childs" value=""></td>
+                    <td> <input type="text" readonly class="text-center" name="perpax_infants" id="perpax_infants" value=""></td>
+                  </tr>
                </table>
                    <input type="hidden" id="perpax_adult_input" name="perpax_adult_input" value="" />
                    <input type="hidden" id="perpax_childs_input" name="perpax_childs_input" value="" />
@@ -598,149 +540,17 @@
              </div>
              <div class="mt-5">
               <div>
-               <div class="card-head card-head-new ">
-                <p>Terms  :</p>
-               </div>
-
-    <div class="container">
-
-     <div class="accordion" id="accordionPanelsStayOpenExample">
-      <div class="accordion-item">
-       <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-        <button class="accordion-button  width-refund" type="button"
-        data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne"
-        aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-        Inclusions
-       </button>
-      </h2>
-      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse"
-      aria-labelledby="panelsStayOpen-headingOne">
-      <div class="accordion-body">
-       <div class="form-floating">
-        <textarea class="form-control" placeholder="Leave a comment here"
-        id="buildPackageInclusions" name="buildPackageInclusions" style="height: 100px"></textarea>
-        <!-- <label for="floatingTextarea2">Comments</label> -->
-       </div>
-      </div>
-     </div>
-    </div>
-    <div class="accordion-item">
-     <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-      <button class="accordion-button collapsed  width-refund" type="button"
-      data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo"
-      aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-      Exclusions
-     </button>
-    </h2>
-    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
-    aria-labelledby="panelsStayOpen-headingTwo">
-    <div class="accordion-body">
-     <div class="form-floating">
-      <textarea class="form-control" placeholder="Leave a comment here"
-      id="buildPackageExclusions" name="buildPackageExclusions" style="height: 100px"></textarea>
-      <!-- <label for="floatingTextarea2">Comments</label> -->
-     </div>
-    </div>
-   </div>
-  </div>
-  <div class="accordion-item">
-   <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-    <button class="accordion-button collapsed  width-refund" type="button"
-    data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree"
-    aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-    Term & Condions
-   </button>
-  </h2>
-  <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
-  aria-labelledby="panelsStayOpen-headingThree">
-  <div class="accordion-body">
-   <div class="form-floating">
-    <textarea class="form-control" placeholder="Leave a comment here"
-    id="buildPackageConditions" name="buildPackageConditions" style="height: 100px">
-    v  Rooms and rates are subject to availability at the time of actual booking.
-  </textarea>
-    <!-- <label for="floatingTextarea2">Comments</label> -->
-   </div>
-  </div>
- </div>
-</div>
-<div class="accordion mt-3" id="accordionExample">
- <div class="accordion-item">
-  <h2 class="accordion-header" id="headingOne">
-   <button class="accordion-button  width-refund" type="button"
-   data-bs-toggle="collapse" data-bs-target="#collapseOne"
-   aria-expanded="true" aria-controls="collapseOne">
-   Cancellations Policy
-  </button>
- </h2>
- <div id="collapseOne" class="accordion-collapse collapse"
- aria-labelledby="headingOne" data-bs-parent="#accordionExample">
- <div class="accordion-body">
-  <div class="form-floating">
-   <textarea class="form-control" placeholder="Leave a comment here"
-   id="buildPackageCancellations" name="buildPackageCancellations" style="height: 100px">
-        Cancellation Terms: FIT
-  </textarea>
-   <!-- <label for="floatingTextarea2">Comments</label> -->
-  </div>
- </div>
-</div>
-</div>
-<!-- <div class="accordion-item ">
- <h2 class="accordion-header" id="flush-headingTwo">
-  <button class="accordion-button collapsed  width-refund" type="button"
-  data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
-  aria-expanded="false" aria-controls="flush-collapseTwo">
-  Refund Policy
- </button>
-</h2>
-<div id="flush-collapseTwo" class="accordion-collapse collapse"
-aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-<div class="accordion-body">
- <div class="form-floating">
-  <textarea class="form-control" placeholder="Leave a comment here"
-  id="buildPackageRefund" name="buildPackageRefund" style="height: 100px"></textarea>
-  <label for="floatingTextarea2">Comments</label>
- </div>
-</div>
-</div>
-</div> -->
-</div>
-</div>
-</div>
-
-
-
-
-
-
-
-
 <input  type="hidden" id="QueryId" name="QueryId" value="<?php echo $view->query_id;?>">
 <div class="last-btn mt-4 mb-4">
-
  <button id="view-proposal-btn" type="button" class="new_btn px-5 mr-4">View Proposal</button> 
- <!-- <a id="view-proposal" type="button" class="new_btn px-5 mr-4" href="<?php// echo base_url();?>/proposal.html">View Proposal</a>  -->
-
-</div>
-
-
-
-
-
-
-
 </div>
 </div>
-
-
+</div>
 </form>
 </div>
 </div>
 </div>
 </div>
-
-
 
 
 </div>
@@ -2313,9 +2123,9 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
 
                           // $("#subtotal_adults").html( sub_total_adult );                      
                           // $("#subtotal_childs").html( sub_total_child ); 
-                          $("#subtotal_adults").html( c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2)  : sub_total_adult );                      
-                          $("#subtotal_childs").html( c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child );                                 
-                          $("#subtotal_infants").html( 0 ); 
+                          $("#subtotal_adults").val( c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2)  : sub_total_adult );                      
+                          $("#subtotal_childs").val( c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child );                                 
+                          $("#subtotal_infants").val( 0 ); 
 
                           var PackageMarkup = $("#PackageMarkup").val();
                           var Mark_up =$("#Mark_up").val();
@@ -2339,21 +2149,21 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                             
                           }
                         
-                          // $("#totalprice_adult").html( total_adult );
-                          // $("#totalprice_childs").html( total_child );
-                          $("#totalprice_adult").html(  c_type == 'USD' ? ( total_adult / usd_aed).toFixed(2)  : total_adult  );
-                          $("#totalprice_childs").html(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
-                          $("#totalprice_infants").html( 0 );
+                          // $("#totalprice_adult").val( total_adult );
+                          // $("#totalprice_childs").val( total_child );
+                          $("#totalprice_adult").val(  c_type == 'USD' ? ( total_adult / usd_aed).toFixed(2)  : total_adult  );
+                          $("#totalprice_childs").val(  c_type == 'USD' ? ( total_child / usd_aed).toFixed(2)  : total_child  );
+                          $("#totalprice_infants").val( 0 );
 
                           var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / 2 : parseInt(total_adult));
                           var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
                         //   var per_pax_infant = (parseInt(total_infant) / 2);
                           
-                          // $("#perpax_adult").html(per_pax_adult);
-                          // $("#perpax_childs").html( per_pax_child );
-                          $("#perpax_adult").html( c_type == 'USD' ?  ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
-                          $("#perpax_childs").html(  c_type == 'USD' ?  ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child   );
-                          $("#perpax_infants").html( 0 );
+                          // $("#perpax_adult").val(per_pax_adult);
+                          // $("#perpax_childs").val( per_pax_child );
+                          $("#perpax_adult").val( c_type == 'USD' ?  ( per_pax_adult / usd_aed).toFixed(2)  : per_pax_adult  );
+                          $("#perpax_childs").val(  c_type == 'USD' ?  ( per_pax_child / usd_aed).toFixed(2)  : per_pax_child   );
+                          $("#perpax_infants").val( 0 );
 
                           $("#perpax_adult_input").val(per_pax_adult);
                           $("#perpax_childs_input").val(per_pax_child );

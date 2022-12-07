@@ -223,7 +223,7 @@
 
           <?php if(isset($details->otb) && !empty($details->otb)) : ?>
 
-          <table style="text-align:center" class="items" border="1" cellspacing="0">
+          <table class="items" border="1" cellspacing="0">
             <tr>
               <th rowspan="3" colspan="3">
                 <h2>OTB Rates</h2>

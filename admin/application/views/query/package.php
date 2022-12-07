@@ -552,7 +552,10 @@
 
                                                 <div class="col">
                                                     <label for="">No. Child</label><br>
-                                                    <input class="package_inputs" type="number" value="0" placeholder="" name="child" id="child22" required autocomplete="off" />
+                                                    <input class="package_inputs" type="number" onchange="childAgeDivEx('#child22')" value="0" placeholder="" name="child" id="child22" required autocomplete="off" />
+                                                    <div id="child_ages_ex_div_main" style="margin: 0px 2rem 0px 2rem;" class="px-3">
+                                                    <div id="child_ages_ex_div"  class="border d-flex flex-column rounded-lg" style="display:none"></div>
+                                                    </div>
                                                 </div>
 
                                                 <input id="child_age22" name="child_age" class="Travelers-select-package-values" type="hidden" value="0" />
@@ -1579,6 +1582,29 @@
                                 $(childDiv).empty().append(data);
                             } else {
                                 $(childDiv).attr('style', 'display:none');
+                            }
+                        }
+
+                        function childAgeDivEx(childNo) {
+                            let childDiv = $('#child_ages_ex_div');
+                            var child = $(child22).val();
+                            
+                            if (child > 0) {
+                                $(childDiv).attr('style', 'display:block');
+                                $('#child_ages_ex_div_main').attr('style', 'display:flex');
+                                let data = '';
+                                for (let i = 1; i <= child; i++) {
+                                    data += `
+                                    <div class=""> 
+                                        <div class="col d-flex ">
+                                        <label class="col-1 col-form-label text-nowrap">child ${i}</label>
+                                        <input type="text" class="form-control ml-5" placeholder="Child ${i} Age" name="child_age_count[]" id="child_age">
+                                    </div></div>`;
+                                }
+                                $(childDiv).empty().append(data);
+                            } else {
+                                $('#child_ages_ex_div_main').attr('style', 'display:none');
+                                $('#child_ages_ex_div').attr('style', 'display:none');
                             }
                         }
 

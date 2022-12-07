@@ -38,6 +38,15 @@
             color: black !important;
           }
 
+          @media only screen and (min-width: 320px) and (max-width: 480px) { 
+            .head {
+            background-color: white;
+            padding: 1rem;
+            box-shadow: none;
+            color: hsl(205, 86%, 27%);
+          }
+        }
+
           .head {
             background-color: white;
             /* height: 100%;
@@ -153,6 +162,7 @@
             padding: 5px 10px;
             border-collapse: collapse;
             border: double !important;
+            white-space: nowrap;
           }
           @media print {
             .head {
@@ -170,10 +180,22 @@
           }
           td {
             border: double !important;
+            white-space: nowrap;
           }
           div{
             color: black !important;
           }
+
+          /* @media screen and (min-width: 768px) {
+              .table_xl {display:block;}
+              .table_sm {display:none;}
+          }
+
+          @media screen and (max-width: 767px) {
+              .table_xl {display:none;}
+              .table_sm {display:block;}
+          } */
+
     </style>
 
     <style>
@@ -184,7 +206,7 @@
 
   <body>
     <div class="maindiv">
-      <div class="head">
+      <div class="head" style="width: fit-content;">
         <div class="head1">Dear Sir/Ma’am,</div>
         <br></br>
         <div class="head2">
@@ -220,19 +242,14 @@
             </tr>
             <?php endif ?>
 
-            <!-- <tr>
-              <td> AED 300 Infant</td>
-            </tr> -->
           </table>
-          <!-- </div> -->
           <br />
           <br />
 
-          <!-- <div class="head3"> -->
           <table class="items" border="1" cellspacing="0">
             <tr>
               <th>Hotel Name</th>
-              <td colspan="3">
+              <td colspan="3" style="white-space: normal;">
                   <?php foreach ($details->hotels as $key => $val) : ?>
                         <?php print_r($details->hotels[$key]->hotelname) ?> - <?php echo $details->hotelPrefrence ?>* - <?php print_r($details->build_room_types[$key]) ?> - <?php print_r($details->buildRoomType[$key]) ?><?php echo array_key_last($details->hotels) != $key ?  ', <br/>' : '' ?>
                     <?php endforeach ?>

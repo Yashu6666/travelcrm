@@ -417,48 +417,16 @@
 
                             $(".card-box").click(function(e) {
                               e.stopPropagation();
-                              // var hotel_rate_adult = $("#hotel_rate_adult").val();
-                              // var total_price_internal = $("#total_price_internal").val();
-                              // var total_price_point = $("#total_price_point").val();
-                              // var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val(); 
                               var total_pax_meal_adult = $("#total_pax_meal_adult").val();
-                              // var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
-                              // var total_pax_sic_adult = $("#total_pax_sic_adult").val();
-
                               var sub_total_adult = parseInt(total_pax_meal_adult);
-                              // parseInt(hotel_rate_adult) +
-                              //   parseInt(total_price_internal)+ 
-                              //   parseInt(total_price_point) + 
-                              //   parseInt(total_pax_visa_price_adult) + 
-                              //   parseInt(total_pax_meal_adult) + 
-                              //   parseInt(total_pax_pvt_adult) + 
-                              //   parseInt(total_pax_sic_adult);
-
-                              // var hotel_rate_child = $("#hotel_rate_child").val();
-                              // var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
-                              // var total_pax_sic_hild = $("#total_pax_sic_hild").val();
                               var total_pax_meal_child = $("#total_pax_meal_child").val();
-                              // var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
-
                               var sub_total_child = parseInt(total_pax_meal_child);
-
-                              // var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val(); 
-                              // var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
-                              // var total_pax_sic_infant = $("#total_pax_sic_infant").val();
-
-                              // var sub_total_infant = parseInt(total_pax_visa_price_infant) +
-                              //   parseInt(total_pax_pvt_infant)+ 
-                              //   parseInt(total_pax_sic_infant);
-
-
-
-                              // $("#subtotal_adults").html( sub_total_adult );                      
-                              // $("#subtotal_childs").html( sub_total_child );          
                               let c_type = document.getElementById('currencyOption').value;
                               var usd_aed = <?php echo $usd_to_aed->usd_to_aed; ?>;
-                              $("#subtotal_adults").html(c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2) : sub_total_adult);
-                              $("#subtotal_childs").html(c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child);
-                              $("#subtotal_infants").html(0);
+                              
+                              $("#subtotal_adults").val(c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2) : sub_total_adult);
+                              $("#subtotal_childs").val(c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child);
+                              $("#subtotal_infants").val(0);
 
                               var PackageMarkup = $("#PackageMarkup").val();
                               var Mark_up = $("#Mark_up").val();
@@ -482,17 +450,9 @@
 
                               }
 
-                              // $("#totalprice_adult").html( total_adult );
-                              // $("#totalprice_childs").html( total_child );
-                              // $("#totalprice_infants").html( total_infant );
-
-                              // var per_pax_adult = (parseInt(total_adult) / 2);
-                              // var per_pax_child = (parseInt(total_child) / 2);
-                              //   var per_pax_infant = (parseInt(total_infant) / 2);
-
-                              $("#totalprice_adult").html(c_type == 'USD' ? (total_adult / usd_aed).toFixed(2) : total_adult);
-                              $("#totalprice_childs").html(c_type == 'USD' ? (total_child / usd_aed).toFixed(2) : total_child);
-                              $("#totalprice_infants").html(c_type == 'USD' ? (total_infant / usd_aed).toFixed(2) : total_infant);
+                              $("#totalprice_adult").val(c_type == 'USD' ? (total_adult / usd_aed).toFixed(2) : total_adult);
+                              $("#totalprice_childs").val(c_type == 'USD' ? (total_child / usd_aed).toFixed(2) : total_child);
+                              $("#totalprice_infants").val(c_type == 'USD' ? (total_infant / usd_aed).toFixed(2) : total_infant);
 
                               var pax_adult_count = <?php echo $buildpackage->adult; ?>;
                               var pax_child_count = <?php echo $buildpackage->child; ?>;
@@ -502,18 +462,9 @@
                               var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / 2 : parseInt(total_child));
                               var per_pax_infant = (pax_infant_count > 1 ? parseInt(total_infant) / 2 : parseInt(total_infant));
 
-
-                              // $("#perpax_adult").html(per_pax_adult);
-                              // $("#perpax_childs").html( per_pax_child );
-                              // $("#perpax_infants").html( 0 );
-
-                              // $("#perpax_adult_input").val(per_pax_adult);
-                              // $("#perpax_childs_input").val( per_pax_child );
-                              // $("#perpax_infants_input").val( 0 );
-
-                              $("#perpax_adult").html(c_type == 'USD' ? (per_pax_adult / usd_aed).toFixed(2) : per_pax_adult);
-                              $("#perpax_childs").html(c_type == 'USD' ? (per_pax_child / usd_aed).toFixed(2) : per_pax_child);
-                              $("#perpax_infants").html(0);
+                              $("#perpax_adult").val(c_type == 'USD' ? (per_pax_adult / usd_aed).toFixed(2) : per_pax_adult);
+                              $("#perpax_childs").val(c_type == 'USD' ? (per_pax_child / usd_aed).toFixed(2) : per_pax_child);
+                              $("#perpax_infants").val(0);
 
                               $("#perpax_adult_input").val(c_type == 'USD' ? (per_pax_adult / usd_aed).toFixed(2) : per_pax_adult);
                               $("#perpax_childs_input").val(c_type == 'USD' ? (per_pax_child / usd_aed).toFixed(2) : per_pax_child);
@@ -521,51 +472,8 @@
 
                               var totalprice_meals = total_adult + total_child + total_infant;
                               $("#totalprice_meals").val(c_type == 'USD' ? (totalprice_meals / usd_aed).toFixed(2) : totalprice_meals);
-
                             })
-
-
-                            //  $(".check-adult").change(function(){
-                            //  var old_adult = <?php echo $view->Packagetravelers; ?>;
-                            //  var new_adult = $('.check-adult').val();
-
-
-                            //  if(new_adult > old_adult){
-                            //   $('.check-adult').val(old_adult);
-                            //  }else{
-                            //   $('.check-adult').val(new_adult);
-                            //  }
-
-
-                            // })
-
-
-                            // $(".check-child").change(function(){
-                            //  var old_child = <?php echo $buildpackage->child; ?>;
-                            //  var new_child = $('.check-child').val();
-
-
-                            //  if(new_child > old_child){
-                            //   $('.check-child').val(old_child);
-                            //  }else{
-                            //   $('.check-child').val(new_child);
-                            //  }
-
-
-                            // })
-
-
-
                           })
-
-
-                          // var faqs_row2= 0;                    
-                          // function addrowss(){
-                          //   // alert("hi");
-                          //   var adds=' <tr  id="faqs-row1'+faqs_row2 + '">  <td><input class="form-control" type="date" value="<?php echo $view->specificDate; ?>" name="buildCheckIn" id="buildCheckIn"></td> <td> <div> <select data-mdl-for="sample2" class="form-control" value="" tabIndex="-1" name="visa_category"> <option value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td> <td> <div> <select data-mdl-for="sample2" class="form-control" value="" tabIndex="-1" name="Meal"> <option value="Lunch">Lunch</option> <option value="Dinner">Dinner</option> </select> </div> </td> <td> <div> <select data-mdl-for="sample2" class="form-control" value="" tabIndex="-1" name="Meal_Type"> <option value="Veg">Veg</option> <option value="Non-Veg">Non-Veg</option> <option value="Jain">Jain</option> </select> </div> </td> <td><input type="text" placeholder="0" class="form-control" name="adult"> </td> <td><input type="text" placeholder="0" class="form-control" name="child"> </td> <td><button class="btn btn-danger btn-xs" onClick="$(\'#faqs-row' + faqs_row + '\').remove();"><i class="fa fa-trash"></i></button> </td> </tr>';
-                          //     $('#addrowss').append(adds);
-                          //   faqs_row2++;
-                          // }
 
                           var faqs_row2 = 1;
 
@@ -656,17 +564,6 @@ function addrowss() {
   faqs_row2++;
 }
 
-                          // removeMeals =function  removeMeals(data){
-                          //     var allocateddays = parseInt($('#allocated_days').val());                           
-                          //     var tr = data.closest('tr');
-                          //     // var lessdays = tr.('select.bnights').val();
-                          //     // var lessdays =  data.closest('.bnights');
-                          //     // console.log(lessdays);
-                          //     var deleted_days = (Number(allocateddays) - Number(lessdays));
-                          //     $('#allocated_days').val(deleted_days);
-                          //     data.closest('tr').remove();
-
-                          // }
                         </script>
 
                         </table>
@@ -718,21 +615,21 @@ function addrowss() {
                               </tr>
                               <tr align="center">
                                 <td><b>Sub Total</b></td>
-                                <td type="" id="subtotal_adults" name="subtotal_adults"></td>
-                                <td type="" id="subtotal_childs" name="subtotal_childs"></td>
-                                <td type="" id="subtotal_infants" name="subtotal_infants"></td>
+                                <td> <input type="text" readonly class="text-center" id="subtotal_adults" name="subtotal_adults"></td>
+                                <td> <input type="text" readonly class="text-center" id="subtotal_childs" name="subtotal_childs"></td>
+                                <td> <input type="text" readonly class="text-center" id="subtotal_infants" name="subtotal_infants"></td>
                               </tr>
                               <tr align="center">
                                 <td><b>Total Price</b></td>
-                                <td type="" name="totalprice_adult" id="totalprice_adult" value=""></td>
-                                <td type="" name="totalprice_childs" id="totalprice_childs" value=""></td>
-                                <td type="" name="totalprice_infants" id="totalprice_infants" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="totalprice_adult" id="totalprice_adult" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="totalprice_childs" id="totalprice_childs" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="totalprice_infants" id="totalprice_infants" value=""></td>
                               </tr>
                               <tr align="center">
                                 <td><b>Per PAX</b></td>
-                                <td type="" name="perpax_adult" id="perpax_adult" value=""></td>
-                                <td type="" name="perpax_childs" id="perpax_childs" value=""></td>
-                                <td type="" name="perpax_infants" id="perpax_infants" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="perpax_adult" id="perpax_adult" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="perpax_childs" id="perpax_childs" value=""></td>
+                                <td> <input type="text" readonly class="text-center" name="perpax_infants" id="perpax_infants" value=""></td>
                               </tr>
                             </table>
                             <input type="hidden" id="perpax_adult_input" name="perpax_adult_input" value="" />
@@ -744,175 +641,19 @@ function addrowss() {
                       </div>
                       <div class="mt-5">
                         <div>
-                          <div class="card-head card-head-new ">
-                            <p>Terms :</p>
-                          </div>
-
-                          <div class="container">
-
-                            <div class="accordion" id="accordionPanelsStayOpenExample">
-                              <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                  <button class="accordion-button  width-refund" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                                    Inclusions
-                                  </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-headingOne">
-                                  <div class="accordion-body">
-                                    <div class="form-floating">
-                                      <textarea class="form-control" placeholder="Leave a comment here" id="buildPackageInclusions" name="buildPackageInclusions" style="height: 100px"></textarea>
-                                      <!-- <label for="floatingTextarea2">Comments</label> -->
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                                  <button class="accordion-button collapsed  width-refund" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                                    Exclusions
-                                  </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                                  <div class="accordion-body">
-                                    <div class="form-floating">
-                                      <textarea class="form-control" placeholder="Leave a comment here" id="buildPackageExclusions" name="buildPackageExclusions" style="height: 100px"></textarea>
-                                      <!-- <label for="floatingTextarea2">Comments</label> -->
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                                  <button class="accordion-button collapsed  width-refund" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                    Term & Condions
-                                  </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                                  <div class="accordion-body">
-                                    <div class="form-floating">
-                                      <textarea class="form-control" placeholder="Leave a comment here" id="buildPackageConditions" name="buildPackageConditions" style="height: 100px">
-    v  Rooms and rates are subject to availability at the time of actual booking.
-
-    v  Standard Check-In: 1500 hrs. & Checkout: 1200 hrs.
-
-    v  Early Check-In and Late Check-Out is subject to availability unless booked and confirmed in advance
-
-    v  Normal timing for airport pick-up & drop transfer is 6.00 am to 10.00 pm and extra charges will be applicable except this timings and subject to available of vehicles
-
-    v  Any change in the number of passengers will lead to a revision of the quote.
-
-    v  Vehicle used in the above quote is based on all guests arriving/ departing together in the same flight. In case additional transfers are required, same will be arranged at an additional cost.
-
-    v  Above quotes based on normal ticket prices, rate will be subject to change if we receive any revise rate at later stage
-
-    v  Itinerary might get changed according to the availability of tours & services and it will be informed and updated to the guest once they reach Dubai
-
-    v  OK TO BOARD Message update as per airline’s policy
-
-    v  Visa processing may take anywhere between 3 – 5 working days to get approved
-
-    v  Issuance of visa will be subject to approval from immigration however once visa is applied charges will be applicable and NO refund will be granted.
-
-    v  In case of overstay – Travel agent will be held accountable to settle the fine imposed by immigration which is AED 100.00 Per day (Subject to revision from immigration).
-
-    v  We need pre-payment for Dubai Visa and Insurance and it’s nonrefundable.
-
-    v  if Excursion tickets are not book then Cancellation policy for the ground services will 4 days prior to arrival is free of charge.
-
-    v  Payment to be made in AED as per the rate of exchange applicable on the day of final payment.
-
-    v  Bank Charges AED 80/- will be Charged Mandatory on the total invoice.
-  </textarea>
-                                      <!-- <label for="floatingTextarea2">Comments</label> -->
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="accordion mt-3" id="accordionExample">
-                                <div class="accordion-item">
-                                  <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button  width-refund" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                      Cancellations Policy
-                                    </button>
-                                  </h2>
-                                  <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                      <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Leave a comment here" id="buildPackageCancellations" name="buildPackageCancellations" style="height: 100px">
-        Cancellation Terms: FIT
-        Cancellation Terms:  Groups (MICE)
-
-        25% cancellation within 30 days before travel.
-        25% cancellation within 30 days before travel.
-
-        50% cancellation within 10 days before Travel. 
-        50% cancellation within 15 days before Travel.
-
-        75% cancellation within 07 days before Travel.  
-        100% cancellation within 07 days before Travel.
-        
-        Any cancellation within 04 days will lead to 100% cancellation charge. 
-        Any cancellation within 04 days will lead to 100% cancellation charge.
-  </textarea>
-                                        <!-- <label for="floatingTextarea2">Comments</label> -->
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <!-- <div class="accordion-item ">
- <h2 class="accordion-header" id="flush-headingTwo">
-  <button class="accordion-button collapsed  width-refund" type="button"
-  data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
-  aria-expanded="false" aria-controls="flush-collapseTwo">
-  Refund Policy
- </button>
-</h2>
-<div id="flush-collapseTwo" class="accordion-collapse collapse"
-aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-<div class="accordion-body">
- <div class="form-floating">
-  <textarea class="form-control" placeholder="Leave a comment here"
-  id="buildPackageRefund" name="buildPackageRefund" style="height: 100px"></textarea>
-  <label for="floatingTextarea2">Comments</label>
- </div>
-</div>
-</div>
-</div> -->
-                              </div>
-                            </div>
-                          </div>
-
-
-
-
-
 
                           <input type="hidden" id="QueryId" name="QueryId" value="<?php echo $view->query_id; ?>">
                           <div class="last-btn mt-4 mb-4">
-
                             <button id="view-proposal-btn" type="button" class="new_btn px-5 mr-4">View Proposal</button>
-                            <!-- <a id="view-proposal" type="button" class="contact-next-btn mr-4" href="<?php echo base_url(); ?>/proposal.html">View Proposal</a>  -->
-
                           </div>
-
-
-
-
-
-
 
                         </div>
                       </div>
-
-
       </form>
     </div>
   </div>
 </div>
 </div>
-
-
-
 
 </div>
 </div>

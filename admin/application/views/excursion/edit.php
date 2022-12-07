@@ -96,23 +96,17 @@
                                         <td width="80"></td>
                                         <td width="100"><i class="fa fa-male" aria-hidden="true"></i> Adults</td>
                                         <td width="100"><i class="fa-solid fa-child"></i> Child</td>
+                                        <td width="100"><i class="fa-solid fa-child"></i> Child Age</td>
                                         <td width="100"><i class="fa-solid fa-baby"></i> Infant</td>
                                       </tr>
-                                      <!-- <tr bgcolor="#ffffff" style="text-align:center">
-                                        <td>Quantity</td>
-                                        <td><input type="text" class="form-control input-sm adult" name="maxadult"
-                                            size="" value="<?php echo $edit->maxadult;?>"></td>
-                                        <td><input type="text" class="form-control input-sm child" name="maxchild"
-                                            readonly="" size="" value="<?php echo $edit->maxchild;?>"></td>
-                                        <td><input type="text" class="form-control input-sm infant" name="maxinfant"
-                                            readonly="" size="" value="<?php echo $edit->maxinfant;?>"></td>
-                                      </tr> -->
                                       <tr bgcolor="#ffffff" style="text-align:center">
                                         <td>Ticket Rate</td>
                                         <td><input type="text" class="form-control input-sm adult" name="adultprice"
                                             size="" value="<?php echo $edit->adultprice;?>"></td>
                                         <td><input type="text" class="form-control input-sm child" 
                                             name="childprice" size="" value="<?php echo $edit->childprice;?>"></td>
+                                        <td><input type="number" class="form-control input-sm child_age" 
+                                            name="child_age" size="" value="<?php echo $edit->child_age;?>"></td>
                                         <td><input type="text" class="form-control input-sm infant" 
                                             name="infantprice" size="" value="<?php echo $edit->infantprice;?>"></td>
                                       </tr>

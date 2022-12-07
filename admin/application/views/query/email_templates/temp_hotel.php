@@ -185,6 +185,17 @@
           div{
             color: black !important;
           }
+
+          /* @media screen and (min-width: 768px) {
+              .table_xl {display:block;}
+              .table_sm {display:none;}
+          }
+
+          @media screen and (max-width: 767px) {
+              .table_xl {display:none;}
+              .table_sm {display:block;}
+          } */
+
     </style>
 
     <style>
@@ -208,32 +219,31 @@
         
           <br></br>
           <div></div>
-          <!-- <b>**Any amendments in the dates of travel or number of passengers will attract a requote.**</b> -->
           <table class="items" border="1" cellspacing="0">
             <tr>
               <th rowspan="5">
                 <h2>Hotel Rates</h2>
               </th>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_adult ?></span>Per Adult <?php echo $details->room_sharing_types[0] != "" ? ($details->room_sharing_types[0] == "triple_sharing" ? "Per Person on Triple Sharing Basis" : "Per Person on Double Sharing Basis") : "" ?> </td>
+              <td><span style="color: red;">AED <?php echo $details->per_pax_adult ?></span> Per Adult <?php echo $details->room_sharing_types[0] != "" ? ($details->room_sharing_types[0] == "triple_sharing" ? "Per Person on Triple Sharing Basis" : "Per Person on Double Sharing Basis") : "" ?> </td>
             </tr>
             <?php if($details->per_pax_child > 0) : ?>
             <tr>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_child ?></span>Per Child With Bed</td>
+              <td><span style="color: red;">AED <?php echo $details->per_pax_child ?></span> Per Child With Bed</td>
             </tr>
             <?php endif ?>
             <?php if(isset($details->per_pax_infant) && $details->per_pax_infant > 0 ) : ?>
             <tr>
-            <td><span style="color: red;">AED <?php echo $details->per_pax_infant ?></span>Per Child With Not Bed</td>
+            <td><span style="color: red;">AED <?php echo $details->per_pax_infant ?></span> Per Child With Not Bed</td>
             </tr>
             <?php endif ?>
           </table>
           <br />
           <br />
 
-          <table style="text-align:center" class="items" border="1" cellspacing="0">
+          <table class="items table_xl" border="1" cellspacing="0">
             <tr>
             <th>Hotal Name</th>
-            <td colspan="3"> <?php foreach ($details->hotels as $key => $val) : ?>
+            <td colspan="3" style="white-space: normal;"> <?php foreach ($details->hotels as $key => $val) : ?>
                         <b><?php print_r($details->hotels[$key]->hotelname) ?></b> - <?php print_r($details->hotels[$key]->hotelstars) ?> * - <?php print_r($details->build_room_types[$key]) ?> - <?php print_r($details->buildRoomType[$key]) ?><?php echo array_key_last($details->hotels) != $key ?  '+ <br/>' : '' ?>
                     <?php endforeach ?>
             </td>

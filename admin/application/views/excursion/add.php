@@ -117,24 +117,18 @@
                                         <td width="80"></td>
                                         <td width="100"><i class="fa fa-male" aria-hidden="true"></i> Adults</td>
                                         <td width="100"><i class="fa-solid fa-child"></i> Child</td>
+                                        <td width="100"><i class="fa-solid fa-child"></i> Child Age</td>
                                         <td width="100"><i class="fa-solid fa-baby"></i> Infant</td>
                                       </tr>
-                                      <!-- <tr bgcolor="#ffffff" style="text-align:center">
-                                        <td>Quantity</td>
-                                        <td><input type="text" class="form-control input-sm adult" name="maxadult"
-                                            size="" value=""></td>
-                                        <td><input type="text" class="form-control input-sm child" name="maxchild"
-                                            readonly="" size="" value=""></td>
-                                        <td><input type="text" class="form-control input-sm infant" name="maxinfant"
-                                            readonly="" size="" value=""></td>
-                                      </tr> -->
                                       <tr bgcolor="#ffffff" style="text-align:center">
                                         <td><b>Ticket Rate</b></td>
-                                        <td><input type="text" class="form-control input-sm adult" name="adultprice"
+                                        <td><input type="number" class="form-control input-sm adult" name="adultprice"
                                             size="" value=""></td>
-                                        <td><input type="text" class="form-control input-sm child" 
+                                        <td><input type="number" class="form-control input-sm child" 
                                             name="childprice" size="" value=""></td>
-                                        <td><input type="text" class="form-control input-sm infant" 
+                                        <td><input type="number" class="form-control input-sm child_age" 
+                                            name="child_age" size="" value=""></td>
+                                        <td><input type="number" class="form-control input-sm infant" 
                                             name="infantprice" size="" value=""></td>
                                       </tr>
                                       <tr bgcolor="#ffffff" style="text-align:center;display:none;">

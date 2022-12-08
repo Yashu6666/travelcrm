@@ -224,9 +224,20 @@
               <th rowspan="5">
                 <h2>Hotel Rates</h2>
               </th>
-              <td><span style="color: red;">AED <?php echo $details->per_pax_adult ?></span> Per Adult <?php echo $details->room_sharing_types[0] != "" ? ($details->room_sharing_types[0] == "triple_sharing" ? "Per Person on Triple Sharing Basis" : "Per Person on Double Sharing Basis") : "" ?> </td>
+              <td style="white-space: initial;">
+                <?php if($details->per_pax_adult > 0) : ?>
+                  <span style="color: red;">AED <?php echo $details->per_pax_adult ?></span> Per Person on Single Sharing Basis<br/>
+                <?php endif ?>
+                <?php if($details->per_pax_double > 0) : ?>
+                  <span style="color: red;">AED <?php echo $details->per_pax_double ?></span> Per Person on Double Sharing Basis<br/>
+                <?php endif ?>
+                <?php if($details->per_pax_triple > 0) : ?>
+                  <span style="color: red;">AED <?php echo $details->per_pax_triple ?></span> Per Person on Triple Sharing Basis<br/>
+                <?php endif ?>
+                <!-- ?php echo $details->room_sharing_types[0] != "" ? ($details->room_sharing_types[0] == "triple_sharing" ? "Per Person on Triple Sharing Basis" : "Per Person on Double Sharing Basis") : "" ?> -->
+              </td>
             </tr>
-            <?php if($details->per_pax_child > 0) : ?>
+            <?php if(isset($details->per_pax_child) && $details->per_pax_child > 0) : ?>
             <tr>
               <td><span style="color: red;">AED <?php echo $details->per_pax_child ?></span> Per Child With Bed</td>
             </tr>

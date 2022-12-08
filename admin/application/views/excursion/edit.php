@@ -94,21 +94,21 @@
                                     <tbody>
                                       <tr bgcolor="#efefef" style="text-align:center;font-weight:bold">
                                         <td width="80"></td>
-                                        <td width="100"><i class="fa fa-male" aria-hidden="true"></i> Adults</td>
-                                        <td width="100"><i class="fa-solid fa-child"></i> Child</td>
-                                        <td width="100"><i class="fa-solid fa-child"></i> Child Age</td>
-                                        <td width="100"><i class="fa-solid fa-baby"></i> Infant</td>
+                                        <td width="100" style="font-size: 14px"><i class="fa fa-male" aria-hidden="true"></i> Adults</td>
+                                        <td width="100" style="font-size: 14px"><i class="fa-solid fa-child"></i> Child</td>
+                                        <td width="100" style="font-size: 14px"><i class="fa-solid fa-child"></i> Child Age</td>
+                                        <td width="100" style="font-size: 14px"><i class="fa-solid fa-baby"></i> Infant</td>
                                       </tr>
                                       <tr bgcolor="#ffffff" style="text-align:center">
                                         <td>Ticket Rate</td>
                                         <td><input type="text" class="form-control input-sm adult" name="adultprice"
-                                            size="" value="<?php echo $edit->adultprice;?>"></td>
+                                            style="font-size: 14px" size="" value="<?php echo $edit->adultprice;?>"></td>
                                         <td><input type="text" class="form-control input-sm child" 
-                                            name="childprice" size="" value="<?php echo $edit->childprice;?>"></td>
+                                            style="font-size: 14px" name="childprice" size="" value="<?php echo $edit->childprice;?>"></td>
                                         <td><input type="number" class="form-control input-sm child_age" 
-                                            name="child_age" size="" value="<?php echo $edit->child_age;?>"></td>
+                                            style="font-size: 14px" name="child_age" size="" value="<?php echo $edit->child_age;?>"></td>
                                         <td><input type="text" class="form-control input-sm infant" 
-                                            name="infantprice" size="" value="<?php echo $edit->infantprice;?>"></td>
+                                            style="font-size: 14px" name="infantprice" size="" value="<?php echo $edit->infantprice;?>"></td>
                                       </tr>
                                       <tr bgcolor="#ffffff" style="text-align:center;display:none;">
                                         <td>Enable</td>

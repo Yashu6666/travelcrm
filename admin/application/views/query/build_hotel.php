@@ -679,7 +679,7 @@
                             <table class="table table-bordered" style="font-size:16px;">
                               <tr align="center">
                                 <td name="person" id="person" value=""></td>
-                                <td name="AdultCost" id="AdultCost" value="">Adult</td>
+                                <td name="AdultCost" id="AdultCost" value="">Single Sharing</td>
                                 <td name="DoubleAdultCost" id="DoubleAdultCost" value="">Double Sharing</td>
                                 <td name="TripleAdultCost" id="TripleAdultCost" value="">Triple Sharing</td>
                                 <td name="ChildCost" id="ChildCost" value="">CWB</td>

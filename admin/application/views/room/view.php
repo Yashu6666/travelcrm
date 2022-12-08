@@ -49,11 +49,11 @@
 						<div class="card-body ">
 							<div class="row p-b-20">
 								<div class="col-md-6 col-sm-6 col-6">
-									<div class="btn-group flex-column">
+									<div class="btn-group d-flex">
 										<a href="<?php echo site_url();?>room/add_room" id="addRow" class="new_btn px-3">
 											Add New <i class="fa fa-plus"></i>
 										</a>
-										<a id="multiDel" class="new_btn px-3 mt-2">
+										<a id="multiDel" class="new_btn px-3 ml-3">
 												Delete All <i class="fa fa-trash"></i>
 										</a>
 									</div>

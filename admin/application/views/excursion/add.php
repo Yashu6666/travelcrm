@@ -113,23 +113,23 @@
                                 <div class="col-md-12">
                                   <table class="table table-striped table-bordered" cellspacing="1" bgcolor="#cccccc">
                                     <tbody>
-                                      <tr bgcolor="#efefef" style="text-align:center;font-weight:bold">
+                                      <tr bgcolor="#efefef" style="text-align:center;font-weight:bold;">
                                         <td width="80"></td>
-                                        <td width="100"><i class="fa fa-male" aria-hidden="true"></i> Adults</td>
-                                        <td width="100"><i class="fa-solid fa-child"></i> Child</td>
-                                        <td width="100"><i class="fa-solid fa-child"></i> Child Age</td>
-                                        <td width="100"><i class="fa-solid fa-baby"></i> Infant</td>
+                                        <td width="100" style="font-size: 14px"><i class="fa fa-male" aria-hidden="true"></i> Adults</td>
+                                        <td width="100" style="font-size: 14px"><i class="fa-solid fa-child"></i> Child</td>
+                                        <td width="100" style="font-size: 14px"><i class="fa-solid fa-child"></i> Child Age</td>
+                                        <td width="100" style="font-size: 14px"><i class="fa-solid fa-baby"></i> Infant</td>
                                       </tr>
                                       <tr bgcolor="#ffffff" style="text-align:center">
                                         <td><b>Ticket Rate</b></td>
                                         <td><input type="number" class="form-control input-sm adult" name="adultprice"
-                                            size="" value=""></td>
+                                            style="font-size: 14px" size="" value=""></td>
                                         <td><input type="number" class="form-control input-sm child" 
-                                            name="childprice" size="" value=""></td>
+                                            style="font-size: 14px" name="childprice" size="" value=""></td>
                                         <td><input type="number" class="form-control input-sm child_age" 
-                                            name="child_age" size="" value=""></td>
+                                            style="font-size: 14px" name="child_age" size="" value=""></td>
                                         <td><input type="number" class="form-control input-sm infant" 
-                                            name="infantprice" size="" value=""></td>
+                                            style="font-size: 14px" name="infantprice" size="" value=""></td>
                                       </tr>
                                       <tr bgcolor="#ffffff" style="text-align:center;display:none;">
                                         <td><b>Enable</b></td>

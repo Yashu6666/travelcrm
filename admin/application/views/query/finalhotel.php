@@ -715,6 +715,8 @@
                 "pax_child": "<?php echo $buildpackage->child ?>",
                 "pax_infant": "<?php echo $buildpackage->infant ?>",
                 "per_pax_adult": "<?php echo $proposalDetails['perpax_adult']; ?>",
+                "per_pax_double": "<?php echo $proposalDetails['perpax_double']; ?>",
+                "per_pax_triple": "<?php echo $proposalDetails['perpax_triple']; ?>",
                 "per_pax_child": "<?php echo $proposalDetails['perpax_childs']; ?>",
                 "per_pax_infant": "<?php echo $proposalDetails['perpax_infants']; ?>",
                 "room": "<?php echo $buildpackage->night  ?>",

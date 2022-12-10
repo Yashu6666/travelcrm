@@ -567,21 +567,21 @@
                   </tr>
                   <tr align="center">
                     <td><b>Sub Total</b></td>
-                    <td> <input type="text" readonly class="text-center" id="subtotal_adults" name="subtotal_adults"></td>
-                    <td> <input type="text" readonly class="text-center" id="subtotal_childs" name="subtotal_childs"></td>
-                    <td> <input type="text" readonly class="text-center" id="subtotal_infants" name="subtotal_infants"></td>
+                    <td> <input type="text" class="text-center" id="subtotal_adults" name="subtotal_adults"></td>
+                    <td> <input type="text" class="text-center" id="subtotal_childs" name="subtotal_childs"></td>
+                    <td> <input type="text" class="text-center" id="subtotal_infants" name="subtotal_infants"></td>
                   </tr>
                   <tr align="center">
                     <td><b>Total Price</b></td>
-                    <td> <input type="text" readonly class="text-center" name="totalprice_adult" id="totalprice_adult" value=""></td>
-                    <td> <input type="text" readonly class="text-center" name="totalprice_childs" id="totalprice_childs" value=""></td>
-                    <td> <input type="text" readonly class="text-center" name="totalprice_infants" id="totalprice_infants" value=""></td>
+                    <td> <input type="text" class="text-center" name="totalprice_adult" id="totalprice_adult" value=""></td>
+                    <td> <input type="text" class="text-center" name="totalprice_childs" id="totalprice_childs" value=""></td>
+                    <td> <input type="text" class="text-center" name="totalprice_infants" id="totalprice_infants" value=""></td>
                   </tr>
                   <tr align="center">
                     <td><b>Per PAX</b></td>
-                    <td> <input type="text" readonly class="text-center" name="perpax_adult" id="perpax_adult" value=""></td>
-                    <td> <input type="text" readonly class="text-center" name="perpax_childs" id="perpax_childs" value=""></td>
-                    <td> <input type="text" readonly class="text-center" name="perpax_infants" id="perpax_infants" value=""></td>
+                    <td> <input type="text" class="text-center" name="perpax_adult" id="perpax_adult" value=""></td>
+                    <td> <input type="text" class="text-center" name="perpax_childs" id="perpax_childs" value=""></td>
+                    <td> <input type="text" class="text-center" name="perpax_infants" id="perpax_infants" value=""></td>
                   </tr>
                </table>
                    <input type="hidden" id="perpax_adult_input" name="perpax_adult_input" value="" />

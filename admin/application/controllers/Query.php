@@ -271,7 +271,7 @@ class Query extends CI_Controller
 			: $this->db->where('queryId', $query_id)->where('created_by', $this->session->userdata('admin_id'))->get('querypackage')->row();
 
 			if (isset($package)) {
-				$res = array("id" => $id, "company_name" => $company_name, "admin_names" => $admin_names, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "qp_id" => $package->id, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child. ", infant " . $package->infant, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
+				$res = array("id" => $id, "company_name" => $company_name, "admin_names" => $admin_names, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "qp_id" => $package->id, "traveldate" => !empty($package->specificDate) ? $package->specificDate : $package->doa, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child. ", infant " . $package->infant, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
 				$result[] = $res;
 			}
 			array_push($result_query_id, $value->queryId);
@@ -742,7 +742,7 @@ class Query extends CI_Controller
 		// 	// 	echo "false";
 		// 	// }
 		// }
-		echo json_encode($from_room_types);
+		echo json_encode(array_unique($from_room_types));
 	}
 
 	

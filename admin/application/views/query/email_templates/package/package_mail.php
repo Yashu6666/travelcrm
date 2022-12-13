@@ -201,7 +201,7 @@
               </th>
               <td style="white-space: initial;">
                 <?php if($details->perpax_adult > 0) : ?>
-                  <span style="color: red;">AED <?php echo $details->perpax_adult ?></span> Per Adult<br/>
+                  <span style="color: red;">AED <?php echo $details->perpax_adult ?></span> Per Person on Single Sharing Basis<br/>
                 <?php endif ?>
                 <?php if($details->perpax_adult_single > 0) : ?>
                   <span style="color: red;">AED <?php echo $details->perpax_adult_single ?></span> Per Person on Single Sharing Basis<br/>

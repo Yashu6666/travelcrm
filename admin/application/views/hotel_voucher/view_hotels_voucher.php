@@ -579,9 +579,9 @@ $(document).ready(function() {
 </script>
 
 <style>
-  .dataTables_filter {
+  /* .dataTables_filter {
   float: left !important;
-  }
+  } */
 
   .dataTables_wrapper .dt-buttons {
 	  float: right;

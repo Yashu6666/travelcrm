@@ -293,11 +293,11 @@
                 <?php foreach ($proposalDetails['hotelName'] as $key => $val) : ?>
 
                     <div class="head">
-                        <h5 class="text-light" style="padding: 7px;"><?php print_r($proposalDetails['hotels'][$key]->hotelname) ?> - No of Nights <?php echo $proposalDetails['noOfNights'][$key] ?> </h5>
+                        <h5 class="text-capitalize text-light" style="padding: 7px;"><?php print_r($proposalDetails['hotels'][$key]->hotelname) ?> - No of Nights <?php echo $proposalDetails['noOfNights'][$key] ?> </h5>
                     </div>
                     <div>
                         <h5 class="text-capitalize"><b>Hotel Name : </b> <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></h5>
-                        <b>Room Type : </b> <?php echo $proposalDetails['roomType'][$key] ?>
+                        <h5 class="text-capitalize"><b>Room Type : </b> <?php echo $proposalDetails['roomType'][$key] ?></h5>
                     </div>
                 <?php endforeach ?>
             </div>
@@ -422,7 +422,7 @@
                 <table class="table table-bordered">
                     <tr align="center">
                                   <td></td>
-                                  <td>Adult</td>
+                                  <!-- <td>Adult</td> -->
                                   <td>Single Sharing</td>
                                   <td>Double Sharing</td>
                                   <td>Triple Sharing</td>
@@ -434,7 +434,7 @@
                                 <tr align="center">
                                   <td><b>Sub Total</b></td>
                                   <td><?php echo $proposalDetails['subtotal_adults'] ?></td>
-                                  <td><?php echo $proposalDetails['subtotal_adults_single'] ?></td>
+                                  <!-- <td><?php echo $proposalDetails['subtotal_adults_single'] ?></td> -->
                                   <td><?php echo $proposalDetails['subtotal_adults_double'] ?></td>
                                   <td><?php echo $proposalDetails['subtotal_adults_triple'] ?></td>
                                   <td><?php echo $proposalDetails['subtotal_childs'] ?></td>
@@ -444,7 +444,7 @@
                                 <tr align="center">
                                   <td><b>Total Price</b></td>
                                   <td><?php echo $proposalDetails['totalprice_adult'] ?></td>
-                                  <td><?php echo $proposalDetails['totalprice_adult_single'] ?></td>
+                                  <!-- <td><?php echo $proposalDetails['totalprice_adult_single'] ?></td> -->
                                   <td><?php echo $proposalDetails['totalprice_adult_double'] ?></td>
                                   <td><?php echo $proposalDetails['totalprice_adult_triple'] ?></td>
                                   <td><?php echo $proposalDetails['totalprice_childs'] ?></td>
@@ -454,7 +454,7 @@
                                 <tr align="center">
                                   <td><b>Per PAX</b></td>
                                   <td><?php echo $proposalDetails['perpax_adult'] ?></td>
-                                  <td><?php echo $proposalDetails['perpax_adult_single'] ?></td>
+                                  <!-- <td><?php echo $proposalDetails['perpax_adult_single'] ?></td> -->
                                   <td><?php echo $proposalDetails['perpax_adult_double'] ?></td>
                                   <td><?php echo $proposalDetails['perpax_adult_triple'] ?></td>
                                   <td><?php echo $proposalDetails['perpax_childs'] ?></td>

@@ -84,19 +84,19 @@
 										?>
 									<tr class="odd gradeX">
 										<td id="$i"><input type="hidden" value="<?php echo $view[$i]->id; ?>"></td>
-										<td class="center"><?php echo $i+1;?></td>
-										<td class="center"> <?php echo isset($hotel->hotelname) ? $hotel->hotelname : "N/A";?> </td>
-										<td class="center"> <?php echo $view[$i]->roomtype;?> </td>
+										<td class=""><?php echo $i+1;?></td>
+										<td class=""> <?php echo isset($hotel->hotelname) ? $hotel->hotelname : "N/A";?> </td>
+										<td class=""> <?php echo $view[$i]->roomtype;?> </td>
 									
-										<td class="center"><?php echo isset($hotel->hotelmapaddress) ? $hotel->hotelmapaddress : "N/A";;?> </td>
-										<td class="center"> <?php
+										<td class=""><?php echo isset($hotel->hotelmapaddress) ? $hotel->hotelmapaddress : "N/A";;?> </td>
+										<td class=""> <?php
 										$date=date_create($view[$i]->from_date);
 										echo date_format($date,"d-m-Y");
 										?> </td>
-										<td class="center"> <?php 
+										<td class=""> <?php 
 											$date=date_create($view[$i]->to_date);
 											echo date_format($date,"d-m-Y");?> </td>
-										<td class="center">
+										<td class="">
 											
 											<a class="btn btn-tbl-edit btn-xs" href="<?php echo site_url();?>room/edit_room/<?php echo $view[$i]->id;?>">
 												<i class="fa fa-edit "></i>

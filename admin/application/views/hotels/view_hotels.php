@@ -82,13 +82,13 @@ $this->session->unset_userdata ( 'success' );
 													
 												<tr class="odd gradeX">
 													<td id="$i"><input type="hidden" value="<?php echo $hotels[$i]->id; ?>"></td>
-													<td class="center"><?php echo $i+1;?> </td>
-													<td class="center"><?php echo $hotels[$i]->hotelname;?></td>
-													<td class="center"><?php echo $hotels[$i]->hotelstars;?> </td>
-													<td class="center"><?php echo $hotels[$i]->propertytype;?></td>
-													<td class="center"><?php echo $hotels[$i]->supplier;?></td>
-													<td class="center"><?php echo $hotels[$i]->hotelmapaddress;?></td>
-													<td class="center">
+													<td class=""><?php echo $i+1;?> </td>
+													<td class=""><?php echo $hotels[$i]->hotelname;?></td>
+													<td class=""><?php echo $hotels[$i]->hotelstars;?> </td>
+													<td class=""><?php echo $hotels[$i]->propertytype;?></td>
+													<td class=""><?php echo $hotels[$i]->supplier;?></td>
+													<td class=""><?php echo $hotels[$i]->hotelmapaddress;?></td>
+													<td class="">
 														
 
 														<a class="btn btn-tbl-edit btn-xs" href="<?php echo site_url();?>hotel/edit_hotel/<?php echo $hotels[$i]->id;?>">

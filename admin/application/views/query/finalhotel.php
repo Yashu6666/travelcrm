@@ -298,7 +298,7 @@
                     </div>
                     <div>
                         <h5 class="text-capitalize"><b>Hotel Name : </b> <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></h5>
-                        <b>Room Type : </b> <?php echo $proposalDetails['roomType'][$key] ?>
+                        <h5 class="text-capitalize"><b>Room Type : </b> <?php echo $proposalDetails['roomType'][$key] ?></h5>
                     </div>
                 <?php endforeach ?>
             </div>

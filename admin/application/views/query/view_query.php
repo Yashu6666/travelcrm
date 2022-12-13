@@ -574,7 +574,8 @@ $(document).ready(function() {
 				  extend: 'excelHtml5',
 				  text: '<i class="fa-solid fa-file-excel fa-2x"></i>',
 				  title: 'Queries Data',
-				  exportOptions: { columns: [0,1,2,3,4,5,6,10,8] }	
+				  exportOptions: { columns: [0,1,2,3,4,5,9] }	
+				//   exportOptions: { columns: [0,1,2,3,4,5,6,10,8] }	
 			  },
 			 
 	  ]

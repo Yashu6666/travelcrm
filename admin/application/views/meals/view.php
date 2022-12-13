@@ -62,13 +62,13 @@ $this->session->unset_userdata ( 'success' );
 										<table class="table table-hover table-checkable order-column full-width"
 											id="example4">
 											<thead>
-												<tr><th class="center"> S.No </th>
-												<th class="center"> Resturant Name</th>
-												<th class="center"> Resturant Type  </th>
-													<th class="center"> Meal  </th>
-													<th class="center"> Meal Type </th>
-													<th class="center"> Price </th>
-													<th class="center"> Action </th>
+												<tr><th class=""> S.No </th>
+												<th class=""> Resturant Name</th>
+												<th class=""> Resturant Type  </th>
+													<th class=""> Meal  </th>
+													<th class=""> Meal Type </th>
+													<th class=""> Price </th>
+													<th class=""> Action </th>
 												</tr>
 											</thead>
 											<tbody>
@@ -76,18 +76,18 @@ $this->session->unset_userdata ( 'success' );
 												<?php for($i=0;$i<count($view);$i++)
 												{?>
 												<tr class="odd gradeX">
-													<td class="center"><?php echo $i+1;?></td>
-													<td class="center"><?php echo $view[$i]->resturant_name;?></td>
-													<td class="center"><?php echo $view[$i]->resturant_type;?></td>
+													<td class=""><?php echo $i+1;?></td>
+													<td class=""><?php echo $view[$i]->resturant_name;?></td>
+													<td class=""><?php echo $view[$i]->resturant_type;?></td>
 													
-													<td class="center"><?php echo $view[$i]->meal_name;?></td>
-													<td class="center"><?php echo $view[$i]->meal_type;?></td>
-													<td class="center">Adult: <?php echo $view[$i]->adult_price;?><br>
+													<td class=""><?php echo $view[$i]->meal_name;?></td>
+													<td class=""><?php echo $view[$i]->meal_type;?></td>
+													<td class="">Adult: <?php echo $view[$i]->adult_price;?><br>
 													Child: <?php echo $view[$i]->child_rate;?>
 												
 												</td>
 
-													<td class="center">
+													<td class="">
 														
 														<a class="btn btn-tbl-edit btn-xs" href="<?php echo site_url();?>meals/edit_meals/<?php echo $view[$i]->id;?>">
 															<i class="fa fa-edit "></i>

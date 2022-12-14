@@ -358,9 +358,9 @@
                 <table class="table table-bordered">
                 <tr align="center">
                                   <td></td>
-                                  <td>Adult</td>
-                                  <td>Child</td>
-                                  <td>Infant</td>
+                                  <td>Per Adult</td>
+                                  <td>Per Child</td>
+                                  <td>Per Infant</td>
                                 </tr>
                                 <tr align="center">
                                   <td><b>Sub Total</b></td>

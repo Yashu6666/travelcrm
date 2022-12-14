@@ -561,9 +561,9 @@
                <table class="table table-bordered card-box" style="font-size:16px;">
                <tr align="center">
                    <td type="" name="person" id="person" value=""><span></td>
-                   <td type="" name="AdultCost" id="AdultCost" value=""><span>Adult</td>
-                   <td type="" name="ChildCost" id="ChildCost" value=""><span>Child</td>
-                   <td type="" name="InfantCost" id="InfantCost" value=""><span>Infant</td>
+                   <td type="" name="AdultCost" id="AdultCost" value=""><span>Per Adult</td>
+                   <td type="" name="ChildCost" id="ChildCost" value=""><span>Per Child</td>
+                   <td type="" name="InfantCost" id="InfantCost" value=""><span>Per Infant</td>
                   </tr>
                   <tr align="center">
                     <td><b>Sub Total</b></td>

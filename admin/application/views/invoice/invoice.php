@@ -224,7 +224,7 @@
                     </tr>
                     <tr>
                         <th>CUSTOMER NAME :</th>
-                        <td><?php echo isset($query_hotel_voucher[0]->guest_name) ? $query_hotel_voucher[0]->guest_name : "" ?></td>
+                        <td><?php echo isset($query_hotel_voucher[0]->guest_name) ? $query_hotel_voucher[0]->guest_name : $invoice->billTo ?></td>
                         <th>No. OF ROOMS:</th>
                         <td><?php echo isset($query_package->room) ? $query_package->room : "N/A" ?></td>
                     </tr>

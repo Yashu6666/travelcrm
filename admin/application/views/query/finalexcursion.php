@@ -564,7 +564,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Send Proposal To Customer</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Send Proposal To Travel Agent</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -618,7 +618,7 @@
                                 <span class="input__label">CC</span></span>
                             </label>
                         </div>
-                        <div class="col">
+                        <!-- <div class="col">
                             <label class="input">
                                 <input class="input__field "  value="<?php echo $b2bcustomerquery->b2bfirstName ?>"  type="text" placeholder=" " autocomplete="off" />
                                 <span class="input__label">First Name</span></span>
@@ -629,10 +629,10 @@
                                 <input class="input__field "  value="<?php echo $b2bcustomerquery->b2blastName ?>" type="text" placeholder=" " autocomplete="off" />
                                 <span class="input__label">Last Name</span></span>
                             </label>
-                        </div>
+                        </div> -->
                         <div class="col">
                             <label class="input">
-                                <input class="input__field "  value="<?php echo $b2bcustomerquery->b2bmobileNumber ?>" type="number" placeholder=" " autocomplete="off" />
+                                <input class="input__field width-input"  value="<?php echo $b2bcustomerquery->b2bmobileNumber ?>" type="number" placeholder=" " autocomplete="off" />
                                 <span class="input__label">Mobile</span></span>
                             </label>
                         </div>

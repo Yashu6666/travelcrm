@@ -171,11 +171,11 @@
             </div>
            </td>
 
-           <td><input type="text" placeholder="0" class="form-control" name="adult" value="<?php echo $view->Packagetravelers;?>" disabled>
+           <td><input type="text" placeholder="0" class="form-control" name="adult" value="<?php echo $view->Packagetravelers;?>" >
            </td>
-           <td><input type="text" placeholder="0" class="form-control" name="child" value="<?php echo $buildpackage->child;?>" disabled>
+           <td><input type="text" placeholder="0" class="form-control" name="child" value="<?php echo $buildpackage->child;?>" >
            </td>
-           <td><input type="text" placeholder="0" class="form-control"   name="infant" value="<?php echo $buildpackage->infant;?>" disabled> 
+           <td><input type="text" placeholder="0" class="form-control"   name="infant" value="<?php echo $buildpackage->infant;?>" > 
            </td>
            
          </tr>
@@ -468,9 +468,9 @@
                <table class="table table-bordered" style="font-size:16px;">
                <tr align="center">
                   <td type="" name="person" id="person" value=""></td>
-                  <td type="" name="AdultCost" id="AdultCost" value="">Adult</td>
-                  <td type="" name="ChildCost" id="ChildCost" value="">Child</td>
-                  <td type="" name="InfantCost" id="InfantCost" value="">Infant</td>
+                  <td type="" name="AdultCost" id="AdultCost" value="">Per Adult</td>
+                  <td type="" name="ChildCost" id="ChildCost" value="">Per Child</td>
+                  <td type="" name="InfantCost" id="InfantCost" value="">Per Infant</td>
                 </tr>
                 <tr align="center">
                   <td><b>Sub Total</b></td>

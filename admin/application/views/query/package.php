@@ -814,19 +814,19 @@
 
                                                 <div class="col">
                                                     <label for="">No. Adult</label><br>
-                                                    <input class="package_inputs" type="number" placeholder="" name="adult" required autocomplete="off" />
+                                                    <input class="package_inputs" type="number" placeholder="" value="2" name="adult" required autocomplete="off" />
                                                 </div>
 
                                                 <div class="col">
                                                     <label for="">No. Child</label><br>
-                                                    <input class="package_inputs" type="number" placeholder="" name="child" id="child2" required autocomplete="off" />
+                                                    <input class="package_inputs" type="number" placeholder="" value="0" name="child" id="child2" required autocomplete="off" />
                                                 </div>
 
                                                 <input id="child_age" name="child_age" class="Travelers-select-package-values" type="hidden" value="0" />
 
                                                 <div class="col">
                                                     <label for="">No. Infant</label><br>
-                                                    <input class="package_inputs" type="number" placeholder="" name="infant" required autocomplete="off" />
+                                                    <input class="package_inputs" type="number" placeholder="" value="0" name="infant" required autocomplete="off" />
                                                 </div>
 
 

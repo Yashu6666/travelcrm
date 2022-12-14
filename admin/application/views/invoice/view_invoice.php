@@ -88,14 +88,14 @@ $this->session->unset_userdata ( 'success' );
                                                  ?>
                                                 <tr class="odd gradeX text-center">
                                                     <td><?php echo $i+1;?></td>
-                                                    <td><?php echo $listInvoice[$i]->invoiceDate;?></td>
+                                                    <td><?php echo (new DateTime($listInvoice[$i]->invoiceDate))->format('d-M-Y') ?></td>
                                                     <td><?php echo $listInvoice[$i]->invoiceNumber;?></td>
                                                     <td><?php echo $company_names[$i];?></td>
                                                     <td><?php echo $listInvoice[$i]->finalTotalInvoice;?></td>
                                                     <td><?php echo $listInvoice[$i]->finalVAT;?></td>
                                                     <td><?php echo $listInvoice[$i]->finalAdvance;?></td>
                                                     <td class="text-danger"><?php echo $listInvoice[$i]->finalBalance;?></td>
-                                                    <td><?php echo $listInvoice[$i]->invoicePayment;?></td>
+                                                    <td><?php echo (new DateTime($listInvoice[$i]->invoicePayment))->format('d-M-Y') ?></td>
                                                     <?php if ($this->session->userdata('reg_type') == 'Super Admin') : ?>
                                                         <td><?php echo $admin_names[$i]?></td>
                                                     <?php endif ?>

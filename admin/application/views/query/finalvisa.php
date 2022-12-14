@@ -272,12 +272,15 @@
             </p>
         </div>
         <hr>
+        <?php $date1 = new DateTime("2010-07-06");
+              $date2 = new DateTime("2010-07-09");
+              $numberOfNights= $date2->diff($date1)->format("%a");  ?>
 
-        <!-- <div class="bg-primary d-flex justify-content-around">
-            <h3 class="text-light p-2">Check In: <?php echo (new DateTime($buildpackage->specificDate))->format('d-M-Y') ?> </h3>
-            <h3 class="text-light p-2">No of Nights: <?php echo $buildpackage->night ?> </h3>
-            <h3 class="text-light p-2">Check Out: <?php echo (new DateTime($buildpackage->noDaysFrom))->format('d-M-Y') ?></h3>
-        </div> -->
+        <div class="bg-primary d-flex justify-content-around">
+            <h3 class="text-light p-2">Check In: <?php echo (new DateTime($buildpackage->doa))->format('d-M-Y') ?> </h3>
+            <h3 class="text-light p-2">No of Stay: <?php echo $numberOfNights ?> </h3>
+            <h3 class="text-light p-2">Check Out: <?php echo (new DateTime($buildpackage->dod))->format('d-M-Y') ?></h3>
+        </div>
     </div>
 
     <div class="container mt-5 section">
@@ -322,9 +325,9 @@
                 <table class="table table-bordered">
                 <tr align="center">
                 <td></td>
-                <td>Adult</td>
-                <td>Child</td>
-                <td>Infant</td>
+                <td>Per Adult</td>
+                <td>Per Child</td>
+                <td>Per Infant</td>
             </tr>
             <tr align="center">
                 <td><b>Sub Total</b></td>
@@ -574,7 +577,7 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col">
-                                <div class="mt-2"> <b>Check In/Out</b> : <?php echo $buildpackage->doa ?>/<?php echo $buildpackage->dod ?></div>
+                                <div class="mt-2"> <b>Check In/Out</b> : <?php echo (new DateTime($buildpackage->doa))->format('d-M-Y') ?>/<?php echo (new DateTime($buildpackage->dod))->format('d-M-Y') ?></div>
                                 <div class="mt-2"> <b>Destinations</b> : <?php echo $buildpackage->goingTo ?>, <?php echo $buildpackage->goingFrom ?></div>
                             </div>
                         </div>

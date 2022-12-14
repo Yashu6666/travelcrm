@@ -187,7 +187,7 @@
         <div class="head2">
           <b>Warm Greetings from Diamond Tours LLC!!!</b>
         </div>
-
+        <br/>
         <div class="head3">
           We are pleased to quote the best rate as per your below request:
         
@@ -250,7 +250,7 @@
             </tr>
             <tr>
                 <th>Type of Visa</th>
-                <td colspan="3"><?php echo preg_replace('/\_/', ' ', $details->visa_category_drop_down);?> Tourist Visa</td>
+                <td colspan="3" style="text-transform: capitalize;"><?php echo preg_replace('/\_/', ' ', $details->visa_category_drop_down);?> Tourist Visa</td>
             </tr>
             <tr>
                 <th>Entry Type</th>

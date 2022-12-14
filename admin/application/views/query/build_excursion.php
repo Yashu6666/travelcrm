@@ -668,9 +668,9 @@
                             <table class="table table-bordered" style="font-size:16px;">
                               <tr align="center">
                                 <td type="" name="person" id="person" value=""></td>
-                                <td type="" name="AdultCost" id="AdultCost" value="">Adult</td>
-                                <td type="" name="ChildCost" id="ChildCost" value="">Child</td>
-                                <td type="" name="InfantCost" id="InfantCost" value="">Infant</td>
+                                <td type="" name="AdultCost" id="AdultCost" value="">Per Adult</td>
+                                <td type="" name="ChildCost" id="ChildCost" value="">Per Child</td>
+                                <td type="" name="InfantCost" id="InfantCost" value="">Per Infant</td>
                               </tr>
                               <tr align="center">
                                 <td><b>Sub Total</b></td>

@@ -243,9 +243,6 @@
     <div class="container">
 
         <div class="" style="float:right;margin-top: 1%">
-            <!-- <button type="button" class="new_btn px-3" style="border: none;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Share
-            </button> -->
             <a href="<?php echo base_url(); ?>query/view_query">
                 <button type="button" class="new_btn px-3" style="border: none;">
                     Close
@@ -269,47 +266,38 @@
                 (<?php echo $buildpackage->goingFrom ?>) <br>
                 <?php echo $buildpackage->adult ?> Adult, <?php echo $buildpackage->child ?> Child , <?php echo $buildpackage->infant ?> Infant<br />
                 Currency :<?php echo $package_query[0]->currency ?><br />
-
             </p>
-
         </div>
         <hr>
 
-        <div class="bg-primary d-flex justify-content-center">
-            <h3 class="text-light p-2">Query ID:<?php echo $buildpackage->queryId ?> <?php //echo $proposalDetails['currencyOption'] 
-                                                                                        ?> <?php // echo $proposalDetails['total_package_cost'] 
-                                                                                            ?>
-            </h3>
+        <div class="bg-primary d-flex justify-content-around">
+            <h3 class="text-light p-2">Check In: <?php echo (new DateTime($buildpackage->specificDate))->format('d-M-Y') ?> </h3>
+            <h3 class="text-light p-2">No of Nights: <?php echo $buildpackage->night ?> </h3>
+            <h3 class="text-light p-2">Check Out: <?php echo (new DateTime($buildpackage->noDaysFrom))->format('d-M-Y') ?></h3>
         </div>
     </div>
 
-
-
-
-    <div class="container mt-5 section">
+    <div class="container mt-4 section">
         <?php if (isset($hotel_query[0]->hotel_id)) : ?>
-                <?php foreach(explode(",",$hotel_query[0]->hotel_id) as $key => $val) : ?>
+            <?php foreach (explode(",", $hotel_query[0]->hotel_id) as $key => $val) : ?>
                 <div class=" second">
                     <div class=" bg-primary ">
                         <h3 class="text-light" style="padding: 7px;">Hotel</h3>
                         <div class="head">
-                            <h5 class="text-light" style="padding: 7px;"><?php echo explode(",",$hotel_query[0]->hotel_name)[$key];?> - No of Nights <?php echo explode(",",$hotel_query[0]->nights)[$key];?> </h5>
+                            <h5 class="text-capitalize text-light" style="padding: 7px;"><?php echo explode(",", $hotel_query[0]->hotel_name)[$key]; ?> - No of Nights <?php echo explode(",", $hotel_query[0]->nights)[$key]; ?> </h5>
                         </div>
                     </div>
                     <div>
-                        <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
-                        <h5><b>Hotel Name : </b> <?php echo explode(",",$hotel_query[0]->hotel_name)[$key];?></h5>
-                        <b>Room Type : </b> <?php echo explode(",",$hotel_query[0]->room_type)[$key];?>
+                        <h5 class="text-capitalize"><b>Hotel Name : </b> <?php echo explode(",", $hotel_query[0]->hotel_name)[$key]; ?></h5>
+                        <h5 class="text-capitalize"><b>Room Type : </b> <?php echo explode(",", $hotel_query[0]->room_type)[$key]; ?></h5>
                     </div>
                 </div>
             <?php endforeach ?>
-        <br /><br />
-
         <?php endif ?>
 
 
-        <?php if (isset($sic_query[0]->excursion_name) || isset($pvt_query[0]->excursion_name) || isset($tkt_query[0]->excursion_name)): ?>
-            <div class=" second">
+        <?php if (isset($sic_query[0]->excursion_name) || isset($pvt_query[0]->excursion_name) || isset($tkt_query[0]->excursion_name)) : ?>
+            <div class="mt-4 second">
                 <div class=" bg-primary ">
                     <h3 class="text-light" style="padding: 7px;">Sightseeing</h3>
                 </div>
@@ -318,8 +306,7 @@
                         <div class="head">
                             <h5 class="text-light" style="padding: 7px;"> SIC </h5>
                         </div>
-                            <?php foreach(explode(",",$sic_query[0]->excursion_name) as $key => $value) : ?> 
-                            <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
+                        <?php foreach (explode(",", $sic_query[0]->excursion_name) as $key => $value) : ?>
                             <h5><?php echo $value ?></h5><br />
                         <?php endforeach ?>
                 </div>
@@ -330,153 +317,114 @@
                     <div class="head">
                         <h5 class="text-light" style="padding: 7px;"> PVT</h5>
                     </div>
-                    <?php foreach(explode(",",$pvt_query[0]->excursion_name) as $k => $v) : ?>
-                        <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
+                    <?php foreach (explode(",", $pvt_query[0]->excursion_name) as $k => $v) : ?>
                         <h5><?php echo $v ?></h5>
                     <?php endforeach ?>
                 </div>
             <?php endif ?>
 
-            
-            <div>
-                    <?php if (isset($sic_query[0]->excursion_name)) : ?>
-                        <div class="head">
-                            <h5 class="text-light" style="padding: 7px;"> TKT </h5>
-                        </div>
-                            <?php foreach(explode(",",$sic_query[0]->excursion_name) as $key => $value) : ?> 
-                            <!-- <img src="<?php echo base_url(); ?>public/image/4.jpg" alt=""> -->
-                            <h5><?php echo $value ?></h5><br />
-                        <?php endforeach ?>
+
+            <?php if (isset($tkt_query[0]->excursion_name)) : ?>
+                <div>
+                    <div class="head">
+                        <h5 class="text-light" style="padding: 7px;"> TKT </h5>
+                    </div>
+                    <?php foreach (explode(",", $tkt_query[0]->excursion_name) as $key => $value) : ?>
+                        <h5><?php echo $value ?></h5><br />
+                    <?php endforeach ?>
                 </div>
+            <?php endif ?>
+
+            </div>
+
         <?php endif ?>
 
+        <?php if ( isset($internal_query[0]->transfer_date) || isset($return_query[0]->transfer_date)) : ?>
+
+            <div class="mt-4 second">
+                <div class=" bg-primary ">
+                    <h3 class="text-light" style="padding: 7px;">Transfer</h3>
+                </div>
+                <div>
+                    <table class="table table-bordered">
+                        <thead align="center" style="background: #dbd5d5;">
+                            <th> Transport type</th>
+                            <th> Date</th>
+                            <th> Pick Up</th>
+                            <th> Drop Off </th>
+                        </thead>
+
+                        <?php if (!empty($internal_query)) : ?>
+                        <?php foreach (explode(",", $internal_query[0]->transfer_date) as $key => $value) : ?>
+
+                            <tbody>
+                                <tr align="center">
+                                    <td>Internal City/Hotel Transfer</td>
+                                    <td> <?php echo explode(",", $internal_query[0]->transfer_date)[$key] ?></td>
+                                    <td> <?php echo explode(",", $internal_query[0]->pickup)[$key] ?></td>
+                                    <td> <?php echo explode(",", $internal_query[0]->dropoff)[$key] ?></td>
+
+                                </tr>
+                            </tbody>
+                        <?php endforeach ?>
+                        <?php endif ?>
+
+                        <?php if (!empty($return_query)) : ?>
+                        <?php foreach (explode(",", $return_query[0]->transfer_date) as $key_rt => $value_rt) : ?>
+                            <?php if (isset(explode(",", $return_query[0]->pickup)[$key_rt])) : ?>
+                            <tbody>
+                                <tr align="center">
+                                    <td>Airport Return Transfer</td>
+                                    <td> <?php echo explode(",", $return_query[0]->transfer_date)[$key_rt] ?></td>
+                                    <td> <?php echo explode(",", $return_query[0]->pickup)[$key_rt] ?></td>
+                                    <td> <?php echo explode(",", $return_query[0]->dropoff)[$key_rt] ?></td>
+
+                                </tr>
+                            </tbody>
+                        <?php endif ?>
+                        <?php endforeach ?>
+                        <?php endif ?>
+                    </table>
+                </div>
             </div>
             <br /><br />
 
         <?php endif ?>
 
-        <?php if (isset($internal_query[0]->transfer_date) || isset($return_query[0]->transfer_date)): ?>
+        <?php if (isset($meal_query[0]->resturant_name)) : ?>
 
-        <div class=" second">
-            <div class=" bg-primary ">
-                <h3 class="text-light" style="padding: 7px;">Transfer</h3>
-            </div>
-            <div>
-                <table class="table table-bordered">
-                    <thead align="center" style="background: #dbd5d5;">
-                        <th> Transport type</th>
-                        <th> Date</th>
-                        <th> Pick Up</th>
-                        <th> Drop Off </th>
-                    </thead>
+            <div class=" second">
+                <div class=" bg-primary ">
+                    <h3 class="text-light" style="padding: 7px;">Meals Details</h3>
+                </div>
+                <div>
+                    <table class="table table-bordered">
+                        <thead align="center" style="background: #dbd5d5;">
+                            <th> Resturant Name</th>
+                            <th> Meal</th>
+                            <th> Meal Type</th>
+                        </thead>
 
-                    <?php foreach(explode(",",$internal_query[0]->transfer_date) as $key => $value) : ?> 
-
+                        <?php foreach (explode(",", $meal_query[0]->resturant_name) as $key => $value) : ?>
                             <tbody>
                                 <tr align="center">
-                                    <!-- <td><b>Per PAX</b></td> -->
-                                    <td>Internal City/Hotel Transfer</td>
-                                    <td> <?php echo explode(",",$internal_query[0]->transfer_date)[$key] ?></td>
-                                    <td> <?php echo explode(",",$internal_query[0]->pickup)[$key] ?></td>
-                                    <td> <?php echo explode(",",$internal_query[0]->dropoff)[$key] ?></td>
-
+                                    <td><?php echo explode(",", $meal_query[0]->resturant_name)[$key] ?></td>
+                                    <td><?php echo explode(",", $meal_query[0]->meal)[$key] ?></td>
+                                    <td><?php echo explode(",", $meal_query[0]->meal_type)[$key] ?></td>
                                 </tr>
                             </tbody>
-                    <?php endforeach ?>
+                        <?php endforeach ?>
 
-                    <?php foreach(explode(",",$return_query[0]->transfer_date) as $key => $value) : ?> 
-                            <!-- ?php if($proposalDetails['pp_transfer_pickup'] != 'Pickup') : ?> -->
-                            <tbody>
-                                <tr align="center">
-                                    <!-- <td><b>Per PAX</b></td> -->
-                                    <td>Airport Return Transfer</td>
-                                    <td> <?php echo explode(",",$return_query[0]->transfer_date)[$key] ?></td>
-                                    <td> <?php echo explode(",",$return_query[0]->pickup)[$key] ?></td>
-                                    <td> <?php echo explode(",",$return_query[0]->dropoff)[$key] ?></td>
-
-                                </tr>
-                            </tbody>
-                    <?php endforeach ?>
-
-                </table>
+                    </table>
+                </div>
             </div>
-        </div>
-        <br /><br />
-
-        <?php endif ?>
-
-        <?php if (isset($visa_query[0]->visa_category)) : ?>
-
-        <div class=" second">
-            <div class=" bg-primary ">
-                <h3 class="text-light" style="padding: 7px;">Visa Details</h3>                
-            </div>
-            <div>
-            <table class="table table-bordered">
-                <thead align="center" style="background: #dbd5d5;">
-                    <th> Visa Category</th>
-                    <th> Entry Type</th>
-                    <th> Validity</th>
-                </thead>
-               <tbody>
-          
-                   <tr align="center">
-                    <td> 
-                        <?php if($visa_query[0]->visa_category == "48_hrs") : ?>
-                            48 hrs Transit
-                        <?php elseif($visa_query[0]->visa_category == "96_hrs") : ?>
-                            96 hrs Transit
-                        <?php elseif($visa_query[0]->visa_category == "30_days_tourist") : ?>
-                            30 Days Tourist
-                        <?php elseif($visa_query[0]->visa_category == "90_days_single") : ?>
-                            90 Days Single entry
-                        <?php elseif($visa_query[0]->visa_category == "90_days_multi") : ?>
-                            90 Days Multi Entry
-                        <?php endif ?>
-                    </td>
-                    <td ><?php  echo $visa_query[0]->entry_type ?></td>
-                    <td ><?php echo $visa_query[0]->validity ?></td>                   
-
-                   </tr>
-               </tbody></table>
-            </div>           
-        </div>
-        <br /><br />
-
         <?php endif ?>
 
         
-        <?php if (isset($meal_query[0]->resturant_name)) : ?>
-
-<div class=" second">
-    <div class=" bg-primary ">
-        <h3 class="text-light" style="padding: 7px;">Meals Details</h3>
     </div>
-    <div>
-        <table class="table table-bordered">
-            <thead align="center" style="background: #dbd5d5;">
-                    <th> Resturant Name</th>
-                    <th> Meal</th>
-                    <th> Meal Type</th>
-            </thead>
 
-            <?php foreach(explode(",",$meal_query[0]->resturant_name) as $key => $value) : ?> 
-                    <tbody>
-                        <tr align="center">  
-                        <td ><?php  echo explode(",",$meal_query[0]->resturant_name)[$key] ?></td>
-                        <td ><?php  echo explode(",",$meal_query[0]->meal)[$key] ?></td>
-                        <td ><?php echo explode(",",$meal_query[0]->meal_type)[$key] ?></td>                   
-                        </tr>
-                    </tbody>
-            <?php endforeach ?>
-
-        </table>
-    </div>
-</div>
-<?php endif ?>
-
-<br /><br />
-        <div class=" second">
+    <div class="container">
+    <div class="mt-4 second">
             <div class=" bg-primary ">
                 <h3 class="text-light" style="padding: 7px;">Price</h3>
             </div>
@@ -498,259 +446,52 @@
                 </table>
             </div>
         </div>
-        <br /><br />
 
-        
-
-        <br /><br />
-        <div class=" second" hidden>
-            <div class="accordion accordion-flush mt-5">
-                <div class="accordion-item border">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            Inclusions
-                        </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <div id="editor1">
-                                <?php foreach ($proposalDetails['hotelName'] as $key => $val) : ?>
-                                    <?php echo $proposalDetails['noOfNights'][0] ?> Nights at Hotel <?php echo explode(",",$hotel_query[0]->hotel_name)[$key];?><br>
-                                    <?php if ($proposalDetails['build_room_types'][0] == 'BB') : ?>
-                                        <?php echo $proposalDetails['noOfNights'][0] ?> Breakfast in Hotel <?php echo explode(",",$hotel_query[0]->hotel_name)[$key];?><br>
-                                    <?php endif ?>
-                                <?php endforeach ?>
-
-                                <?php foreach ($proposalDetails['in_transfer_pickup'] as $key => $val) : ?>
-                                    <?php if ($val != 'Pickup') : ?>
-                                        <?php echo $proposalDetails['internal_route'][$key] ?><br>
-                                    <?php endif ?>
-                                <?php endforeach ?>
-
-                                <?php foreach ($proposalDetails['pp_transfer_pickup'] as $key => $val) : ?>
-                                    <?php if ($val != 'Pickup') : ?>
-                                        <?php echo $proposalDetails['return_route'][$key] ?><br>
-
-                                    <?php endif ?>
-                                <?php endforeach ?>
-
-                                <?php if (!empty($proposalDetails['visa_category_drop_down'])) : ?>
-                                    Dubai Single entry tourist visa with Covid 19 Inbound insurance<br>
-                                <?php endif ?>
-
-                                <?php if (isset($proposalDetails['excursion_name_SIC'])) : ?>
-                                    <?php foreach ($proposalDetails['excursion_name_SIC'] as $key => $val) : ?>
-                                        <?php echo $val ?> <br>
-                                    <?php endforeach ?>
-                                <?php endif ?>
-
-                                <?php if (isset($proposalDetails['excursion_name_PVT'])) : ?>
-                                    <?php foreach ($proposalDetails['excursion_name_PVT'] as $key => $val) : ?>
-                                        <?php echo $val ?><br>
-                                    <?php endforeach ?>
-                                <?php endif ?>
-
-                                <?php if ($proposalDetails['res_name'][0] != 'select') : ?>
-                                    <?php foreach ($proposalDetails['res_name'] as $key => $val) : ?>
-                                        <?php echo $proposalDetails['no_of_meals'][$key] . " " . $proposalDetails['Meal'][$key] . " " . $proposalDetails['res_type'][$key] . " " . $proposalDetails['Meal_Type'][$key]; ?>
-                                        Meal Coupons in <?php echo $proposalDetails['res_name'][$key] ?><br>
-                                    <?php endforeach ?>
-                                <?php endif ?>
-
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item mt-3 border">
-                    <h2 class="accordion-header" id="flush-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                            Exclusion
-                        </button>
-                    </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <div id="editor2"><?php echo  $proposalDetails['buildPackageExclusions']  ?></div>
-                        </div>
-                    </div>
-                </div>
+        <!-- <div class="mt-4 second">
+            <div class=" bg-primary ">
+                <h3 class="text-light" style="padding: 7px;">Price</h3>
             </div>
+            <div>
+                <table class="table table-bordered">
+                <tr align="center">
+                                  <td></td>
+                                  <td>Single Sharing</td>
+                                  <td>Double Sharing</td>
+                                  <td>Triple Sharing</td>
+                                  <td>CWB</td>
+                                  <td>CNB</td>
+                                </tr>
 
-
-            <div class="accordion" id="accordionPanelsStayOpenExample">
-
-                <div class="accordion-item  mt-3">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                            Term & Conditions
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                        <div class="accordion-body">
-                            <div id="editor7"><?php echo  $proposalDetails['buildPackageConditions']  ?></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item  mt-3 border">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                            Cancellation Policy
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                        <div class="accordion-body">
-                            <div id="editor8"><?php echo  $proposalDetails['buildPackageCancellations']  ?></div>
-                        </div>
-                    </div>
-                </div>
+                                <tr align="center">
+                                  <td><b>Sub Total</b></td>
+                                  <td><?php echo $proposalDetails['subtotal_adults'] ?></td>
+                                  <td><?php echo $proposalDetails['subtotal_adults_double'] ?></td>
+                                  <td><?php echo $proposalDetails['subtotal_adults_triple'] ?></td>
+                                  <td><?php echo $proposalDetails['subtotal_childs'] ?></td>
+                                  <td><?php echo $proposalDetails['subtotal_infants'] ?></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Total Price</b></td>
+                                  <td><?php echo $proposalDetails['totalprice_adult'] ?></td>
+                                  <td><?php echo $proposalDetails['totalprice_adult_double'] ?></td>
+                                  <td><?php echo $proposalDetails['totalprice_adult_triple'] ?></td>
+                                  <td><?php echo $proposalDetails['totalprice_childs'] ?></td>
+                                  <td><?php echo $proposalDetails['totalprice_infants'] ?></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Per PAX</b></td>
+                                  <td><?php echo $proposalDetails['perpax_adult'] ?></td>
+                                  <td><?php echo $proposalDetails['perpax_double'] ?></td>
+                                  <td><?php echo $proposalDetails['perpax_triple'] ?></td>
+                                  <td><?php echo $proposalDetails['perpax_childs'] ?></td>
+                                  <td><?php echo $proposalDetails['perpax_infants'] ?></td>
+                                </tr>
+                </table>
             </div>
+        </div> -->
         </div>
-    </div>
-
-
-
-    </div>
-    <br><br>
-    <br><br>
-    <br><br>
-   
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Send Proposal To Customer</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <table class="table border ">
-                        <thead class="bg-primary text-light">
-                            <tr>
-                                <th scope="col">Type</th>
-                                <th scope="col">Destination</th>
-                                <th scope="col">Nights</th>
-                                <th scope="col">Pax Details</th>
-                                <th scope="col">Travel Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><?php echo $buildpackage->type ?></td>
-                                <td><?php echo $buildpackage->goingTo ?>, <?php echo $buildpackage->goingFrom ?></td>
-                                <td><?php echo $buildpackage->night ?></td>
-                                <td><?php echo $buildpackage->adult ?> Adult,<?php echo $buildpackage->child ?> Child,<?php echo $buildpackage->infant ?> Infant</td>
-                                <td><?php echo $buildpackage->specificDate ?></td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-
-                    <div class="row">
-                        <div class="col">
-                            <label class="input">
-                                <input class="input__field   width-input" id="pro_sub" value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo $buildpackage->Packagetravelers ?>/ 
-                                <?php echo $buildpackage->specificDate ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName . ' ' . $admin_user_data->LastName); ?> " type="text" placeholder=" " autocomplete="off" />
-                                <span class="input__label">Email Subject</span></span>
-                                <!-- <span id="spanFname" class="spanCompany"></span> -->
-                            </label>
-                        </div>
-                        <div class="col">
-                            <label class="input">
-                                <input class="input__field width-input" type="text" placeholder=" " id="cc_email" value="" autocomplete="off" />
-                                <span class="input__label">CC</span></span>
-                                <!-- <span id="spanFname" class="spanCompany"></span> -->
-                            </label>
-                        </div>
-                    </div>
-
-
-                    <div class="row mt-3">
-                        <div class="col">
-                            <label class="input">
-                                <input class="input__field " id="cus_email" value="<?php echo $b2bcustomerquery->b2bEmail ?>" type="email" placeholder=" " autocomplete="off" />
-                                <span class="input__label">Email </span></span>
-                                <!-- <span id="spanFname" class="spanCompany"></span> -->
-                            </label>
-                        </div>
-                        
-                        <div class="col">
-                            <label class="input">
-                                <input class="input__field  width-input " value="<?php echo $b2bcustomerquery->b2bmobileNumber ?>" type="text" placeholder=" " autocomplete="off" />
-                                <span class="input__label">Mobile</span></span>
-                                <!-- <span id="spanFname" class="spanCompany"></span> -->
-                            </label>
-                        </div>
-
-
-
-
-
-                        <div class="row mt-3">
-                            <div class="col">
-                                <!-- <label class="input">
-                                    <input class="input__field " type="text" placeholder=" " autocomplete="off" />
-                                    <span class="input__label">Sender Email </span></span>
-                                </label><br> -->
-                                <div class="mt-2"> <b>Cheak In/Out</b> : <?php echo $buildpackage->specificDate ?>/<?php echo $buildpackage->noDaysFrom ?></div>
-                                <div class="mt-2"> <b>Destinations</b> : <?php echo $buildpackage->goingTo ?>, <?php echo $buildpackage->goingFrom ?></div>
-                            </div>
-                            <!-- <div class="col">
-                                <div class="form-floating">
-                                    <textarea class="form-control" style="height: 100px;"
-                                        placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                    <label for="floatingTextarea">Message</label>
-                                </div>
-                            </div> -->
-
-                        </div>
-
-
-
-                    </div>
-
-
-
-                </div>
-
-                <div id="hid_div"></div>
-                <div id="hid_div1"></div>
-                <div id="hid_div2"></div>
-
-                <div id="pdf" class="ml-5">
-
-                </div>
-
-                <div class="modal-footer d-flex justify-content-between">
-                    <div>
-
-                    </div>
-                    <!-- <div>
-                        <input type="checkbox">
-                        <label>Mail</label>
-                    </div> -->
-                    <div>
-                        <button type="button" class=" new_btn" data-bs-dismiss="modal" data-bs-dismiss="modal" style="border: none;">Close</button>
-                        <button type="button" id="modal-submit" class="new_btn px-3" style="border: none;">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
-
-
-
-
-
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('#editor8');
@@ -854,78 +595,3 @@
 </body>
 
 </html>
-
-<script>
-    const btn = document.getElementById("modal-submit");
-    btn.addEventListener("click", () => {
-        let res_name = <?php echo json_encode($proposalDetails["res_name"]); ?>;
-        let Meal = <?php echo json_encode($proposalDetails["Meal"]); ?>;
-        let Meal_Type = <?php echo json_encode($proposalDetails["Meal_Type"]); ?>;
-
-        let data_arr = {
-            "checkin": "<?php echo date("jS F Y", strtotime($buildpackage->specificDate)) ?>",
-            "checkout": "<?php echo date("jS F Y", strtotime($buildpackage->noDaysFrom)) ?>",
-            "nights": "<?php echo $buildpackage->night ?>",
-            "pax_adult": "<?php echo $buildpackage->adult ?>",
-            "pax_child": "<?php echo $buildpackage->child ?>",
-            "pax_infant": "<?php echo $buildpackage->infant ?>",
-            "room": "<?php echo $buildpackage->night  ?>",
-            // "hotel" : "?php echo isset($proposalDetails['hotelName']) ? $proposalDetails['hotelName'][0] : [] ?>",
-            "hotels": <?php echo json_encode($proposalDetails['hotels']) ?>,
-            "no_of_room": <?php echo $proposalDetails['no_of_room'] ?>,
-            "buildCheckIns": <?php echo json_encode($proposalDetails['buildCheckIns']) ?>,
-            "subject": document.getElementById("pro_sub").value,
-            "cc_email": document.getElementById("cc_email").value,
-            "cus_email": document.getElementById("cus_email").value,
-            "inclusions": inclu,
-            "exclusions": exclu,
-            "conditions": TnC,
-            "cancelation_policy": canc_ply,
-            "type": 'package',
-            "res_name": res_name,
-            "Meal": Meal,
-            "Meal_Type": Meal_Type,
-            "in_transfer_date": <?php echo json_encode($proposalDetails['in_transfer_date'])  ?>,
-            "in_transfer_pickup": <?php echo json_encode($proposalDetails['in_transfer_pickup'])  ?>,
-            "in_transfer_dropoff": <?php echo json_encode($proposalDetails['in_transfer_dropoff'])  ?>,
-            "pp_transfer_date": <?php echo json_encode($proposalDetails['pp_transfer_date'])  ?>,
-            "pp_transfer_pickup": <?php echo json_encode($proposalDetails['pp_transfer_pickup'])  ?>,
-            "pp_transfer_dropoff": <?php echo json_encode($proposalDetails['pp_transfer_dropoff'])  ?>,
-            "visa_category_drop_down": "<?php echo $proposalDetails['visa_category_drop_down']  ?>",
-            "entry_type": "<?php echo $proposalDetails['entry_type']  ?>",
-            "visa_validity": "<?php echo $proposalDetails['visa_validity']  ?>",
-            // "excursion_name_SIC" : "?php echo $proposalDetails['excursion_name_SIC'][0] ?>",
-            "excursion_name_SIC": <?php echo json_encode($proposalDetails['excursion_name_SIC']) ?>,
-            // "excursion_name_PVT" : "?php echo $proposalDetails['excursion_name_PVT'][0] ?>",
-            "excursion_name_PVT": <?php echo json_encode($proposalDetails['excursion_name_PVT']) ?>,
-            "perpax_adult": "<?php echo $proposalDetails['perpax_adult']  ?>",
-            "perpax_childs": "<?php echo $proposalDetails['perpax_childs']  ?>",
-            "perpax_infants": "<?php echo $proposalDetails['perpax_infants']  ?>",
-            "buildRoomType": <?php echo json_encode($proposalDetails['roomType']) ?>,
-            "hotelPrefrence": "<?php echo $buildpackage->hotelPrefrence ?>",
-            "room_sharing_types": <?php echo json_encode($proposalDetails['room_sharing_types']) ?>,
-            "query_ID": <?php echo $buildpackage->queryId ?>
-        };
-
-        console.log("🚀 ~ file: newproposal_new.php ~ line 861 ~ btn.addEventListener ~ data_arr", data_arr)
-
-
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('/query/sendMailProposalPackage') ?>",
-            data: {
-                data_arr: JSON.stringify(data_arr)
-            },
-            success: function(result) {
-                toastr.success("Email Sent Successfully");
-                console.log("email sent");
-            },
-            error: function() {
-                console.log("Error");
-                toastr.error("Error while sending email");
-            },
-        });
-
-
-    })
-</script>

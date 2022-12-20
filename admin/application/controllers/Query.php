@@ -87,7 +87,7 @@ class Query extends CI_Controller
 			$data['details'] = $data_en;
 			
 			if ($data['details']->type == 'package'){
-				// $this->load->view('query/email_templates/package/package_mail', $data);return;
+				$this->load->view('query/email_templates/package/package_mail', $data);return;
 				$body = $this->load->view('query/email_templates/package/package_mail', $data, TRUE);
 				echo "Email Sent package";
 			}
@@ -2996,7 +2996,11 @@ class Query extends CI_Controller
 			'query_id' => $_POST['QueryId'],
 			'user_id' => $this->session->userdata('admin_id'),
 			'user_name' => $this->session->userdata('admin_username'),
-			'transfer_price' => $_POST['totalprice_transfer']
+			'transfer_price' => $_POST['totalprice_transfer'],
+
+			'adult_single_sharing' => $_POST['subtotal_adults'].','.$_POST['totalprice_adult'].','.$_POST['perpax_adult_input'] ,
+			'child_cwb' => $_POST['subtotal_childs'].','.$_POST['totalprice_childs'].','.$_POST['perpax_childs_input'] ,
+			'infants' => $_POST['subtotal_infants'].','.$_POST['totalprice_infants'].','.$_POST['perpax_infants_input'] ,
 			
 		);
 		$user_id = $this->session->userdata()['admin_id'];
@@ -3049,8 +3053,11 @@ class Query extends CI_Controller
 			'query_id' => $_POST['QueryId'],
 			'user_id' => $this->session->userdata('admin_id'),
 			'user_name' => $this->session->userdata('admin_username'),
-			'visa_price' => $_POST['totalprice_visa']
-			
+			'visa_price' => $_POST['totalprice_visa'],
+
+			'adult_single_sharing' => $_POST['subtotal_adults'].','.$_POST['totalprice_adult'].','.$_POST['perpax_adult_input'] ,
+			'child_cwb' => $_POST['subtotal_childs'].','.$_POST['totalprice_childs'].','.$_POST['perpax_childs_input'] ,
+			'infants' => $_POST['subtotal_infants'].','.$_POST['totalprice_infants'].','.$_POST['perpax_infants_input'] ,
 		);
 		$user_id = $this->session->userdata()['admin_id'];
 		$data['admin_user_data'] = $this->db->where('id', $user_id)->get('users')->row();
@@ -3156,8 +3163,11 @@ class Query extends CI_Controller
 			'query_id' => $_POST['QueryId'],
 			'user_id' => $this->session->userdata('admin_id'),
 			'user_name' => $this->session->userdata('admin_username'),
-			'meal_price' => $_POST['totalprice_meals']
-			
+			'meal_price' => $_POST['totalprice_meals'],
+
+			'adult_single_sharing' => $_POST['subtotal_adults'].','.$_POST['totalprice_adult'].','.$_POST['perpax_adult_input'] ,
+			'child_cwb' => $_POST['subtotal_childs'].','.$_POST['totalprice_childs'].','.$_POST['perpax_childs_input'] ,
+			'infants' => $_POST['subtotal_infants'].','.$_POST['totalprice_infants'].','.$_POST['perpax_infants_input'] ,
 		);
 
 		$query = $this->db->where('query_id', $_POST['QueryId'])->get('pricing_info');
@@ -3306,7 +3316,14 @@ class Query extends CI_Controller
 			'query_id' => $_POST['QueryId'],
 			'user_id' => $this->session->userdata('admin_id'),
 			'user_name' => $this->session->userdata('admin_username'),
-			'package_price' => $_POST['totalprice_package']
+			'package_price' => $_POST['totalprice_package'],
+
+			'adult_single_sharing' => $_POST['subtotal_adults'].','.$_POST['totalprice_adult'].','.$_POST['perpax_adult'] ,
+			'double_sharing' => $_POST['subtotal_adults_double'].','.$_POST['totalprice_adult_double'].','.$_POST['perpax_adult_double'] ,
+			'triple_sharing' => $_POST['subtotal_adults_triple'].','.$_POST['totalprice_adult_triple'].','.$_POST['perpax_adult_triple'] ,
+			'child_cwb' => $_POST['subtotal_childs'].','.$_POST['totalprice_childs'].','.$_POST['perpax_childs'] ,
+			'cnb' => $_POST['subtotal_cnb'].','.$_POST['totalprice_cnb'].','.$_POST['perpax_cnb'] ,
+			'infants' => $_POST['subtotal_infants'].','.$_POST['totalprice_infants'].','.$_POST['perpax_infants'] ,
 		);
 
 		$query = $this->db->where('query_id', $_POST['QueryId'])->get('pricing_info');
@@ -3323,6 +3340,8 @@ class Query extends CI_Controller
 		$data['buildpackage'] = $this->db->where('queryId', $_POST['QueryId'])->get('querypackage')->row();
 		// echo"<pre>";print_r($data['buildpackage']);exit;
 		$data['b2bcustomerquery'] = $this->db->where('query_id', $_POST['QueryId'])->get('b2bcustomerquery')->row();
+		$data["hotel_query_details"] = $this->db->where('query_id', $_POST['QueryId'])->get('query_hotel')->row();
+		$data["activity_query_details"] = $this->db->where('query_id', $_POST['QueryId'])->get('query_excursion')->row();
 		// $this->db->where('query_id',$_POST['QueryId'])->update('b2bcustomerquery',$updatedata);
 		// echo"<pre>";print_r($data);exit;
 
@@ -3402,6 +3421,8 @@ class Query extends CI_Controller
 		
 		$data['buildpackage'] = $this->db->where('queryId', $q_id)->get('querypackage')->row();
 		$data['b2bcustomerquery'] = $this->db->where('query_id', $q_id)->get('b2bcustomerquery')->row();
+
+		$data["price_info"] = $this->db->where('query_id', $q_id)->get('pricing_info')->row();
 
 		$data['adult_per_pax'] = $adult_total == 0 || $data["package_query"][0]->adult == 0  ? 0 :  $adult_total / $data["package_query"][0]->adult;
 		$data['child_per_pax'] = $child_total == 0 || $data["package_query"][0]->child  == 0 ? 0 :  $child_total / $data["package_query"][0]->child;
@@ -3525,7 +3546,11 @@ class Query extends CI_Controller
 			'query_id' => $_POST['QueryId'],
 			'user_id' => $this->session->userdata('admin_id'),
 			'user_name' => $this->session->userdata('admin_username'),
-			'excursion_price' => $_POST['totalprice_excursion']
+			'excursion_price' => $_POST['totalprice_excursion'],
+
+			'adult_single_sharing' => $_POST['subtotal_adults'].','.$_POST['totalprice_adult'].','.$_POST['perpax_adult_input'] ,
+			'child_cwb' => $_POST['subtotal_childs'].','.$_POST['totalprice_childs'].','.$_POST['perpax_childs_input'] ,
+			'infants' => $_POST['subtotal_infants'].','.$_POST['totalprice_infants'].','.$_POST['perpax_infants_input'] ,
 			
 		);
 
@@ -3688,7 +3713,13 @@ class Query extends CI_Controller
 			'query_id' => $_POST['QueryId'],
 			'user_id' => $this->session->userdata('admin_id'),
 			'user_name' => $this->session->userdata('admin_username'),
-			'hotel_price' => $_POST['totalprice_hotel']
+			'hotel_price' => $_POST['totalprice_hotel'],
+
+			'adult_single_sharing' => $_POST['subtotal_adults'].','.$_POST['totalprice_adult'].','.$_POST['perpax_adult'] ,
+			'double_sharing' => $_POST['subtotal_adults_double'].','.$_POST['totalprice_adult_double'].','.$_POST['perpax_adult_double'] ,
+			'triple_sharing' => $_POST['subtotal_adults_triple'].','.$_POST['totalprice_adult_triple'].','.$_POST['perpax_adult_triple'] ,
+			'child_cwb' => $_POST['subtotal_childs'].','.$_POST['totalprice_childs'].','.$_POST['perpax_childs'] ,
+			'cnb' => $_POST['subtotal_infants'].','.$_POST['totalprice_infants'].','.$_POST['perpax_infants'] ,
 			
 		);
 

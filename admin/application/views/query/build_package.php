@@ -420,11 +420,11 @@
                                     </div>
                                   </td>
 
-                                  <td><input type="text" placeholder="0" class="form-control" name="adult" value="<?php echo $view->Packagetravelers; ?>" disabled>
+                                  <td><input type="text" placeholder="0" class="form-control" name="adult" value="<?php echo $view->Packagetravelers; ?>">
                                   </td>
-                                  <td><input type="text" placeholder="0" class="form-control" name="child" value="<?php echo $buildpackage->child; ?>" disabled>
+                                  <td><input type="text" placeholder="0" class="form-control" name="child" value="<?php echo $buildpackage->child; ?>">
                                   </td>
-                                  <td><input type="text" placeholder="0" class="form-control" name="infant" value="<?php echo $buildpackage->infant; ?>" disabled>
+                                  <td><input type="text" placeholder="0" class="form-control" name="infant" value="<?php echo $buildpackage->infant; ?>">
                                   </td>
                                   <td><button type="button" onclick="getvisaprice()" class="new_btn px-3">Save</button>
                                   </td>
@@ -460,7 +460,7 @@
                               <tbody>
                                 <tr id="myTableRow">
                                   <td>
-                                    <input type="text" placeholder="0" class="form-control" name="OTB" value="OTB" disabled>
+                                    <input type="text" placeholder="0" class="form-control" name="OTB" value="OTB" >
                                   </td>
                                   <td><input type="text" placeholder="0" class="form-control" name="otb_adult" id="otb_adult" value="<?php echo $view->Packagetravelers; ?>">
                                   </td>
@@ -660,6 +660,7 @@
                                       <div>
                                         <select data-mdl-for="sample2" class="form-control ex_meal" value="" tabIndex="-1" id="ex_meal_cal" name="ex_meal[]">
                                           <option value="Dinner">Dinner</option>
+                                          <option value="Breakfast">Breakfast</option>
                                           <option value="Lunch">Lunch</option>
                                         </select>
                                       </div>
@@ -669,6 +670,7 @@
                                         <select data-mdl-for="sample2" class="form-control ex_meal_type" value="" tabIndex="-1" id="ex_meal_type_cal" name="ex_meal_type[]">
                                           <option value="Veg">Veg</option>
                                           <option value="Non-Veg">Non-Veg</option>
+                                          <option value="Veg & Non-Veg">Veg & Non-Veg</option>
                                           <option value="Jain">Jain</option>
                                         </select>
                                       </div>
@@ -753,6 +755,7 @@
                                     <div>
                                       <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal" name="Meal[]">
                                         <option value="Dinner">Dinner</option>
+                                        <option value="Breakfast">Breakfast</option>
                                         <option value="Lunch">Lunch</option>
                                       </select>
                                     </div>
@@ -762,6 +765,7 @@
                                       <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal" name="Meal_Type[]">
                                         <option value="Veg">Veg</option>
                                         <option value="Non-Veg">Non-Veg</option>
+                                          <option value="Veg & Non-Veg">Veg & Non-Veg</option>
                                         <option value="Jain">Jain</option>
                                       </select>
                                     </div>
@@ -1095,7 +1099,54 @@
 
                           $(".card-box").click(function(e) {
                             e.stopPropagation();
+                            // console.clear();
+                            
+                            // adult_per_room
+                            var no_room_count = <?php echo $buildpackage->room; ?>;
+                            
+                            var buildBedType_arr = [];
+                            $(".get_bed_type").each(function(i, obj) {
+                              if(i < no_room_count){
+                                buildBedType_arr.push(obj.value);
+                              }
+                            });
 
+                            var adult_per_room_arr = [];
+                            $(".adult_per_room").each(function(i, obj) {
+                              if(i < no_room_count){
+                                adult_per_room_arr.push(obj.value);
+                              }
+                            });
+
+                            let adult_pax_total_arr = [];
+
+                            let single_share_adult_count = 0;
+                            let double_share_adult_count = 0;
+                            let triple_share_adult_count = 0;
+
+                            buildBedType_arr.map((val,index) =>
+                            {
+                              if(buildBedType_arr[index] == "Single"){
+                                single_share_adult_count += parseInt(adult_per_room_arr[index]);
+                                console.log("in single");
+                              } else if(buildBedType_arr[index] == "Double"){
+                                double_share_adult_count += parseInt(adult_per_room_arr[index]);
+                                console.log("in double");
+                              } else if(buildBedType_arr[index] == "Triple"){
+                                triple_share_adult_count += parseInt(adult_per_room_arr[index]);
+                                console.log("in triple");
+                              }
+                            });
+                            
+                            let hotel_radio = $("input[name=hotel_status]");
+                            let hotel_checked_val = hotel_radio.filter(":checked").val();
+
+                            if(hotel_checked_val != "Yes"){
+                              single_share_adult_count = <?php echo (int)$buildpackage->adult; ?>;;
+                              double_share_adult_count = 0;
+                              triple_share_adult_count = 0;
+                            }
+                            
                             let itrnl_total = 0;
                             var hotel_rate_adult = $("#hotel_rate_adult").val();
 
@@ -1109,7 +1160,7 @@
 
                             var total_price_internal_arr = $("input[name='total_price_internal[]']")
                               .map(function() {
-                                itrnl_total += parseInt($(this).val());
+                                itrnl_total += parseInt($ (this).val());
                               }).get();
                             var total_price_internal = itrnl_total;
 
@@ -1141,23 +1192,43 @@
                             var total_pax_meals_adult = $("#total_pax_meals_adult").val();
                             var intrnal_transfer_avg = parseInt(total_price_internal) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
                             var point_transfer_avg = parseInt(total_price_point) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
+
                             var sub_total_adult_single = parseInt(hotel_rate_adult_single);
-                            var sub_total_adult_double = parseInt(hotel_rate_adult_double);
-                            var sub_total_adult_triple = parseInt(hotel_rate_adult_triple);
 
                             var sub_total_adult = parseInt(sub_total_adult_single) +
-                              // parseInt(total_price_internal)+ 
-                              // parseInt(total_price_point) + 
-                              parseInt(intrnal_transfer_avg * (parseInt(pax_adult_count))) +
-                              parseInt(point_transfer_avg * (parseInt(pax_adult_count))) +
+                              parseInt(intrnal_transfer_avg * (parseInt(single_share_adult_count))) +
+                              parseInt(point_transfer_avg * (parseInt(single_share_adult_count))) +
 
-                              parseInt(total_pax_TKT_adult) +
-                              parseInt(total_pax_visa_price_adult) +
-                              parseInt(total_pax_otb_price_adult) +
-                              parseInt(total_pax_meal_adult) +
-                              parseInt(total_pax_pvt_adult) +
-                              parseInt(total_pax_meals_adult) +
-                              parseInt(total_pax_sic_adult);
+                              ((parseInt(total_pax_TKT_adult) / pax_adult_count) * single_share_adult_count) +
+                              ((parseInt(total_pax_visa_price_adult) / pax_adult_count) * single_share_adult_count) +
+                              ((parseInt(total_pax_otb_price_adult) / pax_adult_count) * single_share_adult_count) +
+                              ((parseInt(total_pax_meal_adult) / pax_adult_count) * single_share_adult_count) +
+                              ((parseInt(total_pax_pvt_adult) / pax_adult_count) * single_share_adult_count) +
+                              ((parseInt(total_pax_meals_adult) / pax_adult_count) * single_share_adult_count) +
+                              ((parseInt(total_pax_sic_adult) / pax_adult_count) * single_share_adult_count) ;
+
+                            
+                            var sub_total_adult_double = parseInt(hotel_rate_adult_double) +
+                              parseInt(intrnal_transfer_avg * (parseInt(double_share_adult_count))) +
+                              parseInt(point_transfer_avg * (parseInt(double_share_adult_count))) +
+                              ((parseInt(total_pax_TKT_adult) / pax_adult_count) * double_share_adult_count) +
+                              ((parseInt(total_pax_visa_price_adult) / pax_adult_count) * double_share_adult_count) +
+                              ((parseInt(total_pax_otb_price_adult) / pax_adult_count) * double_share_adult_count) +
+                              ((parseInt(total_pax_meal_adult) / pax_adult_count) * double_share_adult_count) +
+                              ((parseInt(total_pax_pvt_adult) / pax_adult_count) * double_share_adult_count) +
+                              ((parseInt(total_pax_meals_adult) / pax_adult_count) * double_share_adult_count) +
+                              ((parseInt(total_pax_sic_adult) / pax_adult_count) * double_share_adult_count) ;
+
+                            var sub_total_adult_triple = parseInt(hotel_rate_adult_triple) +
+                              parseInt(intrnal_transfer_avg * (parseInt(triple_share_adult_count))) +
+                              parseInt(point_transfer_avg * (parseInt(triple_share_adult_count))) +
+                              ((parseInt(total_pax_TKT_adult) / pax_adult_count) * triple_share_adult_count) +
+                              ((parseInt(total_pax_visa_price_adult) / pax_adult_count) * triple_share_adult_count) +
+                              ((parseInt(total_pax_otb_price_adult) / pax_adult_count) * triple_share_adult_count) +
+                              ((parseInt(total_pax_meal_adult) / pax_adult_count) * triple_share_adult_count) +
+                              ((parseInt(total_pax_pvt_adult) / pax_adult_count) * triple_share_adult_count) +
+                              ((parseInt(total_pax_meals_adult) / pax_adult_count) * triple_share_adult_count) +
+                              ((parseInt(total_pax_sic_adult) / pax_adult_count) * triple_share_adult_count) ;
 
                             var hotel_rate_child = $("#hotel_rate_child").val();
                             var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
@@ -1253,10 +1324,10 @@
                             $("#totalprice_cnb").val(c_type == 'USD' ? (total_cnb / usd_aed).toFixed(2) : total_cnb);
 
                             // var per_pax_adult_single = Math.ceil(hotel_pax_adult_single > 1 ? parseInt(total_adult_single) / hotel_pax_adult_single : parseInt(total_adult_single));
-                            var per_pax_adult_double = Math.ceil(hotel_pax_adult_double > 1 ? parseInt(total_adult_double) / hotel_pax_adult_double : parseInt(total_adult_double));
-                            var per_pax_adult_triple = Math.ceil(hotel_pax_adult_triple > 1 ? parseInt(total_adult_triple) / hotel_pax_adult_triple : parseInt(total_adult_triple));
+                            var per_pax_adult_double = Math.ceil(double_share_adult_count > 1 ? parseInt(total_adult_double) / double_share_adult_count : parseInt(total_adult_double));
+                            var per_pax_adult_triple = Math.ceil(triple_share_adult_count > 1 ? parseInt(total_adult_triple) / triple_share_adult_count : parseInt(total_adult_triple));
 
-                            var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
+                            var per_pax_adult = (single_share_adult_count > 1 ? parseInt(total_adult) / single_share_adult_count : parseInt(total_adult));
 
                             var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
 
@@ -1293,13 +1364,15 @@
 
                         function ex_addrowss() {
                           var cnt = $('#ex_rows_count').val();
-                          $('#ex_rows_count').val(parseInt(cnt) + parseInt(1));
+                          $('#ex_rows_count').val(parseInt(cnt) + parseInt(1));                                        
+                                          
+
                           var adds = '';
                           adds += '<tr id="ex_faqs-row' + ex_faqs_row2 + '"><td><input class="form-control ex_meals_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="ex_meals_date[]" id="meals_date' + ex_faqs_row2 + '"></td>';
                           adds += '<td> <div> <select data-mdl-for="sample2" class="form-control ex_res_type" value="" tabIndex="-1" id="ex_res_type' + ex_faqs_row2 + '" name="ex_res_type[]" onchange="get_resturant_name_ex(this.id,' + ex_faqs_row2 + ');"> <option value="">Select Option</option> <option value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';
                           adds += '<td><select data-mdl-for="sample2" class="form-control ex_res_name" value=""  tabIndex="-1" name="ex_res_name[]" id="ex_res_name' + ex_faqs_row2 + '"  ><option>select</option></select></td>'
-                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control ex_meal" value="" tabIndex="-1" id="ex_meal_cal' + ex_faqs_row2 + '" name="ex_meal[]"> <option value="Dinner">Dinner</option> <option value="Lunch">Lunch</option>  </select> </div> </td>';
-                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control ex_meal_type" value="" tabIndex="-1" id="ex_meal_type_cal' + ex_faqs_row2 + '" name="ex_meal_type[]"> <option value="Veg">Veg</option> <option value="Non-Veg">Non-Veg</option> <option value="Jain">Jain</option> </select> </div> </td>';
+                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control ex_meal" value="" tabIndex="-1" id="ex_meal_cal' + ex_faqs_row2 + '" name="ex_meal[]"> <option value="Dinner">Dinner</option><option value="Breakfast">Breakfast</option> <option value="Lunch">Lunch</option>  </select> </div> </td>';
+                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control ex_meal_type" value="" tabIndex="-1" id="ex_meal_type_cal' + ex_faqs_row2 + '" name="ex_meal_type[]"> <option value="Veg">Veg</option> <option value="Non-Veg">Non-Veg</option> <option value="Veg & Non-Veg">Veg & Non-Veg</option> <option value="Jain">Jain</option> </select> </div> </td>';
                           adds += '<td><input type="number" id="ex_no_of_meals' + ex_faqs_row2 + '" class="form-control ex_no_of_meals" name="ex_no_of_meals[]" >';
                           adds += ' <td><input type="text" placeholder="0" value="' + meal_adult_count + '" class="form-control ex_meal_adult" id="adult_meal_cal' + ex_faqs_row2 + '" name="ex_meal_adult[]" > </td>';
                           adds += '<td><input type="text" placeholder="0"  value="' + meal_child_count + '" class="form-control ex_meal_child" id="child_meal_cal' + ex_faqs_row2 + '" name="ex_meal_child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>';
@@ -1428,8 +1501,8 @@
                           adds += '<td> <div> <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type' + faqs_row2 + '" name="res_type[]" onchange="get_resturant_name(this.id,' + faqs_row2 + ');"> <option value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';
                           // adds += '<td><input class="form-control " type="text" value="" name="res_name[]" id="res_name'+faqs_row2 + '"></td>';
                           adds += '<td><select data-mdl-for="sample2" class="form-control res_name" value=""  tabIndex="-1" name="res_name[]" id="res_name' + faqs_row2 + '"  ><option>select</option></select></td>'
-                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal' + faqs_row2 + '" name="Meal[]"> <option value="Dinner">Dinner</option> <option value="Lunch">Lunch</option>  </select> </div> </td>';
-                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal' + faqs_row2 + '" name="Meal_Type[]"> <option value="Veg">Veg</option> <option value="Non-Veg">Non-Veg</option> <option value="Jain">Jain</option> </select> </div> </td>';
+                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal' + faqs_row2 + '" name="Meal[]"> <option value="Dinner">Dinner</option> <option value="Breakfast">Breakfast</option> <option value="Lunch">Lunch</option>  </select> </div> </td>';
+                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal' + faqs_row2 + '" name="Meal_Type[]"> <option value="Veg">Veg</option> <option value="Non-Veg">Non-Veg</option> <option value="Veg & Non-Veg">Veg & Non-Veg</option> <option value="Jain">Jain</option> </select> </div> </td>';
                           adds += '<td><input type="number" id="no_of_meals' + faqs_row2 + '" class="form-control no_of_meals" name="no_of_meals[]" >';
                           adds += ' <td><input type="text" placeholder="0" class="form-control meal_adult" id="adult_meal_cal' + faqs_row2 + '" name="adult[]" > </td>';
                           adds += '<td><input type="text" placeholder="0" class="form-control meal_child" id="child_meal_cal' + faqs_row2 + '" name="child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>';
@@ -4013,6 +4086,14 @@
     $('.bnights').each(function() {
       allocated_days += Number($(this).val());
     });
+    
+    var totalNoRoom = <?php echo $buildpackage->room ?>;
+    var noOfNightsR = 0;
+    $(".get_no_nights").each(function(index) {
+      if(((index+1) % parseInt(totalNoRoom)) == 0) {
+        noOfNightsR += Number($(this).val());
+      }
+    });
 
     setTimeout(function() {
       $('.noOfDaysAlertcls').attr("style", "display:none;")
@@ -4046,14 +4127,14 @@
       var d = "<?php echo $view->specificDate; ?>";
       var f = moment(d).add((allocated_days / total_rooms), 'days');
       $('.bnights').attr('readonly', true);
-      // if (allocated_days < totalNoOfDays) {
+      if (noOfNightsR < totalNoOfDays) {
 
-      if (allocated_days) {
+      // if (allocated_days) {
         $('#rows_count').val(parseInt(cnt) + parseInt(1));
         faqs_row = parseInt(cnt) + parseInt(1);
         var template = '';
         var no_of_night = '';
-        for (let i = 1; i <= (totalNoOfDays); i++) {
+        for (let i = 1; i <= ((totalNoOfDays - noOfNightsR)); i++) {
           no_of_night += '<option value="' + i + '">' + i + '</option>';
         }
         for (let room_no = 1; room_no <= total_rooms; room_no++) {

@@ -17,7 +17,7 @@
 
         body {
             min-height: 100vh;
-            
+
         }
 
         .second {
@@ -229,11 +229,11 @@
             padding: 6px;
         }
 
-        .bg-primary{
+        .bg-primary {
             background: #d9a927 !important;
         }
     </style>
-	<link href="<?php echo base_url();?>public/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url(); ?>public/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 </head>
 
@@ -247,15 +247,15 @@
             <button type="button" class="new_btn px-3" style="border: none;" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Share
             </button>
-            <a href="<?php echo base_url();?>query/view_query">
-            <button type="button" class="new_btn px-3" style="border: none;">
-                Close
-            </button>
+            <a href="<?php echo base_url(); ?>query/view_query">
+                <button type="button" class="new_btn px-3" style="border: none;">
+                    Close
+                </button>
             </a>
         </div>
         <br />
         <div class="d-flex justify-content-between" style="margin-top: 3%;">
-        <img class="w-25" src="<?php echo base_url();?>public/image/logo.png"/>
+            <img class="w-25" src="<?php echo base_url(); ?>public/image/logo.png" />
             <p>
                 <b>Name: </b><?php echo $b2bcustomerquery->b2bcompanyName ?> <br>
                 <b>Email:</b> <?php echo $b2bcustomerquery->b2bEmail ?> <br>
@@ -274,283 +274,341 @@
         <hr>
 
         <div class="bg-primary d-flex justify-content-around">
-            <h3 class="text-light p-2">Check In: <?php echo (new DateTime($buildpackage->specificDate))->format('d-M-Y') ?> 
-            <h3 class="text-light p-2">No of Nights: <?php echo $buildpackage->night ?> 
-            <h3 class="text-light p-2">Check Out: <?php echo (new DateTime($buildpackage->noDaysFrom))->format('d-M-Y') ?> 
-            </h3>
+            <h3 class="text-light p-2">Check In: <?php echo (new DateTime($buildpackage->specificDate))->format('d-M-Y') ?>
+                <h3 class="text-light p-2">No of Nights: <?php echo $buildpackage->night ?>
+                    <h3 class="text-light p-2">Check Out: <?php echo (new DateTime($buildpackage->noDaysFrom))->format('d-M-Y') ?>
+                    </h3>
         </div>
     </div>
 
+    <?php if (isset($proposalDetails['hotelName']) && !empty($proposalDetails['hotelName'])) : ?>
+    <?php 
+          $room_nights_arr = explode(",",$hotel_query_details->nights);
+          $room_hotel_name_arr = explode(",",$hotel_query_details->hotel_name);
+          $room_room_type_arr = explode(",",$hotel_query_details->room_type);
 
+          foreach ($room_nights_arr as $key => $value) {
+                $result_nights_arr[$key] = array_splice($room_nights_arr,0,3);
+                $result_rooms_arr[$key] = array_splice($room_hotel_name_arr,0,3);
+                $result_bed_arr[$key] = array_splice($room_room_type_arr,0,3);
 
+                if(count($room_nights_arr) == 0){ break; }
+            }
+          
+            $out = array();
+            $final_hotel_names_details = [];
+            $final_hotel_nights_details = [];
+            $final_room_bed_details = [];
+
+            foreach ($result_nights_arr as $key2 => $value2){
+                $dup_key = '';
+                foreach ($value2 as $k2 => $val2) {
+                    if (in_array($result_rooms_arr[$key2][$k2], $final_hotel_names_details))
+                    {
+                      $find_key = array_search($result_rooms_arr[$key2][$k2], $final_hotel_names_details); 
+
+                      if($dup_key != $key2){ 
+                        $final_hotel_nights_details[$find_key] += (int)$val2;
+                      }
+                      $dup_key = $key2;
+                    }
+                    else
+                    {
+                      array_push($final_hotel_names_details,$result_rooms_arr[$key2][$k2]);
+                      array_push($final_hotel_nights_details,(int)$val2);
+                      array_push($final_room_bed_details,$result_bed_arr[$key2][$k2]);
+                    }
+
+                }
+            }
+    ?>
+    <?php endif ?>
 
     <div class="container mt-5 section">
-        <?php if (isset($proposalDetails['hotelName'])) : ?>
+        <?php if (isset($proposalDetails['hotelName']) && !empty($proposalDetails['hotelName'])) : ?>
             <div class=" second">
                 <div class="bg-primary ">
                     <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-hotel"></i> Hotel</h3>
                 </div>
-                <?php foreach ($proposalDetails['hotelName'] as $key => $val) : ?>
+                <?php foreach ($final_hotel_names_details as $key => $val) : ?>
 
                     <div class="head">
-                        <h5 class="text-capitalize text-light" style="padding: 7px;"><?php print_r($proposalDetails['hotels'][$key]->hotelname) ?> - No of Nights <?php echo $proposalDetails['noOfNights'][$key] ?> </h5>
+                        <h5 class="text-capitalize text-light p-2">Hotel Name : <?php print_r($final_hotel_names_details[$key]) ?> - No of Nights <?php echo $final_hotel_nights_details[$key] ?> </h5>
                     </div>
                     <div>
-                        <h5 class="text-capitalize"><b>Hotel Name : </b> <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></h5>
-                        <h5 class="text-capitalize"><b>Room Type : </b> <?php echo $proposalDetails['roomType'][$key] ?></h5>
+                        <!-- <h5 class="text-capitalize"><b>Hotel Name : </b> <?php print_r($proposalDetails['hotels'][$key]->hotelname) ?></h5> -->
+                        <h5 class="text-capitalize p-2"><b> Room Type : </b> <?php echo $final_room_bed_details[$key] ?></h5>
                     </div>
                 <?php endforeach ?>
             </div>
         <?php endif ?>
-        <br/>
 
-        <?php if(isset($proposalDetails['excursion_name_SIC']) || isset($proposalDetails['excursion_name_PVT']) || isset($proposalDetails['excursion_name_TKT'])  ) : ?>
-        <div class=" second">
-            <div class=" bg-primary ">
-                <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-place-of-worship"></i> Sightseeing</h3>
-            </div>
-            <div>
-            <?php if(isset($proposalDetails['excursion_name_SIC'])) : ?>
-            <div class="head">
-                    <h5 class="text-light" style="padding: 7px;"> SIC </h5>
-                   
+        <?php if (isset($proposalDetails['excursion_name_SIC']) || isset($proposalDetails['excursion_name_PVT']) || isset($proposalDetails['excursion_name_TKT'])) : ?>
+            <div class="mt-4 second">
+                <div class=" bg-primary ">
+                    <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-place-of-worship"></i> Sightseeing</h3>
                 </div>
+                <div>
+                    <?php if (isset($proposalDetails['excursion_name_SIC'])) : ?>
+                        <div class="head">
+                            <h5 class="text-light" style="padding: 7px;"> SIC </h5>
 
-            <?php foreach($proposalDetails['excursion_name_SIC'] as $keys => $vals) : ?>
-            <ul><li>
-                <h5><?php echo $vals ?></h5>
-            </li></ul>
-
-            <?php endforeach ?>
-
-            </div>
-            <div>
-            <?php endif ?>
-
-            <?php if( isset($proposalDetails['excursion_name_PVT'])  ) : ?>
-            <div class="head">
-                    <h5 class="text-light" style="padding: 7px;"> PVT</h5>
-                </div>
-            <?php foreach($proposalDetails['excursion_name_PVT'] as $keyss => $valss) : ?>
-            <ul><li>
-                <h5><?php echo $valss ?></h5>
-                </li></ul>
-
-            <?php endforeach ?>
-            </div>
-            <?php endif ?>
-
-            <div>
-            <?php if(isset($proposalDetails['excursion_name_TKT'])) : ?>
-            <div class="head">
-                    <h5 class="text-light" style="padding: 7px;"> TKT </h5>
-                </div>
-            <?php foreach($proposalDetails['excursion_name_TKT'] as $keys => $vals) : ?>
-            <ul><li>
-                <h5><?php echo $vals ?></h5><br/>
-            </li></ul>
-            <?php endforeach ?>
-            </div>
-
-        <?php endif ?>
-        </div>
-        <?php endif ?>
-        <br /><br />
-        <div class=" second">
-            <div class=" bg-primary ">
-                <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-car"></i> Transfer</h3>
-            </div>
-            <div>
-                <table class="table table-bordered">
-                    <thead align="center" style="background: #dbd5d5;">
-                        <th> Transport type</th>
-                        <th> Date</th>
-                        <th> Pick Up</th>
-                        <th> Drop Off </th>
-                    </thead>
-
-                    <?php if(isset($proposalDetails['in_transfer_pickup']) && !empty($proposalDetails['in_transfer_pickup'])) : ?>
-                    <?php foreach($proposalDetails['in_transfer_pickup'] as $key => $val) : ?>
-                    <?php if($val != 'Pickup' && isset($val)) : ?>
-
-                    <tbody>
-                        <tr align="center">
-                        <?php
-                            $date = new DateTime($proposalDetails['in_transfer_date'][$key]);
-                            $date_trans = $date->format('d-M-Y');
-                            ?>
-                            <!-- <td><b>Per PAX</b></td> -->
-                            <td>Internal City/Hotel Transfer</td>
-                            <td> <?php echo $date_trans ?></td>
-                            <td> <?php echo $proposalDetails['in_transfer_pickup'][$key] ?></td>
-                            <td> <?php echo $proposalDetails['in_transfer_dropoff'][$key] ?></td>
-
-                        </tr>
-                    </tbody>
-                    <?php endif ?>
-                    <?php endforeach ?>
-                    <?php endif ?>
-
-                    <?php if(isset($proposalDetails['pp_transfer_pickup']) && !empty($proposalDetails['pp_transfer_pickup'])) : ?>
-                    <?php foreach($proposalDetails['pp_transfer_pickup'] as $key => $val) : ?>
-                    <?php if($val != 'Pickup') : ?>
-                    <tbody>
-                        <tr align="center">
-                        <?php
-                                $date = new DateTime($proposalDetails['pp_transfer_date'][$key]);
-                                $date_pp = $date->format('d-M-Y');
-                                ?>
-                            <td>Airport Return Transfer</td>
-                            <td> <?php echo $date_pp ?></td>
-                            <td> <?php echo $proposalDetails['pp_transfer_pickup'][$key] ?></td>
-                            <td> <?php echo $proposalDetails['pp_transfer_dropoff'][$key] ?></td>
-                        </tr>
-                    </tbody>
-                    <?php endif ?>
-                    <?php endforeach ?>
-                    <?php endif ?>
-
-                </table>
-            </div>
-        </div>
-        <br /><br />
-        <div class=" second">
-            <div class=" bg-primary ">
-                <h3 class="text-light" style="padding: 7px;">Price</h3>
-            </div>
-            <div>
-                <table class="table table-bordered">
-                    <tr align="center">
-                                  <td></td>
-                                  <!-- <td>Adult</td> -->
-                                  <td>Single Sharing</td>
-                                  <td>Double Sharing</td>
-                                  <td>Triple Sharing</td>
-                                  <td>CWB</td>
-                                  <td>CNB</td>
-                                  <td>Infant</td>
-                                </tr>
-
-                                <tr align="center">
-                                  <td><b>Sub Total</b></td>
-                                  <td><?php echo $proposalDetails['subtotal_adults'] ?></td>
-                                  <!-- <td><?php echo $proposalDetails['subtotal_adults_single'] ?></td> -->
-                                  <td><?php echo $proposalDetails['subtotal_adults_double'] ?></td>
-                                  <td><?php echo $proposalDetails['subtotal_adults_triple'] ?></td>
-                                  <td><?php echo $proposalDetails['subtotal_childs'] ?></td>
-                                  <td><?php echo $proposalDetails['subtotal_cnb'] ?></td>
-                                  <td><?php echo $proposalDetails['subtotal_infants'] ?></td>
-                                </tr>
-                                <tr align="center">
-                                  <td><b>Total Price</b></td>
-                                  <td><?php echo $proposalDetails['totalprice_adult'] ?></td>
-                                  <!-- <td><?php echo $proposalDetails['totalprice_adult_single'] ?></td> -->
-                                  <td><?php echo $proposalDetails['totalprice_adult_double'] ?></td>
-                                  <td><?php echo $proposalDetails['totalprice_adult_triple'] ?></td>
-                                  <td><?php echo $proposalDetails['totalprice_childs'] ?></td>
-                                  <td><?php echo $proposalDetails['totalprice_cnb'] ?></td>
-                                  <td><?php echo $proposalDetails['totalprice_infants'] ?></td>
-                                </tr>
-                                <tr align="center">
-                                  <td><b>Per PAX</b></td>
-                                  <td><?php echo $proposalDetails['perpax_adult'] ?></td>
-                                  <!-- <td><?php echo $proposalDetails['perpax_adult_single'] ?></td> -->
-                                  <td><?php echo $proposalDetails['perpax_adult_double'] ?></td>
-                                  <td><?php echo $proposalDetails['perpax_adult_triple'] ?></td>
-                                  <td><?php echo $proposalDetails['perpax_childs'] ?></td>
-                                  <td><?php echo $proposalDetails['perpax_cnb'] ?></td>
-                                  <td><?php echo $proposalDetails['perpax_infants'] ?></td>
-                                </tr>
-
-                </table>
-            </div>
-        </div>
-        <br /><br />
-        <div class="second mb-5 ck_data">
-            <div class="accordion accordion-flush mt-2">
-                <div class="accordion-item border">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                        Above Rate Inclusive of
-                        </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <div id="editor1">
-                        <li><?php echo $buildpackage->night ?> Nights stay at the mentioned hotel</li>
-                        <?php if($proposalDetails['build_room_types'][0] == 'BB') : ?>
-                            <li><?php echo $buildpackage->night ?> Breakfast Buffet Breakfast in the Hotel</li>
-                        <?php endif ?>
-                    
-                    <?php if(isset($proposalDetails['in_transfer_pickup']) && !empty($proposalDetails['in_transfer_pickup']) ) : ?>
-                    <?php foreach($proposalDetails['in_transfer_pickup'] as $key => $val) : ?>
-                    <?php if($val != 'Pickup') : ?>
-                        <li><?php echo $proposalDetails['internal_route'][$key] ?></li>
-                    <?php endif ?>
-                    <?php endforeach ?>
-                    <?php endif ?>
-
-                    <?php if(isset($proposalDetails['pp_transfer_pickup'])) : ?>
-                    <?php foreach($proposalDetails['pp_transfer_pickup'] as $key => $val) : ?>
-                    <?php if($val != 'Pickup') : ?>
-                        <li><?php echo $proposalDetails['return_route'][$key] ?></li>
-                        <?php endif ?>
-                    <?php endforeach ?>
-                    <?php endif ?>
-
-                    <?php if(isset($proposalDetails['excursion_name_SIC'])) : ?>
-                    <?php foreach($proposalDetails['excursion_name_SIC'] as $key => $val) : ?>
-                        <li><?php echo $val ?> </li>
-                    <?php endforeach ?>
-                    <?php endif ?>
-                
-                    <?php if(isset($proposalDetails['excursion_name_PVT'])) : ?>
-                    <?php foreach($proposalDetails['excursion_name_PVT'] as $key => $val) : ?>
-                        <li><?php echo $val ?></li>
-                    <?php endforeach ?>
-                    <?php endif ?>
-
-                    <?php if(isset($proposalDetails['excursion_name_TKT'])) : ?>
-                    <?php foreach($proposalDetails['excursion_name_TKT'] as $key => $val) : ?>
-                        <li><?php echo $val ?></li>
-                    <?php endforeach ?>
-                    <?php endif ?>
-
-                    <?php if(isset($proposalDetails['res_name'][0])) : ?>
-                    <?php if($proposalDetails['res_name'][0] != 'select') : ?>
-                        <?php foreach($proposalDetails['res_name'] as $key => $val) : ?>
-                            <li><?php echo $proposalDetails['no_of_meals'][$key]." ".$proposalDetails['Meal'][$key]." Meal Coupons (".$proposalDetails['res_type'][$key]." ".$proposalDetails['res_name'][$key].") ".
-                            ($proposalDetails['transfer_with_or_without'][$key] == 'without_transfer' ? 'Without Transfer' : 'With Transfer'); ?> 
-                            </li>
-                        <?php endforeach ?>
-                    <?php endif ?>
-                    <?php endif ?>
-
-                    <?php if(!empty($proposalDetails['visa_category_drop_down'])) : ?>
-                        <li>UAE Normal Single Entry Tourist Visa With Covid-19 Inbound Insurance (Subject To Immigration Approval)</li>
-                    <?php endif ?>
-                    <li>Tourism Dirhams Fees</li>
-                    <li>Vat 5% Inclusive</li>
-                    <li>All Applicable Taxes</li>
-                    <li>All of the above services with the hotel to hotel transfer and ticket</li>
-                    <?php if(isset($proposalDetails['excursion_name_SIC'])) : ?>
-                        <li>All Tours & Transfers on sharing Basis except airport transfer</li>
-                    <?php endif ?>
-
-                            </div>
-                        
                         </div>
+
+                        <?php foreach ($proposalDetails['excursion_name_SIC'] as $keys => $vals) : ?>
+                            <ul>
+                                <li>
+                                    <h5><?php echo $vals ?></h5>
+                                </li>
+                            </ul>
+
+                        <?php endforeach ?>
+
+                </div>
+                <div>
+                <?php endif ?>
+
+                <?php if (isset($proposalDetails['excursion_name_PVT'])) : ?>
+                    <div class="head">
+                        <h5 class="text-light" style="padding: 7px;"> PVT</h5>
+                    </div>
+                    <?php foreach ($proposalDetails['excursion_name_PVT'] as $keyss => $valss) : ?>
+                        <ul>
+                            <li>
+                                <h5><?php echo $valss ?></h5>
+                            </li>
+                        </ul>
+
+                    <?php endforeach ?>
+                </div>
+            <?php endif ?>
+
+            <div>
+                <?php if (isset($proposalDetails['excursion_name_TKT'])) : ?>
+                    <div class="head">
+                        <h5 class="text-light" style="padding: 7px;"> TKT </h5>
+                    </div>
+                    <?php foreach ($proposalDetails['excursion_name_TKT'] as $keys => $vals) : ?>
+                        <ul>
+                            <li>
+                                <h5><?php echo $vals ?></h5><br />
+                            </li>
+                        </ul>
+                    <?php endforeach ?>
+            </div>
+
+        <?php endif ?>
+            </div>
+        <?php endif ?>
+
+        <?php if (($proposalDetails['in_transfer_pickup'][0] != "Pickup") && !empty($proposalDetails['in_transfer_pickup'][0]) ||
+            ($proposalDetails['pp_transfer_pickup'][0] != "Pickup") && !empty($proposalDetails['pp_transfer_pickup'][0])
+        ) : ?>
+
+            <div class="mt-4 second">
+                <div class=" bg-primary ">
+                    <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-car"></i> Transfer</h3>
+                </div>
+                <div>
+                    <table class="table table-bordered">
+                        <thead align="center" style="background: #dbd5d5;">
+                            <th> Transport type</th>
+                            <th> Date</th>
+                            <th> Pick Up</th>
+                            <th> Drop Off </th>
+                        </thead>
+
+                        <?php if (isset($proposalDetails['in_transfer_pickup']) && !empty($proposalDetails['in_transfer_pickup'])) : ?>
+                            <?php foreach ($proposalDetails['in_transfer_pickup'] as $key => $val) : ?>
+                                <?php if ($val != 'Pickup' && isset($val)) : ?>
+
+                                    <tbody>
+                                        <tr align="center">
+                                            <?php
+                                            $date = new DateTime($proposalDetails['in_transfer_date'][$key]);
+                                            $date_trans = $date->format('d-M-Y');
+                                            ?>
+                                            <!-- <td><b>Per PAX</b></td> -->
+                                            <td>Internal City/Hotel Transfer</td>
+                                            <td> <?php echo $date_trans ?></td>
+                                            <td> <?php echo $proposalDetails['in_transfer_pickup'][$key] ?></td>
+                                            <td> <?php echo $proposalDetails['in_transfer_dropoff'][$key] ?></td>
+
+                                        </tr>
+                                    </tbody>
+                                <?php endif ?>
+                            <?php endforeach ?>
+                        <?php endif ?>
+
+                        <?php if (isset($proposalDetails['pp_transfer_pickup']) && !empty($proposalDetails['pp_transfer_pickup'])) : ?>
+                            <?php foreach ($proposalDetails['pp_transfer_pickup'] as $key => $val) : ?>
+                                <?php if ($val != 'Pickup') : ?>
+                                    <tbody>
+                                        <tr align="center">
+                                            <?php
+                                            $date = new DateTime($proposalDetails['pp_transfer_date'][$key]);
+                                            $date_pp = $date->format('d-M-Y');
+                                            ?>
+                                            <td>Airport Return Transfer</td>
+                                            <td> <?php echo $date_pp ?></td>
+                                            <td> <?php echo $proposalDetails['pp_transfer_pickup'][$key] ?></td>
+                                            <td> <?php echo $proposalDetails['pp_transfer_dropoff'][$key] ?></td>
+                                        </tr>
+                                    </tbody>
+                                <?php endif ?>
+                            <?php endforeach ?>
+                        <?php endif ?>
+
+                    </table>
+                </div>
+            </div>
+        <?php endif ?>
+
+
+    </div>
+
+    </div>
+
+    <div class="container">
+
+
+    <div class="mt-4 second">
+        <div class=" bg-primary ">
+            <h3 class="text-light" style="padding: 7px;">Price</h3>
+        </div>
+        <div>
+            <table class="table table-bordered">
+                <tr align="center">
+                    <td></td>
+                    <!-- <td>Adult</td> -->
+                    <td>Single Sharing</td>
+                    <td>Double Sharing</td>
+                    <td>Triple Sharing</td>
+                    <td>CWB</td>
+                    <td>CNB</td>
+                    <td>Infant</td>
+                </tr>
+
+                <tr align="center">
+                    <td><b>Sub Total</b></td>
+                    <td><?php echo $proposalDetails['subtotal_adults'] ?></td>
+                    <!-- <td><?php echo $proposalDetails['subtotal_adults_single'] ?></td> -->
+                    <td><?php echo $proposalDetails['subtotal_adults_double'] ?></td>
+                    <td><?php echo $proposalDetails['subtotal_adults_triple'] ?></td>
+                    <td><?php echo $proposalDetails['subtotal_childs'] ?></td>
+                    <td><?php echo $proposalDetails['subtotal_cnb'] ?></td>
+                    <td><?php echo $proposalDetails['subtotal_infants'] ?></td>
+                </tr>
+                <tr align="center">
+                    <td><b>Total Price</b></td>
+                    <td><?php echo $proposalDetails['totalprice_adult'] ?></td>
+                    <!-- <td><?php echo $proposalDetails['totalprice_adult_single'] ?></td> -->
+                    <td><?php echo $proposalDetails['totalprice_adult_double'] ?></td>
+                    <td><?php echo $proposalDetails['totalprice_adult_triple'] ?></td>
+                    <td><?php echo $proposalDetails['totalprice_childs'] ?></td>
+                    <td><?php echo $proposalDetails['totalprice_cnb'] ?></td>
+                    <td><?php echo $proposalDetails['totalprice_infants'] ?></td>
+                </tr>
+                <tr align="center">
+                    <td><b>Per PAX</b></td>
+                    <td><?php echo $proposalDetails['perpax_adult'] ?></td>
+                    <!-- <td><?php echo $proposalDetails['perpax_adult_single'] ?></td> -->
+                    <td><?php echo $proposalDetails['perpax_adult_double'] ?></td>
+                    <td><?php echo $proposalDetails['perpax_adult_triple'] ?></td>
+                    <td><?php echo $proposalDetails['perpax_childs'] ?></td>
+                    <td><?php echo $proposalDetails['perpax_cnb'] ?></td>
+                    <td><?php echo $proposalDetails['perpax_infants'] ?></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-4 second mb-5 ck_data">
+        <div class="accordion accordion-flush mt-2">
+            <div class="accordion-item border">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Above Rate Inclusive of
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <div id="editor1">
+                            <li><?php echo $buildpackage->night ?> Nights stay at the mentioned hotel</li>
+                            <?php if ($proposalDetails['build_room_types'][0] == 'BB') : ?>
+                                <li><?php echo $buildpackage->night ?> Breakfast Buffet Breakfast in the Hotel</li>
+                            <?php endif ?>
+
+                            <?php if (isset($proposalDetails['in_transfer_pickup']) && !empty($proposalDetails['in_transfer_pickup'])) : ?>
+                                <?php foreach ($proposalDetails['in_transfer_pickup'] as $key => $val) : ?>
+                                    <?php if ($val != 'Pickup') : ?>
+                                        <li><?php echo $proposalDetails['internal_route'][$key] ?></li>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            <?php endif ?>
+
+                            <?php if (isset($proposalDetails['pp_transfer_pickup'])) : ?>
+                                <?php foreach ($proposalDetails['pp_transfer_pickup'] as $key => $val) : ?>
+                                    <?php if ($val != 'Pickup') : ?>
+                                        <li><?php echo $proposalDetails['return_route'][$key] ?></li>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            <?php endif ?>
+
+                            <?php if (isset($proposalDetails['excursion_name_SIC'])) : ?>
+                                <?php foreach ($proposalDetails['excursion_name_SIC'] as $key => $val) : ?>
+                                    <li><?php echo $val ?> </li>
+                                <?php endforeach ?>
+                            <?php endif ?>
+
+                            <?php if (isset($proposalDetails['excursion_name_PVT'])) : ?>
+                                <?php foreach ($proposalDetails['excursion_name_PVT'] as $key => $val) : ?>
+                                    <li><?php echo $val ?></li>
+                                <?php endforeach ?>
+                            <?php endif ?>
+
+                            <?php if (isset($proposalDetails['excursion_name_TKT'])) : ?>
+                                <?php foreach ($proposalDetails['excursion_name_TKT'] as $key => $val) : ?>
+                                    <li><?php echo $val ?></li>
+                                <?php endforeach ?>
+                            <?php endif ?>
+
+                            <?php if (isset($proposalDetails['res_name'][0])) : ?>
+                                <?php if ($proposalDetails['res_name'][0] != 'select') : ?>
+                                    <?php foreach ($proposalDetails['res_name'] as $key => $val) : ?>
+                                        <li><?php echo $proposalDetails['no_of_meals'][$key] . " " . $proposalDetails['Meal'][$key] . " Meal Coupons (" . $proposalDetails['res_type'][$key] . " " . $proposalDetails['res_name'][$key] . ") " .
+                                                ($proposalDetails['transfer_with_or_without'][$key] == 'without_transfer' ? 'Without Transfer' : 'With Transfer'); ?>
+                                        </li>
+                                    <?php endforeach ?>
+                                <?php endif ?>
+                            <?php endif ?>
+
+                            <?php if (!empty($proposalDetails['visa_category_drop_down'])) : ?>
+                                <li>UAE Normal Single Entry Tourist Visa With Covid-19 Inbound Insurance (Subject To Immigration Approval)</li>
+                            <?php endif ?>
+                            <li>Tourism Dirhams Fees</li>
+                            <li>Vat 5% Inclusive</li>
+                            <li>All Applicable Taxes</li>
+                            <li>All of the above services with the hotel to hotel transfer and ticket</li>
+                            <?php if (isset($proposalDetails['excursion_name_SIC'])) : ?>
+                                <li>All Tours & Transfers on sharing Basis except airport transfer</li>
+                            <?php endif ?>
+
+                        </div>
+
                     </div>
                 </div>
-                <div class="accordion-item mt-3 border">
-                    <h2 class="accordion-header" id="flush-headingTwo">
+            </div>
+            <div class="accordion-item mt-3 border">
+                <h2 class="accordion-header" id="flush-headingTwo">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
                         General Terms and Conditions
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                        <div class="accordion-body">
-                            <div id="editor7">
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                    <div class="accordion-body">
+                        <div id="editor7">
                             <li>
                                 Rooms and rates are subject
                                 to availability at the time of actual booking.
@@ -586,7 +644,7 @@
                                 revise rate at later stage
                             </li>
                             <li>
-                                
+
                                 Itinerary might get changed according to the availability of
                                 tours & services and it will be informed and updated to the guest
                                 once they reach Dubai
@@ -627,46 +685,45 @@
                                 Bank Charges AED 80/- will be
                                 Charged Mandatory on the total invoice.
                             </li>
-                            </div>
                         </div>
                     </div>
-                    
                 </div>
+
             </div>
+        </div>
 
-            <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion" id="accordionPanelsStayOpenExample">
 
-                <div class="accordion-item  mt-3">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+            <div class="accordion-item  mt-3">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
                         Cancellation Terms: FIT
-                        </button>
-                    </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <div id="editor2">
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <div id="editor2">
                             <li>25% cancellation within 30 days before travel.</li>
                             <li>50% cancellation within 10 days before Travel.</li>
                             <li>75% cancellation within 07 days before Travel.</li>
                             <li>Any cancellation within 04 days will lead to 100% cancellation charge. </li>
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item  mt-3 border">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                        Cancellation Terms:  Groups (MICE)
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                        <div class="accordion-body">
-                            <div id="editor8">
+            </div>
+            <div class="accordion-item  mt-3 border">
+                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                        Cancellation Terms: Groups (MICE)
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                    <div class="accordion-body">
+                        <div id="editor8">
                             <li>25% cancellation within 30 days before travel.</li>
                             <li>50% cancellation within 15 days before Travel.</li>
                             <li>100% cancellation within 07 days before Travel.</li>
                             <li>Any cancellation within 04 days will lead to 100% cancellation charge.</li>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -674,9 +731,8 @@
         </div>
     </div>
 
-
-
     </div>
+
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -707,14 +763,14 @@
 
                         </tbody>
                     </table>
-            
+
                     <div class="row">
                         <div class="col">
                             <label class="input">
-                            <?php $date = new DateTime($buildpackage->specificDate);
-                            $new_df = $date->format('d-M-Y'); ?>
+                                <?php $date = new DateTime($buildpackage->specificDate);
+                                $new_df = $date->format('d-M-Y'); ?>
                                 <input class="input__field   width-input" id="pro_sub" value="<?php echo $buildpackage->queryId ?> - Diamond Tours LLC Dubai / Pax:<?php echo ($buildpackage->adult + $buildpackage->child + $buildpackage->infant)  ?>/ 
-                                <?php echo $new_df ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName.' '.$admin_user_data->LastName); ?> " type="text" placeholder=" " autocomplete="off" />
+                                <?php echo $new_df ?> / <?php echo $buildpackage->goingTo ?> /  <?php print_r($admin_user_data->firstName . ' ' . $admin_user_data->LastName); ?> " type="text" placeholder=" " autocomplete="off" />
                                 <span class="input__label">Email Subject</span></span>
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>
@@ -737,7 +793,7 @@
                                 <!-- <span id="spanFname" class="spanCompany"></span> -->
                             </label>
                         </div>
-                        
+
                         <div class="col">
                             <label class="input">
                                 <input class="input__field  width-input " value="<?php echo $b2bcustomerquery->b2bmobileNumber ?>" type="text" placeholder=" " autocomplete="off" />
@@ -748,7 +804,7 @@
 
 
 
-                        
+
 
                         <div class="row mt-3">
                             <div class="col">
@@ -758,7 +814,7 @@
                                 </label><br> -->
                                 <?php
                                 $date = new DateTime($buildpackage->specificDate);
-                                $date2 = new DateTime( $buildpackage->noDaysFrom);
+                                $date2 = new DateTime($buildpackage->noDaysFrom);
                                 $check_in = $date->format('d-M-Y');
                                 $check_out = $date2->format('d-M-Y');
                                 ?>
@@ -793,24 +849,24 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-<script>
-	CKEDITOR.replace('#editor8');
-</script>
-<script>
-        var inclu = ""; 
-        var exclu = ""; 
-        var TnC = ""; 
-        var canc_ply = ""; 
-        var FIT = ""; 
-        var MICE = ""; 
+    <script>
+        CKEDITOR.replace('#editor8');
+    </script>
+    <script>
+        var inclu = "";
+        var exclu = "";
+        var TnC = "";
+        var canc_ply = "";
+        var FIT = "";
+        var MICE = "";
 
         ClassicEditor
             .create(document.querySelector('#editor1'))
             .then(editor => {
                 inclu = editor.getData();
                 editor.model.document.on('change:data', () => {
-                inclu = editor.getData();
-                // $('<input>').attr({type: 'hidden',id: 'Incl',name: 'Incl',value: editor}).appendTo('#hid_div');
+                    inclu = editor.getData();
+                    // $('<input>').attr({type: 'hidden',id: 'Incl',name: 'Incl',value: editor}).appendTo('#hid_div');
                 });
                 console.error(editor);
 
@@ -867,7 +923,7 @@
             .then(editor => {
                 TnC = editor.getData();
                 editor.model.document.on('change:data', () => {
-                TnC = editor.getData();
+                    TnC = editor.getData();
                 });
             })
             .catch(error => {
@@ -878,7 +934,7 @@
             .then(editor => {
                 MICE = editor.getData();
                 editor.model.document.on('change:data', () => {
-                MICE = editor.getData();
+                    MICE = editor.getData();
                 });
             })
             .catch(error => {
@@ -886,14 +942,14 @@
             });
     </script>
 
-<style>
+    <style>
 
-</style>
+    </style>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 </body>
 
 </html>
@@ -901,72 +957,77 @@
 <script>
     const btn = document.getElementById("modal-submit");
     btn.addEventListener("click", () => {
-        let res_name =<?php echo json_encode($proposalDetails["res_name"] );?>;
-        let Meal =<?php echo json_encode($proposalDetails["Meal"] );?>;
-        let Meal_Type =<?php echo json_encode($proposalDetails["Meal_Type"] );?>;
+        let res_name = <?php echo json_encode($proposalDetails["res_name"]); ?>;
+        let Meal = <?php echo json_encode($proposalDetails["Meal"]); ?>;
+        let Meal_Type = <?php echo json_encode($proposalDetails["Meal_Type"]); ?>;
 
         let data_arr = {
-        "checkin" : "<?php echo date("jS F Y", strtotime($buildpackage->specificDate)) ?>",
-        "checkout" : "<?php echo date("jS F Y", strtotime($buildpackage->noDaysFrom)) ?>",
-        "nights" : "<?php echo $buildpackage->night ?>",
-        "pax_adult" : "<?php echo $buildpackage->adult ?>",
-        "pax_child" : "<?php echo $buildpackage->child ?>",
-        "pax_infant" : "<?php echo $buildpackage->infant ?>",
-        "room" : "<?php echo $buildpackage->night  ?>",
-        // "hotel" : "?php echo isset($proposalDetails['hotelName']) ? $proposalDetails['hotelName'][0] : [] ?>",
-        "hotels" : <?php echo json_encode($proposalDetails['hotels']) ?>,
-        "no_of_room" : <?php echo $proposalDetails['no_of_room'] ?>,
-        "buildCheckIns" : <?php echo json_encode($proposalDetails['buildCheckIns']) ?>,
-        "subject"  : document.getElementById("pro_sub").value,
-        "cc_email"  : document.getElementById("cc_email").value,
-        "cus_email"  : document.getElementById("cus_email").value,
+            "checkin": "<?php echo date("jS F Y", strtotime($buildpackage->specificDate)) ?>",
+            "checkout": "<?php echo date("jS F Y", strtotime($buildpackage->noDaysFrom)) ?>",
+            "nights": "<?php echo $buildpackage->night ?>",
+            "pax_adult": "<?php echo $buildpackage->adult ?>",
+            "pax_child": "<?php echo $buildpackage->child ?>",
+            "pax_infant": "<?php echo $buildpackage->infant ?>",
+            "room": "<?php echo $buildpackage->night  ?>",
+            // "hotel" : "?php echo isset($proposalDetails['hotelName']) ? $proposalDetails['hotelName'][0] : [] ?>",
+            "hotels": <?php echo json_encode($proposalDetails['hotels']) ?>,
+            "no_of_room": <?php echo $proposalDetails['no_of_room'] ?>,
+            "buildCheckIns": <?php echo json_encode($proposalDetails['buildCheckIns']) ?>,
+            "subject": document.getElementById("pro_sub").value,
+            "cc_email": document.getElementById("cc_email").value,
+            "cus_email": document.getElementById("cus_email").value,
 
-        "inclusions" :  inclu,
-        // "exclusions" :  exclu,
-        "conditions" :  TnC,
-        "FIT" :  FIT,
-        "MICE" :  MICE,
+            "inclusions": inclu,
+            // "exclusions" :  exclu,
+            "conditions": TnC,
+            "FIT": FIT,
+            "MICE": MICE,
 
-        "cancelation_policy" : canc_ply,
-        "type" : 'package',
-        "res_name" : res_name,
-        "Meal" : Meal,
-        "Meal_Type" :Meal_Type,
-        "in_transfer_date" : <?php echo json_encode($proposalDetails['in_transfer_date'])  ?>,
-        "in_transfer_pickup" : <?php echo json_encode($proposalDetails['in_transfer_pickup'])  ?>,
-        "in_transfer_dropoff" : <?php echo json_encode($proposalDetails['in_transfer_dropoff'])  ?>,
-        "pp_transfer_date" : <?php echo json_encode($proposalDetails['pp_transfer_date'])  ?>,
-        "pp_transfer_pickup" : <?php echo json_encode($proposalDetails['pp_transfer_pickup'])  ?>,
-        "pp_transfer_dropoff" : <?php echo json_encode($proposalDetails['pp_transfer_dropoff'])  ?>,
-        "visa_category_drop_down" : "<?php echo $proposalDetails['visa_category_drop_down']  ?>",
-        "entry_type" : "<?php echo $proposalDetails['entry_type']  ?>",
-        "visa_validity" : "<?php echo $proposalDetails['visa_validity']  ?>",
-        // "excursion_name_SIC" : "?php echo $proposalDetails['excursion_name_SIC'][0] ?>",
-        "excursion_name_SIC" : <?php echo json_encode($proposalDetails['excursion_name_SIC']) ?>, 
-        // "excursion_name_PVT" : "?php echo $proposalDetails['excursion_name_PVT'][0] ?>",
-        "excursion_name_PVT" : <?php echo json_encode($proposalDetails['excursion_name_PVT']) ?>, 
-        "perpax_adult" : "<?php echo $proposalDetails['perpax_adult']  ?>",
-        "perpax_adult_single" : "<?php echo $proposalDetails['perpax_adult_single']  ?>",
-        "perpax_adult_double" : "<?php echo $proposalDetails['perpax_adult_double']  ?>",
-        "perpax_adult_triple" : "<?php echo $proposalDetails['perpax_adult_triple']  ?>",
-        "perpax_childs" : "<?php echo $proposalDetails['perpax_childs']  ?>",
-        "perpax_cnb" : "<?php echo isset($proposalDetails['perpax_cnb']) ? $proposalDetails['perpax_cnb'] : 0  ?>",
-        "perpax_infants" : "<?php echo $proposalDetails['perpax_infants']  ?>",
-        "buildRoomType" : <?php echo json_encode($proposalDetails['roomType']) ?>,
-        "admin_name" : "<?php echo $proposalDetails['admin_name']  ?>",
-        "hotelPrefrence" : "<?php echo $buildpackage->hotelPrefrence ?>",
-        "room_sharing_types" : <?php echo json_encode($proposalDetails['room_sharing_types']) ?> ,
-        "build_room_types" : <?php echo json_encode($proposalDetails['build_room_types']) ?> ,
-        "query_ID" : <?php echo $buildpackage->queryId ?>
+            "cancelation_policy": canc_ply,
+            "type": 'package',
+            "res_name": res_name,
+            "Meal": Meal,
+            "Meal_Type": Meal_Type,
+            "in_transfer_date": <?php echo json_encode($proposalDetails['in_transfer_date'])  ?>,
+            "in_transfer_pickup": <?php echo json_encode($proposalDetails['in_transfer_pickup'])  ?>,
+            "in_transfer_dropoff": <?php echo json_encode($proposalDetails['in_transfer_dropoff'])  ?>,
+            "pp_transfer_date": <?php echo json_encode($proposalDetails['pp_transfer_date'])  ?>,
+            "pp_transfer_pickup": <?php echo json_encode($proposalDetails['pp_transfer_pickup'])  ?>,
+            "pp_transfer_dropoff": <?php echo json_encode($proposalDetails['pp_transfer_dropoff'])  ?>,
+            "visa_category_drop_down": "<?php echo $proposalDetails['visa_category_drop_down']  ?>",
+            "entry_type": "<?php echo $proposalDetails['entry_type']  ?>",
+            "visa_validity": "<?php echo $proposalDetails['visa_validity']  ?>",
+            // "excursion_name_SIC" : "?php echo $proposalDetails['excursion_name_SIC'][0] ?>",
+            "excursion_name_SIC": <?php echo json_encode($proposalDetails['excursion_name_SIC']) ?>,
+            // "excursion_name_PVT" : "?php echo $proposalDetails['excursion_name_PVT'][0] ?>",
+            "excursion_name_PVT": <?php echo json_encode($proposalDetails['excursion_name_PVT']) ?>,
+            "perpax_adult": "<?php echo $proposalDetails['perpax_adult']  ?>",
+            "perpax_adult_single": "<?php echo $proposalDetails['perpax_adult_single']  ?>",
+            "perpax_adult_double": "<?php echo $proposalDetails['perpax_adult_double']  ?>",
+            "perpax_adult_triple": "<?php echo $proposalDetails['perpax_adult_triple']  ?>",
+            "perpax_childs": "<?php echo $proposalDetails['perpax_childs']  ?>",
+            "perpax_cnb": "<?php echo isset($proposalDetails['perpax_cnb']) ? $proposalDetails['perpax_cnb'] : 0  ?>",
+            "perpax_infants": "<?php echo $proposalDetails['perpax_infants']  ?>",
+            "buildRoomType": <?php echo json_encode($proposalDetails['roomType']) ?>,
+            "admin_name": "<?php echo $proposalDetails['admin_name']  ?>",
+            "hotelPrefrence": "<?php echo $buildpackage->hotelPrefrence ?>",
+            "room_sharing_types": <?php echo json_encode($proposalDetails['room_sharing_types']) ?>,
+            "build_room_types": <?php echo json_encode($proposalDetails['build_room_types']) ?>,
+
+            "hotel_pickup": "<?php echo isset($activity_query_details) && !empty($activity_query_details) ? $activity_query_details->hotel_pickup : "N/A"  ?>",
+
+            "query_ID": <?php echo $buildpackage->queryId ?>
         };
 
         console.log("🚀 ~ file: newproposal_new.php ~ line 861 ~ btn.addEventListener ~ data_arr", data_arr)
 
-        
+
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url('/query/sendMailProposalPackage')?>" ,
-            data: {data_arr : JSON.stringify(data_arr)},
+            url: "<?php echo base_url('/query/sendMailProposalPackage') ?>",
+            data: {
+                data_arr: JSON.stringify(data_arr)
+            },
             success: function(result) {
                 toastr.success("Email Sent Successfully");
                 console.log("email sent");

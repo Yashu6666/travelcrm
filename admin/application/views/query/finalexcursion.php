@@ -411,12 +411,20 @@
                     <?php endforeach ?>
                     <?php endif ?>
 
-                    <li>Tourism Dirhams Fees</li>
+                    <!-- <li>Tourism Dirhams Fees</li> -->
                     <li>Vat 5% Inclusive</li>
                     <li>All Applicable Taxes</li>
                     <li>All of the above services with the hotel to hotel transfer and ticket</li>
-                    <?php if(isset($details->excursion_name_SIC) && !empty($details->excursion_name_SIC)) : ?>
+                    <?php if(isset($proposalDetails['excursion_name_SIC']) && !empty($proposalDetails['excursion_name_SIC'])  && empty($proposalDetails['excursion_name_PVT'])) : ?>
                         <li>All Tours & Transfers on sharing Basis except airport transfer</li>
+                    <?php endif ?>
+
+                    <?php if(isset($proposalDetails['excursion_name_SIC']) && !empty($proposalDetails['excursion_name_SIC'])  && !empty($proposalDetails['excursion_name_PVT'])) : ?>
+                        <li>All Tours & Transfers on sharing Basis until Mentioned on Private basis</li>
+                    <?php endif ?>
+                    
+                    <?php if(isset($proposalDetails['excursion_name_PVT']) && !empty($proposalDetails['excursion_name_PVT']) && empty($proposalDetails['excursion_name_SIC'])) : ?>
+                        <li>All Tours & Transfers on Private Transfer Basis</li>
                     <?php endif ?>
                             </div>
                         

@@ -406,6 +406,7 @@
 
                           // $("#perpax_adult").val(per_pax_adult);
                           // $("#perpax_childs").val( per_pax_child );
+
                           $("#perpax_adult").val(c_type == 'USD' ? Math.ceil(per_pax_adult / usd_aed).toFixed(2) : per_pax_adult);
                           $("#perpax_childs").val(c_type == 'USD' ? Math.ceil(per_pax_child / usd_aed).toFixed(2) : per_pax_child);
                           $("#perpax_infants").val(0);

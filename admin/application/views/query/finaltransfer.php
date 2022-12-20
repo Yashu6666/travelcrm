@@ -413,10 +413,10 @@
                         <?php endforeach ?>
                     <?php endif ?>
 
-                    <li>Tourism Dirhams Fees</li>
+                    <!-- <li>Tourism Dirhams Fees</li> -->
                     <li>Vat 5% Inclusive</li>
                     <li>All Applicable Taxes</li>
-                    <li>All of the above services with the hotel to hotel transfer and ticket</li>
+                    <!-- <li>All of the above services with the hotel to hotel transfer and ticket</li> -->
 
                             </div>
                         

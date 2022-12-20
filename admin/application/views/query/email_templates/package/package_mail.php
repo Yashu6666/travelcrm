@@ -201,7 +201,11 @@
               </th>
               <td style="white-space: initial;">
                 <?php if($details->perpax_adult > 0) : ?>
-                  <span style="color: red;">AED <?php echo $details->perpax_adult ?></span> Per Person on Single Sharing Basis<br/>
+                  <span style="color: red;">AED <?php echo $details->perpax_adult ?></span><?php if(!empty($details->hotels)):?> Per Person on Single Sharing Basis
+                    <?php else : ?>
+                      Per Adult
+                    <?php endif ?>
+                  <br/>
                 <?php endif ?>
                 <?php if($details->perpax_adult_single > 0) : ?>
                   <span style="color: red;">AED <?php echo $details->perpax_adult_single ?></span> Per Person on Single Sharing Basis<br/>
@@ -234,14 +238,25 @@
           </table>
           <br />
           <br />
-
+          
           <table class="items" border="1" cellspacing="0">
             <tr>
               <th>Hotel Name</th>
               <td colspan="3" style="white-space: normal;">
-                  <?php foreach ($details->hotels as $key => $val) : ?>
-                        <?php print_r($details->hotels[$key]->hotelname) ?> - <?php echo $details->hotelPrefrence ?>* - <?php print_r($details->build_room_types[$key]) ?> - <?php print_r($details->buildRoomType[$key]) ?><?php echo array_key_last($details->hotels) != $key ?  ', <br/>' : '' ?>
+                <?php if(!empty($details->hotels)) : ?>
+                  <?php 
+                  $hotel_details_arr = [];
+                  foreach ($details->hotels as $key => $value) {
+                    array_push($hotel_details_arr,$details->hotels[$key]->hotelname.' - '.$details->hotelPrefrence.'*  - '.$details->build_room_types[$key].' - '.$details->buildRoomType[$key]) ;
+                  }
+                  ?>
+                  
+                  <?php foreach (array_unique($hotel_details_arr) as $key1 => $val1) : ?>
+                    <?php  echo $val1; echo array_key_last($hotel_details_arr) != $key1 ?  ', <br/>' : ''; ?>
                     <?php endforeach ?>
+                    <?php else : ?>
+                      <?php print_r($details->hotel_pickup) ?>
+                    <?php endif ?>
               </td>
             </tr>
 
@@ -272,11 +287,12 @@
               <td style="text-align:center"><?php echo $details->pax_child ?></td>
               <td style="text-align:center"><?php echo $details->pax_infant ?></td>
             </tr>
-
+            <?php if(!empty($details->hotels)) : ?>
             <tr>
               <th>No. of Rooms</th>
               <td colspan="3"><?php echo $details->no_of_room ?> Room(s)</td>
             </tr>
+            <?php endif ?>
           </table>
         </div>
 

@@ -429,21 +429,154 @@
                 <h3 class="text-light" style="padding: 7px;">Price</h3>
             </div>
             <div>
-                <table class="table table-bordered">
-                    <thead align="center" style="background: #dbd5d5;">
-                        <th> Adult</th>
-                        <th> Child</th>
-                        <th> Infant</th>
-                    </thead>
-                    <tbody>
-                        <tr align="center">
-                            <td> <?php echo $adult_per_pax ?></td>
-                            <td><?php echo $child_per_pax ?></td>
-                            <td><?php echo $infant_per_pax ?></td>
+            <!-- <table class="table table-bordered">
+                <tr align="center">
+                                  <td></td>
+                                  <td>Single Sharing</td>
+                                  <td>Double Sharing</td>
+                                  <td>Triple Sharing</td>
+                                  <td>CWB</td>
+                                  <td>CNB</td>
+                                  <td>Infant</td>
+                                </tr>
 
-                        </tr>
-                    </tbody>
+                                <tr align="center">
+                                  <td><b>Sub Total</b></td>
+                                  <td><?php echo explode(',',$price_info->adult_single_sharing)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->double_sharing)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->triple_sharing)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->child_cwb)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->cnb)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->cnb)[0] ?></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Total Price</b></td>
+                                  <td><?php echo explode(',',$price_info->adult_single_sharing)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->double_sharing)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->triple_sharing)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->child_cwb)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->cnb)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->cnb)[1] ?></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Per PAX</b></td>
+                                  <td><?php echo explode(',',$price_info->adult_single_sharing)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->double_sharing)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->triple_sharing)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->child_cwb)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->cnb)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->cnb)[2] ?></td>
+                                </tr>
+            </table> -->
+            <?php if($package_query[0]->type == 'Package') : ?>
+                <table class="table table-bordered">
+                <tr align="center">
+                                  <td></td>
+                                  <td>Single Sharing</td>
+                                  <td>Double Sharing</td>
+                                  <td>Triple Sharing</td>
+                                  <td>CWB</td>
+                                  <td>CNB</td>
+                                  <td>Infant</td>
+                                </tr>
+
+                                <tr align="center">
+                                  <td><b>Sub Total</b></td>
+                                  <td><?php echo explode(',',$price_info->adult_single_sharing)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->double_sharing)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->triple_sharing)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->child_cwb)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->cnb)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->infants)[0] ?></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Total Price</b></td>
+                                  <td><?php echo explode(',',$price_info->adult_single_sharing)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->double_sharing)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->triple_sharing)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->child_cwb)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->cnb)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->infants)[1] ?></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Per PAX</b></td>
+                                  <td><?php echo explode(',',$price_info->adult_single_sharing)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->double_sharing)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->triple_sharing)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->child_cwb)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->cnb)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->infants)[2] ?></td>
+                                </tr>
                 </table>
+                <?php elseif($package_query[0]->type == 'Hotel') : ?>
+                    <table class="table table-bordered">
+                        <tr align="center">
+                                  <td></td>
+                                  <td>Single Sharing</td>
+                                  <td>Double Sharing</td>
+                                  <td>Triple Sharing</td>
+                                  <td>CWB</td>
+                                  <td>CNB</td>
+                                </tr>
+
+                                <tr align="center">
+                                  <td><b>Sub Total</b></td>
+                                  <td><?php echo explode(',',$price_info->adult_single_sharing)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->double_sharing)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->triple_sharing)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->child_cwb)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->cnb)[0] ?></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Total Price</b></td>
+                                  <td><?php echo explode(',',$price_info->adult_single_sharing)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->double_sharing)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->triple_sharing)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->child_cwb)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->cnb)[1] ?></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Per PAX</b></td>
+                                  <td><?php echo explode(',',$price_info->adult_single_sharing)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->double_sharing)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->triple_sharing)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->child_cwb)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->cnb)[2] ?></td>
+                                </tr>
+                </table>
+
+                <?php else : ?>
+                
+                    <table class="table table-bordered">
+                        <tr align="center">
+                                  <td></td>
+                                  <td>Adult</td>
+                                  <td>Child</td>
+                                  <td>Infant</td>
+                                </tr>
+
+                                <tr align="center">
+                                  <td><b>Sub Total</b></td>
+                                  <td><?php echo explode(',',$price_info->adult_single_sharing)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->child_cwb)[0] ?></td>
+                                  <td><?php echo explode(',',$price_info->infants)[0] ?></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Total Price</b></td>
+                                  <td><?php echo explode(',',$price_info->adult_single_sharing)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->child_cwb)[1] ?></td>
+                                  <td><?php echo explode(',',$price_info->infants)[1] ?></td>
+                                </tr>
+                                <tr align="center">
+                                  <td><b>Per PAX</b></td>
+                                  <td><?php echo explode(',',$price_info->adult_single_sharing)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->child_cwb)[2] ?></td>
+                                  <td><?php echo explode(',',$price_info->infants)[2] ?></td>
+                                </tr>
+                </table>
+
+                <?php endif ?>
+
             </div>
         </div>
 

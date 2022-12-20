@@ -364,7 +364,8 @@
                             <div id="editor1">
                         <li><?php echo $buildpackage->night ?> Nights stay at the mentioned hotel</li>
                         <?php if($proposalDetails['build_room_types'][0] == 'BB') : ?>
-                            <li><?php echo $buildpackage->night ?> Breakfast Buffet Breakfast in the Hotel</li>
+                            <!-- <li><?php echo $buildpackage->night ?> Breakfast Buffet Breakfast in the Hotel</li> -->
+                            <li><?php echo $buildpackage->night ?> Breakfast </li>
                         <?php endif ?>
 
                     <li>Tourism Dirhams Fees</li>

@@ -1878,45 +1878,45 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                <div></div>
               </br>
               <table class="table table-bordered" style="font-size:16px;">
-                <tr align="center">
-                  <td type="" name="person" id="person" value="0"><span></td>
+                <tr class="text-center">
+                  <td></td>
                   <!-- <td type="" name="AdultCost" id="AdultCost" value="0"><span>Adult</td> -->
-                  <td type="" name="singeleAdultCost" id="singeleAdultCost" value="0"><span>Single Sharing</td>
-                  <td type="" name="DoubleAdultCost" id="DoubleAdultCost" value="0"><span>Double Sharing</td>
-                  <td type="" name="TripleAdultCost" id="TripleAdultCost" value="0"><span>Triple Sharing</td>
-                  <td type="" name="ChildCost" id="ChildCost" value="0"><span>CWB</td>
-                  <td type="" name="ChildCost" id="ChildCost" value="0"><span>CNB</td>
-                  <td type="" name="InfantCost" id="InfantCost" value="0"><span>Infant</td>
+                  <td>Single Sharing</td>
+                  <td>Double Sharing</td>
+                  <td>Triple Sharing</td>
+                  <td>CWB</td>
+                  <td>CNB</td>
+                  <td>Infant</td>
                 </tr>
-                <tr align="center">
+                <tr class="text-center">
                   <td><b>Sub Total</b></td>
-                  <td> <input type="text" class="text-center" id="subtotal_adults" name="subtotal_adults" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" id="subtotal_adults" name="subtotal_adults" value="0"></td>
                   <!-- <td> <input type="text" class="text-center" id="subtotal_adults_single" name="subtotal_adults_single" value="0"></td> -->
-                  <td> <input type="text" class="text-center" id="subtotal_adults_double" name="subtotal_adults_double" value="0"></td>
-                  <td> <input type="text" class="text-center" id="subtotal_adults_triple" name="subtotal_adults_triple" value="0"></td>
-                  <td> <input type="text" class="text-center" id="subtotal_childs" name="subtotal_childs" value="0"></td>
-                  <td> <input type="text" class="text-center" id="subtotal_cnb" name="subtotal_cnb" value="0"></td>
-                  <td> <input type="text" class="text-center" id="subtotal_infants" name="subtotal_infants" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" id="subtotal_adults_double" name="subtotal_adults_double" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" id="subtotal_adults_triple" name="subtotal_adults_triple" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" id="subtotal_childs" name="subtotal_childs" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" id="subtotal_cnb" name="subtotal_cnb" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" id="subtotal_infants" name="subtotal_infants" value="0"></td>
                 </tr>
-                <tr align="center">
+                <tr class="text-center">
                   <td><b>Total Price</b></td>
-                  <td> <input type="text" class="text-center" name="totalprice_adult" id="totalprice_adult" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" name="totalprice_adult" id="totalprice_adult" value="0"></td>
                   <!-- <td> <input type="text" class="text-center" name="totalprice_adult_single" id="totalprice_adult_single" value="0"></td> -->
-                  <td> <input type="text" class="text-center" name="totalprice_adult_double" id="totalprice_adult_double" value="0"></td>
-                  <td> <input type="text" class="text-center" name="totalprice_adult_triple" id="totalprice_adult_triple" value="0"></td>
-                  <td> <input type="text" class="text-center" name="totalprice_childs" id="totalprice_childs" value="0"></td>
-                  <td> <input type="text" class="text-center" name="totalprice_cnb" id="totalprice_cnb" value="0"></td>
-                  <td> <input type="text" class="text-center" name="totalprice_infants" id="totalprice_infants" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" name="totalprice_adult_double" id="totalprice_adult_double" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" name="totalprice_adult_triple" id="totalprice_adult_triple" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" name="totalprice_childs" id="totalprice_childs" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" name="totalprice_cnb" id="totalprice_cnb" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" name="totalprice_infants" id="totalprice_infants" value="0"></td>
                 </tr>
-                <tr align="center">
+                <tr class="text-center">
                   <td><b>Per PAX</b></td>
-                  <td> <input type="text" class="text-center" name="perpax_adult" id="perpax_adult" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" name="perpax_adult" id="perpax_adult" value="0"></td>
                   <!-- <td> <input type="text" class="text-center" name="perpax_adult_single" id="perpax_adult_single" value="0"></td> -->
-                  <td> <input type="text" class="text-center" name="perpax_adult_double" id="perpax_adult_double" value="0"></td>
-                  <td> <input type="text" class="text-center" name="perpax_adult_triple" id="perpax_adult_triple" value="0"></td>
-                  <td> <input type="text" class="text-center" name="perpax_childs" id="perpax_childs" value="0"></td>
-                  <td> <input type="text" class="text-center" name="perpax_cnb" id="perpax_cnb" value="0"></td>
-                  <td> <input type="text" class="text-center" name="perpax_infants" id="perpax_infants" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" name="perpax_adult_double" id="perpax_adult_double" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" name="perpax_adult_triple" id="perpax_adult_triple" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" name="perpax_childs" id="perpax_childs" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" name="perpax_cnb" id="perpax_cnb" value="0"></td>
+                  <td> <input type="text" class="text-center w-50" name="perpax_infants" id="perpax_infants" value="0"></td>
                 </tr>
               </table>
                               <input type="hidden" id="perpax_adult_input" name="perpax_adult_input" value="" />

@@ -207,7 +207,6 @@
                       <?php if ($details->per_pax_triple > 0) : ?>
                         <span style="color: red;">AED <?php echo $details->per_pax_triple ?></span> Per Person on Triple Sharing Basis<br />
                       <?php endif ?>
-                      <!-- ?php echo $details->room_sharing_types[0] != "" ? ($details->room_sharing_types[0] == "triple_sharing" ? "Per Person on Triple Sharing Basis" : "Per Person on Double Sharing Basis") : "" ?> -->
                     </td>
                   </tr>
                   <?php if (isset($details->per_pax_child) && $details->per_pax_child > 0) : ?>

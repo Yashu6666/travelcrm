@@ -460,9 +460,47 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
 
                         $(".card-box").click(function(e) {
                               e.stopPropagation();
-                              var hotel_pax_adult = $("#hotel_pax_adult").val();
-                              var hotel_pax_adult_double = $("#hotel_pax_adult_double").val();
-                              var hotel_pax_adult_triple = $("#hotel_pax_adult_triple").val();
+                              // var hotel_pax_adult = $("#hotel_pax_adult").val();
+                              // var hotel_pax_adult_double = $("#hotel_pax_adult_double").val();
+                              // var hotel_pax_adult_triple = $("#hotel_pax_adult_triple").val();
+
+                              var no_room_count = <?php echo $buildpackage->room; ?>;
+                            
+                            var buildBedType_arr = [];
+                            $(".get_bed_type").each(function(i, obj) {
+                              if(i < no_room_count){
+                                buildBedType_arr.push(obj.value);
+                              }
+                            });
+                            
+                            console.log("🚩 ~ file: build_hotel.php:467 ~ $ ~ buildBedType_arr", buildBedType_arr)
+
+                            var adult_per_room_arr = [];
+                            $(".adult_per_room").each(function(i, obj) {
+                              if(i < no_room_count){
+                                adult_per_room_arr.push(obj.value);
+                              }
+                            });
+
+                            let adult_pax_total_arr = [];
+
+                            let hotel_pax_adult = 0;
+                            let hotel_pax_adult_double = 0;
+                            let hotel_pax_adult_triple = 0;
+
+                            buildBedType_arr.map((val,index) =>
+                            {
+                              if(buildBedType_arr[index] == "Single"){
+                                hotel_pax_adult += parseInt(adult_per_room_arr[index]);
+                                console.log("in single");
+                              } else if(buildBedType_arr[index] == "Double"){
+                                hotel_pax_adult_double += parseInt(adult_per_room_arr[index]);
+                                console.log("in double");
+                              } else if(buildBedType_arr[index] == "Triple"){
+                                hotel_pax_adult_triple += parseInt(adult_per_room_arr[index]);
+                                console.log("in triple");
+                              }
+                            });
 
                               var hotel_rate_adult = $("#hotel_rate_adult").val();
                               var hotel_rate_adult_double = $("#hotel_rate_adult_double").val();

@@ -62,7 +62,8 @@ class HotelVoucher extends CI_Controller
 		$query_id = $_POST['query_id'];
 		$hotel_id = $_POST['hotel_id'];
 
-		$data = $this->db->where('query_id', $query_id)->where('query_hotel_id', $hotel_id)->get('hotel_voucher_confirmation')->row();
+		$data['data'] = $this->db->where('query_id', $query_id)->where('query_hotel_id', $hotel_id)->get('hotel_voucher_confirmation')->row();
+		$data['notes'] = base64_decode($data['data']->notes);
 		echo json_encode($data);
 	}
 
@@ -152,13 +153,16 @@ class HotelVoucher extends CI_Controller
 
 			$query_id = $_POST['query_id'];
 			$c_email = $_POST['email'];
-			$guest_name = $_POST['guest_name'];
 			$board_arr = $_POST['board_arr'];
-			$impInfo = $_POST['impInfo'];
 
 			$hotel_confirmation = $this->db->where('query_id', $query_id)->get('hotel_voucher_confirmation')->result();
 			$data['hotel_confirmation'] = $hotel_confirmation;
-			
+
+			// $impInfo = $_POST['impInfo'];
+			// $guest_name = $_POST['guest_name'];
+			$guest_name = $hotel_confirmation[0]->guest_name;
+			$impInfo = base64_decode($hotel_confirmation[0]->notes);
+
 			$data['details'] = $this->db->where('queryId', $query_id)->get('querypackage')->row();
 			$data['hotel'] = $this->db->where('query_id', $query_id)->get('query_hotel')->result();
 			$data['guest'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
@@ -266,7 +270,7 @@ class HotelVoucher extends CI_Controller
 	public function submitVoucherDetails()
 	{
 		try {
-			// print_r($_POST);
+			// print_r($_POST);exit;
 			$query_id = $_POST['query_id'];
 			$conf_number = $_POST['conf_number'];
 			$hotel_id = $_POST['hotel_id'];
@@ -276,7 +280,11 @@ class HotelVoucher extends CI_Controller
 			$check_in = $_POST['check_in'];
 			$check_out = $_POST['check_out'];
 			$guest_name = $_POST['guest_name'];
+			$notes = $_POST['notes'];
 
+			// $notes = trim($notes);
+			// $notes = stripslashes($notes);
+			// $notes = htmlspecialchars($notes);
 
 			foreach ($conf_number as $key => $val) {
 				$data_arr = [
@@ -289,6 +297,7 @@ class HotelVoucher extends CI_Controller
 					'query_hotel_booking_date' => $booking_date[$key],
 					'query_check_in' => $check_in[$key],
 					'query_check_out' => $check_out[$key],
+					'notes' => base64_encode($notes),
 				];
 
 				$is_data = $this->db->where('query_id', $data_arr['query_id'])
@@ -321,9 +330,11 @@ class HotelVoucher extends CI_Controller
 
 	public function view_hotels_voucher()
 	{
-		$data_conf_tbl = $this->db->order_by("updated_at", "desc")->get('hotel_voucher_confirmation')->result();
-		$data['hotels'] = $data_conf_tbl;
+		// $data_conf_tbl = $this->db->order_by("updated_at", "desc")->get('hotel_voucher_confirmation')->result();
+		// $data['hotels'] = $data_conf_tbl;
 
+		$data_conf_tbl = $this->db->order_by("updated_at", "desc")->distinct()->group_by('query_id')->get('hotel_voucher_confirmation')->result();
+		$data['hotels'] = $data_conf_tbl;
 
 		$agent_names = [];
 		$agent_emails = [];
@@ -399,7 +410,7 @@ class HotelVoucher extends CI_Controller
 
 	public function updateHotelDetails($id)
 	{
-		//echo '<pre>';print_r($_POST);exit;
+		echo '<pre>';print_r($_POST);exit;
 		$hotelamenities = implode(',', $_POST['hotelamenities']);
 		$hotelpayments = implode(',', $_POST['hotelpayments']);
 		//echo '<pre>';print_r($hotelpayments);exit;

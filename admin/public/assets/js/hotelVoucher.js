@@ -51,6 +51,8 @@ function subVoucherAjax() {
     check_out_arr.push($(this).val());
   });
 
+  let impInfo = CKEDITOR.instances["impInfo"].getData();
+
 
   if (confarr.every((val) => val !== "")) {
     let q_id = document.getElementById("query_id").value;
@@ -69,6 +71,7 @@ function subVoucherAjax() {
         booking_date : hotel_booking_date_arr,
         check_in: check_in_arr,
         check_out: check_out_arr,
+        notes: impInfo,
       },
       success: function (result) {
         const btn1 = (document.getElementById(
@@ -82,9 +85,7 @@ function subVoucherAjax() {
         ).hidden = false);
         toastr.success("Hotel Voucher Details Updated");
         location.href = base_url + "/HotelVoucher/view_hotels_voucher";
-
       },
-
       error: function () {
         console.log("Error");
       },

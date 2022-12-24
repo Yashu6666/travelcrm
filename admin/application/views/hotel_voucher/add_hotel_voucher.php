@@ -137,7 +137,7 @@
 																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" id="conf_number_<?php echo $key; ?>" value="#" name="conf_number[<?php echo $key; ?>]" placeholder="Enter Confirmatin Number Here">
 																<input type="hidden" name="hotel_id[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->hotel_id)[$key]); ?>>
 																<input type="hidden" name="hotel_name[<?php echo $key; ?>]" value='<?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?>'>
-																<input type="hidden" name="booking_date[<?php echo $key; ?>]" value=<?php echo $hotel[0]->created_at; ?>>
+																<input type="hidden" name="booking_date[<?php echo $key; ?>]" value=<?php echo $booking_date; ?>>
 															</div>
 															</div>
 														</div>
@@ -253,8 +253,6 @@
 													<?php print_r($hotel_details[$key]->hotel_full_address); ?>, 
 												<?php endif ?>
 												
-												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
-												
 												<?php if(isset($hotel_details[$key]->hotelphone)) : ?>	
 												<?php print_r($hotel_details[$key]->hotelphone); ?></li><br/> 
 												<?php endif ?>
@@ -280,7 +278,6 @@
 <li>All rooms are guaranteed on the day of arrival. In case of a no-show, your room(s) will be released and you will be subject to the terms and conditions of the Cancellation/No-Show Policy specified at the time you made the booking.  </li> <br/>
 
 <li>The total price for this booking does not include mini-bar items, telephone usage, laundry service. etc.</li> <br/>
-												<!-- </p> -->
 												</ul>
 												</textarea>
 												</div>

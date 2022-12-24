@@ -535,9 +535,12 @@
                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <div id="editor1">
-                            <li><?php echo $buildpackage->night ?> Nights stay at the mentioned hotel</li>
-                            <?php if ($proposalDetails['build_room_types'][0] == 'BB') : ?>
-                                <li><?php echo $buildpackage->night ?> Breakfast Buffet Breakfast in the Hotel</li>
+
+                            <?php if (isset($proposalDetails['hotelName']) && !empty($proposalDetails['hotelName'])) : ?>
+                                <li><?php echo $buildpackage->night ?> Nights stay at the mentioned hotel</li>
+                                <?php if ($proposalDetails['build_room_types'][0] == 'BB') : ?>
+                                    <li><?php echo $buildpackage->night ?> Breakfast Buffet Breakfast in the Hotel</li>
+                                <?php endif ?>
                             <?php endif ?>
 
                             <?php if (isset($proposalDetails['in_transfer_pickup']) && !empty($proposalDetails['in_transfer_pickup'])) : ?>
@@ -587,7 +590,9 @@
                             <?php if (!empty($proposalDetails['visa_category_drop_down'])) : ?>
                                 <li>UAE Normal Single Entry Tourist Visa With Covid-19 Inbound Insurance (Subject To Immigration Approval)</li>
                             <?php endif ?>
-                            <li>Tourism Dirhams Fees</li>
+                            <?php if (isset($proposalDetails['hotelName']) && !empty($proposalDetails['hotelName'])) : ?>
+                                <li>Tourism Dirhams Fees</li>
+                            <?php endif ?>
                             <li>Vat 5% Inclusive</li>
                             <li>All Applicable Taxes</li>
                             <li>All of the above services with the hotel to hotel transfer and ticket</li>

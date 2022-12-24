@@ -120,17 +120,17 @@
                <tr id="PvtCab1<?php echo $key ?>" >
                 <th>Internal City/Hotel Transfer</th>
                
-                <td><input class="form-control" type="number" id="pax_internal" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCityCab[]" disabled></td>
+                <td><input class="form-control" type="number" id="pax_internal_<?php echo $key ?>" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCityCab[]" disabled></td>
                 <td><input class="form-control internal_transfer_date" type="date" value="<?php echo (explode(",",$internal_query[0]->transfer_date)[$key]);?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
                
                 <td>
-                <select id="pickupinternal_<?php echo $key ?>" name="buildTravelToDateCab[]"  class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select id="pickupinternal_<?php echo $key ?>" onchange="pickupInternal1(<?php echo $key ?>)" name="buildTravelToDateCab[]"  class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                   <option value="<?php echo (explode(",",$internal_query[0]->pickup)[$key]);?>"><?php echo (explode(",",$internal_query[0]->pickup)[$key]);?></option>
                 </select>
                </td>
 
                 <td>
-                <select id="dropoffinternal_<?php echo $key ?>" name="buildTravelToCityCabDrop[]"  class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select id="dropoffinternal_<?php echo $key ?>" onchange="dropInternal1(<?php echo $key ?>)" name="buildTravelToCityCabDrop[]"  class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                 <option value="<?php echo (explode(",",$internal_query[0]->dropoff)[$key]);?>" ><?php echo (explode(",",$internal_query[0]->dropoff)[$key]);?></option>
                 </select>
                 </td>
@@ -139,7 +139,7 @@
                     <input id="price_internal" type="hidden" name="price_internal[]" />
                     <input id="pax_count_internal" type="hidden" name="pax_count_internal[]" />
                     <input id="total_price_internal" type="hidden" value="0" name="total_price_internal[]" />
-                    <input id="route_nameinternal" class="form-control internal_transfer_route" type="text" value="<?php echo (explode(",",$internal_query[0]->transfer_route)[$key]);?>" placeholder="Route Name" name="buildTravelTypeCab[]">
+                    <input id="route_nameinternal_<?php echo $key ?>" class="form-control internal_transfer_route" type="text" value="<?php echo (explode(",",$internal_query[0]->transfer_route)[$key]);?>" placeholder="Route Name" name="buildTravelTypeCab[]">
                 </td>
 
                 <?php if($key == 0) : ?>
@@ -150,6 +150,37 @@
 
                </tr>
                 <?php endforeach ;?>
+
+                <?php else : ?>
+
+                <tr id="PvtCab" style="display: none;">
+                  <th>Internal City/Hotel Transfer</th>
+
+                  <td><input class="form-control" type="number" id="pax_internal" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="buildTravelFromCityCab[]" disabled></td>
+
+                  <td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate; ?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
+                  <td>
+
+                    <select id="pickupinternal" onchange="pickupInternal(<?php echo $key ?>)" name="buildTravelToDateCab[]" class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                      <option value="Pickup">Pickup</option>
+                    </select>
+
+                  </td>
+                  <td>
+                    <select id="dropoffinternal" onchange="dropInternal(<?php echo $key ?>)" name="buildTravelToCityCabDrop[]" class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                      <option value="Drop Off">Drop Off</option>
+
+                    </select>
+                  </td>
+                  <td>
+                    <input id="price_internal" type="hidden" name="price_internal[]" />
+                    <input id="pax_count_internal" type="hidden" name="pax_count_internal[]" />
+                    <input id="total_price_internal" type="hidden" value="0" name="total_price_internal[]" />
+                    <input id="route_nameinternal" class="form-control internal_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeCab[]">
+                  </td>
+                  <td><a class="new_btn px-3" onclick="transRow()">add</a></td>
+                </tr>
+
                 <?php endif ?>
 
                 <?php if(!empty($return_query)) : ?>
@@ -157,19 +188,18 @@
                 <?php foreach(explode(",",$return_query[0]->transfer_date) as $key => $value) : ?> 
                 <tr id="Sic1<?php echo $key ?>">
                 <th>Airport Return Transfer</th>
-              <td><input class="form-control" id="pax_point" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC[]" disabled></td>
+              <td><input class="form-control" id="pax_point_<?php echo $key ?>" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCitySIC[]" disabled></td>
               <td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT" type="date" value="<?php echo (explode(",",$return_query[0]->transfer_date)[$key]);?>" name="buildTravelFromdatePVT[]"></td>
-               
               <td>
-                <select id="pickuppoint_<?php echo $key ?>"  required  name="buildTravelToDateSIC[]"  class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select id="pickuppoint_<?php echo $key ?>"  onchange="pickupReturn1(<?php echo $key ?>)"  name="buildTravelToDateSIC[]"  class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                 <option value="<?php echo (explode(",",$return_query[0]->pickup)[$key]);?>"><?php echo (explode(",",$return_query[0]->pickup)[$key]);?></option>
               </select></td>
                 <td>
-                <select   id="dropoffpoint_<?php echo $key ?>" name="buildTravelToCitySIC[]"  class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select   id="dropoffpoint_<?php echo $key ?>" onchange="dropReturn1(<?php echo $key ?>)" name="buildTravelToCitySIC[]"  class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                 <option value="<?php echo (explode(",",$return_query[0]->dropoff)[$key]);?>"><?php echo (explode(",",$return_query[0]->dropoff)[$key]);?></option>
               </select>
                   </td>
-                <td><input id="route_namepoint" class="form-control return_transfer_route" value="<?php echo (explode(",",$return_query[0]->transfer_route)[$key]);?>" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>
+                <td><input id="route_namepoint_<?php echo $key ?>" class="form-control return_transfer_route" value="<?php echo (explode(",",$return_query[0]->transfer_route)[$key]);?>" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>
                 
                 <input id="price_point" type="hidden" name="price_point[]" />
                 <input id="pax_count_point" type="hidden" name="pax_count_point[]" />
@@ -183,6 +213,31 @@
 
                </tr>
                <?php endforeach ;?>
+               <?php else : ?>
+
+                <tr id="Sic" style="display: none;">
+                  <th>Airport Return Transfer</th>
+                  <td><input class="form-control" id="pax_point" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="buildTravelFromCitySIC[]" disabled></td>
+                  <td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT" type="date" value="<?php echo $view->specificDate; ?>" name="buildTravelFromdatePVT[]"></td>
+
+                  <td>
+                    <select id="pickuppoint" required name="buildTravelToDateSIC[]" class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                      <option value="Pickup">Pickup</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select id="dropoffpoint" name="buildTravelToCitySIC[]" class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                      <option value="Drop Off">Drop Off</option>
+                    </select>
+                  </td>
+                  <td><input id="route_namepoint" class="form-control return_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>
+
+                  <input id="price_point" type="hidden" name="price_point[]" />
+                  <input id="pax_count_point" type="hidden" name="pax_count_point[]" />
+                  <input id="total_price_point" type="hidden" value="0" name="total_price_point[]" />
+                  <td><a class="new_btn px-3" onclick="transReturnRow()">add</a></td>
+
+                </tr>
                <?php endif ?>
 
 
@@ -383,7 +438,7 @@
                           adds += '<td><input class="form-control" type="number" id="pax_internal'+trans_rows + '" placeholder="Pax" value="<?php echo $view->Packagetravelers+$buildpackage->child;?>" name="buildTravelFromCityCab[]" disabled></td>';
                           adds += '<td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate;?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>';
                           adds += `<td>
-                                    <select id="pickupinternal${trans_rows}"  required  name="buildTravelToDateCab[]"  class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                    <select id="pickupinternal${trans_rows}"  onchange="pickupInternal(${trans_rows})"  name="buildTravelToDateCab[]"  class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                       <option value="Pickup">Pickup</option>
                                       <?php foreach($transfer_route as $value){ ?>
                                       <option value="<?php echo $value->start_city ?>"><?php echo $value->start_city ?></option>
@@ -393,7 +448,7 @@
 
                           adds += `
                                 <td>
-                                  <select id="dropoffinternal${trans_rows}" name="buildTravelToCityCabDrop[]"   class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                  <select id="dropoffinternal${trans_rows}" name="buildTravelToCityCabDrop[]"  onchange="dropInternal(${trans_rows})" class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                   <option value="Drop Off">Drop Off</option>
                                   </select>
                                 </td>
@@ -426,14 +481,14 @@
                           adds += '<td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT'+trans_retrun_rows + '" type="date" value="<?php echo $view->specificDate;?>" name="buildTravelFromdatePVT[]"></td>';
 
                           adds += `<td> 
-                                    <select id="pickuppoint${trans_retrun_rows}"  required  name="buildTravelToDateSIC[]"  class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                    <select id="pickuppoint${trans_retrun_rows}" onchange="pickupReturn(${trans_retrun_rows})"  name="buildTravelToDateSIC[]"  class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                       <option value="Pickup">Pickup</option>
                                     </select>
                                   </td>`;
                                   
                           adds += `
                                 <td>
-                                  <select id="dropoffpoint${trans_retrun_rows}" name="buildTravelToCitySIC[]"  class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                  <select id="dropoffpoint${trans_retrun_rows}" name="buildTravelToCitySIC[]"  onchange="dropReturn(${trans_retrun_rows})" class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                   <option value="Drop Off">Drop Off</option>
                                   </select>
                                 </td>
@@ -1294,12 +1349,11 @@ console.log(response);
           data:{'pickup':this.value },
           success:function(response){
             $("#dropoffinternal").html('<option value="dropoff">dropoff</option>');
-            console.log(response.data.length);
 
 //$('#bus_type').html("<option value='"+ data.type +"'>"+ data.type +"</option>");
 var options=""
 for(var i=0;i<response.data.length;i++){
-    console.log(response.data[i].dest_city);
+   
 options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest_city+'</option>';
 
 }
@@ -1322,12 +1376,12 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
           data:{'pickup':this.value },
           success:function(response){
             $("#dropoffpoint").html('<option value="dropoff">dropoff</option>');
-            console.log(response.data.length);
+            
 
 //$('#bus_type').html("<option value='"+ data.type +"'>"+ data.type +"</option>");
 var options=""
 for(var i=0;i<response.data.length;i++){
-    console.log(response.data[i].dest_city);
+   
 options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest_city+'</option>';
 
 }
@@ -1353,11 +1407,11 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
           data:{'pax': total_pax1},
           success:function(response){
             $("#pickupinternal").html('<option value="Pickup">Pickup</option>');
-            console.log(response.data.length);
+            
             if(response.data.length > 0){
             var options=""
             for(var i=0;i<response.data.length;i++){
-                console.log(response.data[i].start_city);
+                
                 options+='<option value="'+response.data[i].start_city+'">'+response.data[i].start_city+'</option>';
             }
             } else {
@@ -1378,7 +1432,7 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
             if(response.data.length > 0){
             var options=""
             for(var i=0;i<response.data.length;i++){
-                console.log(response.data[i].start_city);
+                
                 options+='<option value="'+response.data[i].start_city+'">'+response.data[i].start_city+'</option>';
             }
           } else {
@@ -1399,7 +1453,7 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
               if(response.data.length > 0){
               var options=""
               for(var i=0;i<response.data.length;i++){
-                  console.log(response.data[i].start_city);
+                  
                   options+='<option value="'+response.data[i].start_city+'">'+response.data[i].start_city+'</option>';
               }
               } else {
@@ -1421,7 +1475,7 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
             if(response.data.length > 0){
             var options=""
             for(var i=0;i<response.data.length;i++){
-                console.log(response.data[i].start_city);
+                
                 options+='<option value="'+response.data[i].start_city+'">'+response.data[i].start_city+'</option>';
             }
           } else {
@@ -1444,11 +1498,11 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                 
                 success: function(response) {
                     $("#dropoffinternal"+id).html('<option value="dropoff">dropoff</option>');
-                    console.log(response.data.length);
+                    
 
                     var options = ""
                     for (var i = 0; i < response.data.length; i++) {
-                        console.log(response.data[i].dest_city);
+                       
                         options += '<option value="' + response.data[i].dest_city + '">' + response.data[i].dest_city + '</option>';
 
                     }
@@ -1531,7 +1585,249 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
 
       }
 
-    
+      function pickupReturn1(id){
+        let value = document.getElementById('pickuppoint_'+id).value;
+        $.ajax({
+          type:"POST",
+          dataType: "json",
+          url:'<?php echo site_url();?>/query/fetchdropoff1',
+          data:{'pickup': value },
+          success:function(response){
+            $("#dropoffpoint_"+id).html('<option value="dropoff">dropoff</option>');
+            var options=""
+            for(var i=0;i<response.data.length;i++){
+            options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest_city+'</option>';
+            }
+        $("#dropoffpoint_"+id).append(options);
+          }
+        });
+       }
+
+
+      function dropReturn1(id) {
+        let dropValue = document.getElementById('dropoffpoint_'+id).value;
+        var value=$("#pickuppoint_"+id).val();
+        var pax_internal=$("#pax_point_"+id).val();
+        $.ajax({
+          type:"POST",
+          dataType: "json",
+          url:'<?php echo site_url();?>/query/fetchprice1',
+          data:{'dropoff':dropValue ,'pickup':value,'person':pax_internal},
+          success:function(response){
+          console.log("🚩 ~ file: build_transfer_edit.php:1569 ~ dropReturn1 ~ response", response)
+              $("#route_namepoint_"+id).val(response.route_name);
+              $("#price_point"+id).val(response.data);
+                var total_price=response.data*pax_internal;
+              $("#total_price_point"+id).val(total_price);
+            }
+        });
+
+      }
+
+      function pickupInternal1(id) {
+          let value = document.getElementById('pickupinternal_'+id).value;
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: '<?php echo site_url(); ?>/query/fetchdropoff',
+                data: {
+                    'pickup': value,
+                },
+                
+                success: function(response) {
+                    $("#dropoffinternal_"+id).html('<option value="dropoff">dropoff</option>');
+                    
+
+                    var options = ""
+                    for (var i = 0; i < response.data.length; i++) {
+                       
+                        options += '<option value="' + response.data[i].dest_city + '">' + response.data[i].dest_city + '</option>';
+                    }
+                    $("#dropoffinternal_"+id).append(options);
+                }
+
+            });
+    }
+
+    function dropInternal1(id) {
+        let dropValue = document.getElementById('dropoffinternal_'+id).value;
+        var value=$("#pickupinternal_"+id).val();
+        var pax_internal=$("#pax_internal_"+id).val();
+        
+        $.ajax({
+          type:"POST",
+          dataType: "json",
+          url:'<?php echo site_url();?>/query/fetchprice',
+          data:{'dropoff':dropValue ,'pickup':value,'person':pax_internal},
+          success:function(response){
+            $("#route_nameinternal_"+id).val(response.route_name);
+             $("#price_internal"+id).val(response.data);
+               var total_price=response.data*pax_internal;
+             $("#total_price_internal"+id).val(total_price);
+           }
+        });
+      }
+
+
+      $("#TrasportTypeCab").change(function() {
+        if ($('#TrasportTypeCab').is(':checked')) {
+          $('#PvtCab').show();
+        }
+      });
+
+      function pickupReturnDefualt(){
+        
+        var pax_adult_count1 = <?php echo $buildpackage->adult; ?>;
+        var pax_child_count1 = <?php echo $buildpackage->child; ?>;
+        var pax_infant_count1 = <?php echo $buildpackage->infant; ?>;
+        var total_pax1 = pax_adult_count1 + pax_child_count1 + 0;
+        var return_transfer_pickup = [];
+          $(".return_transfer_pickup").each(function() {
+            var cat = $(this).val();
+            if(cat != "" && cat != 'Pickup'){
+              return_transfer_pickup.push($.trim(cat));
+              }
+          });
+        var no_of_return = return_transfer_pickup.length;
+        
+        for (let index = 0; index < parseInt(no_of_return); index++) {
+          
+        $.ajax({
+          type: "POST",
+          dataType: "json",
+          url: '<?php echo site_url(); ?>/query/fetchPickup1',
+          data: {
+            'pax': total_pax1
+          },
+          success: function(response) {
+            if (response.data.length > 0) {
+              var options = ""
+              for (var i = 0; i < response.data.length; i++) {
+                
+                options += '<option value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
+              }
+            } else {
+              var options = "<option value=''>No Data Found</option>"
+            }
+            $("#pickuppoint_"+index).append(options);
+          }
+        });
+        }
+  
+       }
+
+       function dropReturnDefualt() {
+
+        var pax_adult_count1 = <?php echo $buildpackage->adult; ?>;
+        var pax_child_count1 = <?php echo $buildpackage->child; ?>;
+        var pax_infant_count1 = <?php echo $buildpackage->infant; ?>;
+        var total_pax1 = pax_adult_count1 + pax_child_count1 + 0;
+        var no_of_return = <?php print_r(count($return_query[0]->pickup)) ?>
+        
+        for (let index = 0; index < parseInt(no_of_return); index++) {
+        $.ajax({
+          type: "POST",
+          dataType: "json",
+          url: '<?php echo site_url(); ?>/query/fetchdropoff1',
+          data: {
+            'pax': total_pax1
+          },
+          success: function(response) {
+            if (response.data.length > 0) {
+              var options = ""
+              for (var i = 0; i < response.data.length; i++) {
+                options += '<option value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
+              }
+            } else {
+              var options = "<option value=''>No Data Found</option>"
+            }
+            $("#dropoffpoint_"+index).append(options);
+          }
+        });
+      }
+
+      }
+
+       function pickupInternalDefualt(){
+        
+        var internal_transfer_pickup = [];
+          $(".internal_transfer_pickup").each(function() {
+            var cat = $(this).val();
+            if(cat != "" && cat != 'Pickup'){
+              internal_transfer_pickup.push($.trim(cat));
+              }
+          });
+        var no_of_internal = internal_transfer_pickup.length;
+        for (let index = 0; index < parseInt(no_of_internal); index++) {
+          let value = document.getElementById('pickupinternal_'+index).value;
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: '<?php echo site_url(); ?>/query/fetchPickup',
+                data:{'pax': total_pax1},
+                success: function(response) {
+
+                    var options = ""
+                    for (var i = 0; i < response.data.length; i++) {
+                       
+                        options += '<option value="' + response.data[i].dest_city + '">' + response.data[i].dest_city + '</option>';
+                    }
+                    $("#pickupinternal_"+index).append(options);
+                }
+
+            });
+        }
+  
+       }
+
+
+       function dropInternalDefualt() {
+
+        var pax_adult_count1 = <?php echo $buildpackage->adult; ?>;
+        var pax_child_count1 = <?php echo $buildpackage->child; ?>;
+        var pax_infant_count1 = <?php echo $buildpackage->infant; ?>;
+        var total_pax1 = pax_adult_count1 + pax_child_count1 + 0;
+
+        var internal_transfer_pickup = [];
+          $(".internal_transfer_pickup").each(function() {
+            var cat = $(this).val();
+            if(cat != "" && cat != 'Pickup'){
+              internal_transfer_pickup.push($.trim(cat));
+              }
+          });
+
+        var no_of_internal = internal_transfer_pickup.length;
+
+        
+        for (let index = 0; index < parseInt(no_of_internal); index++) {
+          let value = document.getElementById('pickupinternal_'+index).value;
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: '<?php echo site_url(); ?>/query/fetchdropoff',
+                data: {
+                    'pickup': document.getElementById('pickupinternal_'+index).value,
+                },
+                
+                success: function(response) {
+                    var options = ""
+                console.log("🚩 ~ file: build_transfer_edit.php:1821 ~ dropInternalDefualt ~ response", response)
+
+                    for (var i = 0; i < response.data.length; i++) {
+                       
+                        options += '<option value="' + response.data[i].dest_city + '">' + response.data[i].dest_city + '</option>';
+                    }
+                    $("#dropoffinternal_"+index).append(options);
+                }
+            });
+      }
+      }
+       
+      pickupInternalDefualt();
+       dropInternalDefualt();
+      
+       pickupReturnDefualt()
+       dropReturnDefualt()
 
        $('#dropoffinternal').on('change', function() {
         var value=$("#pickupinternal").val();
@@ -1941,7 +2237,6 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
                           itrnl_total += parseInt($(this).val());
                         }).get();
                         var total_price_internal = itrnl_total;
-                        console.log("🚩 ~ file: build_transfer_edit.php ~ line 285 ~ $ ~ total_price_internal", total_price_internal)
 
                         let price_total = 0;
                         var total_price_point_arr = $("input[name='total_price_point[]']")
@@ -2052,11 +2347,6 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
   }
 saveTransferDefault();
 
-	CKEDITOR.replace('buildPackageInclusions');
-	CKEDITOR.replace('buildPackageExclusions');
-	CKEDITOR.replace('buildPackageConditions');
-	CKEDITOR.replace('buildPackageCancellations');
-	CKEDITOR.replace('buildPackageRefund');
 </script>
 <style>
 .accordion-button:after {

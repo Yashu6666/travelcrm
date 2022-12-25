@@ -286,11 +286,11 @@ class Itinerary extends CI_Controller {
 		$transfer_return_query_data = $this->db->where('query_id',(int)$query_id)->where('transfer_type','return')->get('query_transfer')->row();
 		$transfer_internal_query_data = $this->db->where('transfer_type','internal')->where('query_id',(int)$query_id)->get('query_transfer')->row();
 
-		$data['transfer_return_pickup'] = explode(",",$transfer_return_query_data->pickup);
-        $data['transfer_internal_pickup'] = explode(",",$transfer_internal_query_data->pickup);
+		$data['transfer_return_pickup'] = !empty($transfer_return_query_data->pickup) ? explode(",",$transfer_return_query_data->pickup) : '';
+        $data['transfer_internal_pickup'] = !empty($transfer_internal_query_data->pickup) ? explode(",",$transfer_internal_query_data->pickup) : '';
 
-		$data['transfer_return_drop'] = explode(",",$transfer_return_query_data->dropoff);
-        $data['transfer_internal_drop'] = explode(",",$transfer_internal_query_data->dropoff);
+		$data['transfer_return_drop'] = !empty($transfer_return_query_data->dropoff) ? explode(",",$transfer_return_query_data->dropoff) : '';
+        $data['transfer_internal_drop'] = !empty($transfer_internal_query_data->dropoff) ? explode(",",$transfer_internal_query_data->dropoff) : '';
 		
 		// $meals = $this->db->where('query_id',$query_id)->get('query_meal')->result();
 		$meals = $this->db->query("SELECT * FROM query_meal WHERE query_id=".$query_id)->result();

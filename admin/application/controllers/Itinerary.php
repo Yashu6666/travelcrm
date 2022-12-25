@@ -283,10 +283,19 @@ class Itinerary extends CI_Controller {
 		$data['transfer_dropoff'] = $transfer_dropoff;
 		$data['transfer_routes'] = $transfer_routes;
 
+		$transfer_return_query_data = $this->db->where('query_id',(int)$query_id)->where('transfer_type','return')->get('query_transfer')->row();
+		$transfer_internal_query_data = $this->db->where('transfer_type','internal')->where('query_id',(int)$query_id)->get('query_transfer')->row();
+
+		$data['transfer_return_pickup'] = explode(",",$transfer_return_query_data->pickup);
+        $data['transfer_internal_pickup'] = explode(",",$transfer_internal_query_data->pickup);
+
+		$data['transfer_return_drop'] = explode(",",$transfer_return_query_data->dropoff);
+        $data['transfer_internal_drop'] = explode(",",$transfer_internal_query_data->dropoff);
+		
 		// $meals = $this->db->where('query_id',$query_id)->get('query_meal')->result();
 		$meals = $this->db->query("SELECT * FROM query_meal WHERE query_id=".$query_id)->result();
 
-		if(count($meals)> 1){
+		if(count($meals) > 0){
 			$data['resturant_transfer_type'] = explode(',',$meals[0]->transfer_type);
 			$data['resturant_type'] = explode(',',$meals[0]->resturant_type);
 			$data['resturant_name'] = explode(',',$meals[0]->resturant_name);
@@ -324,6 +333,12 @@ class Itinerary extends CI_Controller {
 			}
 		});
 
+		$excursion_tkt_data = array_filter($excursion, function($value) {
+			if($value->excursion_type == "TKT"){
+				return $value;
+			}
+		});
+
 		$excursion_pvt = [];
 		foreach ($excursion_pvt_data as $key => $value) {
 			foreach (explode(',',$value->excursion_name) as $k => $val) {
@@ -338,12 +353,22 @@ class Itinerary extends CI_Controller {
 			}
 		}
 
+		$excursion_tkt = [];
+		foreach ($excursion_tkt_data as $key => $value) {
+			foreach (explode(',',$value->excursion_name) as $k => $val) {
+				array_push($excursion_tkt, $val);
+			}
+		}
+
 		$excursion_types = [];
 
 		foreach ($excursion as $k1 => $val1) {
 			array_push($excursion_types, $val1->excursion_type);
 		}
 
+		$data['excursion_pvt'] = $excursion_pvt;
+		$data['excursion_sic'] = $excursion_sic;
+		$data['excursion_tkt'] = $excursion_tkt;
 		$data['excursion_types'] = $excursion_types;
 		$data['excursion_data'] = array_merge($excursion_pvt,$excursion_sic);
 
@@ -383,6 +408,15 @@ class Itinerary extends CI_Controller {
 		// echo"<pre>";print_r($data);exit;
 		$this->load->view('itinerary/add',$data);
 
+	}
+
+	public function getTransferRoute(){
+		$pickup = $this->input->post('pickup');
+		$drop = $this->input->post('dropoff');
+		$type = $this->input->post('transfer_type');
+		
+		$transfer_route_query_data = $this->db->where('transport_type',$type)->where('start_city',$pickup)->where('dest_city',$drop)->get('transfer_route')->result();
+		echo json_encode($transfer_route_query_data[0]->route_name);
 	}
 
 	public function getTransfer(){

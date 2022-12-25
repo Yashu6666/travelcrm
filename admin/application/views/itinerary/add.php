@@ -1355,13 +1355,8 @@ $this
                                           <div class="text-white" style="padding: 5px; background-color: #d9a927;">
 
                                             <div class="">
-                                              <p class="d-flex justify-content-between"><span><i class="fa-solid fa-place-of-worship"></i> Excursion </span><a style="text-decoration:underline; float: right;" data-bs-toggle="modal" data-bs-target="#excursionModal" id="excursionmodal" data-id="<?php echo $i ?>" onclick="excursion_click();">Add +
+                                              <p class="d-flex justify-content-between"><span><i class="fa-solid fa-place-of-worship"></i> Activity </span><a style="text-decoration:underline; float: right;" data-bs-toggle="modal" data-bs-target="#excursionModal" id="excursionmodal" data-id="<?php echo $i ?>" onclick="excursion_click();">Add +
                                                   </a></p>
-
-                                              <!-- <span style="margin-left:65px;display:none;">
-   <input type="radio" name="packagecategory_256346" id="packagecategory_256346_3" value="3" checked="checked"  onclick="return DisplayGrid('3','256346','2261')">
-   <label class="white" for="packagecategory_256346_3">Deluxe&nbsp;&nbsp;</label>
- </span> -->
                                             </div>
                                           </div>
 
@@ -1372,7 +1367,7 @@ $this
                                                   <tr class="alert alert-graylight">
                                                     <!-- <th class="small smallbold">Selected</th> -->  
                                                     <th class="small smallbold">Transfer Type</th>
-                                                    <th class="small smallbold">Excursion Name</th>
+                                                    <th class="small smallbold">Activity Name</th>
                                                     <th class="small smallbold">Adult</th>
                                                     <th class="small smallbold">Child</th>
                                                     <th class="small smallbold">Infant</th>
@@ -1814,6 +1809,11 @@ $this
   // hotel modal script end //
 
   // transfer modal script start //
+  let transfer_internal_pickup_added_arr = [];
+  let transfer_internal_drop_added_arr = [];
+
+  let transfer_return_pickup_added_arr = [];
+  let transfer_return_drop_added_arr = [];
 
   $('#searchTransferButton').on("click", function() {
 
@@ -1846,6 +1846,30 @@ $this
     var return_mins = $("#return_mins").val();
     
     var pickup_time = $("#pickup_time").val();
+    var transferTypeVal = $("#transfertype").val();
+
+    console.log("🚩 ~ file: add.php:1847 ~ $ ~ transferTypeVal", transferTypeVal)
+
+    if(transferTypeVal == 'oneway') {
+    
+      if (!transfer_internal_pickup_added_arr.includes(pickupinternal)) {
+          transfer_internal_pickup_added_arr.push(pickupinternal);
+        }
+
+      if (!transfer_internal_drop_added_arr.includes(dropoffinternal)) {
+        transfer_internal_drop_added_arr.push(dropoffinternal);
+      }
+
+    } else {
+
+      if (!transfer_return_pickup_added_arr.includes(pickupinternal)) {
+          transfer_return_pickup_added_arr.push(pickupinternal);
+        }
+
+      if (!transfer_return_drop_added_arr.includes(dropoffinternal)) {
+        transfer_return_drop_added_arr.push(dropoffinternal);
+      }      
+    }
 
     let transfer_row_count = 0;
 
@@ -1931,6 +1955,8 @@ $this
   });
   // meals modal script end //
 
+  let excursion_names_added_arr = [];
+
 
   // Excursion modal script start //
   let excursion_row_count = 0;
@@ -1943,6 +1969,10 @@ $this
     var excursion_adult = $("#excursion_adult").val();
     var excursion_child = $("#excursion_child").val();
     var excursion_infant = $("#excursion_infant").val();
+
+    if (!excursion_names_added_arr.includes(excursion_name)) {
+        excursion_names_added_arr.push(excursion_name);
+      }
 
     var excursion_body = "";
     excursion_body = '<tr class="odd gradeX" id="excursion_row'+excursion_row_count+'">';
@@ -1969,6 +1999,9 @@ $this
 
     $(document).on('click', '#hotelmodal', function() {
       var modalid_hotel = $(this).data('id');
+      $("#buildHotelName").val('');
+      $("#selectStarRating").val('');
+      $("#buildRoomType").val('');
       $("#modal_hotel").val(modalid_hotel);
 
     });
@@ -2024,96 +2057,94 @@ $this
 
     //     });
 
-    $('#transfertype').on('change', function() {
-      $('#pickupinternal').empty();
-      $('#dropoffinternal').empty();
-      $('#route_nameinternal').val();
-      var transfer_type = $("#transfertype").val();
-      var pickup = $("#pickupinternal").val();
-      var dropoff = $("#dropoffinternal").val();
-      $('#route_nameinternal').val();
-      $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: '<?php echo site_url(); ?>/itinerary/getTransfer',
-        data: {
-          'dropoff': dropoff,
-          'pickup': pickup,
-          'transfer_type': transfer_type,
-          'type': 'get_dropup'
-        },
-        success: function(response) {
-          $("#pickupinternal").html('<option value="dropup">Pick up</option>');
+    // $('#transfertype').on('change', function() {
+    //   $('#pickupinternal').empty();
+    //   $('#dropoffinternal').empty();
+    //   $('#route_nameinternal').val();
+    //   var transfer_type = $("#transfertype").val();
+    //   var pickup = $("#pickupinternal").val();
+    //   var dropoff = $("#dropoffinternal").val();
+    //   $('#route_nameinternal').val();
+    //   $.ajax({
+    //     type: "POST",
+    //     dataType: "json",
+    //     url: '<?php echo site_url(); ?>/itinerary/getTransfer',
+    //     data: {
+    //       'dropoff': dropoff,
+    //       'pickup': pickup,
+    //       'transfer_type': transfer_type,
+    //       'type': 'get_dropup'
+    //     },
+    //     success: function(response) {
+    //       $("#pickupinternal").html('<option value="dropup">Pick up</option>');
 
-          var options = ""
-          for (var i = 0; i < response.length; i++) {
-            options += '<option value="' + response[i].start_city + '">' + response[i].start_city + '</option>';
+    //       var options = ""
+    //       for (var i = 0; i < response.length; i++) {
+    //         options += '<option value="' + response[i].start_city + '">' + response[i].start_city + '</option>';
 
-          }
-
-
-          $("#pickupinternal").append(options);
-
-        }
-      });
-
-    });
+    //       }
 
 
-    $('#pickupinternal').on('change', function() {
-      $('#dropoffinternal').empty();
-      $('#route_nameinternal').val();
-      var transfer_type = $("#transfertype").val();
-      var pickup = $("#pickupinternal").val();
-      var dropoff = $("#dropoffinternal").val();
+    //       $("#pickupinternal").append(options);
 
-      $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: '<?php echo site_url(); ?>/itinerary/getTransfer',
-        data: {
-          'dropoff': dropoff,
-          'pickup': pickup,
-          'transfer_type': transfer_type,
-          'type': 'get_dropoff'
-        },
-        success: function(response) {
-          $("#dropoffinternal").html('<option value="drop off">Pick up</option>');
+    //     }
+    //   });
 
-          var options = ""
-          for (var i = 0; i < response.length; i++) {
-            options += '<option value="' + response[i].dest_city + '">' + response[i].dest_city + '</option>';
-
-          }
-
-          $("#dropoffinternal").append(options);
-
-        }
+    // });
 
 
-      });
+    // $('#pickupinternal').on('change', function() {
+    //   $('#dropoffinternal').empty();
+    //   $('#route_nameinternal').val();
+    //   var transfer_type = $("#transfertype").val();
+    //   var pickup = $("#pickupinternal").val();
+    //   var dropoff = $("#dropoffinternal").val();
+
+    //   $.ajax({
+    //     type: "POST",
+    //     dataType: "json",
+    //     url: '<?php echo site_url(); ?>/itinerary/getTransfer',
+    //     data: {
+    //       'dropoff': dropoff,
+    //       'pickup': pickup,
+    //       'transfer_type': transfer_type,
+    //       'type': 'get_dropoff'
+    //     },
+    //     success: function(response) {
+    //       $("#dropoffinternal").html('<option value="drop off">Pick up</option>');
+
+    //       var options = ""
+    //       for (var i = 0; i < response.length; i++) {
+    //         options += '<option value="' + response[i].dest_city + '">' + response[i].dest_city + '</option>';
+
+    //       }
+
+    //       $("#dropoffinternal").append(options);
+
+    //     }
 
 
-    });
+    //   });
+
+
+    // });
 
     $('#dropoffinternal').on('change', function() {
-      $('#route_nameinternal').val();
       var transfer_type = $("#transfertype").val();
       var pickup = $("#pickupinternal").val();
       var dropoff = $("#dropoffinternal").val();
       $.ajax({
         type: "POST",
         dataType: "json",
-        url: '<?php echo site_url(); ?>/itinerary/getTransfer',
+        url: '<?php echo site_url(); ?>/itinerary/getTransferRoute',
         data: {
           'dropoff': dropoff,
           'pickup': pickup,
-          'transfer_type': transfer_type,
-          'type': 'get_route_name'
+          'transfer_type': transfer_type
         },
         success: function(response) {
-          console.log(response);
-          $("#route_nameinternal").val(response[0].route_name);
+          console.log("🚩 ~ file: add.php:2111 ~ $ ~ response", response)
+          $("#route_nameinternal").val(response);
         }
       });
     });
@@ -2207,19 +2238,28 @@ $this
   });
 
   function ViewAllHotelsNew() {
+    console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    $("#buildHotelName").val('');
+    $("#selectStarRating").val('');
+    $("#buildRoomType").val('');
     $("#exampleModal").show();
   }
 
   function ViewAllTransfersHotels() {
+    $("#transfertype").val('');
+    $("#pickupinternal").val('');
+    $("#dropoffinternal").val('');
+    $("#route_nameinternal").val('');
     $("#transferModal").show();
   }
-
 
   function meals_click() {
     $("#mealsModal").show();
   }
 
   function excursion_click() {
+    $("#excursion_type").val("");
+    $("#excursion_name").val("");
     $("#excursionModal").show();
   }
 </script>
@@ -2295,63 +2335,63 @@ $this
 </script>
 
 <script>
-  $('#selectStarRating').on('change', function() {
-    // $("#buildHotelName").empty();
+  // $('#selectStarRating').on('change', function() {
+  //   // $("#buildHotelName").empty();
 
-    var category = $("#selectStarRating").val();
-    var city = $('#Hotel_name_city_select').val();
-
-
-    $.ajax({
-      type: "POST",
-      dataType: "json",
-      url: '<?php echo site_url(); ?>/Query/get_hotels',
-      data: {
-        'city': city,
-        'category': category
-      },
-      success: function(response) {
-        var i;
-        $('#buildHotelName').empty().append($("<option></option>"));
-        for (i = 0; i < response.length; ++i) {
-          var newOption = $('#buildHotelName').append($("<option></option>").attr("value", response[i].hotelname).text(response[i].hotelname));
-        }
-        // response ='';
-      }
-
-    })
-  });
-
-  $('#buildHotelName').on('change', function() {
-    var hotel_id = $('#buildHotelName').val();
-    // $("#buildRoomType").empty();
-    $.ajax({
-      type: "POST",
-      dataType: "json",
-      url: '<?php echo site_url(); ?>/Query/get_room_type',
-      data: {
-        'hotel_id': hotel_id
-      },
-      success: function(response) {
-        console.log("🚩 ~ file: add.php ~ line 1612 ~ $ ~ response", response)
-        var j;
-        // $('#buildRoomType').append($("<option>Select Room Type</option>"));
-        for (j = 0; j < response.length; ++j) {
-          // do something with `substr[i]`
-          console.log(response[j]);
-          // $('#buildRoomType').empty();
-          $('#buildRoomType')
-          .append($("<option></option>")
-            .attr("value", response[j].roomtype)
-            .text(response[j].roomtype));
-
-        }
-
-      }
-    })
+  //   var category = $("#selectStarRating").val();
+  //   var city = $('#Hotel_name_city_select').val();
 
 
-  });
+  //   $.ajax({
+  //     type: "POST",
+  //     dataType: "json",
+  //     url: '<?php echo site_url(); ?>/Query/get_hotels',
+  //     data: {
+  //       'city': city,
+  //       'category': category
+  //     },
+  //     success: function(response) {
+  //       var i;
+  //       $('#buildHotelName').empty().append($("<option></option>"));
+  //       for (i = 0; i < response.length; ++i) {
+  //         var newOption = $('#buildHotelName').append($("<option></option>").attr("value", response[i].hotelname).text(response[i].hotelname));
+  //       }
+  //       // response ='';
+  //     }
+
+  //   })
+  // });
+
+  // $('#buildHotelName').on('change', function() {
+  //   var hotel_id = $('#buildHotelName').val();
+  //   // $("#buildRoomType").empty();
+  //   $.ajax({
+  //     type: "POST",
+  //     dataType: "json",
+  //     url: '<?php echo site_url(); ?>/Query/get_room_type',
+  //     data: {
+  //       'hotel_id': hotel_id
+  //     },
+  //     success: function(response) {
+  //       console.log("🚩 ~ file: add.php ~ line 1612 ~ $ ~ response", response)
+  //       var j;
+  //       // $('#buildRoomType').append($("<option>Select Room Type</option>"));
+  //       for (j = 0; j < response.length; ++j) {
+  //         // do something with `substr[i]`
+  //         console.log(response[j]);
+  //         // $('#buildRoomType').empty();
+  //         $('#buildRoomType')
+  //         .append($("<option></option>")
+  //           .attr("value", response[j].roomtype)
+  //           .text(response[j].roomtype));
+
+  //       }
+
+  //     }
+  //   })
+
+
+  // });
 
 
   // $('#pickupinternal').on('change', function() {

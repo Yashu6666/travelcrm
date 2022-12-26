@@ -170,9 +170,9 @@
                                                     <th>Rate</th>
                                                     <th>Pax</th>
                                                     <!-- <th>Discount</th> -->
-                                                    <th>Taxable Amount</th>
+                                                    <!-- <th>Taxable Amount</th>
                                                     <th>Vat (5%)</th>
-                                                    <th>Vat Amount</th>
+                                                    <th>Vat Amount</th> -->
                                                     <!-- <th>VAT</th> -->
                                                     <!-- <th>Total VAT</th> -->
                                                     <th>Total Amount</th>
@@ -191,25 +191,7 @@
                                                             <b><span id="spaninvoiceCate" class="colorRed"></span></b>
 
                                                         </div>
-                                                        <!-- <div class="mb-3">
-                                                            <input type="number" class="form-control" id="invoiceNum"
-                                                                name="invoiceNum" aria-describedby="emailHelp"
-                                                                placeholder="SAC Code like -12345" autocomplete="off">
-                                                            <b><span id="spaninvoiceNum" class="colorRed"></span></b>
-                                                        </div> -->
-                                                        <!-- <div class="form-floating">
-                                                            <textarea class="form-control"
-                                                                placeholder="Leave a comment here"
-                                                                id="floatingTextarea" name="invoiceComment"></textarea>
-                                                        </div> -->
                                                     </td>
-                                                    <!-- <td>
-                                                        <div class="mb-3">
-                                                            <input type="text" class="form-control" id="invoiceQty" value="1" 
-                                                                aria-describedby="emailHelp"  autocomplete="off" name="invoiceQty">
-                                                            <b><span id="spanqty" class="colorRed"></span></b>
-                                                        </div>
-                                                    </td> -->
                                                     <td>
                                                         <div class="mb-3">
                                                             <input type="number" class="form-control invoiceRate" id="invoiceRate"
@@ -226,27 +208,6 @@
                                                         </div>
                                                     </td>
                                                     <!-- <td>
-                                                        <div class="row align-items-center">
-                                                               <div class="col">
-                                                                <input type="text" class="form-control mt-2"
-                                                                    id="invoiceDiscount" name="invoiceDiscount" aria-describedby="emailHelp"
-                                                                    value="0" autocomplete="off">
-                                                            </div>
-                                                            <div class="col">
-                                                                <select name="invoiceDiscountChoice" id="invoiceDiscountChoice">
-                                                                    <option value="">Select</option>
-                                                                    <option value="Fixed">Fixed</option>
-                                                                    <option value="%">%</option>
-                                                                </select>
-
-
-                                                               <input class="form-control" value="0.00" type="text" name="discAmount" id="discAmount" style="display: none;">
-                                                            </div>
-                                                         
-                                                        </div>
-
-                                                    </td> -->
-                                                    <td>
                                                         <div class="mb-3">
                                                             <input type="number" class="form-control Taxable invoiceTaxableAmount"
                                                                 id="invoiceTaxableAmount" name="invoiceTaxableAmount[]" aria-describedby="emailHelp"
@@ -261,27 +222,6 @@
                                                                     id="exampleInputEmail1" aria-describedby="emailHelp" readonly=""
                                                                     value="5" autocomplete="off"/>
                                                         </div>
-                                                        <!-- <div class="row align-items-center">
-               
-                                                            <div class="col">
-                                                                <input type="text" class="form-control mt-2" id="invoiceMarkup" name="invoiceMarkup" 
-                                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                                    value="0" autocomplete="off">
-                                                            </div> -->
-<!-- 
-                                                            <div class="col">
-
-                                                        <select name="invoiceMarkupChoice" id="invoiceMarkupChoice">
-                                                            <option value="">Select</option>
-                                                            <option value="Fixed">Fixed</option>
-                                                            <option value="%">%</option>
-                                                        </select>
-                                                        <input class="form-control" value="0.00" type="text" name="discMarkup" id="discMarkup" style="display: none;">
-
-                                                        </div> -->
-
-                                                        <!-- </div> -->
-
                                                     </td>
                                                     <td>
                                                         <div class="mb-3">
@@ -289,24 +229,27 @@
                                                             step="any"  aria-describedby="emailHelp" id="invoiceVatAmount" name="invoiceVatAmount[]" 
                                                                 value="<?php echo $edit_invoice->invoiceVatChoice?>" autocomplete="off"> 
                                                         </div>
-                                                    </td>
-                                                    <!-- <td>
-                                                        <div class="mb-3">
-                                                            <input type="text" class="form-control"
-                                                                id="exampleInputEmail1" aria-describedby="emailHelp" name="invoiceVatChoice"
-                                                                placeholder="VAT" autocomplete="off" readonly="">
-                                                        </div>
                                                     </td> -->
+                                                    
                                                     <td>
                                                         <div class="mb-3">
                                                             <input type="number" class="form-control invoiceTotalAmount"
                                                                 id="invoiceTotalAmount" aria-describedby="emailHelp" name="invoiceTotalAmount" 
-                                                                step="any"  value="<?php echo $edit_invoice->invoiceTotalAmount?>" autocomplete="off">
+                                                                step="any"  value="0" autocomplete="off">
                                                         </div>
                                                     </td>
-                                                    <!-- <td><input type="text" class="form-control"
-                                                                id="invoiceTotalAmount" aria-describedby="emailHelp" name="invoiceTotalAmount" 
-                                                                value="0.00" autocomplete="off" readonly=""></td> -->
+                                                                                                          
+                                            <input type="hidden" class="form-control Taxable invoiceTaxableAmount"
+                                                        id="invoiceTaxableAmount" name="invoiceTaxableAmount[]" aria-describedby="emailHelp"
+                                                        step="any"  value ="0" autocomplete="off">
+
+                                            <input type="hidden" class="form-control mt-2 invoiceVatPercentage" id="invoiceVatPercentage" name="invoiceVatPercentage[]" 
+                                                    id="exampleInputEmail1" aria-describedby="emailHelp" readonly=""
+                                                            value="5" autocomplete="off"/>
+
+                                            <input type="hidden" class="form-control invoiceVatAmount"
+                                                    step="any"  aria-describedby="emailHelp" id="invoiceVatAmount" name="invoiceVatAmount[]" 
+                                                        value="0" autocomplete="off"> 
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -335,7 +278,7 @@
                                         </div>
 
 
-                                        <div class="d-flex justify-content-end border">
+                                        <!-- <div class="d-flex justify-content-end border">
                                             <div class="row g-3 align-items-center">
                                                 <div class="col-auto">
                                                     <label for="inputPassword6"  class="col-form-label">VAT (5%)</label>
@@ -345,7 +288,7 @@
                                                         aria-describedby="passwordHelpInline" value="<?php echo $edit_invoice->finalSubtotal?>" autocomplete="off" readonly="">
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
 
                                         <div class="d-flex justify-content-end border">
@@ -516,10 +459,12 @@ $(window).click(function() {
 
         var qty_s = $('#invoicePax').val();
         var rate_S = $('#invoiceRate').val();
-        var vat_percentage_S  = $('#invoiceVatPercentage').val();
+        var vat_percentage_S  = 1;
+        // var vat_percentage_S  = $('#invoiceVatPercentage').val();
         var finalAdvance_S  = $('#finalAdvance').val();      
         var totalInvoice_S = (qty_s * rate_S);
-        var vatAmount_S = (parseInt(totalInvoice_S) * parseInt(vat_percentage_S) / 100);
+        var vatAmount_S = 0;
+        // var vatAmount_S = (parseInt(totalInvoice_S) * parseInt(vat_percentage_S) / 100);
         var bank_charges = $('#bank_charges').val();
 
         var vatTotalAmount_s = Math.ceil(totalInvoice_S + vatAmount_S);

@@ -70,7 +70,7 @@ $this->session->unset_userdata ( 'success' );
                                                     <th class="center"> Proforma Invoice No </th>
                                                     <th class="center"> Travel Agency Name </th>
                                                     <th class="center"> Invoice value </th>
-                                                    <th class="center">VAT</th>
+                                                    <!-- <th class="center">VAT</th> -->
                                                     <th class="center"> Received </th>
                                                     <th class="center"> Balance </th>
                                                     <th class="center"> Due date </th>
@@ -92,7 +92,7 @@ $this->session->unset_userdata ( 'success' );
                                                     <td><?php echo $listInvoice[$i]->invoiceNumber;?></td>
                                                     <td><?php echo $company_names[$i];?></td>
                                                     <td><?php echo $listInvoice[$i]->finalTotalInvoice;?></td>
-                                                    <td><?php echo $listInvoice[$i]->finalVAT;?></td>
+                                                    <!-- <td>?php echo $listInvoice[$i]->finalVAT;?></td> -->
                                                     <td><?php echo $listInvoice[$i]->finalAdvance;?></td>
                                                     <td class="text-danger"><?php echo $listInvoice[$i]->finalBalance;?></td>
                                                     <td><?php echo (new DateTime($listInvoice[$i]->invoicePayment))->format('d-M-Y') ?></td>

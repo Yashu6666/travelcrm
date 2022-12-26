@@ -1217,15 +1217,11 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                                 $("#endDate1").val(dateFormated);
 
                          })
-
-                        //  $(".card-box").click(function(e) {
-                           
-                        // });
                         
 
-                        $(".card-box").click(function(e) {
-                            e.stopPropagation();
-                            console.clear();
+                      $(".card-box").click(function(e) {
+                          e.stopPropagation();
+                            // ;
                             
                             // adult_per_room
                             var no_room_count = <?php echo $buildpackage->room; ?>;
@@ -1302,7 +1298,6 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                             var pax_infant_count = <?php echo $buildpackage->infant; ?>;
 
                             var pax_cnb_count_data = <?php print_r(json_encode($buildpackage->cnb_per_room)); ?>;
-                            // var pax_cnb_count = ?php echo $buildpackage->cnb_per_room; ?>;
                             let cnb_arr = pax_cnb_count_data.split(",");
                             var pax_cnb_count = 0;
                             cnb_arr.forEach(x => {
@@ -1324,10 +1319,9 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                             var sub_total_adult = parseInt(sub_total_adult_single) +
                               parseInt(intrnal_transfer_avg * (parseInt(single_share_adult_count))) +
                               parseInt(point_transfer_avg * (parseInt(single_share_adult_count))) +
-
                               ((parseInt(total_pax_TKT_adult) / pax_adult_count) * single_share_adult_count) +
                               ((parseInt(total_pax_visa_price_adult) / pax_adult_count) * single_share_adult_count) +
-                              ((parseInt(total_pax_otb_price_adult) / pax_adult_count) * single_share_adult_count) +
+                              ((parseInt(total_pax_otb_price_adult != null ? total_pax_otb_price_adult : 0 ) / pax_adult_count) * single_share_adult_count) +
                               ((parseInt(total_pax_meal_adult) / pax_adult_count) * single_share_adult_count) +
                               ((parseInt(total_pax_pvt_adult) / pax_adult_count) * single_share_adult_count) +
                               ((parseInt(total_pax_meals_adult) / pax_adult_count) * single_share_adult_count) +
@@ -1339,18 +1333,19 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                               parseInt(point_transfer_avg * (parseInt(double_share_adult_count))) +
                               ((parseInt(total_pax_TKT_adult) / pax_adult_count) * double_share_adult_count) +
                               ((parseInt(total_pax_visa_price_adult) / pax_adult_count) * double_share_adult_count) +
-                              ((parseInt(total_pax_otb_price_adult) / pax_adult_count) * double_share_adult_count) +
+                              ((parseInt(total_pax_otb_price_adult != null ? total_pax_otb_price_adult : 0 ) / pax_adult_count) * double_share_adult_count) +
                               ((parseInt(total_pax_meal_adult) / pax_adult_count) * double_share_adult_count) +
                               ((parseInt(total_pax_pvt_adult) / pax_adult_count) * double_share_adult_count) +
                               ((parseInt(total_pax_meals_adult) / pax_adult_count) * double_share_adult_count) +
                               ((parseInt(total_pax_sic_adult) / pax_adult_count) * double_share_adult_count) ;
+
 
                             var sub_total_adult_triple = parseInt(hotel_rate_adult_triple) +
                               parseInt(intrnal_transfer_avg * (parseInt(triple_share_adult_count))) +
                               parseInt(point_transfer_avg * (parseInt(triple_share_adult_count))) +
                               ((parseInt(total_pax_TKT_adult) / pax_adult_count) * triple_share_adult_count) +
                               ((parseInt(total_pax_visa_price_adult) / pax_adult_count) * triple_share_adult_count) +
-                              ((parseInt(total_pax_otb_price_adult) / pax_adult_count) * triple_share_adult_count) +
+                              ((parseInt(total_pax_otb_price_adult != null ? total_pax_otb_price_adult : 0 ) / pax_adult_count) * triple_share_adult_count) +
                               ((parseInt(total_pax_meal_adult) / pax_adult_count) * triple_share_adult_count) +
                               ((parseInt(total_pax_pvt_adult) / pax_adult_count) * triple_share_adult_count) +
                               ((parseInt(total_pax_meals_adult) / pax_adult_count) * triple_share_adult_count) +
@@ -1371,7 +1366,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                               parseInt(total_pax_sic_hild) +
                               parseInt(total_pax_pvt_hild) +
                               parseInt(total_pax_meal_child) + parseInt(total_pax_TKT_child) +
-                              parseInt(total_pax_otb_price_child) +
+                              parseInt(total_pax_otb_price_child != null ? total_pax_otb_price_child : 0 ) +
                               parseInt(total_pax_meals_child) +
                               parseInt(total_pax_visa_price_child);
 
@@ -1382,7 +1377,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                             var total_pax_sic_infant = $("#total_pax_sic_infant").val();
                             var total_pax_TKT_infant = $("#total_pax_TKT_infant").val();
 
-                            var sub_total_infant = parseInt(total_pax_visa_price_infant) + parseInt(total_pax_otb_price_infant) +
+                            var sub_total_infant = parseInt(total_pax_visa_price_infant) + parseInt(total_pax_otb_price_infant != null ? total_pax_otb_price_infant : 0 ) +
                               // parseInt(hotel_rate_infant) +
                               parseInt(total_pax_TKT_infant) +
                               parseInt(total_pax_pvt_infant) +
@@ -1477,10 +1472,11 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                             $("#perpax_childs_input").val(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
                             $("#perpax_infants_input").val(c_type == 'USD' ? Math.floor(per_pax_infant / usd_aed) : Math.floor(per_pax_infant));
                             $("#perpax_cnb_input").val(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
-                            var totalprice_package = total_adult + total_child + total_infant + total_cnb;
+                            var totalprice_package = total_adult + total_child + total_infant + total_cnb + total_adult_double + total_adult_triple;
                             $("#totalprice_package").val(totalprice_package);
 
                           })
+
 
                         function get_resturant_name_ex(id, row) {
                               var transfer = $('input[name="transfer_with_or_without' + row + '[]"]:checked').val();
@@ -2060,7 +2056,6 @@ function get_resturant_name(id,row){
 
 </script>
   <script>
-        console.clear()
         initSample();
         $('.js-example-basic-multiple').select2();
     </script>
@@ -4101,7 +4096,7 @@ function updateRemainingRoom(city,checkin,nights,hotel,bedtype,cat,row){
 
   function checkRoomAvailability(city, date, nights, hotel, room_type) {
     let rating = <?php echo $buildpackage->hotelPrefrence ?>;
-    // console.clear();
+    // ;
     let city_val = $(city).val();
     let date_val = $(date).val();
     let nights_val = $(nights).val();
@@ -4119,7 +4114,7 @@ function updateRemainingRoom(city,checkin,nights,hotel,bedtype,cat,row){
         'hotel_id': hotel_val,
       },
       success: function(response) {
-        // console.clear();
+        // ;
 
         $(room_type).empty();
         $(room_type).append($("<option>Select Room Type</option>"));
@@ -4401,199 +4396,266 @@ function saveTransferDefault(){
   }
 
   function cardClick() {
-    let itrnl_total = 0;
-    var hotel_rate_adult = $("#hotel_rate_adult").val();
+                               // ;
+                            
+                            // adult_per_room
+                            var no_room_count = <?php echo $buildpackage->room; ?>;
+                            
+                            var buildBedType_arr = [];
+                            $(".get_bed_type").each(function(i, obj) {
+                              if(i < no_room_count){
+                                buildBedType_arr.push(obj.value);
+                              }
+                            });
 
-    var hotel_pax_adult_single = $("#hotel_pax_adult_single").val();
-    var hotel_pax_adult_double = $("#hotel_pax_adult_double").val();
-    var hotel_pax_adult_triple = $("#hotel_pax_adult_triple").val();
+                            var adult_per_room_arr = [];
+                            $(".adult_per_room").each(function(i, obj) {
+                              if(i < no_room_count){
+                                adult_per_room_arr.push(obj.value);
+                              }
+                            });
 
-    var hotel_rate_adult_single = $("#hotel_rate_adult_single").val();
-    console.log("🚩 ~ file: build_package_edit.php:4368 ~ cardClick ~ hotel_rate_adult_single", hotel_rate_adult_single)
-    var hotel_rate_adult_double = $("#hotel_rate_adult_double").val();
-    console.log("🚩 ~ file: build_package_edit.php:4370 ~ cardClick ~ hotel_rate_adult_double", hotel_rate_adult_double)
-    var hotel_rate_adult_triple = $("#hotel_rate_adult_triple").val();
-    console.log("🚩 ~ file: build_package_edit.php:4372 ~ cardClick ~ hotel_rate_adult_triple", hotel_rate_adult_triple)
+                            let adult_pax_total_arr = [];
 
-    // var total_price_internal = $("#total_price_internal").val();
-    var total_price_internal_arr = $("input[name='total_price_internal[]']")
-      .map(function() {
-        itrnl_total += parseInt($(this).val());
-      }).get();
-    var total_price_internal = itrnl_total;
+                            let single_share_adult_count = 0;
+                            let double_share_adult_count = 0;
+                            let triple_share_adult_count = 0;
 
-    let price_total = 0;
-    // var total_price_point = $("#total_price_point").val();
-    var total_price_point_arr = $("input[name='total_price_point[]']")
-      .map(function() {
-        price_total += parseInt($(this).val());
-      }).get();
-    var total_price_point = price_total;
+                            buildBedType_arr.map((val,index) =>
+                            {
+                              if(buildBedType_arr[index] == "Single"){
+                                single_share_adult_count += parseInt(adult_per_room_arr[index]);
+                                console.log("in single");
+                              } else if(buildBedType_arr[index] == "Double"){
+                                double_share_adult_count += parseInt(adult_per_room_arr[index]);
+                                console.log("in double");
+                              } else if(buildBedType_arr[index] == "Triple"){
+                                triple_share_adult_count += parseInt(adult_per_room_arr[index]);
+                                console.log("in triple");
+                              }
+                            });
+                            
+                            let hotel_radio = $("input[name=hotel_status]");
+                            let hotel_checked_val = hotel_radio.filter(":checked").val();
 
-    var pax_adult_count = <?php echo $buildpackage->adult; ?>;
-    var pax_child_count = <?php echo $buildpackage->child; ?>;
-    var pax_infant_count = <?php echo $buildpackage->infant; ?>;
+                            if(hotel_checked_val != "Yes"){
+                              single_share_adult_count = <?php echo (int)$buildpackage->adult; ?>;;
+                              double_share_adult_count = 0;
+                              triple_share_adult_count = 0;
+                            }
+                            
+                            let itrnl_total = 0;
+                            var hotel_rate_adult = $("#hotel_rate_adult").val();
 
-    var pax_cnb_count_data = <?php print_r(json_encode($buildpackage->cnb_per_room)); ?>;
-    // var pax_cnb_count = ?php echo $buildpackage->cnb_per_room; ?>;
-    let cnb_arr = pax_cnb_count_data.split(",");
-    var pax_cnb_count = 0;
-    cnb_arr.forEach(x => {
-      pax_cnb_count += parseInt(x);
-    });
+                            var hotel_pax_adult_single = $("#hotel_pax_adult_single").val();
+                            var hotel_pax_adult_double = $("#hotel_pax_adult_double").val();
+                            var hotel_pax_adult_triple = $("#hotel_pax_adult_triple").val();
 
-    var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val();
-    var total_pax_otb_price_adult = $("#total_pax_otb_price_adult").val() == null ? 0 : $("#total_pax_otb_price_adult").val();
-    var total_pax_meal_adult = $("#total_pax_meal_adult").val();
-    var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
-    var total_pax_sic_adult = $("#total_pax_sic_adult").val();
-    var total_pax_TKT_adult = $("#total_pax_TKT_adult").val();
-    var total_pax_meals_adult = $("#total_pax_meals_adult").val();
+                            var hotel_rate_adult_single = $("#hotel_rate_adult_single").val();
+                            var hotel_rate_adult_double = $("#hotel_rate_adult_double").val();
+                            var hotel_rate_adult_triple = $("#hotel_rate_adult_triple").val();
+
+                            var total_price_internal_arr = $("input[name='total_price_internal[]']")
+                              .map(function() {
+                                itrnl_total += parseInt($ (this).val());
+                              }).get();
+                            var total_price_internal = itrnl_total;
+
+                            let price_total = 0;
+                            var total_price_point_arr = $("input[name='total_price_point[]']")
+                              .map(function() {
+                                price_total += parseInt($(this).val());
+                              }).get();
+                            var total_price_point = price_total;
+
+                            var pax_adult_count = <?php echo $buildpackage->adult; ?>;
+                            var pax_child_count = <?php echo $buildpackage->child; ?>;
+                            var pax_infant_count = <?php echo $buildpackage->infant; ?>;
+
+                            var pax_cnb_count_data = <?php print_r(json_encode($buildpackage->cnb_per_room)); ?>;
+                            // var pax_cnb_count = ?php echo $buildpackage->cnb_per_room; ?>;
+                            let cnb_arr = pax_cnb_count_data.split(",");
+                            var pax_cnb_count = 0;
+                            cnb_arr.forEach(x => {
+                              pax_cnb_count += parseInt(x);
+                            });
+
+                            var total_pax_visa_price_adult = $("#total_pax_visa_price_adult").val();
+                            var total_pax_otb_price_adult = $("#total_pax_otb_price_adult").val();
+                            var total_pax_meal_adult = $("#total_pax_meal_adult").val();
+                            var total_pax_pvt_adult = $("#total_pax_pvt_adult").val();
+                            var total_pax_sic_adult = $("#total_pax_sic_adult").val();
+                            var total_pax_TKT_adult = $("#total_pax_TKT_adult").val();
+                            var total_pax_meals_adult = $("#total_pax_meals_adult").val();
+                            var intrnal_transfer_avg = parseInt(total_price_internal) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
+                            var point_transfer_avg = parseInt(total_price_point) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
+
+                            var sub_total_adult_single = parseInt(hotel_rate_adult_single);
+                            
+                            console.log("🚩 ~ file: build_package_edit.php:4576 ~ cardClick ~ sub_total_adult_single", sub_total_adult_single)
+                            console.log("🚩 ~ file: build_package_edit.php:4570 ~ cardClick ~ hotel_rate_adult_double", hotel_rate_adult_double)
+                            console.log("🚩 ~ file: build_package_edit.php:4572 ~ cardClick ~ hotel_rate_adult_triple", hotel_rate_adult_triple)
+                            var sub_total_adult = parseInt(sub_total_adult_single) +
+                              parseInt(intrnal_transfer_avg * (parseInt(single_share_adult_count))) +
+                              parseInt(point_transfer_avg * (parseInt(single_share_adult_count))) +
+                              ((parseInt(total_pax_TKT_adult) / pax_adult_count) * single_share_adult_count) +
+                              ((parseInt(total_pax_visa_price_adult) / pax_adult_count) * single_share_adult_count) +
+                              ((parseInt(total_pax_otb_price_adult) / pax_adult_count) * single_share_adult_count) +
+                              ((parseInt(total_pax_meal_adult) / pax_adult_count) * single_share_adult_count) +
+                              ((parseInt(total_pax_pvt_adult) / pax_adult_count) * single_share_adult_count) +
+                              ((parseInt(total_pax_meals_adult) / pax_adult_count) * single_share_adult_count) +
+                              ((parseInt(total_pax_sic_adult) / pax_adult_count) * single_share_adult_count) ;
+
+                            
+                            var sub_total_adult_double = parseInt(hotel_rate_adult_double) +
+                              parseInt(intrnal_transfer_avg * (parseInt(double_share_adult_count))) +
+                              parseInt(point_transfer_avg * (parseInt(double_share_adult_count))) +
+                              ((parseInt(total_pax_TKT_adult) / pax_adult_count) * double_share_adult_count) +
+                              ((parseInt(total_pax_visa_price_adult) / pax_adult_count) * double_share_adult_count) +
+                              ((parseInt(total_pax_otb_price_adult) / pax_adult_count) * double_share_adult_count) +
+                              ((parseInt(total_pax_meal_adult) / pax_adult_count) * double_share_adult_count) +
+                              ((parseInt(total_pax_pvt_adult) / pax_adult_count) * double_share_adult_count) +
+                              ((parseInt(total_pax_meals_adult) / pax_adult_count) * double_share_adult_count) +
+                              ((parseInt(total_pax_sic_adult) / pax_adult_count) * double_share_adult_count) ;
+
+                            var sub_total_adult_triple = parseInt(hotel_rate_adult_triple) +
+                              parseInt(intrnal_transfer_avg * (parseInt(triple_share_adult_count))) +
+                              parseInt(point_transfer_avg * (parseInt(triple_share_adult_count))) +
+                              ((parseInt(total_pax_TKT_adult) / pax_adult_count) * triple_share_adult_count) +
+                              ((parseInt(total_pax_visa_price_adult) / pax_adult_count) * triple_share_adult_count) +
+                              ((parseInt(total_pax_otb_price_adult) / pax_adult_count) * triple_share_adult_count) +
+                              ((parseInt(total_pax_meal_adult) / pax_adult_count) * triple_share_adult_count) +
+                              ((parseInt(total_pax_pvt_adult) / pax_adult_count) * triple_share_adult_count) +
+                              ((parseInt(total_pax_meals_adult) / pax_adult_count) * triple_share_adult_count) +
+                              ((parseInt(total_pax_sic_adult) / pax_adult_count) * triple_share_adult_count) ;
+
+                            var hotel_rate_child = $("#hotel_rate_child").val();
+                            var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
+                            var total_pax_sic_hild = $("#total_pax_sic_hild").val();
+                            var total_pax_meal_child = $("#total_pax_meal_child").val();
+                            var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
+                            var total_pax_otb_price_child = $("#total_pax_otb_price_child").val();
+                            var total_pax_TKT_child = $("#total_pax_TKT_child").val();
+                            var total_pax_meals_child = $("#total_pax_meals_child").val();
+
+                            var sub_total_child = parseInt(hotel_rate_child) +
+                              parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) +
+                              parseInt(point_transfer_avg * (parseInt(pax_child_count))) +
+                              parseInt(total_pax_sic_hild) +
+                              parseInt(total_pax_pvt_hild) +
+                              parseInt(total_pax_meal_child) + parseInt(total_pax_TKT_child) +
+                              parseInt(total_pax_otb_price_child) +
+                              parseInt(total_pax_meals_child) +
+                              parseInt(total_pax_visa_price_child);
+
+                            var hotel_rate_infant = $("#hotel_rate_infant").val();
+                            var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val();
+                            var total_pax_otb_price_infant = $("#total_pax_otb_price_infant").val();
+                            var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
+                            var total_pax_sic_infant = $("#total_pax_sic_infant").val();
+                            var total_pax_TKT_infant = $("#total_pax_TKT_infant").val();
+
+                            var sub_total_infant = parseInt(total_pax_visa_price_infant) + parseInt(total_pax_otb_price_infant) +
+                              // parseInt(hotel_rate_infant) +
+                              parseInt(total_pax_TKT_infant) +
+                              parseInt(total_pax_pvt_infant) +
+                              parseInt(total_pax_sic_infant);
+
+                            var sub_total_cnb = parseInt(hotel_rate_infant);
+
+                            let c_type = document.getElementById('currencyOption').value;
+                            var usd_aed = <?php echo $usd_to_aed->usd_to_aed; ?>;
+
+                            // $("#subtotal_adults_single").val(c_type == 'USD' ? (sub_total_adult_single / usd_aed).toFixed(2) : sub_total_adult_single);
+                            $("#subtotal_adults_double").val(c_type == 'USD' ? (sub_total_adult_double / usd_aed).toFixed(2) : sub_total_adult_double);
+                            $("#subtotal_adults_triple").val(c_type == 'USD' ? (sub_total_adult_triple / usd_aed).toFixed(2) : sub_total_adult_triple);
+                            
 
 
-    var intrnal_transfer_avg = parseInt(total_price_internal) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
-    var point_transfer_avg = parseInt(total_price_point) / (parseInt(pax_adult_count) + parseInt(pax_child_count));
+                            $("#subtotal_adults").val(c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2) : sub_total_adult);
+                            $("#subtotal_childs").val(c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child);
+                            $("#subtotal_infants").val(c_type == 'USD' ? (sub_total_infant / usd_aed).toFixed(2) : sub_total_infant);
+                            $("#subtotal_cnb").val(c_type == 'USD' ? (sub_total_cnb / usd_aed).toFixed(2) : sub_total_cnb);
 
-    var sub_total_adult_single = parseInt(hotel_rate_adult_single);
-    var sub_total_adult_double = parseInt(hotel_rate_adult_double);
-    var sub_total_adult_triple = parseInt(hotel_rate_adult_triple);
+                            var PackageMarkup = $("#PackageMarkup").val();
+                            var Mark_up = $("#Mark_up").val();
 
+                            var total_adult_single = 0;
+                            var total_adult_double = 0;
+                            var total_adult_triple = 0;
 
-    var sub_total_adult = parseInt(hotel_rate_adult_single) +
-      parseInt(intrnal_transfer_avg * (parseInt(pax_adult_count))) +
-      parseInt(point_transfer_avg * (parseInt(pax_adult_count))) +
-      parseInt(total_pax_TKT_adult) +
-      parseInt(total_pax_visa_price_adult) +
-      parseInt(total_pax_otb_price_adult) +
-      parseInt(total_pax_meal_adult) +
-      parseInt(total_pax_pvt_adult) +
-      parseInt(total_pax_meals_adult) +
-      parseInt(total_pax_sic_adult);
+                            var total_adult = 0;
+                            var total_child = 0;
+                            var total_infant = 0;
+                            if (Mark_up == "precentage") {
 
-      console.log("🚩 ~ file: build_package_edit.php:4415 ~ cardClick ~ sub_total_adult", sub_total_adult)
+                              total_adult_single = (parseInt(sub_total_adult_single) + (parseInt(sub_total_adult_single) * parseInt(PackageMarkup) / 100));
+                              total_adult_double = (parseInt(sub_total_adult_double) + (parseInt(sub_total_adult_double) * parseInt(PackageMarkup) / 100));
+                              total_adult_triple = (parseInt(sub_total_adult_triple) + (parseInt(sub_total_adult_triple) * parseInt(PackageMarkup) / 100));
 
-    var hotel_rate_child = $("#hotel_rate_child").val();
-    var total_pax_pvt_hild = $("#total_pax_pvt_hild").val();
-    var total_pax_sic_hild = $("#total_pax_sic_hild").val();
-    var total_pax_meal_child = $("#total_pax_meal_child").val();
-    var total_pax_visa_price_child = $("#total_pax_visa_price_child").val();
-    var total_pax_otb_price_child = $("#total_pax_otb_price_child").val() == null ? 0 : $("#total_pax_otb_price_child").val();
-    var total_pax_TKT_child = $("#total_pax_TKT_child").val();
-    var total_pax_meals_child = $("#total_pax_meals_child").val();
+                              total_adult = (parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100));
+                              total_child = (parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
+                              total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
+                              total_cnb = (parseInt(sub_total_cnb) + (parseInt(sub_total_cnb) * parseInt(PackageMarkup) / 100));
 
-    var sub_total_child = parseInt(hotel_rate_child) +
-      parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) +
-      parseInt(point_transfer_avg * (parseInt(pax_child_count))) +
-      parseInt(total_pax_sic_hild) +
-      parseInt(total_pax_pvt_hild) +
-      parseInt(total_pax_meal_child) + parseInt(total_pax_TKT_child) +
-      parseInt(total_pax_otb_price_child) +
-      parseInt(total_pax_meals_child) +
-      parseInt(total_pax_visa_price_child);
+                            }
 
-    var hotel_rate_infant = $("#hotel_rate_infant").val();
-    var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val();
-    var total_pax_otb_price_infant = $("#total_pax_otb_price_infant").val() == null ? 0 : $("#total_pax_otb_price_infant").val();
-    var total_pax_pvt_infant = $("#total_pax_pvt_infant").val();
-    var total_pax_sic_infant = $("#total_pax_sic_infant").val();
-    var total_pax_TKT_infant = $("#total_pax_TKT_infant").val();
+                            markup_per = parseInt(PackageMarkup) / parseInt(pax_adult_count + pax_child_count + pax_infant_count);
 
-    var sub_total_infant = parseInt(total_pax_visa_price_infant) + parseInt(total_pax_otb_price_infant) +
-      // parseInt(hotel_rate_infant) +
-      parseInt(total_pax_TKT_infant) +
-      parseInt(total_pax_pvt_infant) +
-      parseInt(total_pax_sic_infant);
+                            if (Mark_up == "values") {
 
-    var sub_total_cnb = parseInt(hotel_rate_infant); 
+                              // total_adult_single = (parseInt(sub_total_adult_single) + parseInt(PackageMarkup));
+                              total_adult_double = (parseInt(sub_total_adult_double) + parseInt(PackageMarkup));
+                              total_adult_triple = (parseInt(sub_total_adult_triple) + parseInt(PackageMarkup));
 
-    let c_type = document.getElementById('currencyOption').value;
-    var usd_aed = <?php echo $usd_to_aed->usd_to_aed; ?>;
+                              total_adult = pax_adult_count > 0 ? (parseInt(sub_total_adult) + parseInt(markup_per * pax_adult_count)) : 0;
+                              total_child = pax_child_count > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * pax_child_count)) : 0;
+                              total_infant = pax_infant_count > 0 ? (parseInt(sub_total_infant) + parseInt(markup_per * pax_infant_count)) : 0;
+                              total_cnb = pax_cnb_count > 0 ? (parseInt(sub_total_cnb) + parseInt(markup_per * pax_cnb_count)) : 0;
 
-    // $("#subtotal_adults_single").val(c_type == 'USD' ? (sub_total_adult_single / usd_aed).toFixed(2) : sub_total_adult_single);
-    $("#subtotal_adults_double").val(c_type == 'USD' ? (sub_total_adult_double / usd_aed).toFixed(2) : sub_total_adult_double);
-    $("#subtotal_adults_triple").val(c_type == 'USD' ? (sub_total_adult_triple / usd_aed).toFixed(2) : sub_total_adult_triple);
+                            }
 
-    $("#subtotal_adults").val(c_type == 'USD' ? (sub_total_adult / usd_aed).toFixed(2) : sub_total_adult);
-    $("#subtotal_childs").val(c_type == 'USD' ? (sub_total_child / usd_aed).toFixed(2) : sub_total_child);
-    $("#subtotal_infants").val(c_type == 'USD' ? (sub_total_infant / usd_aed).toFixed(2) : sub_total_infant);
-    $("#subtotal_cnb").val(c_type == 'USD' ? (sub_total_cnb / usd_aed).toFixed(2) : sub_total_cnb);
+                            // $("#totalprice_adult_single").val(c_type == 'USD' ? (total_adult_single / usd_aed).toFixed(2) : total_adult_single);
+                            $("#totalprice_adult_double").val(c_type == 'USD' ? (total_adult_double / usd_aed).toFixed(2) : total_adult_double);
+                            $("#totalprice_adult_triple").val(c_type == 'USD' ? (total_adult_triple / usd_aed).toFixed(2) : total_adult_triple);
 
-    var PackageMarkup = $("#PackageMarkup").val();
-    var Mark_up = $("#Mark_up").val();
+                            $("#totalprice_adult").val(c_type == 'USD' ? (total_adult / usd_aed).toFixed(2) : total_adult);
+                            $("#totalprice_childs").val(c_type == 'USD' ? (total_child / usd_aed).toFixed(2) : total_child);
+                            $("#totalprice_infants").val(c_type == 'USD' ? (total_infant / usd_aed).toFixed(2) : total_infant);
+                            $("#totalprice_cnb").val(c_type == 'USD' ? (total_cnb / usd_aed).toFixed(2) : total_cnb);
 
-    var total_adult_single = 0;
-    var total_adult_double = 0;
-    var total_adult_triple = 0;
+                            // var per_pax_adult_single = Math.ceil(hotel_pax_adult_single > 1 ? parseInt(total_adult_single) / hotel_pax_adult_single : parseInt(total_adult_single));
+                            var per_pax_adult_double = Math.ceil(double_share_adult_count > 1 ? parseInt(total_adult_double) / double_share_adult_count : parseInt(total_adult_double));
+                            var per_pax_adult_triple = Math.ceil(triple_share_adult_count > 1 ? parseInt(total_adult_triple) / triple_share_adult_count : parseInt(total_adult_triple));
 
-    var total_adult = 0;
-    var total_child = 0;
-    var total_infant = 0;
-    if (Mark_up == "precentage") {
+                            var per_pax_adult = (single_share_adult_count > 1 ? parseInt(total_adult) / single_share_adult_count : parseInt(total_adult));
 
-    // total_adult_single = (parseInt(sub_total_adult_single) + (parseInt(sub_total_adult_single) * parseInt(PackageMarkup) / 100));
-    total_adult_double = (parseInt(sub_total_adult_double) + (parseInt(sub_total_adult_double) * parseInt(PackageMarkup) / 100));
-    total_adult_triple = (parseInt(sub_total_adult_triple) + (parseInt(sub_total_adult_triple) * parseInt(PackageMarkup) / 100));
+                            var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
 
-      total_adult = (parseInt(sub_total_adult) + (parseInt(sub_total_adult) * parseInt(PackageMarkup) / 100));
-      total_child = (parseInt(sub_total_child) + (parseInt(sub_total_child) * parseInt(PackageMarkup) / 100));
-      total_infant = (parseInt(sub_total_infant) + (parseInt(sub_total_infant) * parseInt(PackageMarkup) / 100));
-      total_cnb = (parseInt(sub_total_cnb) + (parseInt(sub_total_cnb) * parseInt(PackageMarkup) / 100));
+                            var per_pax_infant = (pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
 
-    }
+                            var per_pax_cnb = (pax_cnb_count > 1 ? (parseInt(total_cnb) / pax_cnb_count) : parseInt(total_cnb));
 
-    markup_per = parseInt(PackageMarkup) / parseInt(pax_adult_count + pax_child_count + pax_infant_count);
+                            // $("#perpax_adult_single").val(c_type == 'USD' ? (per_pax_adult_single / usd_aed).toFixed(2) : per_pax_adult_single);
+                            $("#perpax_adult_double").val(c_type == 'USD' ? (per_pax_adult_double / usd_aed).toFixed(2) : per_pax_adult_double);
+                            $("#perpax_adult_triple").val(c_type == 'USD' ? (per_pax_adult_triple / usd_aed).toFixed(2) : per_pax_adult_triple);
 
-    if (Mark_up == "values") {
+                            $("#perpax_adult").val(c_type == 'USD' ? Math.floor(per_pax_adult / usd_aed) : Math.floor(per_pax_adult));
+                            $("#perpax_childs").val(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
+                            $("#perpax_infants").val(c_type == 'USD' ? Math.floor(per_pax_infant / usd_aed) : Math.floor(per_pax_infant));
+                            $("#perpax_cnb").val(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
 
-    // total_adult_single = (parseInt(sub_total_adult_single) + parseInt(PackageMarkup));
-    total_adult_double = (parseInt(sub_total_adult_double) + parseInt(PackageMarkup));
-    total_adult_triple = (parseInt(sub_total_adult_triple) + parseInt(PackageMarkup));
-
-      total_adult = pax_adult_count > 0 ? (parseInt(sub_total_adult) + parseInt(markup_per * pax_adult_count)) : 0;
-      total_child = pax_child_count > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * pax_child_count)) : 0;
-      total_infant = pax_infant_count > 0 ? (parseInt(sub_total_infant) + parseInt(markup_per * pax_infant_count)) : 0;
-      total_cnb = pax_cnb_count > 0 ? (parseInt(sub_total_cnb) + parseInt(markup_per * pax_cnb_count)) : 0;
-
-    }
-
-    // $("#totalprice_adult_single").val(c_type == 'USD' ? (total_adult_single / usd_aed).toFixed(2) : total_adult_single);
-    $("#totalprice_adult_double").val(c_type == 'USD' ? (total_adult_double / usd_aed).toFixed(2) : total_adult_double);
-    $("#totalprice_adult_triple").val(c_type == 'USD' ? (total_adult_triple / usd_aed).toFixed(2) : total_adult_triple);
-
-    $("#totalprice_adult").val(c_type == 'USD' ? (total_adult / usd_aed).toFixed(2) : total_adult);
-    $("#totalprice_childs").val(c_type == 'USD' ? (total_child / usd_aed).toFixed(2) : total_child);
-    $("#totalprice_infants").val(c_type == 'USD' ? (total_infant / usd_aed).toFixed(2) : total_infant);
-    $("#totalprice_cnb").val(c_type == 'USD' ? (total_cnb / usd_aed).toFixed(2) : total_cnb);
-
-    // var per_pax_adult_single = Math.ceil(hotel_pax_adult_single > 1 ? parseInt(total_adult_single) / hotel_pax_adult_single : parseInt(total_adult_single));
-    var per_pax_adult_double = Math.ceil(hotel_pax_adult_double > 1 ? parseInt(total_adult_double) / hotel_pax_adult_double : parseInt(total_adult_double));
-    var per_pax_adult_triple = Math.ceil(hotel_pax_adult_triple > 1 ? parseInt(total_adult_triple) / hotel_pax_adult_triple : parseInt(total_adult_triple));
-
-    var per_pax_adult = (pax_adult_count > 1 ? parseInt(total_adult) / pax_adult_count : parseInt(total_adult));
-
-    var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
-
-    var per_pax_infant = (pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
-
-    var per_pax_cnb = (pax_cnb_count > 1 ? (parseInt(total_cnb) / pax_cnb_count) : parseInt(total_cnb));
-
-    // $("#perpax_adult_single").val(c_type == 'USD' ? (per_pax_adult_single / usd_aed).toFixed(2) : per_pax_adult_single);
-    $("#perpax_adult_double").val(c_type == 'USD' ? (per_pax_adult_double / usd_aed).toFixed(2) : per_pax_adult_double);
-    $("#perpax_adult_triple").val(c_type == 'USD' ? (per_pax_adult_triple / usd_aed).toFixed(2) : per_pax_adult_triple);
-
-    $("#perpax_adult").val(c_type == 'USD' ? Math.floor(per_pax_adult / usd_aed) : Math.floor(per_pax_adult));
-    $("#perpax_childs").val(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
-    $("#perpax_infants").val(c_type == 'USD' ? Math.floor(per_pax_infant / usd_aed) : Math.floor(per_pax_infant));
-    $("#perpax_cnb").val(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
-
-    $("#perpax_adult_input").val(c_type == 'USD' ? Math.floor(per_pax_adult / usd_aed) : Math.floor(per_pax_adult));
-    $("#perpax_childs_input").val(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
-    $("#perpax_infants_input").val(c_type == 'USD' ? Math.floor(per_pax_infant / usd_aed) : Math.floor(per_pax_infant));
-    $("#perpax_cnb_input").val(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
-    var totalprice_package = total_adult + total_child + total_infant + total_cnb;
-    $("#totalprice_package").val(totalprice_package);
-$('.card-box').click();
-  }
+                            $("#perpax_adult_input").val(c_type == 'USD' ? Math.floor(per_pax_adult / usd_aed) : Math.floor(per_pax_adult));
+                            // $("#perpax_adult_input_single").val(c_type == 'USD' ? (per_pax_adult_single / usd_aed).toFixed(2) : per_pax_adult_single);
+                            $("#perpax_adult_input_double").val(c_type == 'USD' ? (per_pax_adult_double / usd_aed).toFixed(2) : per_pax_adult_double);
+                            $("#perpax_adult_input_triple").val(c_type == 'USD' ? (per_pax_adult_triple / usd_aed).toFixed(2) : per_pax_adult_triple);
+                            $("#perpax_childs_input").val(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
+                            $("#perpax_infants_input").val(c_type == 'USD' ? Math.floor(per_pax_infant / usd_aed) : Math.floor(per_pax_infant));
+                            $("#perpax_cnb_input").val(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
+                            var totalprice_package = total_adult + total_child + total_infant + total_cnb + total_adult_double + total_adult_triple;
+                            $("#totalprice_package").val(totalprice_package);
+                            $('.card-box').click();
+                      }
 
   hotelcalculation(1);
   mealcalculation(1);

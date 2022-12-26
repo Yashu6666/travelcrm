@@ -87,8 +87,9 @@ class Invoice extends CI_Controller
         elseif($query_type->type == "Package"){
             $QType = "package_price";
         }
-        $remove_vat_amount = (($query_price->$QType * 5 ) / 100);
-        $data['price'] = ($query_price->$QType - $remove_vat_amount )  / $data['pax'];
+        // $remove_vat_amount = (($query_price->$QType * 5 ) / 100);
+        // $data['price'] = ($query_price->$QType - $remove_vat_amount )  / $data['pax'];
+        $data['price'] = $query_price->$QType  / $data['pax'];
         // if($query_type->type == "Package") {
         //  $query_type = $this->db->where('queryId', $query_id)->get('querypackage')->row();
         // }

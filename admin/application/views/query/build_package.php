@@ -1351,7 +1351,7 @@
                             $("#perpax_childs_input").val(c_type == 'USD' ? Math.floor(per_pax_child / usd_aed) : Math.floor(per_pax_child));
                             $("#perpax_infants_input").val(c_type == 'USD' ? Math.floor(per_pax_infant / usd_aed) : Math.floor(per_pax_infant));
                             $("#perpax_cnb_input").val(c_type == 'USD' ? Math.floor(per_pax_cnb / usd_aed) : Math.floor(per_pax_cnb));
-                            var totalprice_package = total_adult + total_child + total_infant + total_cnb;
+                            var totalprice_package = total_adult + total_child + total_infant + total_cnb + total_adult_double + total_adult_triple;
                             $("#totalprice_package").val(totalprice_package);
 
                           })

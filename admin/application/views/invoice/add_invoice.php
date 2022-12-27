@@ -507,7 +507,7 @@ $(window).click(function() {
         $('#invoiceTaxableAmount').val(Math.ceil(totalInvoice_S));
         $('#invoiceVatAmount').val(Math.ceil(vatAmount_S));
         $('#invoiceTotalAmount').val(Math.ceil(vatTotalAmount_s));
-        // $("#finalBalance").val(parseInt(vatTotalAmount_s) - parseInt(finalAdvance_S));
+        $("#finalBalance").val(parseInt(vatTotalAmount_s) - parseInt(finalAdvance_S));
         $(".invoiceRate,.invoicePax").change(function(){
         var qty = $('.invoicePax').map(function(){  return  this.value }).get()
 
@@ -563,6 +563,8 @@ $(window).click(function() {
     $('#finalVAT').val( parseFloat(sum_vatAmount) );
     
     $('#finalTotalInvoice').val( sum_finalTotalAmount + parseInt(bank_charges));
+    // $('#finalBalance').val( sum_finalTotalAmount + parseInt(bank_charges));
+
     // common
     $('#com_invoiceTaxableAmount').val(invoiceTaxableAmount);
     $('#com_invoiceRate').val(sum_invoiceRate);

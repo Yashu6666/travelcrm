@@ -400,7 +400,8 @@
         <?php endif ?>
             </div>
         <?php endif ?>
-
+                        
+        <?php if (isset($proposalDetails['in_transfer_pickup'][0])) :?>
         <?php if (($proposalDetails['in_transfer_pickup'][0] != "Pickup") && !empty($proposalDetails['in_transfer_pickup'][0]) ||
             ($proposalDetails['pp_transfer_pickup'][0] != "Pickup") && !empty($proposalDetails['pp_transfer_pickup'][0])
         ) : ?>
@@ -462,6 +463,7 @@
                     </table>
                 </div>
             </div>
+        <?php endif ?>
         <?php endif ?>
 
 

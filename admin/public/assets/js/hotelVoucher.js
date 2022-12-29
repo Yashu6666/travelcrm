@@ -122,7 +122,7 @@ function sendEmail() {
       success: function (result) {
         console.log("result.email", result);
         toastr.success("Email Sent Successfully");
-        location.href = base_url + "/HotelVoucher/view_hotels_voucher";
+        // location.href = base_url + "/HotelVoucher/view_hotels_voucher";
 
       },
       error: function () {

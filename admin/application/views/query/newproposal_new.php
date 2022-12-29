@@ -541,7 +541,7 @@
                             <?php if (isset($proposalDetails['hotelName']) && !empty($proposalDetails['hotelName'])) : ?>
                                 <li><?php echo $buildpackage->night ?> Nights stay at the mentioned hotel</li>
                                 <?php if ($proposalDetails['build_room_types'][0] == 'BB') : ?>
-                                    <li><?php echo $buildpackage->night ?> Breakfast Buffet Breakfast in the Hotel</li>
+                                    <li><?php echo $buildpackage->night ?>  Breakfast</li>
                                 <?php endif ?>
                             <?php endif ?>
 
@@ -1023,10 +1023,12 @@
 
             "hotel_pickup": "<?php echo isset($activity_query_details) && !empty($activity_query_details) ? $activity_query_details->hotel_pickup : "N/A"  ?>",
 
-            "query_ID": <?php echo $buildpackage->queryId ?>
-        };
+            "query_ID": <?php echo $buildpackage->queryId ?>,
 
-        console.log("🚀 ~ file: newproposal_new.php ~ line 861 ~ btn.addEventListener ~ data_arr", data_arr)
+            "final_hotel_names_details": <?php echo json_encode(isset($final_hotel_names_details) ? $final_hotel_names_details : '') ?>,
+            "final_hotel_nights_details": <?php echo json_encode(isset($final_hotel_nights_details) ? $final_hotel_nights_details : '') ?>,
+            "final_room_bed_details": <?php echo json_encode(isset($final_room_bed_details) ? $final_room_bed_details : '') ?>,
+        };
 
 
         $.ajax({

@@ -87,7 +87,7 @@ class Query extends CI_Controller
 			$data['details'] = $data_en;
 			
 			if ($data['details']->type == 'package'){
-				// $this->load->view('query/email_templates/package/package_mail', $data);return;
+				$this->load->view('query/email_templates/package/package_mail', $data);return;
 				$body = $this->load->view('query/email_templates/package/package_mail', $data, TRUE);
 				echo "Email Sent package";
 			}

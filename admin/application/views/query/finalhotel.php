@@ -59,8 +59,8 @@
         }
 
         /* .section{
-    height: 500vh;
-} */
+            height: 500vh;
+        } */
 
         @import url("https://rsms.me/inter/inter.css");
 

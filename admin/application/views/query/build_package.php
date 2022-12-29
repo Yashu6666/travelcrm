@@ -327,17 +327,18 @@
                                 <td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT" type="date" value="<?php echo $view->specificDate; ?>" name="buildTravelFromdatePVT[]"></td>
 
                                 <td>
-                                  <select id="pickuppoint" required name="buildTravelToDateSIC[]" class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                  <select id="pickuppoint" required name="buildTravelToDateSIC[]" class="return_transfer_pickup w-100 bg-white form-control form-control-lg">
                                     <option value="Pickup">Pickup</option>
                                   </select>
                                 </td>
                                 <td>
-                                  <select id="dropoffpoint" name="buildTravelToCitySIC[]" class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                  <select id="dropoffpoint" name="buildTravelToCitySIC[]" class="return_transfer_dropoff w-100 bg-white form-control form-control-lg">
+                                    <option value="BUR DUBAI HOTEL">BUR DUBAI HOTEL</option>
                                     <option value="Drop Off">Drop Off</option>
 
                                   </select>
                                 </td>
-                                <td><input id="route_namepoint" class="form-control return_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>
+                                <td><input id="route_namepoint" class="form-control return_transfer_route" value="Pick up and Drop from Dubai Airport" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>
                                 <input id="price_point" type="hidden" name="price_point[]" />
                                 <input id="pax_count_point" type="hidden" name="pax_count_point[]" />
                                 <input id="total_price_point" type="hidden" value="0" name="total_price_point[]" />
@@ -392,6 +393,7 @@
                                   <td>
                                     <div>
                                       <select data-mdl-for="sample2" class="form-control" value="" tabIndex="-1" id="visa_category_drop_down" name="visa_category_drop_down">
+                                        <option value="">Select Category</option>
                                         <option value="30_days_tourist">30 Days Tourist</option>
                                         <option value="48_hrs">48 hrs Transit</option>
                                         <option value="96_hrs">96 hrs Transit</option>
@@ -403,6 +405,7 @@
                                   <td>
                                     <div>
                                       <select data-mdl-for="sample2" class="form-control" value="" tabIndex="-1" id='entry_type' name="entry_type">
+                                        <option value="">Select Entry Type</option>
                                         <option value="Single Entry">Single Entry</option>
                                         <option value="Double Entry">Double Entry</option>
                                         <option value="Multi Entry">Multi Entry</option>
@@ -413,6 +416,7 @@
                                   <td>
                                     <div>
                                       <select data-mdl-for="sample2" class="form-control" value="" tabIndex="-1" id="visa_validity" name="visa_validity">
+                                        <option value="">Select Validity</option>
                                         <option value="1 Month">1 Month</option>
                                         <option value="3 Month">3 Month</option>
                                         <option value="5 Years">5 Years</option>
@@ -646,7 +650,7 @@
                                       <div>
                                         <select data-mdl-for="sample2" class="form-control ex_res_type" value="" tabIndex="-1" id="ex_res_type" name="ex_res_type[]" onchange="get_resturant_name_ex('ex_res_type','');">
                                           <option value="">Select Option</option>
-                                          <option value="Standard">Standard</option>
+                                          <option selected value="Standard">Standard</option>
                                           <option value="Premium">Premium</option>
                                         </select>
 
@@ -741,7 +745,7 @@
                                     <div>
                                       <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type" name="res_type[]" onchange="get_resturant_name('res_type','');">
                                         <option value="">Select Option</option>
-                                        <option value="Standard">Standard</option>
+                                        <option selected value="Standard">Standard</option>
                                         <option value="Premium">Premium</option>
                                       </select>
 
@@ -1103,7 +1107,19 @@
                             
                             // adult_per_room
                             var no_room_count = <?php echo $buildpackage->room; ?>;
+                            var child_with_or_wo_bed = <?php echo json_encode(explode(",",$buildpackage->child_with_or_wo_bed)); ?>;
                             
+                            let childWithBedCount = 0;
+                            let childWithNotBedCount = 0;
+                             
+                            child_with_or_wo_bed.forEach(element => {
+                              if(element == 1){
+                                childWithBedCount += 1;
+                              } else {
+                                childWithNotBedCount += 1;
+                              }
+                            });
+
                             var buildBedType_arr = [];
                             $(".get_bed_type").each(function(i, obj) {
                               if(i < no_room_count){
@@ -1240,14 +1256,15 @@
                             var total_pax_meals_child = $("#total_pax_meals_child").val();
 
                             var sub_total_child = parseInt(hotel_rate_child) +
-                              parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) +
-                              parseInt(point_transfer_avg * (parseInt(pax_child_count))) +
-                              parseInt(total_pax_sic_hild) +
-                              parseInt(total_pax_pvt_hild) +
-                              parseInt(total_pax_meal_child) + parseInt(total_pax_TKT_child) +
-                              parseInt(total_pax_otb_price_child) +
-                              parseInt(total_pax_meals_child) +
-                              parseInt(total_pax_visa_price_child);
+                              parseInt(intrnal_transfer_avg * (parseInt(childWithBedCount))) +
+                              parseInt(point_transfer_avg * (parseInt(childWithBedCount))) +
+                              ((parseInt(total_pax_sic_hild) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_pvt_hild) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_meal_child)  / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_TKT_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_otb_price_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount )+
+                              ((parseInt(total_pax_meals_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_visa_price_child) / (pax_child_count > 0 ? pax_child_count : 1))* childWithBedCount );
 
                             var hotel_rate_infant = $("#hotel_rate_infant").val();
                             var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val();
@@ -1262,7 +1279,16 @@
                               parseInt(total_pax_pvt_infant) +
                               parseInt(total_pax_sic_infant);
 
-                            var sub_total_cnb = parseInt(hotel_rate_infant);
+                            var sub_total_cnb = parseInt(hotel_rate_infant) +
+                              parseInt(intrnal_transfer_avg * (parseInt(childWithNotBedCount))) +
+                              parseInt(point_transfer_avg * (parseInt(childWithNotBedCount))) +
+                              ((parseInt(total_pax_sic_hild) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_pvt_hild) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_meal_child)  / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_TKT_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_otb_price_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount )+
+                              ((parseInt(total_pax_meals_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_visa_price_child) / (pax_child_count > 0 ? pax_child_count : 1))* childWithNotBedCount );
 
                             let c_type = document.getElementById('currencyOption').value;
                             var usd_aed = <?php echo $usd_to_aed->usd_to_aed; ?>;
@@ -1308,7 +1334,7 @@
                               total_adult_triple = (parseInt(sub_total_adult_triple) + parseInt(PackageMarkup));
 
                               total_adult = pax_adult_count > 0 ? (parseInt(sub_total_adult) + parseInt(markup_per * pax_adult_count)) : 0;
-                              total_child = pax_child_count > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * pax_child_count)) : 0;
+                              total_child = childWithBedCount > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * childWithBedCount)) : 0;
                               total_infant = pax_infant_count > 0 ? (parseInt(sub_total_infant) + parseInt(markup_per * pax_infant_count)) : 0;
                               total_cnb = pax_cnb_count > 0 ? (parseInt(sub_total_cnb) + parseInt(markup_per * pax_cnb_count)) : 0;
 
@@ -1329,7 +1355,7 @@
 
                             var per_pax_adult = (single_share_adult_count > 1 ? parseInt(total_adult) / single_share_adult_count : parseInt(total_adult));
 
-                            var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
+                            var per_pax_child = (childWithBedCount > 1 ? parseInt(total_child) / childWithBedCount : parseInt(total_child));
 
                             var per_pax_infant = (pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
 
@@ -1369,7 +1395,7 @@
 
                           var adds = '';
                           adds += '<tr id="ex_faqs-row' + ex_faqs_row2 + '"><td><input class="form-control ex_meals_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="ex_meals_date[]" id="meals_date' + ex_faqs_row2 + '"></td>';
-                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control ex_res_type" value="" tabIndex="-1" id="ex_res_type' + ex_faqs_row2 + '" name="ex_res_type[]" onchange="get_resturant_name_ex(this.id,' + ex_faqs_row2 + ');"> <option value="">Select Option</option> <option value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';
+                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control ex_res_type" value="" tabIndex="-1" id="ex_res_type' + ex_faqs_row2 + '" name="ex_res_type[]" onchange="get_resturant_name_ex(this.id,' + ex_faqs_row2 + ');"> <option value="">Select Option</option> <option selected value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';
                           adds += '<td><select data-mdl-for="sample2" class="form-control ex_res_name" value=""  tabIndex="-1" name="ex_res_name[]" id="ex_res_name' + ex_faqs_row2 + '"  ><option>select</option></select></td>'
                           adds += '<td> <div> <select data-mdl-for="sample2" class="form-control ex_meal" value="" tabIndex="-1" id="ex_meal_cal' + ex_faqs_row2 + '" name="ex_meal[]"> <option value="Dinner">Dinner</option><option value="Breakfast">Breakfast</option> <option value="Lunch">Lunch</option>  </select> </div> </td>';
                           adds += '<td> <div> <select data-mdl-for="sample2" class="form-control ex_meal_type" value="" tabIndex="-1" id="ex_meal_type_cal' + ex_faqs_row2 + '" name="ex_meal_type[]"> <option value="Veg">Veg</option> <option value="Non-Veg">Non-Veg</option> <option value="Veg & Non-Veg">Veg & Non-Veg</option> <option value="Jain">Jain</option> </select> </div> </td>';
@@ -1498,7 +1524,7 @@
                           var adds = '<div class="row mb-3" style="border-top: 1px solid;" id="faqs-row' + faqs_row2 + '"> <table style="border-spacing: 10px;border-collapse: separate;"> <thead><tr><th style="width: 200;">Transfer Type</th><th>Date</th><th>Resturant Type</th><th>Resturant Name</th><th>Meal</th><th>Meal Type</th><th>No. of Meals</th><th style="width:100">Adult</th><th style="width:100">Child</th><th>Action</th></tr></thead><tbody style="border-bottom: #ff000000;"> <tr>';
                           adds += '<td><input type="radio"   id="with_transfer' + faqs_row2 + '" onchange="mealsTransferTypeChange(' + faqs_row2 + ')" class="transfer_with_or_without" name="transfer_with_or_without' + faqs_row2 + '[]" value="with_transfer" onclick="get_resturant_name(this.id,' + faqs_row2 + ');"/> With Transfer<br/><input type="radio" class="transfer_with_or_without" checked="checked" onchange="mealsTransferTypeHide(' + faqs_row2 + ')" id="without_transfer' + faqs_row2 + '" name="transfer_with_or_without' + faqs_row2 + '[]" value="without_transfer" onclick="get_resturant_name(this.id,' + faqs_row2 + ');"/> Without Transfer </td>';
                           adds += '<td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="buildCheckIn[]" id="buildCheckIn' + faqs_row2 + '"></td>';
-                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type' + faqs_row2 + '" name="res_type[]" onchange="get_resturant_name(this.id,' + faqs_row2 + ');"> <option value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';
+                          adds += '<td> <div> <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type' + faqs_row2 + '" name="res_type[]" onchange="get_resturant_name(this.id,' + faqs_row2 + ');"> <option selected value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';
                           // adds += '<td><input class="form-control " type="text" value="" name="res_name[]" id="res_name'+faqs_row2 + '"></td>';
                           adds += '<td><select data-mdl-for="sample2" class="form-control res_name" value=""  tabIndex="-1" name="res_name[]" id="res_name' + faqs_row2 + '"  ><option>select</option></select></td>'
                           adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal' + faqs_row2 + '" name="Meal[]"> <option value="Dinner">Dinner</option> <option value="Breakfast">Breakfast</option> <option value="Lunch">Lunch</option>  </select> </div> </td>';
@@ -1861,6 +1887,37 @@
 
   }
 
+  function defaultResName() {
+
+    $("#res_name").empty();
+    $("#ex_res_name").empty();
+    $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: '<?php echo site_url(); ?>/Query/get_resturant_name',
+      data: {
+        'transfer': 'without_transfer',
+        'rest_type': 'Standard'
+      },
+
+      success: function(response) {
+        var i;
+        $('#res_name').append($("<option>Select</option>"));
+        $('#ex_res_name').append($("<option>Select</option>"));
+        for (i = 0; i < response.length; ++i) {
+          if(response[i].resturant_name == 'kamat') {
+            var newOption = $('#res_name').append($("<option selected ></option>").attr("value", response[i].resturant_name).text(response[i].resturant_name));
+            var newOption = $('#ex_res_name').append($("<option selected ></option>").attr("value", response[i].resturant_name).text(response[i].resturant_name));
+          } else {
+            var newOption = $('#res_name').append($("<option></option>").attr("value", response[i].resturant_name).text(response[i].resturant_name));
+            var newOption = $('#ex_res_name').append($("<option></option>").attr("value", response[i].resturant_name).text(response[i].resturant_name));
+        }
+      }
+    }})
+  }
+  defaultResName()
+  
+
   function get_hotel_name_new(id, row) {
     var city = $('#buildHotelCity' + row).val();
     var Category = $('#Category' + row).val();
@@ -1991,7 +2048,6 @@
 </script>
 
 <script>
-  console.clear()
   initSample();
   $('.js-example-basic-multiple').select2();
 </script>
@@ -2685,7 +2741,38 @@
 
   }
 
+  let trasnsSaveClicked = 0;
+
   $('#transferSave').on('click', function() {
+
+    if (trasnsSaveClicked == 0) {
+
+        trasnsSaveClicked = 1;
+        var pickuppoint = $("#pickuppoint").val();
+        var dropoffpoint = $("#dropoffpoint").val();
+        var pax_internal = $("#pax_point").val();
+
+        $.ajax({
+          type: "POST",
+          dataType: "json",
+          url: '<?php echo site_url(); ?>/query/fetchprice1',
+          data: {
+            'dropoff': dropoffpoint,
+            'pickup': pickuppoint,
+            'person': pax_internal
+          },
+          success: function(response) {
+            $("#route_namepoint").val(response.route_name);
+            // $("#pax_count_internal").val(response.data[0].seat_capacity);
+            $("#price_point").val(response.data);
+            var total_price = response.data * pax_internal;
+            $("#total_price_point").val(total_price);
+            $("#pickuppoint1").val(response.row_data.start_city1);
+            $("#dropoffpoint1").val(response.row_data.dest_city1);
+            $("#route_namepoint1").val(response.row_data.route_name1);
+          }
+        });
+    }
 
     var pax_adult = <?php echo $view->Packagetravelers; ?>;
     var pax_child = <?php echo $buildpackage->child; ?>;
@@ -3632,22 +3719,17 @@
       success: function(response) {
         $("#dropoffpoint").html('<option value="dropoff">dropoff</option>');
 
-
-        //$('#bus_type').html("<option value='"+ data.type +"'>"+ data.type +"</option>");
         var options = ""
         for (var i = 0; i < response.data.length; i++) {
-
-          options += '<option value="' + response.data[i].dest_city + '">' + response.data[i].dest_city + '</option>';
-
+          // if(response.data[i].dest_city == 'DXB AIRPORT') {
+          //     options += '<option selected value="' + response.data[i].dest_city + '">' + response.data[i].dest_city + '</option>';
+          //     } else {
+          //       options += '<option value="' + response.data[i].dest_city + '">' + response.data[i].dest_city + '</option>';
+          //   }
+            options += '<option value="' + response.data[i].dest_city + '">' + response.data[i].dest_city + '</option>';
         }
-
-
         $("#dropoffpoint").append(options);
-        // $("#ProposalPage").html(response);
-        // $("#FullPage").hide();
       }
-
-
     });
   });
 
@@ -3692,8 +3774,11 @@
       if (response.data.length > 0) {
         var options = ""
         for (var i = 0; i < response.data.length; i++) {
-
-          options += '<option value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
+          if(response.data[i].start_city == 'DXB AIRPORT') {
+              options += '<option selected value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
+              } else {
+                options += '<option value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
+            }
         }
       } else {
         var options = "<option value=''>No Data Found</option>"
@@ -3905,6 +3990,32 @@
     });
   });
 
+  function defaultTransfer() {
+    $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: '<?php echo site_url(); ?>/query/fetchPickup1',
+      data: {
+        'pax': total_pax1
+      },
+      success: function(response) {
+        $("#pickuppoint").html('<option value="Pickup">Pickup</option>');
+        if (response.data.length > 0) {
+          var options = ""
+          for (var i = 0; i < response.data.length; i++) {
+            if(response.data[i].start_city == 'kamat') {
+              options += '<option selected value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
+              } else {
+                options += '<option value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
+            }
+          }
+        } else {
+          var options = "<option value=''>No Data Found</option>"
+        }
+        $("#pickuppoint").append(options);
+      }
+    });
+  }
 
   $('#Sic').show();
 

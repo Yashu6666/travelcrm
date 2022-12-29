@@ -375,9 +375,7 @@ $this
                 <input class="form-control" type="text" id="guest_name" value="<?php echo isset($data_conf->guest_name) ? $data_conf->guest_name : "" ?>" name="guest_name" readonly="" style="border: none;">
               </p>
 
-              <div class="col-4 mt-4">
-                <button data-bs-toggle="modal" data-bs-target="#emailSendModal" id="email_btn" name="email_btn" class="new_btn px-3" style="display:none">Send Email</button>
-              </div>
+             
             </div>
           </div>
 
@@ -1416,9 +1414,13 @@ $this
                   <?php
 
                   } ?>
-                  <div class="justify-content-center mt-4">
-                  <a id="save_itinerary" name="save_itinerary" onclick="saveItinerary();" class="new_btn px-3" style="color:white;margin-left: 50% !important;">Save</a>
+                  <div class="d-flex mt-4 justify-content-center">
+                    <a id="save_itinerary" name="save_itinerary" onclick="saveItinerary();" class="new_btn px-3" style="color:white;">Save</a>
+                    <button data-bs-toggle="modal" data-bs-target="#emailSendModal" id="email_btn" name="email_btn" class="new_btn px-3 ml-3" style="display:none">Send Email</button>
+                    <a id="close_itinerary" name="close_itinerary" href="<?php echo base_url(); ?>itinerary/view" class="new_btn px-3 ml-3" style="color:white;">Close</a>
+
                   </div>
+                  
                 <?php
               } ?>
                 <?php

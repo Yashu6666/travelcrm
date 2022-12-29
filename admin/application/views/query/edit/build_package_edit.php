@@ -129,21 +129,21 @@
                 }
 
                 ?>
+            <?php if(!empty($hotel_query)):?>
 
-<?php 
-$adult_pax_multi_rooms = [];
-$child_pax_multi_rooms = [];
-for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k++){
-  foreach (explode(",", $package_details->adult_per_room) as $key => $value) {
-    array_push($adult_pax_multi_rooms,$value);
-  }
+              <?php 
+                $adult_pax_multi_rooms = [];
+                $child_pax_multi_rooms = [];
+                for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k++){
+                  foreach (explode(",", $package_details->adult_per_room) as $key => $value) {
+                    array_push($adult_pax_multi_rooms,$value);
+                  }
 
-  foreach (explode(",", $package_details->child_per_room) as $key1 => $value1) {
-    array_push($child_pax_multi_rooms,$value1);
-  }
-}
-?>
-
+                  foreach (explode(",", $package_details->child_per_room) as $key1 => $value1) {
+                    array_push($child_pax_multi_rooms,$value1);
+                  }
+                }
+              ?>
               <?php $room_cnt = $buildpackage->room ; $room_loop = 0; foreach(explode(",",$hotel_query[0]->hotel_id) as $key => $val) : ?>
 
               <thead>
@@ -221,68 +221,204 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                   <option value="<?php echo explode(",",$hotel_query[0]->room_type)[$key];?>"><?php echo explode(",",$hotel_query[0]->room_type)[$key];?></option>
                     </select>
                   </td>
-                        </tbody>
-                        <tbody>
-              <thead>
-               <tr>
-                <th></th>
-                <th>Group Type </th>
-                <th>Bed Type </th>
-                <th>Meal Type </th>
-                <th>Adult </th>
-                <th>Child </th>
-                <th colspan="2">Extra </th>
+              </tbody>
+              <tbody>
+                <thead>
+                <tr>
+                  <th></th>
+                  <th>Group Type </th>
+                  <th>Bed Type </th>
+                  <th>Meal Type </th>
+                  <th>Adult </th>
+                  <th>Child </th>
+                  <th colspan="2">Extra </th>
 
-               </tr>
-              </thead>
-                  <td></td>
-                  <td>
-              <select class="form-control get_room_group_type" id="buildRoomGroupType" name="buildRoomGroupType[]" required>
-                      <option <?php echo explode(",",$hotel_query[0]->group_type)[$key] == "FIT" ? "selected" : "" ?> value="FIT" >FIT</option>                                             
-                      <option <?php echo explode(",",$hotel_query[0]->group_type)[$key] == "GIT" ? "selected" : "" ?> value="GIT" >GIT</option>                                             
-                  </select>
-              </td> 
-                  <td>
-                  <select class="form-control get_bed_type" id="buildBedType" name="buildBedType[]" required>
-                        <option <?php echo explode(",",$hotel_query[0]->bed_type)[$key] == "Double" ? "selected" : "" ?> value="Double" >Double</option>                                             
-                        <option <?php echo explode(",",$hotel_query[0]->bed_type)[$key] == "Single" ? "selected" : "" ?> value ="Single">Single</option> 
+                </tr>
+                </thead>
+                    <td></td>
+                    <td>
+                <select class="form-control get_room_group_type" id="buildRoomGroupType" name="buildRoomGroupType[]" required>
+                        <option <?php echo explode(",",$hotel_query[0]->group_type)[$key] == "FIT" ? "selected" : "" ?> value="FIT" >FIT</option>                                             
+                        <option <?php echo explode(",",$hotel_query[0]->group_type)[$key] == "GIT" ? "selected" : "" ?> value="GIT" >GIT</option>                                             
                     </select>
-                  </td> 
-                  <td>
-                  <select class="form-control get_room_types" id="room_types" name="build_room_types[]" required>
-                        <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "BB" ? "selected" : "" ?> value ="BB">BB</option> 
-                        <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "Room Only" ? "selected" : "" ?> value ="Room Only">Room Only</option> 
-                        <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "HB" ? "selected" : "" ?> value="HB" >HB</option>                                             
-                        <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "FB" ? "selected" : "" ?> value="FB" >FB</option>                                             
-                    </select>
-                  </td> 
-                  <td>
-                    <input class="form-control adult_per_room" type="text"  value="<?php echo explode(",", $package_details->adult_per_room)[$i - 1]; ?>" name="adult_per_room[]" id="adult_per_room">
-                    <select hidden class="form-control room_sharing_types" id="room_sharing_types" name="room_sharing_types[]">
-                      <option value=""></option>
-                    </select>
-                  </td>
-                  <td>
-                    <input class="form-control child_per_room" type="text"  value="<?php echo explode(",", $package_details->child_per_room)[$i - 1]; ?>" name="child_per_room[]" id="child_per_room">
-                    <input class="form-control child_per_room_wo_bed" type="hidden" readonly value="<?php echo isset($no_child_room_wo_new[$key]) &&
-                    !empty($no_child_room_wo_new[$key]) ? ($no_child_room_wo_new[$key]) : 0; ?>" name="child_per_room_wo_bed[]" id="child_per_room_wo_bed">
-                  </td>
-                  <td colspan="2">
-                    <div class="d-flex justify-content-around">
-                      <p><input type="checkbox" id="extra_with_adult" name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"> Ex. adult</p>
-                      <p><input type="hidden" <?php echo $buildpackage->child > 0 ? 'checked' : ''; ?> id="extra_with_child" name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child"></p>
-                      <p><input type="hidden" <?php echo $buildpackage->infant > 0 ? 'checked' : ''; ?> id="extra_without_bed" name="extra_check[]" value="extra_without_bed" class="check-extra extra_without_bed"></p>
-                    </div>
-                  </td>
+                </td> 
+                    <td>
+                    <select class="form-control get_bed_type" id="buildBedType" name="buildBedType[]" required>
+                          <option <?php echo explode(",",$hotel_query[0]->bed_type)[$key] == "Double" ? "selected" : "" ?> value="Double" >Double</option>                                             
+                          <option <?php echo explode(",",$hotel_query[0]->bed_type)[$key] == "Single" ? "selected" : "" ?> value ="Single">Single</option> 
+                      </select>
+                    </td> 
+                    <td>
+                    <select class="form-control get_room_types" id="room_types" name="build_room_types[]" required>
+                          <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "BB" ? "selected" : "" ?> value ="BB">BB</option> 
+                          <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "Room Only" ? "selected" : "" ?> value ="Room Only">Room Only</option> 
+                          <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "HB" ? "selected" : "" ?> value="HB" >HB</option>                                             
+                          <option <?php echo explode(",",$hotel_query[0]->type)[$key] == "FB" ? "selected" : "" ?> value="FB" >FB</option>                                             
+                      </select>
+                    </td> 
+                    <td>
+                      <input class="form-control adult_per_room" type="text"  value="<?php echo explode(",", $package_details->adult_per_room)[$i - 1]; ?>" name="adult_per_room[]" id="adult_per_room">
+                      <select hidden class="form-control room_sharing_types" id="room_sharing_types" name="room_sharing_types[]">
+                        <option value=""></option>
+                      </select>
+                    </td>
+                    <td>
+                      <input class="form-control child_per_room" type="text"  value="<?php echo explode(",", $package_details->child_per_room)[$i - 1]; ?>" name="child_per_room[]" id="child_per_room">
+                      <input class="form-control child_per_room_wo_bed" type="hidden" readonly value="<?php echo isset($no_child_room_wo_new[$key]) &&
+                      !empty($no_child_room_wo_new[$key]) ? ($no_child_room_wo_new[$key]) : 0; ?>" name="child_per_room_wo_bed[]" id="child_per_room_wo_bed">
+                    </td>
+                    <td colspan="2">
+                      <div class="d-flex justify-content-around">
+                        <p><input type="checkbox" id="extra_with_adult" name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"> Ex. adult</p>
+                        <p><input type="hidden" <?php echo $buildpackage->child > 0 ? 'checked' : ''; ?> id="extra_with_child" name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child"></p>
+                        <p><input type="hidden" <?php echo $buildpackage->infant > 0 ? 'checked' : ''; ?> id="extra_without_bed" name="extra_check[]" value="extra_without_bed" class="check-extra extra_without_bed"></p>
+                      </div>
+                    </td>
 
-                  <?php if($key != 0) : ?>
-                  <td><button class="btn btn-danger btn-xs" type="button" onclick="removeRow('hotelRow<?php $key?>')"><i class="fa fa-trash"></i></button> </td>
-                  <?php endif ?>
+                    <?php if($key != 0) : ?>
+                    <td><button class="btn btn-danger btn-xs" type="button" onclick="removeRow('hotelRow<?php $key?>')"><i class="fa fa-trash"></i></button> </td>
+                    <?php endif ?>
 
-                  </tr>
+                    </tr>
 
               </tbody>
               <?php endforeach ?>
+              <?php else : ?>
+
+                <?php for ($i = 1; $i <= $view->room; $i++) : ?>
+
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Hotel City</th>
+                        <th>Check In</th>
+                        <th>Nights</th>
+                        <th>Category</th>
+                        <th>Hotel Name</th>
+                        <th>Room Type </th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr>
+                        <td class="text-nowrap">Room <?php echo $i ?></td>
+                        <td>
+                          <select class="form-control get-hotel get_all_city" required="" name="buildHotelCity[]" id="buildHotelCity<?php echo "_" . $i ?>" onchange="get_hotel_name_new('buildHotelCity','<?php echo '_' . $i ?>');">
+                            <option value="Dubai">Dubai</option>
+                            <option value="AbuDhabi">Abu Dhabi</option>
+                            <option value="Sharjah">Sharjah</option>
+                            <option value="Ajman">Ajman</option>
+                            <option value="Sir Baniyas">Sir Baniyas</option>
+                            <option value="Umm Al-Quwain">Umm Al-Quwain</option>
+                            <option value="Fujairah">Fujairah</option>
+                            <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                            <option value="Al Ain">Al Ain</option>
+                          </select>
+                        </td>
+                        <td>
+                          <input class="form-control get_CheckIn" type="date" value="<?php echo $view->specificDate; ?>" name="buildCheckIns[]" id="buildCheckIn<?php echo "_" . $i ?>">
+                          <input type="hidden" value="<?php echo $view->room; ?>" name="no_of_room" id="no_of_room">
+                        </td>
+                        <td>
+                          <!-- <select class="form-control bnights get_no_nights" id="buildNoNights<?php echo "_" . $i ?>" onchange="checkRoomAvailability(<?php echo 'buildHotelCity_' . $i ?>,<?php echo 'buildCheckIn_' . $i ?>,<?php echo 'buildNoNights_' . $i ?>,<?php echo 'buildHotelName_' . $i ?>,)" name="buildNoNight[]" required=""> -->
+                          <select class="form-control bnights get_no_nights" id="buildNoNights<?php echo "_" . $i ?>" onchange="get_hotel_name_new('Category','<?php echo '_' . $i ?>');" name="buildNoNight[]" required="">
+                            <option value="0">Select</option>
+                            <?php $count_days = 1;
+                            for ($count_days = 1; $count_days <= $buildpackage->night; $count_days++) {
+                              echo "<option value='" . $count_days . "'>" . $count_days . "</option>";
+                            } ?>
+                          </select>
+                        </td>
+                        <td>
+                          <div>
+                            <!-- <input class="form-control get_category" type="number" disabled value="<?php echo $buildpackage->hotelPrefrence ?>" name="Category[]" id="Category<?php echo "_" . $i ?>"> -->
+                            <select data-mdl-for="sample2" class="form-control get_category" value="" id="Category<?php echo '_' . $i ?>" tabIndex="-1" name="Category[]" onchange="get_hotel_name_new('Category','<?php echo '_' . $i ?>');">
+                              <option <?php echo $buildpackage->hotelPrefrence == 1 ? "selected" : ""; ?> value="1">1</option>
+                              <option <?php echo $buildpackage->hotelPrefrence == 2 ? "selected" : ""; ?> value="2">2</option>
+                              <option <?php echo $buildpackage->hotelPrefrence == 3 ? "selected" : ""; ?> value="3">3</option>
+                              <option <?php echo $buildpackage->hotelPrefrence == 4 ? "selected" : ""; ?> value="4">4</option>
+                              <option <?php echo $buildpackage->hotelPrefrence == 5 ? "selected" : ""; ?> value="5">5</option>
+                              <!-- <option  value="?php echo $buildpackage->hotelPrefrence ?>"><?php echo $buildpackage->hotelPrefrence ?></option> -->
+                            </select>
+                          </div>
+                        </td>
+                        <td>
+                          <!-- <select class="form-control get_buildHotelName" id="buildHotelName<?php echo '_' . $i ?>" required="" name="buildHotelName[]" onchange="get_route_name_new('buildHotelName','<?php echo '_' . $i ?>');" required> -->
+                          <select class="form-control get_buildHotelName" id="buildHotelName<?php echo '_' . $i ?>" required="" name="buildHotelName[]" onchange="checkRoomAvailability(<?php echo 'buildHotelCity_' . $i ?>,<?php echo 'buildCheckIn_' . $i ?>,<?php echo 'buildNoNights_' . $i ?>,<?php echo 'buildHotelName_' . $i ?>,<?php echo 'buildRoomType_' . $i ?>,)" required>
+                          </select>
+                        </td>
+                        <td>
+                          <select class="form-control get_buildRoomType" id="buildRoomType<?php echo '_' . $i ?>" onchange="updateRemainingRoom('buildHotelCity_','buildCheckIn_','buildNoNights_','buildHotelName_','buildRoomType_','Category_',<?php echo $i ?>)" name="buildRoomType[]" required>
+                            <option>Select</option>
+                          </select>
+                        </td>
+                      </tr>
+
+                    </tbody>
+
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Group Type </th>
+                        <th>Bed Type </th>
+                        <th>Meal Type </th>
+                        <th>Adult </th>
+                        <th>Child </th>
+                        <th colspan="2">Extra </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <select class="form-control get_room_group_type" id="buildRoomGroupType" name="buildRoomGroupType[]" required>
+                            <option value="FIT">FIT</option>
+                            <option value="GIT">GIT</option>
+                          </select>
+                        </td>
+
+                        <td>
+                          <select class="form-control get_bed_type" id="buildBedType" name="buildBedType[]" required>
+                            <option <?php echo explode(",", $package_details->adult_per_room)[$i - 1] == 2 ? "selected" : ""; ?> value="Double">Double</option>
+                            <option <?php echo explode(",", $package_details->adult_per_room)[$i - 1] == 1 ? "selected" : ""; ?> value="Single">Single</option>
+                            <option <?php echo explode(",", $package_details->adult_per_room)[$i - 1] == 3 ? "selected" : ""; ?> value="Triple">Triple</option>
+                          </select>
+
+                        </td>
+                        <td>
+                          <select class="form-control get_room_types" id="room_types" name="build_room_types[]" required>
+                            <option value="BB">BB</option>
+                            <option value="Room Only">Room Only</option>
+                            <option value="HB">HB</option>
+                            <option value="FB">FB</option>
+                          </select>
+                        </td>
+                        <td>
+                          <input class="form-control adult_per_room" type="text" value="<?php echo explode(",", $package_details->adult_per_room)[$i - 1]; ?>" name="adult_per_room[]" id="adult_per_room">
+                          <select hidden class="form-control room_sharing_types" id="room_sharing_types" name="room_sharing_types[]">
+                            <option value=""></option>
+                          </select>
+                        </td>
+                        <td>
+                          <input class="form-control child_per_room" type="text" value="<?php echo explode(",", $package_details->child_per_room)[$i - 1]; ?>" name="child_per_room[]" id="child_per_room">
+                          <input class="form-control child_per_room_wo_bed" type="hidden" value="<?php echo isset($no_child_room_wo_new[$i - 1]) &&
+                                                                                                    !empty($no_child_room_wo_new[$i - 1]) ? ($no_child_room_wo_new[$i - 1]) : 0; ?>" name="child_per_room_wo_bed[]" id="child_per_room_wo_bed<?php echo $i ?>">
+                        </td>
+                        <td colspan="2">
+                          <div class="d-flex justify-content-around">
+                            <p><input type="checkbox" id="extra_with_adult" name="extra_check[]" value="extra_with_adult" class="check-extra extra_with_adult"> Ex. adult</p>
+                            <p><input type="hidden" <?php echo $buildpackage->child > 0 ? 'checked' : ''; ?> id="extra_with_child" name="extra_check[]" value="extra_with_child" class="check-extra extra_with_child"></p>
+                            <p><input type="hidden" <?php echo $buildpackage->infant > 0 ? 'checked' : ''; ?> id="extra_without_bed" name="extra_check[]" value="extra_without_bed" class="check-extra extra_without_bed"></p>
+                          </div>
+
+                        </td>
+
+
+                      </tr>
+                    </tbody>
+                    <?php endfor ?>
+
+              <?php endif ?>
               
              </table>
 
@@ -364,6 +500,35 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
 
                </tr>
                 <?php endforeach ;?>
+                <?php else : ?>
+                  <tr id="PvtCab" style="display: none;">
+                  <th>Internal City/Hotel Transfer</th>
+
+                  <td><input class="form-control" type="number" id="pax_internal" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="buildTravelFromCityCab[]" disabled></td>
+
+                  <td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate; ?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
+                  <td>
+
+                    <select id="pickupinternal" required name="buildTravelToDateCab[]" class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                      <option value="Pickup">Pickup</option>
+                    </select>
+
+                  </td>
+                  <td>
+                    <select id="dropoffinternal" name="buildTravelToCityCabDrop[]" class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                      <option value="Drop Off">Drop Off</option>
+
+                    </select>
+                  </td>
+                  <td>
+                    <input id="price_internal" type="hidden" name="price_internal[]" />
+                    <input id="pax_count_internal" type="hidden" name="pax_count_internal[]" />
+                    <input id="total_price_internal" type="hidden" value="0" name="total_price_internal[]" />
+                    <input id="route_nameinternal" class="form-control internal_transfer_route" type="text" placeholder="Route Name" name="buildTravelTypeCab[]">
+                  </td>
+                  <td><a class="new_btn px-3" onclick="transRow()">add</a></td>
+                </tr>
+
                 <?php endif ?>
 
               <?php if(!empty($return_query)) : ?>
@@ -396,6 +561,33 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
 
                </tr>
                <?php endforeach ;?>
+
+               <?php else : ?>
+
+               <tr id="Sic" style="display: none;">
+                  <th>Airport Return Transfer</th>
+                  <td><input class="form-control" id="pax_point" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="buildTravelFromCitySIC[]" disabled></td>
+                  <td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT" type="date" value="<?php echo $view->specificDate; ?>" name="buildTravelFromdatePVT[]"></td>
+
+                  <td>
+                    <select id="pickuppoint" required name="buildTravelToDateSIC[]" class="return_transfer_pickup w-100 bg-white form-control form-control-lg">
+                      <option value="Pickup">Pickup</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select id="dropoffpoint" name="buildTravelToCitySIC[]" class="return_transfer_dropoff w-100 bg-white form-control form-control-lg">
+                      <option value="BUR DUBAI HOTEL">BUR DUBAI HOTEL</option>
+                      <option value="Drop Off">Drop Off</option>
+
+                    </select>
+                  </td>
+                  <td><input id="route_namepoint" class="form-control return_transfer_route" value="Pick up and Drop from Dubai Airport" type="text" placeholder="Route Name" name="buildTravelTypeSIC[]"></td>
+                  <input id="price_point" type="hidden" name="price_point[]" />
+                  <input id="pax_count_point" type="hidden" name="pax_count_point[]" />
+                  <input id="total_price_point" type="hidden" value="0" name="total_price_point[]" />
+                  <td><a class="new_btn px-3" onclick="transReturnRow()">add</a></td>
+
+                </tr>
                <?php endif ?>
 
 
@@ -440,7 +632,6 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
               <th>Child</th>
               <th>Infant</th>
              </tr>
-
             </thead>
             <tbody>
              <tbody>
@@ -464,6 +655,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
               <div>
                <select data-mdl-for="sample2" class="form-control"
                value=""  tabIndex="-1" id='entry_type' name="entry_type">
+               <option value="">Select Entry Type</option>
                <option <?php echo $visa_query[0]->entry_type == "Single Entry" ? "selected" : "" ?> value="Single Entry">Single Entry</option>
                <option <?php echo $visa_query[0]->entry_type == "Double Entry" ? "selected" : "" ?> value="Double Entry">Double Entry</option>
                <option <?php echo $visa_query[0]->entry_type == "Multi Entry" ? "selected" : "" ?> value="Multi Entry">Multi Entry</option>
@@ -476,6 +668,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
              <div>
               <select data-mdl-for="sample2" class="form-control"
               value=""  tabIndex="-1" id="visa_validity" name="visa_validity">
+              <option value="">Select Validity</option>
               <option <?php echo $visa_query[0]->validity == "1 Month" ? "selected" : "" ?> value="1 Month">1 Month</option>
               <option <?php echo $visa_query[0]->validity == "3 Month" ? "selected" : "" ?> value="3 Month">3 Month</option>
               <option <?php echo $visa_query[0]->validity == "5 Years" ? "selected" : "" ?> value="5 Years">5 Years</option>
@@ -587,6 +780,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                <div>
                 <select required multiple="" id="excursion_name_SIC"  name="excursion_name_SIC[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" >
                 <?php $sic_arr = explode(",",$sic_query[0]->excursion_name) ;?>
+                
 
                 <?php foreach($excursion_sic as $value){ ?>
                 <option <?php echo in_array($value->tourname, $sic_arr) ? "selected" : "" ?> value="<?php echo $value->tourname ?>"><?php echo $value->tourname ?></option>
@@ -1225,6 +1419,18 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                             
                             // adult_per_room
                             var no_room_count = <?php echo $buildpackage->room; ?>;
+                            var child_with_or_wo_bed = <?php echo json_encode(explode(",",$buildpackage->child_with_or_wo_bed)); ?>;
+                            
+                            let childWithBedCount = 0;
+                            let childWithNotBedCount = 0;
+                             
+                            child_with_or_wo_bed.forEach(element => {
+                              if(element == 1){
+                                childWithBedCount += 1;
+                              } else {
+                                childWithNotBedCount += 1;
+                              }
+                            });
                             
                             var buildBedType_arr = [];
                             $(".get_bed_type").each(function(i, obj) {
@@ -1360,15 +1566,26 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                             var total_pax_TKT_child = $("#total_pax_TKT_child").val();
                             var total_pax_meals_child = $("#total_pax_meals_child").val();
 
-                            var sub_total_child = parseInt(hotel_rate_child) +
-                              parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) +
-                              parseInt(point_transfer_avg * (parseInt(pax_child_count))) +
-                              parseInt(total_pax_sic_hild) +
-                              parseInt(total_pax_pvt_hild) +
-                              parseInt(total_pax_meal_child) + parseInt(total_pax_TKT_child) +
-                              parseInt(total_pax_otb_price_child != null ? total_pax_otb_price_child : 0 ) +
-                              parseInt(total_pax_meals_child) +
-                              parseInt(total_pax_visa_price_child);
+                            // var sub_total_child = parseInt(hotel_rate_child) +
+                            //   parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) +
+                            //   parseInt(point_transfer_avg * (parseInt(pax_child_count))) +
+                            //   parseInt(total_pax_sic_hild) +
+                            //   parseInt(total_pax_pvt_hild) +
+                            //   parseInt(total_pax_meal_child) + parseInt(total_pax_TKT_child) +
+                            //   parseInt(total_pax_otb_price_child != null ? total_pax_otb_price_child : 0 ) +
+                            //   parseInt(total_pax_meals_child) +
+                            //   parseInt(total_pax_visa_price_child);
+
+                              var sub_total_child = parseInt(hotel_rate_child) +
+                              parseInt(intrnal_transfer_avg * (parseInt(childWithBedCount))) +
+                              parseInt(point_transfer_avg * (parseInt(childWithBedCount))) +
+                              ((parseInt(total_pax_sic_hild) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_pvt_hild) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_meal_child)  / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_TKT_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_otb_price_child == null ? 0 : total_pax_otb_price_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount )+
+                              ((parseInt(total_pax_meals_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_visa_price_child) / (pax_child_count > 0 ? pax_child_count : 1))* childWithBedCount );
 
                             var hotel_rate_infant = $("#hotel_rate_infant").val();
                             var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val();
@@ -1383,7 +1600,18 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                               parseInt(total_pax_pvt_infant) +
                               parseInt(total_pax_sic_infant);
 
-                            var sub_total_cnb = parseInt(hotel_rate_infant);
+                            // var sub_total_cnb = parseInt(hotel_rate_infant);
+                            var sub_total_cnb = parseInt(hotel_rate_infant) +
+                              parseInt(intrnal_transfer_avg * (parseInt(childWithNotBedCount))) +
+                              parseInt(point_transfer_avg * (parseInt(childWithNotBedCount))) +
+                              ((parseInt(total_pax_sic_hild) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_pvt_hild) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_meal_child)  / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_TKT_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_otb_price_child == null ? 0 : total_pax_otb_price_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount )+
+                              ((parseInt(total_pax_meals_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_visa_price_child) / (pax_child_count > 0 ? pax_child_count : 1))* childWithNotBedCount );
+
 
                             let c_type = document.getElementById('currencyOption').value;
                             var usd_aed = <?php echo $usd_to_aed->usd_to_aed; ?>;
@@ -1429,7 +1657,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
                               total_adult_triple = (parseInt(sub_total_adult_triple) + parseInt(PackageMarkup));
 
                               total_adult = pax_adult_count > 0 ? (parseInt(sub_total_adult) + parseInt(markup_per * pax_adult_count)) : 0;
-                              total_child = pax_child_count > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * pax_child_count)) : 0;
+                              total_child = childWithBedCount > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * childWithBedCount)) : 0;
                               total_infant = pax_infant_count > 0 ? (parseInt(sub_total_infant) + parseInt(markup_per * pax_infant_count)) : 0;
                               total_cnb = pax_cnb_count > 0 ? (parseInt(sub_total_cnb) + parseInt(markup_per * pax_cnb_count)) : 0;
 
@@ -1450,7 +1678,7 @@ for($k=$buildpackage->room;$k<count(explode(',',$hotel_query[0]->hotel_city));$k
 
                             var per_pax_adult = (single_share_adult_count > 1 ? parseInt(total_adult) / single_share_adult_count : parseInt(total_adult));
 
-                            var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
+                            var per_pax_child = (childWithBedCount > 1 ? parseInt(total_child) / childWithBedCount : parseInt(total_child));
 
                             var per_pax_infant = (pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
 
@@ -4131,6 +4359,8 @@ function updateRemainingRoom(city,checkin,nights,hotel,bedtype,cat,row){
   }
 
   function get_hotel_name_new(id, row) {
+    console.log("🚩 ~ file: build_package_edit.php:4271 ~ get_hotel_name_new ~ row", row)
+    console.log("🚩 ~ file: build_package_edit.php:4271 ~ get_hotel_name_new ~ id", id)
     var city = $('#buildHotelCity' + row).val();
     var Category = $('#Category' + row).val();
     $("#buildHotelName" + row).empty();
@@ -4421,6 +4651,19 @@ function saveTransferDefault(){
                             let double_share_adult_count = 0;
                             let triple_share_adult_count = 0;
 
+                            var child_with_or_wo_bed = <?php echo json_encode(explode(",",$buildpackage->child_with_or_wo_bed)); ?>;
+                            
+                            let childWithBedCount = 0;
+                            let childWithNotBedCount = 0;
+                             
+                            child_with_or_wo_bed.forEach(element => {
+                              if(element == 1){
+                                childWithBedCount += 1;
+                              } else {
+                                childWithNotBedCount += 1;
+                              }
+                            });
+                            
                             buildBedType_arr.map((val,index) =>
                             {
                               if(buildBedType_arr[index] == "Single"){
@@ -4492,9 +4735,6 @@ function saveTransferDefault(){
 
                             var sub_total_adult_single = parseInt(hotel_rate_adult_single);
                             
-                            console.log("🚩 ~ file: build_package_edit.php:4576 ~ cardClick ~ sub_total_adult_single", sub_total_adult_single)
-                            console.log("🚩 ~ file: build_package_edit.php:4570 ~ cardClick ~ hotel_rate_adult_double", hotel_rate_adult_double)
-                            console.log("🚩 ~ file: build_package_edit.php:4572 ~ cardClick ~ hotel_rate_adult_triple", hotel_rate_adult_triple)
                             var sub_total_adult = parseInt(sub_total_adult_single) +
                               parseInt(intrnal_transfer_avg * (parseInt(single_share_adult_count))) +
                               parseInt(point_transfer_avg * (parseInt(single_share_adult_count))) +
@@ -4538,15 +4778,27 @@ function saveTransferDefault(){
                             var total_pax_TKT_child = $("#total_pax_TKT_child").val();
                             var total_pax_meals_child = $("#total_pax_meals_child").val();
 
-                            var sub_total_child = parseInt(hotel_rate_child) +
-                              parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) +
-                              parseInt(point_transfer_avg * (parseInt(pax_child_count))) +
-                              parseInt(total_pax_sic_hild) +
-                              parseInt(total_pax_pvt_hild) +
-                              parseInt(total_pax_meal_child) + parseInt(total_pax_TKT_child) +
-                              parseInt(total_pax_otb_price_child) +
-                              parseInt(total_pax_meals_child) +
-                              parseInt(total_pax_visa_price_child);
+                            // var sub_total_child = parseInt(hotel_rate_child) +
+                            //   parseInt(intrnal_transfer_avg * (parseInt(pax_child_count))) +
+                            //   parseInt(point_transfer_avg * (parseInt(pax_child_count))) +
+                            //   parseInt(total_pax_sic_hild) +
+                            //   parseInt(total_pax_pvt_hild) +
+                            //   parseInt(total_pax_meal_child) + parseInt(total_pax_TKT_child) +
+                            //   parseInt(total_pax_otb_price_child) +
+                            //   parseInt(total_pax_meals_child) +
+                            //   parseInt(total_pax_visa_price_child);
+
+                              var sub_total_child = parseInt(hotel_rate_child) +
+                              parseInt(intrnal_transfer_avg * (parseInt(childWithBedCount))) +
+                              parseInt(point_transfer_avg * (parseInt(childWithBedCount))) +
+                              ((parseInt(total_pax_sic_hild) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_pvt_hild) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_meal_child)  / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_TKT_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_otb_price_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount )+
+                              ((parseInt(total_pax_meals_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithBedCount ) +
+                              ((parseInt(total_pax_visa_price_child) / (pax_child_count > 0 ? pax_child_count : 1))* childWithBedCount );
+
 
                             var hotel_rate_infant = $("#hotel_rate_infant").val();
                             var total_pax_visa_price_infant = $("#total_pax_visa_price_infant").val();
@@ -4561,7 +4813,17 @@ function saveTransferDefault(){
                               parseInt(total_pax_pvt_infant) +
                               parseInt(total_pax_sic_infant);
 
-                            var sub_total_cnb = parseInt(hotel_rate_infant);
+                            // var sub_total_cnb = parseInt(hotel_rate_infant);
+                            var sub_total_cnb = parseInt(hotel_rate_infant) +
+                              parseInt(intrnal_transfer_avg * (parseInt(childWithNotBedCount))) +
+                              parseInt(point_transfer_avg * (parseInt(childWithNotBedCount))) +
+                              ((parseInt(total_pax_sic_hild) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_pvt_hild) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_meal_child)  / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_TKT_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_otb_price_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount )+
+                              ((parseInt(total_pax_meals_child) / (pax_child_count > 0 ? pax_child_count : 1)) * childWithNotBedCount ) +
+                              ((parseInt(total_pax_visa_price_child) / (pax_child_count > 0 ? pax_child_count : 1))* childWithNotBedCount );
 
                             let c_type = document.getElementById('currencyOption').value;
                             var usd_aed = <?php echo $usd_to_aed->usd_to_aed; ?>;
@@ -4609,7 +4871,7 @@ function saveTransferDefault(){
                               total_adult_triple = (parseInt(sub_total_adult_triple) + parseInt(PackageMarkup));
 
                               total_adult = pax_adult_count > 0 ? (parseInt(sub_total_adult) + parseInt(markup_per * pax_adult_count)) : 0;
-                              total_child = pax_child_count > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * pax_child_count)) : 0;
+                              total_child = childWithBedCount > 0 ? (parseInt(sub_total_child) + parseInt(markup_per * childWithBedCount)) : 0;
                               total_infant = pax_infant_count > 0 ? (parseInt(sub_total_infant) + parseInt(markup_per * pax_infant_count)) : 0;
                               total_cnb = pax_cnb_count > 0 ? (parseInt(sub_total_cnb) + parseInt(markup_per * pax_cnb_count)) : 0;
 
@@ -4630,7 +4892,7 @@ function saveTransferDefault(){
 
                             var per_pax_adult = (single_share_adult_count > 1 ? parseInt(total_adult) / single_share_adult_count : parseInt(total_adult));
 
-                            var per_pax_child = (pax_child_count > 1 ? parseInt(total_child) / pax_child_count : parseInt(total_child));
+                            var per_pax_child = (childWithBedCount > 1 ? parseInt(total_child) / childWithBedCount : parseInt(total_child));
 
                             var per_pax_infant = (pax_infant_count > 1 ? (parseInt(total_infant) / pax_infant_count) : parseInt(total_infant));
 

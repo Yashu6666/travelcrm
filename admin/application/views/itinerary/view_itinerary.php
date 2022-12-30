@@ -176,9 +176,7 @@
         .bg_y{
             background: #fabd02;
         }
-        .bg_r{
-            background: red;
-        }
+        
         .txt_center {
             text-align: center;
         }
@@ -199,6 +197,20 @@
             background: #595d60;
             text-align: center;
             padding: 10px;
+        }
+
+        .bg_blue {
+            background: darkblue;
+            color: white;
+        }
+
+        .bg_r{
+            background: darkred;
+            color: white;
+        }
+        .double_border {
+            border: 1px solid black;
+            outline: 1px solid black;
         }
     </style>
 </head>
@@ -228,20 +240,24 @@
             <tr>
                         <?php $date = new DateTime(explode(",",$itinery[0]->arrival_transfer)[5]);
                         $new_df = $date->format('d-M-Y'); ?>
-                <th class="txt_left">Guest Name: <?php echo $query_hotel_voucher[0]->guest_name ?></th>
+                <th class="txt_left">Guest Name: <?php echo !empty($query_hotel_voucher) ? $query_hotel_voucher[0]->guest_name : "N/A" ?></th>
                 <th class="txt_left" colspan="3">Date of Arrival: <?php echo $new_df ;?></th>
             </tr>
-            <tr>
-                <td rowspan="2"> Total No of Guest:</td>
-                <td>Adult</td>
-                <td>Child</td>
-                <td>Infant</td>
 
-            </tr>
             <tr>
-                <td><?php echo $query_package->adult ?></td>
-                <td><?php echo $query_package->child ?></td>
-                <td><?php echo $query_package->infant ?></td>
+                <th class="txt_left"> Total No of Guest:</th>
+                <td><table>
+                        <tr>
+                            <td class="bg_blue double_border">Adult</td>
+                            <td class="bg_blue double_border">Child</td>
+                            <td class="bg_blue double_border">Infant</td>
+                        </tr>
+                        <tr>
+                            <td class="double_border"><?php echo $query_package->adult ?></td>
+                            <td class="double_border"><?php echo $query_package->child ?></td>
+                            <td class="double_border"><?php echo $query_package->infant ?></td>
+                        </tr>
+                    </table></td>
             </tr>
 
         </table>
@@ -249,8 +265,8 @@
             <?php if(isset($query_hotel_voucher[$key])) :?>
         <table border="1" class="table mt_2">
             <tbody>
-            <tr class="bg_r txt_center">
-                <th colspan="2">Hotel Details</th>
+            <tr class="bg_blue txt_center">
+                <th colspan="2">HOTEL DETAILS</th>
             </tr>
             <tr>
                 <td style="width: 40%;">Hotel/Residense Booked:</td>
@@ -283,15 +299,15 @@
         <?php endforeach ?>
 
         <table  border="1" class="table mt_2">
-            <tr class="bg_r txt_center">
+            <tr class="bg_blue txt_center">
                 <th colspan="7">FLIGHT DETAILS</th>
             </tr>
-            <tr class="bg_y">
+            <tr class="bg_r">
                 <td style="white-space: nowrap;">ARRIVAL DATE</td>
                 <td style="white-space: nowrap;">FLIGHT NO</b></td>
-                <td style="white-space: nowrap;">ARRIVAL FROM</b></td>
+                <!-- <td style="white-space: nowrap;">ARRIVAL FROM</b></td> -->
                 <td style="white-space: nowrap;">ETA</b></td>
-                <td style="white-space: nowrap;">AIRPORT</b></td>
+                <!-- <td style="white-space: nowrap;">AIRPORT</b></td> -->
                 <td style="white-space: nowrap;">DROP OFF HOTEL</b></td>
                 <td style="white-space: nowrap;">TRANSFER TYPE</b></td>
             </tr>
@@ -300,19 +316,19 @@
                         $new_df = $date->format('d-M-Y'); ?>
                 <td><?php echo $new_df ;?> </td>
                 <td><?php echo explode(",",$val->arrival_transfer)[0] ;?></td>
-                <td><?php echo explode(",",$val->arrival_transfer)[2] ;?></td>
+                <!-- <td><?php echo explode(",",$val->arrival_transfer)[2] ;?></td> -->
                 <td><?php echo explode(",",$val->arrival_transfer)[1] ;?></td>
-                <td><?php echo explode(",",$val->arrival_transfer)[3] ;?></td>
+                <!-- <td><?php echo explode(",",$val->arrival_transfer)[3] ;?></td> -->
                 <td><?php echo explode(",",$val->arrival_transfer)[4] ;?> </td>
                 <td><?php echo explode(",",$val->arrival_transfer)[6] ;?> </td>
             </tr>
 
-            <tr class="bg_y">
+            <tr class="bg_r">
                 <td style="white-space: nowrap;">DEPARTURE DATE</td>
                 <td style="white-space: nowrap;">FLIGHT NO</b></td>
-                <td style="white-space: nowrap;">DEPARTURE TO</b></td>
+                <!-- <td style="white-space: nowrap;">DEPARTURE TO</b></td> -->
                 <td style="white-space: nowrap;">ETA</b></td>
-                <td style="white-space: nowrap;">AIRPORT</b></td>
+                <!-- <td style="white-space: nowrap;">AIRPORT</b></td> -->
                 <td style="white-space: nowrap;">PICK UP HOTEL</b></td>
                 <td style="white-space: nowrap;">TRANSFER TYPE</b></td>
             </tr>
@@ -321,9 +337,9 @@
                         $new_df = $date->format('d-M-Y'); ?>
                 <td><?php echo $new_df ;?> </td>
                 <td><?php echo explode(",",$val->return_transfer)[0] ;?></td>
-                <td><?php echo explode(",",$val->return_transfer)[2] ;?></td>
+                <!-- <td><?php echo explode(",",$val->return_transfer)[2] ;?></td> -->
                 <td><?php echo explode(",",$val->return_transfer)[1] ;?></td>
-                <td><?php echo explode(",",$val->return_transfer)[3] ;?></td>
+                <!-- <td><?php echo explode(",",$val->return_transfer)[3] ;?></td> -->
                 <td><?php echo explode(",",$val->return_transfer)[4] ;?> </td>
                 <td><?php echo explode(",",$val->return_transfer)[6] ;?> </td>
             </tr>
@@ -333,10 +349,10 @@
                 <th colspan="2">DAY WISE ITINERARY</th>
             </tr>
         <?php foreach(($itinery) as $key => $val) : ?>
-            <tr class="bg_y txt_center">
+            <tr class="bg_blue txt_left">
             <?php $date = new DateTime($val->hotel_check_in_date);
                         $new_df = $date->format('d-M-Y'); ?>
-                <th colspan="2">Day <?php echo $val->day ?> :  <?php echo $new_df ?></th>
+                <th colspan="2">Day <?php echo $val->day ?> :  <?php echo $new_df ?> (<?php echo date('l', strtotime($val->hotel_check_in_date)) ?>)</th>
             </tr>
             <tr>
                 <td>Service</td>
@@ -348,7 +364,22 @@
             </tr>
             <tr>
                 <td>No Of Pax</td>
-                <td><?php echo 'Adult '.$query_package->adult.' Child'.$query_package->child.' Infant'.$query_package->child ?></td>
+                <!-- <td><?php echo 'Adult '.$query_package->adult.' Child'.$query_package->child.' Infant'.$query_package->child ?></td> -->
+                <td>
+                    <table>
+                        <tr>
+                            <td class="bg_blue double_border">Adult</td>
+                            <td class="bg_blue double_border">Child</td>
+                            <td class="bg_blue double_border">Infant</td>
+                        </tr>
+                        <tr>
+                            <td class="double_border"><?php echo $query_package->adult ?></td>
+                            <td class="double_border"><?php echo $query_package->child ?></td>
+                            <td class="double_border"><?php echo $query_package->infant ?></td>
+                        </tr>
+                    </table>
+                </td>
+                
             </tr>
             <tr>
                 <td>Pick up Location</td>

@@ -82,7 +82,7 @@
                                                     <td>
                                                         <label class="input">
                                                             <input class="input__field invoice-width" type="text"
-                                                                name="clientName" placeholder=" "  id="clientName" value="<?php echo isset($details->b2bcompanyName)?$details->b2bcompanyName:"" ?>" required="" autocomplete="off"/>
+                                                                name="invoiceAgencyName" placeholder=" "  id="invoiceAgencyName" value="<?php echo isset($details->b2bcompanyName)?$details->b2bcompanyName:"" ?>" required="" autocomplete="off"/>
                                                             <span class="input__label">Agency Name<span
                                                                     class="colorRed">*</span></span>
                                                            
@@ -148,7 +148,7 @@
 
                                                     <td><label class="input">
                                                             <input class="input__field invoice-second" type="text"
-                                                                name="invoiceAgencyName" placeholder=" " id="" value="<?php echo isset($data_voucher->guest_name)?$data_voucher->guest_name:"N/A" ?>" autocomplete="off" />
+                                                                name="clientName" placeholder=" " id="clientName" value="<?php echo isset($data_voucher->guest_name)?$data_voucher->guest_name:"N/A" ?>" autocomplete="off" />
                                                             <span class="input__label">Guest Name</span>
 
                                                         </label>

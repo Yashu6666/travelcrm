@@ -431,7 +431,7 @@
                                             ?>
                                             <!-- <td><b>Per PAX</b></td> -->
                                             <td>Internal City/Hotel Transfer</td>
-                                            <td> <?php echo $date_trans ?></td>
+                                            <td> <?php echo (new DateTime($proposalDetails['in_transfer_date'][$key]))->format('d-M-Y') ?></td>
                                             <td> <?php echo $proposalDetails['in_transfer_pickup'][$key] ?></td>
                                             <td> <?php echo $proposalDetails['in_transfer_dropoff'][$key] ?></td>
 
@@ -451,7 +451,7 @@
                                             $date_pp = $date->format('d-M-Y');
                                             ?>
                                             <td>Airport Return Transfer</td>
-                                            <td> <?php echo $date_pp ?></td>
+                                            <td> <?php echo (new DateTime($proposalDetails['pp_transfer_date'][$key]))->format('d-M-Y') ?></td>
                                             <td> <?php echo $proposalDetails['pp_transfer_pickup'][$key] ?></td>
                                             <td> <?php echo $proposalDetails['pp_transfer_dropoff'][$key] ?></td>
                                         </tr>

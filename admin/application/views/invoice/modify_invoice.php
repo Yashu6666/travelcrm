@@ -455,7 +455,6 @@
 
 $(window).click(function() {
 
-    
 
         var qty_s = $('#invoicePax').val();
         var rate_S = $('#invoiceRate').val();

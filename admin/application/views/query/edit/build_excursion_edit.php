@@ -131,7 +131,7 @@
              </td>
               <td>
                <div>
-                <select required multiple="" id="excursion_name_SIC"  name="excursion_name_SIC[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" >
+                <select required multiple="" id="excursion_name_SIC"  name="excursion_name_SIC[]"  class="w-100 bg-white form-control form-control-lg" >
                 <!-- <select id="excursion_name" data-mdl-for="sample2" class="form-control"
                 value=""  tabIndex="-1" name="excursion"> -->
                 <!-- <option>Select Excursion</option> -->
@@ -163,7 +163,7 @@
               <tr id="myTableRow">
               <td>
                <div>
-               <!-- <select required multiple="" id="excursion_type"  name="excursion_type[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" value="PVT"> -->
+               <!-- <select required multiple="" id="excursion_type"  name="excursion_type[]"  class="w-100 bg-white form-control form-control-lg" value="PVT"> -->
 
                 <select  id="excursion_type_PVT"data-mdl-for="sample2" class="form-control"
                 value="PVT"  tabIndex="-1" name="excursion_type">
@@ -174,7 +174,7 @@
               
               <td>
                <div>
-               <select required multiple="multiple" id="excursion_name_PVT"  name="excursion_name_PVT[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+               <select required multiple="multiple" id="excursion_name_PVT"  name="excursion_name_PVT[]"  class="w-100 bg-white form-control form-control-lg">
                 <!-- <select id="excursion_name" data-mdl-for="sample2" class="form-control"
                 value=""  tabIndex="-1" name="excursion"> -->
                 <!-- <option>Select Excursion</option> -->
@@ -217,7 +217,7 @@
               
               <td>
                <div>
-                <select required multiple="" id="excursion_name_TKT"  name="excursion_name_TKT[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" >
+                <select required multiple="" id="excursion_name_TKT"  name="excursion_name_TKT[]"  class="w-100 bg-white form-control form-control-lg" >
                 
                 <?php $tkt_arr = explode(",",$tkt_query[0]->excursion_name) ;?>
 
@@ -1963,6 +1963,50 @@ function excursionPVTcalculations1(){
                             }
                             
 </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+<script>
+  $("#excursion_name_SIC").select2({
+  	width: "100%",
+  });
+
+  $("#excursion_name_SIC").on("select2:select", function (evt) {
+    var elm = evt.params.data.element;
+    $elm = $(elm);
+    $t = $(this);
+    $t.append($elm);
+    $t.trigger('change.select2');
+  });
+
+  $("#excursion_name_PVT").select2({
+  	width: "100%",
+  });
+
+  $("#excursion_name_PVT").on("select2:select", function (evt) {
+    var elm = evt.params.data.element;
+    $elm = $(elm);
+    $t = $(this);
+    $t.append($elm);
+    $t.trigger('change.select2');
+  });
+
+  $("#excursion_name_TKT").select2({
+  	width: "100%",
+  });
+
+  $("#excursion_name_TKT").on("select2:select", function (evt) {
+    var elm = evt.params.data.element;
+    $elm = $(elm);
+    $t = $(this);
+    $t.append($elm);
+    $t.trigger('change.select2');
+  });
+
+</script>
+
 <style>
 .accordion-button:after {
     -ms-flex-negative: 0;
@@ -1979,6 +2023,10 @@ function excursionPVTcalculations1(){
     transition: transform .2s ease-in-out;
     transition: transform .2s ease-in-out,-webkit-transform .2s ease-in-out;
 }
+
+.select2-search{
+    display: none !important;
+  }
 </style>
 
 

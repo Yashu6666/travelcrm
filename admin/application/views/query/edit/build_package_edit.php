@@ -778,7 +778,7 @@
               
               <td>
                <div>
-                <select required multiple="" id="excursion_name_SIC"  name="excursion_name_SIC[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" >
+                <select required multiple="" id="excursion_name_SIC"  name="excursion_name_SIC[]"  class=" w-100 bg-white form-control form-control-lg" >
                 <?php $sic_arr = explode(",",$sic_query[0]->excursion_name) ;?>
                 
 
@@ -820,7 +820,7 @@
               
               <td>
                <div>
-               <select required multiple="multiple" id="excursion_name_PVT"  name="excursion_name_PVT[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+               <select required multiple="multiple" id="excursion_name_PVT"  name="excursion_name_PVT[]"  class="w-100 bg-white form-control form-control-lg">
                <?php $pvt_arr = explode(",",$pvt_query[0]->excursion_name) ;?>
                 <?php foreach($excursion_pvt as $value){ ?>
                 <option <?php echo in_array($value->tourname, $pvt_arr) ? "selected" : "" ?>  value="<?php echo $value->tourname ?>"><?php echo $value->tourname ?></option>
@@ -860,7 +860,7 @@
               
               <td>
                <div>
-                <select required multiple="" id="excursion_name_TKT"  name="excursion_name_TKT[]"  class="js-example-basic-multiple w-100 bg-white form-control form-control-lg" >
+                <select required multiple="" id="excursion_name_TKT"  name="excursion_name_TKT[]"  class="w-100 bg-white form-control form-control-lg" >
                 
                 <?php $tkt_arr = explode(",",$tkt_query[0]->excursion_name) ;?>
 
@@ -1424,13 +1424,14 @@
                             let childWithBedCount = 0;
                             let childWithNotBedCount = 0;
                              
-                            child_with_or_wo_bed.forEach(element => {
-                              if(element == 1){
-                                childWithBedCount += 1;
-                              } else {
-                                childWithNotBedCount += 1;
-                              }
-                            });
+                            if(child_with_or_wo_bed.length > 0) {
+                              child_with_or_wo_bed.forEach(element => {
+                                if(element == 1){
+                                  childWithBedCount += 1;
+                                } else if(element != "" && element == 0) {
+                                  childWithNotBedCount += 1;
+                                }
+                            });}
                             
                             var buildBedType_arr = [];
                             $(".get_bed_type").each(function(i, obj) {
@@ -1575,7 +1576,7 @@
                             //   parseInt(total_pax_otb_price_child != null ? total_pax_otb_price_child : 0 ) +
                             //   parseInt(total_pax_meals_child) +
                             //   parseInt(total_pax_visa_price_child);
-
+                            
                               var sub_total_child = parseInt(hotel_rate_child) +
                               parseInt(intrnal_transfer_avg * (parseInt(childWithBedCount))) +
                               parseInt(point_transfer_avg * (parseInt(childWithBedCount))) +
@@ -4655,26 +4656,25 @@ function saveTransferDefault(){
                             
                             let childWithBedCount = 0;
                             let childWithNotBedCount = 0;
-                             
-                            child_with_or_wo_bed.forEach(element => {
-                              if(element == 1){
-                                childWithBedCount += 1;
-                              } else {
-                                childWithNotBedCount += 1;
-                              }
-                            });
+                            
+                            if(child_with_or_wo_bed.length > 0) {
+                              child_with_or_wo_bed.forEach(element => {
+                                if(element == 1){
+                                  childWithBedCount += 1;
+                                } else if(element != "" && element == 0) {
+                                  childWithNotBedCount += 1;
+                                }
+                            });}
+                            
                             
                             buildBedType_arr.map((val,index) =>
                             {
                               if(buildBedType_arr[index] == "Single"){
                                 single_share_adult_count += parseInt(adult_per_room_arr[index]);
-                                console.log("in single");
                               } else if(buildBedType_arr[index] == "Double"){
                                 double_share_adult_count += parseInt(adult_per_room_arr[index]);
-                                console.log("in double");
                               } else if(buildBedType_arr[index] == "Triple"){
                                 triple_share_adult_count += parseInt(adult_per_room_arr[index]);
-                                console.log("in triple");
                               }
                             });
                             
@@ -4938,6 +4938,58 @@ function saveTransferDefault(){
   CKEDITOR.replace('buildPackageCancellations');
   CKEDITOR.replace('buildPackageRefund');
 </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+<script>
+  $("#excursion_name_SIC").select2({
+  	width: "100%",
+  });
+
+  $("#excursion_name_SIC").on("select2:select", function (evt) {
+    var elm = evt.params.data.element;
+    $elm = $(elm);
+    $t = $(this);
+    $t.append($elm);
+    $t.trigger('change.select2');
+  });
+
+  $("#excursion_name_PVT").select2({
+  	width: "100%",
+  });
+
+  $("#excursion_name_PVT").on("select2:select", function (evt) {
+    var elm = evt.params.data.element;
+    $elm = $(elm);
+    $t = $(this);
+    $t.append($elm);
+    $t.trigger('change.select2');
+  });
+
+  $("#excursion_name_TKT").select2({
+  	width: "100%",
+  });
+
+  $("#excursion_name_TKT").on("select2:select", function (evt) {
+    var elm = evt.params.data.element;
+    $elm = $(elm);
+    $t = $(this);
+    $t.append($elm);
+    $t.trigger('change.select2');
+  });
+
+// var selectedValuesTest = ?php print_r(explode(",",$sic_query[0]->excursion_name)) ;?>;
+// console.log("🚩 ~ file: build_package_edit.php:4960 ~ selectedValuesTest", selectedValuesTest)
+// $(document).ready(function() {
+//   $("#excursion_name_SIC").select2({
+//     multiple: true,
+//   });
+//   $('#excursion_name_SIC').val(selectedValuesTest).trigger('change');
+// });
+</script>
+
 <style>
 .accordion-button:after {
     -ms-flex-negative: 0;
@@ -4964,6 +5016,10 @@ function saveTransferDefault(){
   }
 
   input[type="text"]:disabled{background-color:white;}
+  
+  .select2-search{
+    display: none !important;
+  }
 
 </style>
 

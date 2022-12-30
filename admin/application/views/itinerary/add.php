@@ -407,7 +407,7 @@ $this
                       <td><?php echo $package->goingTo ?></td>
                       <td><?php echo $package->night ?></td>
                       <td><?php echo $package->adult . ' adult ' . $package->child . ' child ' . $package->infant . ' infant' ?></td>
-                      <td><?php echo $package->specificDate ?></td>
+                      <td><?php echo (new DateTime($package->specificDate))->format('d-M-Y') ?></td>
                     </tr>
 
                   </tbody>
@@ -432,36 +432,24 @@ $this
                 <div class="row mt-3">
                   <div class="col">
                     <label class="input">
-                      <input class="input__field " id="cus_email" value="<?php echo $query->b2bEmail ?>" type="email" placeholder=" " autocomplete="off" />
+                      <input class="input__field width-input" id="cus_email" value="<?php echo $query->b2bEmail ?>" type="email" placeholder=" " autocomplete="off" />
                       <span class="input__label">Email </span></span>
                     </label>
                   </div>
                   <div class="col">
                     <label class="input">
-                      <input class="input__field " type="text" id="cus_fname" value="<?php echo $query->b2bfirstName ?>" placeholder=" " autocomplete="off" />
-                      <span class="input__label">First Name</span></span>
-                    </label>
-                  </div>
-                  <div class="col">
-                    <label class="input">
-                      <input class="input__field " type="text" id="cus_lname" value="<?php echo $query->b2blastName ?>" placeholder=" " autocomplete="off" />
-                      <span class="input__label">Last Name</span></span>
-                    </label>
-                  </div>
-                  <div class="col">
-                    <label class="input">
-                      <input class="input__field " type="number" id="cus_mobile" value="<?php echo $query->b2bmobileNumber ?>" placeholder=" " autocomplete="off" />
+                      <input class="input__field width-input" type="number" id="cus_mobile" value="<?php echo $query->b2bmobileNumber ?>" placeholder=" " autocomplete="off" />
                       <span class="input__label">Mobile</span></span>
                     </label>
                   </div>
-                </div>
+                  </div>
                 <div class="row mt-3">
                   <div class="col">
                     <label class="input">
                       <!-- <input class="input__field " type="text" placeholder=" " autocomplete="off" />
                       <span class="input__label">Sender Email </span></span>
                     </label><br> -->
-                    <div class="mt-2"> <b>Cheak In/Out</b> : <?php echo $package->specificDate ?> / <?php echo $package->noDaysFrom ?></div>
+                    <div class="mt-2"> <b>Cheak In/Out</b> : <?php echo (new DateTime($package->specificDate))->format('d-M-Y') ?> / <?php echo(new DateTime($package->noDaysFrom))->format('d-M-Y') ?></div>
                     <div class="mt-2"> <b>Destinations</b> : <?php echo $package->goingTo ?></div>
                   </div>
                 </div>
@@ -1467,12 +1455,14 @@ $this
   const btn = document.getElementById("it-modal-submit");
   btn.addEventListener("click", () => {
     let q_id = '<?php echo $details['query_id'] ?>';
+    let email = document.getElementById("cus_email").value;
+
     console.log(q_id);
     $.ajax({
       type: "POST",
       url: "<?php echo base_url('/itinerary/sendMailItinerary') ?>",
       data: {
-        q_id: q_id
+        q_id: q_id, email : email
       },
       success: function(result) {
         toastr.success("Email Sent Successfully");

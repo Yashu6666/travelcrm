@@ -117,7 +117,7 @@
 
 
 				<style>
-					#ex4 .p1[data-count]:after {
+					#notificationIcon .p1[data-count]:after {
 						position: absolute;
 						right: 10%;
 						top: 8%;
@@ -172,9 +172,9 @@
 					</a>
 				<?php } ?></li>
 						<li class="dropdown dropdown-user">
-							<div id="ex4" style="cursor: pointer;" data-toggle="dropdown" data-hover="dropdown" ata-close-others="true">
+							<div id="notificationIcon" style="cursor: pointer;" data-toggle="dropdown" data-hover="dropdown" ata-close-others="true">
 								<span class="p1 fa-stack fa-2x has-badge" data-count="<?php echo count($all_data); ?>">
-									<span class="material-icons text-danger">notifications</span>
+									<span class="material-icons text-danger notification_icon_margin">notifications</span>
 								</span>
 							</div>
 

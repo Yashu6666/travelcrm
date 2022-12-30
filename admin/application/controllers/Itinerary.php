@@ -138,7 +138,6 @@ class Itinerary extends CI_Controller {
 
 	public function sendMailItinerary()	
 	{	
-			
 		try {	
 			$q_id = $_POST['q_id'];	
 			$query = $this->db->query("SELECT * FROM b2bcustomerquery WHERE query_id=".$q_id)->row();
@@ -152,24 +151,16 @@ class Itinerary extends CI_Controller {
 			$itinery = $this->db->query("SELECT * FROM itinery_data WHERE query_id=".$q_id)->result();	
 			$data['query'] = $query;	
 			$data['itinery'] = $itinery;	
-			$data['query_hotel_voucher'] = $this->db->where('query_id', $q_id)->get('hotel_voucher_confirmation')->result();
-			$query_package = $this->db->where('queryId',$q_id)->get('querypackage')->row();	
+			// $data['query_hotel_voucher'] = $this->db->where('query_id', $q_id)->get('hotel_voucher_confirmation')->result();
+			// $query_package = $this->db->where('queryId',$q_id)->get('querypackage')->row();	
+			$data['query_hotel_voucher'] = $this->db->query("SELECT * FROM hotel_voucher_confirmation WHERE query_id=".$q_id)->result();
+			$query_package =  $this->db->query("SELECT * FROM querypackage WHERE queryId=".$q_id)->row();
 			$data['query_package'] = $query_package;	
 
 			$data['hotel_details'] = [];	
-			
-			$this->load->library('email');	
-			$config = array(	
-				'protocol' => 'smtp',	
-				'smtp_host' => 'ssl://smtp.googlemail.com',	
-				'smtp_port' => 465,	
-				'smtp_user' => 'devsum2@gmail.com',	
-				'smtp_pass' => 'kidueonawxajhfae',	
-				'crlf' => "\r\n",	
-				'mailtype' => "html",	
-				'newline' => "\r\n",	
-			);	
-			
+			// $this->load->view('itinerary/templates/itinery_mail',$data, true);
+			// echo "<pre>"; print_r($data);
+			// return;
 			$this->load->library('Pdf');
 			$html =  $this->load->view('itinerary/templates/itinery_mail',$data, true);
 			$dompdf = new Dompdf\DOMPDF();
@@ -181,6 +172,18 @@ class Itinerary extends CI_Controller {
 			file_put_contents(FCPATH . '/public/uploads/itinerary/'.$pdf_name, $output);
 			$file_name = base_url('/public/uploads/itinerary/' . $pdf_name);
 			$this->email->attach($file_name);
+
+			$this->load->library('email');	
+			$config = array(	
+				'protocol' => 'smtp',	
+				'smtp_host' => 'ssl://smtp.googlemail.com',	
+				'smtp_port' => 465,	
+				'smtp_user' => 'devsum2@gmail.com',	
+				'smtp_pass' => 'kidueonawxajhfae',	
+				'crlf' => "\r\n",	
+				'mailtype' => "html",	
+				'newline' => "\r\n",	
+			);	
 
 			$message = '
 			<!DOCTYPE html> 
@@ -460,77 +463,77 @@ class Itinerary extends CI_Controller {
 	
 	public function saveItinerary(){
 
-	try {
-	$description = $this->input->post('description');
-	$arrival_flight = $this->input->post('arrival_flight');
-	$arrival_time = $this->input->post('arrival_time');
-	$arrival_from = $this->input->post('arrival_from');
-	$arrival_airport = $this->input->post('arrival_airport');
-	$arrival_drop = $this->input->post('arrival_drop');
-	$arrival_date = $this->input->post('arrival_date');
-	$arrival_transfer_type = $this->input->post('arrival_transfer_type');
+		try {
+		$description = $this->input->post('description');
+		$arrival_flight = $this->input->post('arrival_flight');
+		$arrival_time = $this->input->post('arrival_time');
+		$arrival_from = $this->input->post('arrival_from');
+		$arrival_airport = $this->input->post('arrival_airport');
+		$arrival_drop = $this->input->post('arrival_drop');
+		$arrival_date = $this->input->post('arrival_date');
+		$arrival_transfer_type = $this->input->post('arrival_transfer_type');
 
-	$return_flight = $this->input->post('return_flight');
-	$return_time = $this->input->post('return_time');
-	$return_departure = $this->input->post('return_departure');
-	$return_airport = $this->input->post('return_airport');
-	$return_pickup = $this->input->post('return_pickup');
-	$return_date = $this->input->post('return_date');
-	$return_transfer_type = $this->input->post('return_transfer_type');
+		$return_flight = $this->input->post('return_flight');
+		$return_time = $this->input->post('return_time');
+		$return_departure = $this->input->post('return_departure');
+		$return_airport = $this->input->post('return_airport');
+		$return_pickup = $this->input->post('return_pickup');
+		$return_date = $this->input->post('return_date');
+		$return_transfer_type = $this->input->post('return_transfer_type');
 
-	$arrival_data = $arrival_flight.','.$arrival_time.','.$arrival_from.','.$arrival_airport.','.$arrival_drop.','.$arrival_date.','.$arrival_transfer_type;
-	$return_data = $return_flight.','.$return_time.','.$return_departure.','.$return_airport.','.$return_pickup.','.$return_date.','.$return_transfer_type;
+		$arrival_data = $arrival_flight.','.$arrival_time.','.$arrival_from.','.$arrival_airport.','.$arrival_drop.','.$arrival_date.','.$arrival_transfer_type;
+		$return_data = $return_flight.','.$return_time.','.$return_departure.','.$return_airport.','.$return_pickup.','.$return_date.','.$return_transfer_type;
 
-	$data = array(
-			'hotel_name' => $this->input->post('hotel_data_hotelname'),
-			'hotel_category' => $this->input->post('hotel_data_hotelstar'),
-			'hotel_room_type' => $this->input->post('hotel_data_roomtype'),
-			'hotel_no_pax' => $this->input->post('hotel_data_pax'),
-			'hotel_check_in_date' => $this->input->post('hotel_data_checkin'),
-			'hotel_checkout_date' => $this->input->post('hotel_data_checkout'),
-			'transfer_type' => $this->input->post('transfer_data_type'),
-			'transfer_pax' => $this->input->post('transfer_data_pax'),
-			'transfer_from_date' => $this->input->post('transfer_data_fromdate'),
-			'transfer_pickup' => $this->input->post('transfer_data_pickup'),
-			'transfer_dropoff' => $this->input->post('transfer_data_dropoff'),
-			'transfer_route_name' => $this->input->post('transfer_data_routename'),
-			'transfer' => $this->input->post('transfer_data_type'),
-			'meal_resturant_name' => $this->input->post('meal_data_resturant_name'),
-			'meal_resturant_type' => $this->input->post('meal_data_resturant_type'),
-			'meal_transfer_type' => $this->input->post('meals_transfer_type'),
-			'meal' => $this->input->post('meal_data_meal'),
-			'meal_type' => $this->input->post('meal_data_type'),
-			'meal_adult' => $this->input->post('meal_data_adult'),
-			'meal_child' => $this->input->post('meal_data_child'),
-			'excursion_type' => $this->input->post('excursion_data_excursion_type'),
-			'excursion_name' => $this->input->post('excursion_data_excursion_name'),
-			'excursion_adult' => $this->input->post('excursion_data_excursion_adult'),
-			'excursion_child' => $this->input->post('excursion_data_excursion_child'),
-			'excursion_infant' => $this->input->post('excursion_data_excursion_infant'),
-			'query_id' => $this->input->post('query_id'),
-			'day' => $this->input->post('day'),
-			'arrival_transfer' => $arrival_data,
-			'return_transfer' => $return_data,
-			'description' => $description,
-			'pickup_time' => $this->input->post('pickup_time'),
-			'created_by' =>   $this->session->userdata('admin_id'),
+		$data = array(
+				'hotel_name' => $this->input->post('hotel_data_hotelname'),
+				'hotel_category' => $this->input->post('hotel_data_hotelstar'),
+				'hotel_room_type' => $this->input->post('hotel_data_roomtype'),
+				'hotel_no_pax' => $this->input->post('hotel_data_pax'),
+				'hotel_check_in_date' => $this->input->post('hotel_data_checkin'),
+				'hotel_checkout_date' => $this->input->post('hotel_data_checkout'),
+				'transfer_type' => $this->input->post('transfer_data_type'),
+				'transfer_pax' => $this->input->post('transfer_data_pax'),
+				'transfer_from_date' => $this->input->post('transfer_data_fromdate'),
+				'transfer_pickup' => $this->input->post('transfer_data_pickup'),
+				'transfer_dropoff' => $this->input->post('transfer_data_dropoff'),
+				'transfer_route_name' => $this->input->post('transfer_data_routename'),
+				'transfer' => $this->input->post('transfer_data_type'),
+				'meal_resturant_name' => $this->input->post('meal_data_resturant_name'),
+				'meal_resturant_type' => $this->input->post('meal_data_resturant_type'),
+				'meal_transfer_type' => $this->input->post('meals_transfer_type'),
+				'meal' => $this->input->post('meal_data_meal'),
+				'meal_type' => $this->input->post('meal_data_type'),
+				'meal_adult' => $this->input->post('meal_data_adult'),
+				'meal_child' => $this->input->post('meal_data_child'),
+				'excursion_type' => $this->input->post('excursion_data_excursion_type'),
+				'excursion_name' => $this->input->post('excursion_data_excursion_name'),
+				'excursion_adult' => $this->input->post('excursion_data_excursion_adult'),
+				'excursion_child' => $this->input->post('excursion_data_excursion_child'),
+				'excursion_infant' => $this->input->post('excursion_data_excursion_infant'),
+				'query_id' => $this->input->post('query_id'),
+				'day' => $this->input->post('day'),
+				'arrival_transfer' => $arrival_data,
+				'return_transfer' => $return_data,
+				'description' => $description,
+				'pickup_time' => $this->input->post('pickup_time'),
+				'created_by' =>   $this->session->userdata('admin_id'),
 
-		);
-		$get_query_id = $this->db->query("SELECT * FROM itinery_data WHERE query_id='".$data['query_id']."' ")->result_array();
-		$this->db->where('query_id',$data['query_id']);
-		$this->db->where('day',$data['day']);
-		$query = $this->db->get('itinery_data');
-		if ($query->num_rows() > 0){
+			);
+			$get_query_id = $this->db->query("SELECT * FROM itinery_data WHERE query_id='".$data['query_id']."' ")->result_array();
 			$this->db->where('query_id',$data['query_id']);
 			$this->db->where('day',$data['day']);
-			$this->db->update('itinery_data', $data); 
+			$query = $this->db->get('itinery_data');
+			if ($query->num_rows() > 0){
+				$this->db->where('query_id',$data['query_id']);
+				$this->db->where('day',$data['day']);
+				$this->db->update('itinery_data', $data); 
+			}
+			else{
+				$this->db->insert('itinery_data',$data);
+			}
+		} catch(Exception $e){
+			echo "<pre>";$e;
 		}
-		else{
-			$this->db->insert('itinery_data',$data);
-		}
-	} catch(Exception $e){
-		echo "<pre>";$e;
-	}
 	}
 
 }

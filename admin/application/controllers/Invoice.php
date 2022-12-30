@@ -268,7 +268,7 @@ class Invoice extends CI_Controller
         $description = implode(',', $description_arr);
         // echo '<pre>';print_r($description);exit;
         $data = array(
-            'billTo' => $this->input->post('clientName'),
+            'billTo' => $this->input->post('invoiceAgencyName'),
             'clientName' => $this->input->post('clientName'),
             'invoiceCurrency' => $this->input->post('invoiceCurrency'),
             'invoiceDate' => $this->input->post('invoiceDate'),
@@ -360,7 +360,7 @@ class Invoice extends CI_Controller
         $description_arr = $this->input->post('invoiceDesc');
         $description = implode(',', $description_arr);
         $data = array(
-            'billTo' => $this->input->post('clientName'),
+            'billTo' => $this->input->post('invoiceAgencyName'),
             'clientName' => $this->input->post('clientName'),
             'invoiceCurrency' => $this->input->post('invoiceCurrency'),
             'invoiceDate' => $this->input->post('invoiceDate'),

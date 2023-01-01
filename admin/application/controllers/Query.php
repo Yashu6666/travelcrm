@@ -436,11 +436,11 @@ class Query extends CI_Controller
 		
 		$id = $_POST['id'];
 		$status = $_POST['status'];
-		// $query_id = $this->db->where('id', $id)->get('b2bcustomerquery')->row();
+		$query_id = $this->db->where('id', $id)->get('querypackage')->row();
 		// // $type = $_POST['type'];
 		$data = array('lead_stage' => $status);
 		$package = $this->db->where('id', $id)->update('querypackage', $data);
-		// $this->db->where('id', $id)->update('b2bcustomerquery', $data);
+		$b2b = $this->db->where('query_id', $query_id->queryId)->update('b2bcustomerquery', $data);
 		echo json_encode("updated");
 	}
 

@@ -498,7 +498,7 @@ $this
                     <input id="arrival_date" class="form-control arrival_date" value="<?php echo $package->specificDate ?>" type="date" placeholder="Arrival Date" name="arrival_date[]">
                   </div>
 
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-4">
                     <label>Transfer Type</label>
                     <select id="arrival_transfer_type" class="form-control arrival_transfer_type" name="arrival_transfer_type[]">
                       <option value="PVT">PVT</option>
@@ -770,8 +770,12 @@ $this
                       <option value="Sharjah International Airport">Sharjah International Airport</option>
                     </select>
                   </div> -->
+                  <div class="form-group col-md-4">
+                    <label>TPT</label>
+                    <input id="arrival_tpt" class="form-control arrival_tpt" type="time" name="arrival_tpt[]">
+                  </div>
 
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-4">
                     <label>Drop off Hotel</label>
                     <input id="arrival_drop" class="form-control arrival_drop" value="<?php echo $hotel_name[array_key_first($hotel_name)] ?>" type="text" placeholder="Drop off Hotel" name="arrival_drop[]">
                   </div>
@@ -786,7 +790,7 @@ $this
                     <input id="return_flight" class="form-control return_flight" type="text" placeholder="Flight No" name="return_flight[]">
                   </div>
                   <div class="form-group col-md-4">
-                    <label>ETA</label>
+                    <label>ETD</label>
                     <input id="return_time" class="form-control return_time" type="time" name="return_time[]">
                   </div>
 
@@ -795,7 +799,7 @@ $this
                     <input id="return_date" class="form-control return_date" value="<?php echo $package->noDaysFrom ?>" type="date" placeholder="return Date" name="return_date[]">
                   </div>
 
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-4">
                     <label>Transfer Type</label>
                     <select id="return_transfer_type" class="form-control return_transfer_type" name="return_transfer_type[]">
                       <option value="PVT">PVT</option>
@@ -1070,10 +1074,17 @@ $this
                   <input id="return_departure" type="hidden" value="" name="return_departure[]">
                   <input id="return_airport" type="hidden" value="" name="return_airport[]">
 
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-4">
+                    <label>TPT</label>
+                    <input id="return_tpt" class="form-control return_tpt" type="time" name="return_tpt[]">
+                  </div>
+
+                  <div class="form-group col-md-4">
                     <label>Pickup Hotel</label>
                     <input id="return_pickup" class="form-control return_pickup" type="text" value="<?php echo $hotel_name[array_key_last($hotel_name)] ?>" placeholder="pickup Hotel" name="return_pickup[]">
                   </div>
+
+
                 </div>
                   </section>
 
@@ -1110,43 +1121,6 @@ $this
 
                                 <div class="panel-body">
 
-                                  <!-- <div class="col-md-12 no-padding">
-
-              <div class="col-md-12 no-padding">
-                <div class="form-group active">
-                <label>Title</label>
-
-                <input onclick="autosuggest_title_program('30785','2261','35787_2261_1');" onchange=" updateitendata('35787','2261','1','256346')" type="text" class="form-control whbg" name="title_35787_2261_1" id="title_35787_2261_1" value="">                   
-              </div>
-              </div>  
-            
-            
-            <div class="col-md-4 " style="display:none;">  
-             <label class="checkbox_popup checkbox_width_100 align_margin_bottom_0">
-              <input type="checkbox" name="saveasMaster_35787_2261_1" id="saveasMaster_35787_2261_1" value="1">
-              Save as Itinerary Description Master
-              <span class="checkmark"></span>
-            </label>
-          </div>    
-        </div>
-
-        <div class="col-md-12 no-padding">
-          <div class="form-group form-group1 active">
-           <label>Program Description</label>
-           <textarea onchange=" updateitendata()" rows="3" class="form-control whbg" cols="45" id="detail_35787_2261_1" name="detail_35787_2261_1"></textarea>                     
-          
-          
-       </div>
-     </div> -->
-                                  <!-- <script>
-            CKEDITOR.replace('detail_35787_2261_1', {});
-            var detName = 'detail_35787_2261_1';
-            CKEDITOR.instances[detName].on('paste', function () {
-             updateitendata('35787', '2261', '1', '256346');
-           });
-            CKEDITOR.instances[detName].on('blur', function () {
-             updateitendata('35787', '2261', '1', '256346');
-           }); -->
                                   </script>
                                   <input type="hidden" name="startCityId_35787_2261_1" id="startCityId_35787_2261_1" value="30785">
                                   <input type="hidden" name="endCityId_35787_2261_1" id="endCityId_35787_2261_1" value="2261">
@@ -1239,10 +1213,6 @@ $this
                                                 <span><i class="fa-solid fa-bowl-rice"></i> Meal</span> <a style="text-decoration:underline; float: right;" data-bs-toggle="modal" data-bs-target="#mealsModal" id="mealsmodal" data-id="<?php echo $i ?>" onclick="meals_click();">Add +
                                                   </a></p>
 
-                                              <!-- <span style="margin-left:65px;display:none;">
-   <input type="radio" name="packagecategory_256346" id="packagecategory_256346_3" value="3" checked="checked"  onclick="return DisplayGrid('3','256346','2261')">
-   <label class="white" for="packagecategory_256346_3">Deluxe&nbsp;&nbsp;</label>
- </span> -->
                                             </div>
                                           </div>
 
@@ -1268,75 +1238,6 @@ $this
                                           </div>
                                         </div>
 
-                                      <!-- <div class="col-md-12 no-padding">
- <div class="panel panel-light-green">
-  <div class="" style="padding: 5px; background-color: cadetblue;">
-
-   <div class=""><p>Flight<a
-    style="text-decoration:underline; float: right;"
-    data-bs-toggle="modal"
-    data-bs-target="#exampleModal"
-    onclick="ViewAllHotels('35787','2261','4553','1','Bang Kapi(Thailand)','256346')">View
-  All</a></p>
-
-  <span style="margin-left:65px;display:none;">
-   <input type="radio" name="packagecategory_256346" id="packagecategory_256346_3" value="3" checked="checked"  onclick="return DisplayGrid('3','256346','2261')">
-   <label class="white" for="packagecategory_256346_3">Deluxe&nbsp;&nbsp;</label>
- </span>
-</div>
-</div>
-
-<div class="panel-body">
- <div class="panel-body table-responsive no-padding">
-  <table class="table tablestyle hotelresult_256346" id="hotelresult_256346_2261">
-   <tbody>
-    <tr class="alert alert-graylight">
-       <th class="small smallbold">Selected</th> -->
-                                      <!-- <th class="small smallbold">Flight Name</th>
-      <th class="small smallbold">Travel Date</th>
-      <th class="small smallbold">Origin City</th>
-      <th class="small smallbold">Destination City</th>
-      <th class="small smallbold"></th>
-    </tr>  
-
-
-  </tbody></table>
-</div>
-</div>
-</div> 
-</div> -->
-
-
-                                      <!-- <div class="col-md-12 no-padding">
-  <div class="panel panel-light-green">
-   <div class="" style="padding: 5px; background-color: cadetblue;">
-    <div class="panel-title"><p>Excursion <a style="text-decoration:underline;float: right;"  data-bs-toggle="modal"
-     data-bs-target="#exampleModal1" data-target="#myModalSightseen" data-toggle="modal" href="javascript:void(0);" onclick="getAgentInternalSightseen('35787','2261','4553','1','256346','')">View all</a></p></div>
-   </div>
-   <div class="panel-body">
-
-    <div class="panel-body table-responsive no-padding">
-     <table class="table tablestyle" id="sightseenresult_256346">
-      <tbody><tr class="alert alert-graylight">
-         <th class="small smallbold">Selected</th> -->
-                                      <!-- <th class="small smallbold"><strong>Excursion</strong></th> -->
-                                      <!--  <th class="small smallbold"><strong>Source</strong></th> -->
-                                      <!-- <th class="small smallbold"><strong>Supplier</strong></th> -->
-                                      <!-- <th class="small smallbold"><strong>Duration</strong></th> -->
-                                      <!-- <th class="small smallbold"><strong>Adult Price</strong></th> -->
-                                      <!-- <th class="small smallbold"><strong>Per Person Cost</strong></th> -->
-
-                                      <!-- <th class="small smallbold"></th> -->
-                                      <!-- </tr>
-
-    </tbody></table>
-  </div>
-</div>
-
-</div>
-</div>  -->
-
-
                                         <div class="panel panel-light-green">
                                           <div class="text-white" style="padding: 5px; background-color: #d9a927;">
 
@@ -1354,6 +1255,10 @@ $this
                                                     <!-- <th class="small smallbold">Selected</th> -->  
                                                     <th class="small smallbold">Transfer Type</th>
                                                     <th class="small smallbold">Activity Name</th>
+                                                    <th class="small smallbold">To Transfer Drop-off</th>
+                                                    <th class="small smallbold">To TPT</th>
+                                                    <th class="small smallbold">Return Transfer Pickup</th>
+                                                    <th class="small smallbold">Return TPT</th>
                                                     <th class="small smallbold">Adult</th>
                                                     <th class="small smallbold">Child</th>
                                                     <th class="small smallbold">Infant</th>
@@ -1511,6 +1416,7 @@ $this
       var arrival_drop = $("#arrival_drop").val();
       var arrival_date = $("#arrival_date").val();
       var arrival_transfer_type = $("#arrival_transfer_type").val();
+      var arrival_tpt = $("#arrival_tpt").val();
 
       var return_flight = $("#return_flight").val();
       var return_time = $("#return_time").val();
@@ -1520,6 +1426,7 @@ $this
       var return_pickup = $("#return_pickup").val();
       var return_pickup = $("#return_pickup").val();
       var return_date = $("#return_date").val();
+      var return_tpt = $("#return_tpt").val();
       var return_transfer_type = $("#return_transfer_type").val();
 
       var description = description_data[i];
@@ -1540,21 +1447,93 @@ $this
       var transfer_data_type = $.trim($(".transfer_data_type" + i).text());
       var pickup_time = $.trim($(".pickup_time" + i).text());
 
-      var meals_transfer_type = $.trim($(".meals_transfer_type" + i).text());
-      var meal_data_resturant_type = $.trim($(".meal_data_resturant_type" + i).text());
-      var meal_data_resturant_name = $.trim($(".meal_data_resturant_name" + i).text());
-      var meal_data_meal = $.trim($(".meal_data_meal" + i).text());
-      var meal_data_type = $.trim($(".meal_data_type" + i).text());
-      var meal_data_adult = $.trim($(".meal_data_adult" + i).text());
-      var meal_data_child = $.trim($(".meal_data_child" + i).text());
+      // var meals_transfer_type = $.trim($(".meals_transfer_type" + i).text());
+      // var meal_data_resturant_type = $.trim($(".meal_data_resturant_type" + i).text());
+      // var meal_data_resturant_name = $.trim($(".meal_data_resturant_name" + i).text());
+      // var meal_data_meal = $.trim($(".meal_data_meal" + i).text());
+      // var meal_data_type = $.trim($(".meal_data_type" + i).text());
+      // var meal_data_adult = $.trim($(".meal_data_adult" + i).text());
+      // var meal_data_child = $.trim($(".meal_data_child" + i).text());
 
+      var meals_transfer_type=[]; 
+      $(".meals_transfer_type" + i).each(function() {
+        meals_transfer_type.push($(this).text());
+      });
+      var meal_data_resturant_type=[]; 
+      $(".meal_data_resturant_type" + i).each(function() {
+        meal_data_resturant_type.push($(this).text());
+      });
+      var meal_data_resturant_name=[]; 
+      $(".meal_data_resturant_name" + i).each(function() {
+        meal_data_resturant_name.push($(this).text());
+      });
+      var meal_data_meal=[]; 
+      $(".meal_data_meal" + i).each(function() {
+        meal_data_meal.push($(this).text());
+      });
+      var meal_data_type=[]; 
+      $(".meal_data_type" + i).each(function() {
+        meal_data_type.push($(this).text());
+      });
+      var meal_data_adult=[]; 
+      $(".meal_data_adult" + i).each(function() {
+        meal_data_adult.push($(this).text());
+      });
+      var meal_data_child=[]; 
+      $(".meal_data_child" + i).each(function() {
+        meal_data_child.push($(this).text());
+      });
 
-      var excursion_data_excursion_type = $.trim($(".excursion_data_excursion_type" + i).text());
-      var excursion_data_excursion_name = $.trim($(".excursion_data_excursion_name" + i).text());
-      var excursion_data_excursion_adult = $.trim($(".excursion_data_excursion_adult" + i).text());
-      var excursion_data_excursion_child = $.trim($(".excursion_data_excursion_child" + i).text());
-      var excursion_data_excursion_infant = $.trim($(".excursion_data_excursion_infant" + i).text());
+      // var excursion_data_excursion_type = $.trim($(".excursion_data_excursion_type" + i).text());
+      // var excursion_data_excursion_name = $.trim($(".excursion_data_excursion_name" + i).text());
+      // var excursion_data_excursion_adult = $.trim($(".excursion_data_excursion_adult" + i).text());
+      // var excursion_data_excursion_child = $.trim($(".excursion_data_excursion_child" + i).text());
+      // var excursion_data_excursion_infant = $.trim($(".excursion_data_excursion_infant" + i).text());
+      
+      // var excursion_data_excursion_to_drop = $.trim($(".excursion_data_excursion_to_drop" + i).text());
+      // var excursion_data_excursion_to_time = $.trim($(".excursion_data_excursion_to_time" + i).text());
+      // var excursion_data_excursion_return_pickup = $.trim($(".excursion_data_excursion_return_pickup" + i).text());
+      // var excursion_data_excursion_return_time = $.trim($(".excursion_data_excursion_return_time" + i).text());
+      var excursion_data_excursion_type=[]; 
+      $(".excursion_data_excursion_type" + i).each(function() {
+        excursion_data_excursion_type.push($(this).text());
+      });
+      var excursion_data_excursion_name=[]; 
+      $(".excursion_data_excursion_name" + i).each(function() {
+        excursion_data_excursion_name.push($(this).text());
+      });
+      var excursion_data_excursion_adult=[]; 
+      $(".excursion_data_excursion_adult" + i).each(function() {
+        excursion_data_excursion_adult.push($(this).text());
+      });
+      var excursion_data_excursion_child=[]; 
+      $(".excursion_data_excursion_child" + i).each(function() {
+        excursion_data_excursion_child.push($(this).text());
+      });
+      var excursion_data_excursion_infant=[]; 
+      $(".excursion_data_excursion_infant" + i).each(function() {
+        excursion_data_excursion_infant.push($(this).text());
+      });
 
+      var excursion_data_excursion_to_drop=[]; 
+      $(".excursion_data_excursion_to_drop" + i).each(function() {
+        excursion_data_excursion_to_drop.push($(this).text());
+      });
+
+      var excursion_data_excursion_to_time=[]; 
+      $(".excursion_data_excursion_to_time" + i).each(function() {
+        excursion_data_excursion_to_time.push($(this).text());
+      });
+
+      var excursion_data_excursion_return_pickup=[]; 
+      $(".excursion_data_excursion_return_pickup" + i).each(function() {
+        excursion_data_excursion_return_pickup.push($(this).text());
+      });
+
+      var excursion_data_excursion_return_time=[]; 
+      $(".excursion_data_excursion_return_time" + i).each(function() {
+        excursion_data_excursion_return_time.push($(this).text());
+      });
 
       $.ajax({
         type: "POST",
@@ -1573,18 +1552,22 @@ $this
           'transfer_data_dropoff': transfer_data_dropoff,
           'transfer_data_routename': transfer_data_routename,
           'pickup_time': pickup_time,
-          'meal_data_resturant_name': meal_data_resturant_name,
-          'meal_data_resturant_type': meal_data_resturant_type,
-          'meals_transfer_type': meals_transfer_type,
-          'meal_data_meal': meal_data_meal,
-          'meal_data_type': meal_data_type,
-          'meal_data_adult': meal_data_adult,
-          'meal_data_child': meal_data_child,
-          'excursion_data_excursion_type': excursion_data_excursion_type,
-          'excursion_data_excursion_name': excursion_data_excursion_name,
-          'excursion_data_excursion_adult': excursion_data_excursion_adult,
-          'excursion_data_excursion_child': excursion_data_excursion_child,
-          'excursion_data_excursion_infant': excursion_data_excursion_infant,
+          'meal_data_resturant_name': meal_data_resturant_name.join(","),
+          'meal_data_resturant_type': meal_data_resturant_type.join(","),
+          'meals_transfer_type': meals_transfer_type.join(","),
+          'meal_data_meal': meal_data_meal.join(","),
+          'meal_data_type': meal_data_type.join(","),
+          'meal_data_adult': meal_data_adult.join(","),
+          'meal_data_child': meal_data_child.join(","),
+          'excursion_data_excursion_type': excursion_data_excursion_type.join(","),
+          'excursion_data_excursion_name': excursion_data_excursion_name.join(","),
+          'excursion_data_excursion_to_drop': excursion_data_excursion_to_drop.join(","),
+          'excursion_data_excursion_to_time': excursion_data_excursion_to_time.join(","),
+          'excursion_data_excursion_return_pickup': excursion_data_excursion_return_pickup.join(","),
+          'excursion_data_excursion_return_time': excursion_data_excursion_return_time.join(","),
+          'excursion_data_excursion_adult': excursion_data_excursion_adult.join(","),
+          'excursion_data_excursion_child': excursion_data_excursion_child.join(","),
+          'excursion_data_excursion_infant': excursion_data_excursion_infant.join(","),
           'query_id': query_id,
           'day': day,
 
@@ -1597,6 +1580,7 @@ $this
           'arrival_drop':arrival_drop,
           'arrival_date':arrival_date,
           'arrival_transfer_type':arrival_transfer_type,
+          'arrival_tpt': arrival_tpt,
 
           'return_flight':return_flight,
           'return_time':return_time,
@@ -1605,6 +1589,7 @@ $this
           'return_pickup':return_pickup,
           'return_date':return_date,
           'return_transfer_type':return_transfer_type,
+          'return_tpt': return_tpt,
         },
         dataType: 'JSON',
         success: function(data) {
@@ -1913,6 +1898,7 @@ $this
     var resturant_type = $("#resturant_type").val();
 
     var meals_transfer_type = $("#transfer_with_or_without").val();
+    console.log("🚩 ~ file: add.php:1901 ~ $ ~ meals_transfer_type", meals_transfer_type)
 
     // var meals_transfer_type = document.querySelector('input[name="transfer_with_or_without"]:checked').value;
     
@@ -1958,6 +1944,12 @@ $this
     var modalid = $("#modal_excursion").val();
     var excursion_type = $("#excursion_type").val();
     var excursion_name = $("#excursion_name").val();
+    
+    var excursion_to_drop = $("#excursion_to_drop").val();
+    var excursion_to_time = $("#excursion_to_time").val();
+    var excursion_return_pickup = $("#excursion_return_pickup").val();
+    var excursion_return_time = $("#excursion_return_time").val();
+
     var excursion_adult = $("#excursion_adult").val();
     var excursion_child = $("#excursion_child").val();
     var excursion_infant = $("#excursion_infant").val();
@@ -1970,6 +1962,12 @@ $this
     excursion_body = '<tr class="odd gradeX" id="excursion_row'+excursion_row_count+'">';
     excursion_body += '<td class="excursion_data_excursion_type' + modalid + '">' + excursion_type + '</td>';
     excursion_body += '<td class="excursion_data_excursion_name' + modalid + '">' + excursion_name + '</td>';
+    
+    excursion_body += '<td class="excursion_data_excursion_to_drop' + modalid + '">' + excursion_to_drop + '</td>';
+    excursion_body += '<td class="excursion_data_excursion_to_time' + modalid + '">' + excursion_to_time + '</td>';
+    excursion_body += '<td class="excursion_data_excursion_return_pickup' + modalid + '">' + excursion_return_pickup + '</td>';
+    excursion_body += '<td class="excursion_data_excursion_return_time' + modalid + '">' + excursion_return_time + '</td>';
+
     excursion_body += '<td class="excursion_data_excursion_adult' + modalid + '">' + excursion_adult + '</td>';
     excursion_body += '<td class="excursion_data_excursion_child' + modalid + '">' + excursion_child + '</td>';
     excursion_body += '<td class="excursion_data_excursion_infant' + modalid + '">' + excursion_infant + '</td>';

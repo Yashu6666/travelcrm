@@ -197,6 +197,9 @@
             border: 1px solid black;
             outline: 1px solid black;
         }
+        .bg_grey {
+            background: lightgray;
+        }
     </style>
 </head>
 
@@ -258,20 +261,29 @@
                             </span></td>
             </tr>
             <tr>
-                <td style="width: 40%;">Hotel Confirmation:</td>
-                <td> <?php echo $query_hotel_voucher[$key]->confirmation_id ?> </td>
+                <td style="width: 40%;">Check in Date</td>
+                <td> <?php echo (new DateTime($val->hotel_check_in_date))->format('d-M-Y') ;?> </td>
             </tr>
             <tr>
-            <?php $date = new DateTime($val->hotel_check_in_date);
-                        $ci = $date->format('d-M-Y'); ?>
-                <td style="width: 40%;">Check in Date:</td>
-                <td> <?php echo $ci ;?> </td>
+                <td style="width: 40%;">Check out Date </td>
+                <td><?php echo (new DateTime($val->hotel_checkout_date))->format('d-M-Y')  ;?> </td>
             </tr>
             <tr>
-            <?php $date = new DateTime($val->hotel_checkout_date);
-                        $co = $date->format('d-M-Y'); ?>
-                <td style="width: 40%;">Check out Date: </td>
-                <td><?php echo $co ;?> </td>
+                <td style="width: 40%;">Hotel Confirmation</td>
+                <td class="txt_red"> <?php echo $query_hotel_voucher[$key]->confirmation_id ?> </td>
+            </tr>
+            <tr>
+                <td style="width: 40%;">No of Nights </td>
+                <td><?php $date1 = new DateTime($val->hotel_check_in_date); $date2 = new DateTime($val->hotel_checkout_date); 
+                echo $date2->diff($date1)->format("%a") ;?> </td>
+            </tr>
+            <tr>
+                <td style="width: 40%;">Hotel Rooms </td>
+                <td><?php echo explode(",",$query_package->room)[0]  ;?> </td>
+            </tr>
+            <tr>
+                <td style="width: 40%;">Hotel Landline Number </td>
+                <td><?php echo $query_hotel_voucher[$key]->hotel_phone  ;?> </td>
             </tr>
             
             </tbody>
@@ -281,7 +293,7 @@
 
         <table  border="1" class="table mt_2">
             <tr class="bg_blue txt_center">
-                <th colspan="5">FLIGHT DETAILS</th>
+                <th colspan="6">FLIGHT DETAILS</th>
             </tr>
             <tr class="bg_r">
                 <td >ARRIVAL DATE</td>
@@ -291,6 +303,7 @@
                 <!-- <td >AIRPORT</b></td> -->
                 <td >DROP OFF HOTEL</b></td>
                 <td >TRANSFER TYPE</b></td>
+                <td>TPT</b></td>
             </tr>
             <tr>
             <?php $date = new DateTime(explode(",",$val->arrival_transfer)[5]);
@@ -302,16 +315,18 @@
                 <!-- <td><?php echo explode(",",$val->arrival_transfer)[3] ;?></td> -->
                 <td><?php echo explode(",",$val->arrival_transfer)[4] ;?> </td>
                 <td><?php echo explode(",",$val->arrival_transfer)[6] ;?> </td>
+                <td><?php echo explode(",",$val->arrival_transfer)[7] ;?> </td>
             </tr>
 
             <tr class="bg_r">
                 <td >DEPARTURE DATE</td>
                 <td >FLIGHT NO</b></td>
                 <!-- <td >DEPARTURE TO</b></td> -->
-                <td >ETA</b></td>
+                <td >ETD</b></td>
                 <!-- <td >AIRPORT</b></td> -->
                 <td >PICK UP HOTEL</b></td>
                 <td >TRANSFER TYPE</b></td>
+                <td>TPT</b></td>
             </tr>
             <tr>
             <?php $date = new DateTime(explode(",",$val->return_transfer)[5]);
@@ -323,6 +338,7 @@
                 <!-- <td><?php echo explode(",",$val->return_transfer)[3] ;?></td> -->
                 <td><?php echo explode(",",$val->return_transfer)[4] ;?> </td>
                 <td><?php echo explode(",",$val->return_transfer)[6] ;?> </td>
+                <td><?php echo explode(",",$val->return_transfer)[7] ;?> </td>
             </tr>
         </table>
         <table  border="1" class="table mt_2">
@@ -337,11 +353,13 @@
             </tr>
             <tr>
                 <td>Service</td>
-                <td><?php echo $val->excursion_name.' ('.$val->excursion_type.')' ?></td>
+                <!-- <td><?php echo $val->excursion_name.' ('.$val->excursion_type.')' ?></td> -->
+                <td><?php echo explode(',',$val->excursion_name)[0] ?></td>
             </tr>
             <tr>
                 <td>Transfer Type</td>
-                <td><?php echo $val->transfer_type ?></td>
+                <!-- <td><?php echo $val->transfer_type ?></td> -->
+                <td><?php echo explode(',',$val->excursion_type)[0] ?></td>
             </tr>
             <tr>
                 <td>No Of Pax</td>
@@ -362,25 +380,155 @@
                 </td>
             </tr>
             <tr>
-                <td>Pick up Location</td>
-                <td><?php echo $val->transfer_pickup ?></td>
+                <td colspan="2" class="bg_grey">To Transfer</td>
             </tr>
+
             <tr>
-                <td>Drop off Location</td>
-                <td><?php echo $val->transfer_dropoff ?></td>
+                <td>Pick up Location</td>
+                <td><?php echo $val->hotel_name ?></td>
             </tr>
             <tr>
                 <td>Pick up Time</td>
-                <td><?php echo $val->pickup_time ?></td>
+                <td><?php echo explode(',',$val->excursion_to_tpt)[0] ?></td>
+            </tr>
+            <tr>
+                <td>Drop off Location</td>
+                <td><?php echo explode(',',$val->excursion_to_transfer_dropoff)[0] ?></td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="bg_grey">Return Transfer</td>
+            </tr>
+
+            <tr>
+                <td>Pick up Location</td>
+                <td><?php echo explode(',',$val->excursion_return_transfer_pickup)[0] ?></td>
+            </tr>
+            <tr>
+                <td>Pick up Time</td>
+                <td><?php echo explode(',',$val->excursion_return_tpt)[0] ?></td>
+            </tr>
+            <tr>
+                <td>Drop off Location</td>
+                <td><?php echo $val->hotel_name ?></td>
+            </tr>
+
+            <tr>
+                <td>Restaurant Type</td>
+                <td><?php echo !empty(explode(',',$val->meal_resturant_type)[0]) ? explode(',',$val->meal_resturant_type)[0] : "N/A" ?></td>
+            </tr>
+            <tr>
+                <td>Meal Type </td>
+                <td><?php echo !empty(explode(',',$val->meal_type)[0]) ? explode(',',$val->meal_type)[0] : "N/A" ?></td>
             </tr>
             <tr>
                 <td>Meal</td>
-                <td><?php echo $val->meal.' at '.$val->meal_resturant_name ?></td>
+                <td><?php echo !empty(explode(',',$val->meal)[0]) ? explode(',',$val->meal)[0] : "N/A" ?></td>
             </tr>
+            <tr>
+                <td>Meal Transfer Type </td>
+                <td><?php echo !empty(explode(',',$val->meal_transfer_type)[0]) ? explode(',',$val->meal_transfer_type)[0] : "N/A" ?></td>
+            </tr>
+
             <tr>
                 <td>Description</td>
                 <td><?php echo $val->description ?></td>
             </tr>
+
+            <!-- --------------------  Followed By --------------------- -->
+            <?php if(count(explode(',',$val->excursion_name)) > 1) : ?>
+            <?php foreach(explode(',',$val->excursion_name) as $k => $v) : ?>
+            <?php if(isset(explode(',',$val->excursion_name)[$k + 1])) : ?>
+            <tr>
+                <td colspan="2" class="bg_blue txt_center">Followed By</td>
+            </tr>
+
+            <tr>
+                <td>Service</td>
+                <td><?php echo explode(',',$val->excursion_name)[$k + 1] ?></td>
+            </tr>
+            <tr>
+                <td>Transfer Type</td>
+                <td><?php echo explode(',',$val->excursion_type)[$k + 1] ?></td>
+            </tr>
+            <tr>
+                <td>No Of Pax</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td class="bg_blue double_border">Adult</td>
+                            <td class="bg_blue double_border">Child</td>
+                            <td class="bg_blue double_border">Infant</td>
+                        </tr>
+                        <tr>
+                            <td class="double_border"><?php echo $query_package->adult ?></td>
+                            <td class="double_border"><?php echo $query_package->child ?></td>
+                            <td class="double_border"><?php echo $query_package->infant ?></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="bg_grey">To Transfer</td>
+            </tr>
+
+            <tr>
+                <td>Pick up Location</td>
+                <td><?php echo $val->hotel_name ?></td>
+            </tr>
+            <tr>
+                <td>Pick up Time</td>
+                <td><?php echo explode(',',$val->excursion_to_tpt)[$k + 1] ?></td>
+            </tr>
+            <tr>
+                <td>Drop off Location</td>
+                <td><?php echo explode(',',$val->excursion_to_transfer_dropoff)[$k + 1] ?></td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="bg_grey">Return Transfer</td>
+            </tr>
+
+            <tr>
+                <td>Pick up Location</td>
+                <td><?php echo explode(',',$val->excursion_return_transfer_pickup)[$k + 1] ?></td>
+            </tr>
+            <tr>
+                <td>Pick up Time</td>
+                <td><?php echo explode(',',$val->excursion_return_tpt)[$k + 1] ?></td>
+            </tr>
+            <tr>
+                <td>Drop off Location</td>
+                <td><?php echo $val->hotel_name ?></td>
+            </tr>
+
+            <tr>
+                <td>Description</td>
+                <td><?php echo $val->description ?></td>
+            </tr>
+            <tr>
+                <td>Restaurant Type</td>
+                <td><?php echo !empty(explode(',',$val->meal_resturant_type)[$k + 1]) ? explode(',',$val->meal_resturant_type)[$k + 1] : "N/A" ?></td>
+            </tr>
+            <tr>
+                <td>Meal Type </td>
+                <td><?php echo !empty(explode(',',$val->meal_type)[$k + 1]) ? explode(',',$val->meal_type)[$k + 1] : "N/A" ?></td>
+            </tr>
+            <tr>
+                <td>Meal</td>
+                <td><?php echo !empty(explode(',',$val->meal)[$k + 1]) ? explode(',',$val->meal)[$k + 1] : "N/A" ?></td>
+            </tr>
+            <tr>
+                <td>Meal Transfer Type </td>
+                <td><?php echo !empty(explode(',',$val->meal_transfer_type)[$k + 1]) ? explode(',',$val->meal_transfer_type)[$k + 1] : "N/A" ?></td>
+            </tr>
+
+            <?php endif ?>
+            <?php endforeach ?>
+            <?php endif ?>
+
+
         <?php endforeach ?>
             
         </table>

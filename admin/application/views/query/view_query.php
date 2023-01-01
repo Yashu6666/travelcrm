@@ -92,7 +92,7 @@
 											id="exampleReport2">
 											<thead>
 												<tr><th class="center"> S.No </th>
-													<!-- <th class="center"> Query Date </th> -->
+													<th class="center"> Query Date </th>
 													<th class="center"> Query ID </th>
 
 													<th class="center"> TA Name </th>
@@ -131,7 +131,7 @@
 												
 												<tr class="odd gradeX" style="<?php echo $styleColor ?>" id="<?php echo $cnt ?>">
 													<td class="center"><?php echo $cnt ?></td>
-													<!-- <td class="center"><?php echo date('d M Y H:i:s' , strtotime($val['created_at'])) ?></td> -->
+													<td class="center"><?php echo date('d M Y' , strtotime($val['created_at'])) ?></td>
 													<td class="center"><?php echo $val['query_id'] ?></td>
 													<td class="center"><?php echo $val['company_name']?></td>
 													<td class="center"><?php echo $val['Description'] ?></td>

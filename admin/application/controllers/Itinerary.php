@@ -112,6 +112,14 @@ class Itinerary extends CI_Controller {
 			$data['query_hotel_voucher'] = $this->db->where('query_id', $q_id)->get('hotel_voucher_confirmation')->result();
 			$query_package = $this->db->where('queryId',$q_id)->get('querypackage')->row();	
 			$data['query_package'] = $query_package;	
+
+			foreach ($data['query_hotel_voucher'] as $key => $value) {
+				$hotel_data = $this->db->where('id',$value->query_hotel_id)->get('hotel')->row();
+				$value->hotel_address = $hotel_data->hotel_full_address;
+				$value->hotel_phone = $hotel_data->hotelphone;
+			}
+
+			$data['hotel_query_details'] = $this->db->where('query_id', $q_id)->get('query_hotel')->row();
 			$data['hotel_details'] = [];	
 			
 			$this->load->view('itinerary/view_itinerary',$data);
@@ -156,6 +164,14 @@ class Itinerary extends CI_Controller {
 			$data['query_hotel_voucher'] = $this->db->query("SELECT * FROM hotel_voucher_confirmation WHERE query_id=".$q_id)->result();
 			$query_package =  $this->db->query("SELECT * FROM querypackage WHERE queryId=".$q_id)->row();
 			$data['query_package'] = $query_package;	
+
+			foreach ($data['query_hotel_voucher'] as $key => $value) {
+				$hotel_data = $this->db->where('id',$value->query_hotel_id)->get('hotel')->row();
+				$value->hotel_address = $hotel_data->hotel_full_address;
+				$value->hotel_phone = $hotel_data->hotelphone;
+			}
+
+			$data['hotel_query_details'] = $this->db->where('query_id', $q_id)->get('query_hotel')->row();
 
 			$data['hotel_details'] = [];	
 			// $this->load->view('itinerary/templates/itinery_mail',$data, true);
@@ -296,7 +312,8 @@ class Itinerary extends CI_Controller {
         $data['transfer_internal_drop'] = !empty($transfer_internal_query_data->dropoff) ? explode(",",$transfer_internal_query_data->dropoff) : '';
 		
 		// $meals = $this->db->where('query_id',$query_id)->get('query_meal')->result();
-		$meals = $this->db->query("SELECT * FROM query_meal WHERE query_id=".$query_id)->result();
+		// $meals2 = $this->db->query("SELECT * FROM query_meal WHERE query_id=".$query_id)->result();
+		$meals = $this->db->where('query_id',(int)$query_id)->where('query_type','excursion')->get('query_meal')->result();
 
 		if(count($meals) > 0){
 			$data['resturant_transfer_type'] = explode(',',$meals[0]->transfer_type);
@@ -472,6 +489,7 @@ class Itinerary extends CI_Controller {
 		$arrival_drop = $this->input->post('arrival_drop');
 		$arrival_date = $this->input->post('arrival_date');
 		$arrival_transfer_type = $this->input->post('arrival_transfer_type');
+		$arrival_tpt = $this->input->post('arrival_tpt');
 
 		$return_flight = $this->input->post('return_flight');
 		$return_time = $this->input->post('return_time');
@@ -480,9 +498,10 @@ class Itinerary extends CI_Controller {
 		$return_pickup = $this->input->post('return_pickup');
 		$return_date = $this->input->post('return_date');
 		$return_transfer_type = $this->input->post('return_transfer_type');
+		$return_tpt = $this->input->post('return_tpt');
 
-		$arrival_data = $arrival_flight.','.$arrival_time.','.$arrival_from.','.$arrival_airport.','.$arrival_drop.','.$arrival_date.','.$arrival_transfer_type;
-		$return_data = $return_flight.','.$return_time.','.$return_departure.','.$return_airport.','.$return_pickup.','.$return_date.','.$return_transfer_type;
+		$arrival_data = $arrival_flight.','.$arrival_time.','.$arrival_from.','.$arrival_airport.','.$arrival_drop.','.$arrival_date.','.$arrival_transfer_type.','.$arrival_tpt;
+		$return_data = $return_flight.','.$return_time.','.$return_departure.','.$return_airport.','.$return_pickup.','.$return_date.','.$return_transfer_type.','.$return_tpt;
 
 		$data = array(
 				'hotel_name' => $this->input->post('hotel_data_hotelname'),
@@ -507,6 +526,10 @@ class Itinerary extends CI_Controller {
 				'meal_child' => $this->input->post('meal_data_child'),
 				'excursion_type' => $this->input->post('excursion_data_excursion_type'),
 				'excursion_name' => $this->input->post('excursion_data_excursion_name'),
+				'excursion_to_transfer_dropoff'=> $this->input->post('excursion_data_excursion_to_drop'),
+				'excursion_to_tpt'=> $this->input->post('excursion_data_excursion_to_time'),
+				'excursion_return_transfer_pickup'=> $this->input->post('excursion_data_excursion_return_pickup'),
+				'excursion_return_tpt'=> $this->input->post('excursion_data_excursion_return_time'),
 				'excursion_adult' => $this->input->post('excursion_data_excursion_adult'),
 				'excursion_child' => $this->input->post('excursion_data_excursion_child'),
 				'excursion_infant' => $this->input->post('excursion_data_excursion_infant'),

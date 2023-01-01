@@ -229,10 +229,11 @@
                                 <section id="" class="col-md-12 mt-4">
                                     <label>Transfer Type</label>
                                     <select id="transfer_with_or_without" required name="transfer_with_or_without" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
-                                        <option value="">Select Transfer</option>
-                                        <?php foreach ($resturant_transfer_type as $value) : ?>
-                                            <option value=<?php echo $value ?>><?php echo $value == "with_transfer" ? "With Transfer" : "Without Transfer" ?></option>
-                                        <?php endforeach ?>
+                                        <option value="With Transfer">With Transfer</option>
+                                        <option value="Without Transfer">Without Transfer</option>
+                                        <!-- <?php foreach ($resturant_transfer_type as $value) : ?>
+                                            <option value='<?php echo $value ?>'><?php echo $value == "with_transfer" ? "With Transfer" : "Without Transfer" ?></option>
+                                        <?php endforeach ?> -->
                                     </select>
                                 </section>
 
@@ -243,7 +244,7 @@
                                     <select id="resturant_type" required name="resturant_type" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                         <!-- <select id="resturant_type"  required  name="resturant_type" onchange="get_resturant_name()" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg"> -->
                                         <?php
-                                        foreach ($resturant_type as $name) {
+                                        foreach (array_unique($resturant_type) as $name) {
                                             echo '<option value="' . $name . '">' . $name . '</option>';
                                         }
                                         ?>
@@ -254,7 +255,7 @@
                                     <label>Resturant Name</label>
                                     <select id="resturant_name" required name="resturant_name" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                         <?php
-                                        foreach ($resturant_name as $name) {
+                                        foreach (array_unique($resturant_name) as $name) {
                                             echo '<option value="' . $name . '">' . $name . '</option>';
                                         }
                                         ?>
@@ -265,7 +266,7 @@
                                     <label>Meal </label>
                                     <select id="meal" required name="meal" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                         <?php
-                                        foreach ($meal as $name) {
+                                        foreach (array_unique($meal) as $name) {
                                             echo '<option value="' . $name . '">' . $name . '</option>';
                                         }
                                         ?>
@@ -277,7 +278,7 @@
                                     <label>Meal Type </label>
                                     <select id="meal_type" required name="meal_type" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
                                         <?php
-                                        foreach ($meal_type as $name) {
+                                        foreach (array_unique($meal_type) as $name) {
                                             echo '<option value="' . $name . '">' . $name . '</option>';
                                         }
                                         ?>
@@ -370,24 +371,57 @@
                                     </select>
                                 </section>
 
-                                <section id="" class="col-md-12 mt-4">
+                                <!-- <section id="" class="col-md-12">
+                                    <label>Transfer Type</label>
+                                    <select id="excursion_transfer_type" name="excursion_transfer_type" onchange="showExcTransfer(this)" class="js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                        <option value="">Select Transfer Type</option>
+                                        <option value="to_transfer">To Transfer</option>
+                                        <option value="return_transfer">Return Transfer</option>
+                                    </select>
+                                </section> -->
+                                
+                                <div class="col">
+                                <div class="row">
+                                <section id="" class="col-md-6 mt-4">
+                                    <label>To Transfer Drop-off Location</label>
+                                    <input id="excursion_to_drop" class="form-control" type="text" onkeyup="this.value=this.value.replace(',', '')" name="excursion_to_drop"></td>
+                                </section>
+
+                                <section id="" class="col-md-6 mt-4">
+                                    <label>To Transfer Pickup Time</label>
+                                    <input id="excursion_to_time" class="form-control" type="time" name="excursion_to_time"></td>
+                                </section>
+
+                                <section id="" class="col-md-6 mt-4">
+                                    <label>Return Transfer Pickup Location</label>
+                                    <input id="excursion_return_pickup" onkeyup="this.value=this.value.replace(',', '')" class="form-control" type="text" name="excursion_return_pickup"></td>
+                                </section>
+
+                                <section id="" class="col-md-6 mt-4">
+                                    <label>Return Transfer Pickup Time</label>
+                                    <input id="excursion_return_time" class="form-control" type="time" name="excursion_return_time"></td>
+                                </section>
+                                </div>
+                                </div>
+
+                                <div class="col">
+                                <div class="row">
+                                <section id="" class="col-md-4 mt-4">
                                     <label><i class="fa fa-male" aria-hidden="true"></i> Adult</label>
                                     <input id="excursion_adult" value="<?php echo ((int)$package->adult) ?>" class="form-control" type="text" name="excursion_adult"></td>
-
                                 </section>
 
-                                <section id="" class="col-md-12 mt-4">
+                                <section id="" class="col-md-4 mt-4">
                                     <label><i class="fa-solid fa-child"></i> Child</label>
                                     <input id="excursion_child" value="<?php echo ((int)$package->child) ?>" class="form-control" type="text" name="excursion_child"></td>
-
                                 </section>
 
-
-                                <section id="" class="col-md-12 mt-4">
+                                <section id="" class="col-md-4 mt-4">
                                     <label><i class="fa-solid fa-baby"></i>Infant</label>
                                     <input id="excursion_infant" value="<?php echo ((int)$package->infant) ?>" class="form-control" type="text" name="excursion_infant"></td>
-
                                 </section>
+                                </div>
+                                </div>
                             </section>
 
                             </section>

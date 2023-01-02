@@ -252,6 +252,17 @@ class Itinerary extends CI_Controller {
 	public function searchDetails(){
 		$query_id=$_POST['query_id'];
 		// print_r($query_id);exit;
+		$data['Qdetails'] = $this->db->where('queryId', $query_id)->get('querypackage')->row();
+		if($data['Qdetails']){
+			if($data['Qdetails']->lead_stage != 'Confirmed'){ 
+				$this->session->set_flashdata('error', 'Entered Query Id Not Confirmed');
+				redirect('itinerary/add','refresh');
+			}
+		 } else {
+			$this->session->set_flashdata('error', 'Entered Query Id Not Found');
+			redirect('itinerary/add','refresh');
+		}
+
 		$hotel = $this->db->where('query_id',$query_id)->get('query_hotel')->result();
 		// print_r($hotel);
 		$data['data_conf'] = $this->db->where('query_id',(int)$query_id)->get('hotel_voucher_confirmation')->row();

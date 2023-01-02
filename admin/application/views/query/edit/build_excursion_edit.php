@@ -2024,9 +2024,9 @@ function excursionPVTcalculations1(){
     transition: transform .2s ease-in-out,-webkit-transform .2s ease-in-out;
 }
 
-.select2-search{
+/* .select2-search{
     display: none !important;
-  }
+  } */
 </style>
 
 

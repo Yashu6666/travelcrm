@@ -52,6 +52,17 @@ class Invoice extends CI_Controller
     {
         $query_id = $_POST['query_id'];
         $data['details'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
+
+		if($data['details']){
+            if($data['details']->lead_stage != 'Confirmed'){ 
+                $this->session->set_flashdata('error', 'Entered Query Id Not Confirmed');
+                redirect('invoice/add_invoice','refresh');
+            }
+        } else {
+            $this->session->set_flashdata('error', 'Entered Query Id Not Found');
+            redirect('invoice/add_invoice','refresh');
+        }
+
         $data['presentdate'] = date('Y-m-d');
         $data['duedate'] = date('Y-m-d', strtotime(' + 15 days'));
         $data['data_voucher'] = $this->db->where('query_id', $query_id)->get('hotel_voucher_confirmation')->row();

@@ -290,6 +290,7 @@
 												<button onclick="subVoucherAjax()" id="submtVoucherBTN" type="button" class="float-right new_btn px-3">Submit</button>
 												<!-- <button onclick="download_pdf()"  id="submtVoucherPrint" type="button" class="mr-3 float-right new_btn px-3">Download</button> -->
 												<button onclick="sendEmail()"  id="submtVoucherEmail" type="button" class="mr-3 float-right new_btn px-3">Send Mail</button>
+												<a href="<?php echo base_url(); ?>HotelVoucher/view_hotels_voucher" class="mr-3 float-right new_btn px-3">Back</a>
 											</div>
 										</div>
 									</div>

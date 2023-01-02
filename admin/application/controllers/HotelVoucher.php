@@ -29,9 +29,14 @@ class HotelVoucher extends CI_Controller
 		$query_id = $_POST['query_id'];
 
 		$data['details'] = $this->db->where('queryId', $query_id)->get('querypackage')->row();
-
+		
 		if($data['details']){
 
+			if($data['details']->lead_stage != 'Confirmed'){ 
+				$this->session->set_flashdata('error', 'Entered Query Id Not Confirmed');
+				redirect('HotelVoucher/add_hotel','refresh');
+			}
+		
 		$data['hotel'] = $this->db->where('query_id', $query_id)->get('query_hotel')->result();
 		$data['guest'] = $this->db->where('query_id', $query_id)->get('b2bcustomerquery')->row();
 		$data['query_id'] = $query_id;

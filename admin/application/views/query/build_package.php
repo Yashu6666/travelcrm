@@ -300,13 +300,13 @@
                                 <td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate; ?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
                                 <td>
 
-                                  <select id="pickupinternal" required name="buildTravelToDateCab[]" class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                  <select id="pickupinternal" name="buildTravelToDateCab[]" class="js-example-basic-multiple internal_transfer_pickup w-100 bg-white form-control form-control-lg">
                                     <option value="Pickup">Pickup</option>
                                   </select>
 
                                 </td>
                                 <td>
-                                  <select id="dropoffinternal" name="buildTravelToCityCabDrop[]" class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                  <select id="dropoffinternal" name="buildTravelToCityCabDrop[]" class="js-example-basic-multiple internal_transfer_dropoff w-100 bg-white form-control form-control-lg">
                                     <option value="Drop Off">Drop Off</option>
 
                                   </select>
@@ -327,12 +327,12 @@
                                 <td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT" type="date" value="<?php echo $view->specificDate; ?>" name="buildTravelFromdatePVT[]"></td>
 
                                 <td>
-                                  <select id="pickuppoint" required name="buildTravelToDateSIC[]" class="return_transfer_pickup w-100 bg-white form-control form-control-lg">
+                                  <select id="pickuppoint" required name="buildTravelToDateSIC[]" class="js-example-basic-multiple return_transfer_pickup w-100 bg-white form-control form-control-lg">
                                     <option value="Pickup">Pickup</option>
                                   </select>
                                 </td>
                                 <td>
-                                  <select id="dropoffpoint" name="buildTravelToCitySIC[]" class="return_transfer_dropoff w-100 bg-white form-control form-control-lg">
+                                  <select id="dropoffpoint" name="buildTravelToCitySIC[]" class="js-example-basic-multiple return_transfer_dropoff w-100 bg-white form-control form-control-lg">
                                     <option value="BUR DUBAI HOTEL">BUR DUBAI HOTEL</option>
                                     <option value="Drop Off">Drop Off</option>
 
@@ -2082,7 +2082,7 @@
         $("#total_pax_visa_price_adult").val(response.per_pax_adult_amt);
         $("#total_pax_visa_price_child").val(response.per_pax_child_amt);
         $("#total_pax_visa_price_infant").val(response.per_pax_infant_amt);
-
+        $('.card-box').click();
 
         toastr.success("Visa Saved Successfully");
 
@@ -2115,6 +2115,7 @@
         $("#total_pax_otb_price_adult").val(response.per_pax_adult_amt);
         $("#total_pax_otb_price_child").val(response.per_pax_child_amt);
         $("#total_pax_otb_price_infant").val(response.per_pax_infant_amt);
+        $('.card-box').click();
 
         toastr.success("OTB Saved Successfully");
 
@@ -2308,7 +2309,7 @@
       success: function(response) {
         $("#total_pax_meal_adult").val(response.adult_prices);
         $("#total_pax_meal_child").val(response.child_prices);
-
+        $('.card-box').click();
         toastr.success("Meals Saved Successfully");
 
 
@@ -2380,6 +2381,7 @@
         $("#total_pax_TKT_adult").val(response.total_adultprice);
         $("#total_pax_TKT_child").val(response.total_childprice);
         $("#total_pax_TKT_infant").val(response.total_infantprice);
+        $('.card-box').click();
         toastr.success("Excursion TKT Saved Successfully");
 
       }
@@ -2462,6 +2464,7 @@
         $("#total_pax_sic_adult").val(response.total_adultprice);
         $("#total_pax_sic_hild").val(response.total_childprice);
         $("#total_pax_sic_infant").val(response.total_infantprice);
+        $('.card-box').click();
         toastr.success("Excursion SIC Saved Successfully");
       }
     })
@@ -4561,8 +4564,8 @@
 
   input[type="text"]:disabled{background-color:white;}
   
-  .select2-search{
+  /* .select2-search{
     display: none !important;
-  }
+  } */
 
 </style>

@@ -474,13 +474,13 @@
                 <td><input class="form-control internal_transfer_date" type="date" value="<?php echo (explode(",",$internal_query[0]->transfer_date)[$key]);?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
                
                 <td>
-                <select id="pickupinternal_<?php echo $key ?>" name="buildTravelToDateCab[]"  class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select id="pickupinternal_<?php echo $key ?>" name="buildTravelToDateCab[]"  class="js-example-basic-multiple internal_transfer_pickup w-100 bg-white form-control form-control-lg">
                   <option value="<?php echo (explode(",",$internal_query[0]->pickup)[$key]);?>" ><?php echo (explode(",",$internal_query[0]->pickup)[$key]);?></option>
                 </select>
                </td>
 
                 <td>
-                <select id="dropoffinternal_<?php echo $key ?>" name="buildTravelToCityCabDrop[]"  class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select id="dropoffinternal_<?php echo $key ?>" name="buildTravelToCityCabDrop[]"  class="js-example-basic-multiple internal_transfer_dropoff w-100 bg-white form-control form-control-lg">
                 <option value="<?php echo (explode(",",$internal_query[0]->dropoff)[$key]);?>" ><?php echo (explode(",",$internal_query[0]->dropoff)[$key]);?></option>
                 </select>
                 </td>
@@ -509,13 +509,13 @@
                   <td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate; ?>" id="buildTravelFromdateCab" name="buildTravelFromdateCab[]"></td>
                   <td>
 
-                    <select id="pickupinternal" required name="buildTravelToDateCab[]" class="internal_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                    <select id="pickupinternal" name="buildTravelToDateCab[]" class="js-example-basic-multiple internal_transfer_pickup w-100 bg-white form-control form-control-lg">
                       <option value="Pickup">Pickup</option>
                     </select>
 
                   </td>
                   <td>
-                    <select id="dropoffinternal" name="buildTravelToCityCabDrop[]" class="internal_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                    <select id="dropoffinternal" name="buildTravelToCityCabDrop[]" class="js-example-basic-multiple internal_transfer_dropoff w-100 bg-white form-control form-control-lg">
                       <option value="Drop Off">Drop Off</option>
 
                     </select>
@@ -539,11 +539,11 @@
               <td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT" type="date" value="<?php echo (explode(",",$return_query[0]->transfer_date)[$key]);?>" name="buildTravelFromdatePVT[]"></td>
                
               <td>
-                <select id="pickuppoint_<?php echo $key ?>"  required  name="buildTravelToDateSIC[]"  class="return_transfer_pickup js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select id="pickuppoint_<?php echo $key ?>"  required  name="buildTravelToDateSIC[]"  class="js-example-basic-multiple return_transfer_pickup w-100 bg-white form-control form-control-lg">
                 <option value="<?php echo (explode(",",$return_query[0]->pickup)[$key]);?>"><?php echo (explode(",",$return_query[0]->pickup)[$key]);?></option>
               </select></td>
                 <td>
-                <select   id="dropoffpoint_<?php echo $key ?>" name="buildTravelToCitySIC[]"  class="return_transfer_dropoff js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                <select   id="dropoffpoint_<?php echo $key ?>" name="buildTravelToCitySIC[]"  class="js-example-basic-multiple return_transfer_dropoff w-100 bg-white form-control form-control-lg">
                 <option value="<?php echo (explode(",",$return_query[0]->dropoff)[$key]);?>"><?php echo (explode(",",$return_query[0]->dropoff)[$key]);?></option>
               </select>
                   </td>
@@ -570,12 +570,12 @@
                   <td><input class="form-control return_transfer_date" id="buildTravelFromdatePVT" type="date" value="<?php echo $view->specificDate; ?>" name="buildTravelFromdatePVT[]"></td>
 
                   <td>
-                    <select id="pickuppoint" required name="buildTravelToDateSIC[]" class="return_transfer_pickup w-100 bg-white form-control form-control-lg">
+                    <select id="pickuppoint" required name="buildTravelToDateSIC[]" class="js-example-basic-multiple return_transfer_pickup w-100 bg-white form-control form-control-lg">
                       <option value="Pickup">Pickup</option>
                     </select>
                   </td>
                   <td>
-                    <select id="dropoffpoint" name="buildTravelToCitySIC[]" class="return_transfer_dropoff w-100 bg-white form-control form-control-lg">
+                    <select id="dropoffpoint" name="buildTravelToCitySIC[]" class="js-example-basic-multiple return_transfer_dropoff w-100 bg-white form-control form-control-lg">
                       <option value="BUR DUBAI HOTEL">BUR DUBAI HOTEL</option>
                       <option value="Drop Off">Drop Off</option>
 
@@ -979,6 +979,8 @@
         <div class="row mt-4 mr-3 ml-3 mb-3 " id="mealsdisplay">
 
 <div id="addrowss">
+
+<?php if(isset($meal_query[0])):?>
 <?php foreach(explode(",",$meal_query[0]->transfer_type) as $key => $val) : ?>
   <div>
     <table id="faqs" class="table table-borderless">
@@ -1136,6 +1138,152 @@
     <!-- ___________________________________________________________________________________________________________ -->
   </div>
   <?php endforeach; ?>
+  <?php else : ?>
+    <div>
+                            <table id="faqs" class="table table-borderless">
+                              <thead>
+                                <tr>
+                                  <th style="width: 200;">Transfer Type</th>
+                                  <th>Date</th>
+                                  <th>Resturant Type</th>
+                                  <th>Resturant Name</th>
+                                  <th>Meal</th>
+                                  <th>Meal Type</th>
+                                  <th>No. of Meals</th>
+                                  <th style="width:100">Adult</th>
+                                  <th style="width:100">Child</th>
+                                  <th>Action</th>
+                                </tr>
+
+                              </thead>
+                              <tbody>
+                                <tr id="myTableRow">
+
+                                  <td>
+                                    <input type="radio" class="transfer_with_or_without" id="with_transfer" name="transfer_with_or_without[]" value="with_transfer" onclick="get_resturant_name('with_transfer','');" /> With Transfer<br />
+                                    <input type="radio" checked="checked" class="transfer_with_or_without" id="without_transfer" name="transfer_with_or_without[]" value="without_transfer" onclick="get_resturant_name('without_transfer','');" /> Without Transfer
+                                  </td>
+
+                                  <td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="buildCheckIn[]" id="buildCheckIn"></td>
+
+
+                                  <td>
+                                    <div>
+                                      <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type" name="res_type[]" onchange="get_resturant_name('res_type','');">
+                                        <option value="">Select Option</option>
+                                        <option selected value="Standard">Standard</option>
+                                        <option value="Premium">Premium</option>
+                                      </select>
+
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <select data-mdl-for="sample2" class="form-control res_name" value="" tabIndex="-1" name="res_name[]" id="res_name">
+                                      <option>select</option>
+                                    </select>
+                                  <td>
+                                    <div>
+                                      <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal" name="Meal[]">
+                                        <option value="Dinner">Dinner</option>
+                                        <option value="Breakfast">Breakfast</option>
+                                        <option value="Lunch">Lunch</option>
+                                      </select>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div>
+                                      <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal" name="Meal_Type[]">
+                                        <option value="Veg">Veg</option>
+                                        <option value="Non-Veg">Non-Veg</option>
+                                          <option value="Veg & Non-Veg">Veg & Non-Veg</option>
+                                        <option value="Jain">Jain</option>
+                                      </select>
+                                    </div>
+                                  </td>
+                                  <td><input type="number" min="1" id="no_of_meals" class="form-control  no_of_meals" name="no_of_meals[]">
+
+
+
+                                  <td><input type="text" value="<?php echo $view->Packagetravelers; ?>" placeholder="0" id="adult_meal_cal" class="form-control check-adult meal_adult" name="adult[]">
+                                  </td>
+                                  <td><input type="text" value="<?php echo $buildpackage->child; ?>" placeholder="0" id="child_meal_cal" class="form-control check-child meal_child" name="child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>
+                                  </td>
+
+                                  <td>
+                                    <a class="new_btn px-3 ml-0" onclick="addrowss()">
+                                      add
+                                    </a>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+
+                            <!-- __________________________________________________________________________________________________ -->
+
+                            <div class="">
+                              <div class="" id="mealTransferMain" style="display: none;">
+                                <div class="">
+                                  <label for="" class="transport-lable"><b>Transport Type</b>:</label>
+                                  <input type="checkbox" name="mealTransTypeInt" id="mealTransTypeInt" class="mr-3 ml-2 " value="Internal Transfer"><span class="transport-lable-ckeck">Internal City/Hotel Transfer</span><span class="checkmark"></span>
+                                  <input type="checkbox" name="mealTransTypeRet" id="mealTransTypeRet" checked class="mr-3 ml-2 " value="Point to Point Transfer"><span class="transport-lable-ckeck">Airport Return Transfer</span><span class="checkmark"></span>
+                                </div>
+                                <div>
+                                  <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Transport type</th>
+                                        <th scope="col">Pax</th>
+                                        <th scope="col">Form Date</th>
+                                        <th scope="col">Pickup Location</th>
+                                        <th scope="col">Drop Off Location </th>
+                                        <th scope="col">Route Name</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="transfer_body" style="border-bottom: #ff000000;">
+                                      <tr id="mealInternalTransfer" style="display: none;">
+                                        <th>Internal City/Hotel Transfer</th>
+                                        <td><input class="form-control" type="number" id="pax_internal_meal" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="buildTravelFromCityCab[]" disabled></td>
+                                        <td><input class="form-control internal_transfer_date" type="date" value="<?php echo $view->specificDate; ?>" id="internal_meal_date" name="internal_meal_date[]"></td>
+                                        <td>
+                                          <select id="pickup_internal_meal" required name="pickup_internal_meal[]" class="pickup_internal_meal js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                            <option value="">Pickup</option>
+                                          </select>
+                                        </td>
+                                        <td>
+                                          <select id="dropoff_internal_meal" name="dropoff_internal_meal[]" class="dropoff_internal_meal js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                            <option value="">Drop Off</option>
+                                          </select>
+                                        </td>
+                                        <td>
+                                          <input id="route_name_internal_meal" name="route_name_internal_meal[]" class="form-control route_name_internal_meal" type="text" placeholder="Route Name">
+                                        </td>
+                                      </tr>
+
+                                      <tr id="mealReturnTransfer">
+                                        <th>Airport Return Transfer</th>
+                                        <td><input class="form-control" id="pax_return_meal" type="text" placeholder="Pax" value="<?php echo $view->Packagetravelers + $buildpackage->child; ?>" name="pax_return_meal[]" disabled></td>
+                                        <td><input class="form-control return_transfer_date" id="return_meal_date" type="date" value="<?php echo $view->specificDate; ?>" name="return_meal_date[]"></td>
+                                        <td>
+                                          <select id="pickup_return_meal" required name="pickup_return_meal[]" class="pickup_return_meal js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                            <option value="">Pickup</option>
+                                          </select>
+                                        </td>
+                                        <td>
+                                          <select id="dropoff_return_meal" name="dropoff_return_meal[]" class="dropoff_return_meal js-example-basic-multiple w-100 bg-white form-control form-control-lg">
+                                            <option value="">Drop Off</option>
+                                          </select>
+                                        </td>
+                                        <td><input id="route_name_return_meal" class="form-control route_name_return_meal" type="text" placeholder="Route Name" name="route_name_return_meal[]"></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+
+                                </div>
+                              </div>
+                            </div>
+                            <!-- ___________________________________________________________________________________________________________ -->
+                          </div>
+  <?php endif ?>
 
 
 </div>
@@ -2187,10 +2335,14 @@
 
 <script>
 function get_resturant_name(id,row){
+    console.log("🚩 ~ file: build_package_edit.php:2338 ~ get_resturant_name ~ row", row)
+    console.log("🚩 ~ file: build_package_edit.php:2338 ~ get_resturant_name ~ id", id)
     // var transfer = $('#'+id).val();
 
     var transfer = $('input[name="transfer_with_or_without'+ row +'[]"]:checked').val();
+    console.log("🚩 ~ file: build_package_edit.php:2341 ~ get_resturant_name ~ transfer", transfer)
     var rest_type =  $('#res_type'+row).val();
+    console.log("🚩 ~ file: build_package_edit.php:2343 ~ get_resturant_name ~ rest_type", rest_type)
     // console.log(rest_type);
     $("#res_name"+row).empty();
     $.ajax({
@@ -2310,8 +2462,9 @@ function get_resturant_name(id,row){
               $("#total_pax_visa_price_adult").val(response.per_pax_adult_amt);
               $("#total_pax_visa_price_child").val(response.per_pax_child_amt);
               $("#total_pax_visa_price_infant").val(response.per_pax_infant_amt);
-
+              
              if(auto != 1){
+              $('.card-box').click();
               toastr.success("Visa Saved Successfully");
             }else {
                     cardClick();
@@ -2348,6 +2501,7 @@ $.ajax({
     $("#total_pax_otb_price_child").val(response.per_pax_child_amt);
     $("#total_pax_otb_price_infant").val(response.per_pax_infant_amt);
     if(auto != 1){
+      $('.card-box').click();
       toastr.success("OTB Saved Successfully");
     }else {
       cardClick();
@@ -2542,8 +2696,8 @@ $.ajax({
         $("#total_pax_meal_adult").val(response.adult_prices);
         $("#total_pax_meal_child").val(response.child_prices);
         if(auto != 1){
+          $('.card-box').click();
         toastr.success("Meals Saved Successfully");
-        $('.card-box').click();
         }else {
             cardClick();
           }
@@ -2577,6 +2731,8 @@ $.ajax({
               $("#total_pax_sic_adult").val(response.total_adultprice);
               $("#total_pax_sic_hild").val(response.total_childprice);
               $("#total_pax_sic_infant").val(response.total_infantprice);
+              $('.card-box').click();
+              toastr.success("Excursion SIC Saved Successfully");
           }
         })
 
@@ -2612,6 +2768,7 @@ $.ajax({
                 $("#total_pax_TKT_child").val(response.total_childprice);
                 $("#total_pax_TKT_infant").val(response.total_infantprice);
                 if(auto != 1){
+              $('.card-box').click();
                 toastr.success("Excursion TKT Saved Successfully");
               }else {
                     cardClick();
@@ -2656,9 +2813,11 @@ $.ajax({
             'excursion_child_PVT':excursion_child_PVT,'excursion_infant_PVT':excursion_infant_PVT,'excursion_name_PVT':excursion_name_PVT,'total_pax':hidden_total_pax},
           success:function(response){
           console.log(response);
-          $("#total_pax_pvt_adult").val(response.total_adultprice);
+              $("#total_pax_pvt_adult").val(response.total_adultprice);
               $("#total_pax_pvt_hild").val(response.total_childprice);
               $("#total_pax_pvt_infant").val(response.total_infantprice);
+              $('.card-box').click();
+              toastr.success("Excursion PVT Saved Successfully");
           }
         })
 
@@ -5017,9 +5176,9 @@ function saveTransferDefault(){
 
   input[type="text"]:disabled{background-color:white;}
   
-  .select2-search{
+  /* .select2-search{
     display: none !important;
-  }
+  } */
 
 </style>
 

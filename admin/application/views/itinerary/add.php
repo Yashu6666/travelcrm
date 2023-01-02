@@ -351,6 +351,16 @@ $this
               </div>
 
             </form>
+
+            <?php  if($this->session->flashdata('error'))
+							{?><center>
+								<div class="alert alert-danger" style="font-size: 12px;">
+									<?php echo $this->session->flashdata('error')?>
+								</div>
+							</center>
+
+							<?php } ?>
+              
             <h4 class="ml-4"></h4>
 
             <div class="row ml-4">

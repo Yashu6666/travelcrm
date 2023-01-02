@@ -52,6 +52,15 @@
                                                         </label>
                                     <button type="submit" class="h1 ml-3 new_btn px-4 py-2" >Search</button>
                                </form>
+
+                               <?php  if($this->session->flashdata('error'))
+							{?><center>
+								<div class="alert alert-danger" style="font-size: 12px;">
+									<?php echo $this->session->flashdata('error')?>
+								</div>
+							</center>
+
+							<?php } ?>
                                 </div>
                                 <form onsubmit="return validateInvoice();" action="<?php echo site_url();?>invoice/addInvoiceDetails" method="post">
                                 <input type="hidden" id="com_invoiceTaxableAmount" name="com_invoiceTaxableAmount" value=""/>  
@@ -376,19 +385,9 @@
                                                 <textarea name="editorTrmsCond"></textarea>
                                             </div>
                                         </div>
-
-
-
-
-
                                         <div class="d-flex justify-content-end mt-4">
                                             <button type="submit" class="new_btn px-3">Submit</button>
                                         </div>
-
-
-
-
-
                                     </div>
                                 </form>
                             </div>
@@ -579,6 +578,7 @@ $(window).click(function() {
 
 });
 
+$(window).click();
 </script>
 <!-- 
 <script type="text/javascript">

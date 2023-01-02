@@ -432,7 +432,7 @@
                                             <div class="d-flex  justify-content-end mt-4 mb-4" style="margin-bottom:50px !important;margin-top:50px !important">
                                                 <?php if (isset($buildpackage->queryId)) {
                                                     if ($buildpackage->type == 'Package') {
-                                                ?>
+                                                    ?>
                                                         <a href="<?php echo site_url(); ?>query/buildPackage/<?php echo $b2bDetails->query_id; ?>">
 
                                                             <button type="button" id="disabled-btn" class="blink_btn new_btn px-5 mr-2">Build Quick <?php echo $buildpackage->type ?></button>
@@ -689,9 +689,7 @@
                                                 </div>
 
                                                 <input id="child_age" name="child_age" class="Travelers-select-package-values" type="hidden" value="0" />
-
                                                 <input class="package_inputs" type="hidden" placeholder="" value="0" name="infant" required autocomplete="off" />
-
 
                                             </div>
 

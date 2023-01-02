@@ -532,6 +532,7 @@ $(window).click(function() {
 
 
 });
+$(window).click();
 
 </script>
 <!-- 

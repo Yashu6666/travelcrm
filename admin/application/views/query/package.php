@@ -401,7 +401,7 @@
                                                         <div class="form-group row">
                                                             <div class="col d-flex mt-2">
                                                                 <label class="col-form-label text-nowrap mx-2">No. of Room</label>
-                                                                <input type="number" name="rooms" id="no_of_rooms"  value="1" required class=" form-control" />
+                                                                <input type="number" name="rooms" id="no_of_rooms" onchange="showRoomData(this.value)" value="1" required class=" form-control" />
                                                             </div>
                                                         </div>
 
@@ -1451,6 +1451,8 @@
 
                             document.getElementById("room_txt_data").value = `${no_room} Room (${adult_pax_count} Adults, ${child_pax_count} Children , ${infant_pax_count} Infant)`;
 
+                            console.log("🚩 ~ file: package.php:1454 ~ showRoomData ~ `${no_room} Room (${adult_pax_count} Adults, ${child_pax_count} Children , ${infant_pax_count} Infant)`", 
+                            `${no_room} Room (${adult_pax_count} Adults, ${child_pax_count} Children , ${infant_pax_count} Infant)`)
                         }
                         
                         function calPaxTotalCount() {
@@ -1502,9 +1504,9 @@
                                         <div class="col d-flex mt-2">
                                             
                                         <label class="col-form-label text-nowrap mx-2">Room ${i}</label>
-                                            <input type="number" max=3 min=0 value="2" class=" form-control mx-2 adult_count" onchange="showRoomData(${no_of_rooms})" value="2" name="adult_count[]" id="adult_count${i}" />
-                                            <input type="number" max=3 min=0 value="0" class=" form-control mx-1 child_count" name="child_count[]" onchange="childAgeDiv(child_ages_div${i},child_count${i})" id="child_count${i}" />
-                                            <input type="number" max=3 min=0 value="0" class=" form-control mx-1 infant_count" name="infant_count[]" onchange="showRoomData(${no_of_rooms})" id="infant_count${i}" />
+                                            <input type="number" min=0 value="${i > 1 ? 0 : 2}" class=" form-control mx-2 adult_count" onchange="showRoomData(${no_of_rooms})" value="2" name="adult_count[]" id="adult_count${i}" />
+                                            <input type="number" min=0 value="0" class=" form-control mx-1 child_count" name="child_count[]" onchange="childAgeDiv(child_ages_div${i},child_count${i})" id="child_count${i}" />
+                                            <input type="number" min=0 value="0" class=" form-control mx-1 infant_count" name="infant_count[]" onchange="showRoomData(${no_of_rooms})" id="infant_count${i}" />
                                         </div>
                                         </div>
                                         <div class="form-group row w-100" id="child_ages_div${i}" style="display: none;"></div>
@@ -1539,9 +1541,9 @@
                                         <div class="col d-flex mt-2">
                                             
                                         <label class="col-form-label text-nowrap mx-2">Room ${i}</label>
-                                            <input type="number" max=3 min=0 value="2" class=" form-control mx-2 adult_count" onchange="showRoomData(${no_of_rooms})" name="adult_count[]" id="adult_count${i}" />
-                                            <input type="number" max=3 min=0 value="0" class=" form-control mx-1 child_count" name="child_count[]" onchange="childAgeDiv(child_ages_div${i},child_count${i})" id="child_count${i}" />
-                                            <input type="number" max=3 min=0 value="0" class=" form-control mx-1 infant_count" name="infant_count[]" onchange="showRoomData(${no_of_rooms})" id="infant_count${i}" />
+                                            <input type="number" min=0 value="${i > 1 ? 0 : 2}" class=" form-control mx-2 adult_count" onchange="showRoomData(${no_of_rooms})" name="adult_count[]" id="adult_count${i}" />
+                                            <input type="number" min=0 value="0" class=" form-control mx-1 child_count" name="child_count[]" onchange="childAgeDiv(child_ages_div${i},child_count${i})" id="child_count${i}" />
+                                            <input type="number" min=0 value="0" class=" form-control mx-1 infant_count" name="infant_count[]" onchange="showRoomData(${no_of_rooms})" id="infant_count${i}" />
                                         </div>
                                         </div>
                                         <div class="form-group row w-100" id="child_ages_div${i}" style="display: none;"></div>

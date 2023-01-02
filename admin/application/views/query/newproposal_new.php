@@ -580,7 +580,7 @@
                             <?php endif ?>
 
                             <?php if (isset($proposalDetails['res_name'][0])) : ?>
-                                <?php if ($proposalDetails['res_name'][0] != 'select') : ?>
+                                <?php if($proposalDetails['res_name'][0] != 'Select') : ?>
                                     <?php foreach ($proposalDetails['res_name'] as $key => $val) : ?>
                                         <li><?php echo $proposalDetails['no_of_meals'][$key] . " " . $proposalDetails['Meal'][$key] . " Meal Coupons (" . $proposalDetails['res_type'][$key] . " " . $proposalDetails['res_name'][$key] . ") " .
                                                 ($proposalDetails['transfer_with_or_without'][$key] == 'without_transfer' ? 'Without Transfer' : 'With Transfer'); ?>

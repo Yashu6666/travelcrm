@@ -3621,10 +3621,14 @@
   $("#visa_status").on("change", function() {
     $("#visadisplay").show();
     $("#visa_category_drop_down").val('30_days_tourist');
-
+    $("#entry_type").val('Single Entry');
+    $("#visa_validity").val('1 Month');
   })
   $("#visa_status1").on("change", function() {
     $("#visadisplay").hide();
+    $("#visa_category_drop_down").val('');
+    $("#entry_type").val('');
+    $("#visa_validity").val('');
     $("#total_pax_visa_price_adult").val(0);
     $("#total_pax_visa_price_child").val(0);
     $("#total_pax_visa_price_infant").val(0);

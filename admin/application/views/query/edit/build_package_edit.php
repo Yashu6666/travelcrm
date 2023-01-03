@@ -199,7 +199,7 @@
                   </td>
                   <td>
                   <div>
-                  <select data-mdl-for="sample2" class="form-control get_category" value=""  id="Category_<?php echo $key ?>" tabIndex="-1" name="Category[]" onchange="get_hotel_name_new('Category_','<?php echo $key ?>');">
+                  <select data-mdl-for="sample2" class="form-control get_category" value=""  id="Category<?php echo '_'.$key ?>" tabIndex="-1" name="Category[]" onchange="get_hotel_name_new('Category','<?php echo '_'.$key ?>');">
 
                   <option <?php echo explode(",",$hotel_query[0]->category)[$key] == "1" ? "selected" : "" ?> value="1">1</option>
                   <option <?php echo explode(",",$hotel_query[0]->category)[$key] == "2" ? "selected" : "" ?> value="2">2</option>
@@ -246,6 +246,7 @@
                     <select class="form-control get_bed_type" id="buildBedType" name="buildBedType[]" required>
                           <option <?php echo explode(",",$hotel_query[0]->bed_type)[$key] == "Double" ? "selected" : "" ?> value="Double" >Double</option>                                             
                           <option <?php echo explode(",",$hotel_query[0]->bed_type)[$key] == "Single" ? "selected" : "" ?> value ="Single">Single</option> 
+                          <option <?php echo explode(",",$hotel_query[0]->bed_type)[$key] == "Triple" ? "selected" : "" ?> value ="Triple">Triple</option> 
                       </select>
                     </td> 
                     <td>
@@ -1003,8 +1004,8 @@
         <tr id="myTableRow">
 
           <td>
-            <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "with_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="with_transfer<?php echo $key ?>" name="transfer_with_or_without<?php echo $key ?>[]" value="with_transfer" onclick="get_resturant_name('with_transfer<?php echo $key ?>','');" /> With Transfer<br />
-            <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "without_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="without_transfer<?php echo $key ?>" name="transfer_with_or_without<?php echo $key ?>[]" value="without_transfer" onclick="get_resturant_name('without_transfer<?php echo $key ?>','');" /> Without Transfer
+            <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "with_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="with_transfer<?php echo $key ?>" name="transfer_with_or_without<?php echo $key == 0 ? "" : $key  ?>[]" value="with_transfer" onclick="get_resturant_name('with_transfer<?php echo $key ?>','');" /> With Transfer<br />
+            <input <?php echo explode(",",$meal_query[0]->transfer_type)[$key] == "without_transfer" ? "checked" : "" ?> type="radio" class="transfer_with_or_without" id="without_transfer<?php echo $key ?>" name="transfer_with_or_without<?php echo $key == 0 ? "" : $key  ?>[]" value="without_transfer" onclick="get_resturant_name('without_transfer<?php echo $key ?>','');" /> Without Transfer
           </td>
 
           <td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="buildCheckIn<?php echo $key ?>[]" id="buildCheckIn<?php echo $key ?>"></td>
@@ -1012,7 +1013,7 @@
 
           <td>
             <div>
-              <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type<?php echo $key ?>" name="res_type<?php echo $key ?>[]" onchange="get_resturant_name('res_type<?php echo $key ?>','');">
+              <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type<?php echo $key ?>" name="res_type[]" onchange="get_resturant_name('res_type<?php echo $key ?>','');">
               <option <?php echo explode(",",$meal_query[0]->resturant_type)[$key] == "Standard" ? "selected" : "" ?> value="Standard">Standard</option>
               <option <?php echo explode(",",$meal_query[0]->resturant_type)[$key] == "Premium" ? "selected" : "" ?> value="Premium">Premium</option>
               </select>
@@ -1020,7 +1021,7 @@
             </div>
           </td>
           <td>
-            <select data-mdl-for="sample2" class="form-control res_name" value="" tabIndex="-1" name="res_name<?php echo $key ?>[]" id="res_name<?php echo $key ?>">
+            <select data-mdl-for="sample2" class="form-control res_name" value="" tabIndex="-1" name="res_name[]" id="res_name<?php echo $key ?>">
             <option value="<?php echo explode(",",$meal_query[0]->resturant_name)[$key]?>" ><?php echo explode(",",$meal_query[0]->resturant_name)[$key]?></option>
             </select>
             <!-- <input class="form-control " type="text" value="" name="res_name[]" id="res_name"></td> -->
@@ -4519,8 +4520,6 @@ function updateRemainingRoom(city,checkin,nights,hotel,bedtype,cat,row){
   }
 
   function get_hotel_name_new(id, row) {
-    console.log("🚩 ~ file: build_package_edit.php:4271 ~ get_hotel_name_new ~ row", row)
-    console.log("🚩 ~ file: build_package_edit.php:4271 ~ get_hotel_name_new ~ id", id)
     var city = $('#buildHotelCity' + row).val();
     var Category = $('#Category' + row).val();
     $("#buildHotelName" + row).empty();

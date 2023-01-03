@@ -1426,22 +1426,29 @@
 
                         function showRoomData(no_room) {
                             var adult_pax_count = 0;
-                            $(".adult_count").each(function() {
-                                var val = $(this).val();
-                                adult_pax_count += parseInt($.trim(val));
-                            });
-
                             var child_pax_count = 0;
-                            $(".child_count").each(function() {
-                                var val = $(this).val();
-                                child_pax_count += parseInt($.trim(val));
-                            });
-
                             var infant_pax_count = 0;
-                            $(".infant_count").each(function() {
-                                var val = $(this).val();
-                                infant_pax_count += parseInt($.trim(val));
-                            });
+
+                            // $(".adult_count").each(function() {
+                            //     var val = $(this).val();
+                            //     adult_pax_count += parseInt($.trim(val));
+                            // });
+
+                            // $(".child_count").each(function() {
+                            //     var val = $(this).val();
+                            //     child_pax_count += parseInt($.trim(val));
+                            // });
+
+                            // $(".infant_count").each(function() {
+                            //     var val = $(this).val();
+                            //     infant_pax_count += parseInt($.trim(val));
+                            // });
+
+                            for (let index = 1; index <= no_room; index++) {
+                                adult_pax_count += parseInt($('#adult_count'+index).val() == null ? 0 : $('#adult_count'+index).val());
+                                child_pax_count += parseInt($('#child_count'+index).val() == null ? 0 : $('#child_count'+index).val());
+                                infant_pax_count += parseInt($('#infant_count'+index).val() == null ? 0 : $('#infant_count'+index).val());
+                            }
 
                             document.getElementById("adult_total_count").value = adult_pax_count;
                             document.getElementById("child_total_count").value = child_pax_count;
@@ -1449,8 +1456,6 @@
 
                             document.getElementById("room_txt_data").value = `${no_room} Room (${adult_pax_count} Adults, ${child_pax_count} Children , ${infant_pax_count} Infant)`;
 
-                            console.log("🚩 ~ file: package.php:1454 ~ showRoomData ~ `${no_room} Room (${adult_pax_count} Adults, ${child_pax_count} Children , ${infant_pax_count} Infant)`", 
-                            `${no_room} Room (${adult_pax_count} Adults, ${child_pax_count} Children , ${infant_pax_count} Infant)`)
                         }
                         
                         function calPaxTotalCount() {

@@ -245,19 +245,21 @@
 												<input type="hidden" id="base_url_id" name="base_url" value=<?php echo site_url(); ?>>
 												<textarea id="impInfo" name="impInfo">
 												<ul>
-												<?php foreach (explode(',',$hotel[0]->room_type) as $key => $value) : ?>
+												<?php foreach ($hotel_details as $key => $value) : ?>
 												<li>
-												<?php print_r($hotel_details[$key]->hotelname); ?>, 
+												<?php if(isset($hotel_details[$key]->hotelname) && !empty($hotel_details[$key]->hotelname)) : ?>	
+													<?php print_r($hotel_details[$key]->hotelname); ?>, 
+												<?php endif ?>
 													
-												<?php if(isset($hotel_details[$key]->hotel_full_address)) : ?>	
+												<?php if(isset($hotel_details[$key]->hotel_full_address)  && !empty($hotel_details[$key]->hotel_full_address)) : ?>	
 													<?php print_r($hotel_details[$key]->hotel_full_address); ?>, 
 												<?php endif ?>
 												
-												<?php if(isset($hotel_details[$key]->hotelphone)) : ?>	
-												<?php print_r($hotel_details[$key]->hotelphone); ?></li><br/> 
+												<?php if(isset($hotel_details[$key]->hotelphone)  && !empty($hotel_details[$key]->hotelphone)) : ?>	
+												<?php print_r($hotel_details[$key]->hotelphone); ?>
 												<?php endif ?>
-
-												<?php endforeach ?>
+												</li><br/> 
+												<?php endforeach ?>	
 
 												<li>Guest Relation Contact Number (24x7):- +971 50 351 5408 , +971 4 355 9218</li> <br/>
 

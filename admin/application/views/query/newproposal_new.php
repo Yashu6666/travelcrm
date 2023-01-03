@@ -301,7 +301,7 @@
             $final_room_bed_details = [];
 
             foreach ($result_nights_arr as $key2 => $value2){
-                $dup_key = '';
+                $dup_key = [];
                 foreach ($value2 as $k2 => $val2) {
                     if (in_array($result_rooms_arr[$key2][$k2], $final_hotel_names_details))
                     {
@@ -309,7 +309,8 @@
 
                       if($dup_key != $key2){ 
                         $final_hotel_nights_details[$find_key] += (int)$val2;
-                      }
+                        print_r($final_hotel_nights_details[$find_key]);
+                    }
                       $dup_key = $key2;
                     }
                     else
@@ -539,10 +540,12 @@
                         <div id="editor1">
 
                             <?php if (isset($proposalDetails['hotelName']) && !empty($proposalDetails['hotelName'])) : ?>
+                            <?php if (isset($proposalDetails['build_room_types'][0]) && !empty($proposalDetails['build_room_types'][0])) : ?>
                                 <li><?php echo $buildpackage->night ?> Nights stay at the mentioned hotel</li>
                                 <?php if ($proposalDetails['build_room_types'][0] == 'BB') : ?>
                                     <li><?php echo $buildpackage->night ?>  Breakfast</li>
                                 <?php endif ?>
+                            <?php endif ?>
                             <?php endif ?>
 
                             <?php if (isset($proposalDetails['in_transfer_pickup']) && !empty($proposalDetails['in_transfer_pickup'])) : ?>
@@ -582,7 +585,7 @@
                             <?php if (isset($proposalDetails['res_name'][0])) : ?>
                                 <?php if($proposalDetails['res_name'][0] != 'Select') : ?>
                                     <?php foreach ($proposalDetails['res_name'] as $key => $val) : ?>
-                                        <li><?php echo $proposalDetails['no_of_meals'][$key] . " " . $proposalDetails['Meal'][$key] . " Meal Coupons (" . $proposalDetails['res_type'][$key] . " " . $proposalDetails['res_name'][$key] . ") " .
+                                        <li><?php echo $proposalDetails['no_of_meals'][$key] . "  " . $proposalDetails['res_type'][$key] . " " . $proposalDetails['Meal_Type'][$key] . " Meal Coupons " .
                                                 ($proposalDetails['transfer_with_or_without'][$key] == 'without_transfer' ? 'Without Transfer' : 'With Transfer'); ?>
                                         </li>
                                     <?php endforeach ?>

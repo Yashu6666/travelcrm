@@ -3204,7 +3204,16 @@ class Query extends CI_Controller
 	public function CreateProposal()
 	{
 		// echo"<pre>";print_r($_POST);exit;
-		// return;
+		$transfer_with_or_without_arr=[];
+
+		foreach ($_POST['res_name'] as $key => $value) {
+			if($key == 0){
+				array_push($transfer_with_or_without_arr, $_POST['transfer_with_or_without'][0]);
+			} else {
+				array_push($transfer_with_or_without_arr, $_POST['transfer_with_or_without'.$key][0]);
+			}
+		}
+
 		$data = array();
 		$hotels = [];
 		if(isset($_POST['buildHotelName'])){
@@ -3293,7 +3302,7 @@ class Query extends CI_Controller
 			'Meal' => isset($_POST['Meal']) ? $_POST['Meal'] : "",
 			'Meal_Type' => isset($_POST['Meal_Type']) ? $_POST['Meal_Type'] : "",
 			'no_of_meals' => isset($_POST['no_of_meals']) ? $_POST['no_of_meals'] : "",
-			'transfer_with_or_without' => isset($_POST['transfer_with_or_without']) ? $_POST['transfer_with_or_without'] : "",
+			'transfer_with_or_without' => isset($transfer_with_or_without_arr) ? $transfer_with_or_without_arr : "",
 
 			'visa_category_drop_down' => isset($_POST['visa_category_drop_down']) ? $_POST['visa_category_drop_down'] : "",
 			'entry_type' => isset($_POST['entry_type']) ? $_POST['entry_type'] : "",

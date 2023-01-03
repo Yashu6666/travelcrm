@@ -196,43 +196,59 @@
           <!-- <b>**Any amendments in the dates of travel or number of passengers will attract a requote.**</b> -->
           <table class="items" border="1" cellspacing="0">
             <tr>
-              <th rowspan="5">
+              <th rowspan="7">
                 <h2>Package Rates</h2>
               </th>
-              <td style="white-space: initial;">
-                <?php if($details->perpax_adult > 0) : ?>
+              <tr>
+              <?php if($details->perpax_adult > 0) : ?>
+                <td style="white-space: initial;">
                   <span style="color: red;">AED <?php echo $details->perpax_adult ?></span><?php if(!empty($details->hotels)):?> Per Person on Single Sharing Basis
                     <?php else : ?>
                       Per Adult
                     <?php endif ?>
-                  <br/>
-                <?php endif ?>
-                <?php if($details->perpax_adult_single > 0) : ?>
-                  <span style="color: red;">AED <?php echo $details->perpax_adult_single ?></span> Per Person on Single Sharing Basis<br/>
-                <?php endif ?>
-                <?php if($details->perpax_adult_double > 0) : ?>
-                  <span style="color: red;">AED <?php echo $details->perpax_adult_double ?></span> Per Person on Double Sharing Basis<br/>
-                <?php endif ?>
-                <?php if($details->perpax_adult_triple > 0) : ?>
-                  <span style="color: red;">AED <?php echo $details->perpax_adult_triple ?></span> Per Person on Triple Sharing Basis<br/>
-                <?php endif ?>
-              </td>
-            </tr>
-            <?php if($details->perpax_childs > 0) : ?>
-            <tr>
+                </td>
+              <?php endif ?>
+                    </tr>
+              <tr>
+              <?php if($details->perpax_adult_single > 0) : ?>
+                <td style="white-space: initial;">
+                <span style="color: red;">AED <?php echo $details->perpax_adult_single ?></span> Per Person on Single Sharing Basis
+                </td>
+              <?php endif ?>
+              </tr>
+              <tr>
+              <?php if($details->perpax_adult_double > 0) : ?>
+                <td style="white-space: initial;">
+                  <span style="color: red;">AED <?php echo $details->perpax_adult_double ?></span> Per Person on Double Sharing Basis
+                </td>
+              <?php endif ?>
+              </tr>
+              <tr>
+              <?php if($details->perpax_adult_triple > 0) : ?>
+                <td style="white-space: initial;">
+                  <span style="color: red;">AED <?php echo $details->perpax_adult_triple ?></span> Per Person on Triple Sharing Basis
+                </td>
+              <?php endif ?>
+              </tr>
+
+              <tr>
+              <?php if($details->perpax_childs > 0) : ?>
               <td  style="white-space: initial;"><span style="color: red;">AED <?php echo $details->perpax_childs ?></span> Per Child With Bed</td>
+              <?php endif ?>
             </tr>
-            <?php endif ?>
+            <tr>
             <?php if(isset($details->perpax_cnb) && $details->perpax_cnb > 0 ) : ?>
-            <tr>
             <td style="white-space: initial;"><span style="color: red;">AED <?php echo $details->perpax_cnb ?></span> Per Child With Not Bed</td>
-            </tr>
             <?php endif ?>
+          </tr>
+          <tr>
             <?php if($details->perpax_infants > 0) : ?>
-            <tr>
               <td style="white-space: initial;"><span style="color: red;">AED <?php echo $details->perpax_infants ?></span> Per Infant</td>
+              <?php endif ?>
             </tr>
-            <?php endif ?>
+
+            </tr>
+            
 
           </table>
           <br />

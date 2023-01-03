@@ -277,7 +277,69 @@
         </div>
     </div>
 
-    <div class="container mt-4 section">
+    <?php if (isset($hotel_query[0]->hotel_id)) : ?>
+    <?php 
+          $room_nights_arr = explode(",",$hotel_query[0]->nights);
+          $room_hotel_name_arr = explode(",",$hotel_query[0]->hotel_name);
+          $room_room_type_arr = explode(",",$hotel_query[0]->room_type);
+
+          foreach ($room_nights_arr as $key => $value) {
+                $result_nights_arr[$key] = array_splice($room_nights_arr,0,3);
+                $result_rooms_arr[$key] = array_splice($room_hotel_name_arr,0,3);
+                $result_bed_arr[$key] = array_splice($room_room_type_arr,0,3);
+
+                if(count($room_nights_arr) == 0){ break; }
+            }
+          
+            $out = array();
+            $final_hotel_names_details = [];
+            $final_hotel_nights_details = [];
+            $final_room_bed_details = [];
+
+            foreach ($result_nights_arr as $key2 => $value2){
+                $dup_key = [];
+                foreach ($value2 as $k2 => $val2) {
+                    if (in_array($result_rooms_arr[$key2][$k2], $final_hotel_names_details))
+                    {
+                      $find_key = array_search($result_rooms_arr[$key2][$k2], $final_hotel_names_details); 
+
+                      if($dup_key != $key2){ 
+                        $final_hotel_nights_details[$find_key] += (int)$val2;
+                        print_r($final_hotel_nights_details[$find_key]);
+                    }
+                      $dup_key = $key2;
+                    }
+                    else
+                    {
+                      array_push($final_hotel_names_details,$result_rooms_arr[$key2][$k2]);
+                      array_push($final_hotel_nights_details,(int)$val2);
+                      array_push($final_room_bed_details,$result_bed_arr[$key2][$k2]);
+                    }
+
+                }
+            }
+    ?>
+    <?php endif ?>
+
+    <div class="container mt-5 section">
+        <?php if (isset($hotel_query[0]->hotel_id)) : ?>
+            <div class=" second">
+                <div class="bg-primary ">
+                    <h3 class="text-light" style="padding: 7px;"><i class="fa fa-solid fa-hotel"></i> Hotel</h3>
+                </div>
+                <?php foreach ($final_hotel_names_details as $key => $val) : ?>
+
+                    <div class="head">
+                        <h5 class="text-capitalize text-light p-2">Hotel Name : <?php print_r($final_hotel_names_details[$key]) ?> - No of Nights <?php echo $final_hotel_nights_details[$key] ?> </h5>
+                    </div>
+                    <div>
+                        <h5 class="text-capitalize p-2"><b> Room Type : </b> <?php echo $final_room_bed_details[$key] ?></h5>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        <?php endif ?>
+
+    <!-- <div class="container mt-4 section">
         <?php if (isset($hotel_query[0]->hotel_id)) : ?>
             <?php foreach (explode(",", $hotel_query[0]->hotel_id) as $key => $val) : ?>
                 <div class=" second">
@@ -293,7 +355,7 @@
                     </div>
                 </div>
             <?php endforeach ?>
-        <?php endif ?>
+        <?php endif ?> -->
 
 
         <?php if (isset($sic_query[0]->excursion_name) || isset($pvt_query[0]->excursion_name) || isset($tkt_query[0]->excursion_name)) : ?>
@@ -393,7 +455,7 @@
 
         <?php if (isset($meal_query[0]->resturant_name)) : ?>
 
-            <div class=" second">
+            <div class="mt-4 second">
                 <div class=" bg-primary ">
                     <h3 class="text-light" style="padding: 7px;">Meals Details</h3>
                 </div>

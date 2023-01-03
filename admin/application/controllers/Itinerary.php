@@ -177,6 +177,18 @@ class Itinerary extends CI_Controller {
 			// $this->load->view('itinerary/templates/itinery_mail',$data, true);
 			// echo "<pre>"; print_r($data);
 			// return;
+			$this->load->library('email');	
+			$config = array(	
+				'protocol' => 'smtp',	
+				'smtp_host' => 'ssl://smtp.googlemail.com',	
+				'smtp_port' => 465,	
+				'smtp_user' => 'devsum2@gmail.com',	
+				'smtp_pass' => 'kidueonawxajhfae',	
+				'crlf' => "\r\n",	
+				'mailtype' => "html",	
+				'newline' => "\r\n",	
+			);	
+			
 			$this->load->library('Pdf');
 			$html =  $this->load->view('itinerary/templates/itinery_mail',$data, true);
 			$dompdf = new Dompdf\DOMPDF();
@@ -189,17 +201,7 @@ class Itinerary extends CI_Controller {
 			$file_name = base_url('/public/uploads/itinerary/' . $pdf_name);
 			$this->email->attach($file_name);
 
-			$this->load->library('email');	
-			$config = array(	
-				'protocol' => 'smtp',	
-				'smtp_host' => 'ssl://smtp.googlemail.com',	
-				'smtp_port' => 465,	
-				'smtp_user' => 'devsum2@gmail.com',	
-				'smtp_pass' => 'kidueonawxajhfae',	
-				'crlf' => "\r\n",	
-				'mailtype' => "html",	
-				'newline' => "\r\n",	
-			);	
+			
 
 			$message = '
 			<!DOCTYPE html> 

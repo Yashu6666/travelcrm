@@ -657,7 +657,7 @@
                                       </div>
                                     </td>
                                     <td>
-                                      <select data-mdl-for="sample2" class="form-control ex_res_name" value="" tabIndex="-1" name="ex_res_name[]" id="ex_res_name">
+                                      <select data-mdl-for="sample2" class="js-example-basic-multiple form-control ex_res_name" value="" tabIndex="-1" name="ex_res_name[]" id="ex_res_name">
                                         <option>select</option>
                                       </select>
                                     <td>
@@ -752,7 +752,7 @@
                                     </div>
                                   </td>
                                   <td>
-                                    <select data-mdl-for="sample2" class="form-control res_name" value="" tabIndex="-1" name="res_name[]" id="res_name">
+                                    <select data-mdl-for="sample2" class="js-example-basic-multiple form-control res_name" value="" tabIndex="-1" name="res_name[]" id="res_name">
                                       <option>select</option>
                                     </select>
                                   <td>
@@ -1527,7 +1527,7 @@
                           adds += '<td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="buildCheckIn[]" id="buildCheckIn' + faqs_row2 + '"></td>';
                           adds += '<td> <div> <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type' + faqs_row2 + '" name="res_type[]" onchange="get_resturant_name(this.id,' + faqs_row2 + ');"> <option selected value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';
                           // adds += '<td><input class="form-control " type="text" value="" name="res_name[]" id="res_name'+faqs_row2 + '"></td>';
-                          adds += '<td><select data-mdl-for="sample2" class="form-control res_name" value=""  tabIndex="-1" name="res_name[]" id="res_name' + faqs_row2 + '"  ><option>select</option></select></td>'
+                          adds += '<td><select data-mdl-for="sample2" class="js-example-basic-multiple form-control res_name" value=""  tabIndex="-1" name="res_name[]" id="res_name' + faqs_row2 + '"  ><option>select</option></select></td>'
                           adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal' + faqs_row2 + '" name="Meal[]"> <option value="Dinner">Dinner</option> <option value="Breakfast">Breakfast</option> <option value="Lunch">Lunch</option>  </select> </div> </td>';
                           adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal' + faqs_row2 + '" name="Meal_Type[]"> <option value="Veg">Veg</option> <option value="Non-Veg">Non-Veg</option> <option value="Veg & Non-Veg">Veg & Non-Veg</option> <option value="Jain">Jain</option> </select> </div> </td>';
                           adds += '<td><input type="number" id="no_of_meals' + faqs_row2 + '" class="form-control no_of_meals" name="no_of_meals[]" >';
@@ -2143,11 +2143,12 @@
     var total_rows = $('#faqs tbody#addrowss tr').length;
     var QueryId = $('#QueryId').val();
 
-    var resturants_name = [];
+    var resturants_name_meals = [];
     $(".res_name").each(function() {
       var resturant_name = $(this).val();
-      resturants_name.push($.trim(resturant_name));
-
+      if(resturant_name != ""){
+      resturants_name_meals.push($.trim(resturant_name));
+    }
     });
 
     var resturants_transfer = [];
@@ -2278,7 +2279,7 @@
       'meal_types': meal_types,
       'meal_adults': meal_adults,
       'meal_childs': meal_childs,
-      'resturants_name': resturants_name,
+      'resturants_name': resturants_name_meals,
       'resturants_transfer': resturants_transfer,
       'no_of_meals': no_of_meals,
       'checkIn_date': checkIn_date,

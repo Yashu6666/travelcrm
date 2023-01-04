@@ -277,11 +277,12 @@
         </div>
     </div>
 
-    <?php if (isset($proposalDetails['hotelName']) && !empty($proposalDetails['hotelName'])) : ?>
+    <?php if (isset($hotel_query[0]->hotel_id)) : ?>
+
     <?php 
-          $room_nights_arr = explode(",",$hotel_query_details->nights);
-          $room_hotel_name_arr = explode(",",$hotel_query_details->hotel_name);
-          $room_room_type_arr = explode(",",$hotel_query_details->room_type);
+          $room_nights_arr = explode(",",$hotel_query[0]->nights);
+          $room_hotel_name_arr = explode(",",$hotel_query[0]->hotel_name);
+          $room_room_type_arr = explode(",",$hotel_query[0]->room_type);
 
           foreach ($room_nights_arr as $key => $value) {
                 $result_nights_arr[$key] = array_splice($room_nights_arr,0,$buildpackage->room);
@@ -319,6 +320,8 @@
             }
     ?>
     <?php endif ?>
+
+    
 
     <div class="container mt-5 section">
         <?php if (isset($hotel_query[0]->hotel_id)) : ?>

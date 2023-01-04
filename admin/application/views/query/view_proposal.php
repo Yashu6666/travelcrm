@@ -277,16 +277,16 @@
         </div>
     </div>
 
-    <?php if (isset($hotel_query[0]->hotel_id)) : ?>
+    <?php if (isset($proposalDetails['hotelName']) && !empty($proposalDetails['hotelName'])) : ?>
     <?php 
-          $room_nights_arr = explode(",",$hotel_query[0]->nights);
-          $room_hotel_name_arr = explode(",",$hotel_query[0]->hotel_name);
-          $room_room_type_arr = explode(",",$hotel_query[0]->room_type);
+          $room_nights_arr = explode(",",$hotel_query_details->nights);
+          $room_hotel_name_arr = explode(",",$hotel_query_details->hotel_name);
+          $room_room_type_arr = explode(",",$hotel_query_details->room_type);
 
           foreach ($room_nights_arr as $key => $value) {
-                $result_nights_arr[$key] = array_splice($room_nights_arr,0,3);
-                $result_rooms_arr[$key] = array_splice($room_hotel_name_arr,0,3);
-                $result_bed_arr[$key] = array_splice($room_room_type_arr,0,3);
+                $result_nights_arr[$key] = array_splice($room_nights_arr,0,$buildpackage->room);
+                $result_rooms_arr[$key] = array_splice($room_hotel_name_arr,0,$buildpackage->room);
+                $result_bed_arr[$key] = array_splice($room_room_type_arr,0,$buildpackage->room);
 
                 if(count($room_nights_arr) == 0){ break; }
             }
@@ -305,14 +305,13 @@
 
                       if($dup_key != $key2){ 
                         $final_hotel_nights_details[$find_key] += (int)$val2;
-                        print_r($final_hotel_nights_details[$find_key]);
                     }
                       $dup_key = $key2;
                     }
                     else
                     {
                       array_push($final_hotel_names_details,$result_rooms_arr[$key2][$k2]);
-                      array_push($final_hotel_nights_details,(int)$val2);
+                      array_push($final_hotel_nights_details,$buildpackage->room > 1 ? 0 : (int)$val2);
                       array_push($final_room_bed_details,$result_bed_arr[$key2][$k2]);
                     }
 

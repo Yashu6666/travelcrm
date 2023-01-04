@@ -288,9 +288,9 @@
           $room_room_type_arr = explode(",",$hotel_query_details->room_type);
 
           foreach ($room_nights_arr as $key => $value) {
-                $result_nights_arr[$key] = array_splice($room_nights_arr,0,3);
-                $result_rooms_arr[$key] = array_splice($room_hotel_name_arr,0,3);
-                $result_bed_arr[$key] = array_splice($room_room_type_arr,0,3);
+                $result_nights_arr[$key] = array_splice($room_nights_arr,0,$buildpackage->room);
+                $result_rooms_arr[$key] = array_splice($room_hotel_name_arr,0,$buildpackage->room);
+                $result_bed_arr[$key] = array_splice($room_room_type_arr,0,$buildpackage->room);
 
                 if(count($room_nights_arr) == 0){ break; }
             }
@@ -309,14 +309,17 @@
 
                       if($dup_key != $key2){ 
                         $final_hotel_nights_details[$find_key] += (int)$val2;
-                        print_r($final_hotel_nights_details[$find_key]);
+                        // print_r($final_hotel_nights_details[$find_key]);
+                        // print_r("-----------------------------");
+                        // print_r((int)$val2);
+                        // print_r("-----------------------------");
                     }
                       $dup_key = $key2;
                     }
                     else
                     {
                       array_push($final_hotel_names_details,$result_rooms_arr[$key2][$k2]);
-                      array_push($final_hotel_nights_details,(int)$val2);
+                      array_push($final_hotel_nights_details,$buildpackage->room > 1 ? 0 : (int)$val2);
                       array_push($final_room_bed_details,$result_bed_arr[$key2][$k2]);
                     }
 

@@ -265,12 +265,7 @@
 <?php $this->load->view('footer'); ?>
 
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-<script>
-	CKEDITOR.replace('impInfo');
-</script>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
@@ -285,6 +280,9 @@ input {
 </style>
 
 <script>
+	$(document).ready(function() { 
+	CKEDITOR.replace('impInfo');
+
     let hotel_ids = '<?php echo json_encode(explode(',',$hotel[0]->hotel_id)); ?>';
     let query_id = '<?php print_r($hotel[0]->query_id); ?>';
     
@@ -307,4 +305,6 @@ input {
       },
     });
     });
+
+});
 </script>

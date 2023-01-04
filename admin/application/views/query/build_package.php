@@ -3592,6 +3592,30 @@
 
   $("#trans_status").on("change", function() {
     $("#transdisplay").show();
+    $.ajax({
+    type: "POST",
+    dataType: "json",
+    url: '<?php echo site_url(); ?>/query/fetchPickup1',
+    data: {
+      'pax': total_pax1
+    },
+    success: function(response) {
+      $("#pickuppoint").html('<option value="Pickup">Pickup</option>');
+      if (response.data.length > 0) {
+        var options = ""
+        for (var i = 0; i < response.data.length; i++) {
+          if(response.data[i].start_city == 'DXB AIRPORT') {
+              options += '<option selected value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
+              } else {
+                options += '<option value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
+            }
+        }
+      } else {
+        var options = "<option value=''>No Data Found</option>"
+      }
+      $("#pickuppoint").append(options);
+    }
+  });
 
   })
   $("#trans_status1").on("change", function() {
@@ -3771,30 +3795,30 @@
   });
 
 
-  $.ajax({
-    type: "POST",
-    dataType: "json",
-    url: '<?php echo site_url(); ?>/query/fetchPickup1',
-    data: {
-      'pax': total_pax1
-    },
-    success: function(response) {
-      $("#pickuppoint").html('<option value="Pickup">Pickup</option>');
-      if (response.data.length > 0) {
-        var options = ""
-        for (var i = 0; i < response.data.length; i++) {
-          if(response.data[i].start_city == 'DXB AIRPORT') {
-              options += '<option selected value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
-              } else {
-                options += '<option value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
-            }
-        }
-      } else {
-        var options = "<option value=''>No Data Found</option>"
-      }
-      $("#pickuppoint").append(options);
-    }
-  });
+  // $.ajax({
+  //   type: "POST",
+  //   dataType: "json",
+  //   url: '<?php echo site_url(); ?>/query/fetchPickup1',
+  //   data: {
+  //     'pax': total_pax1
+  //   },
+  //   success: function(response) {
+  //     $("#pickuppoint").html('<option value="Pickup">Pickup</option>');
+  //     if (response.data.length > 0) {
+  //       var options = ""
+  //       for (var i = 0; i < response.data.length; i++) {
+  //         if(response.data[i].start_city == 'DXB AIRPORT') {
+  //             options += '<option selected value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
+  //             } else {
+  //               options += '<option value="' + response.data[i].start_city + '">' + response.data[i].start_city + '</option>';
+  //           }
+  //       }
+  //     } else {
+  //       var options = "<option value=''>No Data Found</option>"
+  //     }
+  //     $("#pickuppoint").append(options);
+  //   }
+  // });
 
   function pickupInternal(id) {
     let value = document.getElementById('pickupinternal' + id).value;

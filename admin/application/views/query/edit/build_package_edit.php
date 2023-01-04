@@ -1021,7 +1021,7 @@
             </div>
           </td>
           <td>
-            <select data-mdl-for="sample2" class="form-control res_name" value="" tabIndex="-1" name="res_name[]" id="res_name<?php echo $key ?>">
+            <select data-mdl-for="sample2" class="js-example-basic-multiple form-control res_name" value="" tabIndex="-1" name="res_name[]" id="res_name<?php echo $key ?>">
             <option value="<?php echo explode(",",$meal_query[0]->resturant_name)[$key]?>" ><?php echo explode(",",$meal_query[0]->resturant_name)[$key]?></option>
             </select>
             <!-- <input class="form-control " type="text" value="" name="res_name[]" id="res_name"></td> -->
@@ -1179,7 +1179,7 @@
                                     </div>
                                   </td>
                                   <td>
-                                    <select data-mdl-for="sample2" class="form-control res_name" value="" tabIndex="-1" name="res_name[]" id="res_name">
+                                    <select data-mdl-for="sample2" class="js-example-basic-multiple form-control res_name" value="" tabIndex="-1" name="res_name[]" id="res_name">
                                       <option>select</option>
                                     </select>
                                   <td>
@@ -2043,7 +2043,7 @@
                               adds += '<td><input class="form-control checkIn_date" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="buildCheckIn[]" id="buildCheckIn' + faqs_row2 + '"></td>';
                               adds += '<td> <div> <select data-mdl-for="sample2" class="form-control rest_type" value="" tabIndex="-1" id="res_type' + faqs_row2 + '" name="res_type[]" onchange="get_resturant_name(this.id,' + faqs_row2 + ');"> <option value="Standard">Standard</option> <option value="Premium">Premium</option> </select> </div> </td>';
                               // adds += '<td><input class="form-control " type="text" value="" name="res_name[]" id="res_name'+faqs_row2 + '"></td>';
-                              adds += '<td><select data-mdl-for="sample2" class="form-control res_name" value=""  tabIndex="-1" name="res_name[]" id="res_name' + faqs_row2 + '"  ><option>select</option></select></td>'
+                              adds += '<td><select data-mdl-for="sample2" class="js-example-basic-multiple form-control res_name" name="res_name[]" id="res_name' + faqs_row2 + '"  ><option>select</option></select></td>'
                               adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal" value="" tabIndex="-1" id="meal_cal' + faqs_row2 + '" name="Meal[]"> <option value="Dinner">Dinner</option><option value="Breakfast">Breakfast</option>  <option value="Lunch">Lunch</option>  </select> </div> </td>';
                               adds += '<td> <div> <select data-mdl-for="sample2" class="form-control meal_type" value="" tabIndex="-1" id="meal_type_cal' + faqs_row2 + '" name="Meal_Type[]"> <option value="Veg">Veg</option> <option value="Non-Veg">Non-Veg</option><option value="Veg & Non-Veg">Veg & Non-Veg</option> <option value="Jain">Jain</option> </select> </div> </td>';
                               adds += '<td><input type="number" id="no_of_meals' + faqs_row2 + '" class="form-control no_of_meals" name="no_of_meals[]" >';

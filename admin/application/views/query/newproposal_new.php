@@ -286,11 +286,15 @@
           $room_nights_arr = explode(",",$hotel_query_details->nights);
           $room_hotel_name_arr = explode(",",$hotel_query_details->hotel_name);
           $room_room_type_arr = explode(",",$hotel_query_details->room_type);
+          $room_price_col_type_arr = explode(",",$hotel_query_details->type);
+          $room_stars_type_arr = explode(",",$hotel_query_details->category);
 
           foreach ($room_nights_arr as $key => $value) {
                 $result_nights_arr[$key] = array_splice($room_nights_arr,0,$buildpackage->room);
                 $result_rooms_arr[$key] = array_splice($room_hotel_name_arr,0,$buildpackage->room);
                 $result_bed_arr[$key] = array_splice($room_room_type_arr,0,$buildpackage->room);
+                $result_room_price_col_type_arr[$key] = array_splice($room_price_col_type_arr,0,$buildpackage->room);
+                $result_room_stars_type_arr[$key] = array_splice($room_stars_type_arr,0,$buildpackage->room);
 
                 if(count($room_nights_arr) == 0){ break; }
             }
@@ -299,6 +303,8 @@
             $final_hotel_names_details = [];
             $final_hotel_nights_details = [];
             $final_room_bed_details = [];
+            $final_room_price_col_type_details = [];
+            $final_room_stars_type_details = [];
 
             foreach ($result_nights_arr as $key2 => $value2){
                 $dup_key = [];
@@ -321,6 +327,8 @@
                       array_push($final_hotel_names_details,$result_rooms_arr[$key2][$k2]);
                       array_push($final_hotel_nights_details,$buildpackage->room > 1 ? 0 : (int)$val2);
                       array_push($final_room_bed_details,$result_bed_arr[$key2][$k2]);
+                      array_push($final_room_price_col_type_details,$result_room_price_col_type_arr[$key2][$k2]);
+                      array_push($final_room_stars_type_details,$result_room_stars_type_arr[$key2][$k2]);
                     }
 
                 }
@@ -585,7 +593,7 @@
                                 <?php endforeach ?>
                             <?php endif ?>
 
-                            <?php if (isset($proposalDetails['res_name'][0])) : ?>
+                            <?php if (isset($proposalDetails['res_name'][0]) && !empty($proposalDetails['res_name'][0])) : ?>
                                 <?php if($proposalDetails['res_name'][0] != 'Select') : ?>
                                     <?php foreach ($proposalDetails['res_name'] as $key => $val) : ?>
                                         <li><?php echo $proposalDetails['no_of_meals'][$key] . "  " . $proposalDetails['res_type'][$key] . " " . $proposalDetails['Meal_Type'][$key] . " Meal Coupons " .
@@ -1034,6 +1042,8 @@
             "final_hotel_names_details": <?php echo json_encode(isset($final_hotel_names_details) ? $final_hotel_names_details : '') ?>,
             "final_hotel_nights_details": <?php echo json_encode(isset($final_hotel_nights_details) ? $final_hotel_nights_details : '') ?>,
             "final_room_bed_details": <?php echo json_encode(isset($final_room_bed_details) ? $final_room_bed_details : '') ?>,
+            "final_room_price_col_type_details": <?php echo json_encode(isset($final_room_price_col_type_details) ? $final_room_price_col_type_details : '') ?>,
+            "final_room_stars_type_details": <?php echo json_encode(isset($final_room_stars_type_details) ? $final_room_stars_type_details : '') ?>,
         };
 
 

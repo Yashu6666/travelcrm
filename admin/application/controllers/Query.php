@@ -3204,6 +3204,10 @@ class Query extends CI_Controller
 	public function CreateProposal()
 	{
 		// echo"<pre>";print_r($_POST);exit;
+		$services_status = $_POST['hotel_status'].','.$_POST['trans_status'].','.$_POST['visa_status'].','.$_POST['otb_status'].','.$_POST['excursion_status'].','.$_POST['ex_meals_status'].','.$_POST['meals_status'];
+		$data['services_status'] = array('services_status' => $services_status);
+		$this->db->where('QueryId', $_POST['QueryId'])->update('querypackage',$data['services_status']);
+
 		$transfer_with_or_without_arr=[];
 
 		foreach ($_POST['res_name'] as $key => $value) {

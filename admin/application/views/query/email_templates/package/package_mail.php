@@ -253,7 +253,6 @@
           </table>
           <br />
           <br />
-          
           <table class="items" border="1" cellspacing="0">
             <tr>
               <th>Hotel Name</th>
@@ -265,7 +264,7 @@
                   //   array_push($hotel_details_arr,$details->hotels[$key]->hotelname.' - '.$details->hotels[$key]->hotelstars.'*  - '.$details->build_room_types[$key].' - '.$details->buildRoomType[$key]) ;
                   // }
                   foreach ($details->final_hotel_names_details as $key => $value) {
-                    array_push($hotel_details_arr,$details->final_hotel_nights_details[$key].' Nights - '.$details->final_hotel_names_details[$key].' - '.$details->hotels[$key]->hotelstars.'*  - '.$details->build_room_types[$key].' - '.$details->buildRoomType[$key]) ;
+                    array_push($hotel_details_arr,$details->final_hotel_nights_details[$key].' Nights - '.$details->final_hotel_names_details[$key].' - '.$details->final_room_stars_type_details[$key].'*  - '.$details->final_room_price_col_type_details[$key].' - '.$details->final_room_bed_details[$key]) ;
                   }
                   ?>
                   

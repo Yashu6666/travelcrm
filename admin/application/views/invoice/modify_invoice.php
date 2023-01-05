@@ -647,8 +647,13 @@ $(window).click();
     <script type="text/javascript">
         $("#finalAdvance").change(function(){
              var advance = $('#finalAdvance').val();
-             var finalTotalInvoice = $("#finalTotalInvoice").val();
+             var finalTotalInvoice = parseInt($("#finalTotalInvoice").val());
             // var finalBalance = advance;
+             $("#finalBalance").val(finalTotalInvoice - advance);
+        });
+        $("#bank_charges").change(function(){
+             var advance = $('#finalAdvance').val();
+             var finalTotalInvoice = parseInt($("#finalTotalInvoice").val()) + parseInt($("#bank_charges").val());
              $("#finalBalance").val(finalTotalInvoice - advance);
         });
     </script>

@@ -85,7 +85,8 @@
 
        <div>
       
-
+       <!-- <?php print_r($package_details) ?> -->
+       <!-- ?php echo explode(",", $package_details->adult_per_room)[$i - 1]; ?> -->
        <div class="card-body ">
        
         <div class="mt-5">
@@ -93,8 +94,8 @@
            <div class="card-head card-head-new">
             
            <p><i class="fa-solid fa-hotel"></i> Hotel
-           <input type="radio" id="hotel_status" name="hotel_status" value="Yes" checked><label for="html">Yes</label>
-            <input type="radio" id="hotel_status1" name="hotel_status" value="No"><label for="html">No</label>
+           <input type="radio" id="hotel_status" <?php echo explode(",",$buildpackage->services_status)[0] == "Yes" ? "checked" : "" ?> name="hotel_status" value="Yes"><label for="html">Yes</label>
+            <input type="radio" id="hotel_status1" <?php echo explode(",",$buildpackage->services_status)[0] == "No" ? "checked" : "" ?> name="hotel_status" value="No"><label for="html">No</label>
           </p>
            </div>
            <div class="row mt-5 mr-3 ml-3 mb-3"  id="hoteldisplay">
@@ -144,7 +145,24 @@
                   }
                 }
               ?>
-              <?php $room_cnt = $buildpackage->room ; $room_loop = 0; foreach(explode(",",$hotel_query[0]->hotel_id) as $key => $val) : ?>
+
+              <?php $room_cnt = $buildpackage->room ; $room_loop = 0; 
+              $room_row_cnt = (count(explode(",",$hotel_query[0]->hotel_id)));
+              $adultPerRoomCount = (explode(",", $package_details->adult_per_room));
+              $childPerRoomCount = (explode(",", $package_details->child_per_room));
+              $adultFinalCountArr = [];
+              $childFinalCountArr = [];
+
+              for($i=0; $i < $room_row_cnt; $i++) {
+                foreach ($adultPerRoomCount as $k => $v) {
+                  array_push($adultFinalCountArr,$v);
+                }
+                foreach ($childPerRoomCount as $k => $v) {
+                  array_push($childFinalCountArr,$v);
+                }
+              }
+
+              foreach(explode(",",$hotel_query[0]->hotel_id) as $key => $val) : ?>
 
               <thead>
                <tr>
@@ -258,13 +276,13 @@
                       </select>
                     </td> 
                     <td>
-                      <input class="form-control adult_per_room" type="text"  value="<?php echo explode(",", $package_details->adult_per_room)[$i - 1]; ?>" name="adult_per_room[]" id="adult_per_room">
+                      <input class="form-control adult_per_room" type="text"  value="<?php echo $adultFinalCountArr[$key]; ?>" name="adult_per_room[]" id="adult_per_room">
                       <select hidden class="form-control room_sharing_types" id="room_sharing_types" name="room_sharing_types[]">
                         <option value=""></option>
                       </select>
                     </td>
                     <td>
-                      <input class="form-control child_per_room" type="text"  value="<?php echo explode(",", $package_details->child_per_room)[$i - 1]; ?>" name="child_per_room[]" id="child_per_room">
+                      <input class="form-control child_per_room" type="text"  value="<?php echo $childFinalCountArr[$key]; ?>" name="child_per_room[]" id="child_per_room">
                       <input class="form-control child_per_room_wo_bed" type="hidden" readonly value="<?php echo isset($no_child_room_wo_new[$key]) &&
                       !empty($no_child_room_wo_new[$key]) ? ($no_child_room_wo_new[$key]) : 0; ?>" name="child_per_room_wo_bed[]" id="child_per_room_wo_bed">
                     </td>
@@ -433,8 +451,8 @@
            <div>
             <div class="card-head card-head-new">
              <p><i class="fa-solid fa-car"></i> Transfer
-              <input type="radio" id="trans_status" name="trans_status" value="Yes" checked><label for="html">Yes</label>
-              <input type="radio" id="trans_status1" name="trans_status" value="No"><label for="html">No</label>
+              <input type="radio" id="trans_status" <?php echo explode(",",$buildpackage->services_status)[1] == "Yes" ? "checked" : "" ?> name="trans_status" value="Yes"><label for="html">Yes</label>
+              <input type="radio" id="trans_status1" <?php echo explode(",",$buildpackage->services_status)[1] == "No" ? "checked" : "" ?>  name="trans_status" value="No"><label for="html">No</label>
             </p>
             </div>
             </div>
@@ -615,8 +633,8 @@
               <div class="card-head card-head-new m">
              <p style="margin-top:20px"><i class="fa-brands fa-cc-visa"></i> Visa
                
-             <input type="radio" id="visa_status" name="visa_status" value="Yes" checked><label for="html">Yes</label>
-             <input type="radio" id="visa_status1" name="visa_status" value="No"><label for="html">No</label></p>
+             <input type="radio" id="visa_status" <?php echo explode(",",$buildpackage->services_status)[2] == "Yes" ? "checked" : "" ?> name="visa_status" value="Yes"><label for="html">Yes</label>
+             <input type="radio" id="visa_status1" <?php echo explode(",",$buildpackage->services_status)[2] == "No" ? "checked" : "" ?>  name="visa_status" value="No"><label for="html">No</label></p>
             </div>
             <br>
               <div class="row mt-4 mr-3 ml-3 mb-3 "  id="visadisplay">
@@ -699,8 +717,8 @@
                           <div class="card-head card-head-new m">
                             <p style="margin-top:20px"><i class="fa-brands fa-cc-visa"></i> OTB
 
-                              <input type="radio" id="otb_status" name="otb_status" value="Yes" checked><label for="html">Yes</label>
-                              <input type="radio" id="otb_status1" name="otb_status" value="No"><label for="html">No</label>
+                              <input type="radio" id="otb_status" <?php echo explode(",",$buildpackage->services_status)[3] == "Yes" ? "checked" : "" ?> name="otb_status" value="Yes" ><label for="html">Yes</label>
+                              <input type="radio" id="otb_status1" <?php echo explode(",",$buildpackage->services_status)[3] == "No" ? "checked" : "" ?>  name="otb_status" value="No"><label for="html">No</label>
                             </p>
                           </div>
                           <br>
@@ -739,8 +757,8 @@
 
              <div class="card-head card-head-new">
              <p style="margin-top:20px"><i class="fa-solid fa-place-of-worship"></i> Excursion
-                <input type="radio" id="excursion_status" name="excursion_status" value="Yes" checked><label for="html">Yes</label>
-              <input type="radio" id="excursion_status1" name="excursion_status" value="No"><label for="html">No</label>
+                <input type="radio" id="excursion_status" <?php echo explode(",",$buildpackage->services_status)[4] == "Yes" ? "checked" : "" ?> name="excursion_status" value="Yes" ><label for="html">Yes</label>
+              <input type="radio" id="excursion_status1" <?php echo explode(",",$buildpackage->services_status)[4] == "No" ? "checked" : "" ?>  name="excursion_status" value="No"><label for="html">No</label>
              </p>
         </div>
             <div class="row mt-4 mr-3 ml-3 mb-3 "  id="excursiondisplay">
@@ -967,13 +985,96 @@
                               <button type="button" onclick="excursionMeal()" class="new_btn px-3 float-end">Save</button>
                             </div>
                           </div>
+
+                          <?php else : ?>
+                            <div class="card-head card-head-new mt-5">
+                              <p style="margin-top:20px"><i class="fa-solid fa-bowl-rice"></i> Meal
+                                <input type="radio" id="ex_meals_status" name="ex_meals_status" value="Yes"><label for="html">Yes</label>
+                                <input type="radio" id="ex_meals_status1" checked name="ex_meals_status" value="No"><label for="html">No</label>
+                              </p>
+                            </div>
+                            <div id="ex_addrowss" style="display:none">
+                              <table id="meals_table" class="table table-borderless">
+                                <thead>
+                                  <tr>
+                                    <th>Date</th>
+                                    <th>Resturant Type</th>
+                                    <th>Resturant Name</th>
+                                    <th>Meal</th>
+                                    <th>Meal Type</th>
+                                    <th>No. of Meals</th>
+                                    <th style="width:100">Adult</th>
+                                    <th style="width:100">Child</th>
+                                    <th>Action</th>
+                                  </tr>
+
+                                </thead>
+                                <tbody id="ex_mealsRow">
+                                  <tr id="ex_myTableRow">
+
+                                    <td><input class="form-control ex_meals_date" min="<?php echo date("Y-m-d") ?>" type="date" value="<?php echo $view->specificDate; ?>" min="<?php echo $view->specificDate; ?>" max="<?php echo date('Y-m-d', strtotime($view->specificDate . ' + ' . (($buildpackage->night) - (1)) . ' days')); ?>" name="ex_meals_date[]" id="ex_meals_date"></td>
+
+                                    <td>
+                                      <div>
+                                        <select data-mdl-for="sample2" class="form-control ex_res_type" value="" tabIndex="-1" id="ex_res_type" name="ex_res_type[]" onchange="get_resturant_name_ex('ex_res_type','');">
+                                          <option value="">Select Option</option>
+                                          <option selected value="Standard">Standard</option>
+                                          <option value="Premium">Premium</option>
+                                        </select>
+
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <select data-mdl-for="sample2" class="js-example-basic-multiple form-control ex_res_name" value="" tabIndex="-1" name="ex_res_name[]" id="ex_res_name">
+                                        <option>select</option>
+                                      </select>
+                                    <td>
+                                      <div>
+                                        <select data-mdl-for="sample2" class="form-control ex_meal" value="" tabIndex="-1" id="ex_meal_cal" name="ex_meal[]">
+                                          <option value="Dinner">Dinner</option>
+                                          <option value="Breakfast">Breakfast</option>
+                                          <option value="Lunch">Lunch</option>
+                                        </select>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div>
+                                        <select data-mdl-for="sample2" class="form-control ex_meal_type" value="" tabIndex="-1" id="ex_meal_type_cal" name="ex_meal_type[]">
+                                          <option value="Veg">Veg</option>
+                                          <option value="Non-Veg">Non-Veg</option>
+                                          <option value="Veg & Non-Veg">Veg & Non-Veg</option>
+                                          <option value="Jain">Jain</option>
+                                        </select>
+                                      </div>
+                                    </td>
+                                    <td><input type="number" min="1" id="ex_no_of_meals" class="form-control  ex_no_of_meals" name="ex_no_of_meals[]">
+
+
+
+                                    <td><input type="text" value="<?php echo $view->Packagetravelers; ?>" placeholder="0" id="ex_adult_meal_cal" class="form-control check-adult ex_meal_adult" name="ex_meal_adult[]">
+                                    </td>
+                                    <td><input type="text" value="<?php echo $buildpackage->child; ?>" placeholder="0" id="ex_child_meal_cal" class="form-control check-child ex_meal_child" name="ex_meal_child[]" <?php if ($buildpackage->child == 0) echo "disabled"; ?>>
+                                    </td>
+
+                                    <td>
+                                      <a class="new_btn px-3 ml-0" onclick="ex_addrowss()">
+                                        add
+                                      </a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <div>
+                                <button type="button" onclick="excursionMeal()" class="new_btn px-3 float-end">Save</button>
+                              </div>
+                            </div>
                           <?php endif ?>  
                </div>
                </div>
                <div class="card-head card-head-new mt-5">
              <p style="margin-top:20px"><i class="fa-solid fa-bowl-rice"></i>	Meal
-             <input type="radio" id="meals_status" name="meals_status" value="Yes" checked><label for="html">Yes</label>
-              <input type="radio" id="meals_status1" name="meals_status" value="No"><label for="html">No</label>
+             <input type="radio" id="meals_status" <?php echo explode(",",$buildpackage->services_status)[6] == "Yes" ? "checked" : "" ?> name="meals_status" value="Yes"><label for="html">Yes</label>
+              <input type="radio" id="meals_status1" <?php echo explode(",",$buildpackage->services_status)[6] == "No" ? "checked" : "" ?>  name="meals_status" value="No"><label for="html">No</label>
             </p>
                
         </div>
@@ -3523,9 +3624,22 @@ console.log(response);
     </script>
 
     <script type="text/javascript">
+        let hotel_services_status = "<?php print_r(explode(",",$buildpackage->services_status)[0]) ?>";
+        let transfer_services_status = "<?php print_r(explode(",",$buildpackage->services_status)[1]) ?>";
+        let visa_services_status = "<?php print_r(explode(",",$buildpackage->services_status)[2]) ?>";
+        let otb_services_status = "<?php print_r(explode(",",$buildpackage->services_status)[3]) ?>";
+        let excursion_services_status = "<?php print_r(explode(",",$buildpackage->services_status)[4]) ?>";
+        let meals_services_status = "<?php print_r(explode(",",$buildpackage->services_status)[6]) ?>";
+
+        if(hotel_services_status == "No") { $("#hoteldisplay").hide(); }
+        if(transfer_services_status == "No") { $("#transdisplay").hide(); }
+        if(visa_services_status == "No") { $("#visadisplay").hide(); }
+        if(otb_services_status == "No") { $("#otbdisplay").hide(); }
+        if(excursion_services_status == "No") { $("#excursiondisplay").hide(); }
+        if(meals_services_status == "No") { $("#mealsdisplay").hide(); }
+
         $("#hotel_status").on("change",function(){
             $("#hoteldisplay").show();
-
         })
         $("#hotel_status1").on("change",function(){
             $("#hoteldisplay").hide();
@@ -5077,6 +5191,7 @@ function saveTransferDefault(){
                             $('.card-box').click();
                       }
 
+                    
   hotelcalculation(1);
   mealcalculation(1);
   saveTransferDefault();

@@ -78,7 +78,7 @@
                         <div class="card-head card-head-new">
                           <p><i class="fa-solid fa-hotel"></i> Hotel
                             <input type="radio" id="hotel_status" name="hotel_status" value="Yes"><label for="html">Yes</label>
-                            <input type="radio" id="hotel_status1" name="hotel_status" value="No"><label for="html">No</label>
+                            <input type="radio" id="hotel_status1" name="hotel_status" checked value="No"><label for="html">No</label>
                           </p>
                         </div>
                         <div class="row mt-5 mr-3 ml-3 mb-3" style="display:none" id="hoteldisplay">
@@ -263,7 +263,7 @@
                         <div class="card-head card-head-new">
                           <p><i class="fa-solid fa-car"></i> Transfer
                             <input type="radio" id="trans_status" name="trans_status" value="Yes"><label for="html">Yes</label>
-                            <input type="radio" id="trans_status1" name="trans_status" value="No"><label for="html">No</label>
+                            <input type="radio" id="trans_status1" checked name="trans_status" value="No"><label for="html">No</label>
                           </p>
                         </div>
                       </div>
@@ -370,7 +370,7 @@
                           <p style="margin-top:20px"><i class="fa-brands fa-cc-visa"></i> Visa
 
                             <input type="radio" id="visa_status" name="visa_status" value="Yes"><label for="html">Yes</label>
-                            <input type="radio" id="visa_status1" name="visa_status" value="No"><label for="html">No</label>
+                            <input type="radio" id="visa_status1" name="visa_status" checked value="No"><label for="html">No</label>
                           </p>
                         </div>
                         <br>
@@ -445,7 +445,7 @@
                           <p style="margin-top:20px"><i class="fa-brands fa-cc-visa"></i> OTB
 
                             <input type="radio" id="otb_status" name="otb_status" value="Yes"><label for="html">Yes</label>
-                            <input type="radio" id="otb_status1" name="otb_status" value="No"><label for="html">No</label>
+                            <input type="radio" id="otb_status1" checked name="otb_status" value="No"><label for="html">No</label>
                           </p>
                         </div>
                         <br>
@@ -486,7 +486,7 @@
                       <div class="card-head card-head-new">
                         <p style="margin-top:20px"><i class="fa-solid fa-place-of-worship"></i> Excursion
                           <input type="radio" id="excursion_status" name="excursion_status" value="Yes"><label for="html">Yes</label>
-                          <input type="radio" id="excursion_status1" name="excursion_status" value="No"><label for="html">No</label>
+                          <input type="radio" id="excursion_status1" checked name="excursion_status" value="No"><label for="html">No</label>
                         </p>
                       </div>
                       <div class="row mt-4 mr-3 ml-3 mb-3 " style="display:none" id="excursiondisplay">
@@ -622,7 +622,7 @@
                             <div class="card-head card-head-new mt-5">
                               <p style="margin-top:20px"><i class="fa-solid fa-bowl-rice"></i> Meal
                                 <input type="radio" id="ex_meals_status" name="ex_meals_status" value="Yes"><label for="html">Yes</label>
-                                <input type="radio" id="ex_meals_status1" name="ex_meals_status" value="No"><label for="html">No</label>
+                                <input type="radio" id="ex_meals_status1" checked name="ex_meals_status" value="No"><label for="html">No</label>
                               </p>
                             </div>
                             <div id="ex_addrowss" style="display:none">
@@ -706,7 +706,7 @@
                       <div class="card-head card-head-new mt-5">
                         <p style="margin-top:20px"><i class="fa-solid fa-bowl-rice"></i> Meal
                           <input type="radio" id="meals_status" name="meals_status" value="Yes"><label for="html">Yes</label>
-                          <input type="radio" id="meals_status1" name="meals_status" value="No"><label for="html">No</label>
+                          <input type="radio" id="meals_status1" name="meals_status" checked value="No"><label for="html">No</label>
                         </p>
 
                       </div>
@@ -1104,7 +1104,9 @@
                           $(".card-box").click(function(e) {
                             e.stopPropagation();
                             // console.clear();
-                            
+                            // let hstats= $('.hotel_status').val();
+                            let hstats = $("input[name=hotel_status]:checked").val();
+                            console.log("🚩 ~ file: build_package.php:1108 ~ $ ~ hstats", hstats)
                             // adult_per_room
                             var no_room_count = <?php echo $buildpackage->room; ?>;
                             var child_with_or_wo_bed = <?php echo json_encode(explode(",",$buildpackage->child_with_or_wo_bed)); ?>;

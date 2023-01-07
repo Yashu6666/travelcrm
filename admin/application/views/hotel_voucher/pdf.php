@@ -47,18 +47,14 @@
 
     <div>
 </div>
-    <?php foreach (explode(',', $hotel[0]->hotel_name) as $key => $value) : ?>
+        <?php foreach($final_hotel_details as $key => $value) : ?>
 
         <div class="div_flex" style="height:auto;width:100%;background-color: #d9a927;margin-top:0px;font-size: 18px;">
         <h4 style="margin-left:20px;float: left;color:white; padding-top: 0px;padding-bottom:16px; width: 55%;">Hotel Name :
-        <?php print_r(explode(',', $hotel[0]->hotel_name)[$key]) ?>
-                        <?php if (isset($hotel_details[$key]->hotelstars)) : ?>
+        <?php echo $value->hotel_name ?>
                             <span style="color: #efe717;">
-                            <?php for($i=0;$i<$hotel_details[$key]->hotelstars;$i++) : ?>
-                              *
-                            <?php endfor ?>
+                                <?php echo str_repeat("*",$value->hotel_category); ?>
                             </span>
-                        <?php endif ?>      
         </h4>
     <h4 style="text-align:right;color:white;margin-left: auto; padding-top: 0px;padding-bottom:16px; width: 45%;">Confirmation Number : <?php print_r($hotel_confirmation[$key]->confirmation_id) ?>
     &nbsp;&nbsp;</h4>
@@ -76,29 +72,19 @@
             </thead>
             <tbody>
                 <tr>
-                    <!-- <td><?php print_r(explode(',', $hotel[0]->hotel_name)[$key]) ?>
-                        <?php if (isset($hotel_details[$key]->hotelstars)) : ?>
-                            <span style="color: #efe717;">
-                            <?php for($i=0;$i<$hotel_details[$key]->hotelstars;$i++) : ?>
-                              *
-                            <?php endfor ?>
-                            </span>
-                        <?php endif ?>
-                    </td> -->
                     <?php
                     $date = new DateTime(explode(',', $hotel[0]->checkin)[$key]);
                     $check_in = $date->format('d-M-Y');
                     $date->modify('+' . explode(',', $hotel[0]->nights)[$key] . ' day');
                     $checkout =  $date->format('d-M-Y');
                     ?>
-                    <td><?php echo $check_in; ?></td>
+                    <td><?php echo $value->check_in; ?></td>
                     <?php
                     $created_date = new DateTime($guest->created_at);
                     $booking_date = $created_date->format('d-M-Y');
                     ?>
                     <td><?php print_r(explode(',', $hotel[0]->nights)[$key]); ?></td>
-                    <!-- <td><?php print_r($hotel_confirmation[$key]->confirmation_id) ?></td> -->
-                    <td><?php echo $checkout; ?></td>
+                    <td><?php echo $value->check_out; ?></td>
                     <td colspan="2"><?php echo $booking_date ?></td>
                 </tr>
             </tbody>
@@ -112,11 +98,11 @@
             </tr>
             <tbody>
                 <tr>
-                    <td><?php print_r(explode(',', $hotel[0]->room_type)[$key]); ?></td>
-                    <td><?php echo $details->room; ?></td>
-                    <td><?php echo $details->adult; ?></td>
-                    <td><?php echo $details->child; ?></td>
-                    <?php if ($board_arr[$key] == '') : ?>
+                    <td><?php echo $value->room_type; ?></td>
+                    <td><?php echo $value->no_of_rooms; ?></td>
+                    <td><?php echo $value->adult_per_pax; ?></td>
+                    <td><?php echo $value->child_per_pax; ?></td>
+                    <?php if ($hotel_confirmation[$key]->board == '') : ?>
                         <td>----</td>
                     <?php else : ?>
                         <td     >
@@ -127,32 +113,6 @@
             </tbody>
         </table>
 
-        <!-- <table style="width:100%; margin-top:20px">
-            <tr>
-                <th>Room Type</th>
-                <th>No of Rooms</th>
-                <th>Adults</th>
-                <th>Children</th>
-                <th>Children Ages</th>
-                <th>Meals Board</th>
-            </tr>
-            <tbody>
-                <tr>
-                    <td><?php print_r(explode(',', $hotel[0]->room_type)[$key]); ?></td>
-                    <td><?php echo $details->room; ?></td>
-                    <td><?php echo $details->adult; ?></td>
-                    <td><?php echo $details->child; ?></td>
-                    <td>--</td>
-                    <?php if ($board_arr[$key] == '') : ?>
-                        <td>----</td>
-                    <?php else : ?>
-                        <td>
-                            <?php print_r($hotel_confirmation[$key]->board) ?>
-                        </td>
-                    <?php endif ?>
-                </tr>
-            </tbody>
-        </table> -->
     <?php endforeach; ?>
 
 

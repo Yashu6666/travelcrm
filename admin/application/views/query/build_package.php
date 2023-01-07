@@ -127,7 +127,9 @@
 
                                 <tbody>
                                   <tr>
-                                    <td class="text-nowrap">Room <?php echo $i ?></td>
+                                    <td class="text-nowrap">Room <?php echo $i ?>
+                                    <input type="hidden" class="room_number"  value="<?php echo $i ?>" name="room_number[]">
+                                  </td>
                                     <td>
                                       <select class="form-control get-hotel get_all_city" required="" name="buildHotelCity[]" id="buildHotelCity<?php echo "_" . $i ?>" onchange="get_hotel_name_new('buildHotelCity','<?php echo '_' . $i ?>');">
                                         <option value="Dubai">Dubai</option>
@@ -2683,7 +2685,12 @@
       child_per_room.push($.trim(cat));
     });
 
-
+    var room_number = [];
+    $(".room_number").each(function() {
+      var cat = $(this).val();
+      room_number.push($.trim(cat));
+    });
+    
     let total_no_of_days = <?php echo $buildpackage->night ?>;
 
     // if (noOfNights < total_no_of_days) {
@@ -2706,6 +2713,7 @@
       'child_per_room_wo_bed': child_per_room_wo_bed,
       'adult_per_room': adult_per_room,
       'child_per_room': child_per_room,
+      'room_number': room_number,
       'query_type': 'hotel',
     }];
 
@@ -4299,7 +4307,9 @@
           </tr>
         </thead>
         <tr>
-          <td>Room${room_no}</td>
+          <td>Room${room_no}
+          <input type="hidden" class="room_number" value="${room_no}" name="room_number[]">
+          </td>
           <td>
               <select class="form-control get-hotel get_all_city" name="buildHotelCity[]" id="buildHotelCity${faqs_row}${room_no}" onchange="get_hotel_name(this.id,${faqs_row}${room_no});">
                 <option value="Dubai">Dubai</option>

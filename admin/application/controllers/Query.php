@@ -981,6 +981,7 @@ class Query extends CI_Controller
 
 	public function getHotelCalculationNew()
 	{
+		// echo "<pre>";print_r($this->input->post());exit;
 		$pax_adult = $this->input->post('pax_adult');
 		$pax_child = $this->input->post('pax_child');
 		$pax_infants = $this->input->post('pax_infants');
@@ -1002,6 +1003,53 @@ class Query extends CI_Controller
 		$tableData = $this->input->post('data');
 		$rows_count = count($tableData[0]['group_type']);
 		$rows_count_new = $rows_count / count($no_childs_room);
+
+		$db_hotel_query_data_details = $this->db->where('query_id', $QueryId)->get('query_hotel_details');
+		if ($db_hotel_query_data_details->num_rows() > 0) {
+			$this->db->where('query_id', $QueryId)->delete('query_hotel_details');
+		}
+		foreach($tableData[0]['bedType'] as $key1 => $val1){
+			$this->db->select('hotelname');
+			$this->db->where('id', $tableData[0]['hotelName'][$key1]);
+			$this->db->limit(1);
+  			$name = $this->db->get('hotel');
+			// $hotel_names[] = $name->row()->hotelname;
+
+			$hotel_query_data_details = [
+				'query_id' => $QueryId,
+				'query_type' => "",
+				'hotel_city' => $tableData[0]['buildHotelCity'][$key1],
+				'hotel_id' => $tableData[0]['hotelName'][$key1],
+				'hotel_name' => $name->row()->hotelname,
+				'hotel_category' => $tableData[0]['Category'][$key1],
+				'no_of_nights' => $tableData[0]['nights'][$key1],
+				'check_in' => $tableData[0]['buildCheckIns'][$key1],
+				'check_out' => date('Y-m-d', strtotime($tableData[0]['buildCheckIns'][$key1]. ' + '.$tableData[0]['nights'][$key1].' days')),
+				'room_type' => $tableData[0]['roomType'][$key1],
+				'room_no' => $tableData[0]['room_number'][$key1],
+				'bed_type' => $tableData[0]['bedType'][$key1],
+				'group_type' => $tableData[0]['group_type'][$key1],
+				'type' => $tableData[0]['get_room_types'][$key1], 
+				'adult_per_pax' => $tableData[0]['adult_per_room'][$key1],
+				'child_per_pax' => $tableData[0]['child_per_room'][$key1],
+				'created_by' => $this->session->userdata('admin_id'),
+			];
+
+			// $db_hotel_query_data_details = $this->db->where('query_id', $QueryId)->where('check_in', $tableData[0]['buildCheckIns'][$key1])->where('room_no', $tableData[0]['room_number'][$key1])->get('query_hotel_details');
+			// // $db_hotel_query_data_details = $this->db->where('query_id', $QueryId)->get('query_hotel_details');
+			// if ($db_hotel_query_data_details->num_rows() > 0) {
+			// 	// $this->db->where('query_id', $QueryId);
+			// 	// $this->db->where('check_in', $tableData[0]['buildCheckIns'][$key1]);
+			// 	// $this->db->where('room_no', $tableData[0]['room_number'][$key1]);
+			// 	// $this->db->update('query_hotel_details',$hotel_query_data_details);
+			// 	$this->db->where('query_id', $QueryId)->delete('query_hotel_details');
+			// } else {
+			// 	$this->db->insert('query_hotel_details',$hotel_query_data_details);
+			// }
+
+			$this->db->insert('query_hotel_details',$hotel_query_data_details);
+
+		}
 
 		$single_sharing_pax = 0;
 		$double_sharing_pax = 0;

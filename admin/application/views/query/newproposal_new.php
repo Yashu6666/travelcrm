@@ -593,7 +593,7 @@
                                 <?php endforeach ?>
                             <?php endif ?>
 
-                            <?php if (isset($proposalDetails['res_name'][0]) && !empty($proposalDetails['res_name'][0])) : ?>
+                            <?php if (isset($proposalDetails['res_name'][0]) && $proposalDetails['no_of_meals'][0] > 0) : ?>
                                 <?php if($proposalDetails['res_name'][0] != 'Select') : ?>
                                     <?php foreach ($proposalDetails['res_name'] as $key => $val) : ?>
                                         <li><?php echo $proposalDetails['no_of_meals'][$key] . "  " . $proposalDetails['res_type'][$key] . " " . $proposalDetails['Meal_Type'][$key] . " Meal Coupons " .

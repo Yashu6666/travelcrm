@@ -455,7 +455,7 @@
 
         <?php endif ?>
 
-        <?php if (isset($meal_query[0]->resturant_name)) : ?>
+        <?php if (isset($meal_query[0]->resturant_name) && $meal_query[0]->no_of_meals > 0) : ?>
 
             <div class="mt-4 second">
                 <div class=" bg-primary ">

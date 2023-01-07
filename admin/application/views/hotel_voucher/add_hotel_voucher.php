@@ -116,18 +116,14 @@
 												?>
 
 
-											<?php foreach (explode(',',$hotel[0]->nights) as $key => $value) : ?>
-												<?php if(isset($hotel_details[$key]->hotelstars)) : ?>	
-
+											<?php foreach($final_hotel_details as $key => $value) : ?>
 												<div class="mt-3 row d-flex align-items-baseline ">
 													<div class="bg-dark col-xl-12">
 														<div id="HD_header" class="form-row p-3 rounded-lg">
 															<div class="col d-flex just">
 																<label for="" class="col-form-label text-white">Hotel Name:</label>
-																<label style="flex: 0 0 50%; max-width: 50%;white-space: nowrap;" class="col-form-label col-xl-6 mx-3 text-white"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?>
-																<?php if(isset($hotel_details[$key]->hotelstars)) : ?>	
-																	<?php echo str_repeat("⭐",$hotel_details[$key]->hotelstars); ?>
-																<?php endif ?>
+																<label style="flex: 0 0 50%; max-width: 50%;white-space: nowrap;" class="col-form-label col-xl-6 mx-3 text-white"><?php echo $value->hotel_name ?>
+																	<?php echo str_repeat("⭐",$value->hotel_category); ?>
 															</label>
 															</div>
 
@@ -135,8 +131,8 @@
 															<div class="col d-flex justify-content-end">
 																<label for="" class=" col-form-label text-white">Confirmation Number:</label>
 																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" id="conf_number_<?php echo $key; ?>" value="#" name="conf_number[<?php echo $key; ?>]" placeholder="Enter Confirmatin Number Here">
-																<input type="hidden" name="hotel_id[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->hotel_id)[$key]); ?>>
-																<input type="hidden" name="hotel_name[<?php echo $key; ?>]" value='<?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?>'>
+																<input type="hidden" name="hotel_id[<?php echo $key; ?>]" value=<?php echo $value->hotel_id ?>>
+																<input type="hidden" name="hotel_name[<?php echo $key; ?>]" value='<?php echo $value->hotel_name ?>'>
 																<input type="hidden" name="booking_date[<?php echo $key; ?>]" value=<?php echo $booking_date; ?>>
 															</div>
 															</div>
@@ -159,22 +155,22 @@
 															<div class="col d-flex just">
 																<label for="" class=" col-form-label">Check-in</label>
 																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $check_in; ?>>
-																<input type="hidden" name="check_in[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?>>
+																<input type="hidden" name="check_in[<?php echo $key; ?>]" value=<?php echo $value->check_in; ?>>
 															
 															</div>
-															<input type="hidden" name="check_out[<?php echo $key; ?>]" value=<?php echo $checkout; ?>>
+															<input type="hidden" name="check_out[<?php echo $key; ?>]" value=<?php echo $value->check_out; ?>>
 
 
 															<div class="col d-flex">
 																<label for="" class=" col-form-label">No of Nights</label>
-																<input style="flex: 0 0 50%; max-width: 50%;"  aria-describedby="basic-addon1"  class="mx-3 form-control col-xl-6" placeholder='🌙 <?php print_r(explode(',',$hotel[0]->nights)[$key]); ?>'>
+																<input style="flex: 0 0 50%; max-width: 50%;"  aria-describedby="basic-addon1"  class="mx-3 form-control col-xl-6" placeholder='🌙 <?php echo $value->no_of_nights; ?>'>
 															</div>
 
 															
 
 															<div class="col d-flex">
 																<label for="" class=" col-form-label">Check-out</label>
-																<input  style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $checkout; ?>>
+																<input  style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $value->check_out; ?>>
 															</div>
 														</div>
 
@@ -192,19 +188,17 @@
 															</thead>
 															<tbody>
 																<tr>
-																	<td><?php print_r(explode(',',$hotel[0]->room_type)[$key]); ?></td>
-																	<td><?php echo $details->room; ?></td>
-																	<td><?php echo $details->adult; ?></td>
-																	<td><?php echo $details->child; ?></td>
-																	<td><input type="text" class="form-control" value="<?php echo isset($board[$key]) ? $board[$key] :  "" ?>" name="board[<?php echo $key; ?>]"></td>
+																	<td><?php echo $value->room_type; ?></td>
+																	<td><?php echo $value->no_of_rooms ?></td>
+																	<td><?php echo $value->adult_per_pax ?></td>
+																	<td><?php echo $value->child_per_pax ?></td>
+																	<td><input type="text" class="form-control" value="<?php  echo $value->type ?>" name="board[<?php echo $key; ?>]"></td>
 																</tr>
 															</tbody>
 														</table>
 													</div>
 												</div>
-											<?php endif ?>
 											<?php endforeach; ?>
-											<!-- endforech -->
 											<div class="mt-3 row d-flex align-items-baseline new_bg_header">
 												<div class="col-xl-12">
 													<h4 class="text-white">Guest Details</strong></h4>

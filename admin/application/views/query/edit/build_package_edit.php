@@ -188,7 +188,9 @@
                     echo $room_loop + 1;
                     $room_loop +=1;
                   }
-                  ?></td>
+                  ?>
+                  <input type="hidden" class="room_number" value="<?php echo $room_loop ?>" name="room_number[]">
+                </td>
                   <td>
                     <select class="form-control get-hotel get_all_city"  required="" name="buildHotelCity[]" id="buildHotelCity_<?php echo $key ?>" onchange="get_hotel_name('buildHotelCity_','<?php echo $key ?>');">
                           <option <?php echo explode(",",$hotel_query[0]->hotel_city)[$key] == "Dubai" ? "selected" : "" ?> value="Dubai">Dubai</option>
@@ -321,6 +323,7 @@
                     <tbody>
                       <tr>
                         <td class="text-nowrap">Room <?php echo $i ?></td>
+                        <input type="hidden" class="room_number"  value="<?php echo $i ?>" name="room_number[]">
                         <td>
                           <select class="form-control get-hotel get_all_city" required="" name="buildHotelCity[]" id="buildHotelCity<?php echo "_" . $i ?>" onchange="get_hotel_name_new('buildHotelCity','<?php echo '_' . $i ?>');">
                             <option value="Dubai">Dubai</option>
@@ -3257,6 +3260,11 @@ $(".child_per_room").each(function() {
   child_per_room.push($.trim(cat));
 });
 
+var room_number = [];
+$(".room_number").each(function() {
+  var cat = $(this).val();
+  room_number.push($.trim(cat));
+});
 
 let total_no_of_days = <?php echo $buildpackage->night ?>;
 
@@ -3280,6 +3288,7 @@ let total_no_of_days = <?php echo $buildpackage->night ?>;
     'child_per_room_wo_bed': child_per_room_wo_bed,
     'adult_per_room': adult_per_room,
     'child_per_room': child_per_room,
+    'room_number': room_number,
     'query_type': 'hotel',
   }];
 
@@ -4430,7 +4439,9 @@ options+='<option value="'+response.data[i].dest_city+'">'+response.data[i].dest
           </tr>
         </thead>
         <tr>
-          <td>Room${room_no}</td>
+          <td>Room${room_no}
+          <input type="hidden" class="room_number" value="${room_no}" name="room_number[]">
+          </td>
           <td>
               <select class="form-control get-hotel get_all_city" name="buildHotelCity[]" id="buildHotelCity${faqs_row}${room_no}" onchange="get_hotel_name(this.id,${faqs_row}${room_no});">
                 <option value="Dubai">Dubai</option>

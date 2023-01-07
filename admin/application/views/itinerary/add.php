@@ -342,7 +342,7 @@ $this
                   <p class="ml-2"><b>Query ID</b>
                     <input type="text" name="query_id" value="<?php if (!empty($details['query_id'])) {
                                                                 echo $details['query_id'];
-                                                              } else echo ""; ?> " class="form-control" placeholder="Query ID">
+                                                              } else echo ""; ?>" class="form-control" placeholder="Query ID">
                   </p>
                 </div>
                 <div class="mt-4">

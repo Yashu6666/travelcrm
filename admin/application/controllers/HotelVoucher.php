@@ -43,12 +43,34 @@ class HotelVoucher extends CI_Controller
 
 		$hotel_ids = explode(',',$data['hotel'][0]->hotel_id);
 
+		$final_hotel_details = [];
+		$query_hotel_details = $this->db->where('query_id', $query_id)->group_by(array("room_type", "check_in"))->get('query_hotel_details')->result();
+
+		foreach ($query_hotel_details as $k => $v) {
+			$sub_query_hotel_details = $this->db->where('query_id', $query_id)->where('hotel_id', $v->hotel_id)->where('room_type', $v->room_type)->where('check_in', $v->check_in)->get('query_hotel_details')->result();
+			// echo "<pre>";print_r($sub_query_hotel_details);
+			$adult_pax_count_hd = 0;
+			$child_pax_count_hd = 0;
+			$no_of_room_count_hd = 0;
+			foreach ($sub_query_hotel_details as $k1 => $v1) {
+				$adult_pax_count_hd += $v1->adult_per_pax;
+				$child_pax_count_hd += $v1->child_per_pax;
+				$no_of_room_count_hd += 1;
+			}
+			$sub_query_hotel_details[0]->adult_per_pax = $adult_pax_count_hd;
+			$sub_query_hotel_details[0]->child_per_pax = $child_pax_count_hd;
+			$sub_query_hotel_details[0]->no_of_rooms = $no_of_room_count_hd;
+			array_push($final_hotel_details,$sub_query_hotel_details[0]);
+		}
+		$data['final_hotel_details'] = $final_hotel_details;
+		// echo "<pre>";print_r($sub_query_hotel_details);exit;
+
 		$data['hotel_details'] = [];
 		foreach($hotel_ids as $id){
 			$data_hotel = $this->db->where('id', $id)->get('hotel')->row();
 			if (!in_array($data_hotel, $data['hotel_details'])) {
 				array_push($data['hotel_details'],$data_hotel);
-			} 
+			}
 		}
 		// print_r($data['hotel_details']);
 		// return;
@@ -66,8 +88,9 @@ class HotelVoucher extends CI_Controller
 	{
 		$query_id = $_POST['query_id'];
 		$hotel_id = $_POST['hotel_id'];
+		$row = $_POST['row'];
 
-		$data['data'] = $this->db->where('query_id', $query_id)->where('query_hotel_id', $hotel_id)->get('hotel_voucher_confirmation')->row();
+		$data['data'] = $this->db->where('query_id', $query_id)->where('no_of_hotel_rows', $row)->where('query_hotel_id', $hotel_id)->get('hotel_voucher_confirmation')->row();
 		$data['notes'] = base64_decode($data['data']->notes);
 		echo json_encode($data);
 	}
@@ -91,6 +114,27 @@ class HotelVoucher extends CI_Controller
 			$data_hotel = $this->db->where('id', $id)->get('hotel')->row();
 			array_push($data['hotel_details'],$data_hotel);
 		}
+
+		$final_hotel_details = [];
+		$query_hotel_details = $this->db->where('query_id', $query_id)->group_by(array("room_type", "check_in"))->get('query_hotel_details')->result();
+
+		foreach ($query_hotel_details as $k => $v) {
+			$sub_query_hotel_details = $this->db->where('query_id', $query_id)->where('hotel_id', $v->hotel_id)->where('room_type', $v->room_type)->where('check_in', $v->check_in)->get('query_hotel_details')->result();
+			// echo "<pre>";print_r($sub_query_hotel_details);
+			$adult_pax_count_hd = 0;
+			$child_pax_count_hd = 0;
+			$no_of_room_count_hd = 0;
+			foreach ($sub_query_hotel_details as $k1 => $v1) {
+				$adult_pax_count_hd += $v1->adult_per_pax;
+				$child_pax_count_hd += $v1->child_per_pax;
+				$no_of_room_count_hd += 1;
+			}
+			$sub_query_hotel_details[0]->adult_per_pax = $adult_pax_count_hd;
+			$sub_query_hotel_details[0]->child_per_pax = $child_pax_count_hd;
+			$sub_query_hotel_details[0]->no_of_rooms = $no_of_room_count_hd;
+			array_push($final_hotel_details,$sub_query_hotel_details[0]);
+		}
+		$data['final_hotel_details'] = $final_hotel_details;
 
 		$this->load->view('hotel_voucher/hotel_voucher_edit', $data);
 		} else {
@@ -177,7 +221,36 @@ class HotelVoucher extends CI_Controller
 			$data['guest_name'] = $guest_name;
 			$body = $this->load->view('hotel_voucher/voucher_pdf/index',$data,TRUE);
 
+			$final_hotel_details = [];
+			$query_hotel_details = $this->db->where('query_id', $query_id)->group_by(array("room_type", "check_in"))->get('query_hotel_details')->result();
+
+			foreach ($query_hotel_details as $k => $v) {
+				$sub_query_hotel_details = $this->db->where('query_id', $query_id)->where('hotel_id', $v->hotel_id)->where('room_type', $v->room_type)->where('check_in', $v->check_in)->get('query_hotel_details')->result();
+				// echo "<pre>";print_r($sub_query_hotel_details);
+				$adult_pax_count_hd = 0;
+				$child_pax_count_hd = 0;
+				$no_of_room_count_hd = 0;
+				foreach ($sub_query_hotel_details as $k1 => $v1) {
+					$adult_pax_count_hd += $v1->adult_per_pax;
+					$child_pax_count_hd += $v1->child_per_pax;
+					$no_of_room_count_hd += 1;
+				}
+				$sub_query_hotel_details[0]->adult_per_pax = $adult_pax_count_hd;
+				$sub_query_hotel_details[0]->child_per_pax = $child_pax_count_hd;
+				$sub_query_hotel_details[0]->no_of_rooms = $no_of_room_count_hd;
+				array_push($final_hotel_details,$sub_query_hotel_details[0]);
+			}
+			$data['final_hotel_details'] = $final_hotel_details;
+
 			$hotel_ids = explode(',',$data['hotel'][0]->hotel_id);
+
+			$hotel_confirmation_arr = [];
+			for($i=0;$i<$data['details']->room;$i++){
+				foreach ($hotel_confirmation as $key => $value) {
+					array_push($hotel_confirmation_arr,$value);
+				}
+			}
+			$data['hotel_confirmation'] = $hotel_confirmation_arr;
 
 			$data['hotel_details'] = [];
 			foreach($hotel_ids as $id){
@@ -221,6 +294,7 @@ class HotelVoucher extends CI_Controller
 			$user_id = $this->session->userdata()['admin_id'];
 			$data['admin_user'] = $this->db->where('id', $user_id)->get('users')->row();
 
+			// $this->load->view('hotel_voucher/pdf',$data); return;
 
 			$subject = $data['view']->query_id . '
 			 - Diamond Tours LLC Dubai / Pax:' . $data['view']->Packagetravelers . ' 
@@ -303,14 +377,16 @@ class HotelVoucher extends CI_Controller
 					'query_check_in' => $check_in[$key],
 					'query_check_out' => $check_out[$key],
 					'notes' => base64_encode($notes),
+					'no_of_hotel_rows' => $key,
 				];
 
-				$is_data = $this->db->where('query_id', $data_arr['query_id'])
+				$is_data = $this->db->where('query_id', $data_arr['query_id'])->where('no_of_hotel_rows', $key)
 					->where('query_hotel_id', $data_arr['query_hotel_id'])->get('hotel_voucher_confirmation')->result();
 					
 					if (count($is_data) > 0) {
 					$this->db->where('query_id', $data_arr['query_id'])
 					->where('query_hotel_id', $data_arr['query_hotel_id'])
+					->where('no_of_hotel_rows', $key)
 					->update('hotel_voucher_confirmation', $data_arr);
 				} else {
 					$this->db->insert('hotel_voucher_confirmation', $data_arr);

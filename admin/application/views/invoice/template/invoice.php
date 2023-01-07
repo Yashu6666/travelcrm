@@ -218,14 +218,14 @@ th {
                         <td><?php echo $checkout ?></td>
                     </tr>
                     <tr>
-                        <th>CUSTOMER/AGENT NAME :</th>
+                        <th>AGENT NAME :</th>
                         <td><?php echo $b2b->b2bcompanyName ?></td>
                         <th>No. OF NIGHTS :</th>
                         <td><?php echo $query_package->night ?></td>
                     </tr>
                     <tr>
-                        <th>CUSTOMER/AGENT ADDRESS :</th>
-                        <td><?php echo isset($b2b->b2bCompanyAddress) ? $b2b->b2bCompanyAddress : "" ?></td>
+                        <th>CUSTOMER NAME :</th>
+                        <td><?php echo isset($query_hotel_voucher[0]->guest_name) ? $query_hotel_voucher[0]->guest_name : $invoice->billTo ?></td>
                         <th>No. OF ROOMS:</th>
                         <td><?php echo $query_package->room ?></td>
                     </tr>
@@ -238,7 +238,7 @@ th {
                         <th>HOTEL NAME <?php echo $key + 1 ?> :</th>
                         <td> <?php echo $val->hotelname; ?> 
                             <!-- ?php echo str_repeat("*", $val->hotelstars); ?> -->
-                            <span style="color: #fae937;">
+                            <span style="color: #ffe900;">
                             <?php for($i=0;$i<$val->hotelstars;$i++) : ?>
                               *
                             <?php endfor ?>

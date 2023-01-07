@@ -89,43 +89,38 @@
 													$created_date = new DateTime($guest->created_at);
 													$booking_date = $created_date->format('d-M-Y');
 													?>
-											<?php foreach (explode(',',$hotel[0]->nights) as $key => $value) : ?>
 
+											<?php foreach($final_hotel_details as $key => $value) : ?>
 												<div class="mt-3 row d-flex align-items-baseline ">
 													<div class="bg-dark col-xl-12">
 														<div id="HD_header" class="form-row p-3 rounded-lg">
 															<div class="col d-flex just">
 																<label for="" class="col-form-label text-white">Hotel Name:</label>
-																<label style="flex: 0 0 50%; max-width: 50%;white-space: nowrap;" class="col-form-label col-xl-6 mx-3 text-white"><?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?>
-																<?php if(isset($hotel_details[$key]->hotelstars)) : ?>	
-																	<?php echo str_repeat("⭐",$hotel_details[$key]->hotelstars); ?>
-																<?php endif ?>
-																</label>
+																<label style="flex: 0 0 50%; max-width: 50%;white-space: nowrap;" class="col-form-label col-xl-6 mx-3 text-white"><?php echo $value->hotel_name ?>
+																	<?php echo str_repeat("⭐",$value->hotel_category); ?>
+															</label>
 															</div>
 
 															<div>
-															
 															<div class="col d-flex justify-content-end">
 																<label for="" class=" col-form-label text-white">Confirmation Number:</label>
-																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" id="conf_number_<?php echo $key; ?>" value=<?php print_r(explode(',',$hotel[0]->hotel_id)[$key]); ?> name="conf_number[<?php echo $key; ?>]" placeholder="Enter Confirmatin Number Here">
-																<input type="hidden" name="hotel_id[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->hotel_id)[$key]); ?>>
-																<input type="hidden" name="hotel_name[<?php echo $key; ?>]" value='<?php print_r(explode(',',$hotel[0]->hotel_name)[$key]) ?>'>
-																<input type="hidden" name="booking_date[<?php echo $key; ?>]" value=<?php echo $hotel[0]->created_at; ?>>
+																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" id="conf_number_<?php echo $key; ?>" value="#" name="conf_number[<?php echo $key; ?>]" placeholder="Enter Confirmatin Number Here">
+																<input type="hidden" name="hotel_id[<?php echo $key; ?>]" value=<?php echo $value->hotel_name ?>>
+																<input type="hidden" name="hotel_name[<?php echo $key; ?>]" value='<?php echo $value->hotel_name ?>'>
+																<input type="hidden" name="booking_date[<?php echo $key; ?>]" value=<?php echo $booking_date; ?>>
 															</div>
 															</div>
-															
 														</div>
 													</div>
 													<div class="border border-bottom-0 border-top-0 col-xl-12">
 														<div class=" form-row p-3 rounded-lg">
-														<?php
+															<?php
 															$date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);
 															$check_in = $date->format('d-M-Y');
 															$date->modify('+' . explode(',',$hotel[0]->nights)[$key] . ' day');
 															$checkout =  $date->format('d-M-Y');
 
 															?>
-
 															<div class="col d-flex">
 																<label for="" class=" col-form-label">Booking Date</label>
 																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" value="<?php echo $booking_date ?>">
@@ -134,33 +129,22 @@
 															<div class="col d-flex just">
 																<label for="" class=" col-form-label">Check-in</label>
 																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $check_in; ?>>
-																<input type="hidden" name="check_in[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?>>
+																<input type="hidden" name="check_in[<?php echo $key; ?>]" value=<?php echo $value->check_in; ?>>
 															
 															</div>
-															<!-- <?php
-															$date = new DateTime(explode(',',$hotel[0]->checkin)[$key]);
-															$date->modify('+' . explode(',',$hotel[0]->nights)[$key] . ' day');
-															$checkout =  $date->format('d-M-Y');
-															?>
+															<input type="hidden" name="check_out[<?php echo $key; ?>]" value=<?php echo $value->check_out; ?>>
 
-															<div class="col d-flex just">
-																<label for="" class=" col-form-label">Check-in</label>
-																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $date->format('d-m-Y'); ?>>
-																<input type="hidden" name="check_in[<?php echo $key; ?>]" value=<?php print_r(explode(',',$hotel[0]->checkin)[$key]); ?>>
-															</div> -->
-															<input type="hidden" name="check_out[<?php echo $key; ?>]" value=<?php echo $checkout; ?>>
 
 															<div class="col d-flex">
 																<label for="" class=" col-form-label">No of Nights</label>
-																<!-- <span class="input-group-text ml-3" style="height: 34px;" id="basic-addon1"><i class="fa-solid fa-moon"></i></span> -->
-																<input style="flex: 0 0 50%; max-width: 50%;"  aria-describedby="basic-addon1" class="form-control mx-3 col-xl-6" placeholder="🌙 <?php print_r(explode(',',$hotel[0]->nights)[$key]); ?>">
+																<input style="flex: 0 0 50%; max-width: 50%;"  aria-describedby="basic-addon1"  class="mx-3 form-control col-xl-6" placeholder='🌙 <?php echo $value->no_of_nights; ?>'>
 															</div>
 
 															
-															
+
 															<div class="col d-flex">
 																<label for="" class=" col-form-label">Check-out</label>
-																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $checkout; ?>>
+																<input  style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $value->check_out; ?>>
 															</div>
 														</div>
 
@@ -178,10 +162,10 @@
 															</thead>
 															<tbody>
 																<tr>
-																	<td><?php print_r(explode(',',$hotel[0]->room_type)[$key]); ?></td>
-																	<td><?php echo $details->room; ?></td>
-																	<td><?php echo $details->adult; ?></td>
-																	<td><?php echo $details->child; ?></td>
+																	<td><?php echo $value->room_type; ?></td>
+																	<td><?php echo $value->no_of_rooms ?></td>
+																	<td><?php echo $value->adult_per_pax ?></td>
+																	<td><?php echo $value->child_per_pax ?></td>
 																	<td><input type="text" class="form-control" id="board_<?php echo $key; ?>" name="board[<?php echo $key; ?>]"></td>
 																</tr>
 															</tbody>
@@ -189,7 +173,8 @@
 													</div>
 												</div>
 											<?php endforeach; ?>
-											<!-- endforech -->
+
+
 											<div class="mt-3 row d-flex align-items-baseline new_bg_header">
 												<div class="col-xl-12">
 													<h4 class="text-white">Guest Details</strong></h4>
@@ -283,22 +268,28 @@ input {
 	$(document).ready(function() { 
 	CKEDITOR.replace('impInfo');
 
-    let hotel_ids = '<?php echo json_encode(explode(',',$hotel[0]->hotel_id)); ?>';
+    let hotel_data = '<?php echo json_encode($final_hotel_details); ?>';
+	let	hotel_ids = [];
+	JSON.parse(hotel_data).forEach(element => {
+		hotel_ids.push(element.hotel_id);
+	});
     let query_id = '<?php print_r($hotel[0]->query_id); ?>';
     
-    JSON.parse(hotel_ids).forEach((id,index) => {
+    (hotel_ids).forEach((id,index) => {
     $.ajax({
       type: "POST",
       url: "<?php echo base_url()?>HotelVoucher/getConfirmation",
       data: {
         query_id: query_id,
         hotel_id: id,
+        row: index,
       },
       success: function (result) {
         document.getElementById('impInfo').innerHTML = JSON.parse(result).notes;
         document.getElementById('conf_number_'+index).value = JSON.parse(result).data.confirmation_id;
         document.getElementById('board_'+index).value = JSON.parse(result).data.board;
         document.getElementById('guest_name').value = JSON.parse(result).data.guest_name;
+        console.log("🚩 ~ file: hotel_voucher_edit.php:292 ~ JSON.parse(result).data.guest_name", JSON.parse(result).data.guest_name)
       },
       error: function () {
         console.log("Error");

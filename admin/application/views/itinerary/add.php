@@ -1124,7 +1124,9 @@ $this
                               <div class="panel panel-danger">
                                 <div class="text-white" style="padding: 5px; background-color: #d9a927;">
                                   <p class="">Day <?php echo $i + 1 ?> - <?php
-                                                                          echo date('d-m-Y', strtotime($details['checkindate'] . ' + ' . $i . ' days'))
+                                                                          $cur_day_val = date('Y-m-d', strtotime($details['checkindate'] . ' + ' . $i . ' days'));
+                                                                          $cur_day = date('d-m-Y', strtotime($details['checkindate'] . ' + ' . $i . ' days'));
+                                                                          echo $cur_day;
                                                                           ?></p>
 
                                 </div>
@@ -1134,6 +1136,7 @@ $this
                                   </script>
                                   <input type="hidden" name="startCityId_35787_2261_1" id="startCityId_35787_2261_1" value="30785">
                                   <input type="hidden" name="endCityId_35787_2261_1" id="endCityId_35787_2261_1" value="2261">
+                                  <input type="hidden" id="cur_day<?php echo $i ?>" value="<?php echo $cur_day_val ?>">
 
 
 
@@ -1999,14 +2002,37 @@ $this
 
     $(document).on('click', '#hotelmodal', function() {
       var modalid_hotel = $(this).data('id');
-      $("#buildHotelName").val('');
-      $("#selectStarRating").val('');
-      $("#buildRoomType").val('');
-      $("#modal_hotel").val(modalid_hotel);
+      let current_day = $("#cur_day"+modalid_hotel).val();
+      let hotel_details = <?php echo json_encode($final_hotel_details) ?>;
+
+      let room_types = [];
+      var newData = hotel_details.map((item, index) => {
+      if(current_day >= item.check_in && current_day < item.check_out){
+        room_types.push(item.room_type);
+        room_types.join(",");
+        $("#Hotel_name_city_select").val(item.hotel_city);
+        $("#buildHotelName").val(item.hotel_name);
+        $("#selectStarRating").val(item.hotel_category);
+        $("#buildRoomType").val(room_types);
+        $("#check_in_date").val(current_day);
+        $("#check_out_date").val(item.check_out);
+        $("#modal_hotel").val(modalid_hotel);
+      }
+    });
+      // room_types.join(",");
+      // $("#buildHotelName").val('');
+      // $("#selectStarRating").val('');
+      // $("#buildRoomType").val('');
+      // $("#check_in_date").val(current_day);
+      // $("#check_out_date").val('');
+      // $("#modal_hotel").val(modalid_hotel);
 
     });
     $(document).on('click', '#transfermodal', function() {
       var modalid_transfer = $(this).data('id');
+      let transfer_details = <?php echo json_encode($final_transfer) ?>;
+      console.log("🚩 ~ file: add.php:2034 ~ $ ~ transfer_details", transfer_details)
+
       // alert(modalid_transfer);
       $("#modal_transfer").val(modalid_transfer);
 

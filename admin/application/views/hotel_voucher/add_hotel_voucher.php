@@ -154,7 +154,7 @@
 															
 															<div class="col d-flex just">
 																<label for="" class=" col-form-label">Check-in</label>
-																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $check_in; ?>>
+																<input style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo (new DateTime($value->check_in))->format('d-M-Y'); ?>>
 																<input type="hidden" name="check_in[<?php echo $key; ?>]" value=<?php echo $value->check_in; ?>>
 															
 															</div>
@@ -170,7 +170,7 @@
 
 															<div class="col d-flex">
 																<label for="" class=" col-form-label">Check-out</label>
-																<input  style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo $value->check_out; ?>>
+																<input  style="flex: 0 0 50%; max-width: 50%;" class="form-control col-xl-6 mx-3" placeholder=<?php echo (new DateTime($value->check_out))->format('d-M-Y'); ?>>
 															</div>
 														</div>
 

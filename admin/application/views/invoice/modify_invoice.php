@@ -646,14 +646,24 @@ $(window).click();
 
     <script type="text/javascript">
         $("#finalAdvance").change(function(){
-             var advance = $('#finalAdvance').val();
-             var finalTotalInvoice = parseInt($("#finalTotalInvoice").val());
+            // console.log(this.value);
+            $(window).click();
+            var advance = $('#finalAdvance').val();
+            var finalTotalInvoice = parseInt($("#finalTotalInvoice").val());
+            var bank_charges = $('#bank_charges').val();
             // var finalBalance = advance;
-             $("#finalBalance").val(finalTotalInvoice - advance);
+            $("#finalBalance").val(finalTotalInvoice - advance);
+
         });
         $("#bank_charges").change(function(){
-             var advance = $('#finalAdvance').val();
-             var finalTotalInvoice = parseInt($("#finalTotalInvoice").val()) + parseInt($("#bank_charges").val());
+            
+            $(window).click();
+            var advance = $('#finalAdvance').val();
+             var finalTotalInvoice = parseInt($("#finalTotalInvoice").val());
+             var bank_charges = $('#bank_charges').val();
+            // var finalBalance = advance;
              $("#finalBalance").val(finalTotalInvoice - advance);
+
         });
+        
     </script>

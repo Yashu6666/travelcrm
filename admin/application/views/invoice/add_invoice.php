@@ -488,96 +488,176 @@
 
 <script type="text/javascript">
 
+// $(window).click(function() {
+
+    
+
+//         var qty_s = $('#invoicePax').val();
+//         var rate_S = $('#invoiceRate').val();
+//         var vat_percentage_S  = 1;
+//         // var vat_percentage_S  = $('#invoiceVatPercentage').val();
+//         var finalAdvance_S  = $('#finalAdvance').val();      
+//         var totalInvoice_S = (qty_s * rate_S);
+//         var vatAmount_S = 0;
+//         // var vatAmount_S = (parseInt(totalInvoice_S) * parseInt(vat_percentage_S) / 100);
+//         var bank_charges = $('#bank_charges').val();
+
+//         var vatTotalAmount_s = (totalInvoice_S + vatAmount_S);
+//         $('#invoiceTaxableAmount').val(Math.ceil(totalInvoice_S));
+//         $('#invoiceVatAmount').val(Math.ceil(vatAmount_S));
+//         $('#invoiceTotalAmount').val(Math.ceil(vatTotalAmount_s));
+//         $("#finalBalance").val(parseInt(vatTotalAmount_s) - parseInt(finalAdvance_S));
+//         $(".invoiceRate,.invoicePax").change(function(){
+//         var qty = $('.invoicePax').map(function(){  return  this.value }).get()
+
+//         $.each(qty, function(index, value){
+
+//             var pax = $('#invoicePax'+index).val();
+//             var rate = $('#invoiceRate'+index).val();
+//             var vat_percentage  = $('#invoiceVatPercentage'+index).val();
+//             var totalInvoice = (parseFloat(pax) * parseFloat(rate));
+//             var vatAmount = (parseInt(totalInvoice) * parseInt(vat_percentage) / 100);
+//             var vatTotalAmount = Math.ceil(totalInvoice + vatAmount);
+//             $('#invoiceTaxableAmount'+index).val(totalInvoice);
+//             $('#invoiceVatAmount'+index).val(vatAmount);
+//             $('#invoiceTotalAmount'+index).val(vatTotalAmount);
+
+//         })
+
+//     });
+
+//     var invoiceTaxableAmount = 0;
+//     var sum_vatAmount = 0;
+//     var sum_finalTotalAmount = 0;
+
+//     var sum_invoiceRate = 0;
+//     var sum_invoicePax = 0;
+
+//     $(".invoiceRate").each(function(){
+//         sum_invoiceRate += Math.ceil(parseFloat($(this).val()));
+//     });
+//     $(".invoicePax").each(function(){
+//         sum_invoicePax += Math.ceil(parseFloat($(this).val()));
+//     });
+
+//     $(".invoiceTaxableAmount").each(function(){
+//         invoiceTaxableAmount += Math.ceil(parseFloat($(this).val()));
+//     });
+//     $(".invoiceVatAmount").each(function(){
+//         sum_vatAmount += Math.ceil(parseFloat($(this).val()));
+//     });
+//     $(".invoiceTotalAmount").each(function(){
+//         sum_finalTotalAmount += Math.ceil(parseFloat($(this).val()));
+//     });
+
+//     // var sum_invoiceDesc = $("#invoiceDesc").val();
+//     // alert(sum_invoiceDesc);
+//     // $("#invoiceDesc").each(function(){
+//         // sum_invoiceRate = $(this).val();
+//     // });
+
+
+//     $('#finalSubtotal').val( parseFloat(invoiceTaxableAmount) );
+
+//     $('#finalVAT').val( parseFloat(sum_vatAmount) );
+    
+//     $('#finalTotalInvoice').val( sum_finalTotalAmount + parseInt(bank_charges));
+//     // $('#finalBalance').val( sum_finalTotalAmount + parseInt(bank_charges));
+
+//     // common
+//     $('#com_invoiceTaxableAmount').val(invoiceTaxableAmount);
+//     $('#com_invoiceRate').val(sum_invoiceRate);
+
+//     $('#com_invoicePax').val(sum_invoicePax);
+//     $('#com_invoiceVatAmount').val(sum_vatAmount);
+//     $('#com_invoiceTotalAmount').val( sum_finalTotalAmount );
+//     // $('#com_invoiceDesc').val( sum_invoiceDesc );
+    
+
+
+
+// });
+
+
 $(window).click(function() {
 
-    
 
-        var qty_s = $('#invoicePax').val();
-        var rate_S = $('#invoiceRate').val();
-        var vat_percentage_S  = 1;
-        // var vat_percentage_S  = $('#invoiceVatPercentage').val();
-        var finalAdvance_S  = $('#finalAdvance').val();      
-        var totalInvoice_S = (qty_s * rate_S);
-        var vatAmount_S = 0;
-        // var vatAmount_S = (parseInt(totalInvoice_S) * parseInt(vat_percentage_S) / 100);
-        var bank_charges = $('#bank_charges').val();
+var qty_s = $('#invoicePax').val();
+var rate_S = $('#invoiceRate').val();
+var vat_percentage_S  = 1;
+// var vat_percentage_S  = $('#invoiceVatPercentage').val();
+var finalAdvance_S  = $('#finalAdvance').val();      
+var totalInvoice_S = (qty_s * rate_S);
+var vatAmount_S = 0;
+// var vatAmount_S = (parseInt(totalInvoice_S) * parseInt(vat_percentage_S) / 100);
+var bank_charges = $('#bank_charges').val();
 
-        var vatTotalAmount_s = (totalInvoice_S + vatAmount_S);
-        $('#invoiceTaxableAmount').val(Math.ceil(totalInvoice_S));
-        $('#invoiceVatAmount').val(Math.ceil(vatAmount_S));
-        $('#invoiceTotalAmount').val(Math.ceil(vatTotalAmount_s));
-        $("#finalBalance").val(parseInt(vatTotalAmount_s) - parseInt(finalAdvance_S));
-        $(".invoiceRate,.invoicePax").change(function(){
-        var qty = $('.invoicePax').map(function(){  return  this.value }).get()
+var vatTotalAmount_s = Math.ceil(totalInvoice_S + vatAmount_S);
+$('#invoiceTaxableAmount').val(Math.ceil(totalInvoice_S));
+$('#invoiceVatAmount').val(Math.ceil(vatAmount_S));
+$('#invoiceTotalAmount').val(Math.ceil(vatTotalAmount_s));
+// $("#finalBalance").val(parseInt(vatTotalAmount_s) - parseInt(finalAdvance_S));
+$(".invoiceRate,.invoicePax").change(function(){
+var qty = $('.invoicePax').map(function(){  return  this.value }).get()
 
-        $.each(qty, function(index, value){
+$.each(qty, function(index, value){
 
-            var pax = $('#invoicePax'+index).val();
-            var rate = $('#invoiceRate'+index).val();
-            var vat_percentage  = $('#invoiceVatPercentage'+index).val();
-            var totalInvoice = (parseFloat(pax) * parseFloat(rate));
-            var vatAmount = (parseInt(totalInvoice) * parseInt(vat_percentage) / 100);
-            var vatTotalAmount = Math.ceil(totalInvoice + vatAmount);
-            $('#invoiceTaxableAmount'+index).val(totalInvoice);
-            $('#invoiceVatAmount'+index).val(vatAmount);
-            $('#invoiceTotalAmount'+index).val(vatTotalAmount);
+    var pax = $('#invoicePax'+index).val();
+    var rate = $('#invoiceRate'+index).val();
+    var vat_percentage  = $('#invoiceVatPercentage'+index).val();
+    var totalInvoice = (parseFloat(pax) * parseFloat(rate));
+    var vatAmount = (parseInt(totalInvoice) * parseInt(vat_percentage) / 100);
+    var vatTotalAmount = (totalInvoice + vatAmount);
+    $('#invoiceTaxableAmount'+index).val(totalInvoice);
+    $('#invoiceVatAmount'+index).val(vatAmount);
+    $('#invoiceTotalAmount'+index).val(vatTotalAmount);
 
-        })
+})
 
-    });
+});
 
-    var invoiceTaxableAmount = 0;
-    var sum_vatAmount = 0;
-    var sum_finalTotalAmount = 0;
+var invoiceTaxableAmount = 0;
+var sum_vatAmount = 0;
+var sum_finalTotalAmount = 0;
 
-    var sum_invoiceRate = 0;
-    var sum_invoicePax = 0;
+var sum_invoiceRate = 0;
+var sum_invoicePax = 0;
 
-    $(".invoiceRate").each(function(){
-        sum_invoiceRate += Math.ceil(parseFloat($(this).val()));
-    });
-    $(".invoicePax").each(function(){
-        sum_invoicePax += Math.ceil(parseFloat($(this).val()));
-    });
+$(".invoiceRate").each(function(){
+sum_invoiceRate += Math.ceil(parseFloat($(this).val()));
+});
+$(".invoicePax").each(function(){
+sum_invoicePax += Math.ceil(parseFloat($(this).val()));
+});
 
-    $(".invoiceTaxableAmount").each(function(){
-        invoiceTaxableAmount += Math.ceil(parseFloat($(this).val()));
-    });
-    $(".invoiceVatAmount").each(function(){
-        sum_vatAmount += Math.ceil(parseFloat($(this).val()));
-    });
-    $(".invoiceTotalAmount").each(function(){
-        sum_finalTotalAmount += Math.ceil(parseFloat($(this).val()));
-    });
-
-    // var sum_invoiceDesc = $("#invoiceDesc").val();
-    // alert(sum_invoiceDesc);
-    // $("#invoiceDesc").each(function(){
-        // sum_invoiceRate = $(this).val();
-    // });
+$(".invoiceTaxableAmount").each(function(){
+invoiceTaxableAmount += Math.ceil(parseFloat($(this).val()));
+});
+$(".invoiceVatAmount").each(function(){
+sum_vatAmount += Math.ceil(parseFloat($(this).val()));
+});
+$(".invoiceTotalAmount").each(function(){
+sum_finalTotalAmount += Math.ceil(parseFloat($(this).val()));
+});
 
 
-    $('#finalSubtotal').val( parseFloat(invoiceTaxableAmount) );
+$('#finalSubtotal').val( parseFloat(invoiceTaxableAmount) );
 
-    $('#finalVAT').val( parseFloat(sum_vatAmount) );
-    
-    $('#finalTotalInvoice').val( sum_finalTotalAmount + parseInt(bank_charges));
-    // $('#finalBalance').val( sum_finalTotalAmount + parseInt(bank_charges));
+$('#finalVAT').val( parseFloat(sum_vatAmount) );
 
-    // common
-    $('#com_invoiceTaxableAmount').val(invoiceTaxableAmount);
-    $('#com_invoiceRate').val(sum_invoiceRate);
+$('#finalTotalInvoice').val( sum_finalTotalAmount  + parseInt(bank_charges));
+// common
+$('#com_invoiceTaxableAmount').val(invoiceTaxableAmount);
+$('#com_invoiceRate').val(sum_invoiceRate);
 
-    $('#com_invoicePax').val(sum_invoicePax);
-    $('#com_invoiceVatAmount').val(sum_vatAmount);
-    $('#com_invoiceTotalAmount').val( sum_finalTotalAmount );
-    $('#com_invoiceDesc').val( sum_invoiceDesc );
-    
+$('#com_invoicePax').val(sum_invoicePax);
+$('#com_invoiceVatAmount').val(sum_vatAmount);
+$('#com_invoiceTotalAmount').val( sum_finalTotalAmount );
+
 
 
 
 });
-
 $(window).click();
 </script>
 <!-- 
@@ -689,7 +769,7 @@ $(window).click();
     });
     </script> -->
 
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         $("#finalAdvance").change(function(){
              var advance = $('#finalAdvance').val();
              var finalTotalInvoice = parseInt($("#finalTotalInvoice").val());
@@ -700,4 +780,29 @@ $(window).click();
              var finalTotalInvoice = parseInt($("#finalTotalInvoice").val()) + parseInt($("#bank_charges").val());
              $("#finalBalance").val(finalTotalInvoice - advance);
         });
+    </script> -->
+
+<script type="text/javascript">
+        $("#finalAdvance").change(function(){
+            // console.log(this.value);
+            $(window).click();
+            var advance = $('#finalAdvance').val();
+            var finalTotalInvoice = parseInt($("#finalTotalInvoice").val());
+            var bank_charges = $('#bank_charges').val();
+            console.log("🚩 ~ file: add_invoice.php:712 ~ $ ~ bank_charges", bank_charges)
+            // var finalBalance = advance;
+            $("#finalBalance").val(finalTotalInvoice - advance);
+
+        });
+        $("#bank_charges").change(function(){
+            
+            $(window).click();
+            var advance = $('#finalAdvance').val();
+             var finalTotalInvoice = parseInt($("#finalTotalInvoice").val());
+             var bank_charges = $('#bank_charges').val();
+            // var finalBalance = advance;
+             $("#finalBalance").val(finalTotalInvoice - advance);
+
+        });
+        
     </script>

@@ -78,13 +78,13 @@
                     $date->modify('+' . explode(',', $hotel[0]->nights)[$key] . ' day');
                     $checkout =  $date->format('d-M-Y');
                     ?>
-                    <td><?php echo $value->check_in; ?></td>
+                    <td><?php echo (new DateTime($value->check_in))->format('d-M-Y'); ?></td>
                     <?php
                     $created_date = new DateTime($guest->created_at);
                     $booking_date = $created_date->format('d-M-Y');
                     ?>
                     <td><?php print_r(explode(',', $hotel[0]->nights)[$key]); ?></td>
-                    <td><?php echo $value->check_out; ?></td>
+                    <td><?php echo (new DateTime($value->check_out))->format('d-M-Y'); ?></td>
                     <td colspan="2"><?php echo $booking_date ?></td>
                 </tr>
             </tbody>

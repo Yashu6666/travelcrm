@@ -44,7 +44,7 @@ class HotelVoucher extends CI_Controller
 		$hotel_ids = explode(',',$data['hotel'][0]->hotel_id);
 
 		$final_hotel_details = [];
-		$query_hotel_details = $this->db->where('query_id', $query_id)->group_by(array("room_type", "check_in"))->get('query_hotel_details')->result();
+		$query_hotel_details = $this->db->order_by("id", "asc")->where('query_id', $query_id)->group_by(array("room_type", "check_in"))->get('query_hotel_details')->result();
 
 		foreach ($query_hotel_details as $k => $v) {
 			$sub_query_hotel_details = $this->db->where('query_id', $query_id)->where('hotel_id', $v->hotel_id)->where('room_type', $v->room_type)->where('check_in', $v->check_in)->get('query_hotel_details')->result();
@@ -116,7 +116,7 @@ class HotelVoucher extends CI_Controller
 		}
 
 		$final_hotel_details = [];
-		$query_hotel_details = $this->db->where('query_id', $query_id)->group_by(array("room_type", "check_in"))->get('query_hotel_details')->result();
+		$query_hotel_details = $this->db->order_by("id", "asc")->where('query_id', $query_id)->group_by(array("room_type", "check_in"))->get('query_hotel_details')->result();
 
 		foreach ($query_hotel_details as $k => $v) {
 			$sub_query_hotel_details = $this->db->where('query_id', $query_id)->where('hotel_id', $v->hotel_id)->where('room_type', $v->room_type)->where('check_in', $v->check_in)->get('query_hotel_details')->result();
@@ -222,7 +222,7 @@ class HotelVoucher extends CI_Controller
 			$body = $this->load->view('hotel_voucher/voucher_pdf/index',$data,TRUE);
 
 			$final_hotel_details = [];
-			$query_hotel_details = $this->db->where('query_id', $query_id)->group_by(array("room_type", "check_in"))->get('query_hotel_details')->result();
+			$query_hotel_details = $this->db->order_by("id", "asc")->where('query_id', $query_id)->group_by(array("room_type", "check_in"))->get('query_hotel_details')->result();
 
 			foreach ($query_hotel_details as $k => $v) {
 				$sub_query_hotel_details = $this->db->where('query_id', $query_id)->where('hotel_id', $v->hotel_id)->where('room_type', $v->room_type)->where('check_in', $v->check_in)->get('query_hotel_details')->result();

@@ -265,6 +265,27 @@ class Itinerary extends CI_Controller {
 			redirect('itinerary/add','refresh');
 		}
 
+		$final_hotel_details = [];
+			$query_hotel_details = $this->db->where('query_id', $query_id)->group_by(array("room_type", "check_in"))->get('query_hotel_details')->result();
+
+			foreach ($query_hotel_details as $k => $v) {
+				$sub_query_hotel_details = $this->db->where('query_id', $query_id)->where('hotel_id', $v->hotel_id)->where('room_type', $v->room_type)->where('check_in', $v->check_in)->get('query_hotel_details')->result();
+				// echo "<pre>";print_r($sub_query_hotel_details);
+				$adult_pax_count_hd = 0;
+				$child_pax_count_hd = 0;
+				$no_of_room_count_hd = 0;
+				foreach ($sub_query_hotel_details as $k1 => $v1) {
+					$adult_pax_count_hd += $v1->adult_per_pax;
+					$child_pax_count_hd += $v1->child_per_pax;
+					$no_of_room_count_hd += 1;
+				}
+				$sub_query_hotel_details[0]->adult_per_pax = $adult_pax_count_hd;
+				$sub_query_hotel_details[0]->child_per_pax = $child_pax_count_hd;
+				$sub_query_hotel_details[0]->no_of_rooms = $no_of_room_count_hd;
+				array_push($final_hotel_details,$sub_query_hotel_details[0]);
+			}
+		$data['final_hotel_details'] = $final_hotel_details;
+
 		$hotel = $this->db->where('query_id',$query_id)->get('query_hotel')->result();
 		// print_r($hotel);
 		$data['data_conf'] = $this->db->where('query_id',(int)$query_id)->get('hotel_voucher_confirmation')->row();
@@ -282,6 +303,7 @@ class Itinerary extends CI_Controller {
 		$transfer_dropoff = [];
 		$transfer_routes = [];
 		$transfer = $this->db->query("SELECT * FROM query_transfer WHERE query_id=".$query_id)->result();
+		$data['final_transfer'] = $transfer;
 
 		foreach ($transfer as $key => $value) {
 			$transfer_pickup_values = explode(',',$transfer[$key]->pickup);
@@ -318,12 +340,42 @@ class Itinerary extends CI_Controller {
 		$transfer_return_query_data = $this->db->where('query_id',(int)$query_id)->where('transfer_type','return')->get('query_transfer')->row();
 		$transfer_internal_query_data = $this->db->where('transfer_type','internal')->where('query_id',(int)$query_id)->get('query_transfer')->row();
 
-		$data['transfer_return_pickup'] = !empty($transfer_return_query_data->pickup) ? explode(",",$transfer_return_query_data->pickup) : '';
         $data['transfer_internal_pickup'] = !empty($transfer_internal_query_data->pickup) ? explode(",",$transfer_internal_query_data->pickup) : '';
-
-		$data['transfer_return_drop'] = !empty($transfer_return_query_data->dropoff) ? explode(",",$transfer_return_query_data->dropoff) : '';
         $data['transfer_internal_drop'] = !empty($transfer_internal_query_data->dropoff) ? explode(",",$transfer_internal_query_data->dropoff) : '';
+        $data['transfer_internal_date'] = !empty($transfer_internal_query_data->transfer_date) ? explode(",",$transfer_internal_query_data->transfer_date) : '';
 		
+		$data['transfer_return_pickup'] = !empty($transfer_return_query_data->pickup) ? explode(",",$transfer_return_query_data->pickup) : '';
+		$data['transfer_return_drop'] = !empty($transfer_return_query_data->dropoff) ? explode(",",$transfer_return_query_data->dropoff) : '';
+        $data['transfer_return_date'] = !empty($transfer_return_query_data->transfer_date) ? explode(",",$transfer_return_query_data->transfer_date) : '';
+
+		$final_return_transfer = [];
+		foreach ($data['transfer_return_date'] as $key => $value) {
+			$return_trans_data = [
+				"date" => $value,
+				"pickup" => $data['transfer_return_pickup'][$key],
+				"drop" => $data['transfer_return_drop'][$key],
+			];
+
+			array_push($final_return_transfer,$return_trans_data);
+		}
+
+		$final_internal_transfer = [];
+		foreach ($data['transfer_internal_date'] as $key => $value) {
+			$internal_trans_data = [
+				"date" => $value,
+				"pickup" => $data['transfer_internal_pickup'][$key],
+				"drop" => $data['transfer_internal_drop'][$key],
+			];
+
+			array_push($final_internal_transfer,$internal_trans_data);
+		}
+		
+		// echo "<pre>";print_r($final_return_transfer);
+		// echo "<pre>";print_r($final_internal_transfer);
+		// exit;
+
+
+
 		// $meals = $this->db->where('query_id',$query_id)->get('query_meal')->result();
 		// $meals2 = $this->db->query("SELECT * FROM query_meal WHERE query_id=".$query_id)->result();
 		$meals = $this->db->where('query_id',(int)$query_id)->where('query_type','excursion')->get('query_meal')->result();

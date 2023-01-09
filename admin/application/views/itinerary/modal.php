@@ -46,7 +46,7 @@
                             </section>
                             <section id="" class="col-md-12 mt-4">
                                 <label>Room Type</label>
-                                <select class="form-control buildRoomType" id="buildRoomType" required="" name="buildRoomType" style="display: flex;">
+                                <select class="form-control buildRoomType" multiple id="buildRoomType" required="" name="buildRoomType" style="display: flex;">
                                     <option value="">Select Room Type</option>
                                     <?php
                                     foreach (array_unique($room_type) as $name) {
@@ -604,18 +604,19 @@
     }
 
     function getDropTransfer() {
-
+        let selected_index  = $("#pickupinternal")[0].selectedIndex - 1
         var value = $("#transfertype").val();
-
         let options_drop = '';
         let options_drop_data = [];
+
         $('.select_trans_drop').empty();
-        $('.select_trans_drop').append('<option value="">Dropoff</option>');
+        // $('.select_trans_drop').append('<option value="">Dropoff</option>');
         if (value == "oneway") {
             options_drop_data = <?php echo json_encode($transfer_internal_drop) ?>;
         } else {
             options_drop_data = <?php echo json_encode($transfer_return_drop) ?>;
         }
+
         options_drop_data.forEach(element => {
 
             if (value == "oneway") {
@@ -628,9 +629,27 @@
                 }
             }
 
-            options_drop += `<option value="${element}">${element}</option>`;
+            // options_drop += `<option value="${element}">${element}</option>`;
         });
+        options_drop += `<option value="${options_drop_data[selected_index]}">${options_drop_data[selected_index]}</option>`;
         $('.select_trans_drop').append(options_drop);
+
+        var transfer_type = $("#transfertype").val();
+        var pickup = $("#pickupinternal").val();
+        var dropoff = $("#dropoffinternal").val();
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '<?php echo site_url(); ?>/itinerary/getTransferRoute',
+            data: {
+            'dropoff': dropoff,
+            'pickup': pickup,
+            'transfer_type': transfer_type
+            },
+            success: function(response) {
+            $("#route_nameinternal").val(response);
+            }
+        });
     }
 
     function get_resturant_name(id) {

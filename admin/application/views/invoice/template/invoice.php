@@ -336,7 +336,7 @@ th {
             <td colspan="2"></td>
           </tr>
           <tr>
-            <td colspan="2">FOR DIAMOND TOURS L.L.C <br>50-B STREET COSMOS LANE, OPPOSITE COSMOS STORE,MEENA BAZAR P.O.BOX:-241685,DUBAI,UAE
+            <td colspan="2">FOR DIAMOND TOURS L.L.C <br> 704 BMI BUILDING, KHALID BIN AL WALEED ROAD, P.O.BOX 241685, BUR DUBAI, DUBAI-UNITED ARAB EMIRATES
           <br>Tel: <b>+971 4 355 9218</b></td>
         </tr>
           <!-- <tr>

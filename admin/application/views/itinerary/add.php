@@ -787,7 +787,7 @@ $this
 
                   <div class="form-group col-md-4">
                     <label>Drop off Hotel</label>
-                    <input id="arrival_drop" class="form-control arrival_drop" value="<?php echo $hotel_name[array_key_first($hotel_name)] ?>" type="text" placeholder="Drop off Hotel" name="arrival_drop[]">
+                    <input id="arrival_drop" class="form-control arrival_drop" value="<?php echo isset($hotel_name[array_key_first($hotel_name)]) ? $hotel_name[array_key_first($hotel_name)] : "" ?>" type="text" placeholder="Drop off Hotel" name="arrival_drop[]">
                   </div>
                 </div>
                   </section>
@@ -1091,7 +1091,7 @@ $this
 
                   <div class="form-group col-md-4">
                     <label>Pickup Hotel</label>
-                    <input id="return_pickup" class="form-control return_pickup" type="text" value="<?php echo $hotel_name[array_key_last($hotel_name)] ?>" placeholder="pickup Hotel" name="return_pickup[]">
+                    <input id="return_pickup" class="form-control return_pickup" type="text" value="<?php echo isset($hotel_name[array_key_last($hotel_name)]) ? $hotel_name[array_key_last($hotel_name)] : "" ?>" placeholder="pickup Hotel" name="return_pickup[]">
                   </div>
 
 

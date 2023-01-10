@@ -38,7 +38,7 @@
         <img src="<?php echo base_url('/public/image/logo.png'); ?>" alt="logo" style="margin-bottom: 15px;" width="100" class="my-3 ms-4">
     </div>
 
-    <div class="mainDiv" style="background-color: #d9a927;text-align: center;font-size: 20px;">
+    <div class="mainDiv" style="background-color: #28166f;text-align: center;font-size: 20px;">
         <h4 style="padding: 20px;color:white"><i class="fa-solid fa-receipt"></i> Accommodation Voucher</h4>
     </div>
     <!-- <div class="mainDiv" style="background-color: #d9a927;">
@@ -49,7 +49,7 @@
 </div>
         <?php foreach($final_hotel_details as $key => $value) : ?>
 
-        <div class="div_flex" style="height:auto;width:100%;background-color: #d9a927;margin-top:0px;font-size: 18px;">
+        <div class="div_flex" style="height:auto;width:100%;background-color: #343a40;margin-top:0px;font-size: 18px;">
         <h4 style="margin-left:20px;float: left;color:white; padding-top: 0px;padding-bottom:16px; width: 55%;">Hotel Name :
         <?php echo $value->hotel_name ?>
                             <span style="color: #efe717;">
@@ -116,7 +116,7 @@
     <?php endforeach; ?>
 
 
-    <div style="background-color: #d9a927;">
+    <div style="background-color: #28166f;">
         <h4 style="color:white;text-align: start;padding:20px;align-items: center;display: flex;font-size: 20px;">Guest Details</h4>
     </div>
 
@@ -140,7 +140,7 @@
         </tbody>
     </table>
 
-    <div style="background-color: #d9a927;">
+    <div style="background-color: #28166f;">
         <h4 style="color:white;text-align: start;padding:20px;align-items: center;display: flex;font-size: 20px;"> Note </h4>
     </div>
     <?php echo $impInfo ?>

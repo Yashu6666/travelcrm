@@ -74,7 +74,7 @@
 													<h4 class="text-white text-center ">Voucher / Accommodation</h4>
 												</div>
 											</div> -->
-											<div class="mt-3 row d-flex align-items-baseline new_bg_header">
+											<div class="mt-3 row d-flex align-items-baseline" style="background-color:#28166f">
 												<div class="col-xl-12">
 													<h4 class="text-white text-center"><i class="fa-solid fa-receipt"></i> Accommodation Voucher</h4>
 												</div>
@@ -175,7 +175,7 @@
 											<?php endforeach; ?>
 
 
-											<div class="mt-3 row d-flex align-items-baseline new_bg_header">
+											<div class="mt-3 row d-flex align-items-baseline" style="background-color:#28166f">
 												<div class="col-xl-12">
 													<h4 class="text-white">Guest Details</strong></h4>
 												</div>
@@ -202,7 +202,7 @@
 												</table>
 											</div>
 
-											<div class="mt-3 row d-flex align-items-baseline new_bg_header">
+											<div class="mt-3 row d-flex align-items-baseline" style="background-color:#28166f">
 												<div class="col-xl-12">
 													<h4 style="color: white;" class="text-white">Notes</strong></h4>
 												</div>

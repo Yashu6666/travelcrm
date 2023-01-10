@@ -291,10 +291,10 @@ class Itinerary extends CI_Controller {
 		$data['data_conf'] = $this->db->where('query_id',(int)$query_id)->get('hotel_voucher_confirmation')->row();
 		// print_r($data['data_conf']);exit;
 		
-		$data['hotel_city'] = explode(',',$hotel[0]->hotel_city);
-		$data['hotel_name'] = explode(',',$hotel[0]->hotel_name);
-		$data['room_type'] = explode(',',$hotel[0]->room_type);
-		$data['category'] = explode(',',$hotel[0]->category);
+		$data['hotel_city'] = isset($hotel[0]->hotel_city) ? explode(',',$hotel[0]->hotel_city) : [];
+		$data['hotel_name'] = isset($hotel[0]->hotel_name) ? explode(',',$hotel[0]->hotel_name) : [];
+		$data['room_type'] = isset($hotel[0]->room_type) ? explode(',',$hotel[0]->room_type) : [];
+		$data['category'] = isset($hotel[0]->category) ? explode(',',$hotel[0]->category) : [];
 
 		$data['hotel_name'] = array_unique($data['hotel_name']);
 		// $transfer = $this->db->get_where('query_transfer', array('query_id' => $query_id))->row();
@@ -340,34 +340,38 @@ class Itinerary extends CI_Controller {
 		$transfer_return_query_data = $this->db->where('query_id',(int)$query_id)->where('transfer_type','return')->get('query_transfer')->row();
 		$transfer_internal_query_data = $this->db->where('transfer_type','internal')->where('query_id',(int)$query_id)->get('query_transfer')->row();
 
-        $data['transfer_internal_pickup'] = !empty($transfer_internal_query_data->pickup) ? explode(",",$transfer_internal_query_data->pickup) : '';
-        $data['transfer_internal_drop'] = !empty($transfer_internal_query_data->dropoff) ? explode(",",$transfer_internal_query_data->dropoff) : '';
-        $data['transfer_internal_date'] = !empty($transfer_internal_query_data->transfer_date) ? explode(",",$transfer_internal_query_data->transfer_date) : '';
+        $data['transfer_internal_pickup'] = !empty($transfer_internal_query_data->pickup) ? explode(",",$transfer_internal_query_data->pickup) : [];
+        $data['transfer_internal_drop'] = !empty($transfer_internal_query_data->dropoff) ? explode(",",$transfer_internal_query_data->dropoff) : [];
+        $data['transfer_internal_date'] = !empty($transfer_internal_query_data->transfer_date) ? explode(",",$transfer_internal_query_data->transfer_date) : [];
 		
-		$data['transfer_return_pickup'] = !empty($transfer_return_query_data->pickup) ? explode(",",$transfer_return_query_data->pickup) : '';
-		$data['transfer_return_drop'] = !empty($transfer_return_query_data->dropoff) ? explode(",",$transfer_return_query_data->dropoff) : '';
-        $data['transfer_return_date'] = !empty($transfer_return_query_data->transfer_date) ? explode(",",$transfer_return_query_data->transfer_date) : '';
+		$data['transfer_return_pickup'] = !empty($transfer_return_query_data->pickup) ? explode(",",$transfer_return_query_data->pickup) : [];
+		$data['transfer_return_drop'] = !empty($transfer_return_query_data->dropoff) ? explode(",",$transfer_return_query_data->dropoff) : [];
+        $data['transfer_return_date'] = !empty($transfer_return_query_data->transfer_date) ? explode(",",$transfer_return_query_data->transfer_date) : [];
 
 		$final_return_transfer = [];
-		foreach ($data['transfer_return_date'] as $key => $value) {
+		if(isset($data['transfer_return_pickup'])){
+		foreach ($data['transfer_return_pickup'] as $key => $value) {
 			$return_trans_data = [
-				"date" => $value,
+				"date" => $data['transfer_return_date'][$key],
 				"pickup" => $data['transfer_return_pickup'][$key],
 				"drop" => $data['transfer_return_drop'][$key],
 			];
 
 			array_push($final_return_transfer,$return_trans_data);
+			}
 		}
 
 		$final_internal_transfer = [];
-		foreach ($data['transfer_internal_date'] as $key => $value) {
+		if(isset($data['transfer_internal_pickup'])){
+		foreach ($data['transfer_internal_pickup'] as $key => $value) {
 			$internal_trans_data = [
-				"date" => $value,
+				"date" => $data['transfer_internal_date'][$key],
 				"pickup" => $data['transfer_internal_pickup'][$key],
 				"drop" => $data['transfer_internal_drop'][$key],
 			];
 
 			array_push($final_internal_transfer,$internal_trans_data);
+			}
 		}
 		
 		// echo "<pre>";print_r($final_return_transfer);

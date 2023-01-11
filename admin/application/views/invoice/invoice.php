@@ -9,8 +9,8 @@
     <script src="<?php echo base_url(); ?>public/js/html2pdf.bundle.js"></script>
     <style>
         * {
-            font-family: arial;
-        }
+      font-family: Arial, Helvetica, sans-serif !important;
+    }
 
         .invoice_container {
             padding: 10px 10px;
@@ -189,7 +189,7 @@
                             <img src="<?php echo base_url(); ?>public/image/proposalLogo.png" style="width: 250px !important;" alt="" />
                         </th>
                         <th colspan="2">
-                            <h2>PROFORMA INVOICE</h2>
+                            <h2 style="text-align: center;">PROFORMA INVOICE</h2>
                         </th>
                     </tr>
                     <tr>
@@ -232,7 +232,7 @@
                     <?php foreach($hotel_details as $key => $val) : ?>
                        
                     <tr>
-                        <th>HOTEL CONFIRMATION NUMBER <?php echo $key + 1 ?> :</th>
+                        <th>HCN <?php echo $key + 1 ?> :</th>
                         <td><?php echo $query_hotel_voucher[$key]->confirmation_id ?></td>
                         <th>HOTEL NAME <?php echo $key + 1 ?> :</th>
                         <td> <?php echo isset($val->hotelname) ? $val->hotelname : "N/A"; ?> 

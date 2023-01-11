@@ -225,7 +225,8 @@
 												<!-- <button id="submtVoucherbtn" type="button" class="float-right new_btn px-3">Submit</button> -->
 												<button onclick="subVoucherAjax()" id="submtVoucherBTN" type="button" class="float-right new_btn px-3">Update</button>
 												<!-- <button onclick="download_pdf()"  id="submtVoucherPrint" type="button" class="mr-3 float-right new_btn px-3">Download</button> -->
-												<button onclick="sendEmail()"  id="submtVoucherEmail" type="button" class="mr-3 float-right new_btn px-3">Send Mail </button>
+												<!-- <button onclick="sendEmail()"  id="submtVoucherEmail" type="button" class="mr-3 float-right new_btn px-3">Send Mail </button> -->
+												<button  data-id="" data-bs-toggle="modal" data-bs-target="#sendMailHV" id="sendMail" type="button" class="mr-3 float-right new_btn px-3">Send Mail</button>
 												<a href="<?php echo base_url(); ?>HotelVoucher/view_hotels_voucher" class="mr-3 float-right new_btn px-3">Back</a>
 											</div>
 										</div>
@@ -244,6 +245,26 @@
 	</div>
 </div>
 
+</div>
+
+<div class="modal fade" id="sendMailHV" tabindex="-1" aria-labelledby="sendMailModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background: #d9a927;">
+        <h5 class="modal-title" id="sendMailModalLabel">Send Email</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+      </div>
+      <div class="modal-body">
+			<input class="form-control w-75" type="text" placeholder=" " value="<?php echo $guest->b2bEmail; ?>" id="hv_email" 
+				autocomplete="off" />
+            <input type="hidden" placeholder="" value="<?php echo $query_id; ?>" id="hv_queryId"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" onclick="sendEmail()" id="send_hv_mail" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 

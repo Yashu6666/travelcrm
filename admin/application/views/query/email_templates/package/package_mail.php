@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Software</title>
-    <link rel="stylesheet" href="Software.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css  "
-    />
-    <style>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Software</title>
+  <link rel="stylesheet" href="Software.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css  " />
+  <style>
     html,
     body {
       margin: 0;
@@ -29,6 +27,19 @@
     .items td,
     th {
       padding: 5px 10px;
+      border-collapse: collapse;
+      border: double !important;
+      white-space: nowrap;
+    }
+
+    .new_tbl {
+      width: 100%;
+      text-align: left;
+    }
+
+    .new_tbl td,
+    th {
+      /* padding: 5px 10px; */
       border-collapse: collapse;
       border: double !important;
       white-space: nowrap;
@@ -169,193 +180,264 @@
       }
     }
 
-    .ck_data ul{
+    .ck_data ul {
       margin-left: -2rem;
     }
+    * {
+      font-family: Arial, Helvetica, sans-serif !important;
+    }
   </style>
-  </head>
+</head>
 
-  <body>
+<body>
   <div id="body">
     <div class="threshold">
       <div class="container">
         <div class="content">
-    <div class="maindiv">
-      <div class="head" style="width: fit-content;">
-        <div class="head1">Dear Sir/Ma’am,</div>
-        <br></br>
-        <div class="head2">
-          <b>Warm Greetings from Diamond Tours LLC!!!</b>
-        </div>
-
-        <div class="head3">
-          We are pleased to quote the best rate as per your below request:
-        
-          <br></br>
-          <div></div>
-          <!-- <b>**Any amendments in the dates of travel or number of passengers will attract a requote.**</b> -->
-          <table class="items" border="1" cellspacing="0">
-            <tr>
-              <th rowspan="7">
-                <h2>Package Rates</h2>
-              </th>
-              <tr>
-              <?php if($details->perpax_adult > 0) : ?>
-                <td style="white-space: initial;">
-                  <span style="color: red;">AED <?php echo $details->perpax_adult ?></span><?php if(!empty($details->hotels)):?> Per Person on Single Sharing Basis
-                    <?php else : ?>
-                      Per Adult
+          <div class="maindiv">
+            <div class="head" style="width: fit-content;">
+              <div class="head1">Dear Sir/Ma’am,</div>
+              <br>
+              <div class="head2">
+                <b>Warm Greetings from Diamond Tours LLC !!!</b>
+              </div>
+              <br>
+              <div class="head3">
+                We are pleased to quote the best rate as per your below request:
+                <br>
+                <div></div>
+                <!-- <b>**Any amendments in the dates of travel or number of passengers will attract a requote.**</b> -->
+                <!-- <table class="items" border="1" cellspacing="0">
+                  <tr>
+                    <th rowspan="7">
+                      <h2>Package Rates</h2>
+                    </th>
+                  <tr>
+                    <?php if ($details->perpax_adult > 0) : ?>
+                      <td style="white-space: initial;">
+                        <span style="color: red;">AED <?php echo $details->perpax_adult ?></span><?php if (!empty($details->hotels)) : ?> Per Person on Single Sharing Basis
+                        <?php else : ?>
+                          Per Adult
+                        <?php endif ?>
+                      </td>
                     <?php endif ?>
-                </td>
-              <?php endif ?>
+                  </tr>
+                  <tr>
+                    <?php if ($details->perpax_adult_single > 0) : ?>
+                      <td style="white-space: initial;">
+                        <span style="color: red;">AED <?php echo $details->perpax_adult_single ?></span> Per Person on Single Sharing Basis
+                      </td>
+                    <?php endif ?>
+                  </tr>
+                  <tr>
+                    <?php if ($details->perpax_adult_double > 0) : ?>
+                      <td style="white-space: initial;">
+                        <span style="color: red;">AED <?php echo $details->perpax_adult_double ?></span> Per Person on Double Sharing Basis
+                      </td>
+                    <?php endif ?>
+                  </tr>
+                  <tr>
+                    <?php if ($details->perpax_adult_triple > 0) : ?>
+                      <td style="white-space: initial;">
+                        <span style="color: red;">AED <?php echo $details->perpax_adult_triple ?></span> Per Person on Triple Sharing Basis
+                      </td>
+                    <?php endif ?>
+                  </tr>
+
+                  <tr>
+                    <?php if ($details->perpax_childs > 0) : ?>
+                      <td style="white-space: initial;"><span style="color: red;">AED <?php echo $details->perpax_childs ?></span> Per Child With Bed</td>
+                    <?php endif ?>
+                  </tr>
+                  <tr>
+                    <?php if (isset($details->perpax_cnb) && $details->perpax_cnb > 0) : ?>
+                      <td style="white-space: initial;"><span style="color: red;">AED <?php echo $details->perpax_cnb ?></span> Per Child With Not Bed</td>
+                    <?php endif ?>
+                  </tr>
+                  <tr>
+                    <?php if ($details->perpax_infants > 0) : ?>
+                      <td style="white-space: initial;"><span style="color: red;">AED <?php echo $details->perpax_infants ?></span> Per Infant</td>
+                    <?php endif ?>
+                  </tr>
+
+                  </tr>
+
+
+                </table> -->
+                <br />
+                <br />
+
+                <table class="new_tbl" border="1" cellspacing="0">
+                  <tr>
+                    <td>
+                      <h2 style="margin-left: 1rem;">Package Rates</h2>
+                    </td>
+                    <td>
+                      <table style="width: 100%;padding:0px !important" border="1" cellspacing="0">
+
+                        <?php if ($details->perpax_adult > 0) : ?>
+                          <tr>
+                              <td style="white-space: initial;">
+                                <span style="color: red;">AED <?php echo $details->perpax_adult ?></span><?php if (!empty($details->hotels)) : ?> Per Person on Single Sharing Basis
+                                <?php else : ?>
+                                  Per Adult
+                                <?php endif ?>
+                              </td>
+                          </tr>
+                        <?php endif ?>
+
+                        <?php if ($details->perpax_adult_single > 0) : ?>
+                          <tr>
+                              <td style="white-space: initial;">
+                                <span style="color: red;">AED <?php echo $details->perpax_adult_single ?></span> Per Person on Single Sharing Basis
+                              </td>
+                          </tr>
+                       <?php endif ?>
+
+                       <?php if ($details->perpax_adult_double > 0) : ?>
+                        <tr>
+                          <td style="white-space: initial;">
+                            <span style="color: red;">AED <?php echo $details->perpax_adult_double ?></span> Per Person on Double Sharing Basis
+                          </td>
+                        </tr>
+                       <?php endif ?>
+
+                       <?php if ($details->perpax_adult_triple > 0) : ?>
+                        <tr>
+                          <td style="white-space: initial;">
+                            <span style="color: red;">AED <?php echo $details->perpax_adult_triple ?></span> Per Person on Triple Sharing Basis
+                          </td>
+                        </tr>
+                      <?php endif ?>
+
+                      <?php if ($details->perpax_childs > 0) : ?>
+                        <tr>
+                          <td style="white-space: initial;"><span style="color: red;">AED <?php echo $details->perpax_childs ?></span> Per Child With Bed</td>
+                        </tr>
+                      <?php endif ?>
+
+                      <?php if (isset($details->perpax_cnb) && $details->perpax_cnb > 0) : ?>
+                        <tr>
+                          <td style="white-space: initial;"><span style="color: red;">AED <?php echo $details->perpax_cnb ?></span> Per Child With Not Bed</td>
+                        </tr>
+                      <?php endif ?>
+
+                      <?php if ($details->perpax_infants > 0) : ?>
+                        <tr>
+                            <td style="white-space: initial;"><span style="color: red;">AED <?php echo $details->perpax_infants ?></span> Per Infant</td>
+                        </tr>
+                      <?php endif ?>
+
+                      </table>
+                    </td>
+
+                  </tr>
+
+                </table>
+                <br/>
+                <table class="items" border="1" cellspacing="0">
+                  <tr>
+                    <th>Hotel Name</th>
+                    <td colspan="3" style="white-space: normal;">
+                      <?php if (!empty($details->hotels)) : ?>
+                        <?php
+                        $hotel_details_arr = [];
+                        // foreach ($details->hotels as $key => $value) {
+                        //   array_push($hotel_details_arr,$details->hotels[$key]->hotelname.' - '.$details->hotels[$key]->hotelstars.'*  - '.$details->build_room_types[$key].' - '.$details->buildRoomType[$key]) ;
+                        // }
+                        foreach ($details->final_hotel_names_details as $key => $value) {
+                          array_push($hotel_details_arr, $details->final_hotel_nights_details[$key] . ' Nights - ' . $details->final_hotel_names_details[$key] . ' - ' . $details->final_room_stars_type_details[$key] . '*  - ' . $details->final_room_price_col_type_details[$key] . ' - ' . $details->final_room_bed_details[$key]);
+                        }
+                        ?>
+
+                        <?php foreach (array_unique($hotel_details_arr) as $key1 => $val1) : ?>
+                          <?php echo $val1;
+                          echo array_key_last($hotel_details_arr) != $key1 ?  ', <br/>' : ''; ?>
+                        <?php endforeach ?>
+                      <?php else : ?>
+                        <?php print_r($details->hotel_pickup) ?>
+                      <?php endif ?>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th>Check In Date</th>
+                    <td colspan="3"><?php echo $details->checkin ?></td>
+                  </tr>
+
+                  <tr>
+                    <th>Check Out Date</th>
+                    <td colspan="3"><?php echo $details->checkout ?></td>
+                  </tr>
+
+                  <tr>
+                    <th>No. of Nights</th>
+                    <td colspan="3"><?php echo $details->nights ?> Nights</td>
+                  </tr>
+
+                  <tr>
+                    <th rowspan="2">No. of Pax.</th>
+                    <th style="text-align:center">Adults</th>
+                    <th style="text-align:center">Child</th>
+                    <th style="text-align:center">Infant</th>
+                  </tr>
+
+                  <tr>
+                    <td style="text-align:center"><?php echo $details->pax_adult ?></td>
+                    <td style="text-align:center"><?php echo $details->pax_child ?></td>
+                    <td style="text-align:center"><?php echo $details->pax_infant ?></td>
+                  </tr>
+                  <?php if (!empty($details->hotels)) : ?>
+                    <tr>
+                      <th>No. of Rooms</th>
+                      <td colspan="3"><?php echo $details->no_of_room ?> Room(s)</td>
                     </tr>
-              <tr>
-              <?php if($details->perpax_adult_single > 0) : ?>
-                <td style="white-space: initial;">
-                <span style="color: red;">AED <?php echo $details->perpax_adult_single ?></span> Per Person on Single Sharing Basis
-                </td>
-              <?php endif ?>
-              </tr>
-              <tr>
-              <?php if($details->perpax_adult_double > 0) : ?>
-                <td style="white-space: initial;">
-                  <span style="color: red;">AED <?php echo $details->perpax_adult_double ?></span> Per Person on Double Sharing Basis
-                </td>
-              <?php endif ?>
-              </tr>
-              <tr>
-              <?php if($details->perpax_adult_triple > 0) : ?>
-                <td style="white-space: initial;">
-                  <span style="color: red;">AED <?php echo $details->perpax_adult_triple ?></span> Per Person on Triple Sharing Basis
-                </td>
-              <?php endif ?>
-              </tr>
+                  <?php endif ?>
+                </table>
+              </div>
 
-              <tr>
-              <?php if($details->perpax_childs > 0) : ?>
-              <td  style="white-space: initial;"><span style="color: red;">AED <?php echo $details->perpax_childs ?></span> Per Child With Bed</td>
-              <?php endif ?>
-            </tr>
-            <tr>
-            <?php if(isset($details->perpax_cnb) && $details->perpax_cnb > 0 ) : ?>
-            <td style="white-space: initial;"><span style="color: red;">AED <?php echo $details->perpax_cnb ?></span> Per Child With Not Bed</td>
-            <?php endif ?>
-          </tr>
-          <tr>
-            <?php if($details->perpax_infants > 0) : ?>
-              <td style="white-space: initial;"><span style="color: red;">AED <?php echo $details->perpax_infants ?></span> Per Infant</td>
-              <?php endif ?>
-            </tr>
+              <div class="head5 ck_data">
+                <br />
+                <b><u>Above Rate Inclusive of:</u></b>
+                <p><?php echo $details->inclusions ?></p>
+              </div>
+              <div class="head7">
+                Kindly note that the above rates are only a quote, no rooms or
+                services are booked or blocked and will be subject to availability at
+                the time of booking.
+              </div>
+              <br />
+              <div class="head8 ck_data">
+                <b>Thanks & Regards<br />
+                  <?php echo $details->admin_name ?>
+                </b>
+              </div>
+              <br />
 
-            </tr>
-            
-
-          </table>
-          <br />
-          <br />
-          <table class="items" border="1" cellspacing="0">
-            <tr>
-              <th>Hotel Name</th>
-              <td colspan="3" style="white-space: normal;">
-                <?php if(!empty($details->hotels)) : ?>
-                  <?php 
-                  $hotel_details_arr = [];
-                  // foreach ($details->hotels as $key => $value) {
-                  //   array_push($hotel_details_arr,$details->hotels[$key]->hotelname.' - '.$details->hotels[$key]->hotelstars.'*  - '.$details->build_room_types[$key].' - '.$details->buildRoomType[$key]) ;
-                  // }
-                  foreach ($details->final_hotel_names_details as $key => $value) {
-                    array_push($hotel_details_arr,$details->final_hotel_nights_details[$key].' Nights - '.$details->final_hotel_names_details[$key].' - '.$details->final_room_stars_type_details[$key].'*  - '.$details->final_room_price_col_type_details[$key].' - '.$details->final_room_bed_details[$key]) ;
-                  }
-                  ?>
-                  
-                  <?php foreach (array_unique($hotel_details_arr) as $key1 => $val1) : ?>
-                    <?php  echo $val1; echo array_key_last($hotel_details_arr) != $key1 ?  ', <br/>' : ''; ?>
-                    <?php endforeach ?>
-                    <?php else : ?>
-                      <?php print_r($details->hotel_pickup) ?>
-                    <?php endif ?>
-              </td>
-            </tr>
-
-            <tr>
-              <th>Check In Date</th>
-              <td colspan="3"><?php echo $details->checkin ?></td>
-            </tr>
-
-            <tr>
-              <th>Check Out Date</th>
-              <td colspan="3"><?php echo $details->checkout ?></td>
-            </tr>
-
-            <tr>
-              <th>No. of Nights</th>
-              <td colspan="3"><?php echo $details->nights ?> Nights</td>
-            </tr>
-
-            <tr>
-              <th rowspan="2">No. of Pax.</th>
-              <th style="text-align:center">Adults</th>
-              <th style="text-align:center">Child</th>
-              <th style="text-align:center">Infant</th>
-            </tr>
-
-            <tr>
-              <td style="text-align:center"><?php echo $details->pax_adult ?></td>
-              <td style="text-align:center"><?php echo $details->pax_child ?></td>
-              <td style="text-align:center"><?php echo $details->pax_infant ?></td>
-            </tr>
-            <?php if(!empty($details->hotels)) : ?>
-            <tr>
-              <th>No. of Rooms</th>
-              <td colspan="3"><?php echo $details->no_of_room ?> Room(s)</td>
-            </tr>
-            <?php endif ?>
-          </table>
-        </div>
-
-        <div class="head5 ck_data">
-          <br />
-          <b><u>Above Rate Inclusive of:</u></b>
-          <p><?php echo $details->inclusions ?></p>
-        </div>
-        <div class="head7">
-          Kindly note that the above rates are only a quote, no rooms or
-          services are booked or blocked and will be subject to availability at
-          the time of booking.
-        </div>
-        <br/>
-        <div class="head8 ck_data">
-          <b
-            >Thanks & Regards<br />
-            <?php echo $details->admin_name ?>
-          </b>
-        </div>
-        <br/>
-
-        <div class="head9 ck_data">
-          <span
-            ><b><u>GENERAL TERMS AND CONDITIONS :</u></b></span> <br>
-            <p><?php echo $details->conditions ?></p>
-        </div>
-        <div class="head10"> </div>
-          <div class="left ck_data">
-            <p>
-              <u><b>Cancellation Terms: FIT</b> <br></u>
-            </p>
-            <p><?php echo $details->FIT ?></p>
-          </div>
-         <br>
-          <div class="head11">
-          <div class="right ck_data">
-            <u><b>Cancellation Terms:  Groups (MICE)</b><br></u>
-            <p><?php echo $details->MICE ?></p>
+              <div class="head9 ck_data">
+                <span><b><u>GENERAL TERMS AND CONDITIONS :</u></b></span> <br>
+                <p><?php echo $details->conditions ?></p>
+              </div>
+              <div class="head10"> </div>
+              <div class="left ck_data">
+                <p>
+                  <u><b>Cancellation Terms: FIT</b> <br></u>
+                </p>
+                <p><?php echo $details->FIT ?></p>
+              </div>
+              <br>
+              <div class="head11">
+                <div class="right ck_data">
+                  <u><b>Cancellation Terms: Groups (MICE)</b><br></u>
+                  <p><?php echo $details->MICE ?></p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-  </body>
+  </div>
+</body>
+
 </html>

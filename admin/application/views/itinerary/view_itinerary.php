@@ -215,6 +215,16 @@
         .bg_grey {
             background: lightgray;
         }
+        .table{
+            border: double !important;
+        }
+        .table td,
+        th {
+            border: double !important;
+        }
+        * {
+      font-family: Arial, Helvetica, sans-serif !important;
+    }
     </style>
 </head>
 
@@ -321,9 +331,9 @@
             </tr>
             <tr>
                 <td style="width: 40%;">Hotel/Residense Booked:</td>
-                <td> <?php echo $val->hotel_name ;?> <span style="color: #fae937;">
+                <td> <?php echo $val->hotel_name ;?> <span style="font-size:20px;color: #fcd53f;">
                             <?php for($i=0;$i<$val->hotel_category;$i++) : ?>
-                              *
+                                &#9733;
                             <?php endfor ?>
                             </span></td>
             </tr>
@@ -336,13 +346,13 @@
                 <td><?php echo (new DateTime($val->hotel_checkout_date))->format('d-M-Y')  ;?> </td>
             </tr>
             <tr>
-                <td style="width: 40%;">Hotel Confirmation</td>
-                <td class="txt_red"> <?php echo $query_hotel_voucher[$key]->confirmation_id ?> </td>
-            </tr>
-            <tr>
                 <td style="width: 40%;">No of Nights </td>
                 <td><?php $date1 = new DateTime($val->hotel_check_in_date); $date2 = new DateTime($val->hotel_checkout_date); 
                 echo $date2->diff($date1)->format("%a") ;?> </td>
+            </tr>
+            <tr>
+                <td style="width: 40%;">Hotel Confirmation</td>
+                <td><p class="txt_red"><?php echo $query_hotel_voucher[$key]->confirmation_id ?></p> </td>
             </tr>
             <tr>
                 <td style="width: 40%;">Hotel Rooms </td>
@@ -415,9 +425,13 @@
         <?php foreach(($itinery) as $key => $val) : ?>
             
             <tr class="bg_blue txt_left">
-            <?php $date = new DateTime($val->hotel_check_in_date);
+            <!-- ?php $date = new DateTime($val->hotel_check_in_date);
                         $new_df = $date->format('d-M-Y'); ?>
-                <th colspan="2">Day <?php echo $val->day ?> :  <?php echo $new_df ?> (<?php echo date('l', strtotime($val->hotel_check_in_date)) ?>)</th>
+                <th colspan="2">Day <?php echo $val->day ?> :  <?php echo $new_df ?> (<?php echo date('l', strtotime($val->hotel_check_in_date)) ?>)</th> -->
+            <?php $day_date = (new DateTime($itinery[0]->created_at))->format('d-M-Y');
+                $next_day_date= date('d-M-Y', strtotime($day_date. ' + '.$key.' days'));  ?>
+                <th class="bg_blue txt_left" colspan="2">Day <?php echo $val->day ?> :  <?php echo $next_day_date ?> (<?php echo date('l', strtotime($next_day_date)) ?>)</th>
+
             </tr>
             <tr>
                 <td>Service</td>
@@ -481,6 +495,7 @@
                 <td>Drop off Location</td>
                 <td><?php echo $val->hotel_name ?></td>
             </tr>
+            <?php if(!empty(explode(',',$val->meal_resturant_type)[0])) : ?>
 
             <tr>
                 <td>Restaurant Type</td>
@@ -498,6 +513,7 @@
                 <td>Meal Transfer Type </td>
                 <td><?php echo !empty(explode(',',$val->meal_transfer_type)[0]) ? explode(',',$val->meal_transfer_type)[0] : "N/A" ?></td>
             </tr>
+            <?php endif ?>
 
             <tr>
                 <td>Description</td>
@@ -577,10 +593,13 @@
                 <td>Description</td>
                 <td><?php echo $val->description ?></td>
             </tr>
+            
+            <?php if(!empty(explode(',',$val->meal_resturant_type)[$k + 1])) : ?>
             <tr>
                 <td>Restaurant Type</td>
                 <td><?php echo !empty(explode(',',$val->meal_resturant_type)[$k + 1]) ? explode(',',$val->meal_resturant_type)[$k + 1] : "N/A" ?></td>
             </tr>
+
             <tr>
                 <td>Meal Type </td>
                 <td><?php echo !empty(explode(',',$val->meal_type)[$k + 1]) ? explode(',',$val->meal_type)[$k + 1] : "N/A" ?></td>
@@ -593,6 +612,7 @@
                 <td>Meal Transfer Type </td>
                 <td><?php echo !empty(explode(',',$val->meal_transfer_type)[$k + 1]) ? explode(',',$val->meal_transfer_type)[$k + 1] : "N/A" ?></td>
             </tr>
+            <?php endif ?>
 
             <?php endif ?>
             <?php endforeach ?>

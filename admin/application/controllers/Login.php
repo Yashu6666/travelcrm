@@ -146,8 +146,8 @@ class Login extends CI_Controller
 		$data['year_total'] = $year_total;
 		$data['year_remaining'] = $year_remaining;
 
-		$confirmed = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result() :
-					 $this->db->where('lead_stage', "Confirmed")->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery')->result();
+		$confirmed = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->order_by("id", "desc")->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result() :
+					 $this->db->order_by("id", "desc")->where('lead_stage', "Confirmed")->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery')->result();
 		$result = array();
 		foreach ($confirmed as $value) {
 			$query_id = $value->query_id;
@@ -158,7 +158,7 @@ class Login extends CI_Controller
 			$created_at = $value->created_at;
 			$id = $value->id;
 			// $package = $this->db->where('queryId', $query_id)->get('querypackage')->row();
-			$package = $this->db->where('queryId', $query_id)->where('specificDate >=', $current_date)->get('querypackage')->row();
+			$package = $this->db->order_by("id", "desc")->where('queryId', $query_id)->where('specificDate >=', $current_date)->get('querypackage')->row();
 
 			if (isset($package)) {
 				$res = array("id" => $id, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "traveldate" => $package->specificDate, "checkout" => $package->noDaysFrom, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);
@@ -172,7 +172,7 @@ class Login extends CI_Controller
 		$date_today = new DateTime("now");
 		$curr_date = $date_today->format('Y-m-d');
 		$user = $this->session->userdata('admin_username');
-		$data['todo'] = $this->db->where('Tododay', $curr_date)->get('todo')->result_array();
+		$data['todo'] = $this->db->order_by("id", "desc")->where('Tododay', $curr_date)->get('todo')->result_array();
 		
 		$todo_data_arr = [];
 
@@ -245,8 +245,8 @@ class Login extends CI_Controller
 			
 		}
 
-		$query_data = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result() :
-					  $this->db->where('lead_stage', "Confirmed")->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery')->result();
+		$query_data = $this->session->userdata('reg_type') == 'Super Admin' ? $this->db->order_by("id", "desc")->where('lead_stage', "Confirmed")->get('b2bcustomerquery')->result() :
+					  $this->db->order_by("id", "desc")->where('lead_stage', "Confirmed")->where('reportsTo', $this->session->userdata('admin_username'))->get('b2bcustomerquery')->result();
 		// $data['upcoming_arrivals'] = $upcoming_arrivals;
 
 		$result = array();
@@ -259,7 +259,7 @@ class Login extends CI_Controller
 			$created_at = $value->created_at;
 			$id = $value->id;
 
-			$package = $this->db->where('queryId', $query_id)->where('specificDate >=', $current_date)->get('querypackage')->row();
+			$package = $this->db->order_by("id", "desc")->where('queryId', $query_id)->where('specificDate >=', $current_date)->get('querypackage')->row();
 
 			if (isset($package)) {
 				$res = array("id" => $id, "created_at" => $created_at, "query_id" => $query_id, "name" => $name, "mobile" => $mobile, "Description" => $package->type, "traveldate" => $package->specificDate, "nopax" => "adult " . $package->Packagetravelers . ", child " . $package->child, "goingTo" => $package->goingTo, "lead_stage" => $lead_stage);

@@ -44,6 +44,10 @@ th {
   .tx_cntr {
   text-align: center;
   }
+
+  * {
+      font-family: Arial, Helvetica, sans-serif !important;
+    }
     </style>
   </head>
   <body>
@@ -158,7 +162,7 @@ th {
                 <img src="<?php echo base_url();?>public/image/proposalLogo.png" style="width: 250px !important;" alt="" />
               </th>
               <th colspan="2">
-                <h2>PROFORMA INVOICE</h2>
+                <h2 style="text-align: center;">PROFORMA INVOICE</h2>
               </th>
             </tr>
             <tr>
@@ -233,12 +237,12 @@ th {
                     <?php foreach($hotel_details as $key => $val) : ?>
                        
                     <tr>
-                        <th>HOTEL CONFIRMATION NUMBER <?php echo $key + 1 ?> :</th>
+                        <th>HCN <?php echo $key + 1 ?> :</th>
                         <td><?php echo $query_hotel_voucher[$key]->confirmation_id ?></td>
                         <th>HOTEL NAME <?php echo $key + 1 ?> :</th>
                         <td> <?php echo $val->hotelname; ?> 
                             <!-- ?php echo str_repeat("*", $val->hotelstars); ?> -->
-                            <span style="color: #ffe900;">
+                            <span style="color: #102158;">
                             <?php for($i=0;$i<$val->hotelstars;$i++) : ?>
                               *
                             <?php endfor ?>

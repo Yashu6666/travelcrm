@@ -77,9 +77,9 @@ function subVoucherAjax() {
         const btn1 = (document.getElementById(
           "submtVoucherBTN"
         ).hidden = false);
-        const btn2 = (document.getElementById(
-          "submtVoucherPrint"
-        ).hidden = false);
+        // const btn2 = (document.getElementById(
+        //   "submtVoucherPrint"
+        // ).hidden = false);
         const btn3 = (document.getElementById(
           "submtVoucherEmail"
         ).hidden = false);
@@ -98,7 +98,9 @@ function subVoucherAjax() {
 function sendEmail() {
   let q_id = document.getElementById("query_id").value;
   let base_url = document.getElementById("base_url_id").value;
-  let email_id = document.getElementById("email_id").value;
+  // let email_id = document.getElementById("email_id").value;
+  let email_id = document.getElementById("hv_email").value;
+  console.log("🚩 ~ file: hotelVoucher.js:103 ~ sendEmail ~ email_id", email_id)
   let guest_name = document.getElementById("guest_name").value;
   let impInfo = CKEDITOR.instances["impInfo"].getData();
   let board_arr = [];

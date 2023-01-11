@@ -59,15 +59,15 @@ class Itinerary extends CI_Controller {
 		if($this->session->userdata('reg_type') != 'Super Admin'){
 			$this->db->where('created_by' , $this->session->userdata('admin_id'));
 		}
-		$itinery_data = $this->db->distinct()->select('query_id')->get('itinery_data')->result();
+		$itinery_data = $this->db->order_by("id", "asc")->distinct()->select('query_id')->get('itinery_data')->result();
 		// $data['view'] = $this->db->distinct('query_id')->select('query_id','transfer_from_date')->get('itinery_data')->result();
 		// print_r(json_encode($itinery_data));exit;
 
-		$data['view'] = [];
+		$data_itinery = [];
 		foreach($itinery_data as $val1){
 			$data_itinerary = $this->db->where('query_id', $val1->query_id)->limit(1)->get('itinery_data')->result();
 			if(!empty($data_itinerary)){
-				array_push($data['view'],$data_itinerary);
+				array_push($data_itinery,$data_itinerary);
 			}
 		}
 
@@ -75,7 +75,7 @@ class Itinerary extends CI_Controller {
 		$agent_names = [];
 		$guest_names = [];
 		
-		foreach($data['view'] as $val){
+		foreach($data_itinery as $val){
 
 			$data_b2b = $this->db->where('query_id', $val[0]->query_id)->get('b2bcustomerquery')->row();
 			$data_voucher = $this->db->where('query_id', $val[0]->query_id)->get('hotel_voucher_confirmation')->row();
@@ -95,6 +95,8 @@ class Itinerary extends CI_Controller {
 			}
 
 		}
+		$data['view'] = $data_itinery;
+
 		$data['admin_names'] = $admin_names;
 		$data['agent_names'] = $agent_names;
 		$data['guest_names'] = $guest_names;
@@ -106,7 +108,8 @@ class Itinerary extends CI_Controller {
 		try {	
 			$q_id = $id;	
 			$query = $this->db->query("SELECT * FROM b2bcustomerquery WHERE query_id=".$q_id)->row();
-			$itinery = $this->db->query("SELECT * FROM itinery_data WHERE query_id=".$q_id)->result();	
+			// $itinery = $this->db->order_by("id", "asc")->query("SELECT * FROM itinery_data WHERE query_id=".$q_id)->result();	
+			$itinery = $this->db->order_by("day", "asc")->where('query_id', $q_id)->get('itinery_data')->result();
 			$data['query'] = $query;	
 			$data['itinery'] = $itinery;	
 			$data['query_hotel_voucher'] = $this->db->where('query_id', $q_id)->get('hotel_voucher_confirmation')->result();
@@ -156,7 +159,8 @@ class Itinerary extends CI_Controller {
 				$send_to = $query->b2bEmail;
 			}
 
-			$itinery = $this->db->query("SELECT * FROM itinery_data WHERE query_id=".$q_id)->result();	
+			// $itinery = $this->db->order_by("id", "asc")->query("SELECT * FROM itinery_data WHERE query_id=".$q_id)->result();	
+			$itinery = $this->db->order_by("day", "asc")->where('query_id', $q_id)->get('itinery_data')->result();
 			$data['query'] = $query;	
 			$data['itinery'] = $itinery;	
 			// $data['query_hotel_voucher'] = $this->db->where('query_id', $q_id)->get('hotel_voucher_confirmation')->result();
@@ -174,9 +178,6 @@ class Itinerary extends CI_Controller {
 			$data['hotel_query_details'] = $this->db->where('query_id', $q_id)->get('query_hotel')->row();
 
 			$data['hotel_details'] = [];	
-			// $this->load->view('itinerary/templates/itinery_mail',$data, true);
-			// echo "<pre>"; print_r($data);
-			// return;
 			$this->load->library('email');	
 			$config = array(	
 				'protocol' => 'smtp',	
@@ -611,6 +612,7 @@ class Itinerary extends CI_Controller {
 				'created_by' =>   $this->session->userdata('admin_id'),
 
 			);
+			// echo "<pre>";print_r($data);exit;
 			$get_query_id = $this->db->query("SELECT * FROM itinery_data WHERE query_id='".$data['query_id']."' ")->result_array();
 			$this->db->where('query_id',$data['query_id']);
 			$this->db->where('day',$data['day']);

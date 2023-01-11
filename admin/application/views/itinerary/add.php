@@ -1612,7 +1612,7 @@ $this
       });
 
     }
-
+    toastr.success("Data Saved Successfully");
 
     // alert(('#hotelresult_256346_22610 tbody#hotelbody0 .hotel_data_hotelname0').text());
   }

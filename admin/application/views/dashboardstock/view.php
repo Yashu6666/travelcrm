@@ -273,7 +273,7 @@
 					stacked: true,
 					ticks: {
 						min: 0,
-						stepSize: 1,
+						stepSize: 25,
 					}
 
 				}]
